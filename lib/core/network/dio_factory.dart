@@ -1,8 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'interceptors/auth_interceptor.dart';
+import 'interceptors/locale_interceptor.dart';
+import 'interceptors/error_interceptor.dart';
 
 class DioFactory {
-  static Dio getDio() {
+  static Dio getDio({
+    required AuthInterceptor authInterceptor,
+    required LocaleInterceptor localeInterceptor,
+    required ErrorInterceptor errorInterceptor,
+  }) {
     Dio dio = Dio();
 
     dio.options = BaseOptions(
@@ -14,6 +21,11 @@ class DioFactory {
         'Accept': 'application/json',
       },
     );
+
+    // Add custom interceptors
+    dio.interceptors.add(authInterceptor);
+    dio.interceptors.add(localeInterceptor);
+    dio.interceptors.add(errorInterceptor);
 
     if (kDebugMode) {
       dio.interceptors.add(
@@ -27,8 +39,6 @@ class DioFactory {
         ),
       );
     }
-
-    // TODO: Add AuthInterceptor, LocaleInterceptor, ErrorInterceptor
 
     return dio;
   }

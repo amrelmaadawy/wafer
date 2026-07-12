@@ -1,16 +1,37 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../network/dio_factory.dart';
+import '../network/interceptors/auth_interceptor.dart';
+import '../network/interceptors/error_interceptor.dart';
+import '../network/interceptors/locale_interceptor.dart';
+import '../storage/cache_helper.dart';
+import '../storage/secure_storage_service.dart';
 
 final GetIt sl = GetIt.instance;
 
 Future<void> setupServiceLocator() async {
-  // Core
-  sl.registerLazySingleton<Dio>(() => DioFactory.getDio());
-  
+  // External
+  final sharedPreferences = await SharedPreferences.getInstance();
+  sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+
   // Storage
-  // sl.registerLazySingleton<SecureStorageService>(() => SecureStorageService());
-  
+  sl.registerLazySingleton<SecureStorageService>(() => SecureStorageService());
+  sl.registerLazySingleton<CacheHelper>(() => CacheHelper(sl()));
+
+  // Network Interceptors
+  sl.registerLazySingleton<AuthInterceptor>(() => AuthInterceptor(sl()));
+  sl.registerLazySingleton<LocaleInterceptor>(() => LocaleInterceptor(sl()));
+  sl.registerLazySingleton<ErrorInterceptor>(() => ErrorInterceptor());
+
+  // Network
+  sl.registerLazySingleton<Dio>(() => DioFactory.getDio(
+        authInterceptor: sl(),
+        localeInterceptor: sl(),
+        errorInterceptor: sl(),
+      ));
+
   // Features (Each feature will have its own init method called here)
   // await initAuthModule();
 }
