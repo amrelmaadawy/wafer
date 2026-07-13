@@ -14,6 +14,7 @@ abstract class ProfileRemoteDataSource {
     required String newPassword,
     required String newPasswordConfirmation,
   });
+  Future<ProfileModel> updateAvatar({required String imagePath});
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -60,5 +61,18 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
         'new_password_confirmation': newPasswordConfirmation,
       },
     );
+  }
+
+  @override
+  Future<ProfileModel> updateAvatar({required String imagePath}) async {
+    final formData = FormData.fromMap({
+      'avatar': await MultipartFile.fromFile(imagePath),
+    });
+    final response = await _dio.post(
+      '${ApiConstants.baseUrl}${ApiConstants.sharedUpdateAvatar}',
+      data: formData,
+    );
+    final data = response.data['data'] as Map<String, dynamic>;
+    return ProfileModel.fromJson(data);
   }
 }

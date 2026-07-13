@@ -117,7 +117,11 @@
     "change_password_req_match": "تطابق كلمتي المرور الجديدة",
     "change_password_val_required": "هذا الحقل مطلوب",
     "change_password_val_diff": "يجب أن تختلف كلمة المرور الجديدة عن الحالية",
-    "change_password_val_mismatch": "كلمتا المرور غير متطابقتين"
+    "change_password_val_mismatch": "كلمتا المرور غير متطابقتين",
+    "avatar_change_title": "تحديث الصورة الشخصية",
+    "avatar_camera": "التقاط صورة بالكاميرا",
+    "avatar_gallery": "اختيار من معرض الصور",
+    "avatar_success": "تم تحديث الصورة الشخصية بنجاح"
   },
   "common": {
     "retry": "إعادة المحاولة",

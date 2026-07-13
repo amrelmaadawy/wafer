@@ -117,7 +117,11 @@
     "change_password_req_match": "New passwords match",
     "change_password_val_required": "This field is required",
     "change_password_val_diff": "New password must differ from current password",
-    "change_password_val_mismatch": "Passwords do not match"
+    "change_password_val_mismatch": "Passwords do not match",
+    "avatar_change_title": "Update Profile Picture",
+    "avatar_camera": "Take Photo with Camera",
+    "avatar_gallery": "Choose from Gallery",
+    "avatar_success": "Profile picture updated successfully"
   },
   "common": {
     "retry": "Retry",

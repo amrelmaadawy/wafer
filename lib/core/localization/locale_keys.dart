@@ -118,6 +118,10 @@ class LocaleKeys {
   static const changePasswordValRequired = 'profile.change_password_val_required';
   static const changePasswordValDiff = 'profile.change_password_val_diff';
   static const changePasswordValMismatch = 'profile.change_password_val_mismatch';
+  static const profileAvatarChangeTitle = 'profile.avatar_change_title';
+  static const profileAvatarCamera = 'profile.avatar_camera';
+  static const profileAvatarGallery = 'profile.avatar_gallery';
+  static const profileAvatarSuccess = 'profile.avatar_success';
 
   // Common
   static const commonRetry = 'common.retry';

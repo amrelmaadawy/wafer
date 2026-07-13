@@ -19,4 +19,5 @@ class ApiConstants {
   /// Shared Endpoints
   static const String sharedProfile = 'shared/profile';
   static const String sharedChangePassword = 'shared/change-password';
+  static const String sharedUpdateAvatar = 'shared/update-avatar';
 }

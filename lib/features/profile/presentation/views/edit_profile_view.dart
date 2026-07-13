@@ -4,6 +4,7 @@ import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../domain/entities/profile_entity.dart';
+import '../widgets/edit_profile_avatar_header.dart';
 import '../widgets/edit_profile_form_widget.dart';
 
 class EditProfileView extends StatelessWidget {
@@ -33,7 +34,7 @@ class EditProfileView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Column(
           children: [
-            _buildAvatarHeader(context),
+            EditProfileAvatarHeader(profile: profile),
             const SizedBox(height: 20),
             _buildReadOnlyBanner(context),
             const SizedBox(height: 24),
@@ -42,76 +43,6 @@ class EditProfileView extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildAvatarHeader(BuildContext context) {
-    final initial = profile.name.isNotEmpty ? profile.name[0].toUpperCase() : 'U';
-    return Column(
-      children: [
-        Stack(
-          alignment: Alignment.bottomLeft,
-          children: [
-            Container(
-              width: 86,
-              height: 86,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [context.primaryColor, context.primaryColor.withValues(alpha: 0.75)],
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: context.primaryShadow.withValues(alpha: 0.3),
-                    blurRadius: 16,
-                    offset: const Offset(0, 6),
-                  ),
-                ],
-                border: Border.all(color: Colors.white, width: 3),
-              ),
-              alignment: Alignment.center,
-              child: ClipOval(
-                child: (profile.avatar != null && profile.avatar!.isNotEmpty)
-                    ? Image.network(
-                        profile.avatar!,
-                        width: 86,
-                        height: 86,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) => _buildInitialText(initial),
-                      )
-                    : _buildInitialText(initial),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: context.primaryColor,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.white, width: 2),
-              ),
-              child: const Icon(Icons.edit_rounded, color: Colors.white, size: 14),
-            ),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Text(
-          profile.email,
-          style: const TextStyle(
-            color: AppColors.textSecondaryLight,
-            fontSize: 13,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildInitialText(String initial) {
-    return Text(
-      initial,
-      style: const TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
     );
   }
 

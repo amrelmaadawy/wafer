@@ -5,6 +5,7 @@ import '../domain/repositories/profile_repository.dart';
 import '../domain/usecases/get_profile_use_case.dart';
 import '../domain/usecases/update_profile_use_case.dart';
 import '../domain/usecases/change_password_use_case.dart';
+import '../domain/usecases/update_avatar_use_case.dart';
 import '../presentation/cubit/change_password_cubit.dart';
 import '../presentation/cubit/profile_cubit.dart';
 
@@ -41,6 +42,12 @@ void initProfileModule() {
     );
   }
 
-  sl.registerFactory<ProfileCubit>(() => ProfileCubit(sl(), sl()));
+  if (!sl.isRegistered<UpdateAvatarUseCase>()) {
+    sl.registerLazySingleton<UpdateAvatarUseCase>(
+      () => UpdateAvatarUseCase(sl()),
+    );
+  }
+
+  sl.registerFactory<ProfileCubit>(() => ProfileCubit(sl(), sl(), sl()));
   sl.registerFactory<ChangePasswordCubit>(() => ChangePasswordCubit(changePasswordUseCase: sl()));
 }

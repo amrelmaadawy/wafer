@@ -44,6 +44,7 @@ dependencies:
   dartz: ^0.10.1
   easy_localization: ^3.0.8
   logger: ^2.7.0
+  image_picker: ^1.2.3
 
 dev_dependencies:
   flutter_test:

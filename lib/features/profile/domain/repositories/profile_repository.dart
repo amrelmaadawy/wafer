@@ -14,4 +14,5 @@ abstract class ProfileRepository {
     required String newPassword,
     required String newPasswordConfirmation,
   });
+  Future<Either<Failure, ProfileEntity>> updateAvatar({required String imagePath});
 }

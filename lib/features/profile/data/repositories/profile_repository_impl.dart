@@ -107,5 +107,26 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, ProfileEntity>> updateAvatar({required String imagePath}) async {
+    try {
+      final updatedModel = await _remoteDataSource.updateAvatar(imagePath: imagePath);
+      try {
+        await _cacheHelper.saveCachedProfile(jsonEncode(updatedModel.toJson()));
+      } catch (_) {}
+      return Right(updatedModel);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      String? serverMsg;
+      if (e.response?.data is Map<String, dynamic>) {
+        serverMsg = (e.response?.data as Map<String, dynamic>)['message'] as String?;
+      }
+      return Left(ServerFailure(serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }
 

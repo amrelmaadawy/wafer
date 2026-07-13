@@ -56,3 +56,25 @@ class ProfileUpdateError extends ProfileLoaded {
   List<Object?> get props => [profile, errorMessage];
 }
 
+class ProfileAvatarUpdating extends ProfileLoaded {
+  const ProfileAvatarUpdating(super.profile);
+}
+
+class ProfileAvatarUpdateSuccess extends ProfileLoaded {
+  final String message;
+
+  const ProfileAvatarUpdateSuccess(super.profile, {required this.message});
+
+  @override
+  List<Object?> get props => [profile, message];
+}
+
+class ProfileAvatarUpdateError extends ProfileLoaded {
+  final String errorMessage;
+
+  const ProfileAvatarUpdateError(super.profile, {required this.errorMessage});
+
+  @override
+  List<Object?> get props => [profile, errorMessage];
+}
+
