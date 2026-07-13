@@ -48,6 +48,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
           keyboardType: widget.keyboardType,
           decoration: InputDecoration(
             hintText: widget.hintText,
+            hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: AppColors.textSecondaryLight.withValues(alpha: 0.45),
+                ),
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.isPassword
                 ? IconButton(

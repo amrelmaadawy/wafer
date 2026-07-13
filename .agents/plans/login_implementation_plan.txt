@@ -1,0 +1,34 @@
+# Login Endpoint & Shared Auth Implementation Plan (Plain Text)
+
+1. Overview & Context
+This plan outlines the structured implementation of the Login API Endpoint (login) which serves as the shared authentication gateway for all three account types (Company, Owner, and Tenant).
+Endpoint URL: https://codra.cloud/api/v1/mobile/login
+HTTP Method: POST
+
+2. Architecture & File Breakdown (Max 150 Lines per File)
+
+Phase 1: Domain Layer (Shared Contracts & Business Models)
+1. lib/features/auth/domain/entities/user_entity.dart (Modify)
+   - Add fields: token (String?), accountType (String), tenantId (String?), tenantName (String?), requiresPasswordChange (bool).
+2. lib/features/auth/domain/repositories/auth_repository.dart (Modify)
+   - Update login method signature to accept username, password, deviceName, deviceToken.
+3. lib/features/auth/domain/usecases/login_usecase.dart (Modify)
+   - Update LoginParams to hold username, password, deviceName, deviceToken.
+
+Phase 2: Data Layer (Models, RemoteDataSource, and Repository Impl)
+1. lib/features/auth/data/models/user_model.dart (New File)
+   - Extends UserEntity, implements fromJson & toJson.
+2. lib/features/auth/data/datasources/auth_remote_data_source.dart (New File)
+   - Sends POST request via Dio to ApiConstants.baseUrl + 'login'.
+3. lib/features/auth/data/repositories/auth_repository_impl.dart (New File)
+   - Saves token in SecureStorageService and tenantId/accountType in CacheHelper upon success.
+
+Phase 3: Presentation Layer (Cubit, State, and UI Screen/Widgets)
+1. lib/features/auth/presentation/cubit/auth_cubit.dart (Modify)
+   - Emit AuthLoading, Authenticated, or AuthError.
+2. lib/features/auth/presentation/screens/login_screen.dart (New File)
+3. lib/features/auth/presentation/views/login_view.dart (New File)
+4. lib/features/auth/presentation/widgets/login_form_widget.dart (New File)
+
+Phase 4: Dependency Injection Setup
+1. lib/core/di/service_locator.dart (Modify)

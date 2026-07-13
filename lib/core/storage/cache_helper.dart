@@ -24,6 +24,25 @@ class CacheHelper {
     return _prefs.getBool(_onboardingKey) ?? false;
   }
 
+  static const String _accountTypeKey = 'account_type';
+  static const String _tenantIdKey = 'tenant_id';
+
+  Future<void> saveAccountType(String accountType) async {
+    await _prefs.setString(_accountTypeKey, accountType);
+  }
+
+  String? getAccountType() {
+    return _prefs.getString(_accountTypeKey);
+  }
+
+  Future<void> saveTenantId(String tenantId) async {
+    await _prefs.setString(_tenantIdKey, tenantId);
+  }
+
+  String? getTenantId() {
+    return _prefs.getString(_tenantIdKey);
+  }
+
   Future<void> clearAll() async {
     await _prefs.clear();
   }

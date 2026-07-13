@@ -12,16 +12,28 @@ class LoginUseCase implements UseCase<UserEntity, LoginParams> {
 
   @override
   Future<Either<Failure, UserEntity>> call(LoginParams params) {
-    return repository.login(email: params.email, password: params.password);
+    return repository.login(
+      username: params.username,
+      password: params.password,
+      deviceName: params.deviceName,
+      deviceToken: params.deviceToken,
+    );
   }
 }
 
 class LoginParams extends Equatable {
-  final String email;
+  final String username;
   final String password;
+  final String deviceName;
+  final String deviceToken;
 
-  const LoginParams({required this.email, required this.password});
+  const LoginParams({
+    required this.username,
+    required this.password,
+    required this.deviceName,
+    required this.deviceToken,
+  });
 
   @override
-  List<Object> get props => [email, password];
+  List<Object> get props => [username, password, deviceName, deviceToken];
 }

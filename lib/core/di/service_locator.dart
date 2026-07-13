@@ -8,6 +8,7 @@ import '../network/interceptors/error_interceptor.dart';
 import '../network/interceptors/locale_interceptor.dart';
 import '../storage/cache_helper.dart';
 import '../storage/secure_storage_service.dart';
+import '../../features/auth/di/auth_di.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -32,6 +33,6 @@ Future<void> setupServiceLocator() async {
         errorInterceptor: sl(),
       ));
 
-  // Features (Each feature will have its own init method called here)
-  // await initAuthModule();
+  // Features
+  await initAuthModule();
 }

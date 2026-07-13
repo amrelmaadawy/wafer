@@ -15,9 +15,10 @@ void main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('en'), Locale('ar')],
+      supportedLocales: const [Locale('ar'), Locale('en')],
       path: 'assets/translations',
-      fallbackLocale: const Locale('en'),
+      startLocale: const Locale('ar'),
+      fallbackLocale: const Locale('ar'),
       child: const RealEstateApp(),
     ),
   );
@@ -29,7 +30,7 @@ class RealEstateApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Real Estate ERP',
+      title: 'Wafer Real Estate ERP',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
