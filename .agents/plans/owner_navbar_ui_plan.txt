@@ -1,0 +1,51 @@
+================================================================================
+خطة تنفيذ تصميم الـ UI (Bottom Navigation Bar UI Plan)
+نظام وافر لإدارة العقارات والأملاك (Wafer Real Estate ERP)
+================================================================================
+
+1. مواصفات ومميزات التصميم البصري (Professional & Minimalist Aesthetics):
+--------------------------------------------------------------------------------
+لتنفيذ شريط تنقل سفلي (`Bottom Navigation Bar`) فخم واحترافي يليق بتطبيقات الـ Enterprise العالمية (مثل *Linear* و *Stripe* و *Airbnb Host*)، سنلتزم بالمواصفات التالية:
+
+[أ] حاوية الشريط (Navigation Bar Container):
+- الخلفية: لون أبيض نقي (`AppColors.surfaceLight`) في الوضع الفاتح، والسطح الداكن في الوضع الداكن.
+- الظل والحدود: خط علوي رفيع وهادئ جداً (`AppColors.borderLight.withValues(alpha: 0.6)`) مع ظل علوي ناعم (`BoxShadow` مع `blurRadius: 20` وشوائب ظلية لا تتعدى `5%`).
+- التوافق مع الشاشات: استخدام `SafeArea` لضمان عدم تداخل الشريط مع شريط إيماءات النظام (System Navigation Bar / Home Indicator) في أجهزة iPhone وأحدث هواتف Android.
+
+[ب] تفاصيل التبويب الفردي (Tab Item Visual States):
+- الحالة غير النشطة (Unselected State):
+  * الأيقونة: أيقونة مفرغة (`Outlined Icon`) بلون رمادي هادئ (`AppColors.textSecondaryLight.withValues(alpha: 0.75)`).
+  * النص: خط بحجم `10.5` بوزن متوسط (`FontWeight.medium`) ومحاذاة سفلية دقيقة.
+- الحالة النشطة (Selected State):
+  * كبسولة التمييز (Active Pill / Glow): عند اختيار التبويب، تحيط بالأيقونة كبسولة ناعمة مائلة للدوران (`BorderRadius.circular(16)`) بلون الـ `Primary` المخفف (`alpha: 0.12`).
+  * الأيقونة: تتحول إلى أيقونة ممتلئة البناء (`Rounded/Solid Icon`) بلون الـ `Primary` الداكن والأنيق (`AppColors.primary`).
+  * النص: يبرز بوزن عريض (`FontWeight.bold`) ولون الـ `Primary` ليعطي تأكيداً بصرياً فورياً للقسم الحالي.
+
+
+2. التقنيات والتحريك (Animations & State Preservation):
+--------------------------------------------------------------------------------
+- حفظ حالة الشاشات (State Preservation): استخدام `IndexedStack` في جسم الشاشة الرئيسية (`OwnerMainScreen`) لضمان عدم إعادة بناء الصفحات أو فقدان موضع التمرير (Scroll Position) عند التبديل بين (الرئيسية، العقارات، العقود، المالية، المزيد).
+- حركة التبديل (Micro-animations): استخدام `AnimatedContainer` لسلاسة انتقال الأيقونة وتغير حجم الكبسولة النشطة دون بطء أو استهلاك لموارد المعالج.
+
+
+3. خطوات التنفيذ المتسلسلة (Implementation Steps):
+--------------------------------------------------------------------------------
+الخطوة 1: إنشاء الـ Cubit وحالة الملاحة
+  - إنشاء `lib/features/owner/presentation/cubit/owner_nav_state.dart` (يحتوي على `currentIndex`).
+  - إنشاء `lib/features/owner/presentation/cubit/owner_nav_cubit.dart` (يحتوي على دالة `changeTab(int index)`).
+
+الخطوة 2: بناء الشاشات الخمس الحاوية الأولية (Views Setup)
+  - إنشاء 5 ملفات Views داخل `lib/features/owner/presentation/views/` (كل شاشة تحتوي على Scaffold وهيدر بسيط يوضح اسم التبويب لتأكيد الربط).
+
+الخطوة 3: بناء مكون الـ Bottom Nav Bar الاحترافي
+  - إنشاء `lib/features/owner/presentation/widgets/owner_bottom_nav_widget.dart`.
+  - تطبيق تصميم الكبسولة والأيقونات المفرغة والممتلئة لكافة التبويبات الخمسة.
+
+الخطوة 4: تجميع واجهة الملاك الرئيسية (OwnerMainScreen)
+  - إنشاء `lib/features/owner/presentation/screens/owner_main_screen.dart` وربطه بـ `BlocProvider<OwnerNavCubit>` والـ `IndexedStack`.
+
+الخطوة 5: التسجيل في نظام حقن الاعتماديات والتوجيه (DI & Routing)
+  - تسجيل `OwnerNavCubit` في `sl`.
+  - إضافة مسار الملاك الأساسي إلى `AppRouter`.
+
+================================================================================

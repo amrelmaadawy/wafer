@@ -9,6 +9,7 @@ import '../network/interceptors/locale_interceptor.dart';
 import '../storage/cache_helper.dart';
 import '../storage/secure_storage_service.dart';
 import '../../features/auth/di/auth_di.dart';
+import '../../features/owner/di/owner_di.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -35,4 +36,6 @@ Future<void> setupServiceLocator() async {
 
   // Features
   await initAuthModule();
+  initOwnerModule();
 }
+

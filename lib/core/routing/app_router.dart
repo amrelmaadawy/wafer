@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/owner/presentation/screens/owner_main_screen.dart';
 import 'routes.dart';
 
 class AppRouter {
@@ -9,11 +9,15 @@ class AppRouter {
     routes: [
       GoRoute(
         path: Routes.home,
-        builder: (context, state) => const Scaffold(body: Center(child: Text('Home Screen'))),
+        builder: (context, state) => const OwnerMainScreen(),
       ),
       GoRoute(
         path: Routes.login,
         builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: Routes.ownerMain,
+        builder: (context, state) => const OwnerMainScreen(),
       ),
     ],
   );

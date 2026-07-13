@@ -3,5 +3,5 @@ class Routes {
 
   static const String home = '/';
   static const String login = '/login';
-  // Define other route paths here
+  static const String ownerMain = '/owner-main';
 }
