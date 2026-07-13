@@ -50,7 +50,7 @@ class ProfileView extends StatelessWidget {
           const SizedBox(height: 16),
           ProfileInfoCard(profile: profile),
           const SizedBox(height: 16),
-          const ProfileActionsCard(),
+          ProfileActionsCard(profile: profile),
         ],
       ),
     );

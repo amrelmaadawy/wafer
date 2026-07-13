@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
+import '../../domain/entities/profile_entity.dart';
+import '../cubit/profile_cubit.dart';
+import '../screens/edit_profile_screen.dart';
 
 class ProfileActionsCard extends StatelessWidget {
-  const ProfileActionsCard({super.key});
+  final ProfileEntity profile;
+
+  const ProfileActionsCard({super.key, required this.profile});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +55,18 @@ class ProfileActionsCard extends StatelessWidget {
             subtitle: 'الاسم، الهاتف، البريد الإلكتروني',
             iconBg: context.primaryColor.withValues(alpha: 0.1),
             iconColor: context.primaryColor,
-            onTap: () => AppToast.showInfo(context, 'سيتم فتح شاشة تعديل الملف الشخصي'),
+            onTap: () {
+              final cubit = context.read<ProfileCubit>();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => EditProfileScreen(
+                    cubit: cubit,
+                    profile: profile,
+                  ),
+                ),
+              );
+            },
           ),
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
           _buildTile(

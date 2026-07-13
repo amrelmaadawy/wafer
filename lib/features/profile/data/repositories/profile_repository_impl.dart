@@ -52,4 +52,32 @@ class ProfileRepositoryImpl implements ProfileRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, ProfileEntity>> updateProfile({
+    required String name,
+    required String phone,
+    required String gender,
+  }) async {
+    try {
+      final result = await _remoteDataSource.updateProfile(
+        name: name,
+        phone: phone,
+        gender: gender,
+      );
+      try {
+        await _cacheHelper.saveCachedProfile(jsonEncode(result.toJson()));
+      } catch (_) {
+        // Cache saving non-fatal
+      }
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure(e.message ?? 'حدث خطأ في الاتصال بالسيرفر'));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }
+

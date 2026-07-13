@@ -3,6 +3,7 @@ import '../data/datasources/profile_remote_data_source.dart';
 import '../data/repositories/profile_repository_impl.dart';
 import '../domain/repositories/profile_repository.dart';
 import '../domain/usecases/get_profile_use_case.dart';
+import '../domain/usecases/update_profile_use_case.dart';
 import '../presentation/cubit/profile_cubit.dart';
 
 final sl = GetIt.instance;
@@ -26,5 +27,11 @@ void initProfileModule() {
     );
   }
 
-  sl.registerFactory<ProfileCubit>(() => ProfileCubit(sl()));
+  if (!sl.isRegistered<UpdateProfileUseCase>()) {
+    sl.registerLazySingleton<UpdateProfileUseCase>(
+      () => UpdateProfileUseCase(sl()),
+    );
+  }
+
+  sl.registerFactory<ProfileCubit>(() => ProfileCubit(sl(), sl()));
 }
