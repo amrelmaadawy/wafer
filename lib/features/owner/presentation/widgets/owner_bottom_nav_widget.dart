@@ -14,11 +14,11 @@ class OwnerBottomNavWidget extends StatelessWidget {
   });
 
   static const _tabs = [
-    _NavTab(label: 'الرئيسية', active: Icons.dashboard_rounded, inactive: Icons.dashboard_outlined),
-    _NavTab(label: 'العقارات', active: Icons.apartment_rounded, inactive: Icons.apartment_outlined),
-    _NavTab(label: 'العقود', active: Icons.description_rounded, inactive: Icons.description_outlined),
-    _NavTab(label: 'المالية', active: Icons.account_balance_wallet_rounded, inactive: Icons.account_balance_wallet_outlined),
-    _NavTab(label: 'المزيد', active: Icons.more_horiz_rounded, inactive: Icons.more_horiz_outlined),
+    _NavTab('الرئيسية', Icons.dashboard_rounded, Icons.dashboard_outlined),
+    _NavTab('العقارات', Icons.apartment_rounded, Icons.apartment_outlined),
+    _NavTab('العقود', Icons.description_rounded, Icons.description_outlined),
+    _NavTab('المالية', Icons.account_balance_wallet_rounded, Icons.account_balance_wallet_outlined),
+    _NavTab('المزيد', Icons.more_horiz_rounded, Icons.more_horiz_outlined),
   ];
 
   @override
@@ -32,14 +32,17 @@ class OwnerBottomNavWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(28),
           border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.8)),
           boxShadow: [
-            BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 30, offset: const Offset(0, 12)),
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.08),
+              blurRadius: 30,
+              offset: const Offset(0, 12),
+            ),
           ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(_tabs.length, (i) => _NavItem(
             tab: _tabs[i],
-            index: i,
             isSelected: currentIndex == i,
             onTap: () {
               HapticFeedback.lightImpact();
@@ -56,18 +59,16 @@ class _NavTab {
   final String label;
   final IconData active;
   final IconData inactive;
-  const _NavTab({required this.label, required this.active, required this.inactive});
+  const _NavTab(this.label, this.active, this.inactive);
 }
 
 class _NavItem extends StatefulWidget {
   final _NavTab tab;
-  final int index;
   final bool isSelected;
   final VoidCallback onTap;
 
   const _NavItem({
     required this.tab,
-    required this.index,
     required this.isSelected,
     required this.onTap,
   });
@@ -120,7 +121,9 @@ class _NavItemState extends State<_NavItem> with SingleTickerProviderStateMixin 
         decoration: BoxDecoration(
           color: widget.isSelected ? context.primaryColor : Colors.transparent,
           borderRadius: BorderRadius.circular(22),
-          boxShadow: widget.isSelected ? [BoxShadow(color: context.primaryShadow, blurRadius: 12, offset: const Offset(0, 4))] : null,
+          boxShadow: widget.isSelected
+              ? [BoxShadow(color: context.primaryShadow, blurRadius: 12, offset: const Offset(0, 4))]
+              : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -136,27 +139,38 @@ class _NavItemState extends State<_NavItem> with SingleTickerProviderStateMixin 
                 child: Icon(
                   widget.isSelected ? widget.tab.active : widget.tab.inactive,
                   key: ValueKey(widget.isSelected),
-                  color: widget.isSelected ? Colors.white : AppColors.textSecondaryLight.withValues(alpha: 0.6),
+                  color: widget.isSelected
+                      ? Colors.white
+                      : AppColors.textSecondaryLight.withValues(alpha: 0.6),
                   size: 22,
                 ),
               ),
             ),
-            AnimatedSize(
-              duration: const Duration(milliseconds: 250),
-              curve: Curves.easeOutCubic,
-              child: widget.isSelected
-                  ? Row(children: [
-                      const SizedBox(width: 6),
-                      AnimatedBuilder(
-                        animation: _bounce,
-                        builder: (context, child) => Opacity(opacity: _bounce.value.clamp(0.0, 1.0), child: child),
-                        child: Text(
-                          widget.tab.label,
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+            ClipRect(
+              child: AnimatedSize(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOutCubic,
+                alignment: Alignment.centerRight,
+                child: widget.isSelected
+                    ? Row(children: [
+                        const SizedBox(width: 6),
+                        AnimatedBuilder(
+                          animation: _bounce,
+                          builder: (context, child) => Opacity(
+                            opacity: _bounce.value.clamp(0.0, 1.0),
+                            child: child,
+                          ),
+                          child: Text(
+                            widget.tab.label,
+                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
                         ),
-                      ),
-                    ])
-                  : const SizedBox.shrink(),
+                      ])
+                    : const SizedBox.shrink(),
+              ),
             ),
           ],
         ),

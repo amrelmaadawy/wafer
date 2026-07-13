@@ -10,6 +10,7 @@ import '../views/owner_leases_view.dart';
 import '../views/owner_finance_view.dart';
 import '../views/owner_more_view.dart';
 import '../widgets/owner_bottom_nav_widget.dart';
+import '../widgets/owner_page_switcher.dart';
 
 class OwnerMainScreen extends StatelessWidget {
   const OwnerMainScreen({super.key});
@@ -65,7 +66,7 @@ class _OwnerMainContentState extends State<_OwnerMainContent> {
 
         return Scaffold(
           extendBody: true,
-          body: _PageSwitcher(
+          body: OwnerPageSwitcher(
             currentIndex: current,
             previousIndex: _previousIndex,
             isForward: isForward,
@@ -81,96 +82,3 @@ class _OwnerMainContentState extends State<_OwnerMainContent> {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Professional page switcher
-// ---------------------------------------------------------------------------
-
-class _PageSwitcher extends StatefulWidget {
-  final int currentIndex;
-  final int previousIndex;
-  final bool isForward;
-  final Widget child;
-
-  const _PageSwitcher({
-    required this.currentIndex,
-    required this.previousIndex,
-    required this.isForward,
-    required this.child,
-  });
-
-  @override
-  State<_PageSwitcher> createState() => _PageSwitcherState();
-}
-
-class _PageSwitcherState extends State<_PageSwitcher> with SingleTickerProviderStateMixin {
-  late final AnimationController _ctrl;
-  late Animation<Offset> _slideIn;   // non-final — reassigned on every tab change
-  late Animation<Offset> _slideOut;
-  Widget? _outgoing;
-
-  @override
-  void initState() {
-    super.initState();
-    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 320));
-    _setupAnimations();
-    _ctrl.value = 1.0;
-  }
-
-  void _setupAnimations() {
-    final fwd = widget.isForward;
-    _slideIn = Tween<Offset>(
-      begin: Offset(fwd ? -0.07 : 0.07, 0),
-      end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOutQuart));
-    _slideOut = Tween<Offset>(
-      begin: Offset.zero,
-      end: Offset(fwd ? 0.04 : -0.04, 0),
-    ).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeInCubic));
-  }
-
-  @override
-  void didUpdateWidget(_PageSwitcher old) {
-    super.didUpdateWidget(old);
-    if (old.currentIndex != widget.currentIndex) {
-      _outgoing = old.child;
-      _setupAnimations();
-      _ctrl.forward(from: 0).then((_) => setState(() => _outgoing = null));
-    }
-  }
-
-  @override
-  void dispose() {
-    _ctrl.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        // Outgoing page fades + slides away
-        if (_outgoing != null)
-          AnimatedBuilder(
-            animation: _ctrl,
-            builder: (_, child) => FadeTransition(
-              opacity: Tween(begin: 1.0, end: 0.0)
-                  .animate(CurvedAnimation(parent: _ctrl, curve: const Interval(0.0, 0.4, curve: Curves.easeIn))),
-              child: SlideTransition(position: _slideOut, child: child),
-            ),
-            child: _outgoing,
-          ),
-        // Incoming page fades + slides in
-        AnimatedBuilder(
-          animation: _ctrl,
-          builder: (_, child) => FadeTransition(
-            opacity: Tween(begin: 0.0, end: 1.0)
-                .animate(CurvedAnimation(parent: _ctrl, curve: const Interval(0.2, 1.0, curve: Curves.easeOut))),
-            child: SlideTransition(position: _slideIn, child: child),
-          ),
-          child: widget.child,
-        ),
-      ],
-    );
-  }
-}
