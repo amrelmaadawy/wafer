@@ -15,6 +15,7 @@ For every API endpoint sent by the developer (`endpoint`, `body`, and `response`
 - Analyze the HTTP method, endpoint path, required query parameters/body structure, and the exact response payload structure (including metadata, pagination, and error structures).
 
 ### Step 2: UI/UX Design Proposal & Verification
+- **Dynamic Primary Colors**: Always derive primary colors dynamically via `context.primaryColor` and `context.primaryShadow` (from `color_utils.dart`); NEVER hardcode `AppColors.primary` in navbars, buttons, or interactive UI elements.
 - **If a Design/Prototype is Provided**: Follow and execute the design faithfully using our centralized Design System (`AppColors`, `AppFonts`, `AppSpacing`, `AppRadius`, etc.).
 - **If No Design is Provided**: Analyze the data structure (`body` and `response`) and propose a comprehensive UI/UX Design before writing UI code. Specifically outline:
   - Screen layout & structure.

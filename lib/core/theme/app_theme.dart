@@ -6,7 +6,7 @@ class AppTheme {
   AppTheme._();
 
   /// Default primary color used on first launch before user customization.
-  static const Color defaultPrimary = Color(0xFFA63A8A);
+  static const Color defaultPrimary = Color(0xFF1E3A8A);
 
   /// Builds a light [ThemeData] using the given [primary] color.
   /// All color-sensitive components (ColorScheme, ElevatedButton, etc.)

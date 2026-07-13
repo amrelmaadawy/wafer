@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 
@@ -12,6 +13,14 @@ class OwnerBottomNavWidget extends StatelessWidget {
     required this.onTabChanged,
   });
 
+  static const _tabs = [
+    _NavTab(label: 'الرئيسية', active: Icons.dashboard_rounded, inactive: Icons.dashboard_outlined),
+    _NavTab(label: 'العقارات', active: Icons.apartment_rounded, inactive: Icons.apartment_outlined),
+    _NavTab(label: 'العقود', active: Icons.description_rounded, inactive: Icons.description_outlined),
+    _NavTab(label: 'المالية', active: Icons.account_balance_wallet_rounded, inactive: Icons.account_balance_wallet_outlined),
+    _NavTab(label: 'المزيد', active: Icons.more_horiz_rounded, inactive: Icons.more_horiz_outlined),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -21,109 +30,134 @@ class OwnerBottomNavWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.surfaceLight,
           borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.8), width: 1),
+          border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.8)),
           boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.08),
-              blurRadius: 30,
-              offset: const Offset(0, 12),
-            ),
+            BoxShadow(color: Colors.black.withValues(alpha: 0.08), blurRadius: 30, offset: const Offset(0, 12)),
           ],
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            _buildDockItem(
-              context: context,
-              index: 0,
-              label: 'الرئيسية',
-              activeIcon: Icons.dashboard_rounded,
-              inactiveIcon: Icons.dashboard_outlined,
-            ),
-            _buildDockItem(
-              context: context,
-              index: 1,
-              label: 'العقارات',
-              activeIcon: Icons.apartment_rounded,
-              inactiveIcon: Icons.apartment_outlined,
-            ),
-            _buildDockItem(
-              context: context,
-              index: 2,
-              label: 'العقود',
-              activeIcon: Icons.description_rounded,
-              inactiveIcon: Icons.description_outlined,
-            ),
-            _buildDockItem(
-              context: context,
-              index: 3,
-              label: 'المالية',
-              activeIcon: Icons.account_balance_wallet_rounded,
-              inactiveIcon: Icons.account_balance_wallet_outlined,
-            ),
-            _buildDockItem(
-              context: context,
-              index: 4,
-              label: 'المزيد',
-              activeIcon: Icons.more_horiz_rounded,
-              inactiveIcon: Icons.more_horiz_outlined,
-            ),
-          ],
+          children: List.generate(_tabs.length, (i) => _NavItem(
+            tab: _tabs[i],
+            index: i,
+            isSelected: currentIndex == i,
+            onTap: () {
+              HapticFeedback.lightImpact();
+              onTabChanged(i);
+            },
+          )),
         ),
       ),
     );
   }
+}
 
-  Widget _buildDockItem({
-    required BuildContext context,
-    required int index,
-    required String label,
-    required IconData activeIcon,
-    required IconData inactiveIcon,
-  }) {
-    final isSelected = currentIndex == index;
+class _NavTab {
+  final String label;
+  final IconData active;
+  final IconData inactive;
+  const _NavTab({required this.label, required this.active, required this.inactive});
+}
 
-    return InkWell(
-      onTap: () => onTabChanged(index),
-      borderRadius: BorderRadius.circular(22),
+class _NavItem extends StatefulWidget {
+  final _NavTab tab;
+  final int index;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const _NavItem({
+    required this.tab,
+    required this.index,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  State<_NavItem> createState() => _NavItemState();
+}
+
+class _NavItemState extends State<_NavItem> with SingleTickerProviderStateMixin {
+  late final AnimationController _ctrl;
+  late final Animation<double> _scale;
+  late final Animation<double> _bounce;
+
+  @override
+  void initState() {
+    super.initState();
+    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 400));
+    _scale = TweenSequence<double>([
+      TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.85), weight: 20),
+      TweenSequenceItem(tween: Tween(begin: 0.85, end: 1.15), weight: 40),
+      TweenSequenceItem(tween: Tween(begin: 1.15, end: 1.0), weight: 40),
+    ]).animate(CurvedAnimation(parent: _ctrl, curve: Curves.easeOut));
+    _bounce = CurvedAnimation(parent: _ctrl, curve: Curves.elasticOut);
+    if (widget.isSelected) _ctrl.value = 1.0;
+  }
+
+  @override
+  void didUpdateWidget(_NavItem old) {
+    super.didUpdateWidget(old);
+    if (widget.isSelected && !old.isSelected) {
+      _ctrl.forward(from: 0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: widget.onTap,
+      behavior: HitTestBehavior.opaque,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeOutCubic,
-        padding: EdgeInsets.symmetric(
-          horizontal: isSelected ? 14 : 10,
-          vertical: isSelected ? 8 : 8,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: widget.isSelected ? 16 : 10, vertical: 8),
         decoration: BoxDecoration(
-          color: isSelected ? context.primaryColor : Colors.transparent,
+          color: widget.isSelected ? context.primaryColor : Colors.transparent,
           borderRadius: BorderRadius.circular(22),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: context.primaryShadow,
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
-                  ),
-                ]
-              : null,
+          boxShadow: widget.isSelected ? [BoxShadow(color: context.primaryShadow, blurRadius: 12, offset: const Offset(0, 4))] : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(
-              isSelected ? activeIcon : inactiveIcon,
-              color: isSelected ? Colors.white : AppColors.textSecondaryLight.withValues(alpha: 0.7),
-              size: 22,
-            ),
-            if (isSelected) ...[
-              const SizedBox(width: 6),
-              Text(
-                label,
-                style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+            ScaleTransition(
+              scale: widget.isSelected ? _scale : const AlwaysStoppedAnimation(1.0),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 200),
+                transitionBuilder: (child, anim) => FadeTransition(
+                  opacity: anim,
+                  child: ScaleTransition(scale: anim, child: child),
+                ),
+                child: Icon(
+                  widget.isSelected ? widget.tab.active : widget.tab.inactive,
+                  key: ValueKey(widget.isSelected),
+                  color: widget.isSelected ? Colors.white : AppColors.textSecondaryLight.withValues(alpha: 0.6),
+                  size: 22,
+                ),
               ),
-            ],
+            ),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 250),
+              curve: Curves.easeOutCubic,
+              child: widget.isSelected
+                  ? Row(children: [
+                      const SizedBox(width: 6),
+                      AnimatedBuilder(
+                        animation: _bounce,
+                        builder: (context, child) => Opacity(opacity: _bounce.value.clamp(0.0, 1.0), child: child),
+                        child: Text(
+                          widget.tab.label,
+                          style: Theme.of(context).textTheme.labelSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ])
+                  : const SizedBox.shrink(),
+            ),
           ],
         ),
       ),
