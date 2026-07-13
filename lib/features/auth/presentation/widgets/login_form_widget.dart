@@ -51,10 +51,14 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 CustomTextField(
-                  label: 'البريد الإلكتروني / اسم المستخدم',
+                  label: 'البريد الإلكتروني أو اسم المستخدم',
                   hintText: 'ahmed@gmail.com',
                   controller: _usernameController,
-                  prefixIcon: const Icon(Icons.person_outline, color: AppColors.primary),
+                  prefixIcon: Icon(
+                    Icons.person_outline_rounded,
+                    color: AppColors.textSecondaryLight.withValues(alpha: 0.7),
+                    size: 20,
+                  ),
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
@@ -69,7 +73,11 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                   hintText: '•••••••••',
                   controller: _passwordController,
                   isPassword: true,
-                  prefixIcon: const Icon(Icons.lock_outline, color: AppColors.primary),
+                  prefixIcon: Icon(
+                    Icons.lock_outline_rounded,
+                    color: AppColors.textSecondaryLight.withValues(alpha: 0.7),
+                    size: 20,
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'يرجى إدخال كلمة المرور';
@@ -80,15 +88,15 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                     return null;
                   },
                 ),
-                const SizedBox(height: 14),
+                const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
                       children: [
                         SizedBox(
-                          height: 24,
-                          width: 24,
+                          height: 20,
+                          width: 20,
                           child: Checkbox(
                             value: _rememberMe,
                             activeColor: AppColors.primary,
@@ -98,7 +106,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          'تذكر بيانات دخولي',
+                          'تذكر دخولي',
                           style: Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: AppColors.textSecondaryLight,
                                 fontWeight: FontWeight.w500,
@@ -119,7 +127,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                         'نسيت كلمة المرور؟',
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                               color: AppColors.primary,
-                              fontWeight: FontWeight.bold,
+                              fontWeight: FontWeight.w600,
                             ),
                       ),
                     ),
@@ -127,7 +135,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 ),
                 const SizedBox(height: 28),
                 CustomButton(
-                  text: 'تسجيل الدخول للنظام',
+                  text: 'تسجيل الدخول',
                   onPressed: _submit,
                   isLoading: isLoading,
                 ),

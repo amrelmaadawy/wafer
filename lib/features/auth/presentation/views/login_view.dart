@@ -12,21 +12,23 @@ class LoginView extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
-        body: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 460),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _buildHeader(context),
-                  const SizedBox(height: 26),
-                  _buildCard(context),
-                  const SizedBox(height: 22),
-                  _buildFooter(context),
-                ],
+        body: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 36),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 420),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    _buildBrandHeader(context),
+                    const SizedBox(height: 36),
+                    _buildFormCard(context),
+                    const SizedBox(height: 32),
+                    _buildFooter(context),
+                  ],
+                ),
               ),
             ),
           ),
@@ -35,92 +37,96 @@ class LoginView extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildBrandHeader(BuildContext context) {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(14),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: AppColors.primary.withValues(alpha: 0.08),
-            shape: BoxShape.circle,
-            border: Border.all(color: AppColors.primary.withValues(alpha: 0.2), width: 1.5),
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(14),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withValues(alpha: 0.15),
+                blurRadius: 12,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
           child: const Icon(
-            Icons.domain_verification_rounded,
-            size: 42,
-            color: AppColors.primary,
+            Icons.domain_rounded,
+            size: 32,
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 14),
         Text(
-          'نظام وافر لإدارة العقارات والأملاك',
-          textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+          'وافر',
+          style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                color: AppColors.primary,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimaryLight,
+                letterSpacing: 0.5,
               ),
         ),
-        const SizedBox(height: 6),
+        const SizedBox(height: 4),
         Text(
-          'بوابة الدخول الموحدة لإدارة المحافظ العقارية والتأجير',
-          textAlign: TextAlign.center,
+          'نظام إدارة العقارات والأملاك المتكامل',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: AppColors.textSecondaryLight,
               ),
         ),
-        const SizedBox(height: 14),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
-          decoration: BoxDecoration(
-            color: AppColors.secondary.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: AppColors.secondary.withValues(alpha: 0.3)),
-          ),
-          child: const Text(
-            'الشركات • الملاك • المستأجرون',
-            style: TextStyle(
-              color: AppColors.secondaryDark,
-              fontSize: 11.5,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ),
       ],
     );
   }
 
-  Widget _buildCard(BuildContext context) {
+  Widget _buildFormCard(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(26),
+      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 32),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: AppColors.borderLight, width: 1),
+        border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.7), width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 18,
-            offset: const Offset(0, 6),
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 24,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
-      child: const LoginFormWidget(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'تسجيل الدخول',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimaryLight,
+                ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'أدخل بياناتك للوصول إلى لوحة التحكم',
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: AppColors.textSecondaryLight,
+                ),
+          ),
+          const SizedBox(height: 24),
+          const LoginFormWidget(),
+        ],
+      ),
     );
   }
 
   Widget _buildFooter(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(Icons.shield_outlined, size: 15, color: AppColors.textSecondaryLight.withValues(alpha: 0.8)),
-        const SizedBox(width: 6),
-        Text(
-          'اتصال مشفر ومؤمن • Wafer ERP v1.0',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: AppColors.textSecondaryLight.withValues(alpha: 0.8),
-              ),
-        ),
-      ],
+    return Text(
+      'جميع الحقوق محفوظة © وافر لإدارة الأملاك',
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+            color: AppColors.textSecondaryLight.withValues(alpha: 0.7),
+          ),
     );
   }
 }
