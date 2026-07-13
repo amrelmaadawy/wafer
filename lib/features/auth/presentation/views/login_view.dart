@@ -1,4 +1,7 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../widgets/login_form_widget.dart';
 
@@ -8,7 +11,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: context.locale.languageCode == 'ar' ? ui.TextDirection.rtl : ui.TextDirection.ltr,
       child: Scaffold(
         body: Stack(
           children: [
@@ -70,9 +73,9 @@ class LoginView extends StatelessWidget {
           child: Center(child: Icon(Icons.home_work_rounded, size: 34, color: context.primaryColor)),
         ),
         const SizedBox(height: 14),
-        const Text('وافر', style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w800, letterSpacing: 1.0)),
+        Text(LocaleKeys.authBrandName.tr(), style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w800, letterSpacing: 1.0)),
         const SizedBox(height: 4),
-        Text('نظام إدارة العقارات والأملاك', style: TextStyle(color: Colors.white.withValues(alpha: 0.75), fontSize: 13)),
+        Text(LocaleKeys.authBrandSubtitle.tr(), style: TextStyle(color: Colors.white.withValues(alpha: 0.75), fontSize: 13)),
       ],
     );
   }
@@ -95,9 +98,9 @@ class LoginView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('تسجيل الدخول', textAlign: TextAlign.center, style: TextStyle(color: context.primaryDark, fontSize: 20, fontWeight: FontWeight.w700)),
+              Text(LocaleKeys.authLoginTitle.tr(), textAlign: TextAlign.center, style: TextStyle(color: context.primaryDark, fontSize: 20, fontWeight: FontWeight.w700)),
               const SizedBox(height: 4),
-              const Text('أدخل بياناتك للوصول إلى حسابك', textAlign: TextAlign.center, style: TextStyle(color: Color(0xFF64748B), fontSize: 13)),
+              Text(LocaleKeys.authLoginSubtitle.tr(), textAlign: TextAlign.center, style: const TextStyle(color: Color(0xFF64748B), fontSize: 13)),
               const SizedBox(height: 24),
               const LoginFormWidget(),
             ],
@@ -113,7 +116,7 @@ class LoginView extends StatelessWidget {
       children: [
         const Icon(Icons.lock_outline_rounded, size: 12, color: Color(0xFFB0B8CC)),
         const SizedBox(width: 5),
-        Text('جميع الحقوق محفوظة © وافر', style: TextStyle(color: Colors.black.withValues(alpha: 0.35), fontSize: 11.5)),
+        Text(LocaleKeys.authCopyrights.tr(), style: TextStyle(color: Colors.black.withValues(alpha: 0.35), fontSize: 11.5)),
       ],
     );
   }

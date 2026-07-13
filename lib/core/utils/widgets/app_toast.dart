@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../localization/locale_keys.dart';
 import 'app_toast_widget.dart';
 
 enum AppToastType { success, error, info }
@@ -12,16 +14,16 @@ class AppToastColors {
 class AppToast {
   AppToast._();
 
-  static void showSuccess(BuildContext context, String message, {String title = 'نجاح'}) {
-    _show(context: context, message: message, title: title, type: AppToastType.success);
+  static void showSuccess(BuildContext context, String message, {String? title}) {
+    _show(context: context, message: message, title: title ?? LocaleKeys.commonSuccess.tr(), type: AppToastType.success);
   }
 
-  static void showError(BuildContext context, String message, {String title = 'تنبيه خطأ'}) {
-    _show(context: context, message: message, title: title, type: AppToastType.error);
+  static void showError(BuildContext context, String message, {String? title}) {
+    _show(context: context, message: message, title: title ?? LocaleKeys.commonError.tr(), type: AppToastType.error);
   }
 
-  static void showInfo(BuildContext context, String message, {String title = 'معلومة'}) {
-    _show(context: context, message: message, title: title, type: AppToastType.info);
+  static void showInfo(BuildContext context, String message, {String? title}) {
+    _show(context: context, message: message, title: title ?? LocaleKeys.commonInfo.tr(), type: AppToastType.info);
   }
 
   static void _show({

@@ -37,3 +37,8 @@ For every API endpoint sent by the developer (`endpoint`, `body`, and `response`
 
 ### Step 5: Strict Rule Enforcement
 - Ensure 100% adherence to `rules.md` (Clean Architecture boundaries, max 150 lines per file, zero duplicated logic, GetIt only, localized strings, robust validation, and security).
+- **Strict Localization (`easy_localization`) Enforcement**:
+  - ABSOLUTELY ZERO HARDCODED STRINGS inside any Widget, Screen, View, Toast, or Dialog.
+  - All user-facing text MUST use `easy_localization` (`.tr()` or `LocaleKeys.key.tr()`).
+  - When creating or modifying any UI component, every text string MUST first be added to `assets/translations/ar.json` and `en.json`, defined in `LocaleKeys`, and referenced via `.tr()`. Never bypass this rule.
+

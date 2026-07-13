@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 
@@ -13,13 +15,13 @@ class OwnerBottomNavWidget extends StatelessWidget {
     required this.onTabChanged,
   });
 
-  static const _tabs = [
-    _NavTab('الرئيسية', Icons.dashboard_rounded, Icons.dashboard_outlined),
-    _NavTab('العقارات', Icons.apartment_rounded, Icons.apartment_outlined),
-    _NavTab('العقود', Icons.description_rounded, Icons.description_outlined),
-    _NavTab('المالية', Icons.account_balance_wallet_rounded, Icons.account_balance_wallet_outlined),
-    _NavTab('الملف الشخصي', Icons.person_rounded, Icons.person_outline_rounded),
-  ];
+  static List<_NavTab> get _tabs => [
+        _NavTab(LocaleKeys.dashboardNavHome.tr(), Icons.dashboard_rounded, Icons.dashboard_outlined),
+        _NavTab(LocaleKeys.dashboardNavProperties.tr(), Icons.apartment_rounded, Icons.apartment_outlined),
+        _NavTab(LocaleKeys.dashboardNavContracts.tr(), Icons.description_rounded, Icons.description_outlined),
+        _NavTab(LocaleKeys.dashboardNavFinance.tr(), Icons.account_balance_wallet_rounded, Icons.account_balance_wallet_outlined),
+        _NavTab(LocaleKeys.dashboardNavProfile.tr(), Icons.person_rounded, Icons.person_outline_rounded),
+      ];
 
   @override
   Widget build(BuildContext context) {

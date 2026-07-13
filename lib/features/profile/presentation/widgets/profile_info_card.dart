@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
@@ -39,7 +41,7 @@ class ProfileInfoCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  'المعلومات الشخصية',
+                  LocaleKeys.profilePersonalInfo.tr(),
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimaryLight,
@@ -53,41 +55,41 @@ class ProfileInfoCard extends StatelessWidget {
           // Rows
           ProfileInfoTile(
             icon: Icons.phone_android_rounded,
-            label: 'رقم الهاتف',
+            label: LocaleKeys.profilePhone.tr(),
             value: profile.phone,
-            onCopy: () => _copy(context, 'رقم الهاتف', profile.phone),
+            onCopy: () => _copy(context, LocaleKeys.profilePhone.tr(), profile.phone),
           ),
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
           ProfileInfoTile(
             icon: Icons.email_outlined,
-            label: 'البريد الإلكتروني',
+            label: LocaleKeys.profileEmail.tr(),
             value: profile.email,
-            onCopy: () => _copy(context, 'البريد الإلكتروني', profile.email),
+            onCopy: () => _copy(context, LocaleKeys.profileEmail.tr(), profile.email),
           ),
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
           ProfileInfoTile(
             icon: Icons.badge_outlined,
-            label: 'رقم الهوية',
+            label: LocaleKeys.profileIdentityNumber.tr(),
             value: profile.identityNumber,
-            onCopy: () => _copy(context, 'رقم الهوية', profile.identityNumber),
+            onCopy: () => _copy(context, LocaleKeys.profileIdentityNumber.tr(), profile.identityNumber),
           ),
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
           ProfileInfoTile(
             icon: Icons.event_outlined,
-            label: 'انتهاء الهوية',
+            label: LocaleKeys.profileIdentityExpiry.tr(),
             value: profile.identityExpiry,
             trailing: expiringSoon ? _expiryBadge() : null,
           ),
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
           ProfileInfoTile(
             icon: Icons.wc_rounded,
-            label: 'الجنس',
-            value: profile.gender.toLowerCase() == 'male' ? 'ذكر' : 'أنثى',
+            label: LocaleKeys.profileGender.tr(),
+            value: profile.gender.toLowerCase() == 'male' ? LocaleKeys.profileGenderMale.tr() : LocaleKeys.profileGenderFemale.tr(),
           ),
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
           ProfileInfoTile(
             icon: Icons.calendar_month_outlined,
-            label: 'تاريخ الانضمام',
+            label: LocaleKeys.profileJoinedDate.tr(),
             value: profile.joinedAt,
           ),
           if (expiringSoon) ...[
@@ -107,9 +109,9 @@ class ProfileInfoCard extends StatelessWidget {
         color: AppColors.error.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: const Text(
-        'تنتهي قريباً',
-        style: TextStyle(color: AppColors.error, fontSize: 11, fontWeight: FontWeight.bold),
+      child: Text(
+        LocaleKeys.profileExpiringSoon.tr(),
+        style: const TextStyle(color: AppColors.error, fontSize: 11, fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -129,7 +131,7 @@ class ProfileInfoCard extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'الهوية قريبة من الانتهاء أو منتهية — يُنصح بالتحديث لضمان الخدمة.',
+              LocaleKeys.profileExpiryWarning.tr(),
               style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.error),
             ),
           ),
@@ -141,7 +143,7 @@ class ProfileInfoCard extends StatelessWidget {
   void _copy(BuildContext context, String label, String value) {
     if (value.isEmpty) return;
     Clipboard.setData(ClipboardData(text: value));
-    AppToast.showSuccess(context, 'تم نسخ $label بنجاح', title: 'تم النسخ');
+    AppToast.showSuccess(context, LocaleKeys.profileCopySuccess.tr(args: [label]), title: LocaleKeys.profileCopiedTitle.tr());
   }
 
   bool _isExpiringSoon(String expiry) {

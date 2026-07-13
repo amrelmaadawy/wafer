@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../domain/entities/profile_entity.dart';
@@ -157,7 +159,7 @@ class ProfileHeaderCard extends StatelessWidget {
           icon: Icons.workspace_premium_rounded,
         ),
         _buildBadge(
-          label: profile.isActive ? 'نشط' : 'غير نشط',
+          label: profile.isActive ? LocaleKeys.profileActive.tr() : LocaleKeys.profileInactive.tr(),
           icon: profile.isActive ? Icons.verified_rounded : Icons.cancel_rounded,
           bgColor: profile.isActive
               ? Colors.white.withValues(alpha: 0.2)
@@ -192,9 +194,9 @@ class ProfileHeaderCard extends StatelessWidget {
 
   String _accountTypeLabel(String type) {
     switch (type.toLowerCase()) {
-      case 'owner':  return 'مالك عقارات';
-      case 'company': return 'شركة عقارية';
-      case 'tenant':  return 'مستأجر';
+      case 'owner':  return LocaleKeys.profileOwnerType.tr();
+      case 'company': return LocaleKeys.profileCompanyType.tr();
+      case 'tenant':  return LocaleKeys.profileTenantType.tr();
       default:        return type;
     }
   }

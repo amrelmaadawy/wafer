@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/owner_dashboard_entity.dart';
@@ -57,10 +59,10 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
   Widget _buildHeader(bool hasOverdue) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Row(children: [
-            Icon(Icons.account_balance_wallet_rounded, color: Colors.white60, size: 15),
-            SizedBox(width: 6),
-            Text('الموقف المالي', style: TextStyle(color: Colors.white60, fontSize: 12.5, fontWeight: FontWeight.w500)),
+          Row(children: [
+            const Icon(Icons.account_balance_wallet_rounded, color: Colors.white60, size: 15),
+            const SizedBox(width: 6),
+            Text(LocaleKeys.dashboardFinancialPosition.tr(), style: const TextStyle(color: Colors.white60, fontSize: 12.5, fontWeight: FontWeight.w500)),
           ]),
           if (hasOverdue)
             Container(
@@ -69,7 +71,7 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
               child: Row(mainAxisSize: MainAxisSize.min, children: [
                 const Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 12),
                 const SizedBox(width: 4),
-                Text('${data.overdueInstallmentsCount} متأخرة', style: const TextStyle(color: AppColors.error, fontSize: 10.5, fontWeight: FontWeight.w700)),
+                Text('${data.overdueInstallmentsCount} ${LocaleKeys.dashboardOverdue.tr()}', style: const TextStyle(color: AppColors.error, fontSize: 10.5, fontWeight: FontWeight.w700)),
               ]),
             ),
         ],
@@ -78,30 +80,30 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
   Widget _buildHeroNumber() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerRight, child: Text('${_fmt(data.pendingAmount)} ر.س', style: const TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.w800, letterSpacing: -0.5, height: 1.1))),
+          FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerRight, child: Text(LocaleKeys.commonCurrencySar.tr(args: [_fmt(data.pendingAmount)]), style: const TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.w800, letterSpacing: -0.5, height: 1.1))),
           const SizedBox(height: 5),
           Row(children: [
             Container(width: 6, height: 6, decoration: const BoxDecoration(color: Color(0xFFFBBF24), shape: BoxShape.circle)),
             const SizedBox(width: 7),
-            const Text('إجمالي المبالغ المستحقة (معلق)', style: TextStyle(color: Colors.white54, fontSize: 12.5)),
+            Text(LocaleKeys.dashboardTotalDuePending.tr(), style: const TextStyle(color: Colors.white54, fontSize: 12.5)),
           ]),
         ],
       );
 
   Widget _buildMetricsRow() => Row(
         children: [
-          Expanded(child: _miniMetric('محصّل', data.collectedAmount, const Color(0xFF34D399), Icons.check_circle_outline_rounded)),
+          Expanded(child: _miniMetric(LocaleKeys.ownerCollected.tr(), data.collectedAmount, const Color(0xFF34D399), Icons.check_circle_outline_rounded)),
           Container(width: 1, height: 36, color: Colors.white.withValues(alpha: 0.1)),
-          Expanded(child: _miniMetric('المعلق', data.pendingAmount, const Color(0xFFFBBF24), Icons.pending_actions_rounded)),
+          Expanded(child: _miniMetric(LocaleKeys.ownerPending.tr(), data.pendingAmount, const Color(0xFFFBBF24), Icons.pending_actions_rounded)),
           Container(width: 1, height: 36, color: Colors.white.withValues(alpha: 0.1)),
-          Expanded(child: _miniMetric('الإجمالي', data.totalRevenue, Colors.white70, Icons.bar_chart_rounded)),
+          Expanded(child: _miniMetric(LocaleKeys.ownerTotal.tr(), data.totalRevenue, Colors.white70, Icons.bar_chart_rounded)),
         ],
       );
 
   Widget _miniMetric(String label, num amount, Color color, IconData icon) => Column(children: [
         Icon(icon, color: color.withValues(alpha: 0.8), size: 15),
         const SizedBox(height: 5),
-        FittedBox(fit: BoxFit.scaleDown, child: Text('${_fmt(amount)} ر.س', style: TextStyle(color: color, fontSize: 13.5, fontWeight: FontWeight.w700))),
+        FittedBox(fit: BoxFit.scaleDown, child: Text(LocaleKeys.commonCurrencySar.tr(args: [_fmt(amount)]), style: TextStyle(color: color, fontSize: 13.5, fontWeight: FontWeight.w700))),
         const SizedBox(height: 3),
         Text(label, style: const TextStyle(color: Colors.white38, fontSize: 10.5, fontWeight: FontWeight.w500)),
       ]);

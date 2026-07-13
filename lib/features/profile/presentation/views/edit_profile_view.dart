@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../domain/entities/profile_entity.dart';
@@ -14,9 +16,9 @@ class EditProfileView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text(
-          'تعديل البيانات الشخصية',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+        title: Text(
+          LocaleKeys.profileEditScreenTitle.tr(),
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         centerTitle: true,
         backgroundColor: Colors.white,
@@ -127,8 +129,8 @@ class EditProfileView extends StatelessWidget {
           const SizedBox(width: 12),
           Expanded(
             child: Text(
-              'بيانات البريد ورقم الهوية مسجلة رسمياً ولا يمكن تعديلها مباشرة لضمان أمان وتوثيق الحساب.',
-              style: TextStyle(color: const Color(0xFF475569), fontSize: 12, height: 1.4),
+              LocaleKeys.profileReadonlyBanner.tr(),
+              style: const TextStyle(color: Color(0xFF475569), fontSize: 12, height: 1.4),
             ),
           ),
         ],

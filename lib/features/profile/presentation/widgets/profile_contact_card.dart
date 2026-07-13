@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
@@ -28,7 +30,7 @@ class ProfileContactCard extends StatelessWidget {
               Icon(Icons.contact_mail_rounded, color: context.primaryColor, size: 22),
               const SizedBox(width: 8),
               Text(
-                'معلومات الاتصال والحساب',
+                LocaleKeys.profileContactAndAccountInfo.tr(),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimaryLight,
@@ -40,7 +42,7 @@ class ProfileContactCard extends StatelessWidget {
           _buildRow(
             context: context,
             icon: Icons.phone_android_rounded,
-            label: 'رقم الهاتف',
+            label: LocaleKeys.profilePhone.tr(),
             value: profile.phone,
             canCopy: true,
           ),
@@ -48,7 +50,7 @@ class ProfileContactCard extends StatelessWidget {
           _buildRow(
             context: context,
             icon: Icons.email_rounded,
-            label: 'البريد الإلكتروني',
+            label: LocaleKeys.profileEmail.tr(),
             value: profile.email,
             canCopy: true,
           ),
@@ -56,7 +58,7 @@ class ProfileContactCard extends StatelessWidget {
           _buildRow(
             context: context,
             icon: Icons.person_outline_rounded,
-            label: 'الجنس',
+            label: LocaleKeys.profileGender.tr(),
             value: _getGenderLabel(profile.gender),
             canCopy: false,
           ),
@@ -64,7 +66,7 @@ class ProfileContactCard extends StatelessWidget {
           _buildRow(
             context: context,
             icon: Icons.calendar_today_rounded,
-            label: 'تاريخ الانضمام',
+            label: LocaleKeys.profileJoinedDate.tr(),
             value: profile.joinedAt,
             canCopy: false,
           ),
@@ -96,7 +98,7 @@ class ProfileContactCard extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                value.isNotEmpty ? value : 'غير متوفر',
+                value.isNotEmpty ? value : LocaleKeys.profileUnspecified.tr(),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: AppColors.textPrimaryLight,
                       fontWeight: FontWeight.bold,
@@ -111,8 +113,8 @@ class ProfileContactCard extends StatelessWidget {
               Clipboard.setData(ClipboardData(text: value));
               AppToast.showSuccess(
                 context,
-                'تم نسخ $label بنجاح',
-                title: 'تم النسخ',
+                LocaleKeys.profileCopySuccess.tr(args: [label]),
+                title: LocaleKeys.profileCopiedTitle.tr(),
               );
             },
             child: Container(
@@ -131,9 +133,9 @@ class ProfileContactCard extends StatelessWidget {
   String _getGenderLabel(String gender) {
     switch (gender.toLowerCase()) {
       case 'male':
-        return 'ذكر';
+        return LocaleKeys.profileGenderMale.tr();
       case 'female':
-        return 'أنثى';
+        return LocaleKeys.profileGenderFemale.tr();
       default:
         return gender;
     }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../domain/entities/profile_entity.dart';
@@ -17,7 +19,7 @@ class ProfileView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
-        title: const Text('الملف الشخصي', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
+        title: Text(LocaleKeys.profileTitle.tr(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
         centerTitle: true,
         backgroundColor: AppColors.backgroundLight,
         elevation: 0,
@@ -28,10 +30,10 @@ class ProfileView extends StatelessWidget {
         builder: (context, state) {
           if (state is ProfileLoading || state is ProfileInitial) {
             return _buildSkeleton();
-          } else if (state is ProfileError) {
-            return _buildError(context, state.message);
           } else if (state is ProfileLoaded) {
             return _buildContent(context, state.profile);
+          } else if (state is ProfileError) {
+            return _buildError(context, state.message);
           }
           return const SizedBox.shrink();
         },
@@ -60,22 +62,21 @@ class ProfileView extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.fromLTRB(16, 4, 16, 120),
       children: [
-        _skeletonBox(height: 230, radius: 24),
+        Container(
+          height: 180,
+          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(24)),
+        ),
         const SizedBox(height: 16),
-        _skeletonBox(height: 360, radius: 20),
+        Container(
+          height: 260,
+          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(20)),
+        ),
         const SizedBox(height: 16),
-        _skeletonBox(height: 220, radius: 20),
+        Container(
+          height: 180,
+          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(20)),
+        ),
       ],
-    );
-  }
-
-  Widget _skeletonBox({required double height, double radius = 12}) {
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: AppColors.borderLight.withValues(alpha: 0.5),
-        borderRadius: BorderRadius.circular(radius),
-      ),
     );
   }
 
@@ -95,9 +96,9 @@ class ProfileView extends StatelessWidget {
               child: const Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'تعذر تحميل البيانات',
-              style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: AppColors.textPrimaryLight),
+            Text(
+              LocaleKeys.profileLoadError.tr(),
+              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: AppColors.textPrimaryLight),
             ),
             const SizedBox(height: 8),
             Text(
@@ -114,7 +115,7 @@ class ProfileView extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
               ),
               icon: const Icon(Icons.refresh_rounded),
-              label: const Text('إعادة المحاولة', style: TextStyle(fontWeight: FontWeight.bold)),
+              label: Text(LocaleKeys.commonRetry.tr(), style: const TextStyle(fontWeight: FontWeight.bold)),
             ),
           ],
         ),

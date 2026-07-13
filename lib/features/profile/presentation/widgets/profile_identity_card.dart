@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
@@ -30,7 +32,7 @@ class ProfileIdentityCard extends StatelessWidget {
               Icon(Icons.badge_rounded, color: context.primaryColor, size: 22),
               const SizedBox(width: 8),
               Text(
-                'بيانات الهوية والصلاحية',
+                LocaleKeys.profileIdentitySection.tr(),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimaryLight,
@@ -41,14 +43,14 @@ class ProfileIdentityCard extends StatelessWidget {
           const SizedBox(height: 16),
           _buildItemRow(
             context: context,
-            label: 'رقم الهوية / الإقامة',
+            label: LocaleKeys.profileIdentityNumber.tr(),
             value: profile.identityNumber,
             canCopy: true,
           ),
           const Divider(height: 24, color: AppColors.borderLight),
           _buildItemRow(
             context: context,
-            label: 'تاريخ انتهاء الهوية',
+            label: LocaleKeys.profileIdentityExpiry.tr(),
             value: profile.identityExpiry,
             canCopy: false,
           ),
@@ -67,7 +69,7 @@ class ProfileIdentityCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      'تنبيه: الهوية قريبة من الانتهاء أو منتهية، يرجى تحديثها لضمان استمرارية الخدمات.',
+                      LocaleKeys.profileIdentityWarningBanner.tr(),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AppColors.error,
                             fontWeight: FontWeight.bold,
@@ -101,7 +103,7 @@ class ProfileIdentityCard extends StatelessWidget {
         Row(
           children: [
             Text(
-              value.isNotEmpty ? value : 'غير محدد',
+              value.isNotEmpty ? value : LocaleKeys.profileUnspecified.tr(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppColors.textPrimaryLight,
                     fontWeight: FontWeight.bold,
@@ -114,8 +116,8 @@ class ProfileIdentityCard extends StatelessWidget {
                   Clipboard.setData(ClipboardData(text: value));
                   AppToast.showSuccess(
                     context,
-                    'تم نسخ $label بنجاح',
-                    title: 'تم النسخ',
+                    LocaleKeys.profileCopySuccess.tr(args: [label]),
+                    title: LocaleKeys.profileCopiedTitle.tr(),
                   );
                 },
                 child: Icon(Icons.copy_rounded, size: 18, color: context.primaryColor),

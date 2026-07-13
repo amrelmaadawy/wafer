@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../cubit/auth_cubit.dart';
@@ -47,7 +49,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              _buildTextField(controller: _usernameController, hint: 'البريد الإلكتروني أو اسم المستخدم', icon: Icons.person_outline_rounded, keyboardType: TextInputType.emailAddress, validator: (v) => (v == null || v.trim().isEmpty) ? 'يرجى إدخال اسم المستخدم' : null),
+              _buildTextField(controller: _usernameController, hint: LocaleKeys.authUsernameLabel.tr(), icon: Icons.person_outline_rounded, keyboardType: TextInputType.emailAddress, validator: (v) => (v == null || v.trim().isEmpty) ? LocaleKeys.authUsernameValidation.tr() : null),
               const SizedBox(height: 14),
               _buildPasswordField(context),
               const SizedBox(height: 14),
@@ -72,11 +74,11 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         controller: _passwordController,
         obscureText: _obscurePassword,
         validator: (v) {
-          if (v == null || v.isEmpty) return 'يرجى إدخال كلمة المرور';
-          if (v.length < 6) return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+          if (v == null || v.isEmpty) return LocaleKeys.authPasswordValidation.tr();
+          if (v.length < 6) return LocaleKeys.authPasswordMinLength.tr();
           return null;
         },
-        decoration: _inputDeco(context, hint: 'كلمة المرور', prefixIcon: Icons.lock_outline_rounded, suffix: IconButton(icon: Icon(_obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined, size: 20, color: const Color(0xFF94A3B8)), onPressed: () => setState(() => _obscurePassword = !_obscurePassword))),
+        decoration: _inputDeco(context, hint: LocaleKeys.authPasswordLabel.tr(), prefixIcon: Icons.lock_outline_rounded, suffix: IconButton(icon: Icon(_obscurePassword ? Icons.visibility_off_outlined : Icons.visibility_outlined, size: 20, color: const Color(0xFF94A3B8)), onPressed: () => setState(() => _obscurePassword = !_obscurePassword))),
       );
 
   InputDecoration _inputDeco(BuildContext context, {required String hint, required IconData prefixIcon, Widget? suffix}) => InputDecoration(
@@ -102,10 +104,10 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             child: Row(children: [
               SizedBox(height: 20, width: 20, child: Checkbox(value: _rememberMe, activeColor: context.primaryColor, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)), side: const BorderSide(color: Color(0xFFCCD3E0)), onChanged: (val) => setState(() => _rememberMe = val ?? true))),
               const SizedBox(width: 8),
-              const Text('تذكر دخولي', style: TextStyle(color: Color(0xFF4B5563), fontSize: 13, fontWeight: FontWeight.w500)),
+              Text(LocaleKeys.authRememberMe.tr(), style: const TextStyle(color: Color(0xFF4B5563), fontSize: 13, fontWeight: FontWeight.w500)),
             ]),
           ),
-          TextButton(onPressed: () {}, style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 0), tapTargetSize: MaterialTapTargetSize.shrinkWrap), child: Text('نسيت كلمة المرور؟', style: TextStyle(color: context.primaryColor, fontSize: 13, fontWeight: FontWeight.w600))),
+          TextButton(onPressed: () {}, style: TextButton.styleFrom(padding: EdgeInsets.zero, minimumSize: const Size(0, 0), tapTargetSize: MaterialTapTargetSize.shrinkWrap), child: Text(LocaleKeys.authForgotPassword.tr(), style: TextStyle(color: context.primaryColor, fontSize: 13, fontWeight: FontWeight.w600))),
         ],
       );
 
@@ -118,7 +120,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         child: ElevatedButton(
           onPressed: isLoading ? null : _submit,
           style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent, shadowColor: Colors.transparent, disabledBackgroundColor: const Color(0xFFE4E9F2), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), minimumSize: const Size(double.infinity, 52)),
-          child: isLoading ? const SizedBox(height: 22, width: 22, child: CircularProgressIndicator(strokeWidth: 2.5, valueColor: AlwaysStoppedAnimation(Colors.white))) : const Text('تسجيل الدخول', style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700)),
+          child: isLoading ? const SizedBox(height: 22, width: 22, child: CircularProgressIndicator(strokeWidth: 2.5, valueColor: AlwaysStoppedAnimation(Colors.white))) : Text(LocaleKeys.authLoginBtn.tr(), style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w700)),
         ),
       );
 }

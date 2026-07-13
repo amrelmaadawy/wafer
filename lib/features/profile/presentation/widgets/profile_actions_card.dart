@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
@@ -37,7 +39,7 @@ class ProfileActionsCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  'إعدادات الحساب',
+                  LocaleKeys.profileAccountSettings.tr(),
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimaryLight,
@@ -51,8 +53,8 @@ class ProfileActionsCard extends StatelessWidget {
           _buildTile(
             context: context,
             icon: Icons.edit_rounded,
-            label: 'تعديل البيانات الشخصية',
-            subtitle: 'الاسم، الهاتف، البريد الإلكتروني',
+            label: LocaleKeys.profileEditProfile.tr(),
+            subtitle: LocaleKeys.profileEditProfileSubtitle.tr(),
             iconBg: context.primaryColor.withValues(alpha: 0.1),
             iconColor: context.primaryColor,
             onTap: () {
@@ -72,18 +74,18 @@ class ProfileActionsCard extends StatelessWidget {
           _buildTile(
             context: context,
             icon: Icons.lock_outline_rounded,
-            label: 'تغيير كلمة المرور',
-            subtitle: 'تحديث بيانات الأمان والدخول',
+            label: LocaleKeys.profileChangePassword.tr(),
+            subtitle: LocaleKeys.profileChangePasswordSubtitle.tr(),
             iconBg: AppColors.warning.withValues(alpha: 0.1),
             iconColor: AppColors.warning,
-            onTap: () => AppToast.showInfo(context, 'سيتم فتح شاشة تغيير كلمة المرور'),
+            onTap: () => AppToast.showInfo(context, LocaleKeys.profileChangePasswordToast.tr()),
           ),
           const Divider(height: 1, color: AppColors.borderLight),
           _buildTile(
             context: context,
             icon: Icons.logout_rounded,
-            label: 'تسجيل الخروج',
-            subtitle: 'الخروج من الحساب وإنهاء الجلسة',
+            label: LocaleKeys.profileLogout.tr(),
+            subtitle: LocaleKeys.profileLogoutSubtitle.tr(),
             iconBg: AppColors.error.withValues(alpha: 0.1),
             iconColor: AppColors.error,
             labelColor: AppColors.error,
@@ -150,6 +152,6 @@ class ProfileActionsCard extends StatelessWidget {
   }
 
   void _showLogoutDialog(BuildContext context) {
-    AppToast.showInfo(context, 'سيتم تسجيل الخروج ومسح التخزين المؤقت');
+    AppToast.showInfo(context, LocaleKeys.profileLogoutDialogMsg.tr());
   }
 }

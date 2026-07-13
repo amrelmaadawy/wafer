@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../domain/usecases/get_profile_use_case.dart';
 import '../../domain/usecases/update_profile_use_case.dart';
 import 'profile_state.dart';
@@ -38,7 +40,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     result.fold(
       (failure) => emit(ProfileUpdateError(currentProfile, errorMessage: failure.message)),
-      (updatedProfile) => emit(ProfileUpdateSuccess(updatedProfile, message: 'تم تحديث البيانات بنجاح')),
+      (updatedProfile) => emit(ProfileUpdateSuccess(updatedProfile, message: LocaleKeys.profileUpdateSuccess.tr())),
     );
   }
 }

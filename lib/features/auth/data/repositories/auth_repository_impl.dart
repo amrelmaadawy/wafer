@@ -1,6 +1,8 @@
 import 'package:dartz/dartz.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/storage/cache_helper.dart';
 import '../../../../core/storage/secure_storage_service.dart';
 import '../../domain/entities/user_entity.dart';
@@ -47,7 +49,7 @@ class AuthRepositoryImpl implements AuthRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } catch (e) {
-      return Left(ServerFailure('حدث خطأ غير متوقع: ${e.toString()}'));
+      return Left(ServerFailure(LocaleKeys.errorsUnexpected.tr(args: [e.toString()])));
     }
   }
 
@@ -57,7 +59,7 @@ class AuthRepositoryImpl implements AuthRepository {
       await _secureStorageService.deleteToken();
       return const Right(null);
     } catch (e) {
-      return Left(ServerFailure('تعذر تسجيل الخروج'));
+      return Left(ServerFailure(LocaleKeys.errorsLogoutFailed.tr()));
     }
   }
 
@@ -75,9 +77,9 @@ class AuthRepositoryImpl implements AuthRepository {
           accountType: accountType ?? 'unknown',
         ));
       }
-      return const Left(ServerFailure('غير مسجل الدخول'));
+      return Left(ServerFailure(LocaleKeys.errorsNotLoggedIn.tr()));
     } catch (e) {
-      return const Left(ServerFailure('فصل المصادقة'));
+      return Left(ServerFailure(LocaleKeys.errorsAuthDisconnected.tr()));
     }
   }
 }

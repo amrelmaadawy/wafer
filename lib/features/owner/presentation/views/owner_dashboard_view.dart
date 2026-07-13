@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../cubit/owner_dashboard_cubit.dart';
 import '../cubit/owner_dashboard_state.dart';
@@ -93,7 +95,7 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
             ElevatedButton.icon(
               onPressed: () => context.read<OwnerDashboardCubit>().loadDashboardStats(forceRefresh: true),
               icon: const Icon(Icons.refresh_rounded, size: 18),
-              label: const Text('إعادة المحاولة'),
+              label: Text(LocaleKeys.commonRetry.tr()),
               style: ElevatedButton.styleFrom(backgroundColor: context.primaryColor, foregroundColor: Colors.white),
             ),
           ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/owner_dashboard_entity.dart';
 
@@ -15,11 +17,11 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text('آخر التحصيلات المالية', style: TextStyle(color: Color(0xFF0F172A), fontSize: 16, fontWeight: FontWeight.w800)),
+            Text(LocaleKeys.dashboardRecentReceipts.tr(), style: const TextStyle(color: Color(0xFF0F172A), fontSize: 16, fontWeight: FontWeight.w800)),
             if (receipts.isNotEmpty)
               TextButton(
                 onPressed: () {},
-                child: Text('عرض الكل', style: TextStyle(color: context.primaryColor, fontSize: 13, fontWeight: FontWeight.w700)),
+                child: Text(LocaleKeys.dashboardViewAll.tr(), style: TextStyle(color: context.primaryColor, fontSize: 13, fontWeight: FontWeight.w700)),
               ),
           ],
         ),
@@ -49,9 +51,9 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
             child: Icon(Icons.receipt_long_rounded, color: context.primaryColor, size: 28),
           ),
           const SizedBox(height: 14),
-          const Text('لا توجد تحصيلات حديثة', style: TextStyle(color: Color(0xFF1E293B), fontSize: 14, fontWeight: FontWeight.w700)),
+          Text(LocaleKeys.dashboardNoRecentReceipts.tr(), style: const TextStyle(color: Color(0xFF1E293B), fontSize: 14, fontWeight: FontWeight.w700)),
           const SizedBox(height: 4),
-          const Text('ستظهر هنا عمليات الدفع وسندات القبض فور تسجيلها', style: TextStyle(color: Color(0xFF64748B), fontSize: 12.5), textAlign: TextAlign.center),
+          Text(LocaleKeys.dashboardReceiptsSubtitle.tr(), style: const TextStyle(color: Color(0xFF64748B), fontSize: 12.5), textAlign: TextAlign.center),
         ],
       ),
     );
@@ -84,7 +86,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
                   children: [
                     const Icon(Icons.domain_rounded, size: 13, color: Color(0xFF64748B)),
                     const SizedBox(width: 4),
-                    Text('${receipt.propertyName} - وحدة ${receipt.unitNumber}', style: const TextStyle(color: Color(0xFF64748B), fontSize: 11.5)),
+                    Text('${receipt.propertyName} - ${LocaleKeys.dashboardUnitPrefix.tr(args: [receipt.unitNumber])}', style: const TextStyle(color: Color(0xFF64748B), fontSize: 11.5)),
                   ],
                 ),
               ],
@@ -93,7 +95,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Text('+${_fmt(receipt.amount)} ر.س', style: const TextStyle(color: Color(0xFF10B981), fontSize: 14, fontWeight: FontWeight.w800)),
+              Text('+${LocaleKeys.commonCurrencySar.tr(args: [_fmt(receipt.amount)])}', style: const TextStyle(color: Color(0xFF10B981), fontSize: 14, fontWeight: FontWeight.w800)),
               const SizedBox(height: 3),
               Text(receipt.date, style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 11)),
             ],

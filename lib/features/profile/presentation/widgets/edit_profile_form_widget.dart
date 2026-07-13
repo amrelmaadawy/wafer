@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
@@ -55,7 +57,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
     return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
         if (state is ProfileUpdateSuccess) {
-          AppToast.showSuccess(context, state.message);
+          AppToast.showSuccess(context, LocaleKeys.profileUpdateSuccess.tr());
           Navigator.pop(context);
         } else if (state is ProfileUpdateError) {
           AppToast.showError(context, state.errorMessage);
@@ -73,21 +75,21 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
             children: [
               ProfileTextField(
                 controller: _nameController,
-                label: 'الاسم الكامل',
+                label: LocaleKeys.profileFullNameLabel.tr(),
                 icon: Icons.person_outline_rounded,
-                validator: (val) => val == null || val.trim().isEmpty ? 'يرجى إدخال الاسم' : null,
+                validator: (val) => val == null || val.trim().isEmpty ? LocaleKeys.profileFullNameValidation.tr() : null,
               ),
               const SizedBox(height: 18),
               ProfileTextField(
                 controller: _phoneController,
-                label: 'رقم الهاتف',
+                label: LocaleKeys.profilePhoneLabel.tr(),
                 icon: Icons.phone_outlined,
                 keyboardType: TextInputType.phone,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                validator: (val) => val == null || val.trim().length < 9 ? 'يرجى إدخال رقم هاتف صحيح' : null,
+                validator: (val) => val == null || val.trim().length < 9 ? LocaleKeys.profilePhoneValidation.tr() : null,
               ),
               const SizedBox(height: 20),
-              const Text('النوع الاجتماعي', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textPrimaryLight)),
+              Text(LocaleKeys.profileGenderLabel.tr(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textPrimaryLight)),
               const SizedBox(height: 10),
               Row(
                 children: [
@@ -95,7 +97,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
                     child: ProfileGenderCard(
                       value: 'male',
                       currentGender: _gender,
-                      label: 'ذكر',
+                      label: LocaleKeys.profileGenderMale.tr(),
                       icon: Icons.male_rounded,
                       onSelect: (val) => setState(() => _gender = val),
                     ),
@@ -105,7 +107,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
                     child: ProfileGenderCard(
                       value: 'female',
                       currentGender: _gender,
-                      label: 'أنثى',
+                      label: LocaleKeys.profileGenderFemale.tr(),
                       icon: Icons.female_rounded,
                       onSelect: (val) => setState(() => _gender = val),
                     ),
@@ -134,7 +136,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
       ),
       child: isUpdating
           ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5))
-          : const Text('حفظ التعديلات', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          : Text(LocaleKeys.profileSaveChanges.tr(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
     );
   }
 }

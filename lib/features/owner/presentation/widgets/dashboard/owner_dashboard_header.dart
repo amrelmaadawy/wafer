@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../profile/presentation/cubit/profile_cubit.dart';
 import '../../../../profile/presentation/cubit/profile_state.dart';
@@ -13,7 +15,7 @@ class OwnerDashboardHeader extends StatelessWidget {
 
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, profileState) {
-        String name = 'مستخدم وافر';
+        String name = LocaleKeys.dashboardDefaultUser.tr();
         if (profileState is ProfileLoaded) {
           final fullName = profileState.profile.name.trim();
           name = fullName.isNotEmpty ? fullName.split(' ').first : fullName;
@@ -42,7 +44,7 @@ class OwnerDashboardHeader extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'مرحباً، $name',
+                      '${LocaleKeys.dashboardWelcome.tr()} $name',
                       style: const TextStyle(
                         color: Color(0xFF0F172A),
                         fontSize: 18,
@@ -52,9 +54,9 @@ class OwnerDashboardHeader extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 3),
-                    const Text(
-                      'لوحة التحكم والنظرة العامة للأملاك',
-                      style: TextStyle(
+                    Text(
+                      LocaleKeys.ownerHeaderSubtitle.tr(),
+                      style: const TextStyle(
                         color: Color(0xFF64748B),
                         fontSize: 12.5,
                         fontWeight: FontWeight.w400,

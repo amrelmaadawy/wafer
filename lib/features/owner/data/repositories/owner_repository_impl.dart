@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
 import '../../domain/repositories/owner_repository.dart';
 import '../datasources/owner_remote_data_source.dart';
@@ -19,7 +21,7 @@ class OwnerRepositoryImpl implements OwnerRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? 'حدث خطأ في الاتصال بالسيرفر'));
+      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

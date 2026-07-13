@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
@@ -17,7 +19,7 @@ class OwnerPropertiesView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'العقارات والوحدات',
+                LocaleKeys.ownerPropertiesTitle.tr(),
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimaryLight,
@@ -25,7 +27,7 @@ class OwnerPropertiesView extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                'إدارة محافظك العقارية والوحدات التابعة لها',
+                LocaleKeys.ownerPropertiesSubtitle.tr(),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppColors.textSecondaryLight,
                     ),
@@ -47,7 +49,7 @@ class OwnerPropertiesView extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'سجل العقارات والوحدات',
+                      LocaleKeys.ownerPropertiesLog.tr(),
                       style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppColors.textPrimaryLight,
@@ -55,7 +57,7 @@ class OwnerPropertiesView extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      'سيتم عرض قائمة العقارات وتصفيتها (سكني، تجاري، أراضي) هنا',
+                      LocaleKeys.ownerPropertiesPlaceholder.tr(),
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: AppColors.textSecondaryLight,

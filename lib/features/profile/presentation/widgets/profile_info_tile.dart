@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 
@@ -53,7 +55,7 @@ class ProfileInfoTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  isEmpty ? 'غير متوفر' : value,
+                  isEmpty ? LocaleKeys.profileUnspecified.tr() : value,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,

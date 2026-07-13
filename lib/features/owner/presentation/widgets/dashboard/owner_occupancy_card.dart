@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../domain/entities/owner_dashboard_entity.dart';
 
@@ -19,11 +21,11 @@ class OwnerOccupancyCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Row(
+              Row(
                 children: [
-                  Icon(Icons.pie_chart_outline_rounded, size: 16, color: Color(0xFF64748B)),
-                  SizedBox(width: 7),
-                  Text('كفاءة الإشغال', style: TextStyle(color: Color(0xFF0F172A), fontSize: 14, fontWeight: FontWeight.w700)),
+                  const Icon(Icons.pie_chart_outline_rounded, size: 16, color: Color(0xFF64748B)),
+                  const SizedBox(width: 7),
+                  Text(LocaleKeys.dashboardOccupancyEfficiency.tr(), style: const TextStyle(color: Color(0xFF0F172A), fontSize: 14, fontWeight: FontWeight.w700)),
                 ],
               ),
               Container(
@@ -51,11 +53,11 @@ class OwnerOccupancyCard extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              Expanded(child: _pill(label: 'مؤجرة', count: data.rentedUnits, color: const Color(0xFF10B981), icon: Icons.check_circle_rounded)),
+              Expanded(child: _pill(label: LocaleKeys.ownerPillRented.tr(), count: data.rentedUnits, color: const Color(0xFF10B981), icon: Icons.check_circle_rounded)),
               const SizedBox(width: 8),
-              Expanded(child: _pill(label: 'شاغرة', count: data.vacantUnits, color: const Color(0xFF64748B), icon: Icons.roofing_rounded)),
+              Expanded(child: _pill(label: LocaleKeys.ownerPillVacant.tr(), count: data.vacantUnits, color: const Color(0xFF64748B), icon: Icons.roofing_rounded)),
               const SizedBox(width: 8),
-              Expanded(child: _pill(label: 'عقارات', count: data.totalProperties, color: const Color(0xFF6366F1), icon: Icons.domain_rounded)),
+              Expanded(child: _pill(label: LocaleKeys.ownerPillProperties.tr(), count: data.totalProperties, color: const Color(0xFF6366F1), icon: Icons.domain_rounded)),
             ],
           ),
         ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../../domain/entities/owner_dashboard_entity.dart';
 
 class OwnerAlertsGrid extends StatelessWidget {
@@ -11,11 +13,11 @@ class OwnerAlertsGrid extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Row(
+        Row(
           children: [
-            Icon(Icons.bolt_rounded, size: 17, color: Color(0xFF64748B)),
-            SizedBox(width: 6),
-            Text('التنبيهات السريعة', style: TextStyle(color: Color(0xFF0F172A), fontSize: 14, fontWeight: FontWeight.w700)),
+            const Icon(Icons.bolt_rounded, size: 17, color: Color(0xFF64748B)),
+            const SizedBox(width: 6),
+            Text(LocaleKeys.ownerQuickAlerts.tr(), style: const TextStyle(color: Color(0xFF0F172A), fontSize: 14, fontWeight: FontWeight.w700)),
           ],
         ),
         const SizedBox(height: 12),
@@ -23,32 +25,32 @@ class OwnerAlertsGrid extends StatelessWidget {
           children: [
             Expanded(
               child: _buildCard(
-                title: 'العقود السارية',
+                title: LocaleKeys.ownerActiveContractsTitle.tr(),
                 count: data.activeContracts,
                 color: const Color(0xFF10B981),
                 icon: Icons.description_rounded,
-                subtitle: 'عقد نشط',
+                subtitle: LocaleKeys.ownerActiveContractsSub.tr(),
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: _buildCard(
-                title: 'توشك على الانتهاء',
+                title: LocaleKeys.ownerExpiringTitle.tr(),
                 count: data.expiringContracts,
                 color: data.expiringContracts > 0 ? const Color(0xFFF59E0B) : const Color(0xFF94A3B8),
                 icon: Icons.update_rounded,
-                subtitle: 'يتطلب تجديد',
+                subtitle: LocaleKeys.ownerExpiringSub.tr(),
                 highlight: data.expiringContracts > 0,
               ),
             ),
             const SizedBox(width: 10),
             Expanded(
               child: _buildCard(
-                title: 'صيانة معلقة',
+                title: LocaleKeys.ownerPendingMaintTitle.tr(),
                 count: data.pendingMaintenance,
                 color: data.pendingMaintenance > 0 ? const Color(0xFFEF4444) : const Color(0xFF94A3B8),
                 icon: Icons.handyman_rounded,
-                subtitle: 'بانتظار الاعتماد',
+                subtitle: LocaleKeys.ownerPendingMaintSub.tr(),
                 highlight: data.pendingMaintenance > 0,
               ),
             ),

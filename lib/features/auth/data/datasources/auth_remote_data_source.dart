@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/error/exceptions.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
@@ -38,15 +40,15 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
         return UserModel.fromJson(response.data['data']);
       } else {
         throw ServerException(
-          response.data['message'] ?? 'فشل تسجيل الدخول. تأكد من صحة البيانات.',
+          response.data['message'] ?? LocaleKeys.errorsLoginFailed.tr(),
         );
       }
     } on DioException catch (e) {
       if (e.response != null && e.response?.data is Map) {
-        final message = e.response?.data['message'] ?? 'خطأ في الاتصال بالخادم.';
+        final message = e.response?.data['message'] ?? LocaleKeys.errorsConnectionError.tr();
         throw ServerException(message.toString());
       }
-      throw ServerException(e.message ?? 'تعذر الاتصال بالخادم. يرجى التحقق من الشبكة.');
+      throw ServerException(e.message ?? LocaleKeys.errorsNetworkError.tr());
     } catch (e) {
       if (e is ServerException) rethrow;
       throw ServerException(e.toString());

@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/error/failures.dart';
+import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/storage/cache_helper.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../../domain/repositories/profile_repository.dart';
@@ -47,7 +49,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
           return Right(ProfileModel.fromJson(data));
         } catch (_) {}
       }
-      return Left(ServerFailure(e.message ?? 'حدث خطأ في الاتصال بالسيرفر'));
+      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -74,7 +76,7 @@ class ProfileRepositoryImpl implements ProfileRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? 'حدث خطأ في الاتصال بالسيرفر'));
+      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
