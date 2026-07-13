@@ -56,6 +56,17 @@ class CacheHelper {
     return _prefs.getInt(_primaryColorKey);
   }
 
+  // ─── Profile Caching ──────────────────────────────────────────────────────
+  static const String _cachedProfileKey = 'cached_user_profile_json';
+
+  Future<void> saveCachedProfile(String jsonString) async {
+    await _prefs.setString(_cachedProfileKey, jsonString);
+  }
+
+  String? getCachedProfile() {
+    return _prefs.getString(_cachedProfileKey);
+  }
+
   Future<void> clearAll() async {
     await _prefs.clear();
   }

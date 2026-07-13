@@ -15,4 +15,7 @@ class ApiConstants {
   static const String authorizationHeader = 'Authorization';
   static const String bearerPrefix = 'Bearer ';
   static const String localeHeader = 'Accept-Language';
+
+  /// Shared Endpoints
+  static const String sharedProfile = 'shared/profile';
 }

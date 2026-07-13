@@ -11,6 +11,7 @@ import '../storage/secure_storage_service.dart';
 import '../theme/app_theme_cubit.dart';
 import '../../features/auth/di/auth_di.dart';
 import '../../features/owner/di/owner_di.dart';
+import '../../features/profile/di/profile_di.dart';
 
 final GetIt sl = GetIt.instance;
 
@@ -41,4 +42,5 @@ Future<void> setupServiceLocator() async {
   // Features
   await initAuthModule();
   initOwnerModule();
+  initProfileModule();
 }

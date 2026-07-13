@@ -8,6 +8,7 @@ import '../widgets/dashboard/owner_alerts_grid.dart';
 import '../widgets/dashboard/owner_financial_summary_card.dart';
 import '../widgets/dashboard/owner_occupancy_card.dart';
 import '../widgets/dashboard/owner_recent_receipts_section.dart';
+import '../../../profile/presentation/screens/profile_screen.dart';
 
 class OwnerDashboardView extends StatefulWidget {
   const OwnerDashboardView({super.key});
@@ -71,10 +72,23 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
               Text('لوحة التحكم والنظرة العامة للأملاك', style: TextStyle(color: Color(0xFF64748B), fontSize: 12.5)),
             ],
           ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(color: const Color(0xFFF8FAFF), borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E8F0))),
-            child: Icon(Icons.notifications_outlined, color: context.primaryColor, size: 22),
+          Row(
+            children: [
+              GestureDetector(
+                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileScreen())),
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(color: context.primaryColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12), border: Border.all(color: context.primaryColor.withValues(alpha: 0.3))),
+                  child: Icon(Icons.person_outline_rounded, color: context.primaryColor, size: 22),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.all(10),
+                decoration: BoxDecoration(color: const Color(0xFFF8FAFF), borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E8F0))),
+                child: Icon(Icons.notifications_outlined, color: context.primaryColor, size: 22),
+              ),
+            ],
           ),
         ],
       ),

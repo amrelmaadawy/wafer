@@ -18,7 +18,7 @@ class OwnerBottomNavWidget extends StatelessWidget {
     _NavTab('العقارات', Icons.apartment_rounded, Icons.apartment_outlined),
     _NavTab('العقود', Icons.description_rounded, Icons.description_outlined),
     _NavTab('المالية', Icons.account_balance_wallet_rounded, Icons.account_balance_wallet_outlined),
-    _NavTab('المزيد', Icons.more_horiz_rounded, Icons.more_horiz_outlined),
+    _NavTab('الملف الشخصي', Icons.person_rounded, Icons.person_outline_rounded),
   ];
 
   @override

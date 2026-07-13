@@ -8,7 +8,7 @@ import '../views/owner_dashboard_view.dart';
 import '../views/owner_properties_view.dart';
 import '../views/owner_leases_view.dart';
 import '../views/owner_finance_view.dart';
-import '../views/owner_more_view.dart';
+import '../../../profile/presentation/screens/profile_screen.dart';
 import '../widgets/owner_bottom_nav_widget.dart';
 import '../widgets/owner_page_switcher.dart';
 
@@ -49,7 +49,7 @@ class _OwnerMainContentState extends State<_OwnerMainContent> {
     OwnerPropertiesView(),
     OwnerLeasesView(),
     OwnerFinanceView(),
-    OwnerMoreView(),
+    ProfileScreen(),
   ];
 
   @override
