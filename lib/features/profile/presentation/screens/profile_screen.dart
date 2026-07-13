@@ -9,12 +9,20 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: BlocProvider<ProfileCubit>(
-        create: (_) => sl<ProfileCubit>()..fetchProfile(),
-        child: const ProfileView(),
-      ),
-    );
+    try {
+      context.read<ProfileCubit>();
+      return const Directionality(
+        textDirection: TextDirection.rtl,
+        child: ProfileView(),
+      );
+    } catch (_) {
+      return Directionality(
+        textDirection: TextDirection.rtl,
+        child: BlocProvider<ProfileCubit>(
+          create: (_) => sl<ProfileCubit>()..fetchProfile(),
+          child: const ProfileView(),
+        ),
+      );
+    }
   }
 }

@@ -8,7 +8,7 @@ import '../widgets/dashboard/owner_alerts_grid.dart';
 import '../widgets/dashboard/owner_financial_summary_card.dart';
 import '../widgets/dashboard/owner_occupancy_card.dart';
 import '../widgets/dashboard/owner_recent_receipts_section.dart';
-import '../../../profile/presentation/screens/profile_screen.dart';
+import '../widgets/dashboard/owner_dashboard_header.dart';
 
 class OwnerDashboardView extends StatefulWidget {
   const OwnerDashboardView({super.key});
@@ -33,66 +33,27 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
       value: SystemUiOverlayStyle.dark,
       child: Scaffold(
         backgroundColor: const Color(0xFFF8FAFC),
-        body: SafeArea(
-          child: Column(
-            children: [
-              _buildHeader(context),
-              Expanded(
-                child: BlocBuilder<OwnerDashboardCubit, OwnerDashboardState>(
-                  builder: (context, state) {
-                    if (state is OwnerDashboardLoading) return _buildLoading();
-                    if (state is OwnerDashboardError) return _buildError(context, state.message);
-                    if (state is OwnerDashboardLoaded) return _buildContent(context, state);
-                    return const SizedBox.shrink();
-                  },
-                ),
+        body: Column(
+          children: [
+            _buildHeader(context),
+            Expanded(
+              child: BlocBuilder<OwnerDashboardCubit, OwnerDashboardState>(
+                builder: (context, state) {
+                  if (state is OwnerDashboardLoading) return _buildLoading();
+                  if (state is OwnerDashboardError) return _buildError(context, state.message);
+                  if (state is OwnerDashboardLoaded) return _buildContent(context, state);
+                  return const SizedBox.shrink();
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
   Widget _buildHeader(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(20, 14, 20, 14),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(bottom: BorderSide(color: Color(0xFFF1F5F9))),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('مرحباً، أحمد 👋', style: TextStyle(color: Color(0xFF0F172A), fontSize: 18, fontWeight: FontWeight.w800)),
-              SizedBox(height: 2),
-              Text('لوحة التحكم والنظرة العامة للأملاك', style: TextStyle(color: Color(0xFF64748B), fontSize: 12.5)),
-            ],
-          ),
-          Row(
-            children: [
-              GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileScreen())),
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(color: context.primaryColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12), border: Border.all(color: context.primaryColor.withValues(alpha: 0.3))),
-                  child: Icon(Icons.person_outline_rounded, color: context.primaryColor, size: 22),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Container(
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(color: const Color(0xFFF8FAFF), borderRadius: BorderRadius.circular(12), border: Border.all(color: const Color(0xFFE2E8F0))),
-                child: Icon(Icons.notifications_outlined, color: context.primaryColor, size: 22),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
+    return const OwnerDashboardHeader();
   }
 
   Widget _buildContent(BuildContext context, OwnerDashboardLoaded state) {

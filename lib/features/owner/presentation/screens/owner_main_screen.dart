@@ -8,6 +8,7 @@ import '../views/owner_dashboard_view.dart';
 import '../views/owner_properties_view.dart';
 import '../views/owner_leases_view.dart';
 import '../views/owner_finance_view.dart';
+import '../../../profile/presentation/cubit/profile_cubit.dart';
 import '../../../profile/presentation/screens/profile_screen.dart';
 import '../widgets/owner_bottom_nav_widget.dart';
 import '../widgets/owner_page_switcher.dart';
@@ -23,6 +24,7 @@ class OwnerMainScreen extends StatelessWidget {
         providers: [
           BlocProvider<OwnerNavCubit>(create: (_) => sl<OwnerNavCubit>()),
           BlocProvider<OwnerDashboardCubit>(create: (_) => sl<OwnerDashboardCubit>()),
+          BlocProvider<ProfileCubit>(create: (_) => sl<ProfileCubit>()..fetchProfile()),
         ],
         child: const _OwnerMainContent(),
       ),
