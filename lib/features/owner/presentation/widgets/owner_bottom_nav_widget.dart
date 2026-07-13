@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/color_utils.dart';
 
 class OwnerBottomNavWidget extends StatelessWidget {
   final int currentIndex;
@@ -93,12 +94,12 @@ class OwnerBottomNavWidget extends StatelessWidget {
           vertical: isSelected ? 8 : 8,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : Colors.transparent,
+          color: isSelected ? context.primaryColor : Colors.transparent,
           borderRadius: BorderRadius.circular(22),
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.3),
+                    color: context.primaryShadow,
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),

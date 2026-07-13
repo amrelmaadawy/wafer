@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_radius.dart';
 import '../../theme/app_sizes.dart';
+import '../../theme/color_utils.dart';
 
 enum ButtonType { primary, secondary, text }
 
@@ -30,11 +31,11 @@ class CustomButton extends StatelessWidget {
     return SizedBox(
       width: width,
       height: AppSizes.buttonHeight,
-      child: _buildButton(),
+      child: _buildButton(context),
     );
   }
 
-  Widget _buildButton() {
+  Widget _buildButton(BuildContext context) {
     final bool disabled = isDisabled || isLoading;
     
     switch (type) {
@@ -42,7 +43,7 @@ class CustomButton extends StatelessWidget {
         return ElevatedButton(
           onPressed: disabled ? null : onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primary,
+            backgroundColor: context.primaryColor,
             foregroundColor: Colors.white,
             shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularMd),
             elevation: 0,
@@ -54,19 +55,19 @@ class CustomButton extends StatelessWidget {
         return OutlinedButton(
           onPressed: disabled ? null : onPressed,
           style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.primary,
-            side: const BorderSide(color: AppColors.primary),
+            foregroundColor: context.primaryColor,
+            side: BorderSide(color: context.primaryColor),
             shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularMd),
           ),
-          child: _buildChild(AppColors.primary),
+          child: _buildChild(context.primaryColor),
         );
       case ButtonType.text:
         return TextButton(
           onPressed: disabled ? null : onPressed,
           style: TextButton.styleFrom(
-            foregroundColor: AppColors.primary,
+            foregroundColor: context.primaryColor,
           ),
-          child: _buildChild(AppColors.primary),
+          child: _buildChild(context.primaryColor),
         );
     }
   }

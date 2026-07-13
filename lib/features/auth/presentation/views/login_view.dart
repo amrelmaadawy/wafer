@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/color_utils.dart';
 import '../widgets/login_form_widget.dart';
 
 class LoginView extends StatelessWidget {
@@ -11,122 +10,111 @@ class LoginView extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: AppColors.backgroundLight,
-        body: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 36),
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 420),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    _buildBrandHeader(context),
-                    const SizedBox(height: 36),
-                    _buildFormCard(context),
-                    const SizedBox(height: 32),
-                    _buildFooter(context),
-                  ],
+        body: Stack(
+          children: [
+            _buildBackground(context),
+            SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 48),
+                      _buildBrand(context),
+                      const SizedBox(height: 32),
+                      _buildFormCard(context),
+                      const SizedBox(height: 24),
+                      _buildFooter(context),
+                      const SizedBox(height: 24),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildBrandHeader(BuildContext context) {
+  Widget _buildBackground(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+          flex: 38,
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [context.primaryDark, context.primaryColor, context.primaryLight],
+              ),
+            ),
+          ),
+        ),
+        Expanded(flex: 62, child: Container(color: const Color(0xFFF4F6FB))),
+      ],
+    );
+  }
+
+  Widget _buildBrand(BuildContext context) {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(12),
+          width: 68,
+          height: 68,
           decoration: BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.circular(14),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.primary.withValues(alpha: 0.15),
-                blurRadius: 12,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: const Icon(
-            Icons.domain_rounded,
-            size: 32,
             color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.18), blurRadius: 20, offset: const Offset(0, 6))],
           ),
+          child: Center(child: Icon(Icons.home_work_rounded, size: 34, color: context.primaryColor)),
         ),
         const SizedBox(height: 14),
-        Text(
-          'وافر',
-          style: Theme.of(context).textTheme.displayMedium?.copyWith(
-                color: AppColors.primary,
-                fontWeight: FontWeight.bold,
-                letterSpacing: 0.5,
-              ),
-        ),
+        const Text('وافر', style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w800, letterSpacing: 1.0)),
         const SizedBox(height: 4),
-        Text(
-          'نظام إدارة العقارات والأملاك المتكامل',
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.textSecondaryLight,
-              ),
-        ),
+        Text('نظام إدارة العقارات والأملاك', style: TextStyle(color: Colors.white.withValues(alpha: 0.75), fontSize: 13)),
       ],
     );
   }
 
   Widget _buildFormCard(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 32),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularXl,
-        border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.7), width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 24,
-            offset: const Offset(0, 8),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 420),
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(24, 28, 24, 28),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24),
+            boxShadow: [
+              BoxShadow(color: context.primaryShadow.withValues(alpha: 0.08), blurRadius: 40, offset: const Offset(0, 12)),
+              BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 16, offset: const Offset(0, 4)),
+            ],
           ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            'تسجيل الدخول',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimaryLight,
-                ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text('تسجيل الدخول', textAlign: TextAlign.center, style: TextStyle(color: context.primaryDark, fontSize: 20, fontWeight: FontWeight.w700)),
+              const SizedBox(height: 4),
+              const Text('أدخل بياناتك للوصول إلى حسابك', textAlign: TextAlign.center, style: TextStyle(color: Color(0xFF64748B), fontSize: 13)),
+              const SizedBox(height: 24),
+              const LoginFormWidget(),
+            ],
           ),
-          const SizedBox(height: 4),
-          Text(
-            'أدخل بياناتك للوصول إلى لوحة التحكم',
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: AppColors.textSecondaryLight,
-                ),
-          ),
-          const SizedBox(height: 24),
-          const LoginFormWidget(),
-        ],
+        ),
       ),
     );
   }
 
   Widget _buildFooter(BuildContext context) {
-    return Text(
-      'جميع الحقوق محفوظة © وافر لإدارة الأملاك',
-      textAlign: TextAlign.center,
-      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: AppColors.textSecondaryLight.withValues(alpha: 0.7),
-          ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(Icons.lock_outline_rounded, size: 12, color: Color(0xFFB0B8CC)),
+        const SizedBox(width: 5),
+        Text('جميع الحقوق محفوظة © وافر', style: TextStyle(color: Colors.black.withValues(alpha: 0.35), fontSize: 11.5)),
+      ],
     );
   }
 }

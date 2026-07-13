@@ -66,7 +66,8 @@ trigger: always_on
 - Offline queues/conflicts are explicit for contracts, payments, maint., property changes.
 ## 14. UI & Design System
 - No hardcoded colors, fonts, sizes, radius, shadows, strings, icons, assets.
-- Use AppColors/AppFonts/AppSpacing/AppRadius/AppIcons/AppAssets/AppDurations/AppSizes.
+- Dynamic Primary Color: The primary color (`primary`, `primaryDark`, `primaryLight`, `primaryShadow`) is dynamic and customizable by the user (`AppThemeCubit`). ALL UI components, navigation bars, buttons, and gradients MUST use `context.primaryColor`, `context.primaryDark`, `context.primaryLight`, and `context.primaryShadow` via `color_utils.dart`. Never use static `AppColors.primary` for primary theme elements.
+- Use AppColors/AppFonts/AppSpacing/AppRadius/AppIcons/AppAssets/AppDurations/AppSizes for all other static design tokens.
 - All user text from localization.
 - Support Arabic/English, RTL/LTR, dark/light, scalable text, contrast, semantics, touch targets.
 - Support phones/tablets/foldables, portrait/landscape, 320px+.
@@ -197,7 +198,7 @@ trigger: always_on
 - Done means compliant, localized, responsive, accessible, secure, perm-aware, tested, documented, logged, and handles loading/success/empty/error/edge cases.
 - Contracts, payments, perms, docs, migrations need extra review/audit.
 ## 40. Prohibited & Enforcement
-- No architecture violations, hardcoded values/strings/endpoints/secrets, global state, repo bypass, UI calculations, UI-only perms, unreviewed Core changes, data leakage.
+- No architecture violations, hardcoded values/strings/endpoints/secrets, global state, repo bypass, UI calculations, UI-only perms, unreviewed Core changes, data leakage, or using static `AppColors.primary` when `context.primaryColor` is required.
 - Before coding, inspect architecture, constants, localization, design system, widgets, repos, use cases, perms, domain rules.
 - Challenge technical debt, weak security, poor UX, leakage, poor performance, low scalability.
 - Prioritize maintainability; reject non-compliance.

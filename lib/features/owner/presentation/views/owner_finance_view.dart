@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
+import '../../../../core/theme/color_utils.dart';
 
 class OwnerFinanceView extends StatelessWidget {
   const OwnerFinanceView({super.key});
@@ -42,7 +43,7 @@ class OwnerFinanceView extends StatelessWidget {
                     Icon(
                       Icons.account_balance_wallet_rounded,
                       size: 48,
-                      color: AppColors.primary.withValues(alpha: 0.2),
+                      color: context.primaryColor.withValues(alpha: 0.2),
                     ),
                     const SizedBox(height: 16),
                     Text(

@@ -1,0 +1,84 @@
+# OWNER DASHBOARD IMPLEMENTATION PLAN (CLEAN ARCHITECTURE)
+
+## 1. Deep Input Analysis
+- **API Endpoint**: `GET https://codra.cloud/api/v1/mobile/owner/dashboard`
+- **Response Structure**:
+  ```json
+  {
+      "success": true,
+      "message": "تم جلب إحصائيات لوحة التحكم بنجاح",
+      "data": {
+          "total_properties": 1,
+          "total_units": 2,
+          "rented_units": 1,
+          "vacant_units": 1,
+          "active_contracts": 0,
+          "total_revenue": 0,
+          "collected_amount": 0,
+          "pending_amount": 1000,
+          "overdue_installments_count": 0,
+          "expiring_contracts": 0,
+          "pending_maintenance": 0,
+          "occupancy_rate": 50,
+          "recent_receipts": []
+      }
+  }
+  ```
+
+## 2. UI/UX Design & Executive Layout Proposal
+The Owner Dashboard (`لوحة التحكم الملاك`) is designed with a **Modern Executive UI** that makes complex portfolio metrics instantly understandable to any real estate owner at a single glance:
+
+### A. Executive Financial Hero Card (`الموقف المالي المحصّل والمستحق`)
+- High-contrast premium dark card displaying `collected_amount` vs `pending_amount` vs `total_revenue`.
+- Highlighted badge for `overdue_installments_count` if > 0 to instantly alert the owner.
+
+### B. Portfolio & Occupancy Progress Section (`كفاءة إشغال العقارات`)
+- Visual occupancy progress bar showing `occupancy_rate` (`50%`).
+- Pill indicators breaking down `rented_units` (`🟢 1 مؤجرة`) and `vacant_units` (`⚪ 1 شاغرة`) across `total_properties` properties.
+
+### C. Action Alerts Grid (`تنبيهات العقود والصيانة`)
+- Quick indicator cards for:
+  - `active_contracts` (العقود السارية)
+  - `expiring_contracts` (عقود توشك على الانتهاء - color-coded warning)
+  - `pending_maintenance` (طلبات صيانة بانتظار الاعتماد - quick action highlight)
+
+### D. Recent Transactions List (`أحدث التحصيلات والعمليات`)
+- Clean list of `recent_receipts`.
+- If empty (`[]`), displays an executive `EmptyStateWidget` stating clearly "لا توجد عمليات مالية مسجلة حديثاً".
+
+---
+
+## 3. Architecture & File Structure (< 150 Lines Per File Rule)
+
+### A. Central Network Layer
+- Verify/update `lib/core/network/api_constants.dart` with `static const String ownerDashboard = 'owner/dashboard';`.
+
+### B. Domain Layer (`lib/features/owner/domain/`)
+1. `entities/owner_dashboard_entity.dart`: Immutable business model for dashboard metrics & receipts (`Equatable`).
+2. `repositories/owner_repository.dart`: Abstract contract `Future<Either<Failure, OwnerDashboardEntity>> getDashboardStats();`.
+3. `usecases/get_owner_dashboard_use_case.dart`: UseCase wrapping the repository call.
+
+### C. Data Layer (`lib/features/owner/data/`)
+1. `models/owner_dashboard_model.dart`: JSON deserialization (`fromJson`) with null-safe fallbacks for all numerical metrics.
+2. `datasources/owner_remote_data_source.dart`: Dio GET call to `ApiConstants.ownerDashboard`.
+3. `repositories/owner_repository_impl.dart`: Concrete implementation mapping API errors to localized `Failure`.
+
+### D. Presentation Layer (`lib/features/owner/presentation/`)
+1. `cubit/owner_dashboard_cubit.dart`: Manages `OwnerDashboardState` (`Loading`, `Success`, `Error`). Supports pull-to-refresh via `forceRefresh`.
+2. `cubit/owner_dashboard_state.dart`: Immutable states representing the exact UI conditions.
+3. `views/owner_dashboard_view.dart`: Main dashboard container with `BlocConsumer`, refresh indicator, and state dispatching.
+4. `widgets/dashboard/owner_financial_summary_card.dart`: Hero financial widget.
+5. `widgets/dashboard/owner_occupancy_card.dart`: Occupancy rate visualizer widget.
+6. `widgets/dashboard/owner_alerts_grid.dart`: Contracts & maintenance summary grid.
+7. `widgets/dashboard/owner_recent_receipts_section.dart`: Receipts display & empty state handling.
+
+### E. Dependency Injection (`lib/features/owner/di/owner_di.dart`)
+- Register `OwnerRemoteDataSource`, `OwnerRepository`, `GetOwnerDashboardUseCase`, and `OwnerDashboardCubit` via GetIt (`sl`).
+
+---
+
+## 4. Strict Compliance Checklist
+- [x] Zero hardcoded colors/fonts (Only `AppColors`, `AppFonts`, `AppRadius`, `AppSpacing`).
+- [x] All files strictly < 150 lines.
+- [x] Full error handling mapped to friendly Arabic messages via `AppToast`.
+- [x] Zero duplicated code or endpoints across feature boundaries.

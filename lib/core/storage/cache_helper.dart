@@ -43,6 +43,19 @@ class CacheHelper {
     return _prefs.getString(_tenantIdKey);
   }
 
+  // ─── Theme: Primary Color ─────────────────────────────────────────────────
+  static const String _primaryColorKey = 'primary_color_value';
+
+  /// Persists the user's chosen primary color as an ARGB int value.
+  Future<void> savePrimaryColor(int colorValue) async {
+    await _prefs.setInt(_primaryColorKey, colorValue);
+  }
+
+  /// Returns the saved primary color int value, or null if not set.
+  int? getPrimaryColor() {
+    return _prefs.getInt(_primaryColorKey);
+  }
+
   Future<void> clearAll() async {
     await _prefs.clear();
   }

@@ -8,6 +8,7 @@ import '../network/interceptors/error_interceptor.dart';
 import '../network/interceptors/locale_interceptor.dart';
 import '../storage/cache_helper.dart';
 import '../storage/secure_storage_service.dart';
+import '../theme/app_theme_cubit.dart';
 import '../../features/auth/di/auth_di.dart';
 import '../../features/owner/di/owner_di.dart';
 
@@ -21,6 +22,9 @@ Future<void> setupServiceLocator() async {
   // Storage
   sl.registerLazySingleton<SecureStorageService>(() => SecureStorageService());
   sl.registerLazySingleton<CacheHelper>(() => CacheHelper(sl()));
+
+  // Theme
+  sl.registerLazySingleton<AppThemeCubit>(() => AppThemeCubit());
 
   // Network Interceptors
   sl.registerLazySingleton<AuthInterceptor>(() => AuthInterceptor(sl()));
@@ -38,4 +42,3 @@ Future<void> setupServiceLocator() async {
   await initAuthModule();
   initOwnerModule();
 }
-

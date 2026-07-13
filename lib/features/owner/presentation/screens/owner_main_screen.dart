@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/service_locator.dart';
+import '../cubit/owner_dashboard_cubit.dart';
 import '../cubit/owner_nav_cubit.dart';
 import '../cubit/owner_nav_state.dart';
 import '../views/owner_dashboard_view.dart';
@@ -17,8 +18,11 @@ class OwnerMainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Directionality(
       textDirection: TextDirection.rtl,
-      child: BlocProvider<OwnerNavCubit>(
-        create: (context) => sl<OwnerNavCubit>(),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<OwnerNavCubit>(create: (context) => sl<OwnerNavCubit>()),
+          BlocProvider<OwnerDashboardCubit>(create: (context) => sl<OwnerDashboardCubit>()),
+        ],
         child: const _OwnerMainContent(),
       ),
     );
