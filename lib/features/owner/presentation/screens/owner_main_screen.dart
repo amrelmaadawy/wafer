@@ -25,23 +25,86 @@ class OwnerMainScreen extends StatelessWidget {
   }
 }
 
-class _OwnerMainContent extends StatelessWidget {
+class _OwnerMainContent extends StatefulWidget {
   const _OwnerMainContent();
 
   @override
+  State<_OwnerMainContent> createState() => _OwnerMainContentState();
+}
+
+class _OwnerMainContentState extends State<_OwnerMainContent> {
+  int _previousIndex = 0;
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OwnerNavCubit, OwnerNavState>(
+    return BlocConsumer<OwnerNavCubit, OwnerNavState>(
+      listener: (context, state) {
+        if (state.currentIndex != _previousIndex) {
+          setState(() {
+            _previousIndex = state.currentIndex;
+          });
+        }
+      },
       builder: (context, state) {
+        final isForward = state.currentIndex >= _previousIndex;
+
         return Scaffold(
-          body: IndexedStack(
-            index: state.currentIndex,
-            children: const [
-              OwnerDashboardView(),
-              OwnerPropertiesView(),
-              OwnerLeasesView(),
-              OwnerFinanceView(),
-              OwnerMoreView(),
-            ],
+          extendBody: true,
+          body: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 240),
+            switchInCurve: Curves.easeOutCubic,
+            switchOutCurve: Curves.easeInCubic,
+            layoutBuilder: (currentChild, previousChildren) {
+              return Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  ...previousChildren,
+                  ?currentChild,
+                ],
+              );
+            },
+            transitionBuilder: (child, animation) {
+              final isIncoming = child.key == ValueKey<int>(state.currentIndex);
+              final slideOffset = isForward ? const Offset(-0.06, 0) : const Offset(0.06, 0);
+
+              if (isIncoming) {
+                return FadeTransition(
+                  opacity: CurvedAnimation(
+                    parent: animation,
+                    curve: const Interval(0.1, 1.0, curve: Curves.easeOutCubic),
+                  ),
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: slideOffset,
+                      end: Offset.zero,
+                    ).animate(
+                      CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+                    ),
+                    child: child,
+                  ),
+                );
+              } else {
+                return FadeTransition(
+                  opacity: CurvedAnimation(
+                    parent: animation,
+                    curve: const Interval(0.0, 0.35, curve: Curves.easeIn),
+                  ),
+                  child: SlideTransition(
+                    position: Tween<Offset>(
+                      begin: Offset.zero,
+                      end: Offset(-slideOffset.dx, 0),
+                    ).animate(
+                      CurvedAnimation(parent: animation, curve: Curves.easeIn),
+                    ),
+                    child: child,
+                  ),
+                );
+              }
+            },
+            child: KeyedSubtree(
+              key: ValueKey<int>(state.currentIndex),
+              child: _getViewForIndex(state.currentIndex),
+            ),
           ),
           bottomNavigationBar: OwnerBottomNavWidget(
             currentIndex: state.currentIndex,
@@ -52,5 +115,22 @@ class _OwnerMainContent extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget _getViewForIndex(int index) {
+    switch (index) {
+      case 0:
+        return const OwnerDashboardView();
+      case 1:
+        return const OwnerPropertiesView();
+      case 2:
+        return const OwnerLeasesView();
+      case 3:
+        return const OwnerFinanceView();
+      case 4:
+        return const OwnerMoreView();
+      default:
+        return const OwnerDashboardView();
+    }
   }
 }

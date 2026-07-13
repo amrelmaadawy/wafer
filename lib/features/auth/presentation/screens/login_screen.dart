@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/routing/routes.dart';
-import '../../../../core/utils/widgets/custom_snackbar.dart';
+import '../../../../core/utils/widgets/app_toast.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_state.dart';
 import '../views/login_view.dart';
@@ -21,12 +21,12 @@ class LoginScreen extends StatelessWidget {
           body: BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
               if (state is AuthError) {
-                CustomSnackbar.showError(context, state.message);
+                AppToast.showError(context, state.message);
               } else if (state is Authenticated) {
-                CustomSnackbar.showSuccess(context, 'تم تسجيل الدخول بنجاح');
+                AppToast.showSuccess(context, 'تم تسجيل الدخول بنجاح');
                 if (state.user.requiresPasswordChange) {
                   // TODO: Navigate to ChangePasswordScreen when built
-                  CustomSnackbar.showInfo(context, 'يرجى تغيير كلمة المرور أولاً');
+                  AppToast.showInfo(context, 'يرجى تغيير كلمة المرور أولاً');
                 } else {
                   context.go(Routes.home);
                 }
