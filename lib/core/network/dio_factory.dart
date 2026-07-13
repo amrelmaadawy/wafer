@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'interceptors/auth_interceptor.dart';
 import 'interceptors/locale_interceptor.dart';
 import 'interceptors/error_interceptor.dart';
+import 'api_constants.dart';
 
 class DioFactory {
   static Dio getDio({
@@ -13,12 +14,12 @@ class DioFactory {
     Dio dio = Dio();
 
     dio.options = BaseOptions(
-      baseUrl: 'https://api.example.com/', // TODO: Move to EnvironmentConfig
-      connectTimeout: const Duration(seconds: 30),
-      receiveTimeout: const Duration(seconds: 30),
+      baseUrl: ApiConstants.baseUrl,
+      connectTimeout: ApiConstants.connectTimeout,
+      receiveTimeout: ApiConstants.receiveTimeout,
       headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        ApiConstants.contentTypeHeader: ApiConstants.applicationJson,
+        ApiConstants.acceptHeader: ApiConstants.applicationJson,
       },
     );
 
