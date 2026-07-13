@@ -4,6 +4,8 @@ import '../data/repositories/profile_repository_impl.dart';
 import '../domain/repositories/profile_repository.dart';
 import '../domain/usecases/get_profile_use_case.dart';
 import '../domain/usecases/update_profile_use_case.dart';
+import '../domain/usecases/change_password_use_case.dart';
+import '../presentation/cubit/change_password_cubit.dart';
 import '../presentation/cubit/profile_cubit.dart';
 
 final sl = GetIt.instance;
@@ -33,5 +35,12 @@ void initProfileModule() {
     );
   }
 
+  if (!sl.isRegistered<ChangePasswordUseCase>()) {
+    sl.registerLazySingleton<ChangePasswordUseCase>(
+      () => ChangePasswordUseCase(sl()),
+    );
+  }
+
   sl.registerFactory<ProfileCubit>(() => ProfileCubit(sl(), sl()));
+  sl.registerFactory<ChangePasswordCubit>(() => ChangePasswordCubit(changePasswordUseCase: sl()));
 }

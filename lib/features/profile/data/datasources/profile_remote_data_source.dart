@@ -9,6 +9,11 @@ abstract class ProfileRemoteDataSource {
     required String phone,
     required String gender,
   });
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String newPasswordConfirmation,
+  });
 }
 
 class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
@@ -39,5 +44,21 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     );
     final data = response.data['data'] as Map<String, dynamic>;
     return ProfileModel.fromJson(data);
+  }
+
+  @override
+  Future<void> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String newPasswordConfirmation,
+  }) async {
+    await _dio.post(
+      '${ApiConstants.baseUrl}${ApiConstants.sharedChangePassword}',
+      data: {
+        'current_password': currentPassword,
+        'new_password': newPassword,
+        'new_password_confirmation': newPasswordConfirmation,
+      },
+    );
   }
 }

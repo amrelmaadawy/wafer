@@ -105,6 +105,19 @@ class LocaleKeys {
   static const profileUnspecified = 'profile.unspecified';
   static const profileContactAndAccountInfo = 'profile.contact_and_account_info';
   static const profileChangePasswordToast = 'profile.change_password_toast';
+  static const changePasswordTitle = 'profile.change_password_title';
+  static const changePasswordSub = 'profile.change_password_sub';
+  static const changePasswordCurrent = 'profile.change_password_current';
+  static const changePasswordNew = 'profile.change_password_new';
+  static const changePasswordConfirm = 'profile.change_password_confirm';
+  static const changePasswordBtn = 'profile.change_password_btn';
+  static const changePasswordSuccess = 'profile.change_password_success';
+  static const changePasswordReqMin = 'profile.change_password_req_min';
+  static const changePasswordReqNum = 'profile.change_password_req_num';
+  static const changePasswordReqMatch = 'profile.change_password_req_match';
+  static const changePasswordValRequired = 'profile.change_password_val_required';
+  static const changePasswordValDiff = 'profile.change_password_val_diff';
+  static const changePasswordValMismatch = 'profile.change_password_val_mismatch';
 
   // Common
   static const commonRetry = 'common.retry';

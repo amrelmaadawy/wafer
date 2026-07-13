@@ -9,4 +9,9 @@ abstract class ProfileRepository {
     required String phone,
     required String gender,
   });
+  Future<Either<Failure, void>> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String newPasswordConfirmation,
+  });
 }

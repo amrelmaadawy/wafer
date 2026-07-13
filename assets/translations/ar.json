@@ -104,7 +104,20 @@
     "tenant_type": "مستأجر",
     "unspecified": "غير محدد",
     "contact_and_account_info": "معلومات الاتصال والحساب",
-    "change_password_toast": "سيتم فتح شاشة تغيير كلمة المرور"
+    "change_password_toast": "سيتم فتح شاشة تغيير كلمة المرور",
+    "change_password_title": "تغيير كلمة المرور",
+    "change_password_sub": "قم بتحديث كلمة المرور الخاصة بحسابك لضمان أعلى مستويات الحماية والأمان",
+    "change_password_current": "كلمة المرور الحالية",
+    "change_password_new": "كلمة المرور الجديدة",
+    "change_password_confirm": "تأكيد كلمة المرور الجديدة",
+    "change_password_btn": "حفظ كلمة المرور الجديدة",
+    "change_password_success": "تم تغيير كلمة المرور بنجاح.",
+    "change_password_req_min": "8 أحرف على الأقل",
+    "change_password_req_num": "تحتوي على أرقام",
+    "change_password_req_match": "تطابق كلمتي المرور الجديدة",
+    "change_password_val_required": "هذا الحقل مطلوب",
+    "change_password_val_diff": "يجب أن تختلف كلمة المرور الجديدة عن الحالية",
+    "change_password_val_mismatch": "كلمتا المرور غير متطابقتين"
   },
   "common": {
     "retry": "إعادة المحاولة",

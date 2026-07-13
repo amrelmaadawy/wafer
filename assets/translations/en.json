@@ -104,7 +104,20 @@
     "tenant_type": "Tenant",
     "unspecified": "Unspecified",
     "contact_and_account_info": "Contact and Account Information",
-    "change_password_toast": "Change password screen will open"
+    "change_password_toast": "Change password screen will open",
+    "change_password_title": "Change Password",
+    "change_password_sub": "Update your account password to ensure maximum security and protection",
+    "change_password_current": "Current Password",
+    "change_password_new": "New Password",
+    "change_password_confirm": "Confirm New Password",
+    "change_password_btn": "Save New Password",
+    "change_password_success": "Password changed successfully.",
+    "change_password_req_min": "At least 8 characters",
+    "change_password_req_num": "Contains numbers",
+    "change_password_req_match": "New passwords match",
+    "change_password_val_required": "This field is required",
+    "change_password_val_diff": "New password must differ from current password",
+    "change_password_val_mismatch": "Passwords do not match"
   },
   "common": {
     "retry": "Retry",

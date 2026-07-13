@@ -8,6 +8,8 @@ import '../../../../core/utils/widgets/app_toast.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../cubit/profile_cubit.dart';
 import '../screens/edit_profile_screen.dart';
+import '../screens/change_password_screen.dart';
+import 'profile_action_tile.dart';
 
 class ProfileActionsCard extends StatelessWidget {
   final ProfileEntity profile;
@@ -50,8 +52,7 @@ class ProfileActionsCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           const Divider(height: 1, color: AppColors.borderLight),
-          _buildTile(
-            context: context,
+          ProfileActionTile(
             icon: Icons.edit_rounded,
             label: LocaleKeys.profileEditProfile.tr(),
             subtitle: LocaleKeys.profileEditProfileSubtitle.tr(),
@@ -71,18 +72,23 @@ class ProfileActionsCard extends StatelessWidget {
             },
           ),
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
-          _buildTile(
-            context: context,
+          ProfileActionTile(
             icon: Icons.lock_outline_rounded,
             label: LocaleKeys.profileChangePassword.tr(),
             subtitle: LocaleKeys.profileChangePasswordSubtitle.tr(),
             iconBg: AppColors.warning.withValues(alpha: 0.1),
             iconColor: AppColors.warning,
-            onTap: () => AppToast.showInfo(context, LocaleKeys.profileChangePasswordToast.tr()),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const ChangePasswordScreen(),
+                ),
+              );
+            },
           ),
           const Divider(height: 1, color: AppColors.borderLight),
-          _buildTile(
-            context: context,
+          ProfileActionTile(
             icon: Icons.logout_rounded,
             label: LocaleKeys.profileLogout.tr(),
             subtitle: LocaleKeys.profileLogoutSubtitle.tr(),
@@ -93,60 +99,6 @@ class ProfileActionsCard extends StatelessWidget {
           ),
           const SizedBox(height: 8),
         ],
-      ),
-    );
-  }
-
-  Widget _buildTile({
-    required BuildContext context,
-    required IconData icon,
-    required String label,
-    required String subtitle,
-    required Color iconBg,
-    required Color iconColor,
-    Color? labelColor,
-    required VoidCallback onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-        child: Row(
-          children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: iconBg,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              alignment: Alignment.center,
-              child: Icon(icon, size: 20, color: iconColor),
-            ),
-            const SizedBox(width: 14),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w600,
-                      color: labelColor ?? AppColors.textPrimaryLight,
-                    ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    subtitle,
-                    style: const TextStyle(fontSize: 11.5, color: AppColors.textSecondaryLight),
-                  ),
-                ],
-              ),
-            ),
-            Icon(Icons.chevron_right_rounded, color: AppColors.textSecondaryLight.withValues(alpha: 0.5), size: 20),
-          ],
-        ),
       ),
     );
   }
