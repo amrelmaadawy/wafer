@@ -42,3 +42,10 @@ For every API endpoint sent by the developer (`endpoint`, `body`, and `response`
   - All user-facing text MUST use `easy_localization` (`.tr()` or `LocaleKeys.key.tr()`).
   - When creating or modifying any UI component, every text string MUST first be added to `assets/translations/ar.json` and `en.json`, defined in `LocaleKeys`, and referenced via `.tr()`. Never bypass this rule.
 
+## 3. Sub-Module Domain-Driven Feature Architecture
+For large and complex features (like `owner`), never group all files together in a monolithic `data`, `domain`, or `presentation` folder. Instead, partition the feature into strictly isolated sub-modules representing Domain-Driven Bounded Contexts.
+- **Sub-Module Separation**: E.g., `features/owner/` should be split into `dashboard/`, `contracts/`, `finance/`, `properties/`, and `shell/`.
+- **Independent Layers**: Every sub-module MUST contain its own independent `data/`, `domain/`, and `presentation/` layers.
+- **Routing & Shell**: Navigation logic and the main entry screen must be isolated in a dedicated `shell/` sub-module.
+- **Modular Dependency Injection**: Use helper methods (e.g., `_initDashboard()`, `_initContracts()`) in the primary DI file (e.g., `owner_di.dart`) to keep dependencies decoupled by sub-module.
+- **Zero Cross-Importing**: Avoid importing `data` or `presentation` logic across sub-modules. Shared logic should go into `core/`.
