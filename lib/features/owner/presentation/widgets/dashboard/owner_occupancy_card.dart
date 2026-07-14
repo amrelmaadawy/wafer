@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../domain/entities/owner_dashboard_entity.dart';
 
 class OwnerOccupancyCard extends StatelessWidget {
@@ -30,14 +31,14 @@ class OwnerOccupancyCard extends StatelessWidget {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(color: rateColor.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(20)),
+                decoration: BoxDecoration(color: rateColor.withValues(alpha: 0.1), borderRadius: AppRadius.circularFull),
                 child: Text('${data.occupancyRate}%', style: TextStyle(color: rateColor, fontSize: 13, fontWeight: FontWeight.w800)),
               ),
             ],
           ),
           const SizedBox(height: 14),
           ClipRRect(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadius.circularMd,
             child: TweenAnimationBuilder<double>(
               tween: Tween(begin: 0, end: rate),
               duration: const Duration(milliseconds: 900),
@@ -70,7 +71,7 @@ class OwnerOccupancyCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.07),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: AppRadius.circularMd,
         border: Border.all(color: color.withValues(alpha: 0.18)),
       ),
       child: Column(
@@ -98,7 +99,7 @@ class OwnerOccupancyCard extends StatelessWidget {
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadius.circularXxl,
         border: Border.all(color: const Color(0xFFEDF0F7)),
         boxShadow: [
           BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 20, offset: const Offset(0, 6)),

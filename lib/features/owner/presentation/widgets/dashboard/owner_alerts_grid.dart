@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../domain/entities/owner_dashboard_entity.dart';
 
 class OwnerAlertsGrid extends StatelessWidget {
@@ -72,7 +73,7 @@ class OwnerAlertsGrid extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(10, 14, 10, 14),
       decoration: BoxDecoration(
         color: highlight ? color.withValues(alpha: 0.06) : Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadius.circularXl,
         border: Border.all(color: highlight ? color.withValues(alpha: 0.35) : const Color(0xFFEDF0F7), width: highlight ? 1.5 : 1.0),
         boxShadow: [
           BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 16, offset: const Offset(0, 5)),
@@ -86,7 +87,7 @@ class OwnerAlertsGrid extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(7),
-                decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(9)),
+                decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.circularMd),
                 child: Icon(icon, color: color, size: 16),
               ),
               if (highlight) Container(width: 7, height: 7, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),

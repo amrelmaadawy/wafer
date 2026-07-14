@@ -30,7 +30,7 @@ class ContractDetailsPropertyCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXxl,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -61,7 +61,7 @@ class ContractDetailsPropertyCard extends StatelessWidget {
             padding: const EdgeInsets.all(AppSpacing.sm),
             decoration: BoxDecoration(
               color: primaryColor.withValues(alpha: 0.05),
-              borderRadius: AppRadius.circularMd,
+              borderRadius: AppRadius.circularLg,
               border: Border.all(color: primaryColor.withValues(alpha: 0.15)),
             ),
             child: Row(
@@ -103,7 +103,7 @@ class ContractDetailsPropertyCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: AppRadius.circularSm,
+                    borderRadius: AppRadius.circularMd,
                     border: Border.all(color: AppColors.borderLight),
                   ),
                   child: Text(

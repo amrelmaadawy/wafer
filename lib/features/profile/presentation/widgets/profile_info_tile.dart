@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
 
 class ProfileInfoTile extends StatelessWidget {
@@ -34,7 +35,7 @@ class ProfileInfoTile extends StatelessWidget {
             height: 36,
             decoration: BoxDecoration(
               color: AppColors.backgroundLight,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: AppRadius.circularMd,
               border: Border.all(color: AppColors.borderLight),
             ),
             alignment: Alignment.center,
@@ -109,7 +110,7 @@ class _CopyButtonState extends State<_CopyButton> with SingleTickerProviderState
           color: _copied
               ? AppColors.success.withValues(alpha: 0.12)
               : context.primaryColor.withValues(alpha: 0.08),
-          borderRadius: BorderRadius.circular(9),
+          borderRadius: AppRadius.circularMd,
           border: Border.all(
             color: _copied
                 ? AppColors.success.withValues(alpha: 0.3)

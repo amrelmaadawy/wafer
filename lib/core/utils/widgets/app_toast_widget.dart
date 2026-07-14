@@ -117,7 +117,7 @@ class _AppToastWidgetState extends State<AppToastWidget> with SingleTickerProvid
                         await _controller.reverse();
                         widget.onDismissed();
                       },
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: AppRadius.circularXl,
                       child: Padding(
                         padding: const EdgeInsets.all(4),
                         child: Icon(Icons.close_rounded, size: 18, color: AppColors.textSecondaryLight.withValues(alpha: 0.6)),

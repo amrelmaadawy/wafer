@@ -22,7 +22,7 @@ class InstallmentCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXxl,
         border: isOverdue
             ? Border.all(color: AppColors.error.withValues(alpha: 0.3), width: 1.5)
             : Border.all(color: AppColors.borderLight.withValues(alpha: 0.5)),
@@ -46,7 +46,7 @@ class InstallmentCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
                   color: primaryColor.withValues(alpha: 0.1),
-                  borderRadius: AppRadius.circularSm,
+                  borderRadius: AppRadius.circularMd,
                 ),
                 child: Text(
                   LocaleKeys.installmentsInstallmentNum.tr(
@@ -63,7 +63,7 @@ class InstallmentCard extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
                   color: statusConfig.color.withValues(alpha: 0.12),
-                  borderRadius: AppRadius.circularSm,
+                  borderRadius: AppRadius.circularMd,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,

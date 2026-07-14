@@ -54,7 +54,7 @@ class _ContractsSkeletonWidgetState extends State<ContractsSkeletonWidget>
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXxl,
         border: Border.all(color: AppColors.borderLight),
       ),
       child: Column(

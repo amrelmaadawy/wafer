@@ -121,7 +121,7 @@ class ProfileContactCard extends StatelessWidget {
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: context.primaryColor.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: AppRadius.circularMd,
               ),
               child: Icon(Icons.copy_rounded, size: 16, color: context.primaryColor),
             ),

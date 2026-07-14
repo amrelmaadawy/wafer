@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
 import '../cubit/change_password_cubit.dart';
@@ -121,9 +122,9 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
         ),
         filled: true,
         fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: AppColors.borderLight)),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: AppColors.borderLight)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: context.primaryColor, width: 2)),
+        border: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: const BorderSide(color: AppColors.borderLight)),
+        enabledBorder: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: const BorderSide(color: AppColors.borderLight)),
+        focusedBorder: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: BorderSide(color: context.primaryColor, width: 2)),
       ),
     );
   }
@@ -168,7 +169,7 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: met ? AppColors.success.withValues(alpha: 0.08) : AppColors.surfaceLight,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.circularLg,
         border: Border.all(color: met ? AppColors.success.withValues(alpha: 0.3) : AppColors.borderLight),
       ),
       child: Row(
@@ -188,7 +189,7 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
         backgroundColor: context.primaryColor,
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 16),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.circularXl),
         elevation: 4,
         shadowColor: context.primaryShadow,
       ),

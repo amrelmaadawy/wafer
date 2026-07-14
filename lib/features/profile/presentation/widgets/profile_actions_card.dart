@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
 import '../../domain/entities/profile_entity.dart';
@@ -21,7 +22,7 @@ class ProfileActionsCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadius.circularXxl,
         border: Border.all(color: AppColors.borderLight),
       ),
       child: Column(
@@ -35,7 +36,7 @@ class ProfileActionsCard extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: context.primaryColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: AppRadius.circularMd,
                   ),
                   child: Icon(Icons.tune_rounded, color: context.primaryColor, size: 18),
                 ),

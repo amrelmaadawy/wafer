@@ -33,12 +33,12 @@ class ContractDetailsInstallmentsActionCard extends StatelessWidget {
           ),
         ),
       ),
-      borderRadius: AppRadius.circularLg,
+      borderRadius: AppRadius.circularXxl,
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
           color: AppColors.surfaceLight,
-          borderRadius: AppRadius.circularLg,
+          borderRadius: AppRadius.circularXxl,
           border: Border.all(color: primaryColor.withValues(alpha: 0.25)),
           boxShadow: [
             BoxShadow(
@@ -91,7 +91,7 @@ class ContractDetailsInstallmentsActionCard extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               decoration: BoxDecoration(
                 color: primaryColor,
-                borderRadius: AppRadius.circularSm,
+                borderRadius: AppRadius.circularMd,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,

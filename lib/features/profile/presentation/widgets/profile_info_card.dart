@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
 import '../../domain/entities/profile_entity.dart';
@@ -20,7 +21,7 @@ class ProfileInfoCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadius.circularXxl,
         border: Border.all(color: AppColors.borderLight),
       ),
       child: Column(
@@ -35,7 +36,7 @@ class ProfileInfoCard extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: context.primaryColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: AppRadius.circularMd,
                   ),
                   child: Icon(Icons.person_outline_rounded, color: context.primaryColor, size: 18),
                 ),
@@ -107,7 +108,7 @@ class ProfileInfoCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: AppColors.error.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: AppRadius.circularMd,
       ),
       child: Text(
         LocaleKeys.profileExpiringSoon.tr(),
@@ -122,7 +123,7 @@ class ProfileInfoCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
       decoration: BoxDecoration(
         color: AppColors.error.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.circularLg,
         border: Border.all(color: AppColors.error.withValues(alpha: 0.25)),
       ),
       child: Row(

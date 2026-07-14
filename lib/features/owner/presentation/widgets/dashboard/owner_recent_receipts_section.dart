@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/owner_dashboard_entity.dart';
 
@@ -40,7 +41,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
       padding: const EdgeInsets.all(28),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadius.circularXxl,
         border: Border.all(color: const Color(0xFFEDF0F7)),
       ),
       child: Column(
@@ -65,14 +66,14 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadius.circularXl,
         border: Border.all(color: const Color(0xFFEDF0F7)),
       ),
       child: Row(
         children: [
           Container(
             width: 44, height: 44,
-            decoration: BoxDecoration(color: const Color(0xFF10B981).withValues(alpha: 0.1), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(color: const Color(0xFF10B981).withValues(alpha: 0.1), borderRadius: AppRadius.circularLg),
             child: const Icon(Icons.arrow_downward_rounded, color: Color(0xFF10B981), size: 22),
           ),
           const SizedBox(width: 12),

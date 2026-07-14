@@ -22,7 +22,7 @@ class ContractDetailsRenterCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXxl,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -147,14 +147,14 @@ class ContractDetailsRenterCard extends StatelessWidget {
   }) {
     return Material(
       color: color.withValues(alpha: 0.07),
-      borderRadius: AppRadius.circularMd,
+      borderRadius: AppRadius.circularLg,
       child: InkWell(
         onTap: onTap,
-        borderRadius: AppRadius.circularMd,
+        borderRadius: AppRadius.circularLg,
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           decoration: BoxDecoration(
-            borderRadius: AppRadius.circularMd,
+            borderRadius: AppRadius.circularLg,
             border: Border.all(color: color.withValues(alpha: 0.25), width: 1.2),
           ),
           child: Row(

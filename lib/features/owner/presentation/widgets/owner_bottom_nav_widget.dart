@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
 
 class OwnerBottomNavWidget extends StatelessWidget {
@@ -31,7 +32,7 @@ class OwnerBottomNavWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
         decoration: BoxDecoration(
           color: AppColors.surfaceLight,
-          borderRadius: BorderRadius.circular(28),
+          borderRadius: AppRadius.circularXxl,
           border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.8)),
           boxShadow: [
             BoxShadow(
@@ -122,7 +123,7 @@ class _NavItemState extends State<_NavItem> with SingleTickerProviderStateMixin 
         padding: EdgeInsets.symmetric(horizontal: widget.isSelected ? 16 : 10, vertical: 8),
         decoration: BoxDecoration(
           color: widget.isSelected ? context.primaryColor : Colors.transparent,
-          borderRadius: BorderRadius.circular(22),
+          borderRadius: AppRadius.circularXxl,
           boxShadow: widget.isSelected
               ? [BoxShadow(color: context.primaryShadow, blurRadius: 12, offset: const Offset(0, 4))]
               : null,

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../cubit/owner_contracts_cubit.dart';
 import '../../cubit/owner_contracts_state.dart';
@@ -61,7 +62,7 @@ class ContractsFilterBar extends StatelessWidget {
         selectedColor: context.primaryColor,
         showCheckmark: false,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: AppRadius.circularFull,
           side: BorderSide(color: isSelected ? context.primaryColor : AppColors.borderLight),
         ),
       ),

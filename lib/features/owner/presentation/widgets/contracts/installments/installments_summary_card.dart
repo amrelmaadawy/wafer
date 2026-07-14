@@ -32,7 +32,7 @@ class InstallmentsSummaryCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXxl,
         gradient: LinearGradient(
           colors: [
             primaryColor,
@@ -92,7 +92,7 @@ class InstallmentsSummaryCard extends StatelessWidget {
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: Colors.white.withValues(alpha: 0.15),
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: AppRadius.circularMd,
                           ),
                           child: const Icon(
                             Icons.account_balance_wallet_rounded,
@@ -116,7 +116,7 @@ class InstallmentsSummaryCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: AppRadius.circularFull,
                       ),
                       child: Text(
                         '$paidCount / ${installments.length}',
@@ -136,7 +136,7 @@ class InstallmentsSummaryCard extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(14),
+                    borderRadius: AppRadius.circularLg,
                   ),
                   child: Row(
                     children: [
@@ -225,7 +225,7 @@ class InstallmentsSummaryCard extends StatelessWidget {
 
                 // Linear progress bar
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: AppRadius.circularFull,
                   child: LinearProgressIndicator(
                     value: progress,
                     minHeight: 7,

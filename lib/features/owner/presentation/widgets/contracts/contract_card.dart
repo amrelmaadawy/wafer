@@ -27,7 +27,7 @@ class ContractCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 14),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXxl,
         border: Border.all(color: AppColors.borderLight, width: 1),
         boxShadow: [
           BoxShadow(
@@ -39,10 +39,10 @@ class ContractCard extends StatelessWidget {
       ),
       child: Material(
         color: Colors.transparent,
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXxl,
         child: InkWell(
           onTap: onTap,
-          borderRadius: AppRadius.circularLg,
+          borderRadius: AppRadius.circularXxl,
           child: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -172,7 +172,7 @@ class ContractCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
                   decoration: BoxDecoration(
                     color: context.primaryColor.withValues(alpha: 0.1),
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: AppRadius.circularSm,
                   ),
                   child: Text(
                     _getCycleLabel(),

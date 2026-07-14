@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_radius.dart';
 
 class ProfileActionTile extends StatelessWidget {
   final IconData icon;
@@ -34,7 +35,7 @@ class ProfileActionTile extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 color: iconBg,
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: AppRadius.circularLg,
               ),
               alignment: Alignment.center,
               child: Icon(icon, size: 20, color: iconColor),

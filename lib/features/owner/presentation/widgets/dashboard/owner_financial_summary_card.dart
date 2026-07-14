@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/owner_dashboard_entity.dart';
 
@@ -17,7 +18,7 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(colors: [context.primaryDark, context.primaryColor, context.primaryLight], begin: Alignment.topLeft, end: Alignment.bottomRight),
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: AppRadius.circularXxl,
         boxShadow: [
           BoxShadow(color: context.primaryShadow, blurRadius: 28, offset: const Offset(0, 12)),
           BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 2)),
@@ -48,7 +49,7 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
 
   Widget _buildCircles() => Positioned.fill(
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(22),
+          borderRadius: AppRadius.circularXxl,
           child: Stack(children: [
             Positioned(top: -40, left: -40, child: Container(width: 140, height: 140, decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white.withValues(alpha: 0.04)))),
             Positioned(bottom: -30, right: -20, child: Container(width: 110, height: 110, decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white.withValues(alpha: 0.05)))),
@@ -67,7 +68,7 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
           if (hasOverdue)
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
-              decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.18), borderRadius: BorderRadius.circular(20), border: Border.all(color: AppColors.error.withValues(alpha: 0.55))),
+              decoration: BoxDecoration(color: AppColors.error.withValues(alpha: 0.18), borderRadius: AppRadius.circularFull, border: Border.all(color: AppColors.error.withValues(alpha: 0.55))),
               child: Row(mainAxisSize: MainAxisSize.min, children: [
                 const Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 12),
                 const SizedBox(width: 4),

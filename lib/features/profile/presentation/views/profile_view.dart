@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../cubit/profile_cubit.dart';
@@ -64,17 +65,17 @@ class ProfileView extends StatelessWidget {
       children: [
         Container(
           height: 180,
-          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(24)),
+          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: AppRadius.circularXxl),
         ),
         const SizedBox(height: 16),
         Container(
           height: 260,
-          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: AppRadius.circularXxl),
         ),
         const SizedBox(height: 16),
         Container(
           height: 180,
-          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: BorderRadius.circular(20)),
+          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: AppRadius.circularXxl),
         ),
       ],
     );
@@ -112,7 +113,7 @@ class ProfileView extends StatelessWidget {
               style: FilledButton.styleFrom(
                 backgroundColor: context.primaryColor,
                 padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 13),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
               ),
               icon: const Icon(Icons.refresh_rounded),
               label: Text(LocaleKeys.commonRetry.tr(), style: const TextStyle(fontWeight: FontWeight.bold)),

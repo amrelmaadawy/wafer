@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
 
 class ProfileTextField extends StatelessWidget {
@@ -34,9 +35,9 @@ class ProfileTextField extends StatelessWidget {
         prefixIcon: Icon(icon, color: context.primaryColor, size: 22),
         filled: true,
         fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: AppColors.borderLight)),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: const BorderSide(color: AppColors.borderLight)),
-        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(16), borderSide: BorderSide(color: context.primaryColor, width: 2)),
+        border: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: const BorderSide(color: AppColors.borderLight)),
+        enabledBorder: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: const BorderSide(color: AppColors.borderLight)),
+        focusedBorder: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: BorderSide(color: context.primaryColor, width: 2)),
       ),
     );
   }
@@ -68,7 +69,7 @@ class ProfileGenderCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
         decoration: BoxDecoration(
           color: isSelected ? context.primaryColor.withValues(alpha: 0.1) : Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadius.circularXl,
           border: Border.all(color: isSelected ? context.primaryColor : AppColors.borderLight, width: isSelected ? 2 : 1),
         ),
         child: Row(

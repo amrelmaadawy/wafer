@@ -28,7 +28,7 @@ class ContractDetailsFinancialCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXxl,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),
@@ -59,7 +59,7 @@ class ContractDetailsFinancialCard extends StatelessWidget {
             padding: const EdgeInsets.all(AppSpacing.md),
             decoration: BoxDecoration(
               color: primaryColor.withValues(alpha: 0.04),
-              borderRadius: AppRadius.circularMd,
+              borderRadius: AppRadius.circularLg,
               border: Border.all(color: primaryColor.withValues(alpha: 0.1)),
             ),
             child: Row(
@@ -90,7 +90,7 @@ class ContractDetailsFinancialCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: primaryColor.withValues(alpha: 0.1),
-                    borderRadius: AppRadius.circularSm,
+                    borderRadius: AppRadius.circularMd,
                   ),
                   child: Text(
                     cycleLabel,

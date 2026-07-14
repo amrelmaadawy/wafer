@@ -18,7 +18,7 @@ class InstallmentsFilterBar extends StatelessWidget {
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularMd,
+        borderRadius: AppRadius.circularLg,
         border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.7)),
       ),
       child: Row(
@@ -42,7 +42,7 @@ class InstallmentsFilterBar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(
             color: isSelected ? primaryColor : Colors.transparent,
-            borderRadius: AppRadius.circularSm,
+            borderRadius: AppRadius.circularMd,
           ),
           child: Text(
             label,

@@ -26,22 +26,11 @@ class ContractDetailsHeaderCard extends StatelessWidget {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         ),
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXxl,
         border: Border.all(color: primaryColor.withValues(alpha: 0.18)),
       ),
       child: Column(
         children: [
-          // Top accent bar
-          Container(
-            height: 4,
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(14),
-                topRight: Radius.circular(14),
-              ),
-            ),
-          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
             child: Column(
@@ -99,7 +88,7 @@ class ContractDetailsHeaderCard extends StatelessWidget {
                           color: contract.isEjarLinked
                               ? AppColors.success.withValues(alpha: 0.1)
                               : AppColors.borderLight.withValues(alpha: 0.5),
-                          borderRadius: AppRadius.circularSm,
+                          borderRadius: AppRadius.circularMd,
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
