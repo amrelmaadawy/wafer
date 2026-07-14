@@ -93,7 +93,17 @@ class ContractCard extends StatelessWidget {
             ),
           ],
         ),
-        ContractStatusBadge(status: contract.status),
+        Row(
+          children: [
+            ContractStatusBadge(status: contract.status),
+            const SizedBox(width: 8),
+            Icon(
+              Icons.arrow_forward_ios_rounded,
+              size: 14,
+              color: AppColors.textSecondaryLight.withValues(alpha: 0.6),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -126,6 +136,7 @@ class ContractCard extends StatelessWidget {
   Widget _buildFinancialAndTimelineRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,27 +145,58 @@ class ContractCard extends StatelessWidget {
               LocaleKeys.contractsRentAmountLabel.tr(),
               style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 11.5),
             ),
-            const SizedBox(height: 2),
-            Text(
-              '${contract.rentAmount.toStringAsFixed(0)} ${_getCycleLabel()}',
-              style: TextStyle(
-                color: context.primaryColor,
-                fontSize: 14.5,
-                fontWeight: FontWeight.w800,
-              ),
+            const SizedBox(height: 4),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.baseline,
+              textBaseline: TextBaseline.alphabetic,
+              children: [
+                Text(
+                  contract.rentAmount.toStringAsFixed(0),
+                  style: TextStyle(
+                    color: context.primaryColor,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  LocaleKeys.contractsCurrency.tr(),
+                  style: TextStyle(
+                    color: context.primaryColor.withValues(alpha: 0.7),
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                const SizedBox(width: 6),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: context.primaryColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Text(
+                    _getCycleLabel(),
+                    style: TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w700,
+                      color: context.primaryColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
         if (contract.startDate.isNotEmpty && contract.endDate.isNotEmpty)
           Row(
             children: [
-              const Icon(Icons.calendar_today_outlined, size: 14, color: AppColors.textSecondaryLight),
-              const SizedBox(width: 5),
+              const Icon(Icons.calendar_today_outlined, size: 13, color: AppColors.textSecondaryLight),
+              const SizedBox(width: 4),
               Text(
-                '${contract.startDate} - ${contract.endDate}',
+                '${contract.startDate} › ${contract.endDate}',
                 style: const TextStyle(
                   color: AppColors.textSecondaryLight,
-                  fontSize: 12,
+                  fontSize: 11.5,
                   fontWeight: FontWeight.w500,
                 ),
               ),

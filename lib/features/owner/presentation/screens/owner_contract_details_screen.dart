@@ -10,6 +10,7 @@ import '../cubit/owner_contract_details_cubit.dart';
 import '../cubit/owner_contract_details_state.dart';
 import '../widgets/contracts/details/contract_details_financial_card.dart';
 import '../widgets/contracts/details/contract_details_header_card.dart';
+import '../widgets/contracts/details/contract_details_installments_action_card.dart';
 import '../widgets/contracts/details/contract_details_property_card.dart';
 import '../widgets/contracts/details/contract_details_renter_card.dart';
 import '../widgets/contracts/details/contract_details_skeleton_widget.dart';
@@ -57,7 +58,7 @@ class OwnerContractDetailsScreen extends StatelessWidget {
                 onRefresh: () => context.read<OwnerContractDetailsCubit>().getContractDetails(contractId),
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 80),
                   child: Column(
                     children: [
                       ContractDetailsHeaderCard(contract: contract),
@@ -67,7 +68,12 @@ class OwnerContractDetailsScreen extends StatelessWidget {
                       ContractDetailsRenterCard(contract: contract),
                       const SizedBox(height: 16),
                       ContractDetailsFinancialCard(contract: contract),
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 16),
+                      ContractDetailsInstallmentsActionCard(
+                        contractId: contractId,
+                        contractNumber: contract.contractNumber,
+                        installmentsCount: contract.paymentCount,
+                      ),
                     ],
                   ),
                 ),
@@ -87,7 +93,7 @@ class OwnerContractDetailsScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
+            const Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
             const SizedBox(height: 16),
             Text(
               message,

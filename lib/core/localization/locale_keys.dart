@@ -218,6 +218,7 @@ class LocaleKeys {
   static const contractsNoTitle = 'contracts.no_contracts_title';
   static const contractsNoSubtitle = 'contracts.no_contracts_subtitle';
   static const contractsDetailsTitle = 'contracts.details_title';
+  static const contractsContractNumberLabel = 'contracts.contract_number_label';
   static const contractsTypeLabel = 'contracts.type_label';
   static const contractsTypeResidential = 'contracts.type_residential';
   static const contractsTypeCommercial = 'contracts.type_commercial';
@@ -240,4 +241,26 @@ class LocaleKeys {
   static const contractsSecurityDeposit = 'contracts.security_deposit';
   static const contractsCurrency = 'contracts.currency';
   static const contractsLauncherError = 'contracts.launcher_error';
+  static const installmentsTitle = 'contracts.installments_title';
+  static const installmentsViewScheduleBtn = 'contracts.installments_view_schedule_btn';
+  static const installmentsCardSubtitle = 'contracts.installments_card_subtitle';
+  static const installmentsTotalAmount = 'contracts.installments_total_amount';
+  static const installmentsPaidAmount = 'contracts.installments_paid_amount';
+  static const installmentsRemainingAmount = 'contracts.installments_remaining_amount';
+  static const installmentsInstallmentNum = 'contracts.installments_installment_num';
+  static const installmentsDueDate = 'contracts.installments_due_date';
+  static const installmentsAmount = 'contracts.installments_amount';
+  static const installmentsPaid = 'contracts.installments_paid';
+  static const installmentsRemaining = 'contracts.installments_remaining';
+  static const installmentsStatusUnpaid = 'contracts.installments_status_unpaid';
+  static const installmentsStatusPaid = 'contracts.installments_status_paid';
+  static const installmentsStatusOverdue = 'contracts.installments_status_overdue';
+  static const installmentsStatusPartial = 'contracts.installments_status_partial';
+  static const installmentsFilterAll = 'contracts.installments_filter_all';
+  static const installmentsFilterPaid = 'contracts.installments_filter_paid';
+  static const installmentsFilterUnpaid = 'contracts.installments_filter_unpaid';
+  static const installmentsEmptyTitle = 'contracts.installments_empty_title';
+  static const installmentsEmptySubtitle = 'contracts.installments_empty_subtitle';
+  static const installmentsViewBtn = 'contracts.installments_view_btn';
+  static const installmentsCountLabel = 'contracts.installments_count_label';
 }

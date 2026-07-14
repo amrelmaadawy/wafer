@@ -121,14 +121,14 @@ class ContractDetailsFinancialCard extends StatelessWidget {
           const SizedBox(height: 12),
           _buildRowItem(
             LocaleKeys.contractsStartDateLabel.tr(),
-            contract.startDate.isNotEmpty ? contract.startDate : '-',
+            contract.startDate.isNotEmpty ? _formatDate(contract.startDate) : '-',
           ),
           const SizedBox(height: 12),
           const Divider(height: 1, color: AppColors.borderLight),
           const SizedBox(height: 12),
           _buildRowItem(
             LocaleKeys.contractsEndDateLabel.tr(),
-            contract.endDate.isNotEmpty ? contract.endDate : '-',
+            contract.endDate.isNotEmpty ? _formatDate(contract.endDate) : '-',
           ),
         ],
       ),
@@ -153,5 +153,19 @@ class ContractDetailsFinancialCard extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  String _formatDate(String isoDate) {
+    if (isoDate.isEmpty) return '-';
+    try {
+      final parts = isoDate.split('-');
+      if (parts.length != 3) return isoDate;
+      final months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+        'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+      final month = int.tryParse(parts[1]) ?? 1;
+      return '${parts[2]} ${months[month - 1]} ${parts[0]}';
+    } catch (_) {
+      return isoDate;
+    }
   }
 }
