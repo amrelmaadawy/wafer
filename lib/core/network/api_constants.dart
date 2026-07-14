@@ -22,4 +22,7 @@ class ApiConstants {
   static const String sharedUpdateAvatar = 'shared/update-avatar';
   static const String sharedNotifications = 'shared/notifications';
   static const String sharedUnreadCount = 'shared/notifications/unread-count';
+
+  /// Owner Endpoints
+  static const String ownerContracts = 'owner/contracts';
 }

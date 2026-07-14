@@ -189,5 +189,29 @@
     "time_minutes_ago": "منذ {} دقيقة",
     "time_hours_ago": "منذ {} ساعة",
     "time_days_ago": "منذ {} يوم"
+  },
+  "contracts": {
+    "title": "عقود الإيجار",
+    "total_count": "إجمالي العقود",
+    "filter_all": "الكل",
+    "filter_active": "ساري",
+    "filter_expiring": "قارب على الانتهاء",
+    "filter_draft": "مسودة",
+    "filter_terminated": "منتهي / مفسوخ",
+    "status_active": "ساري ونشط",
+    "status_expiring": "توشك على الانتهاء",
+    "status_draft": "مسودة",
+    "status_terminated": "منتهي / مفسوخ",
+    "status_cancelled": "ملغى",
+    "status_renewed": "مجدد",
+    "status_archived": "مؤرشف",
+    "tenant_label": "المستأجر:",
+    "rent_amount_label": "قيمة الإيجار:",
+    "cycle_monthly": "شهرياً",
+    "cycle_annual": "سنوياً",
+    "cycle_quarterly": "ربع سنوي",
+    "cycle_custom": "حسب العقد",
+    "no_contracts_title": "لا توجد عقود حتى الآن",
+    "no_contracts_subtitle": "ستظهر هنا جميع العقود الإيجارية الخاصة بأملاكك ووحداتك العقارية فور إنشائها وتفعيلها"
   }
 }

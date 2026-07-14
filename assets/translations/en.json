@@ -189,5 +189,29 @@
     "time_minutes_ago": "{}m ago",
     "time_hours_ago": "{}h ago",
     "time_days_ago": "{}d ago"
+  },
+  "contracts": {
+    "title": "Lease Contracts",
+    "total_count": "Total Contracts",
+    "filter_all": "All",
+    "filter_active": "Active",
+    "filter_expiring": "Expiring Soon",
+    "filter_draft": "Draft",
+    "filter_terminated": "Terminated",
+    "status_active": "Active",
+    "status_expiring": "Expiring Soon",
+    "status_draft": "Draft",
+    "status_terminated": "Terminated",
+    "status_cancelled": "Cancelled",
+    "status_renewed": "Renewed",
+    "status_archived": "Archived",
+    "tenant_label": "Tenant:",
+    "rent_amount_label": "Rent Amount:",
+    "cycle_monthly": "Monthly",
+    "cycle_annual": "Annual",
+    "cycle_quarterly": "Quarterly",
+    "cycle_custom": "As Contracted",
+    "no_contracts_title": "No contracts yet",
+    "no_contracts_subtitle": "All lease contracts for your real estate properties and units will appear here once created and activated"
   }
 }

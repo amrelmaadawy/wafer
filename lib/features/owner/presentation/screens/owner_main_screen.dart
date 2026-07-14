@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/di/service_locator.dart';
+import '../cubit/owner_contracts_cubit.dart';
 import '../cubit/owner_dashboard_cubit.dart';
 import '../cubit/owner_nav_cubit.dart';
 import '../cubit/owner_nav_state.dart';
@@ -24,6 +25,7 @@ class OwnerMainScreen extends StatelessWidget {
         providers: [
           BlocProvider<OwnerNavCubit>(create: (_) => sl<OwnerNavCubit>()),
           BlocProvider<OwnerDashboardCubit>(create: (_) => sl<OwnerDashboardCubit>()),
+          BlocProvider<OwnerContractsCubit>(create: (_) => sl<OwnerContractsCubit>()),
           BlocProvider<ProfileCubit>(create: (_) => sl<ProfileCubit>()..fetchProfile()),
         ],
         child: const _OwnerMainContent(),

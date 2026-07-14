@@ -193,4 +193,28 @@ class LocaleKeys {
   static const notificationsTimeMinutesAgo = 'notifications.time_minutes_ago';
   static const notificationsTimeHoursAgo = 'notifications.time_hours_ago';
   static const notificationsTimeDaysAgo = 'notifications.time_days_ago';
+
+  // Contracts
+  static const contractsTitle = 'contracts.title';
+  static const contractsTotalCount = 'contracts.total_count';
+  static const contractsFilterAll = 'contracts.filter_all';
+  static const contractsFilterActive = 'contracts.filter_active';
+  static const contractsFilterExpiring = 'contracts.filter_expiring';
+  static const contractsFilterDraft = 'contracts.filter_draft';
+  static const contractsFilterTerminated = 'contracts.filter_terminated';
+  static const contractsStatusActive = 'contracts.status_active';
+  static const contractsStatusExpiring = 'contracts.status_expiring';
+  static const contractsStatusDraft = 'contracts.status_draft';
+  static const contractsStatusTerminated = 'contracts.status_terminated';
+  static const contractsStatusCancelled = 'contracts.status_cancelled';
+  static const contractsStatusRenewed = 'contracts.status_renewed';
+  static const contractsStatusArchived = 'contracts.status_archived';
+  static const contractsTenantLabel = 'contracts.tenant_label';
+  static const contractsRentAmountLabel = 'contracts.rent_amount_label';
+  static const contractsCycleMonthly = 'contracts.cycle_monthly';
+  static const contractsCycleAnnual = 'contracts.cycle_annual';
+  static const contractsCycleQuarterly = 'contracts.cycle_quarterly';
+  static const contractsCycleCustom = 'contracts.cycle_custom';
+  static const contractsNoTitle = 'contracts.no_contracts_title';
+  static const contractsNoSubtitle = 'contracts.no_contracts_subtitle';
 }
