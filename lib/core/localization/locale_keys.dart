@@ -217,4 +217,27 @@ class LocaleKeys {
   static const contractsCycleCustom = 'contracts.cycle_custom';
   static const contractsNoTitle = 'contracts.no_contracts_title';
   static const contractsNoSubtitle = 'contracts.no_contracts_subtitle';
+  static const contractsDetailsTitle = 'contracts.details_title';
+  static const contractsTypeLabel = 'contracts.type_label';
+  static const contractsTypeResidential = 'contracts.type_residential';
+  static const contractsTypeCommercial = 'contracts.type_commercial';
+  static const contractsTypeLand = 'contracts.type_land';
+  static const contractsTypeAdmin = 'contracts.type_admin';
+  static const contractsEjarLinked = 'contracts.ejar_linked';
+  static const contractsEjarNotLinked = 'contracts.ejar_not_linked';
+  static const contractsSectionPropertyUnit = 'contracts.section_property_unit';
+  static const contractsSectionRenter = 'contracts.section_renter';
+  static const contractsRenterPhone = 'contracts.renter_phone';
+  static const contractsActionCall = 'contracts.action_call';
+  static const contractsActionWhatsapp = 'contracts.action_whatsapp';
+  static const contractsSectionTimeline = 'contracts.section_timeline';
+  static const contractsStartDateLabel = 'contracts.start_date_label';
+  static const contractsEndDateLabel = 'contracts.end_date_label';
+  static const contractsSectionFinancial = 'contracts.section_financial';
+  static const contractsTotalRentValue = 'contracts.total_rent_value';
+  static const contractsPaymentCount = 'contracts.payment_count';
+  static const contractsPaymentCountUnit = 'contracts.payment_count_unit';
+  static const contractsSecurityDeposit = 'contracts.security_deposit';
+  static const contractsCurrency = 'contracts.currency';
+  static const contractsLauncherError = 'contracts.launcher_error';
 }

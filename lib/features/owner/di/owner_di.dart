@@ -5,8 +5,10 @@ import '../data/repositories/owner_contracts_repository_impl.dart';
 import '../data/repositories/owner_repository_impl.dart';
 import '../domain/repositories/owner_contracts_repository.dart';
 import '../domain/repositories/owner_repository.dart';
+import '../domain/usecases/get_owner_contract_details_use_case.dart';
 import '../domain/usecases/get_owner_contracts_use_case.dart';
 import '../domain/usecases/get_owner_dashboard_use_case.dart';
+import '../presentation/cubit/owner_contract_details_cubit.dart';
 import '../presentation/cubit/owner_contracts_cubit.dart';
 import '../presentation/cubit/owner_dashboard_cubit.dart';
 import '../presentation/cubit/owner_nav_cubit.dart';
@@ -35,6 +37,9 @@ void initOwnerModule() {
   if (!sl.isRegistered<GetOwnerContractsUseCase>()) {
     sl.registerLazySingleton(() => GetOwnerContractsUseCase(sl()));
   }
+  if (!sl.isRegistered<GetOwnerContractDetailsUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerContractDetailsUseCase(sl()));
+  }
 
   // Cubits
   if (!sl.isRegistered<OwnerNavCubit>()) {
@@ -45,5 +50,8 @@ void initOwnerModule() {
   }
   if (!sl.isRegistered<OwnerContractsCubit>()) {
     sl.registerFactory(() => OwnerContractsCubit(sl()));
+  }
+  if (!sl.isRegistered<OwnerContractDetailsCubit>()) {
+    sl.registerFactory(() => OwnerContractDetailsCubit(sl()));
   }
 }

@@ -6,6 +6,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../cubit/owner_contracts_cubit.dart';
 import '../cubit/owner_contracts_state.dart';
+import '../screens/owner_contract_details_screen.dart';
 import '../widgets/contracts/contract_card.dart';
 import '../widgets/contracts/contracts_empty_widget.dart';
 import '../widgets/contracts/contracts_filter_bar.dart';
@@ -124,7 +125,18 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
                     child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
                   );
                 }
-                return ContractCard(contract: state.contracts[index]);
+                final contract = state.contracts[index];
+                return ContractCard(
+                  contract: contract,
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => OwnerContractDetailsScreen(contractId: contract.id),
+                      ),
+                    );
+                  },
+                );
               },
             ),
           );
