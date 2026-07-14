@@ -10,6 +10,7 @@ import '../storage/cache_helper.dart';
 import '../storage/secure_storage_service.dart';
 import '../theme/app_theme_cubit.dart';
 import '../../features/auth/di/auth_di.dart';
+import '../../features/notifications/di/notifications_di.dart';
 import '../../features/owner/di/owner_di.dart';
 import '../../features/profile/di/profile_di.dart';
 
@@ -43,4 +44,5 @@ Future<void> setupServiceLocator() async {
   await initAuthModule();
   initOwnerModule();
   initProfileModule();
+  initNotificationsModule();
 }

@@ -173,5 +173,21 @@
     "pill_rented": "Rented",
     "pill_vacant": "Vacant",
     "pill_properties": "Properties"
+  },
+  "notifications": {
+    "title": "Notifications & Alerts",
+    "mark_all_read": "Mark All as Read",
+    "all": "All",
+    "unread": "Unread",
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "earlier": "Earlier",
+    "no_notifications_title": "No notifications yet",
+    "no_notifications_subtitle": "All alerts regarding invoices, contracts, and maintenance requests will appear here as soon as they occur",
+    "mark_read_success": "Notifications marked as read",
+    "time_just_now": "Just now",
+    "time_minutes_ago": "{}m ago",
+    "time_hours_ago": "{}h ago",
+    "time_days_ago": "{}d ago"
   }
 }

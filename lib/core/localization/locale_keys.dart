@@ -177,4 +177,20 @@ class LocaleKeys {
   static const ownerPillRented = 'owner.pill_rented';
   static const ownerPillVacant = 'owner.pill_vacant';
   static const ownerPillProperties = 'owner.pill_properties';
+
+  // Notifications
+  static const notificationsTitle = 'notifications.title';
+  static const notificationsMarkAllRead = 'notifications.mark_all_read';
+  static const notificationsAll = 'notifications.all';
+  static const notificationsUnread = 'notifications.unread';
+  static const notificationsToday = 'notifications.today';
+  static const notificationsYesterday = 'notifications.yesterday';
+  static const notificationsEarlier = 'notifications.earlier';
+  static const notificationsNoTitle = 'notifications.no_notifications_title';
+  static const notificationsNoSubtitle = 'notifications.no_notifications_subtitle';
+  static const notificationsMarkReadSuccess = 'notifications.mark_read_success';
+  static const notificationsTimeJustNow = 'notifications.time_just_now';
+  static const notificationsTimeMinutesAgo = 'notifications.time_minutes_ago';
+  static const notificationsTimeHoursAgo = 'notifications.time_hours_ago';
+  static const notificationsTimeDaysAgo = 'notifications.time_days_ago';
 }

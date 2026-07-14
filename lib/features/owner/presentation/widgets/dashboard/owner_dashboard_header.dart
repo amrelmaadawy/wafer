@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/theme/app_colors.dart';
+import '../../../../notifications/presentation/cubit/unread_count_cubit.dart';
+import '../../../../notifications/presentation/widgets/notification_bell_badge_widget.dart';
 import '../../../../profile/presentation/cubit/profile_cubit.dart';
 import '../../../../profile/presentation/cubit/profile_state.dart';
 
@@ -68,45 +70,14 @@ class OwnerDashboardHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              _buildCleanNotificationIcon(context),
+              BlocProvider.value(
+                value: sl<UnreadCountCubit>()..getUnreadCount(),
+                child: const NotificationBellBadgeWidget(),
+              ),
             ],
           ),
         );
       },
-    );
-  }
-
-  Widget _buildCleanNotificationIcon(BuildContext context) {
-    return Container(
-      width: 44,
-      height: 44,
-      decoration: const BoxDecoration(
-        color: Color(0xFFF8FAFC),
-        shape: BoxShape.circle,
-        border: Border.fromBorderSide(BorderSide(color: Color(0xFFE2E8F0))),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          const Icon(
-            Icons.notifications_outlined,
-            color: Color(0xFF334155),
-            size: 22,
-          ),
-          Positioned(
-            top: 10,
-            right: 11,
-            child: Container(
-              width: 7,
-              height: 7,
-              decoration: const BoxDecoration(
-                color: AppColors.error,
-                shape: BoxShape.circle,
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }

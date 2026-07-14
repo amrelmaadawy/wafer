@@ -20,4 +20,6 @@ class ApiConstants {
   static const String sharedProfile = 'shared/profile';
   static const String sharedChangePassword = 'shared/change-password';
   static const String sharedUpdateAvatar = 'shared/update-avatar';
+  static const String sharedNotifications = 'shared/notifications';
+  static const String sharedUnreadCount = 'shared/notifications/unread-count';
 }

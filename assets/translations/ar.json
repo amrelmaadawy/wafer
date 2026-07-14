@@ -173,5 +173,21 @@
     "pill_rented": "مؤجرة",
     "pill_vacant": "شاغرة",
     "pill_properties": "عقارات"
+  },
+  "notifications": {
+    "title": "الإشعارات والتنبيهات",
+    "mark_all_read": "تحديد الكل كمقروء",
+    "all": "الكل",
+    "unread": "غير مقروء",
+    "today": "اليوم",
+    "yesterday": "أمس",
+    "earlier": "سابقاً",
+    "no_notifications_title": "لا توجد إشعارات حالياً",
+    "no_notifications_subtitle": "ستظهر هنا كافة التنبيهات الخاصة بالفواتير، العقود، وطلبات الصيانة فور حدوثها",
+    "mark_read_success": "تم تحديد الإشعارات كمقروءة",
+    "time_just_now": "الآن",
+    "time_minutes_ago": "منذ {} دقيقة",
+    "time_hours_ago": "منذ {} ساعة",
+    "time_days_ago": "منذ {} يوم"
   }
 }
