@@ -1,7 +1,7 @@
 import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
-import '../../features/owner/presentation/screens/owner_main_screen.dart';
+import '../../features/owner/shell/presentation/screens/owner_main_screen.dart';
 import 'routes.dart';
 
 class AppRouter {
