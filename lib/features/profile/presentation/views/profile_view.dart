@@ -11,6 +11,7 @@ import '../cubit/profile_state.dart';
 import '../widgets/profile_actions_card.dart';
 import '../widgets/profile_header_card.dart';
 import '../widgets/profile_info_card.dart';
+import '../widgets/profile_skeleton_widget.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -60,25 +61,7 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget _buildSkeleton() {
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 4, 16, 120),
-      children: [
-        Container(
-          height: 180,
-          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: AppRadius.circularXxl),
-        ),
-        const SizedBox(height: 16),
-        Container(
-          height: 260,
-          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: AppRadius.circularXxl),
-        ),
-        const SizedBox(height: 16),
-        Container(
-          height: 180,
-          decoration: BoxDecoration(color: Colors.grey.withValues(alpha: 0.15), borderRadius: AppRadius.circularXxl),
-        ),
-      ],
-    );
+    return const ProfileSkeletonWidget();
   }
 
   Widget _buildError(BuildContext context, String message) {

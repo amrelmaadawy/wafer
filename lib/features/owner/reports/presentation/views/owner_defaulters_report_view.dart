@@ -5,6 +5,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../cubit/owner_defaulters_cubit.dart';
 import '../cubit/owner_defaulters_state.dart';
 
@@ -159,21 +160,68 @@ class _DefaultersSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 170,
-          decoration: BoxDecoration(
-            color: AppColors.surfaceLight,
-            borderRadius: AppRadius.circularXxl,
-            border: Border.all(color: AppColors.borderLight),
+        AppShimmer(
+          child: Container(
+            height: 170,
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceLight,
+              borderRadius: AppRadius.circularXxl,
+              border: Border.all(color: AppColors.borderLight),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    AppShimmer.circle(size: 22),
+                    const SizedBox(width: 8),
+                    AppShimmer.box(width: 150, height: 16),
+                  ],
+                ),
+                AppShimmer.box(width: 110, height: 36),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppShimmer.box(width: 90, height: 14),
+                    AppShimmer.box(width: 90, height: 14),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 16),
-        Container(
-          height: 150,
-          decoration: BoxDecoration(
-            color: AppColors.surfaceLight,
-            borderRadius: AppRadius.circularXxl,
-            border: Border.all(color: AppColors.borderLight),
+        AppShimmer(
+          child: Container(
+            height: 140,
+            padding: const EdgeInsets.all(18),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceLight,
+              borderRadius: AppRadius.circularXxl,
+              border: Border.all(color: AppColors.borderLight),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  children: [
+                    AppShimmer.circle(size: 40),
+                    const SizedBox(width: 14),
+                    Expanded(child: AppShimmer.box(height: 16)),
+                  ],
+                ),
+                const Divider(color: AppColors.borderLight),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    AppShimmer.box(width: 80, height: 14),
+                    AppShimmer.box(width: 100, height: 18),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ],

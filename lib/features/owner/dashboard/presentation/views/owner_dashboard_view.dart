@@ -11,6 +11,7 @@ import '../widgets/owner_financial_summary_card.dart';
 import '../widgets/owner_occupancy_card.dart';
 import '../widgets/owner_recent_receipts_section.dart';
 import '../widgets/owner_dashboard_header.dart';
+import '../widgets/owner_dashboard_skeleton_widget.dart';
 import '../widgets/owner_quick_actions.dart';
 
 class OwnerDashboardView extends StatefulWidget {
@@ -81,7 +82,7 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
   }
 
   Widget _buildLoading() {
-    return const Center(child: CircularProgressIndicator());
+    return const OwnerDashboardSkeletonWidget();
   }
 
   Widget _buildError(BuildContext context, String message) {
