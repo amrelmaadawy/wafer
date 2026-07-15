@@ -110,7 +110,7 @@ class _NotificationsViewState extends State<NotificationsView> {
 
   PreferredSizeWidget _buildAppBar(BuildContext context, NotificationsCubit cubit) {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF8FAFC),
       elevation: 0,
       centerTitle: true,
       title: Text(
@@ -121,10 +121,7 @@ class _NotificationsViewState extends State<NotificationsView> {
           fontWeight: FontWeight.w700,
         ),
       ),
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(1),
-        child: Container(color: const Color(0xFFF1F5F9), height: 1),
-      ),
+
       actions: [
         BlocBuilder<NotificationsCubit, NotificationsState>(
           builder: (context, state) {
@@ -151,8 +148,8 @@ class _NotificationsViewState extends State<NotificationsView> {
 
   Widget _buildFilterChips(BuildContext context) {
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      color: Colors.transparent,
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 4),
       child: BlocBuilder<NotificationsCubit, NotificationsState>(
         builder: (context, state) {
           String current = 'all';
