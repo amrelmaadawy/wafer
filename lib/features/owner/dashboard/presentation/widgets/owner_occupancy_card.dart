@@ -4,7 +4,8 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
-import '../../../reports/presentation/screens/owner_reports_center_screen.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../core/routing/routes.dart';
 
 class OwnerOccupancyCard extends StatelessWidget {
   final OwnerDashboardEntity data;
@@ -18,12 +19,7 @@ class OwnerOccupancyCard extends StatelessWidget {
 
     return _card(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => const OwnerReportsCenterScreen(initialTabIndex: 1),
-          ),
-        );
+        context.push('${Routes.ownerReportsCenter}?tab=1');
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

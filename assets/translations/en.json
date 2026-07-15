@@ -50,7 +50,14 @@
     "nav_properties": "Properties",
     "nav_contracts": "Contracts",
     "nav_finance": "Finance",
-    "nav_profile": "Profile"
+    "nav_profile": "Profile",
+    "maintenance_hub": "Maintenance Requests",
+    "maintenance_pending": "{} Pending",
+    "maintenance_view_all": "View All Requests",
+    "maintenance_no_requests": "No Maintenance Requests",
+    "maintenance_no_requests_sub": "New maintenance requests will appear here",
+    "reports_shortcut": "Reports Center",
+    "reports_shortcut_sub": "Revenue • Occupancy • Defaulters"
   },
   "profile": {
     "title": "Profile",
@@ -122,7 +129,9 @@
     "avatar_change_title": "Update Profile Picture",
     "avatar_camera": "Take Photo with Camera",
     "avatar_gallery": "Choose from Gallery",
-    "avatar_success": "Profile picture updated successfully"
+    "avatar_success": "Profile picture updated successfully",
+    "reports_center": "Reports Center",
+    "reports_center_subtitle": "View revenue and occupancy reports"
   },
   "common": {
     "retry": "Retry",
@@ -320,5 +329,9 @@
     "report_title": "Payment Defaulters",
     "coming_soon": "This report will display a list of tenants with overdue payments, including details and overdue amounts for each case",
     "endpoint_pending": "Pending server configuration"
+  },
+  "drawer": {
+    "settings_coming_soon": "Settings coming soon",
+    "app_version": "Version {}"
   }
 }

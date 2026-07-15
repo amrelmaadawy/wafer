@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -7,9 +6,8 @@ import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
 import '../../domain/entities/profile_entity.dart';
-import '../cubit/profile_cubit.dart';
-import '../screens/edit_profile_screen.dart';
-import '../screens/change_password_screen.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/routing/routes.dart';
 import 'profile_action_tile.dart';
 
 class ProfileActionsCard extends StatelessWidget {
@@ -60,16 +58,7 @@ class ProfileActionsCard extends StatelessWidget {
             iconBg: context.primaryColor.withValues(alpha: 0.1),
             iconColor: context.primaryColor,
             onTap: () {
-              final cubit = context.read<ProfileCubit>();
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => EditProfileScreen(
-                    cubit: cubit,
-                    profile: profile,
-                  ),
-                ),
-              );
+              context.push(Routes.editProfile, extra: {'profile': profile});
             },
           ),
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
@@ -80,14 +69,10 @@ class ProfileActionsCard extends StatelessWidget {
             iconBg: AppColors.warning.withValues(alpha: 0.1),
             iconColor: AppColors.warning,
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const ChangePasswordScreen(),
-                ),
-              );
+              context.push(Routes.changePassword);
             },
           ),
+
           const Divider(height: 1, color: AppColors.borderLight),
           ProfileActionTile(
             icon: Icons.logout_rounded,

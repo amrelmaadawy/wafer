@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../../../../core/di/service_locator.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
-import '../../../shell/presentation/cubit/owner_nav_cubit.dart';
-import '../../../maintenance/presentation/cubit/owner_maintenance_cubit.dart';
-import '../../../maintenance/presentation/views/owner_maintenance_view.dart';
-import '../../../reports/presentation/screens/owner_reports_center_screen.dart';
+
 
 class OwnerQuickActions extends StatelessWidget {
   const OwnerQuickActions({super.key});
@@ -34,68 +31,66 @@ class OwnerQuickActions extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-              child: _buildActionCard(
-                context,
-                title: LocaleKeys.dashboardMaintRequest.tr(),
-                icon: Icons.build_circle_outlined,
-                color: const Color(0xFF8B5CF6),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BlocProvider<OwnerMaintenanceCubit>(
-                        create: (_) => sl<OwnerMaintenanceCubit>(),
-                        child: const OwnerMaintenanceView(),
-                      ),
+        Column(
+          children: [
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: _buildActionCard(
+                      context,
+                      title: LocaleKeys.dashboardLeaseContract.tr(),
+                      icon: Icons.description_outlined,
+                      color: const Color(0xFF10B981),
+                      onTap: () => context.go(Routes.ownerContracts),
                     ),
-                  );
-                },
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: _buildActionCard(
-                context,
-                title: LocaleKeys.dashboardLeaseContract.tr(),
-                icon: Icons.description_outlined,
-                color: const Color(0xFF10B981),
-                onTap: () => context.read<OwnerNavCubit>().changeTab(2),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: _buildActionCard(
-                context,
-                title: LocaleKeys.dashboardAddProperty.tr(),
-                icon: Icons.apartment_rounded,
-                color: context.primaryColor,
-                onTap: () => context.read<OwnerNavCubit>().changeTab(1),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: _buildActionCard(
-                context,
-                title: LocaleKeys.dashboardReports.tr(),
-                icon: Icons.bar_chart_rounded,
-                color: const Color(0xFFF59E0B),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const OwnerReportsCenterScreen(initialTabIndex: 0),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _buildActionCard(
+                      context,
+                      title: LocaleKeys.dashboardAddProperty.tr(),
+                      icon: Icons.apartment_rounded,
+                      color: context.primaryColor,
+                      onTap: () => context.go(Routes.ownerProperties),
                     ),
-                  );
-                },
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: _buildActionCard(
+                      context,
+                      title: LocaleKeys.maintenanceTitle.tr(),
+                      icon: Icons.build_circle_outlined,
+                      color: const Color(0xFFEF4444),
+                      onTap: () {
+                        context.push(Routes.ownerMaintenance);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: _buildActionCard(
+                      context,
+                      title: LocaleKeys.dashboardReports.tr(),
+                      icon: Icons.bar_chart_rounded,
+                      color: const Color(0xFFF59E0B),
+                      onTap: () {
+                        context.push('${Routes.ownerReportsCenter}?tab=0');
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
-        ),
         ),
       ],
     );

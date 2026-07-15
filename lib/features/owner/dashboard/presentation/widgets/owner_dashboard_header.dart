@@ -40,6 +40,7 @@ class OwnerDashboardHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

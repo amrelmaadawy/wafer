@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wafer/core/di/service_locator.dart';
 import 'package:wafer/features/owner/contracts/presentation/cubit/list/owner_contracts_cubit.dart';
 import 'package:wafer/features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
 import 'package:wafer/features/owner/dashboard/presentation/cubit/owner_dashboard_cubit.dart';
-import 'package:wafer/features/owner/shell/presentation/cubit/owner_nav_cubit.dart';
-import 'package:wafer/features/owner/shell/presentation/cubit/owner_nav_state.dart';
-import 'package:wafer/features/owner/dashboard/presentation/views/owner_dashboard_view.dart';
-import 'package:wafer/features/owner/properties/presentation/views/owner_properties_view.dart';
-import 'package:wafer/features/owner/contracts/presentation/views/owner_leases_view.dart';
-import 'package:wafer/features/owner/finance/presentation/views/owner_finance_view.dart';
 import 'package:wafer/features/profile/presentation/cubit/profile_cubit.dart';
-import 'package:wafer/features/profile/presentation/screens/profile_screen.dart';
 import 'package:wafer/features/owner/shell/presentation/widgets/owner_bottom_nav_widget.dart';
-import 'package:wafer/features/owner/shell/presentation/widgets/owner_page_switcher.dart';
+
 
 class OwnerMainScreen extends StatelessWidget {
-  const OwnerMainScreen({super.key});
+  final StatefulNavigationShell navigationShell;
+
+  const OwnerMainScreen({super.key, required this.navigationShell});
 
   @override
   Widget build(BuildContext context) {
@@ -24,62 +20,25 @@ class OwnerMainScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<OwnerNavCubit>(create: (_) => sl<OwnerNavCubit>()),
           BlocProvider<OwnerDashboardCubit>(create: (_) => sl<OwnerDashboardCubit>()),
           BlocProvider<OwnerContractsCubit>(create: (_) => sl<OwnerContractsCubit>()),
           BlocProvider<OwnerMaintenanceCubit>(create: (_) => sl<OwnerMaintenanceCubit>()),
           BlocProvider<ProfileCubit>(create: (_) => sl<ProfileCubit>()..fetchProfile()),
         ],
-        child: const _OwnerMainContent(),
-      ),
-    );
-  }
-}
-
-class _OwnerMainContent extends StatefulWidget {
-  const _OwnerMainContent();
-
-  @override
-  State<_OwnerMainContent> createState() => _OwnerMainContentState();
-}
-
-class _OwnerMainContentState extends State<_OwnerMainContent> {
-  int _previousIndex = 0;
-
-  static const _views = [
-    OwnerDashboardView(),
-    OwnerPropertiesView(),
-    OwnerLeasesView(),
-    OwnerFinanceView(),
-    ProfileScreen(),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocConsumer<OwnerNavCubit, OwnerNavState>(
-      listener: (context, state) {
-        if (state.currentIndex != _previousIndex) {
-          setState(() => _previousIndex = state.currentIndex);
-        }
-      },
-      builder: (context, state) {
-        final current = state.currentIndex;
-        final isForward = current > _previousIndex;
-
-        return Scaffold(
+        child: Scaffold(
           extendBody: true,
-          body: OwnerPageSwitcher(
-            currentIndex: current,
-            previousIndex: _previousIndex,
-            isForward: isForward,
-            child: _views[current],
-          ),
+          body: navigationShell,
           bottomNavigationBar: OwnerBottomNavWidget(
-            currentIndex: current,
-            onTabChanged: (i) => context.read<OwnerNavCubit>().changeTab(i),
+            currentIndex: navigationShell.currentIndex,
+            onTabChanged: (i) {
+              navigationShell.goBranch(
+                i,
+                initialLocation: i == navigationShell.currentIndex,
+              );
+            },
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 }

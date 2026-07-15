@@ -301,6 +301,25 @@ class LocaleKeys {
   static const maintenanceUnspecifiedDate = 'maintenance.unspecified_date';
   static const maintenanceNotDeterminedYet = 'maintenance.not_determined_yet';
 
+  // Dashboard Maintenance Hub
+  static const dashboardMaintenanceHub = 'dashboard.maintenance_hub';
+  static const dashboardMaintenancePending = 'dashboard.maintenance_pending';
+  static const dashboardMaintenanceViewAll = 'dashboard.maintenance_view_all';
+  static const dashboardMaintenanceNoRequests = 'dashboard.maintenance_no_requests';
+  static const dashboardMaintenanceNoRequestsSub = 'dashboard.maintenance_no_requests_sub';
+
+  // Dashboard Reports Shortcut
+  static const dashboardReportsShortcut = 'dashboard.reports_shortcut';
+  static const dashboardReportsShortcutSub = 'dashboard.reports_shortcut_sub';
+
+  // Profile Reports
+  static const profileReportsCenter = 'profile.reports_center';
+  static const profileReportsCenterSubtitle = 'profile.reports_center_subtitle';
+
+  // Drawer
+  static const drawerSettingsComingSoon = 'drawer.settings_coming_soon';
+  static const drawerAppVersion = 'drawer.app_version';
+
   // Revenue Reports
   static const revenueReport = 'revenue.report_title';
   static const revenueExpected = 'revenue.expected';

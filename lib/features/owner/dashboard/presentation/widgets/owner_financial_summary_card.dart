@@ -5,7 +5,8 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
-import '../../../reports/presentation/screens/owner_reports_center_screen.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../core/routing/routes.dart';
 
 class OwnerFinancialSummaryCard extends StatelessWidget {
   final OwnerDashboardEntity data;
@@ -19,12 +20,7 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => const OwnerReportsCenterScreen(initialTabIndex: 0),
-            ),
-          );
+          context.push('${Routes.ownerReportsCenter}?tab=0');
         },
         borderRadius: AppRadius.circularXxl,
         child: Container(

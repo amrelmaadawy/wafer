@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
-import '../../../shell/presentation/cubit/owner_nav_cubit.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../contracts/presentation/cubit/list/owner_contracts_cubit.dart';
-import '../../../maintenance/presentation/cubit/owner_maintenance_cubit.dart';
-import '../../../maintenance/presentation/views/owner_maintenance_view.dart';
 
 class OwnerAlertsGrid extends StatelessWidget {
   final OwnerDashboardEntity data;
@@ -40,7 +38,7 @@ class OwnerAlertsGrid extends StatelessWidget {
                 icon: Icons.description_rounded,
                 subtitle: LocaleKeys.ownerActiveContractsSub.tr(),
                 onTap: () {
-                  context.read<OwnerNavCubit>().changeTab(2);
+                  context.go(Routes.ownerContracts);
                   context.read<OwnerContractsCubit>().changeStatusFilter('active');
                 },
               ),
@@ -55,7 +53,7 @@ class OwnerAlertsGrid extends StatelessWidget {
                 subtitle: LocaleKeys.ownerExpiringSub.tr(),
                 highlight: data.expiringContracts > 0,
                 onTap: () {
-                  context.read<OwnerNavCubit>().changeTab(2);
+                  context.go(Routes.ownerContracts);
                   context.read<OwnerContractsCubit>().changeStatusFilter('expiring');
                 },
               ),
@@ -70,17 +68,7 @@ class OwnerAlertsGrid extends StatelessWidget {
                 subtitle: LocaleKeys.ownerPendingMaintSub.tr(),
                 highlight: data.pendingMaintenance > 0,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BlocProvider<OwnerMaintenanceCubit>(
-                        create: (_) => sl<OwnerMaintenanceCubit>(),
-                        child: const OwnerMaintenanceView(
-                          initialStatusFilter: 'pending',
-                        ),
-                      ),
-                    ),
-                  );
+                  context.push('${Routes.ownerMaintenance}?filter=pending');
                 },
               ),
             ),

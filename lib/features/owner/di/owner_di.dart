@@ -1,6 +1,4 @@
 import '../../../../core/di/service_locator.dart';
-// Shell
-import '../shell/presentation/cubit/owner_nav_cubit.dart';
 // Dashboard
 import '../dashboard/data/datasources/owner_dashboard_remote_data_source.dart';
 import '../dashboard/data/repositories/owner_dashboard_repository_impl.dart';
@@ -37,18 +35,13 @@ import '../reports/presentation/cubit/owner_occupancy_cubit.dart';
 import '../reports/presentation/cubit/owner_revenue_cubit.dart';
 
 void initOwnerModule() {
-  _initShell();
   _initDashboard();
   _initContracts();
   _initMaintenance();
   _initReports();
 }
 
-void _initShell() {
-  if (!sl.isRegistered<OwnerNavCubit>()) {
-    sl.registerFactory(() => OwnerNavCubit());
-  }
-}
+
 
 void _initDashboard() {
   if (!sl.isRegistered<OwnerDashboardRemoteDataSource>()) {

@@ -13,6 +13,7 @@ import '../widgets/owner_recent_receipts_section.dart';
 import '../widgets/owner_dashboard_header.dart';
 import '../widgets/owner_dashboard_skeleton_widget.dart';
 import '../widgets/owner_quick_actions.dart';
+import '../widgets/owner_maintenance_hub_section.dart';
 
 class OwnerDashboardView extends StatefulWidget {
   const OwnerDashboardView({super.key});
@@ -35,9 +36,9 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
-      child: Scaffold(
-        backgroundColor: const Color(0xFFF8FAFC),
-        body: Column(
+      child: ColoredBox(
+        color: const Color(0xFFF8FAFC),
+        child: Column(
           children: [
             _buildHeader(context),
             Expanded(
@@ -74,6 +75,11 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
           const OwnerQuickActions(),
           const SizedBox(height: 16),
           OwnerAlertsGrid(data: state.data),
+          const SizedBox(height: 16),
+          OwnerMaintenanceHubSection(
+            pendingCount: state.data.pendingMaintenance,
+            recentItems: const [],
+          ),
           const SizedBox(height: 16),
           OwnerRecentReceiptsSection(receipts: state.data.recentReceipts),
         ],

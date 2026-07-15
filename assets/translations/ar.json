@@ -50,7 +50,14 @@
     "nav_properties": "العقارات",
     "nav_contracts": "العقود",
     "nav_finance": "المالية",
-    "nav_profile": "الملف الشخصي"
+    "nav_profile": "الملف الشخصي",
+    "maintenance_hub": "طلبات الصيانة",
+    "maintenance_pending": "{} طلب معلق",
+    "maintenance_view_all": "عرض كل الطلبات",
+    "maintenance_no_requests": "لا توجد طلبات صيانة",
+    "maintenance_no_requests_sub": "عند ورود طلبات صيانة جديدة ستظهر هنا",
+    "reports_shortcut": "مركز التقارير",
+    "reports_shortcut_sub": "الإيرادات • الإشغال • المتعثرين"
   },
   "profile": {
     "title": "الملف الشخصي",
@@ -122,7 +129,9 @@
     "avatar_change_title": "تحديث الصورة الشخصية",
     "avatar_camera": "التقاط صورة بالكاميرا",
     "avatar_gallery": "اختيار من معرض الصور",
-    "avatar_success": "تم تحديث الصورة الشخصية بنجاح"
+    "avatar_success": "تم تحديث الصورة الشخصية بنجاح",
+    "reports_center": "مركز التقارير",
+    "reports_center_subtitle": "عرض تقارير الإيرادات والإشغال"
   },
   "common": {
     "retry": "إعادة المحاولة",
@@ -320,5 +329,9 @@
     "report_title": "المتأخرون عن السداد",
     "coming_soon": "سيعرض هذا التقرير قائمة بالمستأجرين المتأخرين عن السداد مع تفاصيل كل حالة ومبلغ التأخر",
     "endpoint_pending": "قيد التجهيز من الخادم"
+  },
+  "drawer": {
+    "settings_coming_soon": "الإعدادات قريباً",
+    "app_version": "الإصدار {}"
   }
 }
