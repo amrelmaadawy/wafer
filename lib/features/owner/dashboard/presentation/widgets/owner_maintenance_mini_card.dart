@@ -15,8 +15,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
+          Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute(
               builder: (_) => OwnerMaintenanceDetailsScreen(item: item),
             ),

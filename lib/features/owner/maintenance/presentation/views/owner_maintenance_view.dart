@@ -112,8 +112,7 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
                 return MaintenanceCard(
                   item: item,
                   onTap: () {
-                    Navigator.push(
-                      context,
+                    Navigator.of(context, rootNavigator: true).push(
                       MaterialPageRoute(
                         builder: (_) =>
                             OwnerMaintenanceDetailsScreen(item: item),

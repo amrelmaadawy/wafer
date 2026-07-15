@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/di/service_locator.dart' as di;
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../cubit/owner_defaulters_cubit.dart';
 import '../cubit/owner_occupancy_cubit.dart';
@@ -53,35 +54,87 @@ class OwnerReportsCenterScreen extends StatelessWidget {
             surfaceTintColor: Colors.transparent,
             centerTitle: true,
             iconTheme: const IconThemeData(color: AppColors.textPrimaryLight),
-            bottom: TabBar(
-              indicatorColor: context.primaryColor,
-              indicatorWeight: 3,
-              labelColor: context.primaryColor,
-              unselectedLabelColor: AppColors.textSecondaryLight,
-              isScrollable: true,
-              tabAlignment: TabAlignment.center,
-              labelStyle: const TextStyle(
-                fontWeight: FontWeight.w800,
-                fontSize: 13,
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(60),
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: TabBar(
+                  dividerColor: Colors.transparent,
+                  isScrollable: true,
+                  tabAlignment: TabAlignment.start,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicator: BoxDecoration(
+                    color: context.primaryColor,
+                    borderRadius: AppRadius.circularXxl,
+                    boxShadow: [
+                      BoxShadow(
+                        color: context.primaryShadow,
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  labelColor: Colors.white,
+                  unselectedLabelColor: const Color(0xFF64748B),
+                  labelPadding: const EdgeInsets.symmetric(horizontal: 4),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  splashFactory: NoSplash.splashFactory,
+                  overlayColor: WidgetStateProperty.all(Colors.transparent),
+                  tabs: [
+                    Tab(
+                      height: 44,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.attach_money_rounded, size: 18),
+                            const SizedBox(width: 8),
+                            Text(
+                              LocaleKeys.revenueReport.tr(),
+                              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Tab(
+                      height: 44,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.pie_chart_rounded, size: 18),
+                            const SizedBox(width: 8),
+                            Text(
+                              LocaleKeys.occupancyReportTitle.tr(),
+                              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Tab(
+                      height: 44,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 18),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.warning_amber_rounded, size: 18),
+                            const SizedBox(width: 8),
+                            Text(
+                              LocaleKeys.defaultersReportTitle.tr(),
+                              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              unselectedLabelStyle: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 12.5,
-              ),
-              tabs: [
-                Tab(
-                  icon: const Icon(Icons.attach_money_rounded, size: 20),
-                  text: LocaleKeys.revenueReport.tr(),
-                ),
-                Tab(
-                  icon: const Icon(Icons.pie_chart_rounded, size: 20),
-                  text: LocaleKeys.occupancyReportTitle.tr(),
-                ),
-                Tab(
-                  icon: const Icon(Icons.warning_amber_rounded, size: 20),
-                  text: LocaleKeys.defaultersReportTitle.tr(),
-                ),
-              ],
             ),
           ),
           body: const TabBarView(

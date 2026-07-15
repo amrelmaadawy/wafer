@@ -130,8 +130,7 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
                 return ContractCard(
                   contract: contract,
                   onTap: () {
-                    Navigator.push(
-                      context,
+                    Navigator.of(context, rootNavigator: true).push(
                       MaterialPageRoute(
                         builder: (_) => OwnerContractDetailsScreen(contractId: contract.id),
                       ),
