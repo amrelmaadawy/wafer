@@ -4,6 +4,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
+import '../../../reports/presentation/screens/owner_reports_center_screen.dart';
 
 class OwnerOccupancyCard extends StatelessWidget {
   final OwnerDashboardEntity data;
@@ -16,6 +17,14 @@ class OwnerOccupancyCard extends StatelessWidget {
     final rateColor = data.occupancyRate >= 70 ? const Color(0xFF10B981) : data.occupancyRate >= 40 ? const Color(0xFFF59E0B) : AppColors.error;
 
     return _card(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => const OwnerReportsCenterScreen(initialTabIndex: 1),
+          ),
+        );
+      },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -94,19 +103,26 @@ class OwnerOccupancyCard extends StatelessWidget {
     );
   }
 
-  Widget _card({required Widget child}) {
-    return Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: Colors.white,
+  Widget _card({required Widget child, required VoidCallback onTap}) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: AppRadius.circularXxl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
-        boxShadow: [
-          BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 20, offset: const Offset(0, 6)),
-          BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6, offset: const Offset(0, 2)),
-        ],
+        child: Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: AppRadius.circularXxl,
+            border: Border.all(color: const Color(0xFFEDF0F7)),
+            boxShadow: [
+              BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 20, offset: const Offset(0, 6)),
+              BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6, offset: const Offset(0, 2)),
+            ],
+          ),
+          child: child,
+        ),
       ),
-      child: child,
     );
   }
 }

@@ -39,6 +39,7 @@
     "add_property": "Properties List",
     "lease_contract": "Lease Contracts",
     "receipt_voucher": "Financial Records",
+    "reports": "Reports",
     "maint_request": "Maintenance Requests",
     "recent_receipts": "Recent Financial Receipts",
     "view_all": "View All",
@@ -172,7 +173,8 @@
     "total": "Total",
     "pill_rented": "Rented",
     "pill_vacant": "Vacant",
-    "pill_properties": "Properties"
+    "pill_properties": "Properties",
+    "pill_units": "Units"
   },
   "notifications": {
     "title": "Notifications & Alerts",
@@ -294,5 +296,29 @@
     "no_images": "No images attached to this request",
     "unspecified_date": "Not specified yet",
     "not_determined_yet": "Not determined"
+  },
+  "revenue": {
+    "report_title": "Revenue Report",
+    "expected": "Expected Revenue",
+    "collected": "Actual Collected",
+    "overdue": "Overdue",
+    "collection_rate": "Collection Rate",
+    "total_expected": "Total Expected",
+    "total_collected": "Total Collected",
+    "no_data": "No revenue report data available at this time",
+    "bar_chart_title": "Monthly Revenue Comparison",
+    "monthly_breakdown": "Month-by-Month Revenue Breakdown"
+  },
+  "occupancy": {
+    "report_title": "Property Occupancy Report",
+    "overall_rate": "Overall Portfolio Occupancy Rate",
+    "properties_section": "Occupancy Breakdown by Property",
+    "unnamed_property": "Unnamed Property",
+    "no_data": "No occupancy data available at this time"
+  },
+  "defaulters": {
+    "report_title": "Payment Defaulters",
+    "coming_soon": "This report will display a list of tenants with overdue payments, including details and overdue amounts for each case",
+    "endpoint_pending": "Pending server configuration"
   }
 }

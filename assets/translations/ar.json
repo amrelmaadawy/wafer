@@ -39,6 +39,7 @@
     "add_property": "قائمة العقارات",
     "lease_contract": "عقود الإيجار",
     "receipt_voucher": "السجلات المالية",
+    "reports": "التقارير",
     "maint_request": "طلبات الصيانة",
     "recent_receipts": "آخر التحصيلات المالية",
     "view_all": "عرض الكل",
@@ -172,7 +173,8 @@
     "total": "الإجمالي",
     "pill_rented": "مؤجرة",
     "pill_vacant": "شاغرة",
-    "pill_properties": "عقارات"
+    "pill_properties": "عقارات",
+    "pill_units": "وحدات"
   },
   "notifications": {
     "title": "الإشعارات والتنبيهات",
@@ -294,5 +296,29 @@
     "no_images": "لا توجد صور مرفقة بهذا الطلب",
     "unspecified_date": "لم يُحدد بعد",
     "not_determined_yet": "غير محدد"
+  },
+  "revenue": {
+    "report_title": "تقرير الإيرادات",
+    "expected": "الإيراد المتوقع",
+    "collected": "المحصّل فعلياً",
+    "overdue": "المتأخر",
+    "collection_rate": "نسبة التحصيل",
+    "total_expected": "إجمالي المتوقع",
+    "total_collected": "إجمالي المحصّل",
+    "no_data": "لا توجد بيانات إيرادات متاحة حالياً",
+    "bar_chart_title": "مقارنة الإيرادات الشهرية",
+    "monthly_breakdown": "تفاصيل الإيرادات شهراً بشهر"
+  },
+  "occupancy": {
+    "report_title": "تقرير إشغال العقارات",
+    "overall_rate": "إجمالي نسبة الإشغال لكافة العقارات",
+    "properties_section": "تفاصيل الإشغال حسب العقار",
+    "unnamed_property": "عقار غير مسمى",
+    "no_data": "لا توجد بيانات إشغال متاحة حالياً"
+  },
+  "defaulters": {
+    "report_title": "المتأخرون عن السداد",
+    "coming_soon": "سيعرض هذا التقرير قائمة بالمستأجرين المتأخرين عن السداد مع تفاصيل كل حالة ومبلغ التأخر",
+    "endpoint_pending": "قيد التجهيز من الخادم"
   }
 }

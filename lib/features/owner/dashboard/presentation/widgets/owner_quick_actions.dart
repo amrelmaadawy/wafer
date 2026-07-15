@@ -8,6 +8,7 @@ import '../../../../../core/theme/color_utils.dart';
 import '../../../shell/presentation/cubit/owner_nav_cubit.dart';
 import '../../../maintenance/presentation/cubit/owner_maintenance_cubit.dart';
 import '../../../maintenance/presentation/views/owner_maintenance_view.dart';
+import '../../../reports/presentation/screens/owner_reports_center_screen.dart';
 
 class OwnerQuickActions extends StatelessWidget {
   const OwnerQuickActions({super.key});
@@ -80,10 +81,17 @@ class OwnerQuickActions extends StatelessWidget {
             Expanded(
               child: _buildActionCard(
                 context,
-                title: LocaleKeys.dashboardReceiptVoucher.tr(),
-                icon: Icons.account_balance_wallet_outlined,
+                title: LocaleKeys.dashboardReports.tr(),
+                icon: Icons.bar_chart_rounded,
                 color: const Color(0xFFF59E0B),
-                onTap: () => context.read<OwnerNavCubit>().changeTab(3),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const OwnerReportsCenterScreen(initialTabIndex: 0),
+                    ),
+                  );
+                },
               ),
             ),
           ],

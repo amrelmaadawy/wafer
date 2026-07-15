@@ -5,6 +5,7 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
+import '../../../reports/presentation/screens/owner_reports_center_screen.dart';
 
 class OwnerFinancialSummaryCard extends StatelessWidget {
   final OwnerDashboardEntity data;
@@ -14,35 +15,49 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasOverdue = data.overdueInstallmentsCount > 0;
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(colors: [context.primaryDark, context.primaryColor, context.primaryLight], begin: Alignment.topLeft, end: Alignment.bottomRight),
-        borderRadius: AppRadius.circularXxl,
-        boxShadow: [
-          BoxShadow(color: context.primaryShadow, blurRadius: 28, offset: const Offset(0, 12)),
-          BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 2)),
-        ],
-      ),
-      child: Stack(
-        children: [
-          _buildCircles(),
-          Padding(
-            padding: const EdgeInsets.all(22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildHeader(hasOverdue),
-                const SizedBox(height: 22),
-                _buildHeroNumber(),
-                const SizedBox(height: 20),
-                Container(height: 1, color: Colors.white.withValues(alpha: 0.1)),
-                const SizedBox(height: 18),
-                _buildMetricsRow(),
-              ],
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const OwnerReportsCenterScreen(initialTabIndex: 0),
             ),
+          );
+        },
+        borderRadius: AppRadius.circularXxl,
+        child: Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(colors: [context.primaryDark, context.primaryColor, context.primaryLight], begin: Alignment.topLeft, end: Alignment.bottomRight),
+            borderRadius: AppRadius.circularXxl,
+            boxShadow: [
+              BoxShadow(color: context.primaryShadow, blurRadius: 28, offset: const Offset(0, 12)),
+              BoxShadow(color: Colors.black.withValues(alpha: 0.06), blurRadius: 8, offset: const Offset(0, 2)),
+            ],
           ),
-        ],
+          child: Stack(
+            children: [
+              _buildCircles(),
+              Padding(
+                padding: const EdgeInsets.all(22),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildHeader(hasOverdue),
+                    const SizedBox(height: 22),
+                    _buildHeroNumber(),
+                    const SizedBox(height: 20),
+                    Container(height: 1, color: Colors.white.withValues(alpha: 0.1)),
+                    const SizedBox(height: 18),
+                    _buildMetricsRow(),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

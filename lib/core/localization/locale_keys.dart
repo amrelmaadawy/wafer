@@ -39,6 +39,7 @@ class LocaleKeys {
   static const dashboardAddProperty = 'dashboard.add_property';
   static const dashboardLeaseContract = 'dashboard.lease_contract';
   static const dashboardReceiptVoucher = 'dashboard.receipt_voucher';
+  static const dashboardReports = 'dashboard.reports';
   static const dashboardMaintRequest = 'dashboard.maint_request';
   static const dashboardRecentReceipts = 'dashboard.recent_receipts';
   static const dashboardViewAll = 'dashboard.view_all';
@@ -177,6 +178,7 @@ class LocaleKeys {
   static const ownerPillRented = 'owner.pill_rented';
   static const ownerPillVacant = 'owner.pill_vacant';
   static const ownerPillProperties = 'owner.pill_properties';
+  static const ownerPillUnits = 'owner.pill_units';
 
   // Notifications
   static const notificationsTitle = 'notifications.title';
@@ -298,4 +300,28 @@ class LocaleKeys {
   static const maintenanceNoImages = 'maintenance.no_images';
   static const maintenanceUnspecifiedDate = 'maintenance.unspecified_date';
   static const maintenanceNotDeterminedYet = 'maintenance.not_determined_yet';
+
+  // Revenue Reports
+  static const revenueReport = 'revenue.report_title';
+  static const revenueExpected = 'revenue.expected';
+  static const revenueCollected = 'revenue.collected';
+  static const revenueOverdue = 'revenue.overdue';
+  static const revenueCollectionRate = 'revenue.collection_rate';
+  static const revenueTotalExpected = 'revenue.total_expected';
+  static const revenueTotalCollected = 'revenue.total_collected';
+  static const revenueNoData = 'revenue.no_data';
+  static const revenueBarChartTitle = 'revenue.bar_chart_title';
+  static const revenueMonthlyBreakdown = 'revenue.monthly_breakdown';
+
+  // Occupancy Reports
+  static const occupancyReportTitle = 'occupancy.report_title';
+  static const occupancyOverallRate = 'occupancy.overall_rate';
+  static const occupancyPropertiesSection = 'occupancy.properties_section';
+  static const occupancyUnnamedProperty = 'occupancy.unnamed_property';
+  static const occupancyNoData = 'occupancy.no_data';
+
+  // Defaulters Reports
+  static const defaultersReportTitle = 'defaulters.report_title';
+  static const defaultersComingSoon = 'defaulters.coming_soon';
+  static const defaultersEndpointPending = 'defaulters.endpoint_pending';
 }

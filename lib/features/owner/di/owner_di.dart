@@ -25,12 +25,23 @@ import '../maintenance/domain/usecases/get_owner_maintenance_use_case.dart';
 import '../maintenance/domain/usecases/get_owner_maintenance_details_use_case.dart';
 import '../maintenance/presentation/cubit/owner_maintenance_cubit.dart';
 import '../maintenance/presentation/cubit/details/owner_maintenance_details_cubit.dart';
+// Reports
+import '../reports/data/datasources/owner_reports_remote_data_source.dart';
+import '../reports/data/repositories/owner_reports_repository_impl.dart';
+import '../reports/domain/repositories/owner_reports_repository.dart';
+import '../reports/domain/usecases/get_owner_defaulters_report_use_case.dart';
+import '../reports/domain/usecases/get_owner_occupancy_report_use_case.dart';
+import '../reports/domain/usecases/get_owner_revenue_report_use_case.dart';
+import '../reports/presentation/cubit/owner_defaulters_cubit.dart';
+import '../reports/presentation/cubit/owner_occupancy_cubit.dart';
+import '../reports/presentation/cubit/owner_revenue_cubit.dart';
 
 void initOwnerModule() {
   _initShell();
   _initDashboard();
   _initContracts();
   _initMaintenance();
+  _initReports();
 }
 
 void _initShell() {
@@ -111,5 +122,36 @@ void _initMaintenance() {
   }
   if (!sl.isRegistered<OwnerMaintenanceDetailsCubit>()) {
     sl.registerFactory(() => OwnerMaintenanceDetailsCubit(sl()));
+  }
+}
+
+void _initReports() {
+  if (!sl.isRegistered<OwnerReportsRemoteDataSource>()) {
+    sl.registerLazySingleton<OwnerReportsRemoteDataSource>(
+      () => OwnerReportsRemoteDataSourceImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<OwnerReportsRepository>()) {
+    sl.registerLazySingleton<OwnerReportsRepository>(
+      () => OwnerReportsRepositoryImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<GetOwnerRevenueReportUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerRevenueReportUseCase(sl()));
+  }
+  if (!sl.isRegistered<GetOwnerOccupancyReportUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerOccupancyReportUseCase(sl()));
+  }
+  if (!sl.isRegistered<GetOwnerDefaultersReportUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerDefaultersReportUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerRevenueCubit>()) {
+    sl.registerFactory(() => OwnerRevenueCubit(sl()));
+  }
+  if (!sl.isRegistered<OwnerOccupancyCubit>()) {
+    sl.registerFactory(() => OwnerOccupancyCubit(sl()));
+  }
+  if (!sl.isRegistered<OwnerDefaultersCubit>()) {
+    sl.registerFactory(() => OwnerDefaultersCubit(sl()));
   }
 }
