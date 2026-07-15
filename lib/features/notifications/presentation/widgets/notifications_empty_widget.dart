@@ -21,7 +21,7 @@ class NotificationsEmptyWidget extends StatelessWidget {
               width: 88,
               height: 88,
               decoration: BoxDecoration(
-                color: context.primaryColor.withOpacity(0.08),
+                color: context.primaryColor.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
               child: Icon(

@@ -263,4 +263,39 @@ class LocaleKeys {
   static const installmentsEmptySubtitle = 'contracts.installments_empty_subtitle';
   static const installmentsViewBtn = 'contracts.installments_view_btn';
   static const installmentsCountLabel = 'contracts.installments_count_label';
+
+  // Maintenance
+  static const maintenanceTitle = 'maintenance.title';
+  static const maintenanceTotalCount = 'maintenance.total_count';
+  static const maintenanceFilterAll = 'maintenance.filter_all';
+  static const maintenanceFilterPending = 'maintenance.filter_pending';
+  static const maintenanceFilterInProgress = 'maintenance.filter_in_progress';
+  static const maintenanceFilterCompleted = 'maintenance.filter_completed';
+  static const maintenanceFilterCancelled = 'maintenance.filter_cancelled';
+  static const maintenanceStatusPending = 'maintenance.status_pending';
+  static const maintenanceStatusApproved = 'maintenance.status_approved';
+  static const maintenanceStatusInProgress = 'maintenance.status_in_progress';
+  static const maintenanceStatusExecuted = 'maintenance.status_executed';
+  static const maintenanceStatusRejected = 'maintenance.status_rejected';
+  static const maintenanceStatusCancelled = 'maintenance.status_cancelled';
+  static const maintenanceCostBearerLabel = 'maintenance.cost_bearer_label';
+  static const maintenanceCostBearerClient = 'maintenance.cost_bearer_client';
+  static const maintenanceCostBearerOwner = 'maintenance.cost_bearer_owner';
+  static const maintenanceEstimatedCost = 'maintenance.estimated_cost';
+  static const maintenanceActualCost = 'maintenance.actual_cost';
+  static const maintenanceAdvancePayment = 'maintenance.advance_payment';
+  static const maintenancePropertyLabel = 'maintenance.property_label';
+  static const maintenanceUnitLabel = 'maintenance.unit_label';
+  static const maintenanceRequestedDate = 'maintenance.requested_date';
+  static const maintenanceScheduledDate = 'maintenance.scheduled_date';
+  static const maintenanceCompletedDate = 'maintenance.completed_date';
+  static const maintenanceNoTitle = 'maintenance.no_requests_title';
+  static const maintenanceNoSubtitle = 'maintenance.no_requests_subtitle';
+  static const maintenanceDetailsTitle = 'maintenance.details_title';
+  static const maintenanceCostSection = 'maintenance.cost_section';
+  static const maintenanceTimelineSection = 'maintenance.timeline_section';
+  static const maintenanceImagesSection = 'maintenance.images_section';
+  static const maintenanceNoImages = 'maintenance.no_images';
+  static const maintenanceUnspecifiedDate = 'maintenance.unspecified_date';
+  static const maintenanceNotDeterminedYet = 'maintenance.not_determined_yet';
 }

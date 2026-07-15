@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
+import '../../../shell/presentation/cubit/owner_nav_cubit.dart';
+import '../../../contracts/presentation/cubit/list/owner_contracts_cubit.dart';
+import '../../../maintenance/presentation/cubit/owner_maintenance_cubit.dart';
+import '../../../maintenance/presentation/views/owner_maintenance_view.dart';
 
 class OwnerAlertsGrid extends StatelessWidget {
   final OwnerDashboardEntity data;
@@ -22,15 +28,21 @@ class OwnerAlertsGrid extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
+        IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
               child: _buildCard(
                 title: LocaleKeys.ownerActiveContractsTitle.tr(),
                 count: data.activeContracts,
                 color: const Color(0xFF10B981),
                 icon: Icons.description_rounded,
                 subtitle: LocaleKeys.ownerActiveContractsSub.tr(),
+                onTap: () {
+                  context.read<OwnerNavCubit>().changeTab(2);
+                  context.read<OwnerContractsCubit>().changeStatusFilter('active');
+                },
               ),
             ),
             const SizedBox(width: 10),
@@ -42,6 +54,10 @@ class OwnerAlertsGrid extends StatelessWidget {
                 icon: Icons.update_rounded,
                 subtitle: LocaleKeys.ownerExpiringSub.tr(),
                 highlight: data.expiringContracts > 0,
+                onTap: () {
+                  context.read<OwnerNavCubit>().changeTab(2);
+                  context.read<OwnerContractsCubit>().changeStatusFilter('expiring');
+                },
               ),
             ),
             const SizedBox(width: 10),
@@ -53,9 +69,21 @@ class OwnerAlertsGrid extends StatelessWidget {
                 icon: Icons.handyman_rounded,
                 subtitle: LocaleKeys.ownerPendingMaintSub.tr(),
                 highlight: data.pendingMaintenance > 0,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => BlocProvider<OwnerMaintenanceCubit>(
+                        create: (_) => sl<OwnerMaintenanceCubit>(),
+                        child: const OwnerMaintenanceView(),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
+        ),
         ),
       ],
     );
@@ -68,9 +96,9 @@ class OwnerAlertsGrid extends StatelessWidget {
     required IconData icon,
     required String subtitle,
     bool highlight = false,
+    VoidCallback? onTap,
   }) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(10, 14, 10, 14),
       decoration: BoxDecoration(
         color: highlight ? color.withValues(alpha: 0.06) : Colors.white,
         borderRadius: AppRadius.circularXl,
@@ -79,35 +107,46 @@ class OwnerAlertsGrid extends StatelessWidget {
           BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 16, offset: const Offset(0, 5)),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(7),
-                decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.circularMd),
-                child: Icon(icon, color: color, size: 16),
-              ),
-              if (highlight) Container(width: 7, height: 7, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
-            ],
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: AppRadius.circularXl,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadius.circularXl,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(10, 14, 10, 14),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(7),
+                      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: AppRadius.circularMd),
+                      child: Icon(icon, color: color, size: 16),
+                    ),
+                    if (highlight) Container(width: 7, height: 7, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text('$count', style: TextStyle(color: highlight ? color : const Color(0xFF0F172A), fontSize: 20, fontWeight: FontWeight.w800)),
+                const SizedBox(height: 3),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerRight,
+                  child: Text(title, style: TextStyle(color: highlight ? color.withValues(alpha: 0.85) : const Color(0xFF334155), fontSize: 11, fontWeight: FontWeight.w700)),
+                ),
+                const SizedBox(height: 1),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerRight,
+                  child: Text(subtitle, style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 10)),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 10),
-          Text('$count', style: TextStyle(color: highlight ? color : const Color(0xFF0F172A), fontSize: 20, fontWeight: FontWeight.w800)),
-          const SizedBox(height: 3),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerRight,
-            child: Text(title, style: TextStyle(color: highlight ? color.withValues(alpha: 0.85) : const Color(0xFF334155), fontSize: 11, fontWeight: FontWeight.w700)),
-          ),
-          const SizedBox(height: 1),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            alignment: Alignment.centerRight,
-            child: Text(subtitle, style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 10)),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -11,6 +11,7 @@ import '../widgets/owner_financial_summary_card.dart';
 import '../widgets/owner_occupancy_card.dart';
 import '../widgets/owner_recent_receipts_section.dart';
 import '../widgets/owner_dashboard_header.dart';
+import '../widgets/owner_quick_actions.dart';
 
 class OwnerDashboardView extends StatefulWidget {
   const OwnerDashboardView({super.key});
@@ -68,6 +69,8 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
           OwnerFinancialSummaryCard(data: state.data),
           const SizedBox(height: 16),
           OwnerOccupancyCard(data: state.data),
+          const SizedBox(height: 16),
+          const OwnerQuickActions(),
           const SizedBox(height: 16),
           OwnerAlertsGrid(data: state.data),
           const SizedBox(height: 16),

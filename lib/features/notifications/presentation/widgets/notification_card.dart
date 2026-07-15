@@ -26,10 +26,10 @@ class NotificationCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: unread ? primary.withOpacity(0.04) : Colors.white,
+          color: unread ? primary.withValues(alpha: 0.04) : Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: unread ? primary.withOpacity(0.25) : const Color(0xFFF1F5F9),
+            color: unread ? primary.withValues(alpha: 0.25) : const Color(0xFFF1F5F9),
             width: unread ? 1.5 : 1,
           ),
         ),
@@ -118,17 +118,17 @@ class NotificationCard extends StatelessWidget {
     switch (type) {
       case 'payment':
         icon = Icons.receipt_long_rounded;
-        bg = AppColors.success.withOpacity(0.12);
+        bg = AppColors.success.withValues(alpha: 0.12);
         fg = AppColors.success;
         break;
       case 'lease':
         icon = Icons.description_outlined;
-        bg = context.primaryColor.withOpacity(0.12);
+        bg = context.primaryColor.withValues(alpha: 0.12);
         fg = context.primaryColor;
         break;
       case 'maintenance':
         icon = Icons.build_circle_outlined;
-        bg = AppColors.warning.withOpacity(0.14);
+        bg = AppColors.warning.withValues(alpha: 0.14);
         fg = AppColors.warning;
         break;
       default:

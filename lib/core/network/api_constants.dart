@@ -25,4 +25,6 @@ class ApiConstants {
 
   /// Owner Endpoints
   static const String ownerContracts = 'owner/contracts';
+  static const String ownerMaintenance = 'owner/maintenance';
+  static String ownerMaintenanceDetails(int id) => 'owner/maintenance/$id';
 }

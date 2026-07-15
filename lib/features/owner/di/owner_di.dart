@@ -17,11 +17,20 @@ import '../contracts/domain/usecases/get_owner_contract_installments_use_case.da
 import '../contracts/presentation/cubit/list/owner_contracts_cubit.dart';
 import '../contracts/presentation/cubit/details/owner_contract_details_cubit.dart';
 import '../contracts/presentation/cubit/installments/owner_contract_installments_cubit.dart';
+// Maintenance
+import '../maintenance/data/datasources/owner_maintenance_remote_data_source.dart';
+import '../maintenance/data/repositories/owner_maintenance_repository_impl.dart';
+import '../maintenance/domain/repositories/owner_maintenance_repository.dart';
+import '../maintenance/domain/usecases/get_owner_maintenance_use_case.dart';
+import '../maintenance/domain/usecases/get_owner_maintenance_details_use_case.dart';
+import '../maintenance/presentation/cubit/owner_maintenance_cubit.dart';
+import '../maintenance/presentation/cubit/details/owner_maintenance_details_cubit.dart';
 
 void initOwnerModule() {
   _initShell();
   _initDashboard();
   _initContracts();
+  _initMaintenance();
 }
 
 void _initShell() {
@@ -77,5 +86,30 @@ void _initContracts() {
   }
   if (!sl.isRegistered<OwnerContractInstallmentsCubit>()) {
     sl.registerFactory(() => OwnerContractInstallmentsCubit(sl()));
+  }
+}
+
+void _initMaintenance() {
+  if (!sl.isRegistered<OwnerMaintenanceRemoteDataSource>()) {
+    sl.registerLazySingleton<OwnerMaintenanceRemoteDataSource>(
+      () => OwnerMaintenanceRemoteDataSourceImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<OwnerMaintenanceRepository>()) {
+    sl.registerLazySingleton<OwnerMaintenanceRepository>(
+      () => OwnerMaintenanceRepositoryImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<GetOwnerMaintenanceUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerMaintenanceUseCase(sl()));
+  }
+  if (!sl.isRegistered<GetOwnerMaintenanceDetailsUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerMaintenanceDetailsUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerMaintenanceCubit>()) {
+    sl.registerFactory(() => OwnerMaintenanceCubit(sl()));
+  }
+  if (!sl.isRegistered<OwnerMaintenanceDetailsCubit>()) {
+    sl.registerFactory(() => OwnerMaintenanceDetailsCubit(sl()));
   }
 }
