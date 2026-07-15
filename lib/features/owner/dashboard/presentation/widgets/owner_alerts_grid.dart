@@ -75,7 +75,9 @@ class OwnerAlertsGrid extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (_) => BlocProvider<OwnerMaintenanceCubit>(
                         create: (_) => sl<OwnerMaintenanceCubit>(),
-                        child: const OwnerMaintenanceView(),
+                        child: const OwnerMaintenanceView(
+                          initialStatusFilter: 'pending',
+                        ),
                       ),
                     ),
                   );

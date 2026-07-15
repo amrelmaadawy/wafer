@@ -12,7 +12,9 @@ import '../widgets/maintenance_header.dart';
 import '../widgets/maintenance_skeleton_widget.dart';
 
 class OwnerMaintenanceView extends StatefulWidget {
-  const OwnerMaintenanceView({super.key});
+  final String? initialStatusFilter;
+
+  const OwnerMaintenanceView({super.key, this.initialStatusFilter});
 
   @override
   State<OwnerMaintenanceView> createState() => _OwnerMaintenanceViewState();
@@ -26,7 +28,15 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
     super.initState();
     _scrollController.addListener(_onScroll);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<OwnerMaintenanceCubit>().getMaintenanceRequests();
+      if (widget.initialStatusFilter != null &&
+          widget.initialStatusFilter!.isNotEmpty &&
+          widget.initialStatusFilter != 'all') {
+        context
+            .read<OwnerMaintenanceCubit>()
+            .changeStatusFilter(widget.initialStatusFilter!, force: true);
+      } else {
+        context.read<OwnerMaintenanceCubit>().getMaintenanceRequests();
+      }
     });
   }
 
