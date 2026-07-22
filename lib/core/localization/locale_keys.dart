@@ -158,6 +158,100 @@ class LocaleKeys {
   static const ownerPropertiesSubtitle = 'owner.properties_subtitle';
   static const ownerPropertiesLog = 'owner.properties_log';
   static const ownerPropertiesPlaceholder = 'owner.properties_placeholder';
+
+  // Properties
+  static const propertiesTitle = 'properties.title';
+  static const propertiesSubtitle = 'properties.subtitle';
+  static const propertiesTotalCount = 'properties.total_count';
+  static const propertiesFilterAll = 'properties.filter_all';
+  static const propertiesFilterPublished = 'properties.filter_published';
+  static const propertiesFilterDraft = 'properties.filter_draft';
+  static const propertiesFilterArchived = 'properties.filter_archived';
+  static const propertiesAddNew = 'properties.add_new';
+  static const propertiesEmptyTitle = 'properties.empty_title';
+  static const propertiesEmptySubtitle = 'properties.empty_subtitle';
+  static const propertiesEmptyAction = 'properties.empty_action';
+  static const propertiesSearchHint = 'properties.search_hint';
+  static const propertiesCardUnits = 'properties.card_units';
+  static const propertiesCardArea = 'properties.card_area';
+  static const propertiesStatusPublished = 'properties.status_published';
+  static const propertiesStatusDraft = 'properties.status_draft';
+  static const propertiesStatusArchived = 'properties.status_archived';
+  static const propertiesContinueDraft = 'properties.continue_draft';
+  
+  // Properties Stats
+  static const propertiesStatsTotal = 'properties.stats_total';
+  static const propertiesStatsBuildings = 'properties.stats_buildings';
+  static const propertiesStatsLands = 'properties.stats_lands';
+  static const propertiesStatsUnitsAndDeeds = 'properties.stats_units_deeds';
+  static const propertiesStatsDeeds = 'properties.stats_deeds';
+  static const propertiesStatsUsages = 'properties.stats_usages';
+  static const propertiesStatsResidential = 'properties.stats_residential';
+  static const propertiesStatsMixed = 'properties.stats_mixed';
+
+  // Property Details
+  static const propertyDetailsOverview = 'property_details.overview';
+  static const propertyDetailsUnits = 'property_details.units';
+  static const propertyDetailsBasicInfo = 'property_details.basic_info';
+  static const propertyDetailsOwners = 'property_details.owners';
+  static const propertyDetailsDeed = 'property_details.deed';
+  static const propertyDetailsEdit = 'property_details.edit';
+  static const propertyDetailsClone = 'property_details.clone';
+  static const propertyDetailsCloneSuccess = 'property_details.clone_success';
+  static const propertyDetailsCloneUndo = 'property_details.clone_undo';
+  static const propertyDetailsRepresentative = 'property_details.representative';
+  static const propertyDetailsRemoveRepresentative = 'property_details.remove_representative';
+  static const propertyDetailsDelete = 'property_details.delete';
+  static const propertyDetailsDeleteConfirmTitle = 'property_details.delete_confirm_title';
+  static const propertyDetailsDeleteConfirmBody = 'property_details.delete_confirm_body';
+  static const propertyDetailsDeleteConfirmBtn = 'property_details.delete_confirm_btn';
+  static const propertyDetailsCancel = 'property_details.cancel';
+  static const propertyDetailsNoUnitsTitle = 'property_details.no_units_title';
+  static const propertyDetailsNoUnitsSubtitle = 'property_details.no_units_subtitle';
+  static const propertyDetailsAddUnit = 'property_details.add_unit';
+  static const propertyDetailsArea = 'property_details.area';
+  static const propertyDetailsType = 'property_details.type';
+  static const propertyDetailsAddress = 'property_details.address';
+  static const propertyDetailsDeedNumber = 'property_details.deed_number';
+  static const propertyDetailsDeedDate = 'property_details.deed_date';
+  static const propertyDetailsOwnerPercentage = 'property_details.owner_percentage';
+
+  // Property Edit
+  static const propertyEditTitle = 'property_edit.title';
+  static const propertyEditSave = 'property_edit.save';
+  static const propertyEditSuccess = 'property_edit.success';
+
+  // Property Create Wizard
+  static const propertyCreateTitle = 'property_create.title';
+  static const propertyCreateStep1Title = 'property_create.step1_title';
+  static const propertyCreateStep1Subtitle = 'property_create.step1_subtitle';
+  static const propertyCreateSelectDeed = 'property_create.select_deed';
+  static const propertyCreateNewDeed = 'property_create.new_deed';
+  static const propertyCreateNoDeed = 'property_create.no_deed';
+  static const propertyCreateSelectType = 'property_create.select_type';
+  static const propertyCreateStep2Title = 'property_create.step2_title';
+  static const propertyCreatePropertyName = 'property_create.property_name';
+  static const propertyCreateAddress = 'property_create.address';
+  static const propertyCreateArea = 'property_create.area';
+  static const propertyCreateDescription = 'property_create.description';
+  static const propertyCreateStep3Title = 'property_create.step3_title';
+  static const propertyCreateAddOwner = 'property_create.add_owner';
+  static const propertyCreateOwnerName = 'property_create.owner_name';
+  static const propertyCreateOwnerPercentage = 'property_create.owner_percentage';
+  static const propertyCreatePercentageTotal = 'property_create.percentage_total';
+  static const propertyCreatePercentageError = 'property_create.percentage_error';
+  static const propertyCreateAddImage = 'property_create.add_image';
+  static const propertyCreateStep4Title = 'property_create.step4_title';
+  static const propertyCreatePublish = 'property_create.publish';
+  static const propertyCreateSaveDraft = 'property_create.save_draft';
+  static const propertyCreateNext = 'property_create.next';
+  static const propertyCreatePrevious = 'property_create.previous';
+  static const propertyCreateExitTitle = 'property_create.exit_title';
+  static const propertyCreateExitBody = 'property_create.exit_body';
+  static const propertyCreateExitConfirm = 'property_create.exit_confirm';
+  static const propertyCreateExitCancel = 'property_create.exit_cancel';
+  static const propertyCreateSaved = 'property_create.saved';
+  static const propertyCreatePublishSuccess = 'property_create.publish_success';
   static const ownerLeasesTitle = 'owner.leases_title';
   static const ownerLeasesSubtitle = 'owner.leases_subtitle';
   static const ownerLeasesLog = 'owner.leases_log';

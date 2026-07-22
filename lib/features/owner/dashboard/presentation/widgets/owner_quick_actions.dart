@@ -53,7 +53,7 @@ class OwnerQuickActions extends StatelessWidget {
                       title: LocaleKeys.dashboardAddProperty.tr(),
                       icon: Icons.apartment_rounded,
                       color: context.primaryColor,
-                      onTap: () => context.go(Routes.ownerProperties),
+                      onTap: () => context.push(Routes.ownerPropertyCreate),
                     ),
                   ),
                 ],

@@ -5,6 +5,14 @@ import '../../features/notifications/presentation/screens/notifications_screen.d
 import '../../features/owner/shell/presentation/screens/owner_main_screen.dart';
 import '../../features/owner/dashboard/presentation/views/owner_dashboard_view.dart';
 import '../../features/owner/properties/presentation/views/owner_properties_view.dart';
+import '../../features/owner/properties/presentation/cubit/list/properties_list_cubit.dart';
+import '../../features/owner/properties/presentation/screens/property_details_screen.dart';
+import '../../features/owner/properties/presentation/cubit/details/property_details_cubit.dart';
+import '../../features/owner/properties/domain/entities/property_details_entity.dart';
+import '../../features/owner/properties/presentation/screens/property_create_screen.dart';
+import '../../features/owner/properties/presentation/cubit/create/property_create_cubit.dart';
+import '../../features/owner/properties/presentation/screens/property_edit_screen.dart';
+import '../../features/owner/properties/presentation/cubit/edit/property_edit_cubit.dart';
 import '../../features/owner/contracts/presentation/views/owner_leases_view.dart';
 import '../../features/owner/finance/presentation/views/owner_finance_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
@@ -37,6 +45,34 @@ class AppRouter {
       GoRoute(
         path: Routes.notifications,
         builder: (context, state) => const NotificationsScreen(),
+      ),
+
+      GoRoute(
+        path: Routes.ownerPropertyDetails,
+        builder: (context, state) {
+          final id = int.tryParse(state.uri.queryParameters['id'] ?? '0') ?? 0;
+          return BlocProvider<PropertyDetailsCubit>(
+            create: (_) => sl<PropertyDetailsCubit>(),
+            child: PropertyDetailsScreen(propertyId: id),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerPropertyCreate,
+        builder: (context, state) => BlocProvider<PropertyCreateCubit>(
+          create: (_) => sl<PropertyCreateCubit>()..initWizard(),
+          child: const PropertyCreateScreen(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerPropertyEdit,
+        builder: (context, state) {
+          final property = state.extra as PropertyDetailsEntity;
+          return BlocProvider<PropertyEditCubit>(
+            create: (_) => sl<PropertyEditCubit>(),
+            child: PropertyEditScreen(property: property),
+          );
+        },
       ),
       GoRoute(
         path: Routes.ownerMaintenance,
@@ -86,7 +122,10 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: Routes.ownerProperties,
-                builder: (context, state) => const OwnerPropertiesView(),
+                builder: (context, state) => BlocProvider<PropertiesListCubit>(
+                  create: (_) => sl<PropertiesListCubit>(),
+                  child: const OwnerPropertiesView(),
+                ),
               ),
             ],
           ),

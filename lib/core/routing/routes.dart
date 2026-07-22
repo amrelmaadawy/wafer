@@ -15,4 +15,9 @@ class Routes {
   static const String ownerReportsCenter = '/owner-reports';
   static const String editProfile = '/edit-profile';
   static const String changePassword = '/change-password';
+
+  // Properties sub-routes
+  static const String ownerPropertyDetails = '/owner-property-details';
+  static const String ownerPropertyCreate = '/owner-property-create';
+  static const String ownerPropertyEdit = '/owner-property-edit';
 }
