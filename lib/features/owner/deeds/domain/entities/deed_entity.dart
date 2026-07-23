@@ -15,15 +15,23 @@ class DeedBranchEntity extends Equatable {
 
 class DeedPropertyEntity extends Equatable {
   final int id;
-  final String name;
+  final String? name;
+  final String code;
+  final String? propertyType;
+  final String? usageType;
+  final String? status;
 
   const DeedPropertyEntity({
     required this.id,
-    required this.name,
+    this.name,
+    required this.code,
+    this.propertyType,
+    this.usageType,
+    this.status,
   });
 
   @override
-  List<Object?> get props => [id, name];
+  List<Object?> get props => [id, name, code, propertyType, usageType, status];
 }
 
 class DeedEntity extends Equatable {

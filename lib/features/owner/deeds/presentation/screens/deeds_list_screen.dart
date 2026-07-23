@@ -116,6 +116,7 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
                             child: DeedCard(
                               deed: deed,
                               onTap: () {
+                                FocusManager.instance.primaryFocus?.unfocus();
                                 context.push('${Routes.ownerDeedDetails}?id=${deed.id}');
                               },
                               onAttachmentTap: () => _openAttachment(deed.documentAttachment),

@@ -17,13 +17,21 @@ class DeedBranchModel extends DeedBranchEntity {
 class DeedPropertyModel extends DeedPropertyEntity {
   const DeedPropertyModel({
     required super.id,
-    required super.name,
+    super.name,
+    required super.code,
+    super.propertyType,
+    super.usageType,
+    super.status,
   });
 
   factory DeedPropertyModel.fromJson(Map<String, dynamic> json) {
     return DeedPropertyModel(
       id: json['id'] is int ? json['id'] as int : int.tryParse(json['id'].toString()) ?? 0,
-      name: json['name'] as String? ?? '',
+      name: json['name'] as String?,
+      code: json['code'] as String? ?? '',
+      propertyType: json['property_type'] as String?,
+      usageType: json['usage_type'] as String?,
+      status: json['status'] as String?,
     );
   }
 }

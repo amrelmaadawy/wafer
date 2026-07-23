@@ -5,6 +5,10 @@ import 'package:wafer/core/theme/app_colors.dart';
 import 'package:wafer/core/theme/color_utils.dart';
 import '../../../domain/entities/deed_entity.dart';
 
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/routing/routes.dart';
+import '../../../../../../core/presentation/widgets/animations/animated_press_card.dart';
+
 class DeedDetailsPropertiesCard extends StatelessWidget {
   final DeedEntity deed;
 
@@ -65,8 +69,8 @@ class DeedDetailsPropertiesCard extends StatelessWidget {
               ),
             ],
           ),
-          if (deed.properties.isNotEmpty) ...[
-            const SizedBox(height: 16),
+          const SizedBox(height: 16),
+          if (deed.properties.isNotEmpty)
             ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -74,34 +78,109 @@ class DeedDetailsPropertiesCard extends StatelessWidget {
               separatorBuilder: (_, _) => const Divider(color: AppColors.borderLight, height: 16),
               itemBuilder: (context, index) {
                 final property = deed.properties[index];
-                return Row(
-                  children: [
-                    Container(
-                      width: 40,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: AppColors.backgroundLight,
-                        borderRadius: BorderRadius.circular(8),
+                return AnimatedPressCard(
+                  onTap: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    context.push('${Routes.ownerPropertyDetails}?id=${property.id}');
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: AppColors.backgroundLight,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Icon(Icons.home_work_rounded, color: context.primaryColor, size: 22),
                       ),
-                      child: Icon(Icons.home_rounded, color: context.primaryColor, size: 20),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Text(
-                        property.name,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimaryLight,
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              property.name ?? LocaleKeys.occupancyUnnamedProperty.tr(),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textPrimaryLight,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              property.code,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.textSecondaryLight,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ),
-                  ],
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          if (property.status != null)
+                            _buildBadge(
+                              property.status!,
+                              property.status == 'published' ? const Color(0xFF10B981) : AppColors.textSecondaryLight,
+                            ),
+                          if (property.propertyType != null) ...[
+                            const SizedBox(height: 4),
+                            _buildBadge(
+                              property.propertyType!,
+                              context.primaryColor,
+                            ),
+                          ],
+                        ],
+                      ),
+                    ],
+                  ),
                 );
               },
+            )
+          else
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              alignment: Alignment.center,
+              child: Column(
+                children: [
+                  Icon(Icons.layers_clear_rounded, size: 40, color: AppColors.textSecondaryLight.withValues(alpha: 0.5)),
+                  const SizedBox(height: 8),
+                  Text(
+                    LocaleKeys.deedNoPropertiesFound.tr(), // Fallback or maybe we should add specific empty state key, but this works for now or create a better one.
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.textSecondaryLight,
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ],
         ],
+      ),
+    );
+  }
+
+  Widget _buildBadge(String text, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        text, // ideally localized using tr(), e.g. status.tr() if mapping exists.
+        style: TextStyle(
+          fontSize: 10,
+          fontWeight: FontWeight.bold,
+          color: color,
+        ),
       ),
     );
   }

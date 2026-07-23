@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.g.dart';
@@ -49,36 +50,42 @@ class _DeedsFilterBarState extends State<DeedsFilterBar> {
             children: [
               Expanded(
                 flex: 2,
-                child: TextField(
-                  controller: _searchController,
-                  onChanged: (val) => cubit.searchDeeds(val),
-                  style: const TextStyle(fontSize: 13),
-                  decoration: InputDecoration(
-                    hintText: LocaleKeys.deeds_search_hint.tr(),
-                    prefixIcon: const Icon(Icons.search_rounded, size: 20, color: AppColors.textSecondaryLight),
-                    suffixIcon: _searchController.text.isNotEmpty
-                        ? IconButton(
-                            icon: const Icon(Icons.close_rounded, size: 18),
-                            onPressed: () {
-                              _searchController.clear();
-                              cubit.searchDeeds('');
-                            },
-                          )
-                        : null,
-                    filled: true,
-                    fillColor: AppColors.surfaceLight,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-                    border: OutlineInputBorder(
-                      borderRadius: AppRadius.circularXl,
-                      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: AppRadius.circularXl,
-                      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: AppRadius.circularXl,
-                      borderSide: BorderSide(color: context.primaryColor),
+                child: Shortcuts(
+                  shortcuts: <LogicalKeySet, Intent>{
+                    LogicalKeySet(LogicalKeyboardKey.arrowDown): const DoNothingAndStopPropagationIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.arrowUp): const DoNothingAndStopPropagationIntent(),
+                  },
+                  child: TextField(
+                    controller: _searchController,
+                    onChanged: (val) => cubit.searchDeeds(val),
+                    style: const TextStyle(fontSize: 13),
+                    decoration: InputDecoration(
+                      hintText: LocaleKeys.deeds_search_hint.tr(),
+                      prefixIcon: const Icon(Icons.search_rounded, size: 20, color: AppColors.textSecondaryLight),
+                      suffixIcon: _searchController.text.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.close_rounded, size: 18),
+                              onPressed: () {
+                                _searchController.clear();
+                                cubit.searchDeeds('');
+                              },
+                            )
+                          : null,
+                      filled: true,
+                      fillColor: AppColors.surfaceLight,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      border: OutlineInputBorder(
+                        borderRadius: AppRadius.circularXl,
+                        borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: AppRadius.circularXl,
+                        borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: AppRadius.circularXl,
+                        borderSide: BorderSide(color: context.primaryColor),
+                      ),
                     ),
                   ),
                 ),

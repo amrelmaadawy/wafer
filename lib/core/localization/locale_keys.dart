@@ -440,6 +440,8 @@ class LocaleKeys {
 
   // Deed Details
   static const deedDetailsTitle = 'deeds.details_title';
+  static const deedDocumentAttachment = 'deeds.document_attachment';
+  static const deedNoPropertiesFound = 'deeds.no_deeds_found';
   static const deedElectronic = 'deeds.electronic';
   static const deedPaper = 'deeds.paper';
   static const deedNumber = 'deeds.number';
