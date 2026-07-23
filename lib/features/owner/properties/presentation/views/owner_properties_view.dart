@@ -14,6 +14,7 @@ import '../widgets/list/properties_filter_bar.dart';
 import '../widgets/list/properties_stats_header_widget.dart';
 import '../widgets/list/property_card.dart';
 import '../widgets/list/property_skeleton_card.dart';
+import '../../../../../core/presentation/widgets/animations/staggered_list_item.dart';
 
 class OwnerPropertiesView extends StatefulWidget {
   const OwnerPropertiesView({super.key});
@@ -178,11 +179,14 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
                   );
                 }
                 final property = state.properties[index];
-                return PropertyCard(
-                  property: property,
-                  onTap: () {
-                    context.push('${Routes.ownerPropertyDetails}?id=${property.id}');
-                  },
+                return StaggeredListItem(
+                  index: index,
+                  child: PropertyCard(
+                    property: property,
+                    onTap: () {
+                      context.push('${Routes.ownerPropertyDetails}?id=${property.id}');
+                    },
+                  ),
                 );
               },
             ),

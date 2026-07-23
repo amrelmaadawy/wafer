@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../core/presentation/widgets/animations/staggered_list_item.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/localization/locale_keys.dart';
@@ -97,46 +98,83 @@ class _PropertyUnitsTabState extends State<PropertyUnitsTab> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: context.primarySubtle,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons.meeting_room_outlined,
-                size: 48,
-                color: context.primaryColor,
+            StaggeredListItem(
+              index: 0,
+              child: Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: context.primarySubtle.withValues(alpha: 0.5),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: context.primaryColor.withValues(alpha: 0.1),
+                      blurRadius: 20,
+                      spreadRadius: 5,
+                    ),
+                  ],
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Icon(
+                    Icons.meeting_room_rounded,
+                    size: 56,
+                    color: context.primaryColor,
+                  ),
+                ),
               ),
             ),
-            const SizedBox(height: 16),
-            Text(
-              LocaleKeys.propertyDetailsNoUnitsTitle.tr(),
-              style: const TextStyle(
-                color: AppColors.textPrimaryLight,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
+            const SizedBox(height: 24),
+            StaggeredListItem(
+              index: 1,
+              child: Text(
+                LocaleKeys.propertyDetailsNoUnitsTitle.tr(),
+                style: const TextStyle(
+                  color: AppColors.textPrimaryLight,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
-            const SizedBox(height: 6),
-            Text(
-              LocaleKeys.propertyDetailsNoUnitsSubtitle.tr(),
-              style: const TextStyle(
-                color: AppColors.textSecondaryLight,
-                fontSize: 13,
+            const SizedBox(height: 8),
+            StaggeredListItem(
+              index: 2,
+              child: Text(
+                LocaleKeys.propertyDetailsNoUnitsSubtitle.tr(),
+                style: const TextStyle(
+                  color: AppColors.textSecondaryLight,
+                  fontSize: 14,
+                  height: 1.5,
+                ),
+                textAlign: TextAlign.center,
               ),
-              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 20),
-            ElevatedButton.icon(
-              onPressed: () => _showAddUnitSheet(context),
-              icon: const Icon(Icons.add_rounded, size: 18),
-              label: Text(LocaleKeys.propertyDetailsAddUnit.tr()),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: context.primaryColor,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: AppRadius.circularFull,
+            const SizedBox(height: 32),
+            StaggeredListItem(
+              index: 3,
+              child: ElevatedButton.icon(
+                onPressed: () => _showAddUnitSheet(context),
+                icon: const Icon(Icons.add_rounded, size: 20),
+                label: Text(LocaleKeys.propertyDetailsAddUnit.tr(), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: context.primaryColor,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  elevation: 4,
+                  shadowColor: context.primaryColor.withValues(alpha: 0.4),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadius.circularFull,
+                  ),
                 ),
               ),
             ),

@@ -4,6 +4,7 @@ import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/presentation/widgets/animations/animated_press_card.dart';
 import '../../../domain/entities/property_list_item_entity.dart';
 
 class PropertyCard extends StatelessWidget {
@@ -34,23 +35,22 @@ class PropertyCard extends StatelessWidget {
     final isDraft = property.isDraft;
     final statusColor = isDraft ? AppColors.warning : AppColors.success;
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularXl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: AppRadius.circularXl,
+    return AnimatedPressCard(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        decoration: BoxDecoration(
+          color: AppColors.surfaceLight,
+          borderRadius: AppRadius.circularXl,
+          border: Border.all(color: const Color(0xFFEDF0F7)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.03),
+              blurRadius: 10,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -59,14 +59,20 @@ class PropertyCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 44,
-                    height: 44,
-                    decoration: BoxDecoration(
-                      color: context.primarySubtle,
-                      borderRadius: AppRadius.circularLg,
+                  Hero(
+                    tag: 'property_icon_${property.id}',
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: context.primarySubtle,
+                          borderRadius: AppRadius.circularLg,
+                        ),
+                        child: Icon(_typeIcon, color: context.primaryColor, size: 22),
+                      ),
                     ),
-                    child: Icon(_typeIcon, color: context.primaryColor, size: 22),
                   ),
                   const SizedBox(width: 12),
                   Expanded(

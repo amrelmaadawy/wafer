@@ -137,7 +137,7 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             decoration: BoxDecoration(
-              color: bgColor.withValues(alpha: 0.5),
+              color: color.withValues(alpha: 0.1),
               borderRadius: AppRadius.circularFull,
             ),
             child: Text(

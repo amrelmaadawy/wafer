@@ -13,6 +13,8 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
 
   PropertiesQueryFilterEntity _currentFilter = const PropertiesQueryFilterEntity();
   List<PropertyListItemEntity> _allFetchedProperties = [];
+  dynamic _lastMeta;
+  dynamic _lastStats;
   Timer? _debounceTimer;
 
   PropertiesQueryFilterEntity get currentFilter => _currentFilter;
@@ -34,7 +36,9 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
       (failure) => emit(PropertiesListError(failure.message)),
       (data) {
         _allFetchedProperties = data.items;
-        _applyLocalFilterAndEmit(data.meta, data.stats);
+        _lastMeta = data.meta;
+        _lastStats = data.stats;
+        _applyLocalFilterAndEmit(_lastMeta, _lastStats);
       },
     );
   }
@@ -90,7 +94,8 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
       (data) {
         _currentFilter = nextPageFilter;
         _allFetchedProperties.addAll(data.items);
-        _applyLocalFilterAndEmit(data.meta, data.stats);
+        _lastMeta = data.meta;
+        _applyLocalFilterAndEmit(_lastMeta, _lastStats);
       },
     );
   }
@@ -100,16 +105,8 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
       status: () => statusFilter == 'all' ? null : statusFilter,
     );
 
-    dynamic meta;
-    dynamic stats;
-    if (state is PropertiesListLoaded) {
-      final loadedState = state as PropertiesListLoaded;
-      meta = loadedState.meta;
-      stats = loadedState.stats;
-    }
-
-    if (_allFetchedProperties.isNotEmpty) {
-      _applyLocalFilterAndEmit(meta, stats);
+    if (_allFetchedProperties.isNotEmpty && _lastMeta != null) {
+      _applyLocalFilterAndEmit(_lastMeta, _lastStats);
     } else {
       getProperties(filter: _currentFilter, forceRefresh: false);
     }
@@ -117,20 +114,18 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
 
   void searchProperties(String query) {
     _debounceTimer?.cancel();
+    
+    final trimmedQuery = query.trim();
+    final isSearching = trimmedQuery.isNotEmpty;
+
     _currentFilter = _currentFilter.copyWith(
-      search: () => query.trim().isEmpty ? null : query.trim(),
+      search: () => isSearching ? trimmedQuery : null,
+      // Automatically switch to 'All' category when searching globally
+      status: () => isSearching ? null : _currentFilter.status,
     );
 
-    dynamic meta;
-    dynamic stats;
-    if (state is PropertiesListLoaded) {
-      final loadedState = state as PropertiesListLoaded;
-      meta = loadedState.meta;
-      stats = loadedState.stats;
-    }
-
-    if (_allFetchedProperties.isNotEmpty) {
-      _applyLocalFilterAndEmit(meta, stats);
+    if (_allFetchedProperties.isNotEmpty && _lastMeta != null) {
+      _applyLocalFilterAndEmit(_lastMeta, _lastStats);
     } else {
       _debounceTimer = Timer(const Duration(milliseconds: 300), () {
         getProperties(filter: _currentFilter, forceRefresh: false);
