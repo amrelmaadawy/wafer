@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../cubit/owner_maintenance_cubit.dart';
 import '../cubit/owner_maintenance_state.dart';
 import '../screens/owner_maintenance_details_screen.dart';
@@ -75,13 +76,9 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
             state is OwnerMaintenanceInitial) {
           return const MaintenanceSkeletonWidget();
         } else if (state is OwnerMaintenanceError) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Text(state.message,
-                  style: const TextStyle(color: AppColors.error),
-                  textAlign: TextAlign.center),
-            ),
+          return CustomErrorWidget(
+            message: state.message,
+            onRetry: () => context.read<OwnerMaintenanceCubit>().getMaintenanceRequests(forceRefresh: true),
           );
         } else if (state is OwnerMaintenanceEmpty) {
           return MaintenanceEmptyWidget(

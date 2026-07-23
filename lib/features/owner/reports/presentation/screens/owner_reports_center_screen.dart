@@ -6,6 +6,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../cubit/owner_defaulters_cubit.dart';
 import '../cubit/owner_occupancy_cubit.dart';
 import '../cubit/owner_revenue_cubit.dart';
@@ -40,20 +41,8 @@ class OwnerReportsCenterScreen extends StatelessWidget {
         initialIndex: initialTabIndex.clamp(0, 2),
         child: Scaffold(
           backgroundColor: AppColors.backgroundLight,
-          appBar: AppBar(
-            title: Text(
-              LocaleKeys.dashboardReports.tr(),
-              style: const TextStyle(
-                color: AppColors.textPrimaryLight,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-            backgroundColor: AppColors.surfaceLight,
-            elevation: 0,
-            scrolledUnderElevation: 0,
-            surfaceTintColor: Colors.transparent,
-            centerTitle: true,
-            iconTheme: const IconThemeData(color: AppColors.textPrimaryLight),
+          appBar: CustomAppBar(
+            title: LocaleKeys.dashboardReports.tr(),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(60),
               child: Padding(

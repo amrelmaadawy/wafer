@@ -6,6 +6,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../domain/entities/property_details_entity.dart';
 import '../cubit/edit/property_edit_cubit.dart';
 import '../cubit/edit/property_edit_state.dart';
@@ -63,8 +64,8 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(LocaleKeys.propertyEditTitle.tr()),
+      appBar: CustomAppBar(
+        title: LocaleKeys.propertyEditTitle.tr(),
       ),
       body: BlocConsumer<PropertyEditCubit, PropertyEditState>(
         listener: (context, state) {

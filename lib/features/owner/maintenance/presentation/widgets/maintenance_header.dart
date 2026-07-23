@@ -21,21 +21,17 @@ class MaintenanceHeader extends StatelessWidget {
           Row(
             children: [
               if (Navigator.canPop(context)) ...[
-                InkWell(
-                  onTap: () => Navigator.pop(context),
-                  borderRadius: AppRadius.circularMd,
-                  child: Container(
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: AppColors.surfaceLight,
-                      borderRadius: AppRadius.circularMd,
-                      border: Border.all(color: AppColors.borderLight),
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back_ios_new_rounded,
-                      size: 18,
-                      color: AppColors.textPrimaryLight,
-                    ),
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: context.primaryColor.withValues(alpha: 0.1),
+                    borderRadius: AppRadius.circularLg,
+                  ),
+                  child: IconButton(
+                    icon: Icon(Icons.arrow_back_ios_new_rounded, color: context.primaryColor, size: 18),
+                    padding: EdgeInsets.zero,
+                    onPressed: () => Navigator.pop(context),
                   ),
                 ),
                 const SizedBox(width: 12),

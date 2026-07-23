@@ -30,8 +30,12 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
         serverMsg =
             (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      return Left(ServerFailure(
-          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+      final msg = serverMsg ?? 
+          (e.type == DioExceptionType.badResponse 
+              ? LocaleKeys.errorsServerError.tr() 
+              : e.message) ?? 
+          LocaleKeys.errorsServerError.tr();
+      return Left(ServerFailure(msg));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -52,8 +56,12 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
         serverMsg =
             (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      return Left(ServerFailure(
-          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+      final msg = serverMsg ?? 
+          (e.type == DioExceptionType.badResponse 
+              ? LocaleKeys.errorsServerError.tr() 
+              : e.message) ?? 
+          LocaleKeys.errorsServerError.tr();
+      return Left(ServerFailure(msg));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -74,8 +82,12 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
         serverMsg =
             (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      return Left(ServerFailure(
-          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+      final msg = serverMsg ?? 
+          (e.type == DioExceptionType.badResponse 
+              ? LocaleKeys.errorsServerError.tr() 
+              : e.message) ?? 
+          LocaleKeys.errorsServerError.tr();
+      return Left(ServerFailure(msg));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

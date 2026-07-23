@@ -5,7 +5,8 @@ import '../../../../../core/di/service_locator.dart' as di;
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
-import '../../../../../core/utils/widgets/custom_button.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../cubit/installments/owner_contract_installments_cubit.dart';
 import '../cubit/installments/owner_contract_installments_state.dart';
 import '../widgets/installments/installment_card.dart';
@@ -30,40 +31,19 @@ class OwnerContractInstallmentsScreen extends StatelessWidget {
       create: (_) => di.sl<OwnerContractInstallmentsCubit>()..getContractInstallments(contractId),
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          scrolledUnderElevation: 0,
-          centerTitle: true,
-          iconTheme: const IconThemeData(color: AppColors.textPrimaryLight),
-          title: Column(
-            children: [
-              Text(
-                LocaleKeys.installmentsTitle.tr(),
-                style: const TextStyle(
-                  color: AppColors.textPrimaryLight,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              if (contractNumber.isNotEmpty)
-                Text(
-                  contractNumber,
-                  style: const TextStyle(
-                    color: AppColors.textSecondaryLight,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-            ],
-          ),
+        appBar: CustomAppBar(
+          title: LocaleKeys.installmentsTitle.tr(),
+          subtitle: contractNumber.isNotEmpty ? contractNumber : null,
         ),
         body: BlocBuilder<OwnerContractInstallmentsCubit, OwnerContractInstallmentsState>(
           builder: (context, state) {
             if (state is OwnerContractInstallmentsLoading || state is OwnerContractInstallmentsInitial) {
               return const InstallmentsSkeletonWidget();
             } else if (state is OwnerContractInstallmentsError) {
-              return _buildErrorState(context, state.message);
+              return CustomErrorWidget(
+                message: state.message,
+                onRetry: () => context.read<OwnerContractInstallmentsCubit>().getContractInstallments(contractId),
+              );
             } else if (state is OwnerContractInstallmentsLoaded) {
               final all = state.allInstallments;
               if (all.isEmpty) return const InstallmentsEmptyWidget();
@@ -106,33 +86,6 @@ class OwnerContractInstallmentsScreen extends StatelessWidget {
             }
             return const SizedBox.shrink();
           },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildErrorState(BuildContext context, String message) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
-            const SizedBox(height: 16),
-            Text(
-              message,
-              style: const TextStyle(fontSize: 14.5, color: AppColors.textPrimaryLight),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            CustomButton(
-              text: LocaleKeys.commonRetry.tr(),
-              width: 150,
-              onPressed: () =>
-                  context.read<OwnerContractInstallmentsCubit>().getContractInstallments(contractId),
-            ),
-          ],
         ),
       ),
     );

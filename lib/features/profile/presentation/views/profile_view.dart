@@ -5,6 +5,8 @@ import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../cubit/profile_cubit.dart';
 import '../cubit/profile_state.dart';
@@ -20,13 +22,9 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(LocaleKeys.profileTitle.tr(), style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17)),
-        centerTitle: true,
-        backgroundColor: AppColors.backgroundLight,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        surfaceTintColor: Colors.transparent,
+      appBar: CustomAppBar(
+        title: LocaleKeys.profileTitle.tr(),
+        showBackButton: false,
       ),
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
@@ -65,45 +63,9 @@ class ProfileView extends StatelessWidget {
   }
 
   Widget _buildError(BuildContext context, String message) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(32),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: AppColors.error.withValues(alpha: 0.1),
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(Icons.error_outline_rounded, size: 48, color: AppColors.error),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              LocaleKeys.profileLoadError.tr(),
-              style: const TextStyle(fontSize: 17, fontWeight: FontWeight.bold, color: AppColors.textPrimaryLight),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 13, color: AppColors.textSecondaryLight),
-            ),
-            const SizedBox(height: 28),
-            FilledButton.icon(
-              onPressed: () => context.read<ProfileCubit>().fetchProfile(forceRefresh: true),
-              style: FilledButton.styleFrom(
-                backgroundColor: context.primaryColor,
-                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 13),
-                shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
-              ),
-              icon: const Icon(Icons.refresh_rounded),
-              label: Text(LocaleKeys.commonRetry.tr(), style: const TextStyle(fontWeight: FontWeight.bold)),
-            ),
-          ],
-        ),
-      ),
+    return CustomErrorWidget(
+      message: message,
+      onRetry: () => context.read<ProfileCubit>().fetchProfile(forceRefresh: true),
     );
   }
 }

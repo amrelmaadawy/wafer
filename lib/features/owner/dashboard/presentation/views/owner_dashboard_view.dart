@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
-import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../cubit/owner_dashboard_cubit.dart';
 import '../cubit/owner_dashboard_state.dart';
@@ -92,25 +91,9 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
   }
 
   Widget _buildError(BuildContext context, String message) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.error_outline_rounded, color: Color(0xFFEF4444), size: 48),
-            const SizedBox(height: 14),
-            Text(message, style: const TextStyle(color: Color(0xFF0F172A), fontSize: 15, fontWeight: FontWeight.w700), textAlign: TextAlign.center),
-            const SizedBox(height: 16),
-            ElevatedButton.icon(
-              onPressed: () => context.read<OwnerDashboardCubit>().loadDashboardStats(forceRefresh: true),
-              icon: const Icon(Icons.refresh_rounded, size: 18),
-              label: Text(LocaleKeys.commonRetry.tr()),
-              style: ElevatedButton.styleFrom(backgroundColor: context.primaryColor, foregroundColor: Colors.white),
-            ),
-          ],
-        ),
-      ),
+    return CustomErrorWidget(
+      message: message,
+      onRetry: () => context.read<OwnerDashboardCubit>().loadDashboardStats(forceRefresh: true),
     );
   }
 }

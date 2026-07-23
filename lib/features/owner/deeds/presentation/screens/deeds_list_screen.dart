@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/color_utils.dart';
 import '../../../../../core/localization/locale_keys.g.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/presentation/widgets/animations/staggered_list_item.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../cubit/list/deeds_list_cubit.dart';
 import '../cubit/list/deeds_list_state.dart';
 import '../widgets/deeds_filter_bar.dart';
@@ -11,6 +14,8 @@ import '../widgets/deed_card.dart';
 import '../widgets/deeds_skeleton.dart';
 import '../widgets/deeds_empty_state.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../core/routing/routes.dart';
 
 class DeedsListScreen extends StatefulWidget {
   const DeedsListScreen({super.key});
@@ -55,15 +60,10 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: AppBar(
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        title: Text(
-          LocaleKeys.deeds_title.tr(),
-          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
+      appBar: CustomAppBar(
+        title: LocaleKeys.deeds_title.tr(),
+        subtitle: LocaleKeys.deeds_management_subtitle.tr(),
+        centerTitle: false,
       ),
       body: Column(
         children: [
@@ -74,18 +74,9 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
                 if (state is DeedsListLoading || state is DeedsListInitial) {
                   return const DeedsSkeleton();
                 } else if (state is DeedsListError) {
-                  return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(state.message),
-                        const SizedBox(height: 12),
-                        ElevatedButton(
-                          onPressed: () => context.read<DeedsListCubit>().getDeeds(forceRefresh: true),
-                          child: Text(LocaleKeys.common_retry.tr()),
-                        ),
-                      ],
-                    ),
+                  return CustomErrorWidget(
+                    message: state.message,
+                    onRetry: () => context.read<DeedsListCubit>().getDeeds(forceRefresh: true),
                   );
                 } else if (state is DeedsListEmpty) {
                   return const DeedsEmptyState();
@@ -138,6 +129,20 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          final result = await GoRouter.of(context).push(Routes.ownerDeedsCreate);
+          if (result == true && context.mounted) {
+            context.read<DeedsListCubit>().getDeeds(forceRefresh: true);
+          }
+        },
+        backgroundColor: context.primaryColor,
+        icon: const Icon(Icons.add_rounded, color: Colors.white),
+        label: Text(
+          LocaleKeys.deeds_create_deed.tr(),
+          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }

@@ -7,6 +7,7 @@ import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../cubit/units/unit_create_cubit.dart';
 import '../../cubit/units/units_list_cubit.dart';
 import '../../cubit/units/units_list_state.dart';
@@ -84,7 +85,10 @@ class _PropertyUnitsTabState extends State<PropertyUnitsTab> {
             ),
           );
         } else if (state is UnitsListError) {
-          return Center(child: Text(state.message));
+          return CustomErrorWidget(
+            message: state.message,
+            onRetry: () => context.read<UnitsListCubit>().getUnits(propertyId),
+          );
         }
         return const SizedBox.shrink();
       },

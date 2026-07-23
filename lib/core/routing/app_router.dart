@@ -24,6 +24,7 @@ import '../../features/profile/presentation/screens/change_password_screen.dart'
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../features/owner/deeds/presentation/cubit/list/deeds_list_cubit.dart';
 import '../../features/owner/deeds/presentation/screens/deeds_list_screen.dart';
+import '../../features/owner/deeds/presentation/screens/create_deed_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
@@ -113,6 +114,10 @@ class AppRouter {
           create: (_) => sl<DeedsListCubit>(),
           child: const DeedsListScreen(),
         ),
+      ),
+      GoRoute(
+        path: Routes.ownerDeedsCreate,
+        builder: (context, state) => const CreateDeedScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

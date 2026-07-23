@@ -6,6 +6,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../cubit/create/property_create_cubit.dart';
 import '../cubit/create/property_create_state.dart';
 import '../widgets/create/basic_data_step_widget.dart';
@@ -90,12 +91,9 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
       },
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
-        appBar: AppBar(
-          title: Text(LocaleKeys.propertyCreateTitle.tr()),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_rounded),
-            onPressed: _onWillPop,
-          ),
+        appBar: CustomAppBar(
+          title: LocaleKeys.propertyCreateTitle.tr(),
+          onBackPressed: _onWillPop,
         ),
         body: BlocConsumer<PropertyCreateCubit, PropertyCreateState>(
           listener: (context, state) {

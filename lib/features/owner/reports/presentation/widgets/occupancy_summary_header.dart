@@ -21,7 +21,7 @@ class OccupancySummaryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(22),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -62,22 +62,22 @@ class OccupancySummaryHeader extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               Text(
                 '${overallRate.toStringAsFixed(1)}%',
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 42,
+                  fontSize: 32,
                   fontWeight: FontWeight.w800,
                   letterSpacing: -0.5,
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
               Container(
                 height: 1,
                 color: Colors.white.withValues(alpha: 0.15),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 12),
               Row(
                 children: [
                   Expanded(
@@ -90,7 +90,7 @@ class OccupancySummaryHeader extends StatelessWidget {
                   ),
                   Container(
                     width: 1,
-                    height: 36,
+                    height: 28,
                     color: Colors.white.withValues(alpha: 0.15),
                   ),
                   Expanded(
@@ -103,7 +103,7 @@ class OccupancySummaryHeader extends StatelessWidget {
                   ),
                   Container(
                     width: 1,
-                    height: 36,
+                    height: 28,
                     color: Colors.white.withValues(alpha: 0.15),
                   ),
                   Expanded(

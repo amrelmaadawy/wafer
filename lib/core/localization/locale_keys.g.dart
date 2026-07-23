@@ -424,6 +424,31 @@ abstract class  LocaleKeys {
   static const deeds_no_deeds_found = 'deeds.no_deeds_found';
   static const deeds_no_deeds_found_sub = 'deeds.no_deeds_found_sub';
   static const deeds_document_attachment = 'deeds.document_attachment';
+  static const deeds_create_deed = 'deeds.create_deed';
+  static const deeds_deed_name = 'deeds.deed_name';
+  static const deeds_branch = 'deeds.branch';
+  static const deeds_document_type = 'deeds.document_type';
+  static const deeds_document_number = 'deeds.document_number';
+  static const deeds_document_date = 'deeds.document_date';
+  static const deeds_area = 'deeds.area';
+  static const deeds_city = 'deeds.city';
+  static const deeds_district = 'deeds.district';
+  static const deeds_region = 'deeds.region';
+  static const deeds_street_name = 'deeds.street_name';
+  static const deeds_building_number = 'deeds.building_number';
+  static const deeds_postal_code = 'deeds.postal_code';
+  static const deeds_notes = 'deeds.notes';
+  static const deeds_attachment = 'deeds.attachment';
+  static const deeds_upload_attachment = 'deeds.upload_attachment';
+  static const deeds_save = 'deeds.save';
+  static const deeds_basic_info = 'deeds.basic_info';
+  static const deeds_location_info = 'deeds.location_info';
+  static const deeds_document_info = 'deeds.document_info';
+  static const deeds_success_create_deed = 'deeds.success_create_deed';
+  static const deeds_required_field = 'deeds.required_field';
+  static const deeds_management_subtitle = 'deeds.management_subtitle';
+  static const deeds_create_subtitle = 'deeds.create_subtitle';
+  static const deeds_cancel = 'deeds.cancel';
   static const deeds = 'deeds';
 
 }

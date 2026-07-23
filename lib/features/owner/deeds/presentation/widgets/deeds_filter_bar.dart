@@ -5,6 +5,7 @@ import '../../../../../../core/localization/locale_keys.g.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../cubit/list/deeds_list_cubit.dart';
 import '../cubit/list/deeds_list_state.dart';
 
@@ -85,93 +86,14 @@ class _DeedsFilterBarState extends State<DeedsFilterBar> {
               const SizedBox(width: 8),
               Expanded(
                 flex: 1,
-                child: Container(
-                  height: 44, // Match TextField approximate height
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceLight,
-                    borderRadius: AppRadius.circularXl,
-                    border: Border.all(color: const Color(0xFFE2E8F0)),
-                  ),
-                  child: Theme(
-                    data: Theme.of(context).copyWith(
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                    ),
-                    child: PopupMenuButton<int>(
-                      initialValue: resolvedBranchId,
-                      color: Colors.white,
-                      elevation: 4,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(16)),
-                      ),
-                      position: PopupMenuPosition.under,
-                      offset: const Offset(0, 4),
-                      onSelected: (int newValue) {
-                        cubit.filterByBranch(newValue == -1 ? null : newValue);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                branches.firstWhere(
-                                  (b) => b['id'] == resolvedBranchId,
-                                  orElse: () => branches.first,
-                                )['name'] as String,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.textPrimaryLight,
-                                ),
-                              ),
-                            ),
-                            const Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.textSecondaryLight, size: 18),
-                          ],
-                        ),
-                      ),
-                      itemBuilder: (context) {
-                        return branches.map((branch) {
-                          final isSelected = resolvedBranchId == branch['id'];
-                          return PopupMenuItem<int>(
-                            value: branch['id'] as int,
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Container(
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: isSelected ? context.primaryColor.withValues(alpha: 0.08) : Colors.transparent,
-                                borderRadius: AppRadius.circularMd,
-                              ),
-                              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      branch['name'] as String,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        color: isSelected ? context.primaryColor : AppColors.textPrimaryLight,
-                                        fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                  if (isSelected)
-                                    Icon(Icons.check_circle_rounded, color: context.primaryColor, size: 16),
-                                ],
-                              ),
-                            ),
-                          );
-                        }).toList();
-                      },
-                    ),
-                  ),
+                child: CustomDropdownMenu<int>(
+                  value: resolvedBranchId,
+                  hint: LocaleKeys.deeds_filter_all_branches.tr(),
+                  items: branches.map((b) => b['id'] as int).toList(),
+                  itemLabelBuilder: (id) => branches.firstWhere((b) => b['id'] == id)['name'] as String,
+                  onSelected: (newValue) {
+                    cubit.filterByBranch(newValue == -1 ? null : newValue);
+                  },
                 ),
               ),
             ],

@@ -8,6 +8,8 @@ import 'package:wafer/core/theme/color_utils.dart';
 import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/routing/routes.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../domain/entities/property_details_entity.dart';
 import '../cubit/details/property_details_cubit.dart';
@@ -74,19 +76,10 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
             return const PropertyDetailsSkeleton();
           } else if (state is PropertyDetailsError) {
             return Scaffold(
-              appBar: AppBar(leading: const BackButton()),
-              body: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(state.message),
-                    const SizedBox(height: 12),
-                    ElevatedButton(
-                      onPressed: () => context.read<PropertyDetailsCubit>().loadDetails(widget.propertyId),
-                      child: Text(LocaleKeys.commonRetry.tr()),
-                    ),
-                  ],
-                ),
+              appBar: const CustomAppBar(title: ''),
+              body: CustomErrorWidget(
+                message: state.message,
+                onRetry: () => context.read<PropertyDetailsCubit>().loadDetails(widget.propertyId),
               ),
             );
           } else if (state is PropertyDetailsLoaded) {

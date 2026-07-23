@@ -6,7 +6,7 @@ class ApiConstants {
 
   /// Default timeouts
   static const Duration connectTimeout = Duration(seconds: 30);
-  static const Duration receiveTimeout = Duration(seconds: 30);
+  static const Duration receiveTimeout = Duration(seconds: 60);
 
   /// Headers
   static const String contentTypeHeader = 'Content-Type';

@@ -5,6 +5,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../cubit/list/owner_contracts_cubit.dart';
 import '../cubit/list/owner_contracts_state.dart';
 import '../screens/owner_contract_details_screen.dart';
@@ -106,7 +107,10 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
         if (state is OwnerContractsLoading || state is OwnerContractsInitial) {
           return const ContractsSkeletonWidget();
         } else if (state is OwnerContractsError) {
-          return Center(child: Text(state.message));
+          return CustomErrorWidget(
+            message: state.message,
+            onRetry: () => context.read<OwnerContractsCubit>().getContracts(forceRefresh: true),
+          );
         } else if (state is OwnerContractsEmpty) {
           return ContractsEmptyWidget(
             onRefresh: () => context.read<OwnerContractsCubit>().changeStatusFilter('all', force: true),

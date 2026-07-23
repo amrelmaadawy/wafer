@@ -7,6 +7,7 @@ import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../cubit/list/properties_list_cubit.dart';
 import '../cubit/list/properties_list_state.dart';
 import '../widgets/list/properties_empty_widget.dart';
@@ -148,18 +149,9 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
         if (state is PropertiesListLoading || state is PropertiesListInitial) {
           return const PropertySkeletonCard();
         } else if (state is PropertiesListError) {
-          return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(state.message),
-                const SizedBox(height: 12),
-                ElevatedButton(
-                  onPressed: () => context.read<PropertiesListCubit>().getProperties(forceRefresh: true),
-                  child: Text(LocaleKeys.commonRetry.tr()),
-                ),
-              ],
-            ),
+          return CustomErrorWidget(
+            message: state.message,
+            onRetry: () => context.read<PropertiesListCubit>().getProperties(forceRefresh: true),
           );
         } else if (state is PropertiesListEmpty) {
           return PropertiesEmptyWidget(onAddProperty: _onAddNewProperty);

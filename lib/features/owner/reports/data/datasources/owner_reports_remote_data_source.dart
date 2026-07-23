@@ -17,6 +17,23 @@ class OwnerReportsRemoteDataSourceImpl
 
   OwnerReportsRemoteDataSourceImpl(this._dio);
 
+  List<dynamic> _extractList(dynamic dataField) {
+    if (dataField is List) return dataField;
+    if (dataField is Map) {
+      if (dataField.containsKey('items') && dataField['items'] is List) {
+        return dataField['items'] as List;
+      }
+      if (dataField.containsKey('data') && dataField['data'] is List) {
+        return dataField['data'] as List;
+      }
+      // If no explicit keys, try to find the first array in the map
+      for (var value in dataField.values) {
+        if (value is List) return value;
+      }
+    }
+    return [];
+  }
+
   @override
   Future<List<RevenueEntryModel>> getRevenueReport() async {
     final response = await _dio.get(
@@ -24,7 +41,7 @@ class OwnerReportsRemoteDataSourceImpl
     );
 
     final data = response.data as Map<String, dynamic>? ?? {};
-    final list = data['data'] as List<dynamic>? ?? [];
+    final list = _extractList(data['data']);
 
     final models = list
         .whereType<Map<String, dynamic>>()
@@ -41,7 +58,7 @@ class OwnerReportsRemoteDataSourceImpl
     );
 
     final data = response.data as Map<String, dynamic>? ?? {};
-    final list = data['data'] as List<dynamic>? ?? [];
+    final list = _extractList(data['data']);
 
     return list
         .whereType<Map<String, dynamic>>()
