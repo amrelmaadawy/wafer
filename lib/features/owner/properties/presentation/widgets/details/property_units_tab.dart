@@ -87,7 +87,7 @@ class _PropertyUnitsTabState extends State<PropertyUnitsTab> {
         } else if (state is UnitsListError) {
           return CustomErrorWidget(
             message: state.message,
-            onRetry: () => context.read<UnitsListCubit>().getUnits(propertyId),
+            onRetry: () => context.read<UnitsListCubit>().loadUnits(widget.propertyId),
           );
         }
         return const SizedBox.shrink();
