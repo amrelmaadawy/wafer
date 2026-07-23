@@ -10,6 +10,7 @@ import '../../domain/usecases/create_deed_use_case.dart';
 abstract class DeedsRemoteDataSource {
   Future<DeedsResponseEntity> getDeeds({required DeedsQueryFilterEntity filter});
   Future<void> createDeed({required AddNewDeedParams params});
+  Future<DeedModel> getDeedDetails({required int deedId});
 }
 
 class DeedsRemoteDataSourceImpl implements DeedsRemoteDataSource {
@@ -63,5 +64,11 @@ class DeedsRemoteDataSourceImpl implements DeedsRemoteDataSource {
       ApiConstants.ownerDeeds,
       data: formData,
     );
+  }
+
+  @override
+  Future<DeedModel> getDeedDetails({required int deedId}) async {
+    final response = await _dio.get(ApiConstants.ownerDeedDetails(deedId));
+    return DeedModel.fromJson(response.data['data']);
   }
 }

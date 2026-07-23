@@ -462,6 +462,12 @@
     "required_field": "هذا الحقل مطلوب",
     "management_subtitle": "إدارة وثائق الملكية الخاصة بك",
     "create_subtitle": "يرجى تعبئة البيانات المطلوبة بدقة",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "details_title": "تفاصيل الصك",
+    "electronic": "إلكتروني",
+    "paper": "ورقي",
+    "number": "رقم الصك",
+    "date": "تاريخ الصك",
+    "properties_title": "العقارات المرتبطة"
   }
 }

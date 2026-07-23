@@ -462,6 +462,12 @@
     "required_field": "This field is required",
     "management_subtitle": "Manage your property documents",
     "create_subtitle": "Please accurately fill in the required details",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "details_title": "Deed Details",
+    "electronic": "Electronic",
+    "paper": "Paper",
+    "number": "Deed Number",
+    "date": "Deed Date",
+    "properties_title": "Linked Properties"
   }
 }

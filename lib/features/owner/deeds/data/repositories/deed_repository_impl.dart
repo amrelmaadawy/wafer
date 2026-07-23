@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import '../../domain/entities/deed_entity.dart';
 import '../../../../../core/error/failures.dart';
 import '../../domain/entities/deeds_query_filter_entity.dart';
 import '../../domain/entities/deeds_response_entity.dart';
@@ -30,6 +31,18 @@ class DeedRepositoryImpl implements DeedRepository {
     try {
       await remoteDataSource.createDeed(params: params);
       return const Right(null);
+    } on DioException catch (e) {
+      return Left(ServerFailure(e.response?.data['message'] ?? e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, DeedEntity>> getDeedDetails(int id) async {
+    try {
+      final result = await remoteDataSource.getDeedDetails(deedId: id);
+      return Right(result);
     } on DioException catch (e) {
       return Left(ServerFailure(e.response?.data['message'] ?? e.message));
     } catch (e) {

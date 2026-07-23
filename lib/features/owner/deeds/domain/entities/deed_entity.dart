@@ -13,6 +13,19 @@ class DeedBranchEntity extends Equatable {
   List<Object?> get props => [id, name];
 }
 
+class DeedPropertyEntity extends Equatable {
+  final int id;
+  final String name;
+
+  const DeedPropertyEntity({
+    required this.id,
+    required this.name,
+  });
+
+  @override
+  List<Object?> get props => [id, name];
+}
+
 class DeedEntity extends Equatable {
   final int id;
   final String name;
@@ -36,6 +49,7 @@ class DeedEntity extends Equatable {
   final DeedBranchEntity? branch;
   final int propertiesCount;
   final String? createdAt;
+  final List<DeedPropertyEntity> properties;
 
   const DeedEntity({
     required this.id,
@@ -60,6 +74,7 @@ class DeedEntity extends Equatable {
     this.branch,
     required this.propertiesCount,
     this.createdAt,
+    this.properties = const [],
   });
 
   bool get isElectronic => documentType?.toLowerCase() == 'electronic';
@@ -89,5 +104,6 @@ class DeedEntity extends Equatable {
         branch,
         propertiesCount,
         createdAt,
+        properties,
       ];
 }

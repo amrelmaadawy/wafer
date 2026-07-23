@@ -25,6 +25,8 @@ import '../../features/profile/presentation/cubit/profile_cubit.dart';
 import '../../features/owner/deeds/presentation/cubit/list/deeds_list_cubit.dart';
 import '../../features/owner/deeds/presentation/screens/deeds_list_screen.dart';
 import '../../features/owner/deeds/presentation/screens/create_deed_screen.dart';
+import '../../features/owner/deeds/presentation/screens/deed_details_screen.dart';
+import '../../features/owner/deeds/presentation/cubit/details/deed_details_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
@@ -118,6 +120,16 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerDeedsCreate,
         builder: (context, state) => const CreateDeedScreen(),
+      ),
+      GoRoute(
+        path: Routes.ownerDeedDetails,
+        builder: (context, state) {
+          final id = int.tryParse(state.uri.queryParameters['id'] ?? '0') ?? 0;
+          return BlocProvider<DeedDetailsCubit>(
+            create: (_) => sl<DeedDetailsCubit>(),
+            child: DeedDetailsScreen(deedId: id),
+          );
+        },
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

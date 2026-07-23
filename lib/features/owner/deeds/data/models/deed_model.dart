@@ -14,6 +14,20 @@ class DeedBranchModel extends DeedBranchEntity {
   }
 }
 
+class DeedPropertyModel extends DeedPropertyEntity {
+  const DeedPropertyModel({
+    required super.id,
+    required super.name,
+  });
+
+  factory DeedPropertyModel.fromJson(Map<String, dynamic> json) {
+    return DeedPropertyModel(
+      id: json['id'] is int ? json['id'] as int : int.tryParse(json['id'].toString()) ?? 0,
+      name: json['name'] as String? ?? '',
+    );
+  }
+}
+
 class DeedModel extends DeedEntity {
   const DeedModel({
     required super.id,
@@ -38,6 +52,7 @@ class DeedModel extends DeedEntity {
     super.branch,
     required super.propertiesCount,
     super.createdAt,
+    super.properties = const [],
   });
 
   factory DeedModel.fromJson(Map<String, dynamic> json) {
@@ -64,6 +79,9 @@ class DeedModel extends DeedEntity {
       branch: json['branch'] != null ? DeedBranchModel.fromJson(json['branch']) : null,
       propertiesCount: json['properties_count'] is int ? json['properties_count'] as int : int.tryParse(json['properties_count'].toString()) ?? 0,
       createdAt: json['created_at'] as String?,
+      properties: json['properties'] != null
+          ? (json['properties'] as List).map((e) => DeedPropertyModel.fromJson(e)).toList()
+          : const [],
     );
   }
 }

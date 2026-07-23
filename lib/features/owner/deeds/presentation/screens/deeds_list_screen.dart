@@ -115,6 +115,9 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
                             index: index,
                             child: DeedCard(
                               deed: deed,
+                              onTap: () {
+                                context.push('${Routes.ownerDeedDetails}?id=${deed.id}');
+                              },
                               onAttachmentTap: () => _openAttachment(deed.documentAttachment),
                             ),
                           ),

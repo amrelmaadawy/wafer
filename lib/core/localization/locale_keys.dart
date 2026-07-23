@@ -437,4 +437,23 @@ class LocaleKeys {
   static const defaultersReportTitle = 'defaulters.report_title';
   static const defaultersComingSoon = 'defaulters.coming_soon';
   static const defaultersEndpointPending = 'defaulters.endpoint_pending';
+
+  // Deed Details
+  static const deedDetailsTitle = 'deeds.details_title';
+  static const deedElectronic = 'deeds.electronic';
+  static const deedPaper = 'deeds.paper';
+  static const deedNumber = 'deeds.number';
+  static const deedDate = 'deeds.date';
+  static const deedPropertiesTitle = 'deeds.properties_title';
+  static const deedBasicInfo = 'deeds.basic_info';
+  static const deedLocationInfo = 'deeds.location_info';
+  static const deedArea = 'deeds.area';
+  static const deedCity = 'deeds.city';
+  static const deedDistrict = 'deeds.district';
+  static const deedRegion = 'deeds.region';
+  static const deedStreetName = 'deeds.street_name';
+  static const deedBuildingNumber = 'deeds.building_number';
+  static const deedPostalCode = 'deeds.postal_code';
+  static const deedNotes = 'deeds.notes';
+  static const deedAreaUnit = 'deeds.area_label';
 }
