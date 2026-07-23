@@ -82,7 +82,8 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     );
 
     final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
-    return PropertyFormOptionsModel.fromJson(data);
+    final optionsData = data['options'] as Map<String, dynamic>? ?? {};
+    return PropertyFormOptionsModel.fromJson(optionsData);
   }
 
   @override

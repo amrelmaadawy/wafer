@@ -14,7 +14,7 @@ import '../../../../core/di/service_locator.dart';
 void initDeeds() {
   // Cubit
   sl.registerFactory(() => DeedsListCubit(sl()));
-  sl.registerFactory(() => CreateDeedCubit(sl()));
+  sl.registerFactory(() => CreateDeedCubit(sl(), sl()));
   sl.registerFactory(() => DeedDetailsCubit(sl()));
 
   // Use Cases

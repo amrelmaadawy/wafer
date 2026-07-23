@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../../../properties/domain/entities/form_branch_entity.dart';
 
 abstract class CreateDeedState extends Equatable {
   const CreateDeedState();
@@ -9,6 +10,14 @@ abstract class CreateDeedState extends Equatable {
 
 class CreateDeedInitial extends CreateDeedState {
   const CreateDeedInitial();
+}
+
+class FormOptionsLoaded extends CreateDeedState {
+  final List<FormBranchEntity> branches;
+  const FormOptionsLoaded(this.branches);
+
+  @override
+  List<Object> get props => [branches];
 }
 
 class CreateDeedLoading extends CreateDeedState {

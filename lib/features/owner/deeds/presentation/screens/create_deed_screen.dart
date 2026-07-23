@@ -4,8 +4,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter/services.dart';
 
 import '../../../../../../core/di/service_locator.dart';
+import '../../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../../core/localization/locale_keys.g.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
@@ -15,6 +17,7 @@ import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../domain/usecases/create_deed_use_case.dart';
 import '../cubit/create/create_deed_cubit.dart';
 import '../cubit/create/create_deed_state.dart';
+import '../../../../../../core/utils/widgets/app_shimmer.dart';
 
 class CreateDeedScreen extends StatelessWidget {
   const CreateDeedScreen({super.key});
@@ -56,11 +59,13 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
   bool _isPickerActive = false;
   String? _branchError;
 
-  // Mocked branches
-  final List<Map<String, dynamic>> _branches = [
-    {'id': 1, 'name': 'فرع الادارة'},
-    {'id': 2, 'name': 'الإدارة'},
-  ];
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<CreateDeedCubit>().fetchOptions();
+    });
+  }
 
   @override
   void dispose() {
@@ -93,6 +98,136 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
       if (mounted) {
         _isPickerActive = false;
       }
+    }
+  }
+
+  Future<void> _showProfessionalDatePicker() async {
+    DateTime? tempDate = DateTime.tryParse(_docDateController.text) ?? DateTime.now();
+
+    final date = await showModalBottomSheet<DateTime>(
+      context: context,
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      width: 48,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFE2E8F0),
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          LocaleKeys.deeds_document_date.tr(),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            color: AppColors.textPrimaryLight,
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () => Navigator.of(context).pop(),
+                          borderRadius: BorderRadius.circular(12),
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: AppColors.surfaceLight,
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: const Color(0xFFE2E8F0)),
+                            ),
+                            child: const Icon(Icons.close_rounded, size: 20, color: AppColors.textSecondaryLight),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(color: const Color(0xFFE2E8F0)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.03),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(8),
+                      child: Theme(
+                        data: Theme.of(context).copyWith(
+                          colorScheme: ColorScheme.light(
+                            primary: this.context.primaryColor,
+                            onPrimary: Colors.white,
+                            onSurface: AppColors.textPrimaryLight,
+                          ),
+                          textTheme: Theme.of(context).textTheme.copyWith(
+                                bodyMedium: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+                              ),
+                        ),
+                        child: CalendarDatePicker(
+                          initialDate: tempDate ?? DateTime.now(),
+                          firstDate: DateTime(1900),
+                          lastDate: DateTime(2100),
+                          onDateChanged: (DateTime newDate) {
+                            setState(() {
+                              tempDate = newDate;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: ElevatedButton(
+                        onPressed: () => Navigator.of(context).pop(tempDate),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: this.context.primaryColor,
+                          foregroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: Text(
+                          LocaleKeys.deeds_save.tr(),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+
+    if (date != null) {
+      _docDateController.text = DateFormat('yyyy-MM-dd').format(date);
     }
   }
 
@@ -135,19 +270,15 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
     return BlocListener<CreateDeedCubit, CreateDeedState>(
       listener: (context, state) {
         if (state is CreateDeedSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(LocaleKeys.deeds_success_create_deed.tr()),
-              backgroundColor: Colors.green,
-            ),
+          AppToast.showSuccess(
+            context,
+            LocaleKeys.deeds_success_create_deed.tr(),
           );
           Navigator.of(context).pop(true);
         } else if (state is CreateDeedError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.message),
-              backgroundColor: Colors.red,
-            ),
+          AppToast.showError(
+            context,
+            state.message,
           );
         }
       },
@@ -181,6 +312,7 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
                         controller: _areaController,
                         isRequired: true,
                         keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       ),
                     ),
                   ],
@@ -212,6 +344,9 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
                         controller: _docDateController,
                         isRequired: true,
                         hintText: 'YYYY-MM-DD',
+                        readOnly: true,
+                        suffixIcon: const Icon(Icons.calendar_today_rounded, color: AppColors.textSecondaryLight, size: 20),
+                        onTap: _showProfessionalDatePicker,
                       ),
                     ),
                   ],
@@ -249,7 +384,12 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
                     ),
                     const SizedBox(width: 16),
                     Expanded(
-                      child: _buildTextField(label: LocaleKeys.deeds_postal_code.tr(), controller: _postalController, keyboardType: TextInputType.number),
+                      child: _buildTextField(
+                        label: LocaleKeys.deeds_postal_code.tr(),
+                        controller: _postalController,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      ),
                     ),
                   ],
                 ),
@@ -307,6 +447,10 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
     TextInputType keyboardType = TextInputType.text,
     int maxLines = 1,
     String? hintText,
+    bool readOnly = false,
+    VoidCallback? onTap,
+    Widget? suffixIcon,
+    List<TextInputFormatter>? inputFormatters,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -326,12 +470,16 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
           controller: controller,
           keyboardType: keyboardType,
           maxLines: maxLines,
+          readOnly: readOnly,
+          onTap: onTap,
+          inputFormatters: inputFormatters,
           validator: isRequired
               ? (value) => (value == null || value.trim().isEmpty) ? LocaleKeys.deeds_required_field.tr() : null
               : null,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             hintText: hintText ?? label,
+            suffixIcon: suffixIcon,
             filled: true,
             fillColor: AppColors.backgroundLight,
             contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -371,18 +519,37 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
           ],
         ),
         const SizedBox(height: 8),
-        CustomDropdownMenu<int>(
-          height: 54,
-          value: _selectedBranchId,
-          hint: LocaleKeys.deeds_branch.tr(),
-          items: _branches.map((b) => b['id'] as int).toList(),
-          itemLabelBuilder: (id) => _branches.firstWhere((b) => b['id'] == id)['name'] as String,
-          errorText: _branchError,
-          onSelected: (value) {
-            setState(() {
-              _selectedBranchId = value;
-              _branchError = null;
-            });
+        BlocBuilder<CreateDeedCubit, CreateDeedState>(
+          buildWhen: (previous, current) =>
+              current is CreateDeedInitial ||
+              current is CreateDeedLoading ||
+              current is FormOptionsLoaded ||
+              current is CreateDeedError,
+          builder: (context, state) {
+            final branches = context.read<CreateDeedCubit>().branches;
+            final isLoading = state is CreateDeedInitial || (state is CreateDeedLoading && branches.isEmpty);
+
+            if (isLoading) {
+              return AppShimmer.box(
+                width: double.infinity,
+                height: 54,
+                borderRadius: AppRadius.circularLg,
+              );
+            }
+            return CustomDropdownMenu<int>(
+              height: 54,
+              value: _selectedBranchId,
+              hint: LocaleKeys.deeds_branch.tr(),
+              items: branches.map((b) => b.id).toList(),
+              itemLabelBuilder: (id) => branches.firstWhere((b) => b.id == id).name,
+              errorText: _branchError,
+              onSelected: (value) {
+                setState(() {
+                  _selectedBranchId = value;
+                  _branchError = null;
+                });
+              },
+            );
           },
         ),
       ],
