@@ -75,41 +75,83 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
                 ),
               ),
             ),
-            const SizedBox(height: 6),
-            SizedBox(
-              height: 38,
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                scrollDirection: Axis.horizontal,
-                itemCount: filters.length,
-                separatorBuilder: (context, index) => const SizedBox(width: 8),
-                itemBuilder: (context, index) {
-                  final filter = filters[index];
-                  final isSelected = currentStatus == filter['key'];
+            const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                height: 42,
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF1F5F9),
+                  borderRadius: AppRadius.circularFull,
+                ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    final selectedIndex = filters.indexWhere((f) => f['key'] == currentStatus);
+                    final safeIndex = selectedIndex < 0 ? 0 : selectedIndex;
 
-                  return ChoiceChip(
-                    label: Text(filter['label']!),
-                    selected: isSelected,
-                    onSelected: (selected) {
-                      cubit.changeStatusFilter(selected ? filter['key']! : 'all');
-                    },
-                    selectedColor: context.primaryColor,
-                    backgroundColor: AppColors.surfaceLight,
-                    labelStyle: TextStyle(
-                      color: isSelected ? Colors.white : AppColors.textSecondaryLight,
-                      fontSize: 12,
-                      fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: AppRadius.circularFull,
-                      side: BorderSide(
-                        color: isSelected ? context.primaryColor : const Color(0xFFE2E8F0),
-                      ),
-                    ),
-                    showCheckmark: false,
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-                  );
-                },
+                    return Stack(
+                      children: [
+                        AnimatedAlign(
+                          duration: const Duration(milliseconds: 250),
+                          curve: Curves.fastOutSlowIn,
+                          alignment: AlignmentDirectional(
+                            -1.0 + (safeIndex * (2.0 / (filters.length - 1))),
+                            0.0,
+                          ),
+                          child: FractionallySizedBox(
+                            widthFactor: 1 / filters.length,
+                            heightFactor: 1.0,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: context.primaryColor,
+                                borderRadius: AppRadius.circularFull,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: context.primaryColor.withValues(alpha: 0.35),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: List.generate(filters.length, (index) {
+                            final filter = filters[index];
+                            final isSelected = safeIndex == index;
+
+                            return Expanded(
+                              child: GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  cubit.changeStatusFilter(filter['key']!);
+                                },
+                                child: Center(
+                                  child: AnimatedDefaultTextStyle(
+                                    duration: const Duration(milliseconds: 200),
+                                    curve: Curves.easeInOut,
+                                    style: TextStyle(
+                                      color: isSelected ? Colors.white : const Color(0xFF64748B),
+                                      fontSize: 13,
+                                      fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
+                                      fontFamily: Theme.of(context).textTheme.bodyMedium?.fontFamily,
+                                    ),
+                                    child: Text(
+                                      filter['label']!,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ],

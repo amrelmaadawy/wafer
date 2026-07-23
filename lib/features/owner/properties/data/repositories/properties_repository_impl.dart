@@ -44,8 +44,8 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
         if (filter.usageType != null) queryParams['usage_type'] = filter.usageType;
         if (filter.branchId != null) queryParams['branch_id'] = filter.branchId;
         if (filter.deedId != null) queryParams['deed_id'] = filter.deedId;
-        if (filter.perPage != null) queryParams['per_page'] = filter.perPage;
-        if (filter.includeTree != null) queryParams['include_tree'] = filter.includeTree;
+        queryParams['per_page'] = filter.perPage;
+        queryParams['include_tree'] = filter.includeTree;
       }
 
       final result = await remoteDataSource.getProperties(queryParams);

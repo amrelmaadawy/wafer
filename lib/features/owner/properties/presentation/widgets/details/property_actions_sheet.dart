@@ -25,73 +25,189 @@ class PropertyActionsSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+      padding: const EdgeInsets.only(top: 12, bottom: 32, left: 20, right: 20),
       decoration: const BoxDecoration(
-        color: AppColors.surfaceLight,
+        color: AppColors.backgroundLight,
         borderRadius: AppRadius.topXxl,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Center(
+            child: Container(
+              width: 48,
+              height: 5,
+              decoration: const BoxDecoration(
+                color: AppColors.borderLight,
+                borderRadius: AppRadius.circularFull,
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          // Header with Property info
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: context.primaryColor.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.apartment_rounded, color: context.primaryColor, size: 24),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      property.name,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.textPrimaryLight,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      property.code,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.textSecondaryLight,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          // Grouped standard actions
           Container(
-            width: 40,
-            height: 4,
             decoration: BoxDecoration(
-              color: const Color(0xFFE2E8F0),
-              borderRadius: AppRadius.circularFull,
+              color: AppColors.surfaceLight,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.borderLight),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.02),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                _buildActionItem(
+                  context: context,
+                  title: LocaleKeys.propertyDetailsEdit.tr(),
+                  icon: Icons.edit_rounded,
+                  color: context.primaryColor,
+                  onTap: onEdit,
+                  isFirst: true,
+                ),
+                const Divider(height: 1, color: AppColors.borderLight),
+                _buildActionItem(
+                  context: context,
+                  title: LocaleKeys.propertyDetailsClone.tr(),
+                  icon: Icons.content_copy_rounded,
+                  color: AppColors.success,
+                  onTap: onClone,
+                ),
+                const Divider(height: 1, color: AppColors.borderLight),
+                _buildActionItem(
+                  context: context,
+                  title: LocaleKeys.propertyDetailsRepresentative.tr(),
+                  icon: Icons.person_add_rounded,
+                  color: AppColors.warning,
+                  onTap: onMakeRepresentative,
+                  isLast: true,
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 16),
-          ListTile(
-            leading: Icon(Icons.edit_outlined, color: context.primaryColor),
-            title: Text(
-              LocaleKeys.propertyDetailsEdit.tr(),
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+          // Destructive action separate
+          Container(
+            decoration: BoxDecoration(
+              color: AppColors.surfaceLight,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.error.withValues(alpha: 0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
-            onTap: () {
-              Navigator.pop(context);
-              onEdit();
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.copy_rounded, color: Color(0xFF10B981)),
-            title: Text(
-              LocaleKeys.propertyDetailsClone.tr(),
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+            child: _buildActionItem(
+              context: context,
+              title: LocaleKeys.propertyDetailsDelete.tr(),
+              icon: Icons.delete_rounded,
+              color: AppColors.error,
+              onTap: onDelete,
+              isDestructive: true,
+              isFirst: true,
+              isLast: true,
             ),
-            onTap: () {
-              Navigator.pop(context);
-              onClone();
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.person_add_alt_outlined, color: Color(0xFFF59E0B)),
-            title: Text(
-              LocaleKeys.propertyDetailsRepresentative.tr(),
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              onMakeRepresentative();
-            },
-          ),
-          const Divider(height: 1),
-          ListTile(
-            leading: const Icon(Icons.delete_outline_rounded, color: AppColors.error),
-            title: Text(
-              LocaleKeys.propertyDetailsDelete.tr(),
-              style: const TextStyle(
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-                color: AppColors.error,
-              ),
-            ),
-            onTap: () {
-              Navigator.pop(context);
-              onDelete();
-            },
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildActionItem({
+    required BuildContext context,
+    required String title,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+    bool isDestructive = false,
+    bool isFirst = false,
+    bool isLast = false,
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: () {
+          Navigator.pop(context);
+          onTap();
+        },
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(isFirst ? 16 : 0),
+          bottom: Radius.circular(isLast ? 16 : 0),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: isDestructive ? AppColors.error.withValues(alpha: 0.1) : color.withValues(alpha: 0.1),
+                  borderRadius: AppRadius.circularMd,
+                ),
+                child: Icon(icon, color: color, size: 20),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                    color: isDestructive ? AppColors.error : AppColors.textPrimaryLight,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

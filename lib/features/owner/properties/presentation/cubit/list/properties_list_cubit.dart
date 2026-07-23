@@ -99,7 +99,20 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
     _currentFilter = _currentFilter.copyWith(
       status: () => statusFilter == 'all' ? null : statusFilter,
     );
-    getProperties(filter: _currentFilter, forceRefresh: false);
+
+    dynamic meta;
+    dynamic stats;
+    if (state is PropertiesListLoaded) {
+      final loadedState = state as PropertiesListLoaded;
+      meta = loadedState.meta;
+      stats = loadedState.stats;
+    }
+
+    if (_allFetchedProperties.isNotEmpty) {
+      _applyLocalFilterAndEmit(meta, stats);
+    } else {
+      getProperties(filter: _currentFilter, forceRefresh: false);
+    }
   }
 
   void searchProperties(String query) {
@@ -107,9 +120,22 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
     _currentFilter = _currentFilter.copyWith(
       search: () => query.trim().isEmpty ? null : query.trim(),
     );
-    _debounceTimer = Timer(const Duration(milliseconds: 300), () {
-      getProperties(filter: _currentFilter, forceRefresh: false);
-    });
+
+    dynamic meta;
+    dynamic stats;
+    if (state is PropertiesListLoaded) {
+      final loadedState = state as PropertiesListLoaded;
+      meta = loadedState.meta;
+      stats = loadedState.stats;
+    }
+
+    if (_allFetchedProperties.isNotEmpty) {
+      _applyLocalFilterAndEmit(meta, stats);
+    } else {
+      _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+        getProperties(filter: _currentFilter, forceRefresh: false);
+      });
+    }
   }
 
   @override

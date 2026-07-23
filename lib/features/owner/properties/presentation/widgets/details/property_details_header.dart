@@ -58,33 +58,37 @@ class PropertyDetailsHeader extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                         decoration: BoxDecoration(
-                          color: Colors.white,
+                          color: statusColor.withValues(alpha: 0.15),
                           borderRadius: AppRadius.circularFull,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withValues(alpha: 0.1),
-                              blurRadius: 6,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+                          border: Border.all(
+                            color: statusColor.withValues(alpha: 0.3),
+                            width: 1.2,
+                          ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Container(
-                              width: 6,
-                              height: 6,
+                              width: 8,
+                              height: 8,
                               decoration: BoxDecoration(
                                 color: statusColor,
                                 shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: statusColor.withValues(alpha: 0.6),
+                                    blurRadius: 4,
+                                    spreadRadius: 1,
+                                  ),
+                                ],
                               ),
                             ),
-                            const SizedBox(width: 6),
+                            const SizedBox(width: 8),
                             Text(
                               property.statusLabel,
                               style: TextStyle(
                                 color: statusColor,
-                                fontSize: 11.5,
+                                fontSize: 13,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
