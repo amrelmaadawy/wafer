@@ -425,5 +425,18 @@
   "drawer": {
     "settings_coming_soon": "Settings coming soon",
     "app_version": "Version {}"
+  },
+  "deeds": {
+    "title": "Deeds",
+    "subtitle": "Manage and view deeds and documents",
+    "search_hint": "Search deeds...",
+    "filter_all_branches": "All Branches",
+    "electronic_deed": "Electronic",
+    "manual_deed": "Manual",
+    "properties_count_label": "{} Properties",
+    "area_label": "m²",
+    "no_deeds_found": "No deeds found",
+    "no_deeds_found_sub": "All your registered deeds will appear here",
+    "document_attachment": "View Attachment"
   }
 }

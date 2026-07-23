@@ -37,16 +37,16 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
             children: [
               _buildCircles(),
               Padding(
-                padding: const EdgeInsets.all(22),
+                padding: const EdgeInsets.all(18),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _buildHeader(hasOverdue),
-                    const SizedBox(height: 22),
+                    const SizedBox(height: 14),
                     _buildHeroNumber(),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 16),
                     Container(height: 1, color: Colors.white.withValues(alpha: 0.1)),
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 14),
                     _buildMetricsRow(),
                   ],
                 ),
@@ -92,12 +92,12 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
   Widget _buildHeroNumber() => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerRight, child: Text(LocaleKeys.commonCurrencySar.tr(args: [_fmt(data.pendingAmount)]), style: const TextStyle(color: Colors.white, fontSize: 42, fontWeight: FontWeight.w800, letterSpacing: -0.5, height: 1.1))),
-          const SizedBox(height: 5),
+          FittedBox(fit: BoxFit.scaleDown, alignment: Alignment.centerRight, child: Text(LocaleKeys.commonCurrencySar.tr(args: [_fmt(data.pendingAmount)]), style: const TextStyle(color: Colors.white, fontSize: 34, fontWeight: FontWeight.w800, letterSpacing: -0.5, height: 1.1))),
+          const SizedBox(height: 4),
           Row(children: [
-            Container(width: 6, height: 6, decoration: const BoxDecoration(color: Color(0xFFFBBF24), shape: BoxShape.circle)),
-            const SizedBox(width: 7),
-            Text(LocaleKeys.dashboardTotalDuePending.tr(), style: const TextStyle(color: Colors.white54, fontSize: 12.5)),
+            Container(width: 5, height: 5, decoration: const BoxDecoration(color: Color(0xFFFBBF24), shape: BoxShape.circle)),
+            const SizedBox(width: 6),
+            Text(LocaleKeys.dashboardTotalDuePending.tr(), style: const TextStyle(color: Colors.white54, fontSize: 11.5)),
           ]),
         ],
       );
@@ -113,11 +113,11 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
       );
 
   Widget _miniMetric(String label, num amount, Color color, IconData icon) => Column(children: [
-        Icon(icon, color: color.withValues(alpha: 0.8), size: 15),
-        const SizedBox(height: 5),
-        FittedBox(fit: BoxFit.scaleDown, child: Text(LocaleKeys.commonCurrencySar.tr(args: [_fmt(amount)]), style: TextStyle(color: color, fontSize: 13.5, fontWeight: FontWeight.w700))),
-        const SizedBox(height: 3),
-        Text(label, style: const TextStyle(color: Colors.white38, fontSize: 10.5, fontWeight: FontWeight.w500)),
+        Icon(icon, color: color.withValues(alpha: 0.8), size: 14),
+        const SizedBox(height: 4),
+        FittedBox(fit: BoxFit.scaleDown, child: Text(LocaleKeys.commonCurrencySar.tr(args: [_fmt(amount)]), style: TextStyle(color: color, fontSize: 12.5, fontWeight: FontWeight.w700))),
+        const SizedBox(height: 2),
+        Text(label, style: const TextStyle(color: Colors.white38, fontSize: 10, fontWeight: FontWeight.w500)),
       ]);
 
   String _fmt(num n) => n == n.toInt() ? n.toInt().toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (m) => '${m[1]},') : n.toStringAsFixed(2);

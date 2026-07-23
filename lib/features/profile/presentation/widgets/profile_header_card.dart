@@ -17,7 +17,7 @@ class ProfileHeaderCard extends StatelessWidget {
         ? profile.name.trim().split(' ').take(2)
             .map((e) => e.isNotEmpty ? e[0].toUpperCase() : '').join()
         : 'U';
-    final primary = context.primaryColor;
+    final _ = context.primaryColor;
 
     return Container(
       decoration: BoxDecoration(
@@ -26,9 +26,9 @@ class ProfileHeaderCard extends StatelessWidget {
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
           colors: [
-            primary,
-            primary.withValues(alpha: 0.8),
-            primary.withValues(alpha: 0.65),
+            context.primaryLight,
+            context.primaryColor,
+            context.primaryDark,
           ],
         ),
         boxShadow: [

@@ -32,8 +32,8 @@ class ApiConstants {
 
   // Owner Properties & Deeds
   static const String ownerProperties = 'owner/properties';
-  static const String ownerFormData = 'owner/properties/form-data';
   static const String ownerDeeds = 'owner/deeds';
+  static const String ownerFormData = 'owner/properties/form-data';
   static String ownerDeedDetails(int id) => 'owner/deeds/$id';
   static const String ownerCreateDeed = 'owner/deeds';
   static const String ownerCreateDraftProperty = 'owner/properties/draft';

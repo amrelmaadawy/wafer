@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/localization/locale_keys.g.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
@@ -21,7 +21,7 @@ class OwnerQuickActions extends StatelessWidget {
                 size: 17, color: Color(0xFF64748B)),
             const SizedBox(width: 6),
             Text(
-              LocaleKeys.dashboardQuickActions.tr(),
+              LocaleKeys.dashboard_quick_actions.tr(),
               style: const TextStyle(
                 color: Color(0xFF0F172A),
                 fontSize: 14,
@@ -40,7 +40,7 @@ class OwnerQuickActions extends StatelessWidget {
                   Expanded(
                     child: _buildActionCard(
                       context,
-                      title: LocaleKeys.dashboardLeaseContract.tr(),
+                      title: LocaleKeys.dashboard_lease_contract.tr(),
                       icon: Icons.description_outlined,
                       color: const Color(0xFF10B981),
                       onTap: () => context.go(Routes.ownerContracts),
@@ -50,7 +50,7 @@ class OwnerQuickActions extends StatelessWidget {
                   Expanded(
                     child: _buildActionCard(
                       context,
-                      title: LocaleKeys.dashboardAddProperty.tr(),
+                      title: LocaleKeys.dashboard_add_property.tr(),
                       icon: Icons.apartment_rounded,
                       color: context.primaryColor,
                       onTap: () => context.push(Routes.ownerPropertyCreate),
@@ -67,7 +67,7 @@ class OwnerQuickActions extends StatelessWidget {
                   Expanded(
                     child: _buildActionCard(
                       context,
-                      title: LocaleKeys.maintenanceTitle.tr(),
+                      title: LocaleKeys.maintenance_title.tr(),
                       icon: Icons.build_circle_outlined,
                       color: const Color(0xFFEF4444),
                       onTap: () {
@@ -79,13 +79,36 @@ class OwnerQuickActions extends StatelessWidget {
                   Expanded(
                     child: _buildActionCard(
                       context,
-                      title: LocaleKeys.dashboardReports.tr(),
+                      title: LocaleKeys.dashboard_reports.tr(),
                       icon: Icons.bar_chart_rounded,
                       color: const Color(0xFFF59E0B),
                       onTap: () {
                         context.push('${Routes.ownerReportsCenter}?tab=0');
                       },
                     ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: _buildActionCard(
+                      context,
+                      title: LocaleKeys.deeds_title.tr(),
+                      icon: Icons.file_present_rounded,
+                      color: const Color(0xFF8B5CF6), // Purple
+                      onTap: () {
+                        context.push(Routes.ownerDeeds);
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: const SizedBox.shrink(),
                   ),
                 ],
               ),

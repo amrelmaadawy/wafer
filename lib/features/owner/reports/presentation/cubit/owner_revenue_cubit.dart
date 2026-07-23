@@ -17,6 +17,8 @@ class OwnerRevenueCubit extends Cubit<OwnerRevenueState> {
       GetOwnerRevenueReportParams(forceRefresh: forceRefresh),
     );
 
+    if (isClosed) return;
+
     result.fold(
       (failure) => emit(OwnerRevenueError(failure.message)),
       (entries) {

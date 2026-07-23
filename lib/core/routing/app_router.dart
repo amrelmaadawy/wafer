@@ -22,6 +22,8 @@ import '../../features/owner/maintenance/presentation/cubit/owner_maintenance_cu
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';
 import '../../features/profile/presentation/screens/change_password_screen.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
+import '../../features/owner/deeds/presentation/cubit/list/deeds_list_cubit.dart';
+import '../../features/owner/deeds/presentation/screens/deeds_list_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
@@ -96,7 +98,7 @@ class AppRouter {
         builder: (context, state) {
           final extra = state.extra as Map<String, dynamic>?;
           return EditProfileScreen(
-            cubit: context.read<ProfileCubit>(),
+            cubit: (extra?['cubit'] as ProfileCubit?) ?? sl<ProfileCubit>(),
             profile: extra?['profile'],
           );
         },
@@ -104,6 +106,13 @@ class AppRouter {
       GoRoute(
         path: Routes.changePassword,
         builder: (context, state) => const ChangePasswordScreen(),
+      ),
+      GoRoute(
+        path: Routes.ownerDeeds,
+        builder: (context, state) => BlocProvider<DeedsListCubit>(
+          create: (_) => sl<DeedsListCubit>(),
+          child: const DeedsListScreen(),
+        ),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

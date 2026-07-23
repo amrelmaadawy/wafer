@@ -425,5 +425,18 @@
   "drawer": {
     "settings_coming_soon": "الإعدادات قريباً",
     "app_version": "الإصدار {}"
+  },
+  "deeds": {
+    "title": "الصكوك",
+    "subtitle": "إدارة وعرض الصكوك والوثائق",
+    "search_hint": "البحث في الصكوك...",
+    "filter_all_branches": "كل الفروع",
+    "electronic_deed": "إلكتروني",
+    "manual_deed": "يدوي",
+    "properties_count_label": "{} عقارات",
+    "area_label": "م²",
+    "no_deeds_found": "لا توجد صكوك مسجلة",
+    "no_deeds_found_sub": "ستظهر هنا جميع الصكوك المسجلة الخاصة بك",
+    "document_attachment": "عرض المرفق"
   }
 }
