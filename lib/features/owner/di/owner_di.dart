@@ -68,6 +68,7 @@ import '../properties/presentation/cubit/units/units_list_cubit.dart';
 import '../properties/presentation/cubit/units/unit_create_cubit.dart';
 
 import '../properties/domain/usecases/clone_property_use_case.dart';
+import '../properties/domain/usecases/auto_save_deed_step_use_case.dart';
 import '../properties/domain/usecases/make_representative_use_case.dart';
 import '../properties/domain/usecases/remove_representative_use_case.dart';
 import '../properties/domain/usecases/delete_property_use_case.dart';
@@ -183,12 +184,6 @@ void _initProperties() {
   if (!sl.isRegistered<PropertyCreateCubit>()) {
     sl.registerFactory(() => PropertyCreateCubit(
           createDraft: sl(),
-          autoSave: sl(),
-          getDeeds: sl(),
-          createDeed: sl(),
-          syncOwners: sl(),
-          uploadFile: sl(),
-          publish: sl(),
           getFormData: sl(),
         ));
   }
@@ -207,8 +202,15 @@ void _initProperties() {
   if (!sl.isRegistered<PatchPropertyUseCase>()) {
     sl.registerLazySingleton(() => PatchPropertyUseCase(sl()));
   }
+  if (!sl.isRegistered<AutoSaveDeedStepUseCase>()) {
+    sl.registerLazySingleton(() => AutoSaveDeedStepUseCase(sl()));
+  }
   if (!sl.isRegistered<PropertyEditCubit>()) {
-    sl.registerFactory(() => PropertyEditCubit(sl()));
+    sl.registerFactory(() => PropertyEditCubit(
+          patchProperty: sl(),
+          getFormData: sl(),
+          autoSaveDeedStep: sl(),
+        ));
   }
 }
 

@@ -20,8 +20,10 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
     super.streetName,
     super.buildingNumber,
     super.branchName,
+    super.branchId,
     super.description,
     required super.imageUrls,
+    super.deedId,
     super.deedNumber,
     super.deedDate,
     super.documentType,
@@ -36,6 +38,7 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
     required super.occupancyRate,
     required super.amenities,
     super.createdAt,
+    super.completionPercentage,
   });
 
   factory PropertyDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -80,8 +83,10 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       streetName: json['street_name']?.toString() ?? addrMap?['street_name']?.toString(),
       buildingNumber: json['building_number']?.toString() ?? addrMap?['building_number']?.toString(),
       branchName: branchMap?['name']?.toString(),
+      branchId: json['branch_id'] as int? ?? branchMap?['id'] as int?,
       description: json['notes']?.toString() ?? json['description']?.toString(),
       imageUrls: imagesList,
+      deedId: json['deed_id'] as int? ?? deedMap?['id'] as int?,
       deedNumber: json['deed_number']?.toString() ?? deedMap?['deed_number']?.toString(),
       deedDate: json['deed_date']?.toString() ?? deedMap?['deed_date']?.toString(),
       documentType: json['document_type']?.toString() ?? deedMap?['document_type']?.toString(),
@@ -96,6 +101,7 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       occupancyRate: (json['occupancy_rate'] as num?) ?? (statsMap?['occupancy_rate'] as num?) ?? 0,
       amenities: amenitiesList,
       createdAt: json['created_at']?.toString(),
+      completionPercentage: json['completion_percentage'] as int? ?? 0,
     );
   }
 }

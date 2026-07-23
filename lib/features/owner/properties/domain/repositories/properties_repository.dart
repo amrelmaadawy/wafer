@@ -39,6 +39,11 @@ abstract class PropertiesRepository {
     required Map<String, dynamic> data,
   });
 
+  /// Auto save deed step
+  Future<Either<Failure, PropertyDetailsEntity>> autoSaveDeedStep(int propertyId, int deedId, int branchId);
+
+
+
   /// Sync property owners (percentage must equal 100%)
   Future<Either<Failure, void>> syncOwners(
     int propertyId,

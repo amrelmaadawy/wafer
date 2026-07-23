@@ -28,6 +28,8 @@ abstract class PropertiesRemoteDataSource {
     required Map<String, dynamic> data,
   });
 
+  Future<PropertyDetailsModel> autoSaveDeedStep(int propertyId, int deedId, int branchId);
+
   Future<void> syncOwners(int propertyId, List<Map<String, dynamic>> owners);
 
   Future<String> uploadTempFile(String filePath);
@@ -130,6 +132,19 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
         ...data,
       },
     );
+  }
+
+  @override
+  Future<PropertyDetailsModel> autoSaveDeedStep(int propertyId, int deedId, int branchId) async {
+    final response = await _dio.post(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveProperty(propertyId)}',
+      data: {
+        'deed_id': deedId,
+        'branch_id': branchId,
+      },
+    );
+    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    return PropertyDetailsModel.fromJson(data['property'] as Map<String, dynamic>);
   }
 
   @override

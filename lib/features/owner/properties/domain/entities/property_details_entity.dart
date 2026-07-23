@@ -19,8 +19,10 @@ class PropertyDetailsEntity extends Equatable {
   final String? streetName;
   final String? buildingNumber;
   final String? branchName;
+  final int? branchId;
   final String? description;
   final List<String> imageUrls;
+  final int? deedId;
   final String? deedNumber;
   final String? deedDate;
   final String? documentType;
@@ -35,6 +37,7 @@ class PropertyDetailsEntity extends Equatable {
   final num occupancyRate;
   final List<String> amenities;
   final String? createdAt;
+  final int completionPercentage;
 
   const PropertyDetailsEntity({
     required this.id,
@@ -54,8 +57,10 @@ class PropertyDetailsEntity extends Equatable {
     this.streetName,
     this.buildingNumber,
     this.branchName,
+    this.branchId,
     this.description,
     required this.imageUrls,
+    this.deedId,
     this.deedNumber,
     this.deedDate,
     this.documentType,
@@ -70,10 +75,12 @@ class PropertyDetailsEntity extends Equatable {
     required this.occupancyRate,
     required this.amenities,
     this.createdAt,
+    this.completionPercentage = 0,
   });
 
   bool get isDraft => status.toLowerCase() == 'draft';
   bool get isPublished => status.toLowerCase() == 'published';
+  bool get isLand => propertyType.toLowerCase() == 'land';
 
   String get type => propertyType;
   String? get address => formattedAddress;
@@ -107,8 +114,10 @@ class PropertyDetailsEntity extends Equatable {
         streetName,
         buildingNumber,
         branchName,
+        branchId,
         description,
         imageUrls,
+        deedId,
         deedNumber,
         deedDate,
         documentType,
@@ -123,5 +132,6 @@ class PropertyDetailsEntity extends Equatable {
         occupancyRate,
         amenities,
         createdAt,
+        completionPercentage,
       ];
 }

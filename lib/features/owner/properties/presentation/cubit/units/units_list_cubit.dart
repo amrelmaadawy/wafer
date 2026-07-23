@@ -11,6 +11,9 @@ class UnitsListCubit extends Cubit<UnitsListState> {
   Future<void> loadUnits(int propertyId) async {
     emit(const UnitsListLoading());
     final result = await _getPropertyUnitsUseCase(propertyId);
+    
+    if (isClosed) return;
+
     result.fold(
       (failure) => emit(UnitsListError(failure.message)),
       (units) {

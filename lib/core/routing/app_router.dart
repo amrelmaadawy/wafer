@@ -65,7 +65,7 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerPropertyCreate,
         builder: (context, state) => BlocProvider<PropertyCreateCubit>(
-          create: (_) => sl<PropertyCreateCubit>()..initWizard(),
+          create: (_) => sl<PropertyCreateCubit>(),
           child: const PropertyCreateScreen(),
         ),
       ),

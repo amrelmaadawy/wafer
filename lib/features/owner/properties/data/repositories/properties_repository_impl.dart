@@ -138,6 +138,22 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
   }
 
   @override
+  Future<Either<Failure, PropertyDetailsEntity>> autoSaveDeedStep(
+      int propertyId, int deedId, int branchId) async {
+    try {
+      final result = await remoteDataSource.autoSaveDeedStep(
+          propertyId, deedId, branchId);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> syncOwners(
       int propertyId, List<Map<String, dynamic>> owners) async {
     try {
