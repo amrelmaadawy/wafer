@@ -43,6 +43,7 @@ class ApiConstants {
   static String ownerPropertyDetails(int id) => 'owner/properties/$id';
   static String ownerPublishProperty(int id) => 'owner/properties/$id/publish';
   static String ownerCloneProperty(int id) => 'owner/properties/$id/clone';
+  static String ownerCloneForDeed(int id) => 'owner/properties/$id/clone-for-deed';
   static String ownerDeleteProperty(int id) => 'owner/properties/$id';
   static String ownerPatchProperty(int id) => 'owner/properties/$id';
   static const String ownerStoreProperty = 'owner/properties';

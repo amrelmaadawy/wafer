@@ -48,8 +48,12 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
     super.dispose();
   }
 
-  void _onAddNewProperty() {
-    context.push(Routes.ownerPropertyCreate);
+  void _onAddNewProperty() async {
+    final cubit = context.read<PropertiesListCubit>();
+    await context.push(Routes.ownerPropertyCreate);
+    if (mounted) {
+      cubit.getProperties(forceRefresh: true);
+    }
   }
 
   @override
@@ -175,8 +179,12 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
                   index: index,
                   child: PropertyCard(
                     property: property,
-                    onTap: () {
-                      context.push('${Routes.ownerPropertyDetails}?id=${property.id}');
+                    onTap: () async {
+                      final cubit = context.read<PropertiesListCubit>();
+                      await context.push('${Routes.ownerPropertyDetails}?id=${property.id}');
+                      if (mounted) {
+                        cubit.getProperties(forceRefresh: true);
+                      }
                     },
                   ),
                 );

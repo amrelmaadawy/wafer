@@ -131,7 +131,18 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
+      if (e.response?.data != null && e.response!.data is Map) {
+        final data = e.response!.data as Map;
+        if (data['message'] != null) msg = data['message'].toString();
+        if (data['errors'] != null && data['errors'] is Map) {
+          final errors = data['errors'] as Map;
+          if (errors.isNotEmpty) {
+            msg = errors.values.map((v) => v is List ? v.join('\n') : v.toString()).join('\n');
+          }
+        }
+      }
+      return Left(ServerFailure(msg));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -225,14 +236,25 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
   }
 
   @override
-  Future<Either<Failure, void>> publishProperty(int propertyId) async {
+  Future<Either<Failure, PropertyDetailsEntity>> publishProperty(int propertyId) async {
     try {
-      await remoteDataSource.publishProperty(propertyId);
-      return const Right(null);
+      final result = await remoteDataSource.publishProperty(propertyId);
+      return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
+      if (e.response?.data != null && e.response!.data is Map) {
+        final data = e.response!.data as Map;
+        if (data['message'] != null) msg = data['message'].toString();
+        if (data['errors'] != null && data['errors'] is Map) {
+          final errors = data['errors'] as Map;
+          if (errors.isNotEmpty) {
+            msg = errors.values.map((v) => v is List ? v.join('\n') : v.toString()).join('\n');
+          }
+        }
+      }
+      return Left(ServerFailure(msg));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -247,6 +269,25 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
       return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, int>> cloneForDeed(int propertyId, bool copyData) async {
+    try {
+      final result = await remoteDataSource.cloneForDeed(propertyId, copyData);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
+      if (e.response?.data != null && e.response!.data is Map) {
+        final data = e.response!.data as Map;
+        if (data['message'] != null) msg = data['message'].toString();
+      }
+      return Left(ServerFailure(msg));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -304,7 +345,18 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
+      if (e.response?.data != null && e.response!.data is Map) {
+        final data = e.response!.data as Map;
+        if (data['message'] != null) msg = data['message'].toString();
+        if (data['errors'] != null && data['errors'] is Map) {
+          final errors = data['errors'] as Map;
+          if (errors.isNotEmpty) {
+            msg = errors.values.map((v) => v is List ? v.join('\n') : v.toString()).join('\n');
+          }
+        }
+      }
+      return Left(ServerFailure(msg));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

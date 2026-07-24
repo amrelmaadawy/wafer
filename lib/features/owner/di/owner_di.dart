@@ -1,4 +1,5 @@
 import '../../../../core/di/service_locator.dart';
+import '../properties/presentation/cubit/clone_for_deed/clone_for_deed_cubit.dart';
 // Dashboard
 import '../dashboard/data/datasources/owner_dashboard_remote_data_source.dart';
 import '../dashboard/data/repositories/owner_dashboard_repository_impl.dart';
@@ -55,6 +56,7 @@ import '../properties/domain/usecases/publish_property_use_case.dart';
 import '../properties/presentation/cubit/list/properties_list_cubit.dart';
 import '../properties/presentation/cubit/details/property_details_cubit.dart';
 import '../properties/presentation/cubit/create/property_create_cubit.dart';
+import '../properties/presentation/cubit/publish/publish_property_cubit.dart';
 
 // Units
 import '../properties/data/datasources/units_remote_data_source.dart';
@@ -176,6 +178,12 @@ void _initProperties() {
   }
   if (!sl.isRegistered<PublishPropertyUseCase>()) {
     sl.registerLazySingleton(() => PublishPropertyUseCase(sl()));
+  }
+  if (!sl.isRegistered<PublishPropertyCubit>()) {
+    sl.registerFactory(() => PublishPropertyCubit(sl()));
+  }
+  if (!sl.isRegistered<CloneForDeedCubit>()) {
+    sl.registerFactory(() => CloneForDeedCubit(sl()));
   }
   if (!sl.isRegistered<PropertiesListCubit>()) {
     sl.registerFactory(() => PropertiesListCubit(sl()));

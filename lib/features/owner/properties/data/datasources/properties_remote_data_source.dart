@@ -38,9 +38,10 @@ abstract class PropertiesRemoteDataSource {
 
   Future<void> addUploadedImagePath(int propertyId, String imagePath);
 
-  Future<void> publishProperty(int propertyId);
+  Future<PropertyDetailsModel> publishProperty(int propertyId);
 
   Future<int> cloneProperty(int propertyId);
+  Future<int> cloneForDeed(int propertyId, bool copyData);
   Future<void> makeRepresentative(int propertyId, Map<String, dynamic> body);
   Future<void> removeRepresentative(int propertyId);
   Future<void> deleteProperty(int propertyId);
@@ -193,16 +194,30 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   }
 
   @override
-  Future<void> publishProperty(int propertyId) async {
-    await _dio.post(
+  Future<PropertyDetailsModel> publishProperty(int propertyId) async {
+    final response = await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerPublishProperty(propertyId)}',
     );
+    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    return PropertyDetailsModel.fromJson(data['property'] as Map<String, dynamic>);
   }
 
   @override
   Future<int> cloneProperty(int propertyId) async {
     final response = await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerCloneProperty(propertyId)}',
+    );
+    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    return data['id'] as int? ?? data['new_id'] as int? ?? 0;
+  }
+
+  @override
+  Future<int> cloneForDeed(int propertyId, bool copyData) async {
+    final response = await _dio.post(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerCloneForDeed(propertyId)}',
+      data: {
+        'copy_data': copyData,
+      },
     );
     final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
     return data['id'] as int? ?? data['new_id'] as int? ?? 0;

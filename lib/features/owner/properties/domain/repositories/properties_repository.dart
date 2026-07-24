@@ -62,11 +62,13 @@ abstract class PropertiesRepository {
     String imagePath,
   );
 
-  /// Publish property
-  Future<Either<Failure, void>> publishProperty(int propertyId);
+  Future<Either<Failure, PropertyDetailsEntity>> publishProperty(int propertyId);
 
   /// Clone property (returns new property ID)
   Future<Either<Failure, int>> cloneProperty(int propertyId);
+
+  /// Clone property for same deed (returns new property ID)
+  Future<Either<Failure, int>> cloneForDeed(int propertyId, bool copyData);
 
   /// Make representative
   Future<Either<Failure, void>> makeRepresentative(int propertyId, Map<String, dynamic> body);

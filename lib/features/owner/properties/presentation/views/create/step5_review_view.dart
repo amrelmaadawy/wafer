@@ -10,12 +10,16 @@ import '../../cubit/create/property_create_cubit.dart';
 import '../../cubit/create/property_create_state.dart';
 
 class Step5ReviewView extends StatelessWidget {
-  const Step5ReviewView({super.key});
+  final Function(int step)? onGoToStep;
+
+  const Step5ReviewView({super.key, this.onGoToStep});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PropertyCreateCubit, PropertyCreateState>(
       builder: (context, state) {
+        final cubit = context.read<PropertyCreateCubit>();
+
         return SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
@@ -30,9 +34,9 @@ class Step5ReviewView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'راجع بيانات العقار قبل النشر النهائي',
-                style: TextStyle(
+              Text(
+                LocaleKeys.propertyReviewSubtitle.tr(),
+                style: const TextStyle(
                   fontSize: 14,
                   color: AppColors.textSecondaryLight,
                 ),
@@ -42,12 +46,16 @@ class Step5ReviewView extends StatelessWidget {
                 context,
                 title: LocaleKeys.propertyWizardStep1Title.tr(),
                 icon: Icons.info_outline,
+                onEdit: () {
+                  cubit.setStep(0);
+                  onGoToStep?.call(0);
+                },
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildRow('الفرع', state.formData?.options.branches.where((b) => b.id == state.selectedBranchId).firstOrNull?.name ?? ''),
-                    _buildRow('الصك', state.formData?.options.deeds.where((d) => d.id == state.selectedDeedId).firstOrNull?.documentNumber ?? ''),
-                    _buildRow('النوع', state.selectedType ?? ''),
+                    _buildRow(LocaleKeys.propertyReviewBranch.tr(), state.formData?.options.branches.where((b) => b.id == state.selectedBranchId).firstOrNull?.name ?? ''),
+                    _buildRow(LocaleKeys.propertyReviewDeed.tr(), state.formData?.options.deeds.where((d) => d.id == state.selectedDeedId).firstOrNull?.documentNumber ?? ''),
+                    _buildRow(LocaleKeys.propertyReviewType.tr(), state.selectedType ?? ''),
                   ],
                 ),
               ),
@@ -56,13 +64,17 @@ class Step5ReviewView extends StatelessWidget {
                 context,
                 title: LocaleKeys.propertyWizardStep2Title.tr(),
                 icon: Icons.description_outlined,
+                onEdit: () {
+                  cubit.setStep(1);
+                  onGoToStep?.call(1);
+                },
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildRow('اسم العقار', state.name ?? ''),
-                    _buildRow('العنوان', state.address ?? ''),
-                    _buildRow('المساحة', '${state.area ?? 0} م²'),
-                    _buildRow('سنة البناء', state.constructionYear?.toString() ?? ''),
+                    _buildRow(LocaleKeys.propertyReviewPropertyName.tr(), state.name ?? ''),
+                    _buildRow(LocaleKeys.propertyReviewAddress.tr(), state.address ?? ''),
+                    _buildRow(LocaleKeys.propertyReviewArea.tr(), '${state.area ?? 0} ${LocaleKeys.propertyDetailsAreaUnit.tr()}'),
+                    _buildRow(LocaleKeys.propertyReviewConstructionYear.tr(), state.constructionYear?.toString() ?? ''),
                   ],
                 ),
               ),
@@ -71,8 +83,12 @@ class Step5ReviewView extends StatelessWidget {
                 context,
                 title: LocaleKeys.propertyWizardStep3Title.tr(),
                 icon: Icons.photo_library_outlined,
+                onEdit: () {
+                  cubit.setStep(2);
+                  onGoToStep?.call(2);
+                },
                 content: state.images.isEmpty
-                    ? const Text('لم يتم إضافة صور', style: TextStyle(color: AppColors.textSecondaryLight))
+                    ? Text(LocaleKeys.propertyReviewNoImages.tr(), style: const TextStyle(color: AppColors.textSecondaryLight))
                     : Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -96,6 +112,10 @@ class Step5ReviewView extends StatelessWidget {
                 context,
                 title: LocaleKeys.propertyWizardStep4Title.tr(),
                 icon: Icons.people_outline,
+                onEdit: () {
+                  cubit.setStep(3);
+                  onGoToStep?.call(3);
+                },
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: state.owners.map((o) {
@@ -120,7 +140,13 @@ class Step5ReviewView extends StatelessWidget {
     );
   }
 
-  Widget _buildSection(BuildContext context, {required String title, required IconData icon, required Widget content}) {
+  Widget _buildSection(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required Widget content,
+    VoidCallback? onEdit,
+  }) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -137,6 +163,15 @@ class Step5ReviewView extends StatelessWidget {
               Icon(icon, size: 20, color: context.primaryColor),
               const SizedBox(width: 8),
               Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+              const Spacer(),
+              if (onEdit != null)
+                IconButton(
+                  onPressed: onEdit,
+                  icon: Icon(Icons.edit_outlined, size: 18, color: context.primaryColor),
+                  visualDensity: VisualDensity.compact,
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                ),
             ],
           ),
           const SizedBox(height: 16),

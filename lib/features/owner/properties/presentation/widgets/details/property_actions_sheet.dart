@@ -12,6 +12,7 @@ class PropertyActionsSheet extends StatelessWidget {
   final VoidCallback onClone;
   final VoidCallback onMakeRepresentative;
   final VoidCallback onDelete;
+  final VoidCallback onPublish;
 
   const PropertyActionsSheet({
     super.key,
@@ -20,6 +21,7 @@ class PropertyActionsSheet extends StatelessWidget {
     required this.onClone,
     required this.onMakeRepresentative,
     required this.onDelete,
+    required this.onPublish,
   });
 
   @override
@@ -30,11 +32,12 @@ class PropertyActionsSheet extends StatelessWidget {
         color: AppColors.backgroundLight,
         borderRadius: AppRadius.topXxl,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Center(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Center(
             child: Container(
               width: 48,
               height: 5,
@@ -102,13 +105,24 @@ class PropertyActionsSheet extends StatelessWidget {
             ),
             child: Column(
               children: [
+                if (property.isDraft) ...[
+                  _buildActionItem(
+                    context: context,
+                    title: LocaleKeys.propertyDetailsPublishProperty.tr(),
+                    icon: Icons.rocket_launch_rounded,
+                    color: AppColors.success,
+                    onTap: onPublish,
+                    isFirst: true,
+                  ),
+                  const Divider(height: 1, color: AppColors.borderLight),
+                ],
                 _buildActionItem(
                   context: context,
                   title: LocaleKeys.propertyDetailsEdit.tr(),
                   icon: Icons.edit_rounded,
                   color: context.primaryColor,
                   onTap: onEdit,
-                  isFirst: true,
+                  isFirst: !property.isDraft,
                 ),
                 const Divider(height: 1, color: AppColors.borderLight),
                 _buildActionItem(
@@ -158,7 +172,7 @@ class PropertyActionsSheet extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 
   Widget _buildActionItem({

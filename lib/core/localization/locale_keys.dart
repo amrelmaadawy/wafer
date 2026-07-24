@@ -209,12 +209,48 @@ class LocaleKeys {
   static const propertyDetailsNoUnitsTitle = 'property_details.no_units_title';
   static const propertyDetailsNoUnitsSubtitle = 'property_details.no_units_subtitle';
   static const propertyDetailsAddUnit = 'property_details.add_unit';
+  static const propertyDetailsPublishProperty = 'property_details.publish_property';
+  static const propertyDetailsReadyToPublish = 'property_details.ready_to_publish';
+  static const propertyDetailsPublishNow = 'property_details.publish_now';
+  static const propertyDetailsPublishConfirmTitle = 'property_details.publish_confirm_title';
+  static const propertyDetailsPublishConfirmDesc = 'property_details.publish_confirm_desc';
+  static const propertyDetailsPublishBtn = 'property_details.publish_btn';
+  static const propertyDetailsPublishSuccess = 'property_details.publish_success';
+
+  static const propertyDetailsCloneForDeedTitle = 'property_details.clone_for_deed_title';
+  static const propertyDetailsCloneForDeedDesc = 'property_details.clone_for_deed_desc';
+  static const propertyDetailsCloneForDeedCopyAll = 'property_details.clone_for_deed_copy_all';
+  static const propertyDetailsCloneForDeedCopyAllDesc = 'property_details.clone_for_deed_copy_all_desc';
+  static const propertyDetailsCloneForDeedEmpty = 'property_details.clone_for_deed_empty';
+  static const propertyDetailsCloneForDeedEmptyDesc = 'property_details.clone_for_deed_empty_desc';
+  static const propertyDetailsCloneForDeedConfirm = 'property_details.clone_for_deed_confirm';
+  static const propertyDetailsCloneForDeedSuccess = 'property_details.clone_for_deed_success';
+
   static const propertyDetailsArea = 'property_details.area';
   static const propertyDetailsType = 'property_details.type';
   static const propertyDetailsAddress = 'property_details.address';
   static const propertyDetailsDeedNumber = 'property_details.deed_number';
   static const propertyDetailsDeedDate = 'property_details.deed_date';
   static const propertyDetailsOwnerPercentage = 'property_details.owner_percentage';
+
+  static const propertyDetailsBasicInfoTitle = 'property_details.basic_info_title';
+  static const propertyDetailsPropertyCode = 'property_details.property_code';
+  static const propertyDetailsPropertyTypeLabel = 'property_details.property_type_label';
+  static const propertyDetailsUsageTypeLabel = 'property_details.usage_type_label';
+  static const propertyDetailsBranchLabel = 'property_details.branch_label';
+  static const propertyDetailsConstructionYearLabel = 'property_details.construction_year_label';
+  static const propertyDetailsAddressLabel = 'property_details.address_label';
+  static const propertyDetailsNotesLabel = 'property_details.notes_label';
+  static const propertyDetailsTotalUnits = 'property_details.total_units';
+  static const propertyDetailsRentedUnits = 'property_details.rented_units';
+  static const propertyDetailsAvailableUnitsLabel = 'property_details.available_units_label';
+  static const propertyDetailsOccupancyRate = 'property_details.occupancy_rate';
+  static const propertyDetailsOccupancyRateSub = 'property_details.occupancy_rate_sub';
+  static const propertyDetailsTotalArea = 'property_details.total_area';
+  static const propertyDetailsAreaUnit = 'property_details.area_unit';
+  static const propertyDetailsValuationAmount = 'property_details.valuation_amount';
+  static const propertyDetailsValuationCurrency = 'property_details.valuation_currency';
+  static const propertyDetailsValuationApproved = 'property_details.valuation_approved';
 
   // Property Edit
   static const propertyEditTitle = 'property_edit.title';
@@ -243,6 +279,31 @@ class LocaleKeys {
   static const propertyCreateAddress = 'property_create.address';
   static const propertyCreateArea = 'property_create.area';
   static const propertyCreateDescription = 'property_create.description';
+  static const propertyCreateYearLabel = 'property_create.year_label';
+  static const propertyCreateYearInvalid = 'property_create.year_invalid';
+  static const propertyCreateNameRequired = 'property_create.name_required';
+  static const propertyCreateImagesUploading = 'property_create.images_uploading';
+  static const propertyCreateFillRequired = 'property_create.fill_required_fields';
+  static const propertyCreateOwnersSubtitle = 'property_create.owners_subtitle';
+  static const propertyCreateOwnersAddedCount = 'property_create.owners_added_count';
+  static const propertyCreateOwnerSearchHint = 'property_create.owner_search_hint';
+  static const propertyCreateExitTitle = 'property_create.exit_title';
+  static const propertyCreateExitMessage = 'property_create.exit_message';
+  static const propertyCreateExitCancel = 'property_create.exit_cancel';
+  static const propertyCreateExitConfirm = 'property_create.exit_confirm';
+
+  // Property Review
+  static const propertyReviewTitle = 'property_review.title';
+  static const propertyReviewSubtitle = 'property_review.subtitle';
+  static const propertyReviewBranch = 'property_review.branch';
+  static const propertyReviewDeed = 'property_review.deed';
+  static const propertyReviewType = 'property_review.type';
+  static const propertyReviewPropertyName = 'property_review.property_name';
+  static const propertyReviewAddress = 'property_review.address';
+  static const propertyReviewArea = 'property_review.area';
+  static const propertyReviewConstructionYear = 'property_review.construction_year';
+  static const propertyReviewNoImages = 'property_review.no_images';
+
   static const propertyDraftIncomplete = 'properties.draft_incomplete';
   static const propertyDraftIncompleteDesc = 'properties.draft_incomplete_desc';
   static const propertyDraftProgress = 'properties.draft_progress';

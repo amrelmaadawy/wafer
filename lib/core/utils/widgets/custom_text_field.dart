@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_radius.dart';
 
@@ -12,6 +13,11 @@ class CustomTextField extends StatefulWidget {
   final Widget? prefixIcon;
   final FocusNode? focusNode;
   final int maxLines;
+  final ValueChanged<String>? onChanged;
+  final int? maxLength;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextInputAction? textInputAction;
+  final ValueChanged<String>? onFieldSubmitted;
 
   const CustomTextField({
     super.key,
@@ -24,6 +30,11 @@ class CustomTextField extends StatefulWidget {
     this.prefixIcon,
     this.focusNode,
     this.maxLines = 1,
+    this.onChanged,
+    this.maxLength,
+    this.inputFormatters,
+    this.textInputAction,
+    this.onFieldSubmitted,
   });
 
   @override
@@ -47,11 +58,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
         const SizedBox(height: 8),
         TextFormField(
           controller: widget.controller,
-          focusNode: widget.focusNode,
-          maxLines: widget.maxLines,
-          obscureText: widget.isPassword ? _obscureText : false,
           validator: widget.validator,
           keyboardType: widget.keyboardType,
+          obscureText: widget.isPassword && _obscureText,
+          focusNode: widget.focusNode,
+          textInputAction: widget.textInputAction,
+          onFieldSubmitted: widget.onFieldSubmitted,
+          maxLines: widget.maxLines,
+          onChanged: widget.onChanged,
+          maxLength: widget.maxLength,
+          inputFormatters: widget.inputFormatters,
+          style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             hintText: widget.hintText,
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(

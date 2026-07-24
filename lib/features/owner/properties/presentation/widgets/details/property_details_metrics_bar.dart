@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -21,9 +23,9 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
         children: [
           _buildMetricCard(
             context,
-            label: 'إجمالي الوحدات',
+            label: LocaleKeys.propertyDetailsTotalUnits.tr(),
             value: '${property.unitsCount}',
-            subtext: '${property.rentedUnits} مؤجرة | ${property.availableUnits} متاحة',
+            subtext: '${property.rentedUnits} ${LocaleKeys.propertyDetailsRentedUnits.tr()} | ${property.availableUnits} ${LocaleKeys.propertyDetailsAvailableUnitsLabel.tr()}',
             icon: Icons.meeting_room_rounded,
             color: context.primaryColor,
             bgColor: context.primarySubtle,
@@ -31,9 +33,9 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
           const SizedBox(width: 10),
           _buildMetricCard(
             context,
-            label: 'نسبة الإشغال',
+            label: LocaleKeys.propertyDetailsOccupancyRate.tr(),
             value: '${property.occupancyRate.toStringAsFixed(0)}%',
-            subtext: 'معدل التأجير الفعلي',
+            subtext: LocaleKeys.propertyDetailsOccupancyRateSub.tr(),
             icon: Icons.pie_chart_rounded,
             color: const Color(0xFF10B981),
             bgColor: const Color(0xFFD1FAE5),
@@ -42,11 +44,11 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
             const SizedBox(width: 10),
             _buildMetricCard(
               context,
-              label: 'المساحة الإجمالية',
-              value: '${property.area} م²',
+              label: LocaleKeys.propertyDetailsTotalArea.tr(),
+              value: '${property.area} ${LocaleKeys.propertyDetailsAreaUnit.tr()}',
               subtext: property.length != null && property.width != null
-                  ? '${property.length}م × ${property.width}م'
-                  : 'مساحة المسح الميداني',
+                  ? '${property.length}m × ${property.width}m'
+                  : LocaleKeys.propertyDetailsTotalArea.tr(),
               icon: Icons.square_foot_rounded,
               color: const Color(0xFF8B5CF6),
               bgColor: const Color(0xFFF3E8FF),
@@ -56,9 +58,9 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
             const SizedBox(width: 10),
             _buildMetricCard(
               context,
-              label: 'قيمة التقييم',
-              value: '${property.valuationAmount} ر.س',
-              subtext: property.valuationEntity ?? 'تقييم معتمد',
+              label: LocaleKeys.propertyDetailsValuationAmount.tr(),
+              value: '${property.valuationAmount} ${LocaleKeys.propertyDetailsValuationCurrency.tr()}',
+              subtext: property.valuationEntity ?? LocaleKeys.propertyDetailsValuationApproved.tr(),
               icon: Icons.account_balance_wallet_rounded,
               color: const Color(0xFFF59E0B),
               bgColor: const Color(0xFFFEF3C7),

@@ -8,15 +8,17 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
-import '../../domain/entities/property_details_entity.dart';
-import '../cubit/edit/property_edit_cubit.dart';
-import '../cubit/edit/property_edit_state.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
+import '../../../../../core/routing/routes.dart';
+import '../../domain/entities/property_details_entity.dart';
+import '../../domain/entities/form_branch_entity.dart';
+import '../cubit/edit/property_edit_cubit.dart';
+import '../cubit/edit/property_edit_state.dart';
 import '../widgets/create/deed_selector_widget.dart';
 import '../widgets/create/property_type_selector_widget.dart';
-import '../../domain/entities/form_branch_entity.dart';
-import '../../../../../core/routing/routes.dart';
+import '../widgets/edit/property_edit_bottom_nav.dart';
+import '../widgets/edit/property_edit_header_card.dart';
 
 class PropertyEditScreen extends StatefulWidget {
   final PropertyDetailsEntity property;
@@ -31,6 +33,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
   late TextEditingController _nameController;
   late TextEditingController _addressController;
   late TextEditingController _areaController;
+  late TextEditingController _yearController;
   late TextEditingController _descriptionController;
 
   @override
@@ -40,8 +43,9 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
     _addressController = TextEditingController(text: widget.property.address ?? '');
     _areaController = TextEditingController(
         text: widget.property.area != null ? widget.property.area.toString() : '');
-    _descriptionController =
-        TextEditingController(text: widget.property.description ?? '');
+    _yearController = TextEditingController(
+        text: widget.property.constructionYear != null ? widget.property.constructionYear.toString() : '');
+    _descriptionController = TextEditingController(text: widget.property.description ?? '');
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PropertyEditCubit>().init(
@@ -58,6 +62,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
     _nameController.dispose();
     _addressController.dispose();
     _areaController.dispose();
+    _yearController.dispose();
     _descriptionController.dispose();
     super.dispose();
   }
@@ -65,7 +70,14 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
   void _onSave(BuildContext context) {
     final name = _nameController.text.trim();
     if (name.isEmpty) {
-      AppToast.showError(context, 'يرجى إدخال اسم العقار');
+      AppToast.showError(context, LocaleKeys.propertyCreateNameRequired.tr());
+      return;
+    }
+
+    final yearText = _yearController.text.trim();
+    final year = int.tryParse(yearText);
+    if (yearText.isNotEmpty && (year == null || year < 1900 || year > 2030)) {
+      AppToast.showError(context, LocaleKeys.propertyCreateYearInvalid.tr());
       return;
     }
 
@@ -73,6 +85,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
       'name': name,
       'address': _addressController.text.trim(),
       'area': num.tryParse(_areaController.text.trim()),
+      'construction_year': year,
       'description': _descriptionController.text.trim(),
     }..removeWhere((key, value) => value == null || (value is String && value.isEmpty));
 
@@ -104,7 +117,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildHeaderCard(context),
+                      PropertyEditHeaderCard(property: widget.property),
                       const SizedBox(height: 24),
                       if (state.isLoadingForm)
                         const Center(child: CircularProgressIndicator())
@@ -112,19 +125,15 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                         if (state.branches.length > 1) ...[
                           Text(
                             LocaleKeys.propertyCreateSelectBranch.tr(),
-                            style: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w700),
+                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                           ),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<FormBranchEntity>(
                             items: state.branches,
-                            value: state.branches
-                                .where((b) => b.id == state.selectedBranchId)
-                                .firstOrNull,
+                            value: state.branches.where((b) => b.id == state.selectedBranchId).firstOrNull,
                             hint: LocaleKeys.propertyCreateSelectBranch.tr(),
                             itemLabelBuilder: (b) => b.name,
-                            onSelected: (b) =>
-                                context.read<PropertyEditCubit>().selectBranch(b.id),
+                            onSelected: (b) => context.read<PropertyEditCubit>().selectBranch(b.id),
                           ),
                           const SizedBox(height: 24),
                         ],
@@ -134,9 +143,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                           onSelect: context.read<PropertyEditCubit>().selectDeed,
                           onCreateNew: () async {
                             final result = await context.push(Routes.ownerDeedsCreate);
-                            if (result != null) {
-                              if (!context.mounted) return;
-                              // Re-fetch form data to get the newly added deed, or add it directly if we had a FormDeedEntity
+                            if (result != null && context.mounted) {
                               context.read<PropertyEditCubit>().loadFormData();
                             }
                           },
@@ -145,8 +152,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                         if (state.formData?.options.propertyTypes != null) ...[
                           Text(
                             LocaleKeys.propertyCreateSelectType.tr(),
-                            style: const TextStyle(
-                                fontSize: 14, fontWeight: FontWeight.w700),
+                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                           ),
                           const SizedBox(height: 12),
                           PropertyTypeSelectorWidget(
@@ -181,13 +187,32 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                         hint: 'أدخل العنوان بالتفصيل...',
                       ),
                       const SizedBox(height: 16),
-                      _buildField(
-                        _areaController,
-                        LocaleKeys.propertyCreateArea.tr(),
-                        Icons.square_foot_outlined,
-                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                        isNumber: true,
-                        hint: 'أدخل المساحة بالأرقام فقط (م²)',
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildField(
+                              _areaController,
+                              LocaleKeys.propertyCreateArea.tr(),
+                              Icons.square_foot_outlined,
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                              isNumber: true,
+                              hint: 'أدخل المساحة بالأرقام فقط (م²)',
+                              suffixText: LocaleKeys.propertyDetailsAreaUnit.tr(),
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: _buildField(
+                              _yearController,
+                              LocaleKeys.propertyCreateYearLabel.tr(),
+                              Icons.calendar_today_outlined,
+                              keyboardType: TextInputType.number,
+                              isNumber: true,
+                              hint: 'YYYY',
+                              maxLength: 4,
+                            ),
+                          ),
+                        ],
                       ),
                       const SizedBox(height: 16),
                       _buildField(
@@ -202,116 +227,10 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                   ),
                 ),
               ),
-              _buildBottomNav(context, state),
+              PropertyEditBottomNav(state: state, onSave: () => _onSave(context)),
             ],
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildHeaderCard(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: context.primaryColor.withValues(alpha: 0.05),
-        borderRadius: AppRadius.circularLg,
-        border: Border.all(color: context.primaryColor.withValues(alpha: 0.1)),
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: context.primaryColor.withValues(alpha: 0.1),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(Icons.maps_home_work_rounded, color: context.primaryColor, size: 24),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.property.code,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w700,
-                    color: context.primaryColor,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  widget.property.propertyType,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.textSecondaryLight,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: AppRadius.circularMd,
-              border: Border.all(color: const Color(0xFFE2E8F0)),
-            ),
-            child: Text(
-              widget.property.statusLabel,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w700,
-                color: AppColors.textPrimaryLight,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBottomNav(BuildContext context, PropertyEditState state) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        border: const Border(top: BorderSide(color: Color(0xFFE2E8F0))),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, -4),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          height: 48,
-          child: ElevatedButton(
-            onPressed: state.isSaving ? null : () => _onSave(context),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: context.primaryColor,
-              foregroundColor: Colors.white,
-              elevation: 0,
-              shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
-            ),
-            child: state.isSaving
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                  )
-                : Text(
-                    LocaleKeys.propertyEditSave.tr(),
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-                  ),
-          ),
-        ),
       ),
     );
   }
@@ -325,6 +244,8 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
     int maxLines = 1,
     bool isNumber = false,
     String? hint,
+    int? maxLength,
+    String? suffixText,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -345,13 +266,21 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
           controller: controller,
           keyboardType: keyboardType,
           maxLines: maxLines,
+          maxLength: maxLength,
           inputFormatters: isNumber
-              ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))]
-              : null,
+              ? [
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                  if (maxLength != null) LengthLimitingTextInputFormatter(maxLength),
+                ]
+              : maxLength != null
+                  ? [LengthLimitingTextInputFormatter(maxLength)]
+                  : null,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle:  TextStyle(color: AppColors.textSecondaryLight, fontSize: 13),
+            hintStyle: TextStyle(color: AppColors.textSecondaryLight, fontSize: 13),
+            suffixText: suffixText,
+            suffixStyle: TextStyle(color: context.primaryColor, fontWeight: FontWeight.bold),
             prefixIcon: maxLines > 1
                 ? Padding(
                     padding: const EdgeInsets.only(bottom: 50.0),

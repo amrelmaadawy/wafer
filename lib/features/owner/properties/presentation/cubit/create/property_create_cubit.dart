@@ -134,7 +134,7 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
       step: 'details',
       data: {
         'name': state.name,
-        'city': state.address, // mapping simplified for now
+        'address': state.address,
         'area': state.area,
         'construction_year': state.constructionYear,
         'usage_type': state.usageType,

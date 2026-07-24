@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
@@ -36,25 +37,11 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
     _yearController = TextEditingController(text: state.constructionYear?.toString() ?? '');
     _descController = TextEditingController(text: state.description);
 
-    _nameNode = FocusNode()..addListener(() => _onFocusChange(_nameNode));
-    _addressNode = FocusNode()..addListener(() => _onFocusChange(_addressNode));
-    _areaNode = FocusNode()..addListener(() => _onFocusChange(_areaNode));
-    _yearNode = FocusNode()..addListener(() => _onFocusChange(_yearNode));
-    _descNode = FocusNode()..addListener(() => _onFocusChange(_descNode));
-  }
-
-  void _onFocusChange(FocusNode node) {
-    if (!node.hasFocus) {
-      final cubit = context.read<PropertyCreateCubit>();
-      cubit.updateName(_nameController.text);
-      cubit.updateAddress(_addressController.text);
-      cubit.updateArea(double.tryParse(_areaController.text) ?? 0.0);
-      cubit.updateConstructionYear(int.tryParse(_yearController.text) ?? 0);
-      cubit.updateDescription(_descController.text);
-      
-      // Auto-save on blur
-      cubit.autoSaveDetails();
-    }
+    _nameNode = FocusNode();
+    _addressNode = FocusNode();
+    _areaNode = FocusNode();
+    _yearNode = FocusNode();
+    _descNode = FocusNode();
   }
 
   @override
@@ -107,6 +94,9 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                 controller: _nameController,
                 focusNode: _nameNode,
                 prefixIcon: const Icon(Icons.home_work_outlined),
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_addressNode),
+                onChanged: (val) => context.read<PropertyCreateCubit>().updateName(val),
               ),
               const SizedBox(height: 16),
               CustomTextField(
@@ -115,6 +105,9 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                 controller: _addressController,
                 focusNode: _addressNode,
                 prefixIcon: const Icon(Icons.location_on_outlined),
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_areaNode),
+                onChanged: (val) => context.read<PropertyCreateCubit>().updateAddress(val),
               ),
               const SizedBox(height: 16),
               Row(
@@ -127,17 +120,35 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                       focusNode: _areaNode,
                       keyboardType: TextInputType.number,
                       prefixIcon: const Icon(Icons.square_foot_outlined),
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_yearNode),
+                      onChanged: (val) => context.read<PropertyCreateCubit>().updateArea(double.tryParse(val) ?? 0.0),
                     ),
                   ),
                   const SizedBox(width: 16),
                   Expanded(
                     child: CustomTextField(
-                      label: 'سنة البناء',
+                      label: LocaleKeys.propertyCreateYearLabel.tr(),
                       hintText: 'YYYY',
                       controller: _yearController,
                       focusNode: _yearNode,
                       keyboardType: TextInputType.number,
                       prefixIcon: const Icon(Icons.calendar_today_outlined),
+                      maxLength: 4,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.digitsOnly,
+                        LengthLimitingTextInputFormatter(4),
+                      ],
+                      onChanged: (val) {
+                        final year = int.tryParse(val);
+                        if (year != null && year >= 1900 && year <= 2030) {
+                          context.read<PropertyCreateCubit>().updateConstructionYear(year);
+                        } else if (val.isEmpty) {
+                          context.read<PropertyCreateCubit>().updateConstructionYear(0);
+                        }
+                      },
+                      textInputAction: TextInputAction.next,
+                      onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_descNode),
                     ),
                   ),
                 ],
@@ -150,6 +161,9 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                 focusNode: _descNode,
                 maxLines: 4,
                 prefixIcon: const Icon(Icons.description_outlined),
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
+                onChanged: (val) => context.read<PropertyCreateCubit>().updateDescription(val),
               ),
               const SizedBox(height: 40),
             ],

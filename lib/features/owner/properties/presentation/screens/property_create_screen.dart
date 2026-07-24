@@ -4,15 +4,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/app_radius.dart';
-import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
-import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../cubit/create/property_create_cubit.dart';
 import '../cubit/create/property_create_state.dart';
 import '../widgets/create/wizard_progress_bar.dart';
+import '../widgets/create/create_property_bottom_nav.dart';
 import '../views/create/step1_basic_info_view.dart';
 import '../views/create/step2_details_view.dart';
 import '../views/create/step3_images_view.dart';
@@ -43,35 +41,41 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
   }
 
   void _onNext(PropertyCreateCubit cubit, PropertyCreateState state) async {
-    // Basic Info validation
     if (state.currentStep == 0) {
       if (state.selectedBranchId == null || state.selectedDeedId == null || state.selectedType == null) {
-        if (mounted) AppToast.showError(context, 'يرجى إكمال جميع الحقول المطلوبة');
+        if (mounted) AppToast.showError(context, LocaleKeys.propertyCreateFillRequired.tr());
         return;
       }
       final success = await cubit.createDraft();
-      if (!success) return;
+      if (!success || !mounted) return;
     }
 
-    // Images save
+    if (state.currentStep == 1) {
+      if (state.name == null || state.name!.trim().isEmpty) {
+        if (mounted) AppToast.showError(context, LocaleKeys.propertyCreateNameRequired.tr());
+        return;
+      }
+      FocusScope.of(context).unfocus();
+      final success = await cubit.autoSaveDetails();
+      if (!success || !mounted) return;
+    }
+
     if (state.currentStep == 2) {
       if (state.images.any((i) => i.isUploading)) {
-        if (mounted) AppToast.showError(context, 'يرجى الانتظار حتى يكتمل رفع الصور');
+        if (mounted) AppToast.showError(context, LocaleKeys.propertyCreateImagesUploading.tr());
         return;
       }
       if (state.images.isNotEmpty) {
         final success = await cubit.saveImages();
-        if (!success) return;
+        if (!success || !mounted) return;
       }
     }
 
-    // Owners validation & sync
     if (state.currentStep == 3) {
       final success = await cubit.syncOwners();
-      if (!success) return;
+      if (!success || !mounted) return;
     }
 
-    // Publish
     if (state.currentStep == 4) {
       final success = await cubit.publishProperty();
       if (success && mounted) {
@@ -118,10 +122,37 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
           final cubit = context.read<PropertyCreateCubit>();
 
           return PopScope(
-            canPop: state.currentStep == 0,
-            onPopInvokedWithResult: (didPop, result) {
+            canPop: false,
+            onPopInvokedWithResult: (didPop, result) async {
               if (didPop) return;
-              _onPrevious(cubit);
+              if (state.currentStep == 0) {
+                final shouldPop = await showDialog<bool>(
+                  context: context,
+                  builder: (ctx) => AlertDialog(
+                    title: Text(LocaleKeys.propertyCreateExitTitle.tr()),
+                    content: Text(LocaleKeys.propertyCreateExitMessage.tr()),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(ctx, false),
+                        child: Text(LocaleKeys.propertyCreateExitCancel.tr()),
+                      ),
+                      ElevatedButton(
+                        onPressed: () => Navigator.pop(ctx, true),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.error,
+                          foregroundColor: Colors.white,
+                        ),
+                        child: Text(LocaleKeys.propertyCreateExitConfirm.tr()),
+                      ),
+                    ],
+                  ),
+                );
+                if (shouldPop == true && context.mounted) {
+                  context.pop();
+                }
+              } else {
+                _onPrevious(cubit);
+              }
             },
             child: Column(
               children: [
@@ -129,78 +160,33 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                 Expanded(
                   child: PageView(
                     controller: _pageController,
-                    physics: const NeverScrollableScrollPhysics(), // Disable swipe to force using buttons
-                    children: const [
-                      Step1BasicInfoView(),
-                      Step2DetailsView(),
-                      Step3ImagesView(),
-                      Step4OwnersView(),
-                      Step5ReviewView(),
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      const Step1BasicInfoView(),
+                      const Step2DetailsView(),
+                      const Step3ImagesView(),
+                      const Step4OwnersView(),
+                      Step5ReviewView(
+                        onGoToStep: (step) {
+                          _pageController.animateToPage(
+                            step,
+                            duration: const Duration(milliseconds: 300),
+                            curve: Curves.easeInOut,
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),
-                _buildBottomNav(context, state, cubit),
+                CreatePropertyBottomNav(
+                  state: state,
+                  onNext: () => _onNext(cubit, state),
+                  onPrevious: () => _onPrevious(cubit),
+                ),
               ],
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildBottomNav(BuildContext context, PropertyCreateState state, PropertyCreateCubit cubit) {
-    final isLastStep = state.currentStep == 4;
-    final isBusy = state.isSaving || state.isSavingImages || state.isSyncingOwners || state.isPublishing;
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceLight,
-        border: Border(top: BorderSide(color: Color(0xFFE2E8F0))),
-      ),
-      child: SafeArea(
-        child: Row(
-          children: [
-            if (state.currentStep > 0)
-              Expanded(
-                flex: 1,
-                child: OutlinedButton(
-                  onPressed: isBusy ? null : () => _onPrevious(cubit),
-                  style: OutlinedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
-                    side: const BorderSide(color: Color(0xFFE2E8F0)),
-                  ),
-                  child: Text(
-                    LocaleKeys.propertyWizardPrevious.tr(),
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight),
-                  ),
-                ),
-              ),
-            if (state.currentStep > 0) const SizedBox(width: 12),
-            Expanded(
-              flex: 2,
-              child: isBusy
-                  ? AppShimmer.box(
-                      height: 52,
-                      borderRadius: AppRadius.circularLg,
-                    )
-                  : ElevatedButton(
-                      onPressed: () => _onNext(cubit, state),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: isLastStep ? AppColors.success : context.primaryColor,
-                        foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
-                      ),
-                      child: Text(
-                        isLastStep ? LocaleKeys.propertyWizardPublish.tr() : LocaleKeys.propertyWizardNext.tr(),
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-                      ),
-                    ),
-            ),
-          ],
-        ),
       ),
     );
   }
