@@ -14,6 +14,7 @@ class PropertyEditState extends Equatable {
   final PropertyFormDataEntity? formData;
   final int? selectedBranchId;
   final int? selectedDeedId;
+  final String? selectedType;
   final PropertyDetailsEntity? updatedProperty;
 
   const PropertyEditState({
@@ -25,6 +26,7 @@ class PropertyEditState extends Equatable {
     this.formData,
     this.selectedBranchId,
     this.selectedDeedId,
+    this.selectedType,
     this.updatedProperty,
   });
 
@@ -40,6 +42,7 @@ class PropertyEditState extends Equatable {
     PropertyFormDataEntity? formData,
     int? selectedBranchId,
     int? selectedDeedId,
+    String? selectedType,
     PropertyDetailsEntity? updatedProperty,
   }) {
     return PropertyEditState(
@@ -51,6 +54,7 @@ class PropertyEditState extends Equatable {
       formData: formData ?? this.formData,
       selectedBranchId: selectedBranchId ?? this.selectedBranchId,
       selectedDeedId: selectedDeedId ?? this.selectedDeedId,
+      selectedType: selectedType ?? this.selectedType,
       updatedProperty: updatedProperty ?? this.updatedProperty,
     );
   }
@@ -66,6 +70,7 @@ class PropertyEditState extends Equatable {
       formData: formData,
       selectedBranchId: selectedBranchId,
       selectedDeedId: selectedDeedId,
+      selectedType: selectedType,
       updatedProperty: updatedProperty,
     );
   }
@@ -80,6 +85,7 @@ class PropertyEditState extends Equatable {
         formData,
         selectedBranchId,
         selectedDeedId,
+        selectedType,
         updatedProperty,
       ];
 }

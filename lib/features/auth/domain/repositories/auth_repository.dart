@@ -8,6 +8,7 @@ abstract class AuthRepository {
     required String password,
     required String deviceName,
     required String deviceToken,
+    required bool rememberMe,
   });
   Future<Either<Failure, void>> logout();
   Future<Either<Failure, UserEntity>> checkAuthStatus();

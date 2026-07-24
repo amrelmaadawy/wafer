@@ -35,6 +35,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             password: _passwordController.text,
             deviceName: 'iPhone/Android Device',
             deviceToken: 'fcm_token_placeholder',
+            rememberMe: _rememberMe,
           );
     }
   }

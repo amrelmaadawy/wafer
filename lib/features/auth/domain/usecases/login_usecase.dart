@@ -17,6 +17,7 @@ class LoginUseCase implements UseCase<UserEntity, LoginParams> {
       password: params.password,
       deviceName: params.deviceName,
       deviceToken: params.deviceToken,
+      rememberMe: params.rememberMe,
     );
   }
 }
@@ -26,14 +27,16 @@ class LoginParams extends Equatable {
   final String password;
   final String deviceName;
   final String deviceToken;
+  final bool rememberMe;
 
   const LoginParams({
     required this.username,
     required this.password,
     required this.deviceName,
     required this.deviceToken,
+    required this.rememberMe,
   });
 
   @override
-  List<Object> get props => [username, password, deviceName, deviceToken];
+  List<Object> get props => [username, password, deviceName, deviceToken, rememberMe];
 }

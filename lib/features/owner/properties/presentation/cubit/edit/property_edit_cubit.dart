@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/usecases/patch_property_use_case.dart';
 import '../../../domain/usecases/get_property_form_data_use_case.dart';
 import '../../../domain/usecases/auto_save_deed_step_use_case.dart';
+import '../../../domain/usecases/auto_save_type_step_use_case.dart';
 import '../../../../../../core/usecases/usecase.dart';
 import 'property_edit_state.dart';
 
@@ -9,6 +10,7 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
   final PatchPropertyUseCase _patchProperty;
   final GetPropertyFormDataUseCase _getFormData;
   final AutoSaveDeedStepUseCase _autoSaveDeedStep;
+  final AutoSaveTypeStepUseCase _autoSaveTypeStep;
   
   int? _propertyId;
 
@@ -16,16 +18,19 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
     required PatchPropertyUseCase patchProperty,
     required GetPropertyFormDataUseCase getFormData,
     required AutoSaveDeedStepUseCase autoSaveDeedStep,
+    required AutoSaveTypeStepUseCase autoSaveTypeStep,
   })  : _patchProperty = patchProperty,
         _getFormData = getFormData,
         _autoSaveDeedStep = autoSaveDeedStep,
+        _autoSaveTypeStep = autoSaveTypeStep,
         super(const PropertyEditState());
 
-  void init(int propertyId, int? branchId, int? deedId) {
+  void init(int propertyId, int? branchId, int? deedId, String? selectedType) {
     _propertyId = propertyId;
     emit(state.copyWith(
       selectedBranchId: branchId,
       selectedDeedId: deedId,
+      selectedType: selectedType,
     ));
     loadFormData();
   }
@@ -41,15 +46,20 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
 
   void selectBranch(int branchId) {
     emit(state.copyWith(selectedBranchId: branchId).clearError());
-    _triggerAutoSave();
+    _triggerDeedAutoSave();
   }
 
   void selectDeed(int deedId) {
     emit(state.copyWith(selectedDeedId: deedId).clearError());
-    _triggerAutoSave();
+    _triggerDeedAutoSave();
   }
 
-  Future<void> _triggerAutoSave() async {
+  void selectType(String type) {
+    emit(state.copyWith(selectedType: type).clearError());
+    _triggerTypeAutoSave();
+  }
+
+  Future<void> _triggerDeedAutoSave() async {
     if (_propertyId == null || state.selectedBranchId == null || state.selectedDeedId == null) {
       return;
     }
@@ -60,6 +70,24 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
       propertyId: _propertyId!,
       deedId: state.selectedDeedId!,
       branchId: state.selectedBranchId!,
+    );
+    
+    result.fold(
+      (failure) => emit(state.copyWith(isAutoSaving: false, errorMessage: failure.message)),
+      (property) => emit(state.copyWith(isAutoSaving: false, updatedProperty: property)),
+    );
+  }
+
+  Future<void> _triggerTypeAutoSave() async {
+    if (_propertyId == null || state.selectedType == null) {
+      return;
+    }
+
+    emit(state.copyWith(isAutoSaving: true).clearError());
+    
+    final result = await _autoSaveTypeStep(
+      propertyId: _propertyId!,
+      propertyType: state.selectedType!,
     );
     
     result.fold(

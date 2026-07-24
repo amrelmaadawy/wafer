@@ -13,6 +13,7 @@ import '../../domain/entities/form_branch_entity.dart';
 import '../cubit/create/property_create_cubit.dart';
 import '../cubit/create/property_create_state.dart';
 import '../widgets/create/deed_selector_widget.dart';
+import '../widgets/create/property_type_selector_widget.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 
 class PropertyCreateScreen extends StatefulWidget {
@@ -141,75 +142,14 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                         LocaleKeys.propertyCreateSelectType.tr(),
                         style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
                       ),
-                      const SizedBox(height: 12),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                          childAspectRatio: 2.5,
-                        ),
-                        itemCount: propertyTypes.length,
-                        itemBuilder: (context, index) {
-                          final type = propertyTypes[index];
-                          final isSelected = state.selectedType == type.value;
-                          
-                          IconData typeIcon;
-                          switch (type.value) {
-                            case 'residential': typeIcon = Icons.home_rounded; break;
-                            case 'commercial': typeIcon = Icons.storefront_rounded; break;
-                            case 'land': typeIcon = Icons.landscape_rounded; break;
-                            case 'administrative': typeIcon = Icons.business_rounded; break;
-                            default: typeIcon = Icons.domain_rounded;
-                          }
-
-                          return InkWell(
-                            onTap: () => cubit.selectType(type.value),
-                            borderRadius: AppRadius.circularMd,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: isSelected ? context.primaryColor.withValues(alpha: 0.05) : Colors.white,
-                                borderRadius: AppRadius.circularMd,
-                                border: Border.all(
-                                  color: isSelected ? context.primaryColor : const Color(0xFFE2E8F0),
-                                  width: isSelected ? 1.5 : 1,
-                                ),
-                              ),
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    typeIcon,
-                                    color: isSelected ? context.primaryColor : AppColors.textSecondaryLight,
-                                    size: 20,
-                                  ),
-                                  const SizedBox(width: 8),
-                                  Expanded(
-                                    child: Text(
-                                      type.label,
-                                      style: TextStyle(
-                                        fontSize: 13,
-                                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
-                                        color: isSelected ? context.primaryColor : AppColors.textPrimaryLight,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
+                      PropertyTypeSelectorWidget(
+                        propertyTypes: propertyTypes,
+                        selectedType: state.selectedType,
+                        onSelect: cubit.selectType,
+                        errorText: _submitted && state.selectedType == null
+                            ? LocaleKeys.propertyCreateSelectTypeRequired.tr()
+                            : null,
                       ),
-                      if (_submitted && state.selectedType == null)
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8, right: 12),
-                          child: Text(
-                            LocaleKeys.propertyCreateSelectTypeRequired.tr(),
-                            style: const TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.w500),
-                          ),
-                        ),
                       
                       const SizedBox(height: 40),
                     ],

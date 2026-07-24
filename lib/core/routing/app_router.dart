@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
+import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
 import '../../features/owner/shell/presentation/screens/owner_main_screen.dart';
 import '../../features/owner/dashboard/presentation/views/owner_dashboard_view.dart';
@@ -36,8 +37,12 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 class AppRouter {
   static final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: Routes.login,
+    initialLocation: Routes.splash,
     routes: [
+      GoRoute(
+        path: Routes.splash,
+        builder: (context, state) => const SplashScreen(),
+      ),
       GoRoute(
         path: Routes.home,
         builder: (context, state) => const LoginScreen(), // Just placeholder or check auth

@@ -28,6 +28,7 @@ class AuthRepositoryImpl implements AuthRepository {
     required String password,
     required String deviceName,
     required String deviceToken,
+    required bool rememberMe,
   }) async {
     try {
       final userModel = await _remoteDataSource.login(
@@ -44,6 +45,7 @@ class AuthRepositoryImpl implements AuthRepository {
       if (userModel.tenantId != null) {
         await _cacheHelper.saveTenantId(userModel.tenantId!);
       }
+      await _cacheHelper.saveRememberMe(rememberMe);
 
       return Right(userModel);
     } on ServerException catch (e) {
@@ -68,7 +70,15 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       final token = await _secureStorageService.getToken();
       final accountType = _cacheHelper.getAccountType();
+      final rememberMe = _cacheHelper.getRememberMe();
+
       if (token != null && token.isNotEmpty) {
+        if (!rememberMe) {
+          // User didn't want to be remembered, clear the token on app start
+          await _secureStorageService.deleteToken();
+          return Left(ServerFailure(LocaleKeys.errorsNotLoggedIn.tr()));
+        }
+
         return Right(UserEntity(
           id: '',
           name: '',

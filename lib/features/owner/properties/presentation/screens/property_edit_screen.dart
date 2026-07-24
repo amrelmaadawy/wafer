@@ -14,6 +14,7 @@ import '../cubit/edit/property_edit_state.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../widgets/create/deed_selector_widget.dart';
+import '../widgets/create/property_type_selector_widget.dart';
 import '../../domain/entities/form_branch_entity.dart';
 import '../../../../../core/routing/routes.dart';
 
@@ -47,6 +48,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
             widget.property.id,
             widget.property.branchId,
             widget.property.deedId,
+            widget.property.propertyType,
           );
     });
   }
@@ -140,6 +142,20 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                           },
                         ),
                         const SizedBox(height: 24),
+                        if (state.formData?.options.propertyTypes != null) ...[
+                          Text(
+                            LocaleKeys.propertyCreateSelectType.tr(),
+                            style: const TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w700),
+                          ),
+                          const SizedBox(height: 12),
+                          PropertyTypeSelectorWidget(
+                            propertyTypes: state.formData!.options.propertyTypes,
+                            selectedType: state.selectedType,
+                            onSelect: context.read<PropertyEditCubit>().selectType,
+                          ),
+                          const SizedBox(height: 24),
+                        ],
                       ],
                       Text(
                         LocaleKeys.propertyDetailsBasicInfo.tr(),

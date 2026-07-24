@@ -43,6 +43,17 @@ class CacheHelper {
     return _prefs.getString(_tenantIdKey);
   }
 
+  // ─── Auth ───────────────────────────────────────────────────────────────
+  static const String _rememberMeKey = 'remember_me';
+
+  Future<void> saveRememberMe(bool value) async {
+    await _prefs.setBool(_rememberMeKey, value);
+  }
+
+  bool getRememberMe() {
+    return _prefs.getBool(_rememberMeKey) ?? true; // Default to true
+  }
+
   // ─── Theme: Primary Color ─────────────────────────────────────────────────
   static const String _primaryColorKey = 'primary_color_value';
 

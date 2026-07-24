@@ -42,6 +42,9 @@ abstract class PropertiesRepository {
   /// Auto save deed step
   Future<Either<Failure, PropertyDetailsEntity>> autoSaveDeedStep(int propertyId, int deedId, int branchId);
 
+  /// Auto save type step
+  Future<Either<Failure, PropertyDetailsEntity>> autoSaveTypeStep(int propertyId, String propertyType);
+
 
 
   /// Sync property owners (percentage must equal 100%)

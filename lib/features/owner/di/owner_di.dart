@@ -68,6 +68,7 @@ import '../properties/presentation/cubit/units/units_list_cubit.dart';
 import '../properties/presentation/cubit/units/unit_create_cubit.dart';
 
 import '../properties/domain/usecases/clone_property_use_case.dart';
+import '../properties/domain/usecases/auto_save_type_step_use_case.dart';
 import '../properties/domain/usecases/auto_save_deed_step_use_case.dart';
 import '../properties/domain/usecases/make_representative_use_case.dart';
 import '../properties/domain/usecases/remove_representative_use_case.dart';
@@ -205,11 +206,15 @@ void _initProperties() {
   if (!sl.isRegistered<AutoSaveDeedStepUseCase>()) {
     sl.registerLazySingleton(() => AutoSaveDeedStepUseCase(sl()));
   }
+  if (!sl.isRegistered<AutoSaveTypeStepUseCase>()) {
+    sl.registerLazySingleton(() => AutoSaveTypeStepUseCase(sl()));
+  }
   if (!sl.isRegistered<PropertyEditCubit>()) {
     sl.registerFactory(() => PropertyEditCubit(
           patchProperty: sl(),
           getFormData: sl(),
           autoSaveDeedStep: sl(),
+          autoSaveTypeStep: sl(),
         ));
   }
 }

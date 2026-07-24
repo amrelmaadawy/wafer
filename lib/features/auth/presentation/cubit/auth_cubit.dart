@@ -24,7 +24,7 @@ class AuthCubit extends Cubit<AuthState> {
     final result = await _checkAuthStatusUseCase(const NoParams());
     result.fold(
       (failure) => emit(Unauthenticated()),
-      (user) => emit(Authenticated(user)),
+      (user) => emit(Authenticated(user, isAutoLogin: true)),
     );
   }
 
@@ -33,6 +33,7 @@ class AuthCubit extends Cubit<AuthState> {
     required String password,
     required String deviceName,
     required String deviceToken,
+    required bool rememberMe,
   }) async {
     emit(AuthLoading());
     final result = await _loginUseCase(LoginParams(
@@ -40,6 +41,7 @@ class AuthCubit extends Cubit<AuthState> {
       password: password,
       deviceName: deviceName,
       deviceToken: deviceToken,
+      rememberMe: rememberMe,
     ));
     result.fold(
       (failure) => emit(AuthError(failure.message)),
