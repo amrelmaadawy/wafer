@@ -7,14 +7,16 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
-import '../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../../../../../core/routing/routes.dart';
-import '../../domain/entities/form_branch_entity.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
 import '../cubit/create/property_create_cubit.dart';
 import '../cubit/create/property_create_state.dart';
-import '../widgets/create/deed_selector_widget.dart';
-import '../widgets/create/property_type_selector_widget.dart';
-import '../../../../../core/utils/widgets/app_toast.dart';
+import '../widgets/create/wizard_progress_bar.dart';
+import '../views/create/step1_basic_info_view.dart';
+import '../views/create/step2_details_view.dart';
+import '../views/create/step3_images_view.dart';
+import '../views/create/step4_owners_view.dart';
+import '../views/create/step5_review_view.dart';
 
 class PropertyCreateScreen extends StatefulWidget {
   const PropertyCreateScreen({super.key});
@@ -24,34 +26,73 @@ class PropertyCreateScreen extends StatefulWidget {
 }
 
 class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
-  bool _submitted = false;
+  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
+    _pageController = PageController(initialPage: 0);
     context.read<PropertyCreateCubit>().loadFormOptions();
   }
 
-  void _onSubmit(PropertyCreateState state) async {
-    setState(() => _submitted = true);
-    final cubit = context.read<PropertyCreateCubit>();
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
-    if (state.selectedBranchId == null ||
-        state.selectedDeedId == null ||
-        state.selectedType == null) {
-      if (!mounted) return;
-      AppToast.showError(context, 'يرجى إكمال جميع الحقول المطلوبة');
+  void _onNext(PropertyCreateCubit cubit, PropertyCreateState state) async {
+    // Basic Info validation
+    if (state.currentStep == 0) {
+      if (state.selectedBranchId == null || state.selectedDeedId == null || state.selectedType == null) {
+        if (mounted) AppToast.showError(context, 'يرجى إكمال جميع الحقول المطلوبة');
+        return;
+      }
+      final success = await cubit.createDraft();
+      if (!success) return;
+    }
+
+    // Images save
+    if (state.currentStep == 2) {
+      if (state.images.any((i) => i.isUploading)) {
+        if (mounted) AppToast.showError(context, 'يرجى الانتظار حتى يكتمل رفع الصور');
+        return;
+      }
+      if (state.images.isNotEmpty) {
+        final success = await cubit.saveImages();
+        if (!success) return;
+      }
+    }
+
+    // Owners validation & sync
+    if (state.currentStep == 3) {
+      final success = await cubit.syncOwners();
+      if (!success) return;
+    }
+
+    // Publish
+    if (state.currentStep == 4) {
+      final success = await cubit.publishProperty();
+      if (success && mounted) {
+        AppToast.showSuccess(context, LocaleKeys.propertyWizardPublishedSuccess.tr());
+        context.pushReplacement('${Routes.ownerPropertyDetails}?id=${state.draftPropertyId}');
+      }
       return;
     }
 
-    final success = await cubit.createDraft();
-    if (success && mounted) {
-      AppToast.showSuccess(context, LocaleKeys.propertyCreateSuccess.tr());
-      // Navigate to Property Details Dashboard
-      context.pushReplacement(
-        '${Routes.ownerPropertyDetails}?id=${cubit.state.draftPropertyId}',
-      );
-    }
+    cubit.nextStep();
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  void _onPrevious(PropertyCreateCubit cubit) {
+    cubit.previousStep();
+    _pageController.previousPage(
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -65,106 +106,51 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
         listener: (context, state) {
           if (state.errorMessage != null) {
             AppToast.showError(context, state.errorMessage!);
+            context.read<PropertyCreateCubit>().clearError();
           }
         },
         builder: (context, state) {
-          if (state.isLoading || state.formData == null) {
+          if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
           }
 
-          final branches = state.formData!.options.branches;
-          final propertyTypes = state.formData!.options.propertyTypes;
           final cubit = context.read<PropertyCreateCubit>();
 
-          // Pre-select branch if only one available
-          if (branches.length == 1 && state.selectedBranchId == null) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              cubit.selectBranch(branches.first.id);
-            });
-          }
-
-          return Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        LocaleKeys.propertyCreateSubtitle.tr(),
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.textSecondaryLight,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      
-                      // 1. Branch Selector
-                      if (branches.length > 1) ...[
-                        Text(
-                          LocaleKeys.propertyCreateSelectBranch.tr(),
-                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                        ),
-                        const SizedBox(height: 8),
-                        CustomDropdownMenu<FormBranchEntity>(
-                          items: branches,
-                          value: branches.where((b) => b.id == state.selectedBranchId).firstOrNull,
-                          hint: LocaleKeys.propertyCreateSelectBranch.tr(),
-                          itemLabelBuilder: (b) => b.name,
-                          onSelected: (b) => cubit.selectBranch(b.id),
-                          errorText: _submitted && state.selectedBranchId == null
-                              ? LocaleKeys.propertyCreateSelectBranchRequired.tr()
-                              : null,
-                        ),
-                        const SizedBox(height: 24),
-                      ],
-
-                      // 2. Deed Selector
-                      DeedSelectorWidget(
-                        deeds: state.deeds,
-                        selectedDeedId: state.selectedDeedId,
-                        onSelect: cubit.selectDeed,
-                        onCreateNew: () async {
-                          final result = await context.push(Routes.ownerDeedsCreate);
-                          if (result != null) {
-                            cubit.addNewDeed(result);
-                          }
-                        },
-                        errorText: _submitted && state.selectedDeedId == null
-                            ? LocaleKeys.propertyCreateSelectDeedRequired.tr()
-                            : null,
-                      ),
-                      const SizedBox(height: 24),
-
-                      // 3. Property Type Selector
-                      Text(
-                        LocaleKeys.propertyCreateSelectType.tr(),
-                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-                      ),
-                      PropertyTypeSelectorWidget(
-                        propertyTypes: propertyTypes,
-                        selectedType: state.selectedType,
-                        onSelect: cubit.selectType,
-                        errorText: _submitted && state.selectedType == null
-                            ? LocaleKeys.propertyCreateSelectTypeRequired.tr()
-                            : null,
-                      ),
-                      
-                      const SizedBox(height: 40),
+          return PopScope(
+            canPop: state.currentStep == 0,
+            onPopInvokedWithResult: (didPop, result) {
+              if (didPop) return;
+              _onPrevious(cubit);
+            },
+            child: Column(
+              children: [
+                WizardProgressBar(currentStep: state.currentStep),
+                Expanded(
+                  child: PageView(
+                    controller: _pageController,
+                    physics: const NeverScrollableScrollPhysics(), // Disable swipe to force using buttons
+                    children: const [
+                      Step1BasicInfoView(),
+                      Step2DetailsView(),
+                      Step3ImagesView(),
+                      Step4OwnersView(),
+                      Step5ReviewView(),
                     ],
                   ),
                 ),
-              ),
-              _buildBottomNav(context, state),
-            ],
+                _buildBottomNav(context, state, cubit),
+              ],
+            ),
           );
         },
       ),
     );
   }
 
-  Widget _buildBottomNav(BuildContext context, PropertyCreateState state) {
+  Widget _buildBottomNav(BuildContext context, PropertyCreateState state, PropertyCreateCubit cubit) {
+    final isLastStep = state.currentStep == 4;
+    final isBusy = state.isSaving || state.isSavingImages || state.isSyncingOwners || state.isPublishing;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: const BoxDecoration(
@@ -172,27 +158,48 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
         border: Border(top: BorderSide(color: Color(0xFFE2E8F0))),
       ),
       child: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          height: 48,
-          child: ElevatedButton(
-            onPressed: state.isSaving ? null : () => _onSubmit(state),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: context.primaryColor,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
-            ),
-            child: state.isSaving
-                ? const SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                  )
-                : Text(
-                    LocaleKeys.propertyCreateSubmit.tr(),
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+        child: Row(
+          children: [
+            if (state.currentStep > 0)
+              Expanded(
+                flex: 1,
+                child: OutlinedButton(
+                  onPressed: isBusy ? null : () => _onPrevious(cubit),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
+                    side: const BorderSide(color: Color(0xFFE2E8F0)),
                   ),
-          ),
+                  child: Text(
+                    LocaleKeys.propertyWizardPrevious.tr(),
+                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight),
+                  ),
+                ),
+              ),
+            if (state.currentStep > 0) const SizedBox(width: 12),
+            Expanded(
+              flex: 2,
+              child: ElevatedButton(
+                onPressed: isBusy ? null : () => _onNext(cubit, state),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isLastStep ? AppColors.success : context.primaryColor,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
+                ),
+                child: isBusy
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                      )
+                    : Text(
+                        isLastStep ? LocaleKeys.propertyWizardPublish.tr() : LocaleKeys.propertyWizardNext.tr(),
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                      ),
+              ),
+            ),
+          ],
         ),
       ),
     );

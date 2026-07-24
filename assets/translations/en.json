@@ -483,5 +483,28 @@
     "no_available_owners": "No owners available",
     "sheet_title": "Manage Owners & Shares",
     "owner_already_added": "This owner is already added"
+  },
+  "property_wizard": {
+    "step1_title": "Basic Information",
+    "step2_title": "Property Details",
+    "step3_title": "Property Images",
+    "step4_title": "Owners & Shares",
+    "step5_title": "Review & Publish",
+    "next": "Next",
+    "previous": "Previous",
+    "publish": "Publish Property",
+    "publishing": "Publishing...",
+    "published_success": "Property published successfully!"
+  },
+  "property_images": {
+    "title": "Property Images",
+    "subtitle": "Add documentation images for the property",
+    "add_photo": "Add Photo",
+    "no_images": "No images added yet",
+    "no_images_sub": "Tap to add photos from gallery or camera",
+    "uploading": "Uploading...",
+    "upload_failed": "Upload failed — tap to retry",
+    "upload_success": "Image uploaded successfully",
+    "save_success": "Images saved successfully"
   }
 }

@@ -19,6 +19,26 @@ class PropertyOwnerEntity extends Equatable {
     this.isRepresentative = false,
   });
 
+  PropertyOwnerEntity copyWith({
+    int? id,
+    String? name,
+    num? percentage,
+    String? phone,
+    String? email,
+    String? username,
+    bool? isRepresentative,
+  }) {
+    return PropertyOwnerEntity(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      percentage: percentage ?? this.percentage,
+      phone: phone ?? this.phone,
+      email: email ?? this.email,
+      username: username ?? this.username,
+      isRepresentative: isRepresentative ?? this.isRepresentative,
+    );
+  }
+
   @override
   List<Object?> get props => [id, name, percentage, phone, email, username, isRepresentative];
 }

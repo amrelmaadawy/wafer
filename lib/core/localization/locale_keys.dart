@@ -247,6 +247,30 @@ class LocaleKeys {
   static const propertyDraftIncompleteDesc = 'properties.draft_incomplete_desc';
   static const propertyDraftProgress = 'properties.draft_progress';
   static const propertyDraftContinue = 'properties.draft_continue';
+
+  // Property Wizard
+  static const propertyWizardStep1Title = 'property_wizard.step1_title';
+  static const propertyWizardStep2Title = 'property_wizard.step2_title';
+  static const propertyWizardStep3Title = 'property_wizard.step3_title';
+  static const propertyWizardStep4Title = 'property_wizard.step4_title';
+  static const propertyWizardStep5Title = 'property_wizard.step5_title';
+  static const propertyWizardNext = 'property_wizard.next';
+  static const propertyWizardPrevious = 'property_wizard.previous';
+  static const propertyWizardPublish = 'property_wizard.publish';
+  static const propertyWizardPublishing = 'property_wizard.publishing';
+  static const propertyWizardPublishedSuccess = 'property_wizard.published_success';
+
+  // Property Images
+  static const propertyImagesTitle = 'property_images.title';
+  static const propertyImagesSubtitle = 'property_images.subtitle';
+  static const propertyImagesAddPhoto = 'property_images.add_photo';
+  static const propertyImagesNoImages = 'property_images.no_images';
+  static const propertyImagesNoImagesSub = 'property_images.no_images_sub';
+  static const propertyImagesUploading = 'property_images.uploading';
+  static const propertyImagesUploadFailed = 'property_images.upload_failed';
+  static const propertyImagesUploadSuccess = 'property_images.upload_success';
+  static const propertyImagesSaveSuccess = 'property_images.save_success';
+
   static const ownerLeasesTitle = 'owner.leases_title';
   static const ownerLeasesSubtitle = 'owner.leases_subtitle';
   static const ownerLeasesLog = 'owner.leases_log';

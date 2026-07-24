@@ -187,6 +187,10 @@ void _initProperties() {
     sl.registerFactory(() => PropertyCreateCubit(
           createDraft: sl(),
           getFormData: sl(),
+          autoSavePropertyStep: sl(),
+          uploadTempFile: sl(),
+          syncOwners: sl(),
+          publishProperty: sl(),
         ));
   }
   if (!sl.isRegistered<ClonePropertyUseCase>()) {

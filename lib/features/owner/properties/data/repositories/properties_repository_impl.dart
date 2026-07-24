@@ -178,7 +178,18 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
+      if (e.response?.data != null && e.response!.data is Map) {
+        final data = e.response!.data as Map;
+        if (data['message'] != null) msg = data['message'].toString();
+        if (data['errors'] != null && data['errors'] is Map) {
+          final errors = data['errors'] as Map;
+          if (errors.isNotEmpty) {
+            msg = errors.values.map((v) => v is List ? v.join('\n') : v.toString()).join('\n');
+          }
+        }
+      }
+      return Left(ServerFailure(msg));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

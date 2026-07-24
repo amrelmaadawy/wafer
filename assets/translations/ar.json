@@ -483,5 +483,28 @@
     "no_available_owners": "لا يوجد ملاك متاحون",
     "sheet_title": "إدارة الملاك والحصص",
     "owner_already_added": "هذا المالك مضاف بالفعل"
+  },
+  "property_wizard": {
+    "step1_title": "البيانات الأساسية",
+    "step2_title": "تفاصيل العقار",
+    "step3_title": "صور العقار",
+    "step4_title": "الملاك والحصص",
+    "step5_title": "المراجعة والنشر",
+    "next": "التالي",
+    "previous": "السابق",
+    "publish": "نشر العقار",
+    "publishing": "جاري النشر...",
+    "published_success": "تم نشر العقار بنجاح!"
+  },
+  "property_images": {
+    "title": "صور العقار",
+    "subtitle": "أضف صوراً توثيقية للعقار",
+    "add_photo": "إضافة صورة",
+    "no_images": "لا توجد صور بعد",
+    "no_images_sub": "اضغط لإضافة صور من معرض صورك أو الكاميرا",
+    "uploading": "جاري الرفع...",
+    "upload_failed": "فشل الرفع — اضغط لإعادة المحاولة",
+    "upload_success": "تم رفع الصورة",
+    "save_success": "تم حفظ الصور"
   }
 }
