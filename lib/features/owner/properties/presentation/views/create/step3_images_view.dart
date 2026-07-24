@@ -53,6 +53,7 @@ class Step3ImagesView extends StatelessWidget {
                 images: state.images,
                 onAddImage: cubit.uploadImage,
                 onRemoveImage: cubit.removeImage,
+                onUpdateDescription: cubit.updateImageDescription,
               ),
               const SizedBox(height: 40),
             ],

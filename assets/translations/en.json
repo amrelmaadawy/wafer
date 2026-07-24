@@ -505,6 +505,9 @@
     "uploading": "Uploading...",
     "upload_failed": "Upload failed — tap to retry",
     "upload_success": "Image uploaded successfully",
-    "save_success": "Images saved successfully"
+    "save_success": "Images saved successfully",
+    "add_description": "Add Image Description",
+    "description_hint": "Write a short description...",
+    "save_description": "Save Description"
   }
 }

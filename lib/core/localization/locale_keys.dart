@@ -270,6 +270,9 @@ class LocaleKeys {
   static const propertyImagesUploadFailed = 'property_images.upload_failed';
   static const propertyImagesUploadSuccess = 'property_images.upload_success';
   static const propertyImagesSaveSuccess = 'property_images.save_success';
+  static const propertyImagesAddDescription = 'property_images.add_description';
+  static const propertyImagesDescriptionHint = 'property_images.description_hint';
+  static const propertyImagesSaveDescription = 'property_images.save_description';
 
   static const ownerLeasesTitle = 'owner.leases_title';
   static const ownerLeasesSubtitle = 'owner.leases_subtitle';

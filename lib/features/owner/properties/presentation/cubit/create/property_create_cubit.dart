@@ -184,6 +184,16 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
     );
   }
 
+  void updateImageDescription(String localPath, String description) {
+    final updatedImages = state.images.map((img) {
+      if (img.localPath == localPath) {
+        return img.copyWith(description: description);
+      }
+      return img;
+    }).toList();
+    emit(state.copyWith(images: updatedImages));
+  }
+
   void removeImage(String tempPathOrLocalPath) {
     final updatedImages = state.images.where((img) => 
       img.tempPath != tempPathOrLocalPath && img.localPath != tempPathOrLocalPath
@@ -194,9 +204,12 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
   Future<bool> saveImages() async {
     if (state.draftPropertyId == null) return false;
     
-    final tempPaths = state.images
+    final propertyImagesPayload = state.images
       .where((img) => img.tempPath != null)
-      .map((img) => img.tempPath!)
+      .map((img) => {
+        'path': img.tempPath!,
+        'desc': img.description ?? '',
+      })
       .toList();
 
     emit(state.copyWith(isSavingImages: true).clearError());
@@ -206,7 +219,7 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
       propertyId: state.draftPropertyId!,
       step: 'images',
       data: {
-        'images': tempPaths,
+        'property_images': propertyImagesPayload,
       },
     );
 

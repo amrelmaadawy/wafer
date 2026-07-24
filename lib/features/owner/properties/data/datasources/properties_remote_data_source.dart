@@ -129,10 +129,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   }) async {
     await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveProperty(propertyId)}',
-      data: {
-        'step': step,
-        ...data,
-      },
+      data: data,
     );
   }
 

@@ -9,6 +9,7 @@ import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../cubit/create/property_create_cubit.dart';
 import '../cubit/create/property_create_state.dart';
 import '../widgets/create/wizard_progress_bar.dart';
@@ -179,25 +180,24 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
             if (state.currentStep > 0) const SizedBox(width: 12),
             Expanded(
               flex: 2,
-              child: ElevatedButton(
-                onPressed: isBusy ? null : () => _onNext(cubit, state),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: isLastStep ? AppColors.success : context.primaryColor,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
-                ),
-                child: isBusy
-                    ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
-                      )
-                    : Text(
+              child: isBusy
+                  ? AppShimmer.box(
+                      height: 52,
+                      borderRadius: AppRadius.circularLg,
+                    )
+                  : ElevatedButton(
+                      onPressed: () => _onNext(cubit, state),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: isLastStep ? AppColors.success : context.primaryColor,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
+                      ),
+                      child: Text(
                         isLastStep ? LocaleKeys.propertyWizardPublish.tr() : LocaleKeys.propertyWizardNext.tr(),
                         style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
                       ),
-              ),
+                    ),
             ),
           ],
         ),

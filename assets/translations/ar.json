@@ -505,6 +505,9 @@
     "uploading": "جاري الرفع...",
     "upload_failed": "فشل الرفع — اضغط لإعادة المحاولة",
     "upload_success": "تم رفع الصورة",
-    "save_success": "تم حفظ الصور"
+    "save_success": "تم حفظ الصور",
+    "add_description": "إضافة وصف للصورة",
+    "description_hint": "اكتب وصفاً مختصراً للصورة...",
+    "save_description": "حفظ الوصف"
   }
 }

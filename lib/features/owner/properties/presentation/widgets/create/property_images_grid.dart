@@ -12,6 +12,7 @@ class PropertyImagesGrid extends StatefulWidget {
   final List<TempPropertyImageEntity> images;
   final Function(String) onAddImage;
   final Function(String) onRemoveImage;
+  final Function(String, String)? onUpdateDescription;
   final VoidCallback? onRetryUpload;
 
   const PropertyImagesGrid({
@@ -19,6 +20,7 @@ class PropertyImagesGrid extends StatefulWidget {
     required this.images,
     required this.onAddImage,
     required this.onRemoveImage,
+    this.onUpdateDescription,
     this.onRetryUpload,
   });
 
@@ -150,17 +152,21 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
   }
 
   Widget _buildImageCard(BuildContext context, TempPropertyImageEntity image) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: AppRadius.circularLg,
-            image: DecorationImage(
-              image: FileImage(File(image.localPath)),
-              fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: (!image.isUploading && widget.onUpdateDescription != null)
+          ? () => _showDescriptionBottomSheet(context, image)
+          : null,
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: AppRadius.circularLg,
+              image: DecorationImage(
+                image: FileImage(File(image.localPath)),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-        ),
         if (image.isUploading)
           Container(
             decoration: BoxDecoration(
@@ -212,7 +218,159 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
               ),
             ),
           ),
+        if (!image.isUploading && widget.onUpdateDescription != null)
+          Positioned(
+            bottom: 4,
+            right: 4,
+            child: GestureDetector(
+              onTap: () => _showDescriptionBottomSheet(context, image),
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: context.primaryColor,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.edit, size: 14, color: Colors.white),
+              ),
+            ),
+          ),
+        if (image.description != null && image.description!.isNotEmpty)
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+              decoration: const BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(12), // matching AppRadius.circularLg
+                  bottomRight: Radius.circular(12),
+                ),
+              ),
+              child: Text(
+                image.description!,
+                style: const TextStyle(color: Colors.white, fontSize: 8),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
       ],
+    ),
+    );
+  }
+
+  void _showDescriptionBottomSheet(BuildContext context, TempPropertyImageEntity image) {
+    final TextEditingController controller = TextEditingController(text: image.description);
+    
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (bottomSheetContext) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom),
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withValues(alpha: 0.3),
+                      borderRadius: AppRadius.circularFull,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  LocaleKeys.propertyImagesAddDescription.tr(),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimaryLight,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: Container(
+                    constraints: const BoxConstraints(maxHeight: 250),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.black.withValues(alpha: 0.03),
+                      borderRadius: AppRadius.circularLg,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: AppRadius.circularLg,
+                      child: Image.file(
+                        File(image.localPath),
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: controller,
+                  decoration: InputDecoration(
+                    hintText: LocaleKeys.propertyImagesDescriptionHint.tr(),
+                    border: OutlineInputBorder(
+                      borderRadius: AppRadius.circularMd,
+                      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: AppRadius.circularMd,
+                      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: AppRadius.circularMd,
+                      borderSide: BorderSide(color: context.primaryColor),
+                    ),
+                    filled: true,
+                    fillColor: AppColors.surfaceLight,
+                  ),
+                  maxLines: 3,
+                ),
+                const SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      widget.onUpdateDescription!(image.localPath, controller.text);
+                      Navigator.pop(bottomSheetContext);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: context.primaryColor,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadius.circularMd,
+                      ),
+                    ),
+                    child: Text(
+                      LocaleKeys.propertyImagesSaveDescription.tr(),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }
