@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -7,10 +9,12 @@ import '../../../domain/entities/property_owner_entity.dart';
 
 class PropertyOwnersCard extends StatelessWidget {
   final PropertyDetailsEntity property;
+  final VoidCallback? onEditTap;
 
   const PropertyOwnersCard({
     super.key,
     required this.property,
+    this.onEditTap,
   });
 
   @override
@@ -37,26 +41,64 @@ class PropertyOwnersCard extends StatelessWidget {
             children: [
               Icon(Icons.people_outline_rounded, size: 18, color: context.primaryColor),
               const SizedBox(width: 8),
-              const Text(
-                'الملاك والنسب',
-                style: TextStyle(
-                  color: AppColors.textPrimaryLight,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
+              Expanded(
+                child: Text(
+                  LocaleKeys.propertyOwnersTitle.tr(),
+                  style: const TextStyle(
+                    color: AppColors.textPrimaryLight,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
+              // Edit button only shown for draft properties
+              if (property.isDraft && onEditTap != null)
+                GestureDetector(
+                  onTap: onEditTap,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: context.primaryColor.withValues(alpha: 0.08),
+                      borderRadius: AppRadius.circularFull,
+                      border: Border.all(
+                        color: context.primaryColor.withValues(alpha: 0.2),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.edit_outlined, size: 13, color: context.primaryColor),
+                        const SizedBox(width: 4),
+                        Text(
+                          LocaleKeys.propertyOwnersEditBtn.tr(),
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: context.primaryColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
             ],
           ),
           const SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F5F9)),
           const SizedBox(height: 12),
           property.owners.isEmpty
-              ? const Text(
-                  'لا يوجد ملاك مسجلين',
-                  style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 13),
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    LocaleKeys.propertyOwnersNoOwners.tr(),
+                    style: const TextStyle(
+                        color: AppColors.textSecondaryLight, fontSize: 13),
+                  ),
                 )
               : Column(
-                  children: property.owners.map((owner) => _buildOwnerRow(context, owner)).toList(),
+                  children: property.owners
+                      .map((owner) => _buildOwnerRow(context, owner))
+                      .toList(),
                 ),
         ],
       ),
@@ -85,13 +127,59 @@ class PropertyOwnersCard extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Text(
-                  owner.name,
-                  style: const TextStyle(
-                    color: AppColors.textPrimaryLight,
-                    fontSize: 13.5,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            owner.name,
+                            style: const TextStyle(
+                              color: AppColors.textPrimaryLight,
+                              fontSize: 13.5,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        if (owner.isRepresentative) ...[
+                          const SizedBox(width: 6),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 6, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: context.primaryColor.withValues(alpha: 0.1),
+                              borderRadius: AppRadius.circularFull,
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.star_rounded,
+                                    size: 11, color: context.primaryColor),
+                                const SizedBox(width: 3),
+                                Text(
+                                  LocaleKeys.propertyOwnersRepresentative.tr(),
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    fontWeight: FontWeight.w700,
+                                    color: context.primaryColor,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                    if (owner.phone != null)
+                      Text(
+                        owner.phone!,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: AppColors.textSecondaryLight,
+                        ),
+                      ),
+                  ],
                 ),
               ),
               Text(

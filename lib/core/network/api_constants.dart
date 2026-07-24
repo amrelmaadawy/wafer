@@ -38,7 +38,7 @@ class ApiConstants {
   static const String ownerCreateDeed = 'owner/deeds';
   static const String ownerCreateDraftProperty = 'owner/properties/draft';
   static String ownerAutoSaveProperty(int id) => 'owner/properties/$id/auto-save';
-  static String ownerSyncOwners(int id) => 'owner/properties/$id/sync-owners';
+  static String ownerSyncOwners(int id) => 'owner/properties/$id/owners/sync';
   static const String ownerUploadTempFile = 'owner/properties/upload-temp';
   static String ownerPropertyDetails(int id) => 'owner/properties/$id';
   static String ownerPublishProperty(int id) => 'owner/properties/$id/publish';

@@ -453,4 +453,23 @@ class LocaleKeys {
   static const deedPostalCode = 'deeds.postal_code';
   static const deedNotes = 'deeds.notes';
   static const deedAreaUnit = 'deeds.area_label';
+
+  // Property Owners Sync
+  static const propertyOwnersTitle = 'property_owners.title';
+  static const propertyOwnersEditBtn = 'property_owners.edit_btn';
+  static const propertyOwnersAddOwner = 'property_owners.add_owner';
+  static const propertyOwnersSelectOwner = 'property_owners.select_owner';
+  static const propertyOwnersTotalPercentage = 'property_owners.total_percentage';
+  static const propertyOwnersRepresentative = 'property_owners.representative';
+  static const propertyOwnersSetRepresentative = 'property_owners.set_representative';
+  static const propertyOwnersSaveBtn = 'property_owners.save_btn';
+  static const propertyOwnersSuccessMsg = 'property_owners.success_msg';
+  static const propertyOwnersValidationError = 'property_owners.validation_error';
+  static const propertyOwnersAutoDistribute = 'property_owners.auto_distribute';
+  static const propertyOwnersNoOwners = 'property_owners.no_owners';
+  static const propertyOwnersPercentageLabel = 'property_owners.percentage_label';
+  static const propertyOwnersRemoveOwner = 'property_owners.remove_owner';
+  static const propertyOwnersNoAvailable = 'property_owners.no_available_owners';
+  static const propertyOwnersSheetTitle = 'property_owners.sheet_title';
+  static const propertyOwnersAlreadyAdded = 'property_owners.owner_already_added';
 }

@@ -464,5 +464,24 @@
     "number": "Deed Number",
     "date": "Deed Date",
     "properties_title": "Linked Properties"
+  },
+  "property_owners": {
+    "title": "Owners & Shares",
+    "edit_btn": "Edit Owners",
+    "add_owner": "Add Owner",
+    "select_owner": "Select an owner",
+    "total_percentage": "Total Percentage",
+    "representative": "Main Representative",
+    "set_representative": "Set as Representative",
+    "save_btn": "Save Owners",
+    "success_msg": "Owners updated successfully",
+    "validation_error": "Total percentage must equal exactly 100%",
+    "auto_distribute": "Auto Distribute",
+    "no_owners": "No owners registered",
+    "percentage_label": "Percentage %",
+    "remove_owner": "Remove",
+    "no_available_owners": "No owners available",
+    "sheet_title": "Manage Owners & Shares",
+    "owner_already_added": "This owner is already added"
   }
 }

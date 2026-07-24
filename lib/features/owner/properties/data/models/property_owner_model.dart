@@ -7,6 +7,8 @@ class PropertyOwnerModel extends PropertyOwnerEntity {
     required super.percentage,
     super.phone,
     super.email,
+    super.username,
+    super.isRepresentative,
   });
 
   factory PropertyOwnerModel.fromJson(Map<String, dynamic> json) {
@@ -16,11 +18,13 @@ class PropertyOwnerModel extends PropertyOwnerEntity {
         100;
 
     return PropertyOwnerModel(
-      id: json['id']?.toString() ?? '',
+      id: json['id'] as int? ?? 0,
       name: json['name']?.toString() ?? json['owner_name']?.toString() ?? 'مالك',
       percentage: perc.toDouble(),
       phone: json['phone']?.toString(),
       email: json['email']?.toString(),
+      username: json['username']?.toString(),
+      isRepresentative: json['is_representative'] as bool? ?? false,
     );
   }
 }

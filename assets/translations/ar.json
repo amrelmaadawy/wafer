@@ -464,5 +464,24 @@
     "number": "رقم الصك",
     "date": "تاريخ الصك",
     "properties_title": "العقارات المرتبطة"
+  },
+  "property_owners": {
+    "title": "الملاك والحصص",
+    "edit_btn": "تعديل الملاك",
+    "add_owner": "إضافة مالك",
+    "select_owner": "اختر مالكاً",
+    "total_percentage": "إجمالي النسب",
+    "representative": "الممثل الرئيسي",
+    "set_representative": "تعيين كممثل",
+    "save_btn": "حفظ الملاك",
+    "success_msg": "تم تحديث الملاك بنجاح",
+    "validation_error": "يجب أن يكون مجموع النسب 100% بالضبط",
+    "auto_distribute": "توزيع تلقائي",
+    "no_owners": "لا يوجد ملاك مسجلين",
+    "percentage_label": "النسبة %",
+    "remove_owner": "إزالة",
+    "no_available_owners": "لا يوجد ملاك متاحون",
+    "sheet_title": "إدارة الملاك والحصص",
+    "owner_already_added": "هذا المالك مضاف بالفعل"
   }
 }
