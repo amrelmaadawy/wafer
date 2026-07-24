@@ -273,53 +273,56 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
         return Padding(
           padding: EdgeInsets.only(bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom),
           child: Container(
-            padding: const EdgeInsets.all(24),
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Center(
-                  child: Container(
-                    width: 40,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: Colors.grey.withValues(alpha: 0.3),
-                      borderRadius: AppRadius.circularFull,
-                    ),
+                Container(
+                  width: 48,
+                  height: 6,
+                  margin: const EdgeInsets.only(bottom: 24),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade300,
+                    borderRadius: AppRadius.circularFull,
                   ),
                 ),
-                const SizedBox(height: 16),
                 Text(
                   LocaleKeys.propertyImagesAddDescription.tr(),
                   style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimaryLight,
                   ),
                 ),
-                const SizedBox(height: 16),
-                Center(
-                  child: Container(
-                    constraints: const BoxConstraints(maxHeight: 250),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.03),
-                      borderRadius: AppRadius.circularLg,
-                    ),
-                    child: ClipRRect(
-                      borderRadius: AppRadius.circularLg,
-                      child: Image.file(
-                        File(image.localPath),
-                        fit: BoxFit.contain,
+                const SizedBox(height: 24),
+                Container(
+                  constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.35),
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade100,
+                    borderRadius: AppRadius.circularLg,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.05),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
                       ),
+                    ],
+                  ),
+                  child: ClipRRect(
+                    borderRadius: AppRadius.circularLg,
+                    child: Image.file(
+                      File(image.localPath),
+                      fit: BoxFit.contain,
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 24),
                 TextField(
                   controller: controller,
                   decoration: InputDecoration(
@@ -334,16 +337,17 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: AppRadius.circularMd,
-                      borderSide: BorderSide(color: context.primaryColor),
+                      borderSide: BorderSide(color: context.primaryColor, width: 1.5),
                     ),
                     filled: true,
-                    fillColor: AppColors.surfaceLight,
+                    fillColor: Colors.grey.shade50,
                   ),
                   maxLines: 3,
                 ),
                 const SizedBox(height: 24),
                 SizedBox(
                   width: double.infinity,
+                  height: 52,
                   child: ElevatedButton(
                     onPressed: () {
                       widget.onUpdateDescription!(image.localPath, controller.text);
@@ -351,10 +355,10 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: context.primaryColor,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(
                         borderRadius: AppRadius.circularMd,
                       ),
+                      elevation: 0,
                     ),
                     child: Text(
                       LocaleKeys.propertyImagesSaveDescription.tr(),
@@ -366,6 +370,7 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 8),
               ],
             ),
           ),

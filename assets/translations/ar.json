@@ -509,5 +509,15 @@
     "add_description": "إضافة وصف للصورة",
     "description_hint": "اكتب وصفاً مختصراً للصورة...",
     "save_description": "حفظ الوصف"
+  },
+  "property_details": {
+    "overview": "نظرة عامة",
+    "units": "الوحدات",
+    "contracts": "العقود",
+    "maintenance": "الصيانة",
+    "owners": "الملاك والوثائق",
+    "no_units_title": "لا توجد وحدات بعد",
+    "no_units_subtitle": "قم بإضافة وحدات جديدة للعقار لإدارتها",
+    "add_unit": "إضافة وحدة جديدة"
   }
 }

@@ -509,5 +509,15 @@
     "add_description": "Add Image Description",
     "description_hint": "Write a short description...",
     "save_description": "Save Description"
+  },
+  "property_details": {
+    "overview": "Overview",
+    "units": "Units",
+    "contracts": "Contracts",
+    "maintenance": "Maintenance",
+    "owners": "Owners & Docs",
+    "no_units_title": "No units yet",
+    "no_units_subtitle": "Add new units to the property to manage them",
+    "add_unit": "Add New Unit"
   }
 }

@@ -1,5 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'property_owner_entity.dart';
+import 'contract_entity.dart';
+import 'maintenance_entity.dart';
+import 'property_summary_entity.dart';
+import 'property_kpi_entity.dart';
+import 'unit_entity.dart';
 
 class PropertyDetailsEntity extends Equatable {
   final int id;
@@ -38,6 +43,13 @@ class PropertyDetailsEntity extends Equatable {
   final List<String> amenities;
   final String? createdAt;
   final int completionPercentage;
+  
+  // New nested structures
+  final List<UnitEntity> units;
+  final List<ContractEntity> contracts;
+  final List<MaintenanceEntity> maintenance;
+  final PropertySummaryEntity? summary;
+  final PropertyKpiEntity? kpi;
 
   const PropertyDetailsEntity({
     required this.id,
@@ -76,6 +88,11 @@ class PropertyDetailsEntity extends Equatable {
     required this.amenities,
     this.createdAt,
     this.completionPercentage = 0,
+    this.units = const [],
+    this.contracts = const [],
+    this.maintenance = const [],
+    this.summary,
+    this.kpi,
   });
 
   bool get isDraft => status.toLowerCase() == 'draft';
@@ -133,5 +150,10 @@ class PropertyDetailsEntity extends Equatable {
         amenities,
         createdAt,
         completionPercentage,
+        units,
+        contracts,
+        maintenance,
+        summary,
+        kpi,
       ];
 }

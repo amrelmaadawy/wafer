@@ -5,7 +5,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wafer/core/theme/app_radius.dart';
 import 'package:wafer/core/theme/color_utils.dart';
-import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
@@ -14,13 +13,15 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../domain/entities/property_details_entity.dart';
 import '../cubit/details/property_details_cubit.dart';
 import '../cubit/details/property_details_state.dart';
-import '../cubit/units/units_list_cubit.dart';
 import '../widgets/details/property_actions_sheet.dart';
 
 import '../widgets/details/property_details_header.dart';
 import '../widgets/details/property_details_skeleton.dart';
 import '../widgets/details/property_overview_tab.dart';
 import '../widgets/details/property_units_tab.dart';
+import '../widgets/details/property_contracts_tab.dart';
+import '../widgets/details/property_maintenance_tab.dart';
+import '../widgets/details/property_owners_tab.dart';
 
 class PropertyDetailsScreen extends StatefulWidget {
   final int propertyId;
@@ -37,7 +38,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PropertyDetailsCubit>().loadDetails(widget.propertyId);
     });
@@ -185,6 +186,10 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
                           ),
                           child: TabBar(
                             controller: _tabController,
+                            isScrollable: true,
+                            tabAlignment: TabAlignment.start,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            labelPadding: const EdgeInsets.symmetric(horizontal: 20),
                             labelColor: context.primaryColor,
                             unselectedLabelColor: Colors.white,
                             labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
@@ -206,6 +211,9 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
                             tabs: [
                               Tab(text: LocaleKeys.propertyDetailsOverview.tr()),
                               Tab(text: LocaleKeys.propertyDetailsUnits.tr()),
+                              Tab(text: LocaleKeys.propertyDetailsContracts.tr()),
+                              Tab(text: LocaleKeys.propertyDetailsMaintenance.tr()),
+                              Tab(text: LocaleKeys.propertyDetailsOwners.tr()),
                             ],
                           ),
                         ),
@@ -220,13 +228,10 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
                   controller: _tabController,
                   children: [
                     PropertyOverviewTab(property: property),
-                    BlocProvider(
-                      create: (_) => sl<UnitsListCubit>(),
-                      child: PropertyUnitsTab(
-                        propertyId: property.id,
-                        unitsCount: property.unitsCount,
-                      ),
-                    ),
+                    PropertyUnitsTab(units: property.units),
+                    PropertyContractsTab(contracts: property.contracts),
+                    PropertyMaintenanceTab(maintenanceRequests: property.maintenance),
+                    PropertyOwnersTab(property: property),
                   ],
                 ),
               ),

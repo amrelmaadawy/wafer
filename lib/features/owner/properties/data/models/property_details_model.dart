@@ -1,5 +1,10 @@
 import '../../domain/entities/property_details_entity.dart';
 import 'property_owner_model.dart';
+import 'unit_model.dart';
+import 'contract_model.dart';
+import 'maintenance_model.dart';
+import 'property_summary_model.dart';
+import 'property_kpi_model.dart';
 
 class PropertyDetailsModel extends PropertyDetailsEntity {
   const PropertyDetailsModel({
@@ -39,6 +44,11 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
     required super.amenities,
     super.createdAt,
     super.completionPercentage,
+    super.units = const [],
+    super.contracts = const [],
+    super.maintenance = const [],
+    super.summary,
+    super.kpi,
   });
 
   factory PropertyDetailsModel.fromJson(Map<String, dynamic> json) {
@@ -48,6 +58,9 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
     final statsMap = json['stats'] is Map<String, dynamic> ? json['stats'] as Map<String, dynamic> : null;
     final dimMap = json['dimensions'] is Map<String, dynamic> ? json['dimensions'] as Map<String, dynamic> : null;
     final branchMap = json['branch'] is Map<String, dynamic> ? json['branch'] as Map<String, dynamic> : null;
+    final summaryMap = json['summary'] is Map<String, dynamic> ? json['summary'] as Map<String, dynamic> : null;
+    final financialSummary = summaryMap?['financial'] is Map<String, dynamic> ? summaryMap!['financial'] as Map<String, dynamic> : null;
+    final kpiMap = json['kpi'] is Map<String, dynamic> ? json['kpi'] as Map<String, dynamic> : null;
 
     final codeStr = json['code']?.toString() ?? 'PR-${json['id']}';
     final nameStr = json['name']?.toString() ?? codeStr;
@@ -63,6 +76,18 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
 
     final amenitiesList = (json['amenities'] as List<dynamic>? ?? [])
         .map((e) => e.toString())
+        .toList();
+
+    final unitsList = (json['units'] as List<dynamic>? ?? [])
+        .map((e) => UnitModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+
+    final contractsList = (json['contracts'] as List<dynamic>? ?? [])
+        .map((e) => ContractModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+
+    final maintenanceList = (json['maintenance'] as List<dynamic>? ?? [])
+        .map((e) => MaintenanceModel.fromJson(e as Map<String, dynamic>))
         .toList();
 
     return PropertyDetailsModel(
@@ -102,6 +127,11 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       amenities: amenitiesList,
       createdAt: json['created_at']?.toString(),
       completionPercentage: json['completion_percentage'] as int? ?? 0,
+      units: unitsList,
+      contracts: contractsList,
+      maintenance: maintenanceList,
+      summary: financialSummary != null ? PropertySummaryModel.fromJson(financialSummary) : null,
+      kpi: kpiMap != null ? PropertyKpiModel.fromJson(kpiMap) : null,
     );
   }
 }

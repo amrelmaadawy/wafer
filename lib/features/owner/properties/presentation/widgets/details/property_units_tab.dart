@@ -1,97 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/presentation/widgets/animations/staggered_list_item.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
-import '../../../../../../core/presentation/widgets/custom_error_widget.dart';
-import '../../cubit/units/unit_create_cubit.dart';
-import '../../cubit/units/units_list_cubit.dart';
-import '../../cubit/units/units_list_state.dart';
+import '../../../domain/entities/unit_entity.dart';
 import '../units/unit_card.dart';
-import '../units/unit_create_bottom_sheet.dart';
 
-class PropertyUnitsTab extends StatefulWidget {
-  final int propertyId;
-  final int unitsCount;
+class PropertyUnitsTab extends StatelessWidget {
+  final List<UnitEntity> units;
 
   const PropertyUnitsTab({
     super.key,
-    required this.propertyId,
-    required this.unitsCount,
+    required this.units,
   });
 
   @override
-  State<PropertyUnitsTab> createState() => _PropertyUnitsTabState();
-}
+  Widget build(BuildContext context) {
+    if (units.isEmpty) {
+      return _buildEmptyState(context);
+    }
 
-class _PropertyUnitsTabState extends State<PropertyUnitsTab> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<UnitsListCubit>().loadUnits(widget.propertyId);
-    });
-  }
-
-  void _showAddUnitSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
+    return Scaffold(
       backgroundColor: Colors.transparent,
-      builder: (_) => BlocProvider(
-        create: (_) => sl<UnitCreateCubit>(),
-        child: UnitCreateBottomSheet(
-          propertyId: widget.propertyId,
-          onUnitCreated: () {
-            context.read<UnitsListCubit>().loadUnits(widget.propertyId);
-          },
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          // TODO: Show Add Unit Bottom Sheet
+        },
+        backgroundColor: context.primaryColor,
+        icon: const Icon(Icons.add_rounded, color: Colors.white),
+        label: Text(
+          LocaleKeys.propertyDetailsAddUnit.tr(),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<UnitsListCubit, UnitsListState>(
-      builder: (context, state) {
-        if (state is UnitsListLoading || state is UnitsListInitial) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is UnitsListEmpty) {
-          return _buildEmptyState(context);
-        } else if (state is UnitsListLoaded) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            floatingActionButton: FloatingActionButton.extended(
-              onPressed: () => _showAddUnitSheet(context),
-              backgroundColor: context.primaryColor,
-              icon: const Icon(Icons.add_rounded, color: Colors.white),
-              label: Text(LocaleKeys.propertyDetailsAddUnit.tr(),
-                  style: const TextStyle(color: Colors.white)),
-            ),
-            body: ListView.builder(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 80),
-              itemCount: state.units.length,
-              itemBuilder: (context, index) {
-                final unit = state.units[index];
-                return UnitCard(
-                  unit: unit,
-                  onTap: () {},
-                );
-              },
-            ),
+      body: ListView.builder(
+        padding: const EdgeInsets.fromLTRB(20, 16, 20, 80),
+        itemCount: units.length,
+        itemBuilder: (context, index) {
+          final unit = units[index];
+          return UnitCard(
+            unit: unit,
+            onTap: () {},
           );
-        } else if (state is UnitsListError) {
-          return CustomErrorWidget(
-            message: state.message,
-            onRetry: () => context.read<UnitsListCubit>().loadUnits(widget.propertyId),
-          );
-        }
-        return const SizedBox.shrink();
-      },
+        },
+      ),
     );
   }
 
@@ -167,7 +121,7 @@ class _PropertyUnitsTabState extends State<PropertyUnitsTab> {
             StaggeredListItem(
               index: 3,
               child: ElevatedButton.icon(
-                onPressed: () => _showAddUnitSheet(context),
+                onPressed: () {}, // TODO: Show Add Unit Bottom Sheet
                 icon: const Icon(Icons.add_rounded, size: 20),
                 label: Text(LocaleKeys.propertyDetailsAddUnit.tr(), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
                 style: ElevatedButton.styleFrom(

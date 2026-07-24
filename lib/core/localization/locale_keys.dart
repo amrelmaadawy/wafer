@@ -274,6 +274,10 @@ class LocaleKeys {
   static const propertyImagesDescriptionHint = 'property_images.description_hint';
   static const propertyImagesSaveDescription = 'property_images.save_description';
 
+  // Property Details Additional Tabs
+  static const propertyDetailsContracts = 'property_details.contracts';
+  static const propertyDetailsMaintenance = 'property_details.maintenance';
+
   static const ownerLeasesTitle = 'owner.leases_title';
   static const ownerLeasesSubtitle = 'owner.leases_subtitle';
   static const ownerLeasesLog = 'owner.leases_log';
