@@ -279,7 +279,13 @@
     "valuation_currency": "SAR",
     "valuation_approved": "Certified Valuation",
     "view_deed": "View Deed Details",
-    "deed_info": "Deed Information"
+    "deed_info": "Deed Information",
+    "make_representative": "Make Representative",
+    "make_representative_success": "Representative assigned successfully",
+    "current_representative": "Current Representative",
+    "no_owners": "No registered owners",
+    "no_phone": "No phone number",
+    "deed_and_docs": "Deed and Documents"
   },
   "property_edit": {
     "title": "Edit Property",

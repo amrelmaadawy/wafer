@@ -18,11 +18,33 @@ class PropertyDetailsLoading extends PropertyDetailsState {
 
 class PropertyDetailsLoaded extends PropertyDetailsState {
   final PropertyDetailsEntity property;
+  final bool isMakingRepresentative;
+  final bool isRemovingRepresentative;
+  final int? actionOwnerId;
 
-  const PropertyDetailsLoaded(this.property);
+  const PropertyDetailsLoaded(
+    this.property, {
+    this.isMakingRepresentative = false,
+    this.isRemovingRepresentative = false,
+    this.actionOwnerId,
+  });
+
+  PropertyDetailsLoaded copyWith({
+    PropertyDetailsEntity? property,
+    bool? isMakingRepresentative,
+    bool? isRemovingRepresentative,
+    int? actionOwnerId,
+  }) {
+    return PropertyDetailsLoaded(
+      property ?? this.property,
+      isMakingRepresentative: isMakingRepresentative ?? this.isMakingRepresentative,
+      isRemovingRepresentative: isRemovingRepresentative ?? this.isRemovingRepresentative,
+      actionOwnerId: actionOwnerId ?? this.actionOwnerId,
+    );
+  }
 
   @override
-  List<Object?> get props => [property];
+  List<Object?> get props => [property, isMakingRepresentative, isRemovingRepresentative, actionOwnerId];
 }
 
 class PropertyDetailsError extends PropertyDetailsState {

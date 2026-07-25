@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import '../../../../../core/error/failures.dart';
+import '../entities/property_details_entity.dart';
 import '../repositories/properties_repository.dart';
 
 class MakeRepresentativeUseCase {
@@ -7,7 +8,7 @@ class MakeRepresentativeUseCase {
 
   MakeRepresentativeUseCase(this._repository);
 
-  Future<Either<Failure, void>> call(int propertyId, Map<String, dynamic> body) {
-    return _repository.makeRepresentative(propertyId, body);
+  Future<Either<Failure, PropertyDetailsEntity>> call(int propertyId, int ownerId) {
+    return _repository.makeRepresentative(propertyId, ownerId);
   }
 }

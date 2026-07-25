@@ -32,6 +32,8 @@ abstract class PropertiesRemoteDataSource {
   
   Future<PropertyDetailsModel> autoSaveTypeStep(int propertyId, String propertyType);
 
+  Future<PropertyDetailsModel> makeRepresentative(int propertyId, int ownerId);
+
   Future<void> syncOwners(int propertyId, List<Map<String, dynamic>> owners);
 
   Future<String> uploadTempFile(String filePath);
@@ -42,8 +44,7 @@ abstract class PropertiesRemoteDataSource {
 
   Future<int> cloneProperty(int propertyId);
   Future<int> cloneForDeed(int propertyId, bool copyData);
-  Future<void> makeRepresentative(int propertyId, Map<String, dynamic> body);
-  Future<void> removeRepresentative(int propertyId);
+  Future<PropertyDetailsModel> removeRepresentative(int propertyId, int ownerId);
   Future<void> deleteProperty(int propertyId);
   Future<void> patchProperty(int propertyId, Map<String, dynamic> data);
 }
@@ -224,18 +225,21 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   }
 
   @override
-  Future<void> makeRepresentative(int propertyId, Map<String, dynamic> body) async {
-    await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMakeRepresentative(propertyId)}',
-      data: body,
+  Future<PropertyDetailsModel> makeRepresentative(int propertyId, int ownerId) async {
+    final response = await _dio.post(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerMakeRepresentative(propertyId, ownerId)}',
     );
+    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    return PropertyDetailsModel.fromJson(data['property'] as Map<String, dynamic>);
   }
 
   @override
-  Future<void> removeRepresentative(int propertyId) async {
-    await _dio.delete(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerRemoveRepresentative(propertyId)}',
+  Future<PropertyDetailsModel> removeRepresentative(int propertyId, int ownerId) async {
+    final response = await _dio.post(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerRemoveRepresentative(propertyId, ownerId)}',
     );
+    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    return PropertyDetailsModel.fromJson(data['property'] as Map<String, dynamic>);
   }
 
   @override

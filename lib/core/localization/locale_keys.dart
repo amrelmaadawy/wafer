@@ -194,6 +194,13 @@ class LocaleKeys {
   static const propertyDetailsUnits = 'property_details.units';
   static const propertyDetailsBasicInfo = 'property_details.basic_info';
   static const propertyDetailsOwners = 'property_details.owners';
+  static const propertyDetailsNoOwners = 'property_details.no_owners';
+  static const propertyDetailsNoPhone = 'property_details.no_phone';
+  static const propertyDetailsDeedAndDocs = 'property_details.deed_and_docs';
+  static const propertyDetailsMakeRepresentative = 'property_details.make_representative';
+  static const propertyDetailsMakeRepresentativeSuccess = 'property_details.make_representative_success';
+  static const propertyDetailsCurrentRepresentative = 'property_details.current_representative';
+  
   static const propertyDetailsDeed = 'property_details.deed';
   static const propertyDetailsDeedInfo = 'property_details.deed_info';
   static const propertyDetailsViewDeed = 'property_details.view_deed';

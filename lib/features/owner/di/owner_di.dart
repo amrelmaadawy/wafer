@@ -189,7 +189,7 @@ void _initProperties() {
     sl.registerFactory(() => PropertiesListCubit(sl()));
   }
   if (!sl.isRegistered<PropertyDetailsCubit>()) {
-    sl.registerFactory(() => PropertyDetailsCubit(sl()));
+    sl.registerFactory(() => PropertyDetailsCubit(sl(), sl(), sl()));
   }
   if (!sl.isRegistered<PropertyCreateCubit>()) {
     sl.registerLazySingleton(() => PropertyCreateCubit(

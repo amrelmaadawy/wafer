@@ -181,6 +181,27 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
   }
 
   @override
+  Future<Either<Failure, PropertyDetailsEntity>> makeRepresentative(
+      int propertyId, int ownerId) async {
+    try {
+      final result = await remoteDataSource.makeRepresentative(
+          propertyId, ownerId);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
+      if (e.response?.data != null && e.response!.data is Map) {
+        final data = e.response!.data as Map;
+        if (data['message'] != null) msg = data['message'].toString();
+      }
+      return Left(ServerFailure(msg));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> syncOwners(
       int propertyId, List<Map<String, dynamic>> owners) async {
     try {
@@ -293,30 +314,22 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, void>> makeRepresentative(
-      int propertyId, Map<String, dynamic> body) async {
-    try {
-      await remoteDataSource.makeRepresentative(propertyId, body);
-      return const Right(null);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
-  }
+
 
   @override
-  Future<Either<Failure, void>> removeRepresentative(int propertyId) async {
+  Future<Either<Failure, PropertyDetailsEntity>> removeRepresentative(int propertyId, int ownerId) async {
     try {
-      await remoteDataSource.removeRepresentative(propertyId);
-      return const Right(null);
+      final result = await remoteDataSource.removeRepresentative(propertyId, ownerId);
+      return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
+      if (e.response?.data != null && e.response!.data is Map) {
+        final data = e.response!.data as Map;
+        if (data['message'] != null) msg = data['message'].toString();
+      }
+      return Left(ServerFailure(msg));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

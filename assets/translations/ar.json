@@ -279,7 +279,13 @@
     "valuation_currency": "ر.س",
     "valuation_approved": "تقييم معتمد",
     "view_deed": "عرض تفاصيل الصك",
-    "deed_info": "معلومات الصك"
+    "deed_info": "معلومات الصك",
+    "make_representative": "تعيين كمفوض",
+    "make_representative_success": "تم تعيين المفوض بنجاح",
+    "current_representative": "المفوض الحالي",
+    "no_owners": "لا يوجد ملاك مسجلين",
+    "no_phone": "لا يوجد رقم هاتف",
+    "deed_and_docs": "معلومات الصك والوثائق"
   },
   "property_edit": {
     "title": "تعديل العقار",

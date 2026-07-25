@@ -49,8 +49,8 @@ class ApiConstants {
   static const String ownerStoreProperty = 'owner/properties';
   
   // Representatives
-  static String ownerMakeRepresentative(int id) => 'owner/properties/$id/representative';
-  static String ownerRemoveRepresentative(int id) => 'owner/properties/$id/representative/remove';
+  static String ownerMakeRepresentative(int propertyId, int ownerId) => 'owner/properties/$propertyId/owners/$ownerId/make-representative';
+  static String ownerRemoveRepresentative(int propertyId, int ownerId) => 'owner/properties/$propertyId/owners/$ownerId/remove-representative';
   
   // Units
   static String ownerPropertyUnits(int propertyId) => 'owner/properties/$propertyId/units';

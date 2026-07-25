@@ -47,6 +47,9 @@ abstract class PropertiesRepository {
 
 
 
+  /// Make an owner a representative for the property
+  Future<Either<Failure, PropertyDetailsEntity>> makeRepresentative(int propertyId, int ownerId);
+
   /// Sync property owners (percentage must equal 100%)
   Future<Either<Failure, void>> syncOwners(
     int propertyId,
@@ -70,11 +73,8 @@ abstract class PropertiesRepository {
   /// Clone property for same deed (returns new property ID)
   Future<Either<Failure, int>> cloneForDeed(int propertyId, bool copyData);
 
-  /// Make representative
-  Future<Either<Failure, void>> makeRepresentative(int propertyId, Map<String, dynamic> body);
-
   /// Remove representative
-  Future<Either<Failure, void>> removeRepresentative(int propertyId);
+  Future<Either<Failure, PropertyDetailsEntity>> removeRepresentative(int propertyId, int ownerId);
 
   /// Delete property
   Future<Either<Failure, void>> deleteProperty(int propertyId);
