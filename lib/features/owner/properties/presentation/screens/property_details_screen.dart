@@ -146,7 +146,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
                   controller: _tabController,
                   children: [
                     PropertyOverviewTab(property: property),
-                    PropertyUnitsTab(units: property.units),
+                    PropertyUnitsTab(units: property.units, propertyId: widget.propertyId),
                     PropertyContractsTab(contracts: property.contracts),
                     PropertyMaintenanceTab(maintenanceRequests: property.maintenance),
                     PropertyOwnersTab(property: property),

@@ -170,8 +170,8 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
               itemBuilder: (context, index) {
                 if (index == state.properties.length) {
                   return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                    padding: EdgeInsets.only(top: 8, bottom: 16),
+                    child: PropertySkeletonItem(),
                   );
                 }
                 final property = state.properties[index];

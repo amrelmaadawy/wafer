@@ -12,6 +12,7 @@ import '../../features/owner/properties/presentation/cubit/details/property_deta
 import '../../features/owner/properties/domain/entities/property_details_entity.dart';
 import '../../features/owner/properties/presentation/screens/property_create_screen.dart';
 import '../../features/owner/properties/presentation/cubit/create/property_create_cubit.dart';
+import '../../features/owner/properties/presentation/screens/unit_details_screen.dart';
 import '../../features/owner/properties/presentation/screens/property_edit_screen.dart';
 import '../../features/owner/properties/presentation/cubit/edit/property_edit_cubit.dart';
 import '../../features/owner/contracts/presentation/views/owner_leases_view.dart';
@@ -81,6 +82,17 @@ class AppRouter {
           return BlocProvider<PropertyEditCubit>(
             create: (_) => sl<PropertyEditCubit>(),
             child: PropertyEditScreen(property: property),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerPropertyUnitDetails,
+        builder: (context, state) {
+          final propertyId = int.tryParse(state.uri.queryParameters['propertyId'] ?? '0') ?? 0;
+          final unitId = int.tryParse(state.uri.queryParameters['unitId'] ?? '0') ?? 0;
+          return UnitDetailsScreen(
+            propertyId: propertyId,
+            unitId: unitId,
           );
         },
       ),

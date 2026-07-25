@@ -77,7 +77,7 @@
     "account_status": "حالة الحساب",
     "active": "نشط",
     "inactive": "غير نشط",
-    "identity_number": "رقم الهوية / الإقامة",
+    "identity_number": "رقم الهوية",
     "identity_expiry": "تاريخ انتهاء الهوية",
     "account_settings": "إعدادات الحساب",
     "edit_profile": "تعديل البيانات الشخصية",
@@ -101,11 +101,11 @@
     "update_success": "تم تحديث البيانات بنجاح",
     "joined_date": "تاريخ الانضمام",
     "gender": "الجنس",
-    "expiring_soon": "تنتهي قريباً",
-    "expiry_warning": "الهوية قريبة من الانتهاء أو منتهية — يُنصح بالتحديث لضمان الخدمة.",
+    "expiring_soon": "ينتهي قريباً",
+    "expiry_warning": "هويتك ستنتهي خلال شهر",
     "identity_warning_banner": "تنبيه: الهوية قريبة من الانتهاء أو منتهية، يرجى تحديثها لضمان استمرارية الخدمات.",
-    "copied_title": "تم النسخ",
-    "copy_success": "تم نسخ {} بنجاح",
+    "copied_title": "تم نسخ القيمة إلى الحافظة",
+    "copy_success": "تم النسخ بنجاح",
     "load_error": "تعذر تحميل البيانات",
     "owner_type": "مالك عقارات",
     "company_type": "شركة عقارية",
@@ -138,7 +138,12 @@
     "currency_sar": "{} ر.س",
     "success": "نجاح",
     "error": "تنبيه خطأ",
-    "info": "معلومة"
+    "info": "معلومة",
+    "rooms": "{} غرف",
+    "bathrooms": "{} حمامات",
+    "furnished": "مفروشة",
+    "unfurnished": "غير مفروشة",
+    "area_m2": "{} م²"
   },
   "errors": {
     "server_error": "حدث خطأ في الاتصال بالسيرفر",
@@ -353,7 +358,9 @@
     "time_just_now": "الآن",
     "time_minutes_ago": "منذ {} دقيقة",
     "time_hours_ago": "منذ {} ساعة",
-    "time_days_ago": "منذ {} يوم"
+    "time_days_ago": "منذ {} يوم",
+    "no_title": "لا توجد إشعارات",
+    "no_subtitle": "ستظهر الإشعارات الجديدة هنا"
   },
   "contracts": {
     "title": "عقود الإيجار",
@@ -423,7 +430,9 @@
     "installments_filter_paid": "المدفوعة",
     "installments_filter_unpaid": "غير المدفوعة",
     "installments_empty_title": "لا توجد أقساط مسجلة",
-    "installments_empty_subtitle": "لم يتم العثور على أي أقساط أو دفعات إيجارية لهذا العقد حتى الآن"
+    "installments_empty_subtitle": "لم يتم العثور على أي أقساط أو دفعات إيجارية لهذا العقد حتى الآن",
+    "no_title": "لا توجد عقود",
+    "no_subtitle": "عقوداتك ستظهر هنا"
   },
   "maintenance": {
     "title": "طلبات الصيانة",
@@ -458,7 +467,9 @@
     "images_section": "الصور والمرفقات",
     "no_images": "لا توجد صور مرفقة بهذا الطلب",
     "unspecified_date": "لم يُحدد بعد",
-    "not_determined_yet": "غير محدد"
+    "not_determined_yet": "غير محدد",
+    "no_title": "لا توجد طلبات صيانة",
+    "no_subtitle": "طلبات الصيانة ستظهر هنا"
   },
   "revenue": {
     "report_title": "تقرير الإيرادات",
@@ -576,5 +587,45 @@
     "add_description": "إضافة وصف للصورة",
     "description_hint": "اكتب وصفاً مختصراً للصورة...",
     "save_description": "حفظ الوصف"
+  },
+  "unit_details": {
+    "title": "تفاصيل الوحدة",
+    "unit_type": "النوع",
+    "usage_type": "نوع الاستخدام",
+    "dimensions": "الأبعاد والمقاسات",
+    "length": "الطول",
+    "width": "العرض",
+    "height": "الارتفاع",
+    "facade_length": "الواجهة",
+    "direction": "الاتجاه",
+    "finishing_type": "التشطيب",
+    "meters": "العدادات",
+    "electricity": "كهرباء",
+    "water": "مياه",
+    "gas": "غاز",
+    "amenities": "المميزات",
+    "current_contract": "العقد الحالي",
+    "entrances_count": "المداخل",
+    "rent_prices": "أسعار الإيجار",
+    "per_two_payments": "نصف سنوي",
+    "quarterly": "ربع سنوي",
+    "monthly": "شهري",
+    "is_furnished": "الفرش",
+    "furnished": "مفروشة",
+    "unfurnished": "غير مفروشة",
+    "specs": "المواصفات الأساسية",
+    "contract_info": "معلومات العقد",
+    "basic_info": "المعلومات الأساسية",
+    "unit_code": "كود الوحدة",
+    "description": "الوصف",
+    "status_available": "متاح",
+    "status_rented": "مؤجر",
+    "status_reserved": "محجوز",
+    "status_maintenance": "صيانة",
+    "usage_residential": "سكني",
+    "usage_commercial": "تجاري",
+    "usage_administrative": "إداري",
+    "no_description": "لا يوجد وصف متاح لهذه الوحدة.",
+    "floor_number": "رقم الطابق"
   }
 }

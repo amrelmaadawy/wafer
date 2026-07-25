@@ -1,5 +1,37 @@
 import 'package:equatable/equatable.dart';
 
+class UnitDetailsEntity extends Equatable {
+  final int roomsCount;
+  final int bathroomsCount;
+  final int hallsCount;
+  final int kitchensCount;
+
+  const UnitDetailsEntity({
+    this.roomsCount = 0,
+    this.bathroomsCount = 0,
+    this.hallsCount = 0,
+    this.kitchensCount = 0,
+  });
+
+  @override
+  List<Object?> get props => [roomsCount, bathroomsCount, hallsCount, kitchensCount];
+}
+
+class UnitPricesEntity extends Equatable {
+  final num monthly;
+  final num perTwoMonths;
+  final num quarterly;
+
+  const UnitPricesEntity({
+    this.monthly = 0,
+    this.perTwoMonths = 0,
+    this.quarterly = 0,
+  });
+
+  @override
+  List<Object?> get props => [monthly, perTwoMonths, quarterly];
+}
+
 class UnitEntity extends Equatable {
   final int id;
   final int propertyId;
@@ -16,6 +48,11 @@ class UnitEntity extends Equatable {
   final num? deposit;
   final String? specs;
   final String? createdAt;
+  
+  final bool isFurnished;
+  final String? image;
+  final UnitDetailsEntity details;
+  final UnitPricesEntity prices;
 
   const UnitEntity({
     required this.id,
@@ -33,6 +70,10 @@ class UnitEntity extends Equatable {
     this.deposit,
     this.specs,
     this.createdAt,
+    this.isFurnished = false,
+    this.image,
+    this.details = const UnitDetailsEntity(),
+    this.prices = const UnitPricesEntity(),
   });
 
   bool get isVacant => status.toLowerCase() == 'vacant';
@@ -57,5 +98,9 @@ class UnitEntity extends Equatable {
         deposit,
         specs,
         createdAt,
+        isFurnished,
+        image,
+        details,
+        prices,
       ];
 }

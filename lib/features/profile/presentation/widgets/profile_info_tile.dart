@@ -56,11 +56,10 @@ class ProfileInfoTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  isEmpty ? LocaleKeys.profileUnspecified.tr() : value,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: isEmpty ? AppColors.textSecondaryLight : AppColors.textPrimaryLight,
+                  value.isNotEmpty ? value : LocaleKeys.profile_unspecified.tr(),
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: value.isNotEmpty ? AppColors.textPrimaryLight : AppColors.textSecondaryLight,
+                    fontStyle: value.isNotEmpty ? FontStyle.normal : FontStyle.italic,
                   ),
                 ),
               ],

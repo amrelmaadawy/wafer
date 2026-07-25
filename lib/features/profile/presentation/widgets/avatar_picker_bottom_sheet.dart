@@ -26,7 +26,7 @@ class AvatarPickerBottomSheet {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                LocaleKeys.profileAvatarChangeTitle.tr(),
+                LocaleKeys.profile_avatar_change_title.tr(),
                 style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
@@ -40,7 +40,7 @@ class AvatarPickerBottomSheet {
                   ),
                   child: Icon(Icons.camera_alt_rounded, color: bottomSheetContext.primaryColor),
                 ),
-                title: Text(LocaleKeys.profileAvatarCamera.tr(), style: const TextStyle(fontWeight: FontWeight.w600)),
+                title: Text(LocaleKeys.profile_avatar_camera.tr(), style: const TextStyle(fontWeight: FontWeight.w600)),
                 onTap: () {
                   Navigator.pop(bottomSheetContext);
                   onPick(ImageSource.camera);
@@ -56,7 +56,7 @@ class AvatarPickerBottomSheet {
                   ),
                   child: Icon(Icons.photo_library_rounded, color: bottomSheetContext.primaryColor),
                 ),
-                title: Text(LocaleKeys.profileAvatarGallery.tr(), style: const TextStyle(fontWeight: FontWeight.w600)),
+                title: Text(LocaleKeys.profile_avatar_gallery.tr(), style: const TextStyle(fontWeight: FontWeight.w600)),
                 onTap: () {
                   Navigator.pop(bottomSheetContext);
                   onPick(ImageSource.gallery);

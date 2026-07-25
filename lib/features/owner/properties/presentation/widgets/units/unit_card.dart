@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/unit_entity.dart';
@@ -18,31 +19,48 @@ class UnitCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double displayPrice = (unit.prices.monthly > 0)
+        ? unit.prices.monthly.toDouble()
+        : unit.rentPrice.toDouble();
+
+    final String formattedPrice = (displayPrice % 1 == 0)
+        ? displayPrice.toInt().toString()
+        : displayPrice.toStringAsFixed(2);
+
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(bottom: 14),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXl,
         border: Border.all(color: const Color(0xFFEDF0F7)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Material(
         color: Colors.transparent,
-        borderRadius: AppRadius.circularLg,
+        borderRadius: AppRadius.circularXl,
         child: InkWell(
           onTap: onTap,
-          borderRadius: AppRadius.circularLg,
+          borderRadius: AppRadius.circularXl,
           child: Padding(
-            padding: const EdgeInsets.all(14),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // ── Header Row ──────────────────────────────────────
                 Row(
                   children: [
+                    // Unit icon with primary color bg
                     Container(
                       padding: const EdgeInsets.all(10),
                       decoration: BoxDecoration(
                         color: context.primarySubtle,
-                        borderRadius: AppRadius.circularMd,
+                        borderRadius: AppRadius.circularLg,
                       ),
                       child: Icon(
                         Icons.meeting_room_rounded,
@@ -51,36 +69,122 @@ class UnitCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            unit.name ?? LocaleKeys.dashboardUnitPrefix.tr(args: [unit.unitNumber]),
+                            style: AppTextStyles.h4.copyWith(color: AppColors.textPrimaryLight),
+                          ),
+                          if (unit.typeLabel != null || unit.type != null)
+                            Text(
+                              unit.typeLabel ?? unit.type ?? '',
+                              style: AppTextStyles.labelMedium.copyWith(color: AppColors.textSecondaryLight),
+                            ),
+                        ],
+                      ),
+                    ),
+                    _buildStatusBadge(context),
+                  ],
+                ),
+
+                const SizedBox(height: 14),
+
+                // ── Quick Stats ─────────────────────────────────────
+                Wrap(
+                  spacing: 16,
+                  runSpacing: 6,
+                  children: [
+                    if (unit.details.roomsCount > 0)
+                      _buildStat(Icons.bed_outlined, LocaleKeys.commonRooms.tr(args: [unit.details.roomsCount.toString()])),
+                    if (unit.details.bathroomsCount > 0)
+                      _buildStat(Icons.bathtub_outlined, LocaleKeys.commonBathrooms.tr(args: [unit.details.bathroomsCount.toString()])),
+                    if (unit.area != null && unit.area! > 0)
+                      _buildStat(Icons.square_foot_outlined, LocaleKeys.commonAreaM2.tr(args: [unit.area!.toStringAsFixed(0)])),
+                    if (unit.floor != null && unit.floor!.isNotEmpty)
+                      _buildStat(Icons.layers_outlined, 'الطابق ${unit.floor}'),
+                  ],
+                ),
+
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 12),
+                  child: Divider(color: Color(0xFFF1F5F9), height: 1),
+                ),
+
+                // ── Bottom Row: furnished + code + price ────────────
+                Row(
+                  children: [
+                    // Furnished chip
+                    _buildChip(
+                      icon: unit.isFurnished ? Icons.chair_outlined : Icons.chair_alt_outlined,
+                      label: unit.isFurnished
+                          ? LocaleKeys.commonFurnished.tr()
+                          : LocaleKeys.commonUnfurnished.tr(),
+                      color: unit.isFurnished ? Colors.teal : const Color(0xFF94A3B8),
+                    ),
+                    if (unit.code != null) ...[
+                      const SizedBox(width: 8),
+                      _buildChip(
+                        icon: Icons.tag_rounded,
+                        label: unit.code!,
+                        color: const Color(0xFF94A3B8),
+                      ),
+                    ],
+                    const Spacer(),
+                    // Price
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          LocaleKeys.dashboardUnitPrefix.tr(args: [unit.unitNumber]),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimaryLight,
-                          ),
+                          LocaleKeys.commonCurrencySar.tr(args: [formattedPrice]),
+                          style: AppTextStyles.h4.copyWith(color: context.primaryColor),
                         ),
-                        const SizedBox(height: 2),
-                        Text(
-                          '${unit.rentPrice} ${LocaleKeys.commonCurrencySar.tr()}',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                            color: context.primaryColor,
+                        if (unit.prices.monthly > 0)
+                          Text(
+                            LocaleKeys.unit_details_monthly.tr(),
+                            style: AppTextStyles.labelSmall.copyWith(color: AppColors.textSecondaryLight),
                           ),
-                        ),
                       ],
                     ),
                   ],
                 ),
-                _buildStatusBadge(context),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildStat(IconData icon, String label) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 15, color: const Color(0xFF94A3B8)),
+        const SizedBox(width: 5),
+        Text(
+          label,
+          style: AppTextStyles.bodySmall.copyWith(
+            color: const Color(0xFF475569),
+            fontWeight: AppFonts.semiBold,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildChip({required IconData icon, required String label, required Color color}) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 14, color: color),
+        const SizedBox(width: 4),
+        Text(
+          label,
+          style: AppTextStyles.labelSmall.copyWith(color: color),
+        ),
+      ],
     );
   }
 
@@ -98,23 +202,19 @@ class UnitCard extends StatelessWidget {
       color = AppColors.warning;
       label = LocaleKeys.dashboardUnderMaint.tr();
     } else {
-      color = context.primaryColor;
+      color = AppColors.success;
       label = LocaleKeys.dashboardVacant.tr();
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
+        color: color.withValues(alpha: 0.10),
         borderRadius: AppRadius.circularFull,
       ),
       child: Text(
         label,
-        style: TextStyle(
-          color: color,
-          fontSize: 11,
-          fontWeight: FontWeight.w700,
-        ),
+        style: AppTextStyles.labelSmall.copyWith(color: color, fontWeight: AppFonts.bold),
       ),
     );
   }

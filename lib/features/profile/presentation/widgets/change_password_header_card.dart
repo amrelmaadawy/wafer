@@ -44,7 +44,7 @@ class ChangePasswordHeaderCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  LocaleKeys.changePasswordTitle.tr(),
+                  LocaleKeys.profile_change_password_title.tr(),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColors.textPrimaryLight,
@@ -52,7 +52,7 @@ class ChangePasswordHeaderCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  LocaleKeys.changePasswordSub.tr(),
+                  LocaleKeys.profile_change_password_sub.tr(),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                         color: AppColors.textSecondaryLight,
                         height: 1.4,

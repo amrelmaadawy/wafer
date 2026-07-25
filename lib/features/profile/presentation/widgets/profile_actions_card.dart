@@ -40,7 +40,7 @@ class ProfileActionsCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  LocaleKeys.profileAccountSettings.tr(),
+                  LocaleKeys.profile_account_settings.tr(),
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimaryLight,
@@ -53,8 +53,8 @@ class ProfileActionsCard extends StatelessWidget {
           const Divider(height: 1, color: AppColors.borderLight),
           ProfileActionTile(
             icon: Icons.edit_rounded,
-            label: LocaleKeys.profileEditProfile.tr(),
-            subtitle: LocaleKeys.profileEditProfileSubtitle.tr(),
+            label: LocaleKeys.profile_edit_profile.tr(),
+            subtitle: LocaleKeys.profile_edit_profile_subtitle.tr(),
             iconBg: context.primaryColor.withValues(alpha: 0.1),
             iconColor: context.primaryColor,
             onTap: () {
@@ -64,8 +64,8 @@ class ProfileActionsCard extends StatelessWidget {
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
           ProfileActionTile(
             icon: Icons.lock_outline_rounded,
-            label: LocaleKeys.profileChangePassword.tr(),
-            subtitle: LocaleKeys.profileChangePasswordSubtitle.tr(),
+            label: LocaleKeys.profile_change_password.tr(),
+            subtitle: LocaleKeys.profile_change_password_subtitle.tr(),
             iconBg: AppColors.warning.withValues(alpha: 0.1),
             iconColor: AppColors.warning,
             onTap: () {
@@ -76,8 +76,8 @@ class ProfileActionsCard extends StatelessWidget {
           const Divider(height: 1, color: AppColors.borderLight),
           ProfileActionTile(
             icon: Icons.logout_rounded,
-            label: LocaleKeys.profileLogout.tr(),
-            subtitle: LocaleKeys.profileLogoutSubtitle.tr(),
+            label: LocaleKeys.profile_logout.tr(),
+            subtitle: LocaleKeys.profile_logout_subtitle.tr(),
             iconBg: AppColors.error.withValues(alpha: 0.1),
             iconColor: AppColors.error,
             labelColor: AppColors.error,
@@ -90,6 +90,6 @@ class ProfileActionsCard extends StatelessWidget {
   }
 
   void _showLogoutDialog(BuildContext context) {
-    AppToast.showInfo(context, LocaleKeys.profileLogoutDialogMsg.tr());
+    AppToast.showInfo(context, LocaleKeys.profile_logout_dialog_msg.tr());
   }
 }

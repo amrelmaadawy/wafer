@@ -77,7 +77,7 @@
     "account_status": "Account Status",
     "active": "Active",
     "inactive": "Inactive",
-    "identity_number": "National ID / Iqama",
+    "identity_number": "National ID",
     "identity_expiry": "ID Expiry Date",
     "account_settings": "Account Settings",
     "edit_profile": "Edit Personal Details",
@@ -102,10 +102,10 @@
     "joined_date": "Joined Date",
     "gender": "Gender",
     "expiring_soon": "Expiring Soon",
-    "expiry_warning": "ID is expired or expiring soon — update recommended.",
+    "expiry_warning": "Your ID is expiring within a month",
     "identity_warning_banner": "Warning: Identity is expired or expiring soon, please update it to ensure continuous service.",
-    "copied_title": "Copied",
-    "copy_success": "{} copied successfully",
+    "copied_title": "Value copied to clipboard",
+    "copy_success": "Copied successfully",
     "load_error": "Failed to load profile data",
     "owner_type": "Property Owner",
     "company_type": "Real Estate Company",
@@ -138,7 +138,12 @@
     "currency_sar": "{} SAR",
     "success": "Success",
     "error": "Error Alert",
-    "info": "Info"
+    "info": "Info",
+    "rooms": "{} Rooms",
+    "bathrooms": "{} Baths",
+    "furnished": "Furnished",
+    "unfurnished": "Unfurnished",
+    "area_m2": "{} sqm"
   },
   "errors": {
     "server_error": "Server communication error occurred",
@@ -353,7 +358,9 @@
     "time_just_now": "Just now",
     "time_minutes_ago": "{}m ago",
     "time_hours_ago": "{}h ago",
-    "time_days_ago": "{}d ago"
+    "time_days_ago": "{}d ago",
+    "no_title": "No Notifications",
+    "no_subtitle": "New notifications will appear here"
   },
   "contracts": {
     "title": "Lease Contracts",
@@ -423,7 +430,9 @@
     "installments_filter_paid": "Paid",
     "installments_filter_unpaid": "Unpaid",
     "installments_empty_title": "No installments found",
-    "installments_empty_subtitle": "No payment installments have been created for this contract yet"
+    "installments_empty_subtitle": "No payment installments have been created for this contract yet",
+    "no_title": "No Contracts",
+    "no_subtitle": "Your contracts will appear here"
   },
   "maintenance": {
     "title": "Maintenance Requests",
@@ -458,7 +467,9 @@
     "images_section": "Images & Attachments",
     "no_images": "No images attached to this request",
     "unspecified_date": "Not specified yet",
-    "not_determined_yet": "Not determined"
+    "not_determined_yet": "Not determined",
+    "no_title": "No Maintenance Requests",
+    "no_subtitle": "Maintenance requests will appear here"
   },
   "revenue": {
     "report_title": "Revenue Report",
@@ -576,5 +587,45 @@
     "add_description": "Add Image Description",
     "description_hint": "Write a short description...",
     "save_description": "Save Description"
+  },
+  "unit_details": {
+    "title": "Unit Details",
+    "unit_type": "Type",
+    "usage_type": "Usage Type",
+    "dimensions": "Dimensions & Measurements",
+    "length": "Length",
+    "width": "Width",
+    "height": "Height",
+    "facade_length": "Facade Length",
+    "direction": "Direction",
+    "finishing_type": "Finishing Type",
+    "meters": "Utility Meters",
+    "electricity": "Electricity",
+    "water": "Water",
+    "gas": "Gas",
+    "amenities": "Amenities",
+    "current_contract": "Current Contract",
+    "entrances_count": "Entrances",
+    "rent_prices": "Rent Prices",
+    "per_two_payments": "Biannually",
+    "quarterly": "Quarterly",
+    "monthly": "Monthly",
+    "is_furnished": "Furnishing",
+    "furnished": "Furnished",
+    "unfurnished": "Unfurnished",
+    "specs": "Basic Specifications",
+    "contract_info": "Contract Information",
+    "basic_info": "Basic Information",
+    "unit_code": "Unit Code",
+    "description": "Description",
+    "status_available": "Available",
+    "status_rented": "Rented",
+    "status_reserved": "Reserved",
+    "status_maintenance": "Maintenance",
+    "usage_residential": "Residential",
+    "usage_commercial": "Commercial",
+    "usage_administrative": "Administrative",
+    "no_description": "No description available for this unit.",
+    "floor_number": "Floor Number"
   }
 }

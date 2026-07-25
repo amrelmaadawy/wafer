@@ -9,12 +9,12 @@ import '../../../domain/entities/property_list_item_entity.dart';
 
 class PropertyCard extends StatelessWidget {
   final PropertyListItemEntity property;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const PropertyCard({
     super.key,
     required this.property,
-    required this.onTap,
+    this.onTap,
   });
 
   IconData get _typeIcon {
@@ -36,7 +36,7 @@ class PropertyCard extends StatelessWidget {
     final statusColor = isDraft ? AppColors.warning : AppColors.success;
 
     return AnimatedPressCard(
-      onTap: onTap,
+      onTap: onTap ?? () {},
       child: Container(
         margin: const EdgeInsets.only(bottom: 12),
         decoration: BoxDecoration(
@@ -59,19 +59,16 @@ class PropertyCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Hero(
-                    tag: 'property_icon_${property.id}',
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Container(
-                        width: 44,
-                        height: 44,
-                        decoration: BoxDecoration(
-                          color: context.primarySubtle,
-                          borderRadius: AppRadius.circularLg,
-                        ),
-                        child: Icon(_typeIcon, color: context.primaryColor, size: 22),
+                  Material(
+                    color: Colors.transparent,
+                    child: Container(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: context.primarySubtle,
+                        borderRadius: AppRadius.circularLg,
                       ),
+                      child: Icon(_typeIcon, color: context.primaryColor, size: 22),
                     ),
                   ),
                   const SizedBox(width: 12),

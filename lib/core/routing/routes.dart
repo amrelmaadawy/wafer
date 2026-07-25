@@ -21,6 +21,7 @@ class Routes {
   static const String ownerPropertyDetails = '/owner-property-details';
   static const String ownerPropertyCreate = '/owner-property-create';
   static const String ownerPropertyEdit = '/owner-property-edit';
+  static const String ownerPropertyUnitDetails = '/owner-property-unit-details';
   static const String ownerDeeds = '/owner-deeds';
   static const String ownerDeedsCreate = '/owner-deeds-create';
   static const String ownerDeedDetails = '/owner-deed-details';

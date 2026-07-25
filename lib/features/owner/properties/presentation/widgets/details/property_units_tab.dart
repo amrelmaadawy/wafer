@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../../../../core/presentation/widgets/animations/staggered_list_item.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/routing/routes.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
@@ -10,10 +12,12 @@ import '../units/unit_card.dart';
 
 class PropertyUnitsTab extends StatelessWidget {
   final List<UnitEntity> units;
+  final int propertyId;
 
   const PropertyUnitsTab({
     super.key,
     required this.units,
+    required this.propertyId,
   });
 
   @override
@@ -42,7 +46,15 @@ class PropertyUnitsTab extends StatelessWidget {
           final unit = units[index];
           return UnitCard(
             unit: unit,
-            onTap: () {},
+            onTap: () {
+              context.push(Uri(
+                path: Routes.ownerPropertyUnitDetails,
+                queryParameters: {
+                  'propertyId': propertyId.toString(),
+                  'unitId': unit.id.toString(),
+                },
+              ).toString());
+            },
           );
         },
       ),

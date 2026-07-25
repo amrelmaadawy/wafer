@@ -50,7 +50,7 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
     return BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
       listener: (context, state) {
         if (state is ChangePasswordSuccess) {
-          AppToast.showSuccess(context, LocaleKeys.changePasswordSuccess.tr());
+          AppToast.showSuccess(context, LocaleKeys.profile_change_password_success.tr());
           Navigator.pop(context);
         } else if (state is ChangePasswordError) {
           AppToast.showError(context, state.message);
@@ -65,15 +65,15 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
             children: [
               _buildPasswordField(
                 controller: _currentController,
-                label: LocaleKeys.changePasswordCurrent.tr(),
+                label: LocaleKeys.profile_change_password_current.tr(),
                 obscure: _obscureCurrent,
                 onToggle: () => setState(() => _obscureCurrent = !_obscureCurrent),
-                validator: (val) => val == null || val.trim().isEmpty ? LocaleKeys.changePasswordValRequired.tr() : null,
+                validator: (val) => val == null || val.trim().isEmpty ? LocaleKeys.profile_change_password_val_required.tr() : null,
               ),
               const SizedBox(height: 16),
               _buildPasswordField(
                 controller: _newController,
-                label: LocaleKeys.changePasswordNew.tr(),
+                label: LocaleKeys.profile_change_password_new.tr(),
                 obscure: _obscureNew,
                 onToggle: () => setState(() => _obscureNew = !_obscureNew),
                 onChanged: (_) => setState(() {}),
@@ -82,7 +82,7 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
               const SizedBox(height: 16),
               _buildPasswordField(
                 controller: _confirmController,
-                label: LocaleKeys.changePasswordConfirm.tr(),
+                label: LocaleKeys.profile_change_password_confirm.tr(),
                 obscure: _obscureConfirm,
                 onToggle: () => setState(() => _obscureConfirm = !_obscureConfirm),
                 onChanged: (_) => setState(() {}),
@@ -130,17 +130,17 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
   }
 
   String? _validateNewPassword(String? val) {
-    if (val == null || val.trim().isEmpty) return LocaleKeys.changePasswordValRequired.tr();
-    if (val.trim().length < 8) return LocaleKeys.changePasswordReqMin.tr();
+    if (val == null || val.trim().isEmpty) return LocaleKeys.profile_change_password_val_required.tr();
+    if (val.trim().length < 8) return LocaleKeys.profile_change_password_req_min.tr();
     if (val.trim() == _currentController.text.trim() && _currentController.text.isNotEmpty) {
-      return LocaleKeys.changePasswordValDiff.tr();
+      return LocaleKeys.profile_change_password_val_diff.tr();
     }
     return null;
   }
 
   String? _validateConfirmPassword(String? val) {
-    if (val == null || val.trim().isEmpty) return LocaleKeys.changePasswordValRequired.tr();
-    if (val.trim() != _newController.text.trim()) return LocaleKeys.changePasswordValMismatch.tr();
+    if (val == null || val.trim().isEmpty) return LocaleKeys.profile_change_password_val_required.tr();
+    if (val.trim() != _newController.text.trim()) return LocaleKeys.profile_change_password_val_mismatch.tr();
     return null;
   }
 
@@ -153,11 +153,11 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
 
     return Column(
       children: [
-        _buildPill(LocaleKeys.changePasswordReqMin.tr(), hasMin),
+        _buildPill(LocaleKeys.profile_change_password_req_min.tr(), hasMin),
         const SizedBox(height: 8),
-        _buildPill(LocaleKeys.changePasswordReqNum.tr(), hasNum),
+        _buildPill(LocaleKeys.profile_change_password_req_num.tr(), hasNum),
         const SizedBox(height: 8),
-        _buildPill(LocaleKeys.changePasswordReqMatch.tr(), isMatch),
+        _buildPill(LocaleKeys.profile_change_password_req_match.tr(), isMatch),
       ],
     );
   }
@@ -195,7 +195,7 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
       ),
       child: isLoading
           ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5))
-          : Text(LocaleKeys.changePasswordBtn.tr(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          : Text(LocaleKeys.profile_change_password_btn.tr(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
     );
   }
 }

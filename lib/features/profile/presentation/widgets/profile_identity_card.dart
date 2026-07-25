@@ -32,7 +32,7 @@ class ProfileIdentityCard extends StatelessWidget {
               Icon(Icons.badge_rounded, color: context.primaryColor, size: 22),
               const SizedBox(width: 8),
               Text(
-                LocaleKeys.profileIdentitySection.tr(),
+                LocaleKeys.profile_identity_section.tr(),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: AppColors.textPrimaryLight,
@@ -43,14 +43,14 @@ class ProfileIdentityCard extends StatelessWidget {
           const SizedBox(height: 16),
           _buildItemRow(
             context: context,
-            label: LocaleKeys.profileIdentityNumber.tr(),
+            label: LocaleKeys.profile_identity_number.tr(),
             value: profile.identityNumber,
             canCopy: true,
           ),
           const Divider(height: 24, color: AppColors.borderLight),
           _buildItemRow(
             context: context,
-            label: LocaleKeys.profileIdentityExpiry.tr(),
+            label: LocaleKeys.profile_identity_expiry.tr(),
             value: profile.identityExpiry,
             canCopy: false,
           ),
@@ -69,7 +69,7 @@ class ProfileIdentityCard extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      LocaleKeys.profileIdentityWarningBanner.tr(),
+                      LocaleKeys.profile_identity_warning_banner.tr(),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: AppColors.error,
                             fontWeight: FontWeight.bold,
@@ -103,7 +103,7 @@ class ProfileIdentityCard extends StatelessWidget {
         Row(
           children: [
             Text(
-              value.isNotEmpty ? value : LocaleKeys.profileUnspecified.tr(),
+              value.isNotEmpty ? value : LocaleKeys.profile_unspecified.tr(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                     color: AppColors.textPrimaryLight,
                     fontWeight: FontWeight.bold,
@@ -116,8 +116,8 @@ class ProfileIdentityCard extends StatelessWidget {
                   Clipboard.setData(ClipboardData(text: value));
                   AppToast.showSuccess(
                     context,
-                    LocaleKeys.profileCopySuccess.tr(args: [label]),
-                    title: LocaleKeys.profileCopiedTitle.tr(),
+                    LocaleKeys.profile_copy_success.tr(args: [label]),
+                    title: LocaleKeys.profile_copied_title.tr(),
                   );
                 },
                 child: Icon(Icons.copy_rounded, size: 18, color: context.primaryColor),

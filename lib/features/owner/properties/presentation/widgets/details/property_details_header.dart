@@ -19,21 +19,18 @@ class PropertyDetailsHeader extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Hero(
-              tag: 'property_icon_${property.id}',
-              child: Material(
-                color: Colors.transparent,
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.15),
-                    borderRadius: AppRadius.circularLg,
-                  ),
-                  child: const Icon(
-                    Icons.apartment_rounded,
-                    color: Colors.white,
-                    size: 30,
-                  ),
+            Material(
+              color: Colors.transparent,
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.15),
+                  borderRadius: AppRadius.circularLg,
+                ),
+                child: const Icon(
+                  Icons.apartment_rounded,
+                  color: Colors.white,
+                  size: 30,
                 ),
               ),
             ),

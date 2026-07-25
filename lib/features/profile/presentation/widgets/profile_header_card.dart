@@ -160,7 +160,7 @@ class ProfileHeaderCard extends StatelessWidget {
           icon: Icons.workspace_premium_rounded,
         ),
         _buildBadge(
-          label: profile.isActive ? LocaleKeys.profileActive.tr() : LocaleKeys.profileInactive.tr(),
+          label: profile.isActive ? LocaleKeys.profile_active.tr() : LocaleKeys.profile_inactive.tr(),
           icon: profile.isActive ? Icons.verified_rounded : Icons.cancel_rounded,
           bgColor: profile.isActive
               ? Colors.white.withValues(alpha: 0.2)
@@ -195,9 +195,9 @@ class ProfileHeaderCard extends StatelessWidget {
 
   String _accountTypeLabel(String type) {
     switch (type.toLowerCase()) {
-      case 'owner':  return LocaleKeys.profileOwnerType.tr();
-      case 'company': return LocaleKeys.profileCompanyType.tr();
-      case 'tenant':  return LocaleKeys.profileTenantType.tr();
+      case 'owner':  return LocaleKeys.profile_owner_type.tr();
+      case 'company': return LocaleKeys.profile_company_type.tr();
+      case 'tenant':  return LocaleKeys.profile_tenant_type.tr();
       default:        return type;
     }
   }

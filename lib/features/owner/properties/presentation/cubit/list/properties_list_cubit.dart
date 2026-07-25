@@ -93,7 +93,11 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
       (failure) => emit(currentState.copyWith(isFetchingMore: false)),
       (data) {
         _currentFilter = nextPageFilter;
-        _allFetchedProperties.addAll(data.items);
+        
+        final newItems = data.items.where((newItem) => 
+            !_allFetchedProperties.any((existing) => existing.id == newItem.id)).toList();
+            
+        _allFetchedProperties.addAll(newItems);
         _lastMeta = data.meta;
         _applyLocalFilterAndEmit(_lastMeta, _lastStats);
       },

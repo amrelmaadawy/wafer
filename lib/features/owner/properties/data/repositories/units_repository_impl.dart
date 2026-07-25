@@ -5,6 +5,8 @@ import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/unit_entity.dart';
+import '../../domain/entities/unit_full_details_entity.dart';
+import '../../domain/entities/properties_pagination_meta_entity.dart';
 import '../../domain/repositories/units_repository.dart';
 import '../datasources/units_remote_data_source.dart';
 
@@ -14,9 +16,21 @@ class UnitsRepositoryImpl implements UnitsRepository {
   UnitsRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<Either<Failure, List<UnitEntity>>> getPropertyUnits(int propertyId) async {
+  Future<Either<Failure, ({List<UnitEntity> items, PropertiesPaginationMetaEntity meta})>> getPropertyUnits(
+    int propertyId, {
+    int page = 1,
+    String? search,
+    String? unitStatus,
+    String? unitType,
+  }) async {
     try {
-      final result = await _remoteDataSource.getPropertyUnits(propertyId);
+      final result = await _remoteDataSource.getPropertyUnits(
+        propertyId,
+        page: page,
+        search: search,
+        unitStatus: unitStatus,
+        unitType: unitType,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -56,7 +70,7 @@ class UnitsRepositoryImpl implements UnitsRepository {
   }
 
   @override
-  Future<Either<Failure, UnitEntity>> getUnitDetails(int propertyId, int unitId) async {
+  Future<Either<Failure, UnitFullDetailsEntity>> getUnitDetails(int propertyId, int unitId) async {
     try {
       final result = await _remoteDataSource.getUnitDetails(propertyId, unitId);
       return Right(result);

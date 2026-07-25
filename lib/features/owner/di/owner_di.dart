@@ -53,10 +53,12 @@ import '../properties/domain/usecases/get_property_form_data_use_case.dart';
 import '../properties/domain/usecases/sync_owners_use_case.dart';
 import '../properties/domain/usecases/upload_temp_file_use_case.dart';
 import '../properties/domain/usecases/publish_property_use_case.dart';
+import '../properties/domain/usecases/get_unit_details_use_case.dart';
 import '../properties/presentation/cubit/list/properties_list_cubit.dart';
 import '../properties/presentation/cubit/details/property_details_cubit.dart';
 import '../properties/presentation/cubit/create/property_create_cubit.dart';
 import '../properties/presentation/cubit/publish/publish_property_cubit.dart';
+import '../properties/presentation/cubit/unit_details/unit_details_cubit.dart';
 
 // Units
 import '../properties/data/datasources/units_remote_data_source.dart';
@@ -104,6 +106,9 @@ void _initUnits() {
   if (!sl.isRegistered<GetPropertyUnitsUseCase>()) {
     sl.registerLazySingleton(() => GetPropertyUnitsUseCase(sl()));
   }
+  if (!sl.isRegistered<GetUnitDetailsUseCase>()) {
+    sl.registerLazySingleton(() => GetUnitDetailsUseCase(sl()));
+  }
   if (!sl.isRegistered<CreateDraftUnitUseCase>()) {
     sl.registerLazySingleton(() => CreateDraftUnitUseCase(sl()));
   }
@@ -115,6 +120,9 @@ void _initUnits() {
   }
   if (!sl.isRegistered<UnitsListCubit>()) {
     sl.registerFactory(() => UnitsListCubit(sl()));
+  }
+  if (!sl.isRegistered<UnitDetailsCubit>()) {
+    sl.registerFactory(() => UnitDetailsCubit(sl()));
   }
   if (!sl.isRegistered<UnitCreateCubit>()) {
     sl.registerFactory(() => UnitCreateCubit(

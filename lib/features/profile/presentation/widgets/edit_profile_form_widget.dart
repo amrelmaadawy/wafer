@@ -58,7 +58,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
     return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
         if (state is ProfileUpdateSuccess) {
-          AppToast.showSuccess(context, LocaleKeys.profileUpdateSuccess.tr());
+          AppToast.showSuccess(context, LocaleKeys.profile_update_success.tr());
           Navigator.pop(context);
         } else if (state is ProfileUpdateError) {
           AppToast.showError(context, state.errorMessage);
@@ -76,21 +76,21 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
             children: [
               ProfileTextField(
                 controller: _nameController,
-                label: LocaleKeys.profileFullNameLabel.tr(),
+                label: LocaleKeys.profile_full_name_label.tr(),
                 icon: Icons.person_outline_rounded,
-                validator: (val) => val == null || val.trim().isEmpty ? LocaleKeys.profileFullNameValidation.tr() : null,
+                validator: (val) => val == null || val.trim().isEmpty ? LocaleKeys.profile_full_name_validation.tr() : null,
               ),
               const SizedBox(height: 18),
               ProfileTextField(
                 controller: _phoneController,
-                label: LocaleKeys.profilePhoneLabel.tr(),
+                label: LocaleKeys.profile_phone_label.tr(),
                 icon: Icons.phone_outlined,
                 keyboardType: TextInputType.phone,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                validator: (val) => val == null || val.trim().length < 9 ? LocaleKeys.profilePhoneValidation.tr() : null,
+                validator: (val) => val == null || val.trim().length < 9 ? LocaleKeys.profile_phone_validation.tr() : null,
               ),
               const SizedBox(height: 20),
-              Text(LocaleKeys.profileGenderLabel.tr(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textPrimaryLight)),
+              Text(LocaleKeys.profile_gender_label.tr(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: AppColors.textPrimaryLight)),
               const SizedBox(height: 10),
               Row(
                 children: [
@@ -98,7 +98,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
                     child: ProfileGenderCard(
                       value: 'male',
                       currentGender: _gender,
-                      label: LocaleKeys.profileGenderMale.tr(),
+                      label: LocaleKeys.profile_gender_male.tr(),
                       icon: Icons.male_rounded,
                       onSelect: (val) => setState(() => _gender = val),
                     ),
@@ -108,7 +108,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
                     child: ProfileGenderCard(
                       value: 'female',
                       currentGender: _gender,
-                      label: LocaleKeys.profileGenderFemale.tr(),
+                      label: LocaleKeys.profile_gender_female.tr(),
                       icon: Icons.female_rounded,
                       onSelect: (val) => setState(() => _gender = val),
                     ),
@@ -137,7 +137,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
       ),
       child: isUpdating
           ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5))
-          : Text(LocaleKeys.profileSaveChanges.tr(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          : Text(LocaleKeys.profile_save_changes.tr(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
     );
   }
 }
