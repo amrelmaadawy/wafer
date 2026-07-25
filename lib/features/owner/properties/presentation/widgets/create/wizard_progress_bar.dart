@@ -27,23 +27,22 @@ class WizardProgressBar extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
-            children: List.generate(5, (index) {
-              return Expanded(
-                child: Row(
-                  children: [
-                    _buildStepIndicator(context, index),
-                    if (index < 4)
-                      Expanded(
-                        child: Container(
-                          height: 2,
-                          color: index < currentStep
-                              ? context.primaryColor
-                              : const Color(0xFFE2E8F0),
-                        ),
-                      ),
-                  ],
-                ),
-              );
+            children: List.generate(9, (i) {
+              if (i % 2 == 0) {
+                final index = i ~/ 2;
+                return _buildStepIndicator(context, index);
+              } else {
+                final index = i ~/ 2;
+                return Expanded(
+                  child: Container(
+                    height: 2,
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    color: index < currentStep
+                        ? context.primaryColor
+                        : const Color(0xFFE2E8F0),
+                  ),
+                );
+              }
             }),
           ),
           const SizedBox(height: 12),
@@ -59,7 +58,7 @@ class WizardProgressBar extends StatelessWidget {
                 ),
               ),
               Text(
-                '${currentStep + 1} / 5',
+                '5 / ${currentStep + 1}',
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
