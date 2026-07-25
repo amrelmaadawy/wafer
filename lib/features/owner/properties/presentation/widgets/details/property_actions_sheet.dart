@@ -10,7 +10,6 @@ class PropertyActionsSheet extends StatelessWidget {
   final PropertyDetailsEntity property;
   final VoidCallback onEdit;
   final VoidCallback onClone;
-  final VoidCallback onMakeRepresentative;
   final VoidCallback onDelete;
   final VoidCallback onPublish;
 
@@ -19,7 +18,6 @@ class PropertyActionsSheet extends StatelessWidget {
     required this.property,
     required this.onEdit,
     required this.onClone,
-    required this.onMakeRepresentative,
     required this.onDelete,
     required this.onPublish,
   });
@@ -131,14 +129,6 @@ class PropertyActionsSheet extends StatelessWidget {
                   icon: Icons.content_copy_rounded,
                   color: AppColors.success,
                   onTap: onClone,
-                ),
-                const Divider(height: 1, color: AppColors.borderLight),
-                _buildActionItem(
-                  context: context,
-                  title: LocaleKeys.propertyDetailsRepresentative.tr(),
-                  icon: Icons.person_add_rounded,
-                  color: AppColors.warning,
-                  onTap: onMakeRepresentative,
                   isLast: true,
                 ),
               ],

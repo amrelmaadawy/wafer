@@ -52,6 +52,7 @@ class Step4ImagesView extends StatelessWidget {
         final picker = ImagePicker();
         final pickedFiles = await picker.pickMultiImage();
         if (pickedFiles.isNotEmpty) {
+          if (!context.mounted) return;
           for (var file in pickedFiles) {
             context.read<UnitCreateCubit>().addImage(File(file.path));
           }

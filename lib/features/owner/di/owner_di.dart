@@ -81,6 +81,7 @@ import '../properties/domain/usecases/delete_property_use_case.dart';
 import '../properties/domain/usecases/patch_property_use_case.dart';
 import '../properties/presentation/cubit/edit/property_edit_cubit.dart';
 import '../properties/presentation/cubit/owners/sync_owners_cubit.dart';
+import '../properties/presentation/cubit/delete/delete_property_cubit.dart';
 import '../deeds/di/deeds_di.dart';
 
 void initOwnerModule() {
@@ -237,6 +238,9 @@ void _initProperties() {
           autoSaveDeedStep: sl(),
           autoSaveTypeStep: sl(),
         ));
+  }
+  if (!sl.isRegistered<DeletePropertyCubit>()) {
+    sl.registerFactory(() => DeletePropertyCubit(sl()));
   }
   if (!sl.isRegistered<SyncOwnersCubit>()) {
     sl.registerFactory(() => SyncOwnersCubit(sl(), sl()));

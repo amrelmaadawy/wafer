@@ -2,6 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
@@ -22,6 +24,11 @@ import '../widgets/details/property_owners_tab.dart';
 import '../widgets/details/property_details_app_bar.dart';
 import '../widgets/details/clone_for_deed_sheet.dart';
 import '../widgets/publish/publish_property_sheet.dart';
+import '../widgets/details/property_delete_dialog.dart';
+import '../cubit/delete/delete_property_cubit.dart';
+import '../cubit/delete/delete_property_state.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../core/utils/widgets/loading_widget.dart';
 
 class PropertyDetailsScreen extends StatefulWidget {
   final int propertyId;
@@ -34,6 +41,7 @@ class PropertyDetailsScreen extends StatefulWidget {
 class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  bool _isLoadingDialogOpen = false;
 
   @override
   void initState() {
@@ -81,82 +89,136 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
     );
   }
 
-  void _showActionsSheet(BuildContext context, PropertyDetailsEntity property) {
-    showModalBottomSheet(
+  Future<void> _showActionsSheet(BuildContext context, PropertyDetailsEntity property) async {
+    // Wait for the actions sheet to close and get the chosen action
+    final action = await showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => BackdropFilter(
+      builder: (sheetContext) => BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
         child: PropertyActionsSheet(
           property: property,
-          onEdit: () async {
-            await context.push(Routes.ownerPropertyEdit, extra: property);
-            if (context.mounted) {
-              context.read<PropertyDetailsCubit>().loadDetails(property.id);
-            }
-          },
-          onClone: () => _showCloneForDeedSheet(context, property),
-          onMakeRepresentative: () {},
-          onDelete: () => context.pop(),
-          onPublish: () => _showPublishSheet(context, property),
+          onEdit: () => Navigator.of(sheetContext).pop('edit'),
+          onClone: () => Navigator.of(sheetContext).pop('clone'),
+          onDelete: () => Navigator.of(sheetContext).pop('delete'),
+          onPublish: () => Navigator.of(sheetContext).pop('publish'),
         ),
       ),
     );
+
+    // After sheet is FULLY closed, handle the action
+    if (!context.mounted) return;
+
+    switch (action) {
+      case 'edit':
+        await context.push(Routes.ownerPropertyEdit, extra: property);
+        if (context.mounted) {
+          context.read<PropertyDetailsCubit>().loadDetails(property.id);
+        }
+        break;
+      case 'clone':
+        _showCloneForDeedSheet(context, property);
+        break;
+      case 'delete':
+        // Screen is still alive, BlocProvider still alive, cubit NOT closed
+        _showDeleteConfirmDialog(context, property);
+        break;
+      case 'publish':
+        _showPublishSheet(context, property);
+        break;
+    }
+  }
+
+  void _showDeleteConfirmDialog(BuildContext context, PropertyDetailsEntity property) {
+    final deleteCubit = context.read<DeletePropertyCubit>();
+    PropertyDeleteDialog.show(context, onConfirm: () {
+      deleteCubit.deleteProperty(property.id);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
-      body: BlocBuilder<PropertyDetailsCubit, PropertyDetailsState>(
-        builder: (context, state) {
-          if (state is PropertyDetailsLoading || state is PropertyDetailsInitial) {
-            return const PropertyDetailsSkeleton();
-          } else if (state is PropertyDetailsError) {
-            return SafeArea(
-              child: Column(
-                children: [
-                  const CustomAppBar(title: ''),
-                  Expanded(
-                    child: CustomErrorWidget(
-                      message: state.message,
-                      onRetry: () => context.read<PropertyDetailsCubit>().loadDetails(widget.propertyId),
+    return BlocProvider(
+      create: (_) => sl<DeletePropertyCubit>(),
+      child: Builder(
+        builder: (ctx) => BlocListener<DeletePropertyCubit, DeletePropertyState>(
+          listener: (context, state) {
+            if (state is DeletePropertyLoading) {
+              _isLoadingDialogOpen = true;
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (_) => const Center(child: LoadingWidget()),
+              ).then((_) => _isLoadingDialogOpen = false);
+            } else if (state is DeletePropertySuccess) {
+              if (_isLoadingDialogOpen) {
+                _isLoadingDialogOpen = false;
+                Navigator.of(context, rootNavigator: true).pop();
+              }
+              AppToast.showSuccess(context, LocaleKeys.commonSuccess.tr());
+              context.pop(true);
+            } else if (state is DeletePropertyError) {
+              if (_isLoadingDialogOpen) {
+                _isLoadingDialogOpen = false;
+                Navigator.of(context, rootNavigator: true).pop();
+              }
+              AppToast.showError(context, state.message);
+            }
+          },
+          child: Scaffold(
+            backgroundColor: AppColors.backgroundLight,
+            body: BlocBuilder<PropertyDetailsCubit, PropertyDetailsState>(
+              builder: (context, state) {
+                if (state is PropertyDetailsLoading || state is PropertyDetailsInitial) {
+                  return const PropertyDetailsSkeleton();
+                } else if (state is PropertyDetailsError) {
+                  return SafeArea(
+                    child: Column(
+                      children: [
+                        const CustomAppBar(title: ''),
+                        Expanded(
+                          child: CustomErrorWidget(
+                            message: state.message,
+                            onRetry: () => context.read<PropertyDetailsCubit>().loadDetails(widget.propertyId),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
-            );
-          } else if (state is PropertyDetailsLoaded) {
-            final property = state.property;
-            
-            return NestedScrollView(
-              headerSliverBuilder: (context, innerBoxIsScrolled) {
-                return [
-                  PropertyDetailsSliverAppBar(
-                    property: property,
-                    tabController: _tabController,
-                    onOpenActions: () => _showActionsSheet(context, property),
-                  ),
-                ];
+                  );
+                } else if (state is PropertyDetailsLoaded) {
+                  final property = state.property;
+
+                  return NestedScrollView(
+                    headerSliverBuilder: (context, innerBoxIsScrolled) {
+                      return [
+                        PropertyDetailsSliverAppBar(
+                          property: property,
+                          tabController: _tabController,
+                          onOpenActions: () => _showActionsSheet(ctx, property),
+                        ),
+                      ];
+                    },
+                    body: Container(
+                      color: AppColors.backgroundLight,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          PropertyOverviewTab(property: property),
+                          PropertyUnitsTab(units: property.units, propertyId: widget.propertyId),
+                          PropertyContractsTab(contracts: property.contracts),
+                          PropertyMaintenanceTab(maintenanceRequests: property.maintenance),
+                          PropertyOwnersTab(property: property),
+                        ],
+                      ),
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
               },
-              body: Container(
-                color: AppColors.backgroundLight,
-                child: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    PropertyOverviewTab(property: property),
-                    PropertyUnitsTab(units: property.units, propertyId: widget.propertyId),
-                    PropertyContractsTab(contracts: property.contracts),
-                    PropertyMaintenanceTab(maintenanceRequests: property.maintenance),
-                    PropertyOwnersTab(property: property),
-                  ],
-                ),
-              ),
-            );
-          }
-          return const SizedBox.shrink();
-        },
+            ),
+          ),
+        ),
       ),
     );
   }
