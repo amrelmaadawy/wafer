@@ -192,7 +192,7 @@ void _initProperties() {
     sl.registerFactory(() => PropertyDetailsCubit(sl()));
   }
   if (!sl.isRegistered<PropertyCreateCubit>()) {
-    sl.registerFactory(() => PropertyCreateCubit(
+    sl.registerLazySingleton(() => PropertyCreateCubit(
           createDraft: sl(),
           getFormData: sl(),
           autoSavePropertyStep: sl(),

@@ -69,8 +69,8 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.ownerPropertyCreate,
-        builder: (context, state) => BlocProvider<PropertyCreateCubit>(
-          create: (_) => sl<PropertyCreateCubit>(),
+        builder: (context, state) => BlocProvider<PropertyCreateCubit>.value(
+          value: sl<PropertyCreateCubit>(),
           child: const PropertyCreateScreen(),
         ),
       ),

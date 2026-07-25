@@ -344,4 +344,8 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
       },
     );
   }
+
+  void reset() {
+    emit(const PropertyCreateState());
+  }
 }

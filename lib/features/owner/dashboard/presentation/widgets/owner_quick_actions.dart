@@ -5,6 +5,7 @@ import '../../../../../core/localization/locale_keys.g.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/app_colors.dart';
 
 
 class OwnerQuickActions extends StatelessWidget {
@@ -42,7 +43,7 @@ class OwnerQuickActions extends StatelessWidget {
                       context,
                       title: LocaleKeys.dashboard_lease_contract.tr(),
                       icon: Icons.description_outlined,
-                      color: const Color(0xFF10B981),
+                      color: AppColors.success,
                       onTap: () => context.go(Routes.ownerContracts),
                     ),
                   ),
@@ -50,43 +51,14 @@ class OwnerQuickActions extends StatelessWidget {
                   Expanded(
                     child: _buildActionCard(
                       context,
-                      title: LocaleKeys.dashboard_add_property.tr(),
-                      icon: Icons.apartment_rounded,
-                      color: context.primaryColor,
-                      onTap: () => context.push(Routes.ownerPropertyCreate),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
                       title: LocaleKeys.maintenance_title.tr(),
                       icon: Icons.build_circle_outlined,
-                      color: const Color(0xFFEF4444),
+                      color: AppColors.error,
                       onTap: () {
                         context.push(Routes.ownerMaintenance);
                       },
                     ),
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      title: LocaleKeys.dashboard_reports.tr(),
-                      icon: Icons.bar_chart_rounded,
-                      color: const Color(0xFFF59E0B),
-                      onTap: () {
-                        context.push('${Routes.ownerReportsCenter}?tab=0');
-                      },
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -98,17 +70,25 @@ class OwnerQuickActions extends StatelessWidget {
                   Expanded(
                     child: _buildActionCard(
                       context,
-                      title: LocaleKeys.deeds_title.tr(),
-                      icon: Icons.file_present_rounded,
-                      color: const Color(0xFF8B5CF6), // Purple
+                      title: LocaleKeys.dashboard_reports.tr(),
+                      icon: Icons.bar_chart_rounded,
+                      color: AppColors.warning,
                       onTap: () {
-                        context.push(Routes.ownerDeeds);
+                        context.push('${Routes.ownerReportsCenter}?tab=0');
                       },
                     ),
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: const SizedBox.shrink(),
+                    child: _buildActionCard(
+                      context,
+                      title: LocaleKeys.deeds_title.tr(),
+                      icon: Icons.file_present_rounded,
+                      color: AppColors.info,
+                      onTap: () {
+                        context.push(Routes.ownerDeeds);
+                      },
+                    ),
                   ),
                 ],
               ),
@@ -128,12 +108,12 @@ class OwnerQuickActions extends StatelessWidget {
   }) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surfaceLight,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
+        border: Border.all(color: AppColors.borderLight),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
+            color: context.primaryShadow.withValues(alpha: 0.03),
             blurRadius: 14,
             offset: const Offset(0, 4),
           ),
@@ -165,7 +145,7 @@ class OwnerQuickActions extends StatelessWidget {
                     child: Text(
                       title,
                       style: const TextStyle(
-                        color: Color(0xFF1E293B),
+                        color: AppColors.textPrimaryLight,
                         fontSize: 11.5,
                         fontWeight: FontWeight.w700,
                       ),

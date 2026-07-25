@@ -118,7 +118,10 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                       hintText: '0',
                       controller: _areaController,
                       focusNode: _areaNode,
-                      keyboardType: TextInputType.number,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                      ],
                       prefixIcon: const Icon(Icons.square_foot_outlined),
                       textInputAction: TextInputAction.next,
                       onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_yearNode),
@@ -141,7 +144,7 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                       ],
                       onChanged: (val) {
                         final year = int.tryParse(val);
-                        if (year != null && year >= 1900 && year <= 2030) {
+                        if (year != null) {
                           context.read<PropertyCreateCubit>().updateConstructionYear(year);
                         } else if (val.isEmpty) {
                           context.read<PropertyCreateCubit>().updateConstructionYear(0);

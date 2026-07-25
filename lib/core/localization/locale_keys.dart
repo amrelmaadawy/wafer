@@ -195,6 +195,8 @@ class LocaleKeys {
   static const propertyDetailsBasicInfo = 'property_details.basic_info';
   static const propertyDetailsOwners = 'property_details.owners';
   static const propertyDetailsDeed = 'property_details.deed';
+  static const propertyDetailsDeedInfo = 'property_details.deed_info';
+  static const propertyDetailsViewDeed = 'property_details.view_deed';
   static const propertyDetailsEdit = 'property_details.edit';
   static const propertyDetailsClone = 'property_details.clone';
   static const propertyDetailsCloneSuccess = 'property_details.clone_success';

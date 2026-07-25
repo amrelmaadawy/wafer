@@ -30,8 +30,9 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
   @override
   void initState() {
     super.initState();
-    _pageController = PageController(initialPage: 0);
-    context.read<PropertyCreateCubit>().loadFormOptions();
+    final cubit = context.read<PropertyCreateCubit>();
+    _pageController = PageController(initialPage: cubit.state.currentStep);
+    cubit.loadFormOptions();
   }
 
   @override
@@ -53,6 +54,11 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
     if (state.currentStep == 1) {
       if (state.name == null || state.name!.trim().isEmpty) {
         if (mounted) AppToast.showError(context, LocaleKeys.propertyCreateNameRequired.tr());
+        return;
+      }
+      final currentYear = DateTime.now().year;
+      if (state.constructionYear != null && (state.constructionYear! < 1900 || state.constructionYear! > currentYear)) {
+        if (mounted) AppToast.showError(context, "سنة البناء غير صالحة. يجب أن تكون بين 1900 و $currentYear");
         return;
       }
       FocusScope.of(context).unfocus();
@@ -79,8 +85,10 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
     if (state.currentStep == 4) {
       final success = await cubit.publishProperty();
       if (success && mounted) {
+        final id = state.draftPropertyId;
         AppToast.showSuccess(context, LocaleKeys.propertyWizardPublishedSuccess.tr());
-        context.pushReplacement('${Routes.ownerPropertyDetails}?id=${state.draftPropertyId}');
+        cubit.reset();
+        context.pushReplacement('${Routes.ownerPropertyDetails}?id=$id');
       }
       return;
     }
@@ -128,23 +136,104 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
               if (state.currentStep == 0) {
                 final shouldPop = await showDialog<bool>(
                   context: context,
-                  builder: (ctx) => AlertDialog(
-                    title: Text(LocaleKeys.propertyCreateExitTitle.tr()),
-                    content: Text(LocaleKeys.propertyCreateExitMessage.tr()),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(ctx, false),
-                        child: Text(LocaleKeys.propertyCreateExitCancel.tr()),
+                  builder: (ctx) => Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    child: Container(
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(24),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.1),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
                       ),
-                      ElevatedButton(
-                        onPressed: () => Navigator.pop(ctx, true),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.error,
-                          foregroundColor: Colors.white,
-                        ),
-                        child: Text(LocaleKeys.propertyCreateExitConfirm.tr()),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.error.withValues(alpha: 0.1),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(Icons.logout_rounded, color: AppColors.error, size: 32),
+                          ),
+                          const SizedBox(height: 20),
+                          Text(
+                            state.draftPropertyId != null
+                                ? LocaleKeys.propertyCreateExitTitle.tr()
+                                : "إلغاء الإضافة",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w800,
+                              color: Color(0xFF0F172A),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            state.draftPropertyId != null
+                                ? LocaleKeys.propertyCreateExitMessage.tr()
+                                : "هل أنت متأكد من رغبتك في إلغاء الإضافة؟ لن يتم حفظ أي بيانات كمسودة.",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Color(0xFF64748B),
+                              height: 1.5,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const SizedBox(height: 32),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TextButton(
+                                  onPressed: () => Navigator.pop(ctx, false),
+                                  style: TextButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(vertical: 14),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    foregroundColor: const Color(0xFF64748B),
+                                  ),
+                                  child: Text(
+                                    LocaleKeys.propertyCreateExitCancel.tr(),
+                                    style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: ElevatedButton(
+                                  onPressed: () => Navigator.pop(ctx, true),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: AppColors.error,
+                                    foregroundColor: Colors.white,
+                                    elevation: 0,
+                                    padding: const EdgeInsets.symmetric(vertical: 14),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                  ),
+                                  child: Text(
+                                    LocaleKeys.propertyCreateExitConfirm.tr(),
+                                    style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 );
                 if (shouldPop == true && context.mounted) {

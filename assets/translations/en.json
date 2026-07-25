@@ -277,7 +277,9 @@
     "area_unit": "m²",
     "valuation_amount": "Valuation Amount",
     "valuation_currency": "SAR",
-    "valuation_approved": "Certified Valuation"
+    "valuation_approved": "Certified Valuation",
+    "view_deed": "View Deed Details",
+    "deed_info": "Deed Information"
   },
   "property_edit": {
     "title": "Edit Property",

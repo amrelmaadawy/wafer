@@ -277,7 +277,9 @@
     "area_unit": "م²",
     "valuation_amount": "قيمة التقييم",
     "valuation_currency": "ر.س",
-    "valuation_approved": "تقييم معتمد"
+    "valuation_approved": "تقييم معتمد",
+    "view_deed": "عرض تفاصيل الصك",
+    "deed_info": "معلومات الصك"
   },
   "property_edit": {
     "title": "تعديل العقار",
