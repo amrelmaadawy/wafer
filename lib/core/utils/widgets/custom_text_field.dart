@@ -6,6 +6,7 @@ import '../../theme/app_radius.dart';
 class CustomTextField extends StatefulWidget {
   final String label;
   final String? hintText;
+  final String? initialValue;
   final bool isPassword;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -23,6 +24,7 @@ class CustomTextField extends StatefulWidget {
     super.key,
     required this.label,
     this.hintText,
+    this.initialValue,
     this.isPassword = false,
     this.controller,
     this.validator,
@@ -57,6 +59,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         ),
         const SizedBox(height: 8),
         TextFormField(
+          initialValue: widget.initialValue,
           controller: widget.controller,
           validator: widget.validator,
           keyboardType: widget.keyboardType,

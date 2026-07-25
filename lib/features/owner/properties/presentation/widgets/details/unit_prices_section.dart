@@ -15,14 +15,18 @@ class UnitPricesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     // Gather all non-zero prices
     final prices = <_Price>[];
-    if (unit.monthlyPrice > 0)
+    if (unit.monthlyPrice > 0) {
       prices.add(_Price(LocaleKeys.unit_details_monthly.tr(), unit.monthlyPrice, true));
-    if (unit.perTwoPaymentsPrice > 0)
+    }
+    if (unit.perTwoPaymentsPrice > 0) {
       prices.add(_Price(LocaleKeys.unit_details_per_two_payments.tr(), unit.perTwoPaymentsPrice, false));
-    if (unit.quarterlyPrice > 0)
+    }
+    if (unit.quarterlyPrice > 0) {
       prices.add(_Price(LocaleKeys.unit_details_quarterly.tr(), unit.quarterlyPrice, false));
-    if (prices.isEmpty && unit.rentPrice > 0)
+    }
+    if (prices.isEmpty && unit.rentPrice > 0) {
       prices.add(_Price(LocaleKeys.unit_details_rent_prices.tr(), unit.rentPrice, true));
+    }
 
     if (prices.isEmpty) return const SizedBox.shrink();
 

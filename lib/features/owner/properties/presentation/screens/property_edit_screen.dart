@@ -36,6 +36,17 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
   late TextEditingController _yearController;
   late TextEditingController _descriptionController;
 
+  // New location controllers
+  late TextEditingController _cityController;
+  late TextEditingController _districtController;
+  late TextEditingController _regionController;
+  late TextEditingController _streetController;
+  late TextEditingController _buildingController;
+
+  // New specs controllers
+  late TextEditingController _lengthController;
+  late TextEditingController _widthController;
+
   @override
   void initState() {
     super.initState();
@@ -47,12 +58,25 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
         text: widget.property.constructionYear != null ? widget.property.constructionYear.toString() : '');
     _descriptionController = TextEditingController(text: widget.property.description ?? '');
 
+    _cityController = TextEditingController(text: widget.property.city ?? '');
+    _districtController = TextEditingController(text: widget.property.district ?? '');
+    _regionController = TextEditingController(text: widget.property.region ?? '');
+    _streetController = TextEditingController(text: widget.property.streetName ?? '');
+    _buildingController = TextEditingController(text: widget.property.buildingNumber ?? '');
+
+    _lengthController = TextEditingController(
+        text: widget.property.length != null ? widget.property.length.toString() : '');
+    _widthController = TextEditingController(
+        text: widget.property.width != null ? widget.property.width.toString() : '');
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PropertyEditCubit>().init(
             widget.property.id,
             widget.property.branchId,
             widget.property.deedId,
             widget.property.propertyType,
+            usageType: widget.property.usageType,
+            amenities: widget.property.amenities,
           );
     });
   }
@@ -64,6 +88,13 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
     _areaController.dispose();
     _yearController.dispose();
     _descriptionController.dispose();
+    _cityController.dispose();
+    _districtController.dispose();
+    _regionController.dispose();
+    _streetController.dispose();
+    _buildingController.dispose();
+    _lengthController.dispose();
+    _widthController.dispose();
     super.dispose();
   }
 
@@ -81,12 +112,23 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
       return;
     }
 
+    final cubitState = context.read<PropertyEditCubit>().state;
+
     final data = {
       'name': name,
       'address': _addressController.text.trim(),
       'area': num.tryParse(_areaController.text.trim()),
       'construction_year': year,
       'description': _descriptionController.text.trim(),
+      'city': _cityController.text.trim(),
+      'district': _districtController.text.trim(),
+      'region': _regionController.text.trim(),
+      'street_name': _streetController.text.trim(),
+      'building_number': _buildingController.text.trim(),
+      'length': num.tryParse(_lengthController.text.trim()),
+      'width': num.tryParse(_widthController.text.trim()),
+      if (cubitState.selectedUsageType != null) 'usage_type': cubitState.selectedUsageType,
+      'amenities': cubitState.selectedAmenities,
     }..removeWhere((key, value) => value == null || (value is String && value.isEmpty));
 
     context.read<PropertyEditCubit>().saveChanges(widget.property.id, data);
@@ -163,14 +205,9 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                           const SizedBox(height: 24),
                         ],
                       ],
-                      Text(
-                        LocaleKeys.propertyDetailsBasicInfo.tr(),
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimaryLight,
-                        ),
-                      ),
+
+                      // Section 1: Basic Info
+                      _buildSectionHeader('المعلومات الأساسية', Icons.info_outline_rounded),
                       const SizedBox(height: 16),
                       _buildField(
                         _nameController,
@@ -196,7 +233,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                               Icons.square_foot_outlined,
                               keyboardType: const TextInputType.numberWithOptions(decimal: true),
                               isNumber: true,
-                              hint: 'أدخل المساحة بالأرقام فقط (م²)',
+                              hint: 'المساحة (م²)',
                               suffixText: LocaleKeys.propertyDetailsAreaUnit.tr(),
                             ),
                           ),
@@ -222,6 +259,161 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                         maxLines: 4,
                         hint: 'أضف وصفاً مفصلاً للعقار ومميزاته...',
                       ),
+                      const SizedBox(height: 32),
+
+                      // Section 2: Location Details
+                      _buildSectionHeader('تفاصيل الموقع', Icons.map_outlined),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildField(
+                              _cityController,
+                              'المدينة',
+                              Icons.location_city_outlined,
+                              hint: 'مثال: الرياض',
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: _buildField(
+                              _districtController,
+                              'الحي',
+                              Icons.holiday_village_outlined,
+                              hint: 'مثال: النرجس',
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildField(
+                              _regionController,
+                              'المنطقة',
+                              Icons.explore_outlined,
+                              hint: 'مثال: الوسطى',
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: _buildField(
+                              _buildingController,
+                              'رقم المبنى',
+                              Icons.tag_rounded,
+                              isNumber: true,
+                              hint: 'مثال: 12',
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      _buildField(
+                        _streetController,
+                        'اسم الشارع',
+                        Icons.add_road_rounded,
+                        hint: 'مثال: شارع الملك فهد',
+                      ),
+                      const SizedBox(height: 32),
+
+                      // Section 3: Specifications
+                      _buildSectionHeader('المواصفات والأبعاد', Icons.straighten_rounded),
+                      const SizedBox(height: 16),
+                      Text(
+                        'نوع الاستخدام',
+                        style: const TextStyle(
+                          fontSize: 13.5,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimaryLight,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      CustomDropdownMenu<String>(
+                        items: const ['residential', 'commercial', 'administrative', 'mixed'],
+                        value: state.selectedUsageType,
+                        hint: 'اختر نوع الاستخدام',
+                        itemLabelBuilder: (val) {
+                          switch (val) {
+                            case 'residential':
+                              return 'سكني';
+                            case 'commercial':
+                              return 'تجاري';
+                            case 'administrative':
+                              return 'إداري';
+                            case 'mixed':
+                              return 'مختلط';
+                            default:
+                              return val;
+                          }
+                        },
+                        onSelected: (val) => context.read<PropertyEditCubit>().selectUsageType(val),
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildField(
+                              _lengthController,
+                              'الطول (م)',
+                              Icons.height_rounded,
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                              isNumber: true,
+                              hint: 'مثال: 30',
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: _buildField(
+                              _widthController,
+                              'العرض (م)',
+                              Icons.swap_horiz_rounded,
+                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                              isNumber: true,
+                              hint: 'مثال: 20',
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 32),
+
+                      // Section 4: Amenities
+                      _buildSectionHeader('المميزات والإضافات', Icons.star_outline_rounded),
+                      const SizedBox(height: 16),
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 10,
+                        children: const [
+                          ('elevator', 'مصعد'),
+                          ('parking', 'موقف سيارات'),
+                          ('security', 'حراسة 24/7'),
+                          ('pool', 'مسبح'),
+                          ('gym', 'صالة رياضية'),
+                          ('generator', 'مولد كهرباء'),
+                          ('central_ac', 'تكييف مركزي'),
+                          ('internet', 'ألياف بصرية (إنترنت)'),
+                        ].map((amenity) {
+                          final isSelected = state.selectedAmenities.contains(amenity.$1);
+                          return FilterChip(
+                            label: Text(amenity.$2),
+                            selected: isSelected,
+                            onSelected: (_) => context.read<PropertyEditCubit>().toggleAmenity(amenity.$1),
+                            selectedColor: context.primaryColor.withValues(alpha: 0.12),
+                            checkmarkColor: context.primaryColor,
+                            backgroundColor: Colors.white,
+                            side: BorderSide(
+                              color: isSelected ? context.primaryColor : const Color(0xFFE2E8F0),
+                              width: isSelected ? 1.5 : 1,
+                            ),
+                            labelStyle: TextStyle(
+                              color: isSelected ? context.primaryColor : AppColors.textPrimaryLight,
+                              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                              fontSize: 13,
+                            ),
+                            shape: RoundedRectangleBorder(borderRadius: AppRadius.circularFull),
+                          );
+                        }).toList(),
+                      ),
                       const SizedBox(height: 40),
                     ],
                   ),
@@ -232,6 +424,34 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
           );
         },
       ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title, IconData icon) {
+    return Row(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: context.primaryColor.withValues(alpha: 0.1),
+            borderRadius: AppRadius.circularMd,
+          ),
+          child: Icon(icon, size: 18, color: context.primaryColor),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          title,
+          style: const TextStyle(
+            fontSize: 15.5,
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimaryLight,
+          ),
+        ),
+        const SizedBox(width: 12),
+        const Expanded(
+          child: Divider(color: Color(0xFFE2E8F0), height: 1),
+        ),
+      ],
     );
   }
 

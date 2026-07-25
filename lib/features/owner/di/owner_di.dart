@@ -68,6 +68,7 @@ import '../properties/domain/usecases/get_property_units_use_case.dart';
 import '../properties/domain/usecases/create_draft_unit_use_case.dart';
 import '../properties/domain/usecases/auto_save_unit_use_case.dart';
 import '../properties/domain/usecases/publish_unit_use_case.dart';
+import '../properties/domain/usecases/create_unit_usecase.dart';
 import '../properties/presentation/cubit/units/units_list_cubit.dart';
 import '../properties/presentation/cubit/units/unit_create_cubit.dart';
 
@@ -112,6 +113,9 @@ void _initUnits() {
   if (!sl.isRegistered<CreateDraftUnitUseCase>()) {
     sl.registerLazySingleton(() => CreateDraftUnitUseCase(sl()));
   }
+  if (!sl.isRegistered<CreateUnitUseCase>()) {
+    sl.registerLazySingleton(() => CreateUnitUseCase(sl()));
+  }
   if (!sl.isRegistered<AutoSaveUnitUseCase>()) {
     sl.registerLazySingleton(() => AutoSaveUnitUseCase(sl()));
   }
@@ -125,11 +129,7 @@ void _initUnits() {
     sl.registerFactory(() => UnitDetailsCubit(sl()));
   }
   if (!sl.isRegistered<UnitCreateCubit>()) {
-    sl.registerFactory(() => UnitCreateCubit(
-          createDraftUnit: sl(),
-          autoSaveUnit: sl(),
-          publishUnit: sl(),
-        ));
+    sl.registerFactory(() => UnitCreateCubit(sl(), sl()));
   }
 }
 

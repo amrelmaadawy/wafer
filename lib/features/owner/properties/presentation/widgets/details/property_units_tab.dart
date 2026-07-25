@@ -30,7 +30,10 @@ class PropertyUnitsTab extends StatelessWidget {
       backgroundColor: Colors.transparent,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // TODO: Show Add Unit Bottom Sheet
+          context.push(Uri(
+            path: Routes.ownerUnitCreate,
+            queryParameters: {'propertyId': propertyId.toString()},
+          ).toString());
         },
         backgroundColor: context.primaryColor,
         icon: const Icon(Icons.add_rounded, color: Colors.white),
@@ -133,7 +136,12 @@ class PropertyUnitsTab extends StatelessWidget {
             StaggeredListItem(
               index: 3,
               child: ElevatedButton.icon(
-                onPressed: () {}, // TODO: Show Add Unit Bottom Sheet
+                onPressed: () {
+                  context.push(Uri(
+                    path: Routes.ownerUnitCreate,
+                    queryParameters: {'propertyId': propertyId.toString()},
+                  ).toString());
+                },
                 icon: const Icon(Icons.add_rounded, size: 20),
                 label: Text(LocaleKeys.propertyDetailsAddUnit.tr(), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
                 style: ElevatedButton.styleFrom(

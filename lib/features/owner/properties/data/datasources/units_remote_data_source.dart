@@ -3,6 +3,7 @@ import '../../../../../core/network/api_constants.dart';
 import '../../domain/entities/properties_pagination_meta_entity.dart';
 import '../models/unit_model.dart';
 import '../models/unit_full_details_model.dart';
+import '../models/unit_create_model.dart';
 
 abstract class UnitsRemoteDataSource {
   Future<({List<UnitModel> items, PropertiesPaginationMetaEntity meta})> getPropertyUnits(
@@ -13,6 +14,7 @@ abstract class UnitsRemoteDataSource {
     String? unitType,
   });
   Future<int> createDraftUnit(int propertyId);
+  Future<int> createUnitDirect(int propertyId, UnitCreateModel unit);
   Future<void> autoSaveUnit(int propertyId, int unitId, Map<String, dynamic> data);
   Future<UnitFullDetailsModel> getUnitDetails(int propertyId, int unitId);
   Future<void> publishUnit(int propertyId, int unitId);
@@ -74,6 +76,16 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
 
     final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
     return data['id'] as int? ?? data['unit_id'] as int? ?? 0;
+  }
+
+  @override
+  Future<int> createUnitDirect(int propertyId, UnitCreateModel unit) async {
+    final formData = await unit.toFormData();
+    final response = await _dio.post(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerPropertyUnits(propertyId)}',
+      data: formData,
+    );
+    return response.data['data']['unit_id'] as int;
   }
 
   @override

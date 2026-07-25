@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
-import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/unit_entity.dart';
 import '../../domain/entities/unit_full_details_entity.dart';
 import '../../domain/entities/properties_pagination_meta_entity.dart';
+import '../../domain/entities/unit_create_entity.dart';
 import '../../domain/repositories/units_repository.dart';
+import '../models/unit_create_model.dart';
 import '../datasources/units_remote_data_source.dart';
 
 class UnitsRepositoryImpl implements UnitsRepository {
@@ -35,7 +35,7 @@ class UnitsRepositoryImpl implements UnitsRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -49,7 +49,7 @@ class UnitsRepositoryImpl implements UnitsRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -63,7 +63,7 @@ class UnitsRepositoryImpl implements UnitsRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -77,7 +77,7 @@ class UnitsRepositoryImpl implements UnitsRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -91,7 +91,22 @@ class UnitsRepositoryImpl implements UnitsRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, int>> createUnitDirect(int propertyId, UnitCreateEntity unit) async {
+    try {
+      final model = UnitCreateModel.fromEntity(unit);
+      final result = await _remoteDataSource.createUnitDirect(propertyId, model);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

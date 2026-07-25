@@ -48,7 +48,7 @@ class UnitHeaderSection extends StatelessWidget {
               return Image.network(
                 unit.images[index],
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => _buildFallbackHeader(context),
+                errorBuilder: (_, _, _) => _buildFallbackHeader(context),
               );
             },
           ),

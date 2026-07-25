@@ -25,12 +25,21 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
         _autoSaveTypeStep = autoSaveTypeStep,
         super(const PropertyEditState());
 
-  void init(int propertyId, int? branchId, int? deedId, String? selectedType) {
+  void init(
+    int propertyId,
+    int? branchId,
+    int? deedId,
+    String? selectedType, {
+    String? usageType,
+    List<String>? amenities,
+  }) {
     _propertyId = propertyId;
     emit(state.copyWith(
       selectedBranchId: branchId,
       selectedDeedId: deedId,
       selectedType: selectedType,
+      selectedUsageType: usageType,
+      selectedAmenities: amenities != null ? List<String>.from(amenities) : [],
     ));
     loadFormData();
   }
@@ -57,6 +66,20 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
   void selectType(String type) {
     emit(state.copyWith(selectedType: type).clearError());
     _triggerTypeAutoSave();
+  }
+
+  void selectUsageType(String usageType) {
+    emit(state.copyWith(selectedUsageType: usageType).clearError());
+  }
+
+  void toggleAmenity(String amenity) {
+    final current = List<String>.from(state.selectedAmenities);
+    if (current.contains(amenity)) {
+      current.remove(amenity);
+    } else {
+      current.add(amenity);
+    }
+    emit(state.copyWith(selectedAmenities: current).clearError());
   }
 
   Future<void> _triggerDeedAutoSave() async {

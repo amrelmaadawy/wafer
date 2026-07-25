@@ -15,6 +15,8 @@ class PropertyEditState extends Equatable {
   final int? selectedBranchId;
   final int? selectedDeedId;
   final String? selectedType;
+  final String? selectedUsageType;
+  final List<String> selectedAmenities;
   final PropertyDetailsEntity? updatedProperty;
 
   const PropertyEditState({
@@ -27,6 +29,8 @@ class PropertyEditState extends Equatable {
     this.selectedBranchId,
     this.selectedDeedId,
     this.selectedType,
+    this.selectedUsageType,
+    this.selectedAmenities = const [],
     this.updatedProperty,
   });
 
@@ -43,6 +47,8 @@ class PropertyEditState extends Equatable {
     int? selectedBranchId,
     int? selectedDeedId,
     String? selectedType,
+    String? selectedUsageType,
+    List<String>? selectedAmenities,
     PropertyDetailsEntity? updatedProperty,
   }) {
     return PropertyEditState(
@@ -50,16 +56,17 @@ class PropertyEditState extends Equatable {
       isSaving: isSaving ?? this.isSaving,
       isAutoSaving: isAutoSaving ?? this.isAutoSaving,
       isSuccess: isSuccess ?? this.isSuccess,
-      errorMessage: errorMessage, // null unless explicitly passed? Wait, passing null means clearing it.
+      errorMessage: errorMessage,
       formData: formData ?? this.formData,
       selectedBranchId: selectedBranchId ?? this.selectedBranchId,
       selectedDeedId: selectedDeedId ?? this.selectedDeedId,
       selectedType: selectedType ?? this.selectedType,
+      selectedUsageType: selectedUsageType ?? this.selectedUsageType,
+      selectedAmenities: selectedAmenities ?? this.selectedAmenities,
       updatedProperty: updatedProperty ?? this.updatedProperty,
     );
   }
 
-  // To properly clear error message
   PropertyEditState clearError() {
     return PropertyEditState(
       isLoadingForm: isLoadingForm,
@@ -71,6 +78,8 @@ class PropertyEditState extends Equatable {
       selectedBranchId: selectedBranchId,
       selectedDeedId: selectedDeedId,
       selectedType: selectedType,
+      selectedUsageType: selectedUsageType,
+      selectedAmenities: selectedAmenities,
       updatedProperty: updatedProperty,
     );
   }
@@ -86,6 +95,8 @@ class PropertyEditState extends Equatable {
         selectedBranchId,
         selectedDeedId,
         selectedType,
+        selectedUsageType,
+        selectedAmenities,
         updatedProperty,
       ];
 }

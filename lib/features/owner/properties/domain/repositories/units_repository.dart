@@ -3,6 +3,7 @@ import '../../../../../core/error/failures.dart';
 import '../entities/properties_pagination_meta_entity.dart';
 import '../entities/unit_full_details_entity.dart';
 import '../entities/unit_entity.dart';
+import '../entities/unit_create_entity.dart';
 
 
 abstract class UnitsRepository {
@@ -17,4 +18,5 @@ abstract class UnitsRepository {
   Future<Either<Failure, void>> autoSaveUnit(int propertyId, int unitId, Map<String, dynamic> data);
   Future<Either<Failure, UnitFullDetailsEntity>> getUnitDetails(int propertyId, int unitId);
   Future<Either<Failure, void>> publishUnit(int propertyId, int unitId);
+  Future<Either<Failure, int>> createUnitDirect(int propertyId, UnitCreateEntity unit);
 }

@@ -12,6 +12,7 @@ import '../widgets/details/unit_specs_grid.dart';
 import '../widgets/details/unit_dimensions_card.dart';
 import '../widgets/details/unit_meters_section.dart';
 import '../widgets/details/unit_amenities_section.dart';
+import '../widgets/details/unit_details_skeleton.dart';
 
 class UnitDetailsView extends StatelessWidget {
   const UnitDetailsView({super.key});
@@ -23,7 +24,7 @@ class UnitDetailsView extends StatelessWidget {
       body: BlocBuilder<UnitDetailsCubit, UnitDetailsState>(
         builder: (context, state) {
           if (state is UnitDetailsLoading || state is UnitDetailsInitial) {
-            return const Center(child: CircularProgressIndicator());
+            return const UnitDetailsSkeleton();
           }
           if (state is UnitDetailsError) {
             return CustomErrorWidget(
