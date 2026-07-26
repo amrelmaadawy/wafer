@@ -234,6 +234,7 @@ abstract class  LocaleKeys {
   static const property_details_delete_confirm_title = 'property_details.delete_confirm_title';
   static const property_details_delete_confirm_body = 'property_details.delete_confirm_body';
   static const property_details_delete_confirm_btn = 'property_details.delete_confirm_btn';
+  static const property_details_deleting_property = 'property_details.deleting_property';
   static const property_details_cancel = 'property_details.cancel';
   static const property_details_no_units_title = 'property_details.no_units_title';
   static const property_details_no_units_subtitle = 'property_details.no_units_subtitle';
@@ -835,6 +836,7 @@ abstract class  LocaleKeys {
   static const propertyDetailsDeleteConfirmTitle = property_details_delete_confirm_title;
   static const propertyDetailsDeleteConfirmBody = property_details_delete_confirm_body;
   static const propertyDetailsDeleteConfirmBtn = property_details_delete_confirm_btn;
+  static const propertyDetailsDeletingProperty = property_details_deleting_property;
   static const propertyDetailsCancel = property_details_cancel;
   static const propertyDetailsNoUnitsTitle = property_details_no_units_title;
   static const propertyDetailsNoUnitsSubtitle = property_details_no_units_subtitle;

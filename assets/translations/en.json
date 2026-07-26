@@ -238,6 +238,7 @@
     "delete_confirm_title": "Delete Property",
     "delete_confirm_body": "This property and all associated units will be permanently deleted",
     "delete_confirm_btn": "Confirm Delete",
+    "deleting_property": "Deleting...",
     "cancel": "Cancel",
     "no_units_title": "No Units Added",
     "no_units_subtitle": "Add your first unit to start managing and leasing it",

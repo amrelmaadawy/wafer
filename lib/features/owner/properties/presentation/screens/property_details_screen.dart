@@ -8,6 +8,7 @@ import '../../../../../core/routing/routes.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/di/service_locator.dart';
 import '../../domain/entities/property_details_entity.dart';
 import '../cubit/details/property_details_cubit.dart';
@@ -149,7 +150,33 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
               showDialog(
                 context: context,
                 barrierDismissible: false,
-                builder: (_) => const Center(child: LoadingWidget()),
+                builder: (_) => PopScope(
+                  canPop: false,
+                  child: Dialog(
+                    backgroundColor: AppColors.backgroundLight,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: AppRadius.circularXl,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 24),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const LoadingWidget(),
+                          const SizedBox(height: 20),
+                          Text(
+                            LocaleKeys.propertyDetailsDeletingProperty.tr(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textPrimaryLight,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
               ).then((_) => _isLoadingDialogOpen = false);
             } else if (state is DeletePropertySuccess) {
               if (_isLoadingDialogOpen) {

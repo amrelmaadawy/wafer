@@ -238,6 +238,7 @@
     "delete_confirm_title": "حذف العقار",
     "delete_confirm_body": "سيتم حذف العقار وجميع الوحدات المرتبطة به نهائياً",
     "delete_confirm_btn": "تأكيد الحذف",
+    "deleting_property": "جاري الحذف...",
     "cancel": "إلغاء",
     "no_units_title": "لا توجد وحدات مضافة",
     "no_units_subtitle": "قم بإضافة أول وحدة لهذا العقار للبدء في تأجيرها وإدارتها",

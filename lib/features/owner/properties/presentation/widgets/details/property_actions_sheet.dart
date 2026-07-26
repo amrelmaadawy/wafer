@@ -179,7 +179,6 @@ class PropertyActionsSheet extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          Navigator.pop(context);
           onTap();
         },
         borderRadius: BorderRadius.vertical(
