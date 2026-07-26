@@ -14,9 +14,37 @@ import '../widgets/occupancy_summary_header.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
 import '../../../../../core/services/pdf/builders/occupancy_pdf_builder.dart';
+import '../../../../../core/services/excel/excel_export_service.dart';
+import '../../../../../core/services/excel/builders/occupancy_excel_builder.dart';
 
-class OwnerOccupancyReportView extends StatelessWidget {
+class OwnerOccupancyReportView extends StatefulWidget {
   const OwnerOccupancyReportView({super.key});
+
+  @override
+  State<OwnerOccupancyReportView> createState() => _OwnerOccupancyReportViewState();
+}
+
+class _OwnerOccupancyReportViewState extends State<OwnerOccupancyReportView> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      context.read<OwnerOccupancyCubit>().loadOccupancyReport();
+    }
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +57,35 @@ class OwnerOccupancyReportView extends StatelessWidget {
             builder: (context, state) {
               if (state is OwnerOccupancyLoaded) {
                 return ReportExportButton(
-                  onPressed: () async {
+                  onPdfPressed: () async {
                     final pdf = await OccupancyPdfBuilder.build(
-                      state.properties,
-                      state.overallRate,
-                      state.totalUnits,
-                      state.totalRented,
-                      state.totalVacant,
+                      state.report.items,
+                      state.report.summary.overallOccupancy,
+                      state.report.summary.totalUnits,
+                      state.report.summary.rentedUnits,
+                      state.report.summary.totalUnits - state.report.summary.rentedUnits,
                     );
                     if (context.mounted) {
                       await PdfGeneratorService.exportAndPrint(
                         context: context,
                         pdf: pdf,
                         fileName: 'تقرير_الإشغال.pdf',
+                      );
+                    }
+                  },
+                  onExcelPressed: () async {
+                    final bytes = await OccupancyExcelBuilder.build(
+                      state.report.items,
+                      state.report.summary.overallOccupancy,
+                      state.report.summary.totalUnits,
+                      state.report.summary.rentedUnits,
+                      state.report.summary.totalUnits - state.report.summary.rentedUnits,
+                    );
+                    if (context.mounted) {
+                      await ExcelExportService.saveAndShare(
+                        context: context,
+                        bytes: bytes,
+                        fileName: 'تقرير_الإشغال.xlsx',
                       );
                     }
                   },
@@ -54,7 +98,7 @@ class OwnerOccupancyReportView extends StatelessWidget {
       ),
       body: BlocBuilder<OwnerOccupancyCubit, OwnerOccupancyState>(
         builder: (context, state) {
-        if (state is OwnerOccupancyLoading || state is OwnerOccupancyInitial) {
+        if (state is OwnerOccupancyLoading && context.read<OwnerOccupancyCubit>().state is! OwnerOccupancyLoaded) {
           return const SingleChildScrollView(
             padding: EdgeInsets.all(20),
             child: OccupancySkeleton(),
@@ -70,19 +114,25 @@ class OwnerOccupancyReportView extends StatelessWidget {
                 .read<OwnerOccupancyCubit>()
                 .loadOccupancyReport(forceRefresh: true),
             child: SingleChildScrollView(
+              controller: _scrollController,
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   OccupancySummaryHeader(
-                    overallRate: state.overallRate,
-                    totalUnits: state.totalUnits,
-                    totalRented: state.totalRented,
-                    totalVacant: state.totalVacant,
+                    overallRate: state.report.summary.overallOccupancy,
+                    totalUnits: state.report.summary.totalUnits,
+                    totalRented: state.report.summary.rentedUnits,
+                    totalVacant: state.report.summary.totalUnits - state.report.summary.rentedUnits,
                   ),
                   const SizedBox(height: 22),
-                  OccupancyPropertiesList(properties: state.properties),
+                  OccupancyPropertiesList(properties: state.report.items),
+                  if (!state.hasReachedMax)
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
                   const SizedBox(height: 30),
                 ],
               ),

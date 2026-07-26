@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:wafer/features/owner/reports/data/models/occupancy_report_model.dart';
 import '../../../../../core/network/api_constants.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../models/defaulter_model.dart';
-import '../models/occupancy_property_model.dart';
 import '../models/revenue_report_model.dart';
 import '../models/units_status_report_model.dart';
 
@@ -12,7 +12,7 @@ abstract class OwnerReportsRemoteDataSource {
     String? startDate,
     String? endDate,
   });
-  Future<List<OccupancyPropertyModel>> getOccupancyReport();
+  Future<OccupancyReportModel> getOccupancyReport({int page = 1});
   /// TODO: implement when endpoint is ready (owner/reports/defaulters)
   Future<List<DefaulterModel>> getDefaultersReport();
   Future<UnitsStatusReportModel> getUnitsStatusReport({
@@ -27,23 +27,6 @@ class OwnerReportsRemoteDataSourceImpl
   final Dio _dio;
 
   OwnerReportsRemoteDataSourceImpl(this._dio);
-
-  List<dynamic> _extractList(dynamic dataField) {
-    if (dataField is List) return dataField;
-    if (dataField is Map) {
-      if (dataField.containsKey('items') && dataField['items'] is List) {
-        return dataField['items'] as List;
-      }
-      if (dataField.containsKey('data') && dataField['data'] is List) {
-        return dataField['data'] as List;
-      }
-      // If no explicit keys, try to find the first array in the map
-      for (var value in dataField.values) {
-        if (value is List) return value;
-      }
-    }
-    return [];
-  }
 
   @override
   Future<RevenueReportModel> getRevenueReport({
@@ -69,18 +52,17 @@ class OwnerReportsRemoteDataSourceImpl
   }
 
   @override
-  Future<List<OccupancyPropertyModel>> getOccupancyReport() async {
+  Future<OccupancyReportModel> getOccupancyReport({int page = 1}) async {
     final response = await _dio.get(
       '${ApiConstants.baseUrl}${ApiConstants.ownerOccupancyReport}',
+      queryParameters: {'page': page},
     );
 
     final data = response.data as Map<String, dynamic>? ?? {};
-    final list = _extractList(data['data']);
-
-    return list
-        .whereType<Map<String, dynamic>>()
-        .map((json) => OccupancyPropertyModel.fromJson(json))
-        .toList();
+    if (data['data'] != null && data['data'] is Map<String, dynamic>) {
+      return OccupancyReportModel.fromJson(data['data']);
+    }
+    throw ServerException('Invalid response format');
   }
 
   @override

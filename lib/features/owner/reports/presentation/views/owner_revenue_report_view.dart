@@ -31,7 +31,7 @@ class OwnerRevenueReportView extends StatelessWidget {
             builder: (context, state) {
               if (state is OwnerRevenueLoaded) {
                 return ReportExportButton(
-                  onPressed: () async {
+                  onPdfPressed: () async {
                     final pdf = await RevenuePdfBuilder.build(state.report);
                     if (context.mounted) {
                       await PdfGeneratorService.exportAndPrint(
@@ -40,6 +40,9 @@ class OwnerRevenueReportView extends StatelessWidget {
                         fileName: 'تقرير_الإيرادات.pdf',
                       );
                     }
+                  },
+                  onExcelPressed: () {
+                    // TODO: Implement excel export for revenue report
                   },
                 );
               }

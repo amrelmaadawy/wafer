@@ -4,6 +4,7 @@ class OccupancyPropertyModel extends OccupancyPropertyEntity {
   const OccupancyPropertyModel({
     required super.propertyId,
     required super.propertyName,
+    required super.code,
     required super.totalUnits,
     required super.rentedUnits,
     required super.vacantUnits,
@@ -14,6 +15,7 @@ class OccupancyPropertyModel extends OccupancyPropertyEntity {
     return OccupancyPropertyModel(
       propertyId: _parseInt(json['property_id']),
       propertyName: json['property_name']?.toString() ?? '',
+      code: json['code']?.toString() ?? '',
       totalUnits: _parseInt(json['total_units']),
       rentedUnits: _parseInt(json['rented_units']),
       vacantUnits: _parseInt(json['vacant_units']),
@@ -25,6 +27,7 @@ class OccupancyPropertyModel extends OccupancyPropertyEntity {
     return {
       'property_id': propertyId,
       'property_name': propertyName,
+      'code': code,
       'total_units': totalUnits,
       'rented_units': rentedUnits,
       'vacant_units': vacantUnits,

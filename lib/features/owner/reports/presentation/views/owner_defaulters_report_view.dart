@@ -12,6 +12,7 @@ import '../cubit/owner_defaulters_state.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
 import '../../../../../core/services/pdf/builders/defaulters_pdf_builder.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
 
 class OwnerDefaultersReportView extends StatelessWidget {
   const OwnerDefaultersReportView({super.key});
@@ -27,7 +28,7 @@ class OwnerDefaultersReportView extends StatelessWidget {
             builder: (context, state) {
               if (state is OwnerDefaultersLoaded) {
                 return ReportExportButton(
-                  onPressed: () async {
+                  onPdfPressed: () async {
                     final pdf = await DefaultersPdfBuilder.build(
                       state.defaulters,
                       state.totalOverdueAmount,
@@ -39,6 +40,11 @@ class OwnerDefaultersReportView extends StatelessWidget {
                         pdf: pdf,
                         fileName: 'تقرير_المتعثرين.pdf',
                       );
+                    }
+                  },
+                  onExcelPressed: () {
+                    if (context.mounted) {
+                      AppToast.showInfo(context, 'قريباً');
                     }
                   },
                 );

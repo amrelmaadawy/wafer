@@ -58,7 +58,7 @@ class _OwnerUnitsStatusReportViewState
             builder: (context, state) {
               if (state is OwnerUnitsStatusLoaded) {
                 return ReportExportButton(
-                  onPressed: () async {
+                  onPdfPressed: () async {
                     final pdf = await UnitsStatusPdfBuilder.build(state.report);
                     if (context.mounted) {
                       await PdfGeneratorService.exportAndPrint(
@@ -67,6 +67,9 @@ class _OwnerUnitsStatusReportViewState
                         fileName: 'تقرير_حالة_الوحدات.pdf',
                       );
                     }
+                  },
+                  onExcelPressed: () {
+                    // TODO: Implement excel export for units status report
                   },
                 );
               }

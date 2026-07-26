@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/occupancy_property_entity.dart';
+import '../../domain/entities/occupancy_report_entity.dart';
 
 abstract class OwnerOccupancyState extends Equatable {
   const OwnerOccupancyState();
@@ -17,28 +17,26 @@ class OwnerOccupancyLoading extends OwnerOccupancyState {
 }
 
 class OwnerOccupancyLoaded extends OwnerOccupancyState {
-  final List<OccupancyPropertyEntity> properties;
-  final double overallRate;
-  final int totalUnits;
-  final int totalRented;
-  final int totalVacant;
+  final OccupancyReportEntity report;
+  final bool hasReachedMax;
 
   const OwnerOccupancyLoaded({
-    required this.properties,
-    required this.overallRate,
-    required this.totalUnits,
-    required this.totalRented,
-    required this.totalVacant,
+    required this.report,
+    this.hasReachedMax = false,
   });
 
+  OwnerOccupancyLoaded copyWith({
+    OccupancyReportEntity? report,
+    bool? hasReachedMax,
+  }) {
+    return OwnerOccupancyLoaded(
+      report: report ?? this.report,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+    );
+  }
+
   @override
-  List<Object?> get props => [
-        properties,
-        overallRate,
-        totalUnits,
-        totalRented,
-        totalVacant,
-      ];
+  List<Object?> get props => [report, hasReachedMax];
 }
 
 class OwnerOccupancyEmpty extends OwnerOccupancyState {

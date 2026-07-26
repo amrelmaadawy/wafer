@@ -6,7 +6,7 @@ import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/defaulter_entity.dart';
-import '../../domain/entities/occupancy_property_entity.dart';
+import '../../domain/entities/occupancy_report_entity.dart';
 import '../models/revenue_report_model.dart';
 import '../../domain/repositories/owner_reports_repository.dart';
 import '../datasources/owner_reports_remote_data_source.dart';
@@ -50,11 +50,12 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
   }
 
   @override
-  Future<Either<Failure, List<OccupancyPropertyEntity>>> getOccupancyReport({
+  Future<Either<Failure, OccupancyReportEntity>> getOccupancyReport({
     bool forceRefresh = false,
+    int page = 1,
   }) async {
     try {
-      final result = await _remoteDataSource.getOccupancyReport();
+      final result = await _remoteDataSource.getOccupancyReport(page: page);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

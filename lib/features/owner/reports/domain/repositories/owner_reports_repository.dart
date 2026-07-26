@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import '../../../../../core/error/failures.dart';
 import '../entities/defaulter_entity.dart';
-import '../entities/occupancy_property_entity.dart';
+import '../entities/occupancy_report_entity.dart';
 import '../entities/revenue_report_entity.dart';
 import '../entities/units_status_report_entity.dart';
 
@@ -13,8 +13,9 @@ abstract class OwnerReportsRepository {
     String? endDate,
   });
 
-  Future<Either<Failure, List<OccupancyPropertyEntity>>> getOccupancyReport({
+  Future<Either<Failure, OccupancyReportEntity>> getOccupancyReport({
     bool forceRefresh = false,
+    int page = 1,
   });
 
   Future<Either<Failure, List<DefaulterEntity>>> getDefaultersReport({
