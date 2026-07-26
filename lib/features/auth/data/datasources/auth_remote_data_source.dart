@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../../../core/localization/locale_keys.dart';
+import '../../../../core/network/api_constants.dart';
 import '../models/user_model.dart';
 
 abstract class AuthRemoteDataSource {
@@ -11,6 +12,8 @@ abstract class AuthRemoteDataSource {
     required String deviceName,
     required String deviceToken,
   });
+  
+  Future<void> logout();
 }
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
@@ -41,6 +44,27 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       } else {
         throw ServerException(
           response.data['message'] ?? LocaleKeys.errorsLoginFailed.tr(),
+        );
+      }
+    } on DioException catch (e) {
+      if (e.response != null && e.response?.data is Map) {
+        final message = e.response?.data['message'] ?? LocaleKeys.errorsConnectionError.tr();
+        throw ServerException(message.toString());
+      }
+      throw ServerException(e.message ?? LocaleKeys.errorsNetworkError.tr());
+    } catch (e) {
+      if (e is ServerException) rethrow;
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      final response = await dio.post(ApiConstants.sharedLogout);
+      if (response.data['success'] != true) {
+        throw ServerException(
+          response.data['message'] ?? LocaleKeys.errorsLogoutFailed.tr(),
         );
       }
     } on DioException catch (e) {

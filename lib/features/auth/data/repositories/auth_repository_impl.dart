@@ -58,8 +58,11 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<Either<Failure, void>> logout() async {
     try {
+      await _remoteDataSource.logout();
       await _secureStorageService.deleteToken();
       return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
     } catch (e) {
       return Left(ServerFailure(LocaleKeys.errorsLogoutFailed.tr()));
     }
