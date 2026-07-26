@@ -1,11 +1,16 @@
 import 'package:dio/dio.dart';
 import '../../../../../core/network/api_constants.dart';
+import '../../../../../core/error/exceptions.dart';
 import '../models/defaulter_model.dart';
 import '../models/occupancy_property_model.dart';
-import '../models/revenue_entry_model.dart';
+import '../models/revenue_report_model.dart';
 
 abstract class OwnerReportsRemoteDataSource {
-  Future<List<RevenueEntryModel>> getRevenueReport();
+  Future<RevenueReportModel> getRevenueReport({
+    int? propertyId,
+    String? startDate,
+    String? endDate,
+  });
   Future<List<OccupancyPropertyModel>> getOccupancyReport();
   /// TODO: implement when endpoint is ready (owner/reports/defaulters)
   Future<List<DefaulterModel>> getDefaultersReport();
@@ -35,20 +40,26 @@ class OwnerReportsRemoteDataSourceImpl
   }
 
   @override
-  Future<List<RevenueEntryModel>> getRevenueReport() async {
+  Future<RevenueReportModel> getRevenueReport({
+    int? propertyId,
+    String? startDate,
+    String? endDate,
+  }) async {
+    final queryParams = <String, dynamic>{};
+    if (propertyId != null) queryParams['property_id'] = propertyId;
+    if (startDate != null) queryParams['start_date'] = startDate;
+    if (endDate != null) queryParams['end_date'] = endDate;
+
     final response = await _dio.get(
       '${ApiConstants.baseUrl}${ApiConstants.ownerRevenueReport}',
+      queryParameters: queryParams.isNotEmpty ? queryParams : null,
     );
 
     final data = response.data as Map<String, dynamic>? ?? {};
-    final list = _extractList(data['data']);
-
-    final models = list
-        .whereType<Map<String, dynamic>>()
-        .map((json) => RevenueEntryModel.fromJson(json))
-        .toList();
-
-    return models.reversed.toList();
+    if (data['data'] != null && data['data'] is Map<String, dynamic>) {
+      return RevenueReportModel.fromJson(data['data']);
+    }
+    throw ServerException('Invalid response format');
   }
 
   @override

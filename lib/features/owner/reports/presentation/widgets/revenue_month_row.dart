@@ -13,7 +13,7 @@ class RevenueMonthRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final overdue = item.overdue;
+    final remaining = item.remaining;
     final progress = item.collectionRate.clamp(0.0, 1.0);
     final percentText = (item.collectionRate * 100).toStringAsFixed(0);
     final progressColor = item.collectionRate >= 0.7
@@ -100,8 +100,8 @@ class RevenueMonthRow extends StatelessWidget {
               Expanded(
                 child: _buildCell(
                   title: LocaleKeys.revenueOverdue.tr(),
-                  value: overdue,
-                  color: overdue > 0
+                  value: remaining,
+                  color: remaining > 0
                       ? const Color(0xFFEF4444)
                       : AppColors.textSecondaryLight,
                 ),

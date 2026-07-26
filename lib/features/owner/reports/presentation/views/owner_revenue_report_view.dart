@@ -11,6 +11,7 @@ import '../widgets/revenue_animated_bar_chart.dart';
 import '../widgets/revenue_monthly_list.dart';
 import '../widgets/revenue_skeleton.dart';
 import '../widgets/revenue_summary_header.dart';
+import '../widgets/reports_filter_bar.dart';
 
 class OwnerRevenueReportView extends StatelessWidget {
   const OwnerRevenueReportView({super.key});
@@ -29,26 +30,43 @@ class OwnerRevenueReportView extends StatelessWidget {
         } else if (state is OwnerRevenueEmpty) {
           return _buildEmptyView(context);
         } else if (state is OwnerRevenueLoaded) {
+          final cubit = context.read<OwnerRevenueCubit>();
           return RefreshIndicator(
             color: context.primaryColor,
-            onRefresh: () => context
-                .read<OwnerRevenueCubit>()
-                .loadRevenueReport(forceRefresh: true),
+            onRefresh: () => cubit.loadRevenueReport(forceRefresh: true),
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(vertical: 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  RevenueSummaryHeader(
-                    totalExpected: state.totalExpected,
-                    totalCollected: state.totalCollected,
-                    collectionRate: state.collectionRate,
+                  ReportsFilterBar(
+                    filterOptions: state.report.filterOptions,
+                    selectedPropertyId: cubit.selectedPropertyId,
+                    selectedStartDate: cubit.selectedStartDate,
+                    selectedEndDate: cubit.selectedEndDate,
+                    onPropertySelected: (id) {
+                      cubit.loadRevenueReport(forceRefresh: true, propertyId: id);
+                    },
+                    onDateRangeSelected: (start, end) {
+                      cubit.loadRevenueReport(forceRefresh: true, startDate: start, endDate: end);
+                    },
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: RevenueSummaryHeader(summary: state.report.summary),
                   ),
                   const SizedBox(height: 16),
-                  RevenueAnimatedBarChart(entries: state.entries),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: RevenueAnimatedBarChart(entries: state.report.chart),
+                  ),
                   const SizedBox(height: 16),
-                  RevenueMonthlyList(entries: state.entries),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: RevenueMonthlyList(entries: state.report.chart),
+                  ),
                   const SizedBox(height: 30),
                 ],
               ),

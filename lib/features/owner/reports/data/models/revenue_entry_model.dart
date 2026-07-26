@@ -5,6 +5,8 @@ class RevenueEntryModel extends RevenueEntryEntity {
     required super.month,
     required super.expected,
     required super.collected,
+    required super.remaining,
+    required super.collectionRate,
   });
 
   factory RevenueEntryModel.fromJson(Map<String, dynamic> json) {
@@ -18,6 +20,8 @@ class RevenueEntryModel extends RevenueEntryEntity {
       month: json['month'] as String? ?? '',
       expected: parseDouble(json['expected']),
       collected: parseDouble(json['collected']),
+      remaining: parseDouble(json['remaining']),
+      collectionRate: parseDouble(json['collection_rate']),
     );
   }
 
@@ -26,6 +30,8 @@ class RevenueEntryModel extends RevenueEntryEntity {
       'month': month,
       'expected': expected.toStringAsFixed(2),
       'collected': collected.toStringAsFixed(2),
+      'remaining': remaining.toStringAsFixed(2),
+      'collection_rate': collectionRate.toStringAsFixed(2),
     };
   }
 }

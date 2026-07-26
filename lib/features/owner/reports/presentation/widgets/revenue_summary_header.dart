@@ -4,22 +4,20 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 
+import '../../domain/entities/revenue_report_entity.dart';
+
 class RevenueSummaryHeader extends StatelessWidget {
-  final double totalExpected;
-  final double totalCollected;
-  final double collectionRate;
+  final RevenueSummaryEntity summary;
 
   const RevenueSummaryHeader({
     super.key,
-    required this.totalExpected,
-    required this.totalCollected,
-    required this.collectionRate,
+    required this.summary,
   });
 
   @override
   Widget build(BuildContext context) {
-    final overdue = (totalExpected - totalCollected).clamp(0, double.infinity);
-    final ratePercent = (collectionRate * 100).toStringAsFixed(1);
+    final overdue = summary.totalRemaining;
+    final ratePercent = (summary.collectionRate * 100).toStringAsFixed(1);
 
     return Container(
       padding: const EdgeInsets.all(22),
@@ -84,7 +82,7 @@ class RevenueSummaryHeader extends StatelessWidget {
                   Expanded(
                     child: _miniMetric(
                       LocaleKeys.revenueTotalExpected.tr(),
-                      totalExpected,
+                      summary.totalExpected,
                       const Color(0xFFFBBF24),
                       Icons.account_balance_wallet_rounded,
                     ),
@@ -97,7 +95,7 @@ class RevenueSummaryHeader extends StatelessWidget {
                   Expanded(
                     child: _miniMetric(
                       LocaleKeys.revenueCollected.tr(),
-                      totalCollected,
+                      summary.totalCollected,
                       const Color(0xFF34D399),
                       Icons.check_circle_rounded,
                     ),

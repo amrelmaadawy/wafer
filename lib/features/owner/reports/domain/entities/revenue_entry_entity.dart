@@ -4,16 +4,17 @@ class RevenueEntryEntity extends Equatable {
   final String month;
   final double expected;
   final double collected;
+  final double remaining;
+  final double collectionRate;
 
   const RevenueEntryEntity({
     required this.month,
     required this.expected,
     required this.collected,
+    required this.remaining,
+    required this.collectionRate,
   });
 
-  double get overdue => (expected - collected).clamp(0, double.infinity);
-  double get collectionRate => expected > 0 ? collected / expected : 0.0;
-
   @override
-  List<Object?> get props => [month, expected, collected];
+  List<Object?> get props => [month, expected, collected, remaining, collectionRate];
 }

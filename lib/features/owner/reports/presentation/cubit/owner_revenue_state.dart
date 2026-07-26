@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/revenue_entry_entity.dart';
+import '../../domain/entities/revenue_report_entity.dart';
 
 abstract class OwnerRevenueState extends Equatable {
   const OwnerRevenueState();
@@ -17,21 +17,14 @@ class OwnerRevenueLoading extends OwnerRevenueState {
 }
 
 class OwnerRevenueLoaded extends OwnerRevenueState {
-  final List<RevenueEntryEntity> entries;
-  final double totalExpected;
-  final double totalCollected;
-  final double collectionRate;
+  final RevenueReportEntity report;
 
   const OwnerRevenueLoaded({
-    required this.entries,
-    required this.totalExpected,
-    required this.totalCollected,
-    required this.collectionRate,
+    required this.report,
   });
 
   @override
-  List<Object?> get props =>
-      [entries, totalExpected, totalCollected, collectionRate];
+  List<Object?> get props => [report];
 }
 
 class OwnerRevenueEmpty extends OwnerRevenueState {

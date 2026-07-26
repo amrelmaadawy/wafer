@@ -8,37 +8,52 @@ class OwnerRevenueCubit extends Cubit<OwnerRevenueState> {
   OwnerRevenueCubit(this._getReportUseCase)
       : super(const OwnerRevenueInitial());
 
-  Future<void> loadRevenueReport({bool forceRefresh = false}) async {
+  int? selectedPropertyId;
+  String? selectedStartDate;
+  String? selectedEndDate;
+
+  Future<void> loadRevenueReport({
+    bool forceRefresh = false,
+    int? propertyId,
+    String? startDate,
+    String? endDate,
+  }) async {
+    // Keep track of the current filters
+    if (propertyId != null) selectedPropertyId = propertyId;
+    if (startDate != null) selectedStartDate = startDate;
+    if (endDate != null) selectedEndDate = endDate;
+
     if (state is! OwnerRevenueLoaded || forceRefresh) {
       emit(const OwnerRevenueLoading());
     }
 
     final result = await _getReportUseCase(
-      GetOwnerRevenueReportParams(forceRefresh: forceRefresh),
+      GetOwnerRevenueReportParams(
+        forceRefresh: forceRefresh,
+        propertyId: selectedPropertyId,
+        startDate: selectedStartDate,
+        endDate: selectedEndDate,
+      ),
     );
 
     if (isClosed) return;
 
     result.fold(
       (failure) => emit(OwnerRevenueError(failure.message)),
-      (entries) {
-        if (entries.isEmpty) {
+      (report) {
+        if (report.chart.isEmpty && report.summary.totalExpected == 0) {
           emit(const OwnerRevenueEmpty());
         } else {
-          final totalExpected =
-              entries.fold(0.0, (sum, item) => sum + item.expected);
-          final totalCollected =
-              entries.fold(0.0, (sum, item) => sum + item.collected);
-          final rate = totalExpected > 0 ? totalCollected / totalExpected : 0.0;
-
-          emit(OwnerRevenueLoaded(
-            entries: entries,
-            totalExpected: totalExpected,
-            totalCollected: totalCollected,
-            collectionRate: rate,
-          ));
+          emit(OwnerRevenueLoaded(report: report));
         }
       },
     );
+  }
+
+  void clearFilters() {
+    selectedPropertyId = null;
+    selectedStartDate = null;
+    selectedEndDate = null;
+    loadRevenueReport(forceRefresh: true);
   }
 }
