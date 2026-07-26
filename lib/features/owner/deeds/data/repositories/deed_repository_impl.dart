@@ -21,7 +21,7 @@ class DeedRepositoryImpl implements DeedRepository {
       final result = await remoteDataSource.getDeeds(filter: filter);
       return Right(result);
     } on DioException catch (e) {
-      return Left(ServerFailure(e.response?.data['message'] ?? e.message));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -32,7 +32,7 @@ class DeedRepositoryImpl implements DeedRepository {
       await remoteDataSource.createDeed(params: params);
       return const Right(null);
     } on DioException catch (e) {
-      return Left(ServerFailure(e.response?.data['message'] ?? e.message));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -44,7 +44,7 @@ class DeedRepositoryImpl implements DeedRepository {
       final result = await remoteDataSource.getDeedDetails(deedId: id);
       return Right(result);
     } on DioException catch (e) {
-      return Left(ServerFailure(e.response?.data['message'] ?? e.message));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

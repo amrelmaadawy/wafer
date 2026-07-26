@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/app_radius.dart';
-import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
@@ -19,6 +16,11 @@ import '../widgets/create/deed_selector_widget.dart';
 import '../widgets/create/property_type_selector_widget.dart';
 import '../widgets/edit/property_edit_bottom_nav.dart';
 import '../widgets/edit/property_edit_header_card.dart';
+
+// New section imports
+import 'edit/widgets/edit_basic_info_section.dart';
+import 'edit/widgets/edit_location_section.dart';
+import 'edit/widgets/edit_specs_section.dart';
 
 class PropertyEditScreen extends StatefulWidget {
   final PropertyDetailsEntity property;
@@ -206,215 +208,29 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                         ],
                       ],
 
-                      // Section 1: Basic Info
-                      _buildSectionHeader('المعلومات الأساسية', Icons.info_outline_rounded),
-                      const SizedBox(height: 16),
-                      _buildField(
-                        _nameController,
-                        LocaleKeys.propertyCreatePropertyName.tr(),
-                        Icons.apartment_rounded,
-                        isRequired: true,
-                        hint: 'أدخل اسم العقار (مثال: عمارة الياسمين)',
-                      ),
-                      const SizedBox(height: 16),
-                      _buildField(
-                        _addressController,
-                        LocaleKeys.propertyCreateAddress.tr(),
-                        Icons.location_on_outlined,
-                        hint: 'أدخل العنوان بالتفصيل...',
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildField(
-                              _areaController,
-                              LocaleKeys.propertyCreateArea.tr(),
-                              Icons.square_foot_outlined,
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                              isNumber: true,
-                              hint: 'المساحة (م²)',
-                              suffixText: LocaleKeys.propertyDetailsAreaUnit.tr(),
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: _buildField(
-                              _yearController,
-                              LocaleKeys.propertyCreateYearLabel.tr(),
-                              Icons.calendar_today_outlined,
-                              keyboardType: TextInputType.number,
-                              isNumber: true,
-                              hint: 'YYYY',
-                              maxLength: 4,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      _buildField(
-                        _descriptionController,
-                        LocaleKeys.propertyCreateDescription.tr(),
-                        Icons.notes_rounded,
-                        maxLines: 4,
-                        hint: 'أضف وصفاً مفصلاً للعقار ومميزاته...',
+                      EditBasicInfoSection(
+                        nameController: _nameController,
+                        addressController: _addressController,
+                        areaController: _areaController,
+                        yearController: _yearController,
+                        descriptionController: _descriptionController,
                       ),
                       const SizedBox(height: 32),
 
-                      // Section 2: Location Details
-                      _buildSectionHeader('تفاصيل الموقع', Icons.map_outlined),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildField(
-                              _cityController,
-                              'المدينة',
-                              Icons.location_city_outlined,
-                              hint: 'مثال: الرياض',
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: _buildField(
-                              _districtController,
-                              'الحي',
-                              Icons.holiday_village_outlined,
-                              hint: 'مثال: النرجس',
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildField(
-                              _regionController,
-                              'المنطقة',
-                              Icons.explore_outlined,
-                              hint: 'مثال: الوسطى',
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: _buildField(
-                              _buildingController,
-                              'رقم المبنى',
-                              Icons.tag_rounded,
-                              isNumber: true,
-                              hint: 'مثال: 12',
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      _buildField(
-                        _streetController,
-                        'اسم الشارع',
-                        Icons.add_road_rounded,
-                        hint: 'مثال: شارع الملك فهد',
+                      EditLocationSection(
+                        cityController: _cityController,
+                        districtController: _districtController,
+                        regionController: _regionController,
+                        buildingController: _buildingController,
+                        streetController: _streetController,
                       ),
                       const SizedBox(height: 32),
 
-                      // Section 3: Specifications
-                      _buildSectionHeader('المواصفات والأبعاد', Icons.straighten_rounded),
-                      const SizedBox(height: 16),
-                      Text(
-                        'نوع الاستخدام',
-                        style: const TextStyle(
-                          fontSize: 13.5,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.textPrimaryLight,
-                        ),
+                      EditSpecsSection(
+                        state: state,
+                        lengthController: _lengthController,
+                        widthController: _widthController,
                       ),
-                      const SizedBox(height: 8),
-                      CustomDropdownMenu<String>(
-                        items: const ['residential', 'commercial', 'administrative', 'mixed'],
-                        value: state.selectedUsageType,
-                        hint: 'اختر نوع الاستخدام',
-                        itemLabelBuilder: (val) {
-                          switch (val) {
-                            case 'residential':
-                              return 'سكني';
-                            case 'commercial':
-                              return 'تجاري';
-                            case 'administrative':
-                              return 'إداري';
-                            case 'mixed':
-                              return 'مختلط';
-                            default:
-                              return val;
-                          }
-                        },
-                        onSelected: (val) => context.read<PropertyEditCubit>().selectUsageType(val),
-                      ),
-                      const SizedBox(height: 16),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildField(
-                              _lengthController,
-                              'الطول (م)',
-                              Icons.height_rounded,
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                              isNumber: true,
-                              hint: 'مثال: 30',
-                            ),
-                          ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: _buildField(
-                              _widthController,
-                              'العرض (م)',
-                              Icons.swap_horiz_rounded,
-                              keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                              isNumber: true,
-                              hint: 'مثال: 20',
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 32),
-
-                      // Section 4: Amenities
-                      _buildSectionHeader('المميزات والإضافات', Icons.star_outline_rounded),
-                      const SizedBox(height: 16),
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 10,
-                        children: const [
-                          ('elevator', 'مصعد'),
-                          ('parking', 'موقف سيارات'),
-                          ('security', 'حراسة 24/7'),
-                          ('pool', 'مسبح'),
-                          ('gym', 'صالة رياضية'),
-                          ('generator', 'مولد كهرباء'),
-                          ('central_ac', 'تكييف مركزي'),
-                          ('internet', 'ألياف بصرية (إنترنت)'),
-                        ].map((amenity) {
-                          final isSelected = state.selectedAmenities.contains(amenity.$1);
-                          return FilterChip(
-                            label: Text(amenity.$2),
-                            selected: isSelected,
-                            onSelected: (_) => context.read<PropertyEditCubit>().toggleAmenity(amenity.$1),
-                            selectedColor: context.primaryColor.withValues(alpha: 0.12),
-                            checkmarkColor: context.primaryColor,
-                            backgroundColor: Colors.white,
-                            side: BorderSide(
-                              color: isSelected ? context.primaryColor : const Color(0xFFE2E8F0),
-                              width: isSelected ? 1.5 : 1,
-                            ),
-                            labelStyle: TextStyle(
-                              color: isSelected ? context.primaryColor : AppColors.textPrimaryLight,
-                              fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                              fontSize: 13,
-                            ),
-                            shape: RoundedRectangleBorder(borderRadius: AppRadius.circularFull),
-                          );
-                        }).toList(),
-                      ),
-                      const SizedBox(height: 40),
                     ],
                   ),
                 ),
@@ -424,103 +240,6 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
           );
         },
       ),
-    );
-  }
-
-  Widget _buildSectionHeader(String title, IconData icon) {
-    return Row(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(6),
-          decoration: BoxDecoration(
-            color: context.primaryColor.withValues(alpha: 0.1),
-            borderRadius: AppRadius.circularMd,
-          ),
-          child: Icon(icon, size: 18, color: context.primaryColor),
-        ),
-        const SizedBox(width: 10),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 15.5,
-            fontWeight: FontWeight.w700,
-            color: AppColors.textPrimaryLight,
-          ),
-        ),
-        const SizedBox(width: 12),
-        const Expanded(
-          child: Divider(color: Color(0xFFE2E8F0), height: 1),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildField(
-    TextEditingController controller,
-    String label,
-    IconData icon, {
-    bool isRequired = false,
-    TextInputType keyboardType = TextInputType.text,
-    int maxLines = 1,
-    bool isNumber = false,
-    String? hint,
-    int? maxLength,
-    String? suffixText,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Text(label,
-                style: const TextStyle(
-                    fontSize: 13.5,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimaryLight)),
-            if (isRequired)
-              const Text(' *', style: TextStyle(color: AppColors.error)),
-          ],
-        ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: controller,
-          keyboardType: keyboardType,
-          maxLines: maxLines,
-          maxLength: maxLength,
-          inputFormatters: isNumber
-              ? [
-                  FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                  if (maxLength != null) LengthLimitingTextInputFormatter(maxLength),
-                ]
-              : maxLength != null
-                  ? [LengthLimitingTextInputFormatter(maxLength)]
-                  : null,
-          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-          decoration: InputDecoration(
-            hintText: hint,
-            hintStyle: TextStyle(color: AppColors.textSecondaryLight, fontSize: 13),
-            suffixText: suffixText,
-            suffixStyle: TextStyle(color: context.primaryColor, fontWeight: FontWeight.bold),
-            prefixIcon: maxLines > 1
-                ? Padding(
-                    padding: const EdgeInsets.only(bottom: 50.0),
-                    child: Icon(icon, size: 20, color: context.primaryColor),
-                  )
-                : Icon(icon, size: 20, color: context.primaryColor),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-            filled: true,
-            fillColor: Colors.white,
-            enabledBorder: OutlineInputBorder(
-              borderRadius: AppRadius.circularLg,
-              borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: AppRadius.circularLg,
-              borderSide: BorderSide(color: context.primaryColor, width: 1.5),
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

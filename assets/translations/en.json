@@ -143,7 +143,9 @@
     "bathrooms": "{} Baths",
     "furnished": "Furnished",
     "unfurnished": "Unfurnished",
-    "area_m2": "{} sqm"
+    "area_m2": "{} sqm",
+    "halls": "{} Halls",
+    "kitchens": "{} Kitchens"
   },
   "errors": {
     "server_error": "Server communication error occurred",
@@ -291,7 +293,10 @@
     "current_representative": "Current Representative",
     "no_owners": "No registered owners",
     "no_phone": "No phone number",
-    "deed_and_docs": "Deed and Documents"
+    "deed_and_docs": "Deed and Documents",
+    "valuation_entity": "Valuation Entity",
+    "valuation_date": "Valuation Date",
+    "deed_valuation_title": "Deed & Valuation Data"
   },
   "property_edit": {
     "title": "Edit Property",
@@ -627,6 +632,7 @@
     "usage_commercial": "Commercial",
     "usage_administrative": "Administrative",
     "no_description": "No description available for this unit.",
-    "floor_number": "Floor Number"
+    "floor_number": "Floor Number",
+    "floor_prefix": "Floor {}"
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -40,9 +42,9 @@ class PropertyDeedValuationCard extends StatelessWidget {
             children: [
               Icon(Icons.description_outlined, size: 18, color: context.primaryColor),
               const SizedBox(width: 8),
-              const Text(
-                'بيانات الصك والتقييم',
-                style: TextStyle(
+              Text(
+                LocaleKeys.propertyDetailsDeedValuationTitle.tr(),
+                style: const TextStyle(
                   color: AppColors.textPrimaryLight,
                   fontSize: 15,
                   fontWeight: FontWeight.w700,
@@ -54,19 +56,19 @@ class PropertyDeedValuationCard extends StatelessWidget {
           const Divider(height: 1, color: Color(0xFFF1F5F9)),
           const SizedBox(height: 12),
           if (property.deedNumber != null) ...[
-            _buildRow('رقم الصك', property.deedNumber!, Icons.tag_rounded),
+            _buildRow(LocaleKeys.deedsNumber.tr(), property.deedNumber!, Icons.tag_rounded),
             if (property.deedDate != null)
-              _buildRow('تاريخ الصك', property.deedDate!, Icons.event_available_rounded),
+              _buildRow(LocaleKeys.deedsDate.tr(), property.deedDate!, Icons.event_available_rounded),
             if (property.documentType != null)
-              _buildRow('نوع الوثيقة', property.documentType!, Icons.file_present_rounded),
+              _buildRow(LocaleKeys.deedsDocumentType.tr(), property.documentType!, Icons.file_present_rounded),
           ],
           if (property.valuationAmount != null) ...[
             if (property.deedNumber != null) const SizedBox(height: 8),
-            _buildRow('قيمة التقييم', '${property.valuationAmount} ر.س', Icons.monetization_on_outlined),
+            _buildRow(LocaleKeys.propertyDetailsValuationAmount.tr(), '${property.valuationAmount} ${LocaleKeys.commonCurrencySar.tr()}', Icons.monetization_on_outlined),
             if (property.valuationEntity != null)
-              _buildRow('جهة التقييم', property.valuationEntity!, Icons.business_rounded),
+              _buildRow(LocaleKeys.propertyDetailsValuationEntity.tr(), property.valuationEntity!, Icons.business_rounded),
             if (property.valuationDate != null)
-              _buildRow('تاريخ التقييم', property.valuationDate!, Icons.date_range_rounded),
+              _buildRow(LocaleKeys.propertyDetailsValuationDate.tr(), property.valuationDate!, Icons.date_range_rounded),
           ],
         ],
       ),

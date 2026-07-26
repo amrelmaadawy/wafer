@@ -89,7 +89,7 @@ class UnitPricesSection extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.only(bottom: 3),
                                 child: Text(
-                                  'ر.س',
+                                  LocaleKeys.commonCurrencySar.tr(),
                                   style: AppTextStyles.labelLarge.copyWith(
                                       color: const Color(0xFF64748B)),
                                 ),
@@ -142,7 +142,7 @@ class UnitPricesSection extends StatelessWidget {
             const SizedBox(width: 3),
             Padding(
               padding: const EdgeInsets.only(bottom: 1),
-              child: Text('ر.س',
+              child: Text(LocaleKeys.commonCurrencySar.tr(),
                   style: AppTextStyles.labelSmall
                       .copyWith(color: const Color(0xFF94A3B8))),
             ),

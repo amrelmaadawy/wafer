@@ -177,12 +177,12 @@ class UnitHeaderSection extends StatelessWidget {
                       if (unit.area != null && unit.area! > 0)
                         _buildGlassChip(
                           icon: Icons.square_foot_rounded,
-                          label: '${unit.area!.toStringAsFixed(0)} م²',
+                          label: '${unit.area!.toStringAsFixed(0)} ${LocaleKeys.commonAreaM2.tr()}',
                         ),
                       if (unit.floor != null && unit.floor!.isNotEmpty)
                         _buildGlassChip(
                           icon: Icons.layers_rounded,
-                          label: 'الطابق ${unit.floor}',
+                          label: LocaleKeys.unitDetailsFloorPrefix.tr(args: [unit.floor!]),
                         ),
                       if (unit.isFurnished)
                         _buildGlassChip(

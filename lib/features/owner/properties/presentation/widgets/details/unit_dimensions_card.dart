@@ -16,20 +16,20 @@ class UnitDimensionsCard extends StatelessWidget {
 
     if (unit.length != null && unit.length! > 0) {
       rows.add(_DetailRow(Icons.straighten_outlined, LocaleKeys.unit_details_length.tr(),
-          '${unit.length!.toStringAsFixed(2)} م'));
+          '${unit.length!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}'));
     }
     if (unit.width != null && unit.width! > 0) {
       rows.add(_DetailRow(Icons.swap_horiz_outlined, LocaleKeys.unit_details_width.tr(),
-          '${unit.width!.toStringAsFixed(2)} م'));
+          '${unit.width!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}'));
     }
     if (unit.height != null && unit.height! > 0) {
       rows.add(_DetailRow(Icons.height_outlined, LocaleKeys.unit_details_height.tr(),
-          '${unit.height!.toStringAsFixed(2)} م'));
+          '${unit.height!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}'));
     }
     if (unit.facadeLength != null && unit.facadeLength! > 0) {
       rows.add(_DetailRow(Icons.architecture_outlined,
           LocaleKeys.unit_details_facade_length.tr(),
-          '${unit.facadeLength!.toStringAsFixed(2)} م'));
+          '${unit.facadeLength!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}'));
     }
     if (unit.direction != null && unit.direction!.isNotEmpty) {
       rows.add(_DetailRow(Icons.explore_outlined, LocaleKeys.unit_details_direction.tr(),

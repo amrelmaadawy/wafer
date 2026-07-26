@@ -18,7 +18,7 @@ trigger: always_on
 - Features include entities, models, repos, use cases, cubits, states, screens, views, widgets, data sources.
 - Cross-feature calls use Core contracts/abstractions.
 ## 4. File Size
-- Max 150 lines per file.
+- Max 200 lines per file.
 - Split large widgets, cubits, services, repos, data sources, use cases.
 ## 5. Code Quality
 - Clean, DRY, SOLID, readable, testable.

@@ -38,8 +38,8 @@ class _DeedsFilterBarState extends State<DeedsFilterBar> {
         // E.g., null = All, 1 = Branch 1, 2 = Branch 2
         final branches = [
           {'id': -1, 'name': LocaleKeys.deeds_filter_all_branches.tr()},
-          {'id': 1, 'name': 'فرع الادارة'},
-          {'id': 2, 'name': 'الإدارة'},
+          {'id': 1, 'name': 'Branch 1'},
+          {'id': 2, 'name': 'Branch 2'},
         ];
 
         final resolvedBranchId = currentBranchId ?? -1;

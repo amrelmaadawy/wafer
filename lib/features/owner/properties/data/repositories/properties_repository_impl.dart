@@ -1,9 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
+
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
-import '../../../../../core/localization/locale_keys.dart';
+
 import '../../domain/entities/properties_pagination_meta_entity.dart';
 import '../../domain/entities/properties_query_filter_entity.dart';
 import '../../domain/entities/properties_stats_entity.dart';
@@ -53,7 +53,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -67,7 +67,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -81,7 +81,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -95,7 +95,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -109,7 +109,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -131,18 +131,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
-      if (e.response?.data != null && e.response!.data is Map) {
-        final data = e.response!.data as Map;
-        if (data['message'] != null) msg = data['message'].toString();
-        if (data['errors'] != null && data['errors'] is Map) {
-          final errors = data['errors'] as Map;
-          if (errors.isNotEmpty) {
-            msg = errors.values.map((v) => v is List ? v.join('\n') : v.toString()).join('\n');
-          }
-        }
-      }
-      return Left(ServerFailure(msg));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -158,7 +147,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -174,7 +163,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -190,12 +179,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
-      if (e.response?.data != null && e.response!.data is Map) {
-        final data = e.response!.data as Map;
-        if (data['message'] != null) msg = data['message'].toString();
-      }
-      return Left(ServerFailure(msg));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -210,18 +194,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
-      if (e.response?.data != null && e.response!.data is Map) {
-        final data = e.response!.data as Map;
-        if (data['message'] != null) msg = data['message'].toString();
-        if (data['errors'] != null && data['errors'] is Map) {
-          final errors = data['errors'] as Map;
-          if (errors.isNotEmpty) {
-            msg = errors.values.map((v) => v is List ? v.join('\n') : v.toString()).join('\n');
-          }
-        }
-      }
-      return Left(ServerFailure(msg));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -235,7 +208,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -250,7 +223,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -264,18 +237,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
-      if (e.response?.data != null && e.response!.data is Map) {
-        final data = e.response!.data as Map;
-        if (data['message'] != null) msg = data['message'].toString();
-        if (data['errors'] != null && data['errors'] is Map) {
-          final errors = data['errors'] as Map;
-          if (errors.isNotEmpty) {
-            msg = errors.values.map((v) => v is List ? v.join('\n') : v.toString()).join('\n');
-          }
-        }
-      }
-      return Left(ServerFailure(msg));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -289,7 +251,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -303,12 +265,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
-      if (e.response?.data != null && e.response!.data is Map) {
-        final data = e.response!.data as Map;
-        if (data['message'] != null) msg = data['message'].toString();
-      }
-      return Left(ServerFailure(msg));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -324,12 +281,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
-      if (e.response?.data != null && e.response!.data is Map) {
-        final data = e.response!.data as Map;
-        if (data['message'] != null) msg = data['message'].toString();
-      }
-      return Left(ServerFailure(msg));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -343,18 +295,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
-      if (e.response?.data != null && e.response!.data is Map) {
-        final data = e.response!.data as Map;
-        if (data['message'] != null) msg = data['message'].toString();
-        if (data['errors'] != null && data['errors'] is Map) {
-          final errors = data['errors'] as Map;
-          if (errors.isNotEmpty) {
-            msg = errors.values.map((v) => v is List ? v.join('\n') : v.toString()).join('\n');
-          }
-        }
-      }
-      return Left(ServerFailure(msg));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -369,18 +310,7 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      String msg = e.message ?? LocaleKeys.errorsServerError.tr();
-      if (e.response?.data != null && e.response!.data is Map) {
-        final data = e.response!.data as Map;
-        if (data['message'] != null) msg = data['message'].toString();
-        if (data['errors'] != null && data['errors'] is Map) {
-          final errors = data['errors'] as Map;
-          if (errors.isNotEmpty) {
-            msg = errors.values.map((v) => v is List ? v.join('\n') : v.toString()).join('\n');
-          }
-        }
-      }
-      return Left(ServerFailure(msg));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

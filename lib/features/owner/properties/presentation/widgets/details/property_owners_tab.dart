@@ -181,11 +181,11 @@ class PropertyOwnersTab extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
-                      _buildDocRow('رقم الصك', currentProperty.deedNumber ?? '-'),
+                      _buildDocRow(LocaleKeys.deedsNumber.tr(), currentProperty.deedNumber ?? '-'),
                       const Divider(),
-                      _buildDocRow('تاريخ الصك', currentProperty.deedDate ?? '-'),
+                      _buildDocRow(LocaleKeys.deedsDate.tr(), currentProperty.deedDate ?? '-'),
                       const Divider(),
-                      _buildDocRow('نوع الوثيقة', currentProperty.documentType ?? '-'),
+                      _buildDocRow(LocaleKeys.deedsDocumentType.tr(), currentProperty.documentType ?? '-'),
                     ],
                   ),
                 ),

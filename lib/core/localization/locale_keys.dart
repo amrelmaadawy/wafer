@@ -144,6 +144,8 @@ abstract class  LocaleKeys {
   static const common_furnished = 'common.furnished';
   static const common_unfurnished = 'common.unfurnished';
   static const common_area_m2 = 'common.area_m2';
+  static const common_halls = 'common.halls';
+  static const common_kitchens = 'common.kitchens';
   static const common = 'common';
   static const errors_server_error = 'errors.server_error';
   static const errors_connection_error = 'errors.connection_error';
@@ -280,6 +282,9 @@ abstract class  LocaleKeys {
   static const property_details_valuation_amount = 'property_details.valuation_amount';
   static const property_details_valuation_currency = 'property_details.valuation_currency';
   static const property_details_valuation_approved = 'property_details.valuation_approved';
+  static const property_details_valuation_entity = 'property_details.valuation_entity';
+  static const property_details_valuation_date = 'property_details.valuation_date';
+  static const property_details_deed_valuation_title = 'property_details.deed_valuation_title';
   static const property_details_view_deed = 'property_details.view_deed';
   static const property_details_deed_info = 'property_details.deed_info';
   static const property_details_make_representative = 'property_details.make_representative';
@@ -609,6 +614,7 @@ abstract class  LocaleKeys {
   static const unit_details_usage_administrative = 'unit_details.usage_administrative';
   static const unit_details_no_description = 'unit_details.no_description';
   static const unit_details_floor_number = 'unit_details.floor_number';
+  static const unit_details_floor_prefix = 'unit_details.floor_prefix';
   static const unit_details = 'unit_details';
 
   // === camelCase aliases (backward-compat) ===
@@ -750,6 +756,8 @@ abstract class  LocaleKeys {
   static const commonFurnished = common_furnished;
   static const commonUnfurnished = common_unfurnished;
   static const commonAreaM2 = common_area_m2;
+  static const commonHalls = common_halls;
+  static const commonKitchens = common_kitchens;
   static const errorsServerError = errors_server_error;
   static const errorsConnectionError = errors_connection_error;
   static const errorsUnexpected = errors_unexpected;
@@ -882,6 +890,9 @@ abstract class  LocaleKeys {
   static const propertyDetailsValuationAmount = property_details_valuation_amount;
   static const propertyDetailsValuationCurrency = property_details_valuation_currency;
   static const propertyDetailsValuationApproved = property_details_valuation_approved;
+  static const propertyDetailsValuationEntity = property_details_valuation_entity;
+  static const propertyDetailsValuationDate = property_details_valuation_date;
+  static const propertyDetailsDeedValuationTitle = property_details_deed_valuation_title;
   static const propertyDetailsViewDeed = property_details_view_deed;
   static const propertyDetailsDeedInfo = property_details_deed_info;
   static const propertyDetailsMakeRepresentative = property_details_make_representative;
@@ -1203,6 +1214,7 @@ abstract class  LocaleKeys {
   static const unitDetailsUsageAdministrative = unit_details_usage_administrative;
   static const unitDetailsNoDescription = unit_details_no_description;
   static const unitDetailsFloorNumber = unit_details_floor_number;
+  static const unitDetailsFloorPrefix = unit_details_floor_prefix;
   static const unitDetails = unit_details;
   // === Extra aliases for keys with different naming ===
   static const installmentsTitle = contracts_installments_title;

@@ -143,7 +143,9 @@
     "bathrooms": "{} حمامات",
     "furnished": "مفروشة",
     "unfurnished": "غير مفروشة",
-    "area_m2": "{} م²"
+    "area_m2": "{} م²",
+    "halls": "{} صالات",
+    "kitchens": "{} مطابخ"
   },
   "errors": {
     "server_error": "حدث خطأ في الاتصال بالسيرفر",
@@ -291,7 +293,10 @@
     "current_representative": "المفوض الحالي",
     "no_owners": "لا يوجد ملاك مسجلين",
     "no_phone": "لا يوجد رقم هاتف",
-    "deed_and_docs": "معلومات الصك والوثائق"
+    "deed_and_docs": "معلومات الصك والوثائق",
+    "valuation_entity": "جهة التقييم",
+    "valuation_date": "تاريخ التقييم",
+    "deed_valuation_title": "بيانات الصك والتقييم"
   },
   "property_edit": {
     "title": "تعديل العقار",
@@ -627,6 +632,7 @@
     "usage_commercial": "تجاري",
     "usage_administrative": "إداري",
     "no_description": "لا يوجد وصف متاح لهذه الوحدة.",
-    "floor_number": "رقم الطابق"
+    "floor_number": "رقم الطابق",
+    "floor_prefix": "الطابق {}"
   }
 }
