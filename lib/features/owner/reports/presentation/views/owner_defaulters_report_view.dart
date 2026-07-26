@@ -9,6 +9,9 @@ import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../cubit/owner_defaulters_cubit.dart';
 import '../cubit/owner_defaulters_state.dart';
+import '../widgets/report_export_button.dart';
+import '../../../../../core/services/pdf/pdf_generator_service.dart';
+import '../../../../../core/services/pdf/builders/defaulters_pdf_builder.dart';
 
 class OwnerDefaultersReportView extends StatelessWidget {
   const OwnerDefaultersReportView({super.key});
@@ -17,7 +20,34 @@ class OwnerDefaultersReportView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(title: LocaleKeys.defaultersReportTitle.tr()),
+      appBar: CustomAppBar(
+        title: LocaleKeys.defaultersReportTitle.tr(),
+        actions: [
+          BlocBuilder<OwnerDefaultersCubit, OwnerDefaultersState>(
+            builder: (context, state) {
+              if (state is OwnerDefaultersLoaded) {
+                return ReportExportButton(
+                  onPressed: () async {
+                    final pdf = await DefaultersPdfBuilder.build(
+                      state.defaulters,
+                      state.totalOverdueAmount,
+                      state.totalDefaultersCount,
+                    );
+                    if (context.mounted) {
+                      await PdfGeneratorService.exportAndPrint(
+                        context: context,
+                        pdf: pdf,
+                        fileName: 'تقرير_المتعثرين.pdf',
+                      );
+                    }
+                  },
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
+      ),
       body: BlocBuilder<OwnerDefaultersCubit, OwnerDefaultersState>(
         builder: (context, state) {
         if (state is OwnerDefaultersLoading || state is OwnerDefaultersInitial) {

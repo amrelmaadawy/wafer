@@ -12,6 +12,9 @@ import '../widgets/units_status_filter_bar.dart';
 import '../widgets/units_status_list_item.dart';
 import '../widgets/units_status_skeleton.dart';
 import '../widgets/units_status_summary_header.dart';
+import '../widgets/report_export_button.dart';
+import '../../../../../core/services/pdf/pdf_generator_service.dart';
+import '../../../../../core/services/pdf/builders/units_status_pdf_builder.dart';
 
 class OwnerUnitsStatusReportView extends StatefulWidget {
   const OwnerUnitsStatusReportView({super.key});
@@ -48,7 +51,30 @@ class _OwnerUnitsStatusReportViewState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(title: LocaleKeys.reports_unitsStatusReportTitle.tr()),
+      appBar: CustomAppBar(
+        title: LocaleKeys.reports_unitsStatusReportTitle.tr(),
+        actions: [
+          BlocBuilder<OwnerUnitsStatusCubit, OwnerUnitsStatusState>(
+            builder: (context, state) {
+              if (state is OwnerUnitsStatusLoaded) {
+                return ReportExportButton(
+                  onPressed: () async {
+                    final pdf = await UnitsStatusPdfBuilder.build(state.report);
+                    if (context.mounted) {
+                      await PdfGeneratorService.exportAndPrint(
+                        context: context,
+                        pdf: pdf,
+                        fileName: 'تقرير_حالة_الوحدات.pdf',
+                      );
+                    }
+                  },
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
+      ),
       body: BlocBuilder<OwnerUnitsStatusCubit, OwnerUnitsStatusState>(
         builder: (context, state) {
         if (state is OwnerUnitsStatusInitial ||

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/features/owner/reports/presentation/widgets/report_export_button.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
@@ -13,6 +14,8 @@ import '../widgets/revenue_monthly_list.dart';
 import '../widgets/revenue_skeleton.dart';
 import '../widgets/revenue_summary_header.dart';
 import '../widgets/reports_filter_bar.dart';
+import '../../../../../core/services/pdf/pdf_generator_service.dart';
+import '../../../../../core/services/pdf/builders/revenue_pdf_builder.dart';
 
 class OwnerRevenueReportView extends StatelessWidget {
   const OwnerRevenueReportView({super.key});
@@ -21,7 +24,30 @@ class OwnerRevenueReportView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(title: LocaleKeys.revenueReport.tr()),
+      appBar: CustomAppBar(
+        title: LocaleKeys.revenueReport.tr(),
+        actions: [
+          BlocBuilder<OwnerRevenueCubit, OwnerRevenueState>(
+            builder: (context, state) {
+              if (state is OwnerRevenueLoaded) {
+                return ReportExportButton(
+                  onPressed: () async {
+                    final pdf = await RevenuePdfBuilder.build(state.report);
+                    if (context.mounted) {
+                      await PdfGeneratorService.exportAndPrint(
+                        context: context,
+                        pdf: pdf,
+                        fileName: 'تقرير_الإيرادات.pdf',
+                      );
+                    }
+                  },
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
+      ),
       body: BlocBuilder<OwnerRevenueCubit, OwnerRevenueState>(
         builder: (context, state) {
           if (state is OwnerRevenueLoading || state is OwnerRevenueInitial) {

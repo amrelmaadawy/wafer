@@ -53,6 +53,7 @@ class ReportsFilterBar extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
               ),
             ),
+            const SizedBox(width: 12),
           ],
         ],
       ),
@@ -64,7 +65,7 @@ class ReportsFilterBar extends StatelessWidget {
         selectedStartDate != null && selectedEndDate != null;
     final String label = hasDateFilter
         ? '$selectedStartDate - $selectedEndDate'
-        : 'Select Date Range'; // fallback
+        : 'تحديد الفترة'; // fallback
 
     return InputChip(
       onPressed: () async {
@@ -206,9 +207,10 @@ class ReportsFilterBar extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
-              'Select Property', // fallback
-              style: TextStyle(
+            const SizedBox(height: 16),
+            Text(
+              LocaleKeys.reports_property.tr(),
+              style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
                 color: AppColors.textPrimaryLight,
@@ -226,7 +228,7 @@ class ReportsFilterBar extends StatelessWidget {
                           ? Icon(Icons.check_circle, color: context.primaryColor)
                           : null,
                       onTap: () {
-                        onPropertySelected(null);
+                        onPropertySelected(-1);
                         Navigator.pop(context);
                       },
                     );

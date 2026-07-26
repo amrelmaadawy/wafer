@@ -11,6 +11,9 @@ import '../cubit/owner_occupancy_state.dart';
 import '../widgets/occupancy_properties_list.dart';
 import '../widgets/occupancy_skeleton.dart';
 import '../widgets/occupancy_summary_header.dart';
+import '../widgets/report_export_button.dart';
+import '../../../../../core/services/pdf/pdf_generator_service.dart';
+import '../../../../../core/services/pdf/builders/occupancy_pdf_builder.dart';
 
 class OwnerOccupancyReportView extends StatelessWidget {
   const OwnerOccupancyReportView({super.key});
@@ -19,7 +22,36 @@ class OwnerOccupancyReportView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(title: LocaleKeys.occupancyReportTitle.tr()),
+      appBar: CustomAppBar(
+        title: LocaleKeys.occupancyReportTitle.tr(),
+        actions: [
+          BlocBuilder<OwnerOccupancyCubit, OwnerOccupancyState>(
+            builder: (context, state) {
+              if (state is OwnerOccupancyLoaded) {
+                return ReportExportButton(
+                  onPressed: () async {
+                    final pdf = await OccupancyPdfBuilder.build(
+                      state.properties,
+                      state.overallRate,
+                      state.totalUnits,
+                      state.totalRented,
+                      state.totalVacant,
+                    );
+                    if (context.mounted) {
+                      await PdfGeneratorService.exportAndPrint(
+                        context: context,
+                        pdf: pdf,
+                        fileName: 'تقرير_الإشغال.pdf',
+                      );
+                    }
+                  },
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
+      ),
       body: BlocBuilder<OwnerOccupancyCubit, OwnerOccupancyState>(
         builder: (context, state) {
         if (state is OwnerOccupancyLoading || state is OwnerOccupancyInitial) {
