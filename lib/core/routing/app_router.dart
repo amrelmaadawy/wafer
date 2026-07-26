@@ -22,6 +22,7 @@ import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
 import '../../features/owner/reports/presentation/screens/owner_reports_center_screen.dart';
 import '../../features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
+import '../../features/owner/reports/presentation/screens/reports_center_screen.dart';
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';
 import '../../features/profile/presentation/screens/change_password_screen.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
@@ -155,6 +156,10 @@ class AppRouter {
             child: DeedDetailsScreen(deedId: id),
           );
         },
+      ),
+      GoRoute(
+        path: Routes.ownerReportsCenter,
+        builder: (context, state) => const ReportsCenterScreen(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {

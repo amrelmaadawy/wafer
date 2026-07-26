@@ -634,5 +634,13 @@
     "no_description": "No description available for this unit.",
     "floor_number": "Floor Number",
     "floor_prefix": "Floor {}"
+  },
+  "reports": {
+    "title": "Reports Center",
+    "financial": "Financial Reports",
+    "operational": "Operational & Property",
+    "contracts": "Contracts",
+    "system": "System Activity",
+    "empty_state": "No data available to display in this report currently."
   }
 }

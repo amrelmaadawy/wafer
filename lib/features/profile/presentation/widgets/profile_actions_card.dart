@@ -78,6 +78,17 @@ class ProfileActionsCard extends StatelessWidget {
           ),
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
           ProfileActionTile(
+            icon: Icons.bar_chart_rounded,
+            label: LocaleKeys.reports_title.tr(),
+            subtitle: LocaleKeys.reports_operational.tr(), // Or some general subtitle
+            iconBg: AppColors.info.withValues(alpha: 0.1),
+            iconColor: AppColors.info,
+            onTap: () {
+              context.push(Routes.ownerReportsCenter);
+            },
+          ),
+          const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
+          ProfileActionTile(
             icon: Icons.lock_outline_rounded,
             label: LocaleKeys.profile_change_password.tr(),
             subtitle: LocaleKeys.profile_change_password_subtitle.tr(),

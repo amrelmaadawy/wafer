@@ -1269,4 +1269,11 @@ abstract class  LocaleKeys {
   static const propertyOwnersNoAvailable = property_owners_no_available_owners;
   static const changePasswordTitle = profile_change_password_title;
 
+  static const reports_title = 'reports.title';
+  static const reports_financial = 'reports.financial';
+  static const reports_operational = 'reports.operational';
+  static const reports_contracts = 'reports.contracts';
+  static const reports_system = 'reports.system';
+  static const reports_empty_state = 'reports.empty_state';
+
 }
