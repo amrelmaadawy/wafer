@@ -5,6 +5,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../cubit/owner_revenue_cubit.dart';
 import '../cubit/owner_revenue_state.dart';
 import '../widgets/revenue_animated_bar_chart.dart';
@@ -18,9 +19,12 @@ class OwnerRevenueReportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OwnerRevenueCubit, OwnerRevenueState>(
-      builder: (context, state) {
-        if (state is OwnerRevenueLoading || state is OwnerRevenueInitial) {
+    return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
+      appBar: CustomAppBar(title: LocaleKeys.revenueReport.tr()),
+      body: BlocBuilder<OwnerRevenueCubit, OwnerRevenueState>(
+        builder: (context, state) {
+          if (state is OwnerRevenueLoading || state is OwnerRevenueInitial) {
           return const SingleChildScrollView(
             padding: EdgeInsets.all(20),
             child: RevenueSkeleton(),
@@ -51,6 +55,7 @@ class OwnerRevenueReportView extends StatelessWidget {
                     onDateRangeSelected: (start, end) {
                       cubit.loadRevenueReport(forceRefresh: true, startDate: start, endDate: end);
                     },
+                    onReset: cubit.clearFilters,
                   ),
                   const SizedBox(height: 20),
                   Padding(
@@ -75,7 +80,7 @@ class OwnerRevenueReportView extends StatelessWidget {
         }
         return const SizedBox.shrink();
       },
-    );
+    ));
   }
 
   Widget _buildErrorView(BuildContext context, String message) {

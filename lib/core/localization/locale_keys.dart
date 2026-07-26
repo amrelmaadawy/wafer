@@ -220,6 +220,11 @@ abstract class  LocaleKeys {
   static const properties_draft_incomplete_desc = 'properties.draft_incomplete_desc';
   static const properties_draft_progress = 'properties.draft_progress';
   static const properties_draft_continue = 'properties.draft_continue';
+  static const property = 'property';
+  static const status = 'status';
+  static const financial = 'reports.financial';
+  static const operational = 'reports.operational';
+  static const system = 'system';
   static const properties = 'properties';
   static const property_details_overview = 'property_details.overview';
   static const property_details_units = 'property_details.units';
@@ -1276,4 +1281,13 @@ abstract class  LocaleKeys {
   static const reports_system = 'reports.system';
   static const reports_empty_state = 'reports.empty_state';
 
+  static const reports_unitsStatusReportTitle = 'reports.unitsStatusReportTitle';
+  static const reports_unitsStatusTotal = 'reports.unitsStatusTotal';
+  static const reports_unitsStatusVacant = 'reports.unitsStatusVacant';
+  static const reports_unitsStatusRented = 'reports.unitsStatusRented';
+  static const reports_unitsStatusMaintenance = 'reports.unitsStatusMaintenance';
+  static const reports_all_properties = 'reports.all_properties';
+  static const reports_all_statuses = 'reports.all_statuses';
+  static const reports_property = 'reports.property';
+  static const reports_status = 'reports.status';
 }

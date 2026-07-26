@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/features/owner/reports/domain/entities/units_status_report_entity.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/localization/locale_keys.dart';
@@ -80,6 +81,39 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
   }) async {
     try {
       final result = await _remoteDataSource.getDefaultersReport();
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      String? serverMsg;
+      if (e.response?.data is Map<String, dynamic>) {
+        serverMsg =
+            (e.response?.data as Map<String, dynamic>)['message'] as String?;
+      }
+      final msg = serverMsg ?? 
+          (e.type == DioExceptionType.badResponse 
+              ? LocaleKeys.errorsServerError.tr() 
+              : e.message) ?? 
+          LocaleKeys.errorsServerError.tr();
+      return Left(ServerFailure(msg));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UnitsStatusReportEntity>> getUnitsStatusReport({
+    bool forceRefresh = false,
+    int page = 1,
+    int? propertyId,
+    String? status,
+  }) async {
+    try {
+      final result = await _remoteDataSource.getUnitsStatusReport(
+        page: page,
+        propertyId: propertyId,
+        status: status,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

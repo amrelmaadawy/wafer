@@ -18,10 +18,15 @@ class OwnerRevenueCubit extends Cubit<OwnerRevenueState> {
     String? startDate,
     String? endDate,
   }) async {
-    // Keep track of the current filters
-    if (propertyId != null) selectedPropertyId = propertyId;
-    if (startDate != null) selectedStartDate = startDate;
-    if (endDate != null) selectedEndDate = endDate;
+    if (propertyId != null || propertyId == -1) {
+      selectedPropertyId = propertyId == -1 ? null : propertyId;
+    }
+    if (startDate != null) {
+      selectedStartDate = startDate == '' ? null : startDate;
+    }
+    if (endDate != null) {
+      selectedEndDate = endDate == '' ? null : endDate;
+    }
 
     if (state is! OwnerRevenueLoaded || forceRefresh) {
       emit(const OwnerRevenueLoading());

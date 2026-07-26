@@ -31,9 +31,11 @@ import '../reports/domain/repositories/owner_reports_repository.dart';
 import '../reports/domain/usecases/get_owner_defaulters_report_use_case.dart';
 import '../reports/domain/usecases/get_owner_occupancy_report_use_case.dart';
 import '../reports/domain/usecases/get_owner_revenue_report_use_case.dart';
+import '../reports/domain/usecases/get_owner_units_status_report_usecase.dart';
 import '../reports/presentation/cubit/owner_defaulters_cubit.dart';
 import '../reports/presentation/cubit/owner_occupancy_cubit.dart';
 import '../reports/presentation/cubit/owner_revenue_cubit.dart';
+import '../reports/presentation/cubit/owner_units_status_cubit.dart';
 
 // Properties
 import '../properties/data/datasources/properties_remote_data_source.dart';
@@ -344,6 +346,9 @@ void _initReports() {
   if (!sl.isRegistered<GetOwnerDefaultersReportUseCase>()) {
     sl.registerLazySingleton(() => GetOwnerDefaultersReportUseCase(sl()));
   }
+  if (!sl.isRegistered<GetOwnerUnitsStatusReportUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerUnitsStatusReportUseCase(sl()));
+  }
   if (!sl.isRegistered<OwnerRevenueCubit>()) {
     sl.registerFactory(() => OwnerRevenueCubit(sl()));
   }
@@ -352,5 +357,8 @@ void _initReports() {
   }
   if (!sl.isRegistered<OwnerDefaultersCubit>()) {
     sl.registerFactory(() => OwnerDefaultersCubit(sl()));
+  }
+  if (!sl.isRegistered<OwnerUnitsStatusCubit>()) {
+    sl.registerFactory(() => OwnerUnitsStatusCubit(sl()));
   }
 }

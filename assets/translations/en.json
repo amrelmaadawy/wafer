@@ -636,11 +636,26 @@
     "floor_prefix": "Floor {}"
   },
   "reports": {
-    "title": "Reports Center",
-    "financial": "Financial Reports",
+    "title": "Reports & Analytics",
+    "revenueReport": "Revenue Report",
+    "occupancyReportTitle": "Occupancy Report",
+    "defaultersReportTitle": "Defaulters Report",
+    "unitsStatusReportTitle": "Units Status",
+    "unitsStatusTotal": "Total Units",
+    "unitsStatusVacant": "Vacant",
+    "unitsStatusRented": "Rented",
+    "unitsStatusMaintenance": "Maintenance",
+    "all_properties": "All Properties",
+    "all_statuses": "All Statuses",
+    "property": "Property",
+    "status": "Status",
     "operational": "Operational & Property",
     "contracts": "Contracts",
     "system": "System Activity",
+    "revenue_report": "Revenue Summary",
+    "revenue_report_desc": "Income vs. Expected by month",
+    "defaulters_report": "Overdue & Defaulters",
+    "defaulters_report_desc": "Outstanding balances over 30 days",
     "empty_state": "No data available to display in this report currently."
   }
 }

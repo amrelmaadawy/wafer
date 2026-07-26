@@ -4,6 +4,7 @@ import '../../../../../core/error/exceptions.dart';
 import '../models/defaulter_model.dart';
 import '../models/occupancy_property_model.dart';
 import '../models/revenue_report_model.dart';
+import '../models/units_status_report_model.dart';
 
 abstract class OwnerReportsRemoteDataSource {
   Future<RevenueReportModel> getRevenueReport({
@@ -14,6 +15,11 @@ abstract class OwnerReportsRemoteDataSource {
   Future<List<OccupancyPropertyModel>> getOccupancyReport();
   /// TODO: implement when endpoint is ready (owner/reports/defaulters)
   Future<List<DefaulterModel>> getDefaultersReport();
+  Future<UnitsStatusReportModel> getUnitsStatusReport({
+    int page = 1,
+    int? propertyId,
+    String? status,
+  });
 }
 
 class OwnerReportsRemoteDataSourceImpl
@@ -90,5 +96,29 @@ class OwnerReportsRemoteDataSourceImpl
     //     .map((json) => DefaulterModel.fromJson(json))
     //     .toList();
     return [];
+  }
+
+  @override
+  Future<UnitsStatusReportModel> getUnitsStatusReport({
+    int page = 1,
+    int? propertyId,
+    String? status,
+  }) async {
+    final queryParameters = <String, dynamic>{
+      'page': page,
+    };
+    if (propertyId != null) queryParameters['property_id'] = propertyId;
+    if (status != null) queryParameters['status'] = status;
+
+    final response = await _dio.get(
+      'owner/reports/units-status',
+      queryParameters: queryParameters,
+    );
+    final data = response.data as Map<String, dynamic>? ?? {};
+    if (data['success'] == true && data['data'] != null) {
+      return UnitsStatusReportModel.fromJson(data['data']);
+    } else {
+      throw ServerException(data['message']?.toString() ?? 'Server error');
+    }
   }
 }

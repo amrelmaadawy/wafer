@@ -1,136 +1,190 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../../../../core/di/service_locator.dart' as di;
+import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
-import '../cubit/owner_defaulters_cubit.dart';
-import '../cubit/owner_occupancy_cubit.dart';
-import '../cubit/owner_revenue_cubit.dart';
-import '../views/owner_defaulters_report_view.dart';
-import '../views/owner_occupancy_report_view.dart';
-import '../views/owner_revenue_report_view.dart';
+import '../../../../../core/routing/routes.dart';
 
 class OwnerReportsCenterScreen extends StatelessWidget {
-  final int initialTabIndex;
-
-  const OwnerReportsCenterScreen({super.key, this.initialTabIndex = 0});
+  const OwnerReportsCenterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<OwnerRevenueCubit>(
-          create: (_) => di.sl<OwnerRevenueCubit>()
-            ..loadRevenueReport(forceRefresh: true),
-        ),
-        BlocProvider<OwnerOccupancyCubit>(
-          create: (_) => di.sl<OwnerOccupancyCubit>()
-            ..loadOccupancyReport(forceRefresh: true),
-        ),
-        BlocProvider<OwnerDefaultersCubit>(
-          create: (_) => di.sl<OwnerDefaultersCubit>()
-            ..loadDefaultersReport(forceRefresh: true),
-        ),
-      ],
-      child: DefaultTabController(
-        length: 3,
-        initialIndex: initialTabIndex.clamp(0, 2),
-        child: Scaffold(
-          backgroundColor: AppColors.backgroundLight,
-          appBar: CustomAppBar(
-            title: LocaleKeys.dashboardReports.tr(),
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(60),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 12),
-                child: TabBar(
-                  dividerColor: Colors.transparent,
-                  isScrollable: true,
-                  tabAlignment: TabAlignment.start,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  indicator: BoxDecoration(
-                    color: context.primaryColor,
-                    borderRadius: AppRadius.circularXxl,
-                    boxShadow: [
-                      BoxShadow(
-                        color: context.primaryShadow,
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  labelColor: Colors.white,
-                  unselectedLabelColor: const Color(0xFF64748B),
-                  labelPadding: const EdgeInsets.symmetric(horizontal: 4),
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  splashFactory: NoSplash.splashFactory,
-                  overlayColor: WidgetStateProperty.all(Colors.transparent),
-                  tabs: [
-                    Tab(
-                      height: 44,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.attach_money_rounded, size: 18),
-                            const SizedBox(width: 8),
-                            Text(
-                              LocaleKeys.revenueReport.tr(),
-                              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
-                            ),
-                          ],
-                        ),
+    return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
+      appBar: CustomAppBar(
+        title: LocaleKeys.dashboardReports.tr(),
+      ),
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          SliverToBoxAdapter(
+            child: _buildCategorySection(
+              context,
+              title: LocaleKeys.financial.tr(),
+              reports: [
+                _ReportItem(
+                  title: LocaleKeys.revenueReport.tr(),
+                  subtitle: 'عرض إيرادات العقارات والوحدات بالتفصيل',
+                  icon: Icons.attach_money_rounded,
+                  route: Routes.ownerRevenueReport,
+                ),
+                _ReportItem(
+                  title: LocaleKeys.defaultersReportTitle.tr(),
+                  subtitle: 'متابعة المتأخرات والمدفوعات المستحقة',
+                  icon: Icons.warning_amber_rounded,
+                  route: Routes.ownerDefaultersReport,
+                ),
+              ],
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: _buildCategorySection(
+              context,
+              title: LocaleKeys.operational.tr(),
+              reports: [
+                _ReportItem(
+                  title: LocaleKeys.occupancyReportTitle.tr(),
+                  subtitle: 'تحليل ومتابعة نسب الإشغال والشاغر',
+                  icon: Icons.pie_chart_rounded,
+                  route: Routes.ownerOccupancyReport,
+                ),
+                _ReportItem(
+                  title: LocaleKeys.reports_unitsStatusReportTitle.tr(),
+                  subtitle: 'نظرة عامة وحالة جميع الوحدات العقارية',
+                  icon: Icons.maps_home_work_rounded,
+                  route: Routes.ownerUnitsStatusReport,
+                ),
+              ],
+            ),
+          ),
+          // Additional categories (Contracts, System Activity) can be added here
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 40),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCategorySection(BuildContext context,
+      {required String title, required List<_ReportItem> reports}) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 24, left: 20, right: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w800,
+                color: AppColors.textPrimaryLight,
+              ),
+            ),
+          ),
+          const SizedBox(height: 12),
+          ListView.separated(
+            padding: EdgeInsets.zero,
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: reports.length,
+            separatorBuilder: (context, index) => const SizedBox(height: 12),
+            itemBuilder: (context, index) {
+              return _ReportCard(item: reports[index]);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ReportItem {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final String route;
+
+  _ReportItem({
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+    required this.route,
+  });
+}
+
+class _ReportCard extends StatelessWidget {
+  final _ReportItem item;
+
+  const _ReportCard({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.white,
+      borderRadius: AppRadius.circularXl,
+      shadowColor: context.primaryShadow.withValues(alpha: 0.04),
+      elevation: 2,
+      child: InkWell(
+        onTap: () {
+          context.push(item.route);
+        },
+        borderRadius: AppRadius.circularXl,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            borderRadius: AppRadius.circularXl,
+            border: Border.all(color: AppColors.borderLight),
+          ),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: context.primaryColor.withValues(alpha: 0.08),
+                  borderRadius: AppRadius.circularLg,
+                ),
+                child: Icon(item.icon, color: context.primaryColor, size: 28),
+              ),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.title,
+                      style: const TextStyle(
+                        fontSize: 14.5,
+                        fontWeight: FontWeight.w800,
+                        color: AppColors.textPrimaryLight,
+                        height: 1.2,
                       ),
                     ),
-                    Tab(
-                      height: 44,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.pie_chart_rounded, size: 18),
-                            const SizedBox(width: 8),
-                            Text(
-                              LocaleKeys.occupancyReportTitle.tr(),
-                              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Tab(
-                      height: 44,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 18),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Icon(Icons.warning_amber_rounded, size: 18),
-                            const SizedBox(width: 8),
-                            Text(
-                              LocaleKeys.defaultersReportTitle.tr(),
-                              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 13.5),
-                            ),
-                          ],
-                        ),
+                    const SizedBox(height: 6),
+                    Text(
+                      item.subtitle,
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.textSecondaryLight,
+                        height: 1.3,
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-          ),
-          body: const TabBarView(
-            children: [
-              OwnerRevenueReportView(),
-              OwnerOccupancyReportView(),
-              OwnerDefaultersReportView(),
+              const SizedBox(width: 12),
+              Icon(
+                Icons.chevron_left_rounded,
+                size: 24,
+                color: AppColors.textSecondaryLight.withValues(alpha: 0.5),
+              ),
             ],
           ),
         ),

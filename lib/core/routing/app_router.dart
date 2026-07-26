@@ -20,9 +20,16 @@ import '../../features/owner/contracts/presentation/views/owner_leases_view.dart
 import '../../features/owner/finance/presentation/views/owner_finance_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
-import '../../features/owner/reports/presentation/screens/owner_reports_center_screen.dart';
 import '../../features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
-import '../../features/owner/reports/presentation/screens/reports_center_screen.dart';
+import '../../features/owner/reports/presentation/screens/owner_reports_center_screen.dart';
+import '../../features/owner/reports/presentation/views/owner_revenue_report_view.dart';
+import '../../features/owner/reports/presentation/cubit/owner_revenue_cubit.dart';
+import '../../features/owner/reports/presentation/views/owner_units_status_report_view.dart';
+import '../../features/owner/reports/presentation/cubit/owner_units_status_cubit.dart';
+import '../../features/owner/reports/presentation/views/owner_occupancy_report_view.dart';
+import '../../features/owner/reports/presentation/cubit/owner_occupancy_cubit.dart';
+import '../../features/owner/reports/presentation/views/owner_defaulters_report_view.dart';
+import '../../features/owner/reports/presentation/cubit/owner_defaulters_cubit.dart';
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';
 import '../../features/profile/presentation/screens/change_password_screen.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
@@ -118,9 +125,36 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerReportsCenter,
         builder: (context, state) {
-          final tab = int.tryParse(state.uri.queryParameters['tab'] ?? '0') ?? 0;
-          return OwnerReportsCenterScreen(initialTabIndex: tab);
+          return const OwnerReportsCenterScreen();
         },
+      ),
+      GoRoute(
+        path: Routes.ownerRevenueReport,
+        builder: (context, state) => BlocProvider<OwnerRevenueCubit>(
+          create: (_) => sl<OwnerRevenueCubit>()..loadRevenueReport(forceRefresh: true),
+          child: const OwnerRevenueReportView(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerUnitsStatusReport,
+        builder: (context, state) => BlocProvider<OwnerUnitsStatusCubit>(
+          create: (_) => sl<OwnerUnitsStatusCubit>()..loadUnitsStatusReport(forceRefresh: true),
+          child: const OwnerUnitsStatusReportView(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerOccupancyReport,
+        builder: (context, state) => BlocProvider<OwnerOccupancyCubit>(
+          create: (_) => sl<OwnerOccupancyCubit>()..loadOccupancyReport(forceRefresh: true),
+          child: const OwnerOccupancyReportView(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerDefaultersReport,
+        builder: (context, state) => BlocProvider<OwnerDefaultersCubit>(
+          create: (_) => sl<OwnerDefaultersCubit>()..loadDefaultersReport(forceRefresh: true),
+          child: const OwnerDefaultersReportView(),
+        ),
       ),
       GoRoute(
         path: Routes.editProfile,
@@ -157,10 +191,7 @@ class AppRouter {
           );
         },
       ),
-      GoRoute(
-        path: Routes.ownerReportsCenter,
-        builder: (context, state) => const ReportsCenterScreen(),
-      ),
+
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return OwnerMainScreen(navigationShell: navigationShell);

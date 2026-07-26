@@ -26,4 +26,10 @@ class Routes {
   static const String ownerDeeds = '/owner-deeds';
   static const String ownerDeedsCreate = '/owner-deeds-create';
   static const String ownerDeedDetails = '/owner-deed-details';
+
+  // Reports sub-routes
+  static const String ownerRevenueReport = '/owner-revenue-report';
+  static const String ownerUnitsStatusReport = '/owner-units-status-report';
+  static const String ownerOccupancyReport = '/owner-occupancy-report';
+  static const String ownerDefaultersReport = '/owner-defaulters-report';
 }

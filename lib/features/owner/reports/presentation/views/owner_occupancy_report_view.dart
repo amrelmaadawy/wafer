@@ -5,6 +5,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../cubit/owner_occupancy_cubit.dart';
 import '../cubit/owner_occupancy_state.dart';
 import '../widgets/occupancy_properties_list.dart';
@@ -16,8 +17,11 @@ class OwnerOccupancyReportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OwnerOccupancyCubit, OwnerOccupancyState>(
-      builder: (context, state) {
+    return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
+      appBar: CustomAppBar(title: LocaleKeys.occupancyReportTitle.tr()),
+      body: BlocBuilder<OwnerOccupancyCubit, OwnerOccupancyState>(
+        builder: (context, state) {
         if (state is OwnerOccupancyLoading || state is OwnerOccupancyInitial) {
           return const SingleChildScrollView(
             padding: EdgeInsets.all(20),
@@ -55,7 +59,7 @@ class OwnerOccupancyReportView extends StatelessWidget {
         }
         return const SizedBox.shrink();
       },
-    );
+    ));
   }
 
   Widget _buildErrorView(BuildContext context, String message) {

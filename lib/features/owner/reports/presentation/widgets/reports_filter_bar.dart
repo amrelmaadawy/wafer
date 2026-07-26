@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -13,6 +14,7 @@ class ReportsFilterBar extends StatelessWidget {
   final String? selectedEndDate;
   final Function(int?) onPropertySelected;
   final Function(String?, String?) onDateRangeSelected;
+  final VoidCallback onReset;
 
   const ReportsFilterBar({
     super.key,
@@ -22,6 +24,7 @@ class ReportsFilterBar extends StatelessWidget {
     required this.selectedEndDate,
     required this.onPropertySelected,
     required this.onDateRangeSelected,
+    required this.onReset,
   });
 
   @override
@@ -35,6 +38,22 @@ class ReportsFilterBar extends StatelessWidget {
           _buildDateRangeChip(context),
           const SizedBox(width: 8),
           _buildPropertyChip(context),
+          if (selectedPropertyId != null || (selectedStartDate != null && selectedEndDate != null)) ...[
+            const SizedBox(width: 8),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.red.withValues(alpha: 0.1),
+                shape: BoxShape.circle,
+              ),
+              child: IconButton(
+                onPressed: onReset,
+                icon: const Icon(Icons.refresh_rounded, color: Colors.red, size: 20),
+                tooltip: 'إعادة تعيين',
+                constraints: const BoxConstraints(),
+                padding: const EdgeInsets.all(8),
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -47,7 +66,7 @@ class ReportsFilterBar extends StatelessWidget {
         ? '$selectedStartDate - $selectedEndDate'
         : 'Select Date Range'; // fallback
 
-    return ActionChip(
+    return InputChip(
       onPressed: () async {
         final initialRange = hasDateFilter
             ? DateTimeRange(
@@ -56,29 +75,55 @@ class ReportsFilterBar extends StatelessWidget {
               )
             : null;
 
-        final result = await showDateRangePicker(
+        final result = await showCalendarDatePicker2Dialog(
           context: context,
-          firstDate: DateTime(2020),
-          lastDate: DateTime(2030),
-          initialDateRange: initialRange,
-          builder: (context, child) {
-            return Theme(
-              data: Theme.of(context).copyWith(
-                colorScheme: ColorScheme.light(
-                  primary: context.primaryColor,
-                ),
-              ),
-              child: child!,
-            );
-          },
+          config: CalendarDatePicker2WithActionButtonsConfig(
+            calendarType: CalendarDatePicker2Type.range,
+            selectedDayHighlightColor: context.primaryColor,
+            closeDialogOnCancelTapped: true,
+            firstDayOfWeek: 1,
+            controlsTextStyle: const TextStyle(
+              color: AppColors.textPrimaryLight,
+              fontWeight: FontWeight.w700,
+            ),
+            dayTextStyle: const TextStyle(
+              color: AppColors.textPrimaryLight,
+              fontWeight: FontWeight.w600,
+            ),
+            selectedDayTextStyle: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w700,
+            ),
+            cancelButtonTextStyle: const TextStyle(
+              color: AppColors.textSecondaryLight,
+              fontWeight: FontWeight.w600,
+            ),
+            okButtonTextStyle: TextStyle(
+              color: context.primaryColor,
+              fontWeight: FontWeight.w700,
+            ),
+            centerAlignModePicker: true,
+          ),
+          dialogSize: const Size(325, 400),
+          value: initialRange != null
+              ? [initialRange.start, initialRange.end]
+              : [],
+          borderRadius: AppRadius.circularXl,
         );
 
-        if (result != null) {
-          final start = DateFormat('yyyy-MM-dd').format(result.start);
-          final end = DateFormat('yyyy-MM-dd').format(result.end);
-          onDateRangeSelected(start, end);
+        if (result != null && result.isNotEmpty) {
+          final start = result.first;
+          final end = result.length > 1 ? result[1] : start;
+          if (start != null && end != null) {
+            final startStr = DateFormat('yyyy-MM-dd').format(start);
+            final endStr = DateFormat('yyyy-MM-dd').format(end);
+            onDateRangeSelected(startStr, endStr);
+          }
         }
       },
+      onDeleted: hasDateFilter ? () => onDateRangeSelected('', '') : null,
+      deleteIconColor: Colors.white,
+      deleteIcon: const Icon(Icons.close_rounded, size: 16),
       backgroundColor: hasDateFilter ? context.primaryColor : Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: AppRadius.circularLg,
@@ -100,6 +145,7 @@ class ReportsFilterBar extends StatelessWidget {
         color: hasDateFilter ? Colors.white : AppColors.textSecondaryLight,
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      showCheckmark: false,
     );
   }
 

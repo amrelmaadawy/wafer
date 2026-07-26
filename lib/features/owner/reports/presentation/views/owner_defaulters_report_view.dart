@@ -5,6 +5,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../cubit/owner_defaulters_cubit.dart';
 import '../cubit/owner_defaulters_state.dart';
@@ -14,8 +15,11 @@ class OwnerDefaultersReportView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<OwnerDefaultersCubit, OwnerDefaultersState>(
-      builder: (context, state) {
+    return Scaffold(
+      backgroundColor: AppColors.backgroundLight,
+      appBar: CustomAppBar(title: LocaleKeys.defaultersReportTitle.tr()),
+      body: BlocBuilder<OwnerDefaultersCubit, OwnerDefaultersState>(
+        builder: (context, state) {
         if (state is OwnerDefaultersLoading || state is OwnerDefaultersInitial) {
           return const SingleChildScrollView(
             padding: EdgeInsets.all(20),
@@ -30,7 +34,7 @@ class OwnerDefaultersReportView extends StatelessWidget {
         }
         return _buildComingSoonView(context);
       },
-    );
+    ));
   }
 
   Widget _buildComingSoonView(BuildContext context) {
