@@ -64,6 +64,12 @@ class OwnerReportsCenterScreen extends StatelessWidget {
                   icon: Icons.build_circle_outlined,
                   route: Routes.ownerMaintenanceRequestsReport,
                 ),
+                _ReportItem(
+                  title: LocaleKeys.technicianPerformanceTitle.tr(),
+                  subtitle: 'متابعة أداء الفنيين وإنجازاتهم',
+                  icon: Icons.engineering_outlined,
+                  route: Routes.ownerTechnicianPerformanceReport,
+                ),
               ],
             ),
           ),

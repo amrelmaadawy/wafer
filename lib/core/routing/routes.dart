@@ -35,4 +35,5 @@ class Routes {
   static const String ownerContractsReport = '/owner/reports/contracts';
   static const String ownerContractsMovementReport = '/owner/reports/contracts-movement';
   static const String ownerMaintenanceRequestsReport = '/owner/reports/maintenance-requests';
+  static const String ownerTechnicianPerformanceReport = '/owner/reports/technician-performance';
 }

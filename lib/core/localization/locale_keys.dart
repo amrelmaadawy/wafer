@@ -1332,4 +1332,15 @@ abstract class  LocaleKeys {
   static const String maintenanceRequestsList = 'dashboard.maintenanceRequestsList';
   static const String maintenanceRequestsNoData = 'dashboard.maintenanceRequestsNoData';
 
+  // Technician Performance Report
+  static const String technicianPerformanceTitle = 'dashboard.technicianPerformanceTitle';
+  static const String technicianPerformanceTotalTechnicians = 'dashboard.technicianPerformanceTotalTechnicians';
+  static const String technicianPerformanceTotalCompleted = 'dashboard.technicianPerformanceTotalCompleted';
+  static const String technicianPerformanceTotalPending = 'dashboard.technicianPerformanceTotalPending';
+  static const String technicianPerformanceTechnicianName = 'dashboard.technicianPerformanceTechnicianName';
+  static const String technicianPerformanceTechnicianPhone = 'dashboard.technicianPerformanceTechnicianPhone';
+  static const String technicianPerformanceCompletedRequests = 'dashboard.technicianPerformanceCompletedRequests';
+  static const String technicianPerformancePendingRequests = 'dashboard.technicianPerformancePendingRequests';
+  static const String technicianPerformanceList = 'dashboard.technicianPerformanceList';
+  static const String technicianPerformanceNoData = 'dashboard.technicianPerformanceNoData';
 }

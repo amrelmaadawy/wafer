@@ -42,6 +42,8 @@ import '../reports/domain/usecases/get_owner_contracts_movement_report_use_case.
 import '../reports/presentation/cubit/owner_contracts_movement_cubit.dart';
 import '../reports/domain/usecases/get_owner_maintenance_requests_report_use_case.dart';
 import '../reports/presentation/cubit/owner_maintenance_requests_cubit.dart';
+import '../reports/domain/usecases/get_owner_technician_performance_report_use_case.dart';
+import '../reports/presentation/cubit/owner_technician_performance_cubit.dart';
 
 // Properties
 import '../properties/data/datasources/properties_remote_data_source.dart';
@@ -388,5 +390,13 @@ void _initReports() {
   );
   sl.registerFactory<OwnerMaintenanceRequestsCubit>(
     () => OwnerMaintenanceRequestsCubit(sl()),
+  );
+
+  // Owner Technician Performance Report
+  sl.registerLazySingleton<GetOwnerTechnicianPerformanceReportUseCase>(
+    () => GetOwnerTechnicianPerformanceReportUseCase(sl()),
+  );
+  sl.registerFactory<OwnerTechnicianPerformanceCubit>(
+    () => OwnerTechnicianPerformanceCubit(sl()),
   );
 }

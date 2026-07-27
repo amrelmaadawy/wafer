@@ -7,6 +7,7 @@ import '../../../../../core/error/failures.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/defaulters_report_entity.dart';
 import '../../domain/entities/maintenance_requests_report_entity.dart';
+import '../../domain/entities/technician_performance_report_entity.dart';
 import '../../domain/entities/contracts_report_entity.dart';
 import '../../domain/entities/contracts_movement_report_entity.dart';
 import '../../domain/entities/occupancy_report_entity.dart';
@@ -179,6 +180,20 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
   }) async {
     try {
       final result = await _remoteDataSource.getMaintenanceRequestsReport(page: page);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+  @override
+  Future<Either<Failure, TechnicianPerformanceReportEntity>> getTechnicianPerformanceReport({
+    bool forceRefresh = false,
+    int page = 1,
+  }) async {
+    try {
+      final result = await _remoteDataSource.getTechnicianPerformanceReport(page: page);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

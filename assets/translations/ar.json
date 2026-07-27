@@ -59,7 +59,6 @@
     "reports_shortcut": "مركز التقارير",
     "reports_shortcut_sub": "الإيرادات • الإشغال • المتعثرين",
     "defaultersList": "قائمة المتأخرات",
-  "defaultersTotalRemaining": "إجمالي المبالغ المتبقية",
     "defaultersTotalRemaining": "إجمالي المبالغ المتبقية",
     "defaultersTotalAmount": "إجمالي القيمة الأصلية",
     "defaultersInstallmentsCount": "عدد الأقساط",
@@ -93,8 +92,18 @@
     "maintenanceRequestsClient": "العميل",
     "maintenanceRequestsPhone": "الهاتف",
     "maintenanceRequestsUnknownRenter": "غير محدد",
-    "maintenanceRequestsList": "سجل طلبات الصيانة",
-    "maintenanceRequestsNoData": "لا توجد طلبات صيانة لعرضها"
+    "maintenanceRequestsList": "قائمة طلبات الصيانة",
+    "maintenanceRequestsNoData": "لا توجد طلبات صيانة حالياً",
+    "technicianPerformanceTitle": "تقرير أداء الفنيين",
+    "technicianPerformanceTotalTechnicians": "إجمالي الفنيين",
+    "technicianPerformanceTotalCompleted": "الطلبات المكتملة",
+    "technicianPerformanceTotalPending": "قيد الانتظار",
+    "technicianPerformanceTechnicianName": "اسم الفني",
+    "technicianPerformanceTechnicianPhone": "رقم الهاتف",
+    "technicianPerformanceCompletedRequests": "طلبات مكتملة",
+    "technicianPerformancePendingRequests": "طلبات قيد الانتظار",
+    "technicianPerformanceList": "قائمة الفنيين",
+    "technicianPerformanceNoData": "لا توجد بيانات للفنيين حالياً"
   },
   "profile": {
     "title": "الملف الشخصي",

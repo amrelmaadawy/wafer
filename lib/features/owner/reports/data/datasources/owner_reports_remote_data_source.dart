@@ -8,6 +8,7 @@ import '../models/units_status_report_model.dart';
 import '../models/contracts_report_model.dart';
 import '../models/contracts_movement_report_model.dart';
 import '../models/maintenance_requests_report_model.dart';
+import '../models/technician_performance_report_model.dart';
 
 abstract class OwnerReportsRemoteDataSource {
   Future<RevenueReportModel> getRevenueReport({
@@ -29,6 +30,8 @@ abstract class OwnerReportsRemoteDataSource {
   Future<ContractsMovementReportModel> getContractsMovementReport({int page = 1});
   
   Future<MaintenanceRequestsReportModel> getMaintenanceRequestsReport({int page = 1});
+  
+  Future<TechnicianPerformanceReportModel> getTechnicianPerformanceReport({int page = 1});
 }
 
 class OwnerReportsRemoteDataSourceImpl
@@ -158,6 +161,24 @@ class OwnerReportsRemoteDataSourceImpl
       );
       if (response.data['success'] == true) {
         return MaintenanceRequestsReportModel.fromJson(response.data['data']);
+      } else {
+        throw ServerException(response.data['message']);
+      }
+    } catch (e) {
+      if (e is ServerException) rethrow;
+      throw ServerException('حدث خطأ غير متوقع');
+    }
+  }
+
+  @override
+  Future<TechnicianPerformanceReportModel> getTechnicianPerformanceReport({int page = 1}) async {
+    try {
+      final response = await _dio.get(
+        ApiConstants.ownerTechnicianPerformanceReport,
+        queryParameters: {'page': page},
+      );
+      if (response.data['success'] == true) {
+        return TechnicianPerformanceReportModel.fromJson(response.data['data']);
       } else {
         throw ServerException(response.data['message']);
       }

@@ -59,7 +59,6 @@
     "reports_shortcut": "Reports Center",
     "reports_shortcut_sub": "Revenue • Occupancy • Defaulters",
     "defaultersList": "Defaulters List",
-  "defaultersTotalRemaining": "Total Remaining Amount",
     "defaultersTotalRemaining": "Total Remaining Amount",
     "defaultersTotalAmount": "Total Original Amount",
     "defaultersInstallmentsCount": "Installments Count",
@@ -93,8 +92,19 @@
     "maintenanceRequestsClient": "Client",
     "maintenanceRequestsPhone": "Phone",
     "maintenanceRequestsUnknownRenter": "Unknown",
-    "maintenanceRequestsList": "Maintenance Logs",
-    "maintenanceRequestsNoData": "No maintenance requests to show"
+    "maintenanceRequestsList": "Maintenance Requests List",
+  "maintenanceRequestsNoData": "No maintenance requests found",
+  
+  "technicianPerformanceTitle": "Technician Performance Report",
+  "technicianPerformanceTotalTechnicians": "Total Technicians",
+  "technicianPerformanceTotalCompleted": "Completed Requests",
+  "technicianPerformanceTotalPending": "Pending Requests",
+  "technicianPerformanceTechnicianName": "Technician Name",
+  "technicianPerformanceTechnicianPhone": "Phone Number",
+  "technicianPerformanceCompletedRequests": "Completed",
+  "technicianPerformancePendingRequests": "Pending",
+  "technicianPerformanceList": "Technicians List",
+  "technicianPerformanceNoData": "No technicians data found"
   },
   "profile": {
     "title": "Profile",
