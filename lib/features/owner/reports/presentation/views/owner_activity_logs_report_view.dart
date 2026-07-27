@@ -13,6 +13,7 @@ import '../cubit/owner_activity_logs_cubit.dart';
 import '../cubit/owner_activity_logs_state.dart';
 import '../widgets/activity_logs_summary_header.dart';
 import '../widgets/activity_logs_report_list.dart';
+import '../widgets/report_skeleton.dart';
 import '../widgets/report_export_button.dart';
 
 class OwnerActivityLogsReportView extends StatefulWidget {
@@ -100,7 +101,7 @@ class _OwnerActivityLogsReportViewState extends State<OwnerActivityLogsReportVie
           builder: (context, state) {
             if (state is OwnerActivityLogsInitial || 
                 (state is OwnerActivityLogsLoading && !state.isPagination)) {
-              return const Center(child: CircularProgressIndicator());
+              return const ReportSkeleton();
             }
 
             if (state is OwnerActivityLogsError) {

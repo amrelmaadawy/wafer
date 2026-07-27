@@ -10,6 +10,7 @@ import '../cubit/owner_contracts_movement_cubit.dart';
 import '../cubit/owner_contracts_movement_state.dart';
 import '../widgets/contracts_movement_summary_header.dart';
 import '../widgets/contracts_movement_report_list.dart';
+import '../widgets/report_skeleton.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/builders/contracts_movement_pdf_builder.dart';
 import '../../../../../core/services/excel/builders/contracts_movement_excel_builder.dart';
@@ -104,7 +105,7 @@ class _OwnerContractsMovementReportViewState
             if (state is OwnerContractsMovementInitial ||
                 (state is OwnerContractsMovementLoading &&
                     !state.isPagination)) {
-              return const Center(child: CircularProgressIndicator());
+              return const ReportSkeleton();
             } else if (state is OwnerContractsMovementError) {
               return CustomErrorWidget(
                 message: state.message,

@@ -10,6 +10,7 @@ import '../cubit/owner_technician_performance_cubit.dart';
 import '../cubit/owner_technician_performance_state.dart';
 import '../widgets/technician_performance_summary_header.dart';
 import '../widgets/technician_performance_report_list.dart';
+import '../widgets/report_skeleton.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/builders/technician_performance_pdf_builder.dart';
 import '../../../../../core/services/excel/builders/technician_performance_excel_builder.dart';
@@ -104,7 +105,7 @@ class _OwnerTechnicianPerformanceReportViewState
             if (state is OwnerTechnicianPerformanceInitial ||
                 (state is OwnerTechnicianPerformanceLoading &&
                     !state.isPagination)) {
-              return const Center(child: CircularProgressIndicator());
+              return const ReportSkeleton();
             } else if (state is OwnerTechnicianPerformanceError) {
               return CustomErrorWidget(
                 message: state.message,

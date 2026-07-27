@@ -13,6 +13,7 @@ import '../cubit/owner_employee_tasks_cubit.dart';
 import '../cubit/owner_employee_tasks_state.dart';
 import '../widgets/employee_tasks_summary_header.dart';
 import '../widgets/employee_tasks_report_list.dart';
+import '../widgets/report_skeleton.dart';
 import '../widgets/report_export_button.dart';
 
 class OwnerEmployeeTasksReportView extends StatefulWidget {
@@ -100,7 +101,7 @@ class _OwnerEmployeeTasksReportViewState extends State<OwnerEmployeeTasksReportV
           builder: (context, state) {
             if (state is OwnerEmployeeTasksInitial || 
                 (state is OwnerEmployeeTasksLoading && !state.isPagination)) {
-              return const Center(child: CircularProgressIndicator());
+              return const ReportSkeleton();
             }
 
             if (state is OwnerEmployeeTasksError) {

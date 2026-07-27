@@ -10,6 +10,7 @@ import '../cubit/owner_defaulters_cubit.dart';
 import '../cubit/owner_defaulters_state.dart';
 import '../widgets/defaulters_summary_header.dart';
 import '../widgets/defaulters_report_list.dart';
+import '../widgets/report_skeleton.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
 import '../../../../../core/services/pdf/builders/defaulters_pdf_builder.dart';
@@ -99,7 +100,7 @@ class _OwnerDefaultersReportViewState extends State<OwnerDefaultersReportView> {
           if (state is OwnerDefaultersLoading &&
               context.read<OwnerDefaultersCubit>().state
                   is! OwnerDefaultersLoaded) {
-            return const Center(child: CircularProgressIndicator());
+            return const ReportSkeleton();
           } else if (state is OwnerDefaultersError) {
             return _buildErrorView(context, state.message);
           } else if (state is OwnerDefaultersEmpty) {

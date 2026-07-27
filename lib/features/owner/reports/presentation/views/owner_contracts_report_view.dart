@@ -9,6 +9,7 @@ import '../../../../../core/theme/color_utils.dart';
 import '../cubit/owner_contracts_report_cubit.dart';
 import '../cubit/owner_contracts_report_state.dart';
 import '../widgets/contracts_report_list.dart';
+import '../widgets/report_skeleton.dart';
 import '../widgets/contracts_summary_header.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
@@ -97,7 +98,7 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
       body: BlocBuilder<OwnerContractsReportCubit, OwnerContractsReportState>(
         builder: (context, state) {
           if (state is OwnerContractsReportLoading && context.read<OwnerContractsReportCubit>().state is! OwnerContractsReportLoaded) {
-            return const Center(child: CircularProgressIndicator());
+            return const ReportSkeleton();
           } else if (state is OwnerContractsReportError) {
             return CustomErrorWidget(
               message: state.message,

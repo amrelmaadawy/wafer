@@ -10,6 +10,7 @@ import '../cubit/owner_maintenance_requests_cubit.dart';
 import '../cubit/owner_maintenance_requests_state.dart';
 import '../widgets/maintenance_requests_summary_header.dart';
 import '../widgets/maintenance_requests_report_list.dart';
+import '../widgets/report_skeleton.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/builders/maintenance_requests_pdf_builder.dart';
 import '../../../../../core/services/excel/builders/maintenance_requests_excel_builder.dart';
@@ -104,7 +105,7 @@ class _OwnerMaintenanceRequestsReportViewState
             if (state is OwnerMaintenanceRequestsInitial ||
                 (state is OwnerMaintenanceRequestsLoading &&
                     !state.isPagination)) {
-              return const Center(child: CircularProgressIndicator());
+              return const ReportSkeleton();
             } else if (state is OwnerMaintenanceRequestsError) {
               return CustomErrorWidget(
                 message: state.message,
