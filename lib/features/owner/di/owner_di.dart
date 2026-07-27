@@ -44,6 +44,10 @@ import '../reports/domain/usecases/get_owner_maintenance_requests_report_use_cas
 import '../reports/presentation/cubit/owner_maintenance_requests_cubit.dart';
 import '../reports/domain/usecases/get_owner_technician_performance_report_use_case.dart';
 import '../reports/presentation/cubit/owner_technician_performance_cubit.dart';
+import '../reports/domain/usecases/get_owner_employee_tasks_report_use_case.dart';
+import '../reports/presentation/cubit/owner_employee_tasks_cubit.dart';
+import '../reports/domain/usecases/get_owner_activity_logs_report_use_case.dart';
+import '../reports/presentation/cubit/owner_activity_logs_cubit.dart';
 
 // Properties
 import '../properties/data/datasources/properties_remote_data_source.dart';
@@ -398,5 +402,21 @@ void _initReports() {
   );
   sl.registerFactory<OwnerTechnicianPerformanceCubit>(
     () => OwnerTechnicianPerformanceCubit(sl()),
+  );
+
+  // Owner Employee Tasks Report
+  sl.registerLazySingleton<GetOwnerEmployeeTasksReportUseCase>(
+    () => GetOwnerEmployeeTasksReportUseCase(sl()),
+  );
+  sl.registerFactory<OwnerEmployeeTasksCubit>(
+    () => OwnerEmployeeTasksCubit(sl()),
+  );
+
+  // Owner Activity Logs Report
+  sl.registerLazySingleton<GetOwnerActivityLogsReportUseCase>(
+    () => GetOwnerActivityLogsReportUseCase(sl()),
+  );
+  sl.registerFactory<OwnerActivityLogsCubit>(
+    () => OwnerActivityLogsCubit(sl()),
   );
 }

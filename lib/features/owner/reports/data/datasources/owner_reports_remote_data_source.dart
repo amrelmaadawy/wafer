@@ -9,6 +9,8 @@ import '../models/contracts_report_model.dart';
 import '../models/contracts_movement_report_model.dart';
 import '../models/maintenance_requests_report_model.dart';
 import '../models/technician_performance_report_model.dart';
+import '../models/employee_tasks_report_model.dart';
+import '../models/activity_logs_report_model.dart';
 
 abstract class OwnerReportsRemoteDataSource {
   Future<RevenueReportModel> getRevenueReport({
@@ -31,7 +33,19 @@ abstract class OwnerReportsRemoteDataSource {
   
   Future<MaintenanceRequestsReportModel> getMaintenanceRequestsReport({int page = 1});
   
-  Future<TechnicianPerformanceReportModel> getTechnicianPerformanceReport({int page = 1});
+  Future<TechnicianPerformanceReportModel> getTechnicianPerformanceReport({
+    int page = 1,
+  });
+
+  Future<EmployeeTasksReportModel> getEmployeeTasksReport({
+    int page = 1,
+  });
+
+  Future<ActivityLogsReportModel> getActivityLogsReport({
+    int page = 1,
+    String? type,
+    String? action,
+  });
 }
 
 class OwnerReportsRemoteDataSourceImpl
@@ -179,6 +193,54 @@ class OwnerReportsRemoteDataSourceImpl
       );
       if (response.data['success'] == true) {
         return TechnicianPerformanceReportModel.fromJson(response.data['data']);
+      } else {
+        throw ServerException(response.data['message']);
+      }
+    } catch (e) {
+      if (e is ServerException) rethrow;
+      throw ServerException('حدث خطأ غير متوقع');
+    }
+  }
+
+  @override
+  Future<EmployeeTasksReportModel> getEmployeeTasksReport({int page = 1}) async {
+    try {
+      final response = await _dio.get(
+        ApiConstants.ownerEmployeeTasksReport,
+        queryParameters: {'page': page},
+      );
+      if (response.data['success'] == true) {
+        return EmployeeTasksReportModel.fromJson(response.data['data']);
+      } else {
+        throw ServerException(response.data['message']);
+      }
+    } catch (e) {
+      if (e is ServerException) rethrow;
+      throw ServerException('حدث خطأ غير متوقع');
+    }
+  }
+
+  @override
+  Future<ActivityLogsReportModel> getActivityLogsReport({
+    int page = 1,
+    String? type,
+    String? action,
+  }) async {
+    try {
+      final queryParams = <String, dynamic>{'page': page};
+      if (type != null && type.isNotEmpty) {
+        queryParams['type'] = type;
+      }
+      if (action != null && action.isNotEmpty) {
+        queryParams['action'] = action;
+      }
+
+      final response = await _dio.get(
+        ApiConstants.ownerActivityLogsReport,
+        queryParameters: queryParams,
+      );
+      if (response.data['success'] == true) {
+        return ActivityLogsReportModel.fromJson(response.data['data']);
       } else {
         throw ServerException(response.data['message']);
       }

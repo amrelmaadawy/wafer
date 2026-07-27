@@ -1343,4 +1343,32 @@ abstract class  LocaleKeys {
   static const String technicianPerformancePendingRequests = 'dashboard.technicianPerformancePendingRequests';
   static const String technicianPerformanceList = 'dashboard.technicianPerformanceList';
   static const String technicianPerformanceNoData = 'dashboard.technicianPerformanceNoData';
+
+  // Employee Tasks Report
+  static const String employeeTasksTitle = 'dashboard.employeeTasksTitle';
+  static const String employeeTasksTotalEmployees = 'dashboard.employeeTasksTotalEmployees';
+  static const String employeeTasksTotalCompleted = 'dashboard.employeeTasksTotalCompleted';
+  static const String employeeTasksTotalPending = 'dashboard.employeeTasksTotalPending';
+  static const String employeeTasksTotalOverdue = 'dashboard.employeeTasksTotalOverdue';
+  static const String employeeTasksEmployeeName = 'dashboard.employeeTasksEmployeeName';
+  static const String employeeTasksEmployeePhone = 'dashboard.employeeTasksEmployeePhone';
+  static const String employeeTasksCompleted = 'dashboard.employeeTasksCompleted';
+  static const String employeeTasksPending = 'dashboard.employeeTasksPending';
+  static const String employeeTasksOverdue = 'dashboard.employeeTasksOverdue';
+  static const String employeeTasksList = 'dashboard.employeeTasksList';
+  static const String employeeTasksNoData = 'dashboard.employeeTasksNoData';
+
+  // Activity Logs Report
+  static const String activityLogsTitle = 'dashboard.activityLogsTitle';
+  static const String activityLogsTotalLogs = 'dashboard.activityLogsTotalLogs';
+  static const String activityLogsCreates = 'dashboard.activityLogsCreates';
+  static const String activityLogsUpdates = 'dashboard.activityLogsUpdates';
+  static const String activityLogsDeletes = 'dashboard.activityLogsDeletes';
+  static const String activityLogsList = 'dashboard.activityLogsList';
+  static const String activityLogsNoData = 'dashboard.activityLogsNoData';
+  static const String activityLogsActionMessage = 'dashboard.activityLogsActionMessage';
+  static const String activityLogsActionType = 'dashboard.activityLogsActionType';
+  static const String activityLogsActionUser = 'dashboard.activityLogsActionUser';
+  static const String activityLogsActionIp = 'dashboard.activityLogsActionIp';
+  static const String activityLogsActionDate = 'dashboard.activityLogsActionDate';
 }

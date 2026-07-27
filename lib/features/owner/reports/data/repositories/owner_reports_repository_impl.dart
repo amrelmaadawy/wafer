@@ -8,6 +8,8 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/defaulters_report_entity.dart';
 import '../../domain/entities/maintenance_requests_report_entity.dart';
 import '../../domain/entities/technician_performance_report_entity.dart';
+import '../../domain/entities/employee_tasks_report_entity.dart';
+import '../../domain/entities/activity_logs_report_entity.dart';
 import '../../domain/entities/contracts_report_entity.dart';
 import '../../domain/entities/contracts_movement_report_entity.dart';
 import '../../domain/entities/occupancy_report_entity.dart';
@@ -194,6 +196,42 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
   }) async {
     try {
       final result = await _remoteDataSource.getTechnicianPerformanceReport(page: page);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, EmployeeTasksReportEntity>> getEmployeeTasksReport({
+    bool forceRefresh = false,
+    int page = 1,
+  }) async {
+    try {
+      final result = await _remoteDataSource.getEmployeeTasksReport(page: page);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ActivityLogsReportEntity>> getActivityLogsReport({
+    bool forceRefresh = false,
+    int page = 1,
+    String? type,
+    String? action,
+  }) async {
+    try {
+      final result = await _remoteDataSource.getActivityLogsReport(
+        page: page,
+        type: type,
+        action: action,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

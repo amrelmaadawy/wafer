@@ -8,6 +8,8 @@ import '../entities/contracts_report_entity.dart';
 import '../entities/contracts_movement_report_entity.dart';
 import '../entities/maintenance_requests_report_entity.dart';
 import '../entities/technician_performance_report_entity.dart';
+import '../entities/employee_tasks_report_entity.dart';
+import '../entities/activity_logs_report_entity.dart';
 
 abstract class OwnerReportsRepository {
   Future<Either<Failure, RevenueReportEntity>> getRevenueReport({
@@ -53,5 +55,17 @@ abstract class OwnerReportsRepository {
   Future<Either<Failure, TechnicianPerformanceReportEntity>> getTechnicianPerformanceReport({
     bool forceRefresh = false,
     int page = 1,
+  });
+
+  Future<Either<Failure, EmployeeTasksReportEntity>> getEmployeeTasksReport({
+    bool forceRefresh = false,
+    int page = 1,
+  });
+
+  Future<Either<Failure, ActivityLogsReportEntity>> getActivityLogsReport({
+    bool forceRefresh = false,
+    int page = 1,
+    String? type,
+    String? action,
   });
 }

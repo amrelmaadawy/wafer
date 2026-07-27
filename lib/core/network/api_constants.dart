@@ -37,6 +37,8 @@ class ApiConstants {
   static const String ownerContractsMovementReport = 'owner/reports/contracts-movement';
   static const String ownerMaintenanceRequestsReport = 'owner/reports/maintenance-requests';
   static const String ownerTechnicianPerformanceReport = 'owner/reports/technician-performance';
+  static const String ownerEmployeeTasksReport = 'owner/reports/employee-tasks';
+  static const String ownerActivityLogsReport = 'owner/reports/activity-logs';
 
   // Owner Properties & Deeds
   static const String ownerProperties = 'owner/properties';

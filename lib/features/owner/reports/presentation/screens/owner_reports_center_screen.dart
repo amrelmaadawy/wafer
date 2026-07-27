@@ -70,8 +70,23 @@ class OwnerReportsCenterScreen extends StatelessWidget {
                   icon: Icons.engineering_outlined,
                   route: Routes.ownerTechnicianPerformanceReport,
                 ),
+                _ReportItem(
+                  title: LocaleKeys.employeeTasksTitle.tr(),
+                  subtitle: 'متابعة مهام الموظفين',
+                  icon: Icons.assignment_ind_outlined,
+                  route: Routes.ownerEmployeeTasksReport,
+                ),
+                _ReportItem(
+                  title: LocaleKeys.activityLogsTitle.tr(),
+                  subtitle: 'متابعة سجلات النشاط',
+                  icon: Icons.history_rounded,
+                  route: Routes.ownerActivityLogsReport,
+                ),
               ],
             ),
+          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 32),
           ),
           SliverToBoxAdapter(
             child: _buildCategorySection(
