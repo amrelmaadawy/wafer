@@ -14,6 +14,7 @@ import '../cubit/owner_activity_logs_state.dart';
 import '../widgets/activity_logs_summary_header.dart';
 import '../widgets/activity_logs_report_list.dart';
 import '../widgets/report_skeleton.dart';
+import '../widgets/report_empty_widget.dart';
 import '../widgets/report_export_button.dart';
 
 class OwnerActivityLogsReportView extends StatefulWidget {
@@ -112,8 +113,9 @@ class _OwnerActivityLogsReportViewState extends State<OwnerActivityLogsReportVie
             }
 
             if (state is OwnerActivityLogsEmpty) {
-              return Center(
-                child: Text(LocaleKeys.activityLogsNoData.tr()),
+              return ReportEmptyWidget(
+                message: LocaleKeys.activityLogsNoData.tr(),
+                icon: Icons.history_rounded,
               );
             }
 

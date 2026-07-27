@@ -88,6 +88,9 @@ abstract class  LocaleKeys {
   static const profile_logout = 'profile.logout';
   static const profile_logout_subtitle = 'profile.logout_subtitle';
   static const profile_logout_dialog_msg = 'profile.logout_dialog_msg';
+  static const profile_theme_color = 'profile.theme_color';
+  static const profile_theme_color_subtitle = 'profile.theme_color_subtitle';
+  static const profile_theme_choose_color = 'profile.theme_choose_color';
   static const profile_edit_screen_title = 'profile.edit_screen_title';
   static const profile_readonly_banner = 'profile.readonly_banner';
   static const profile_full_name_label = 'profile.full_name_label';

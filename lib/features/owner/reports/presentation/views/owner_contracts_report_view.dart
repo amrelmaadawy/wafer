@@ -10,6 +10,7 @@ import '../cubit/owner_contracts_report_cubit.dart';
 import '../cubit/owner_contracts_report_state.dart';
 import '../widgets/contracts_report_list.dart';
 import '../widgets/report_skeleton.dart';
+import '../widgets/report_empty_widget.dart';
 import '../widgets/contracts_summary_header.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
@@ -107,7 +108,10 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                   .loadContractsReport(forceRefresh: true),
             );
           } else if (state is OwnerContractsReportEmpty) {
-            return _buildEmptyView(context);
+            return ReportEmptyWidget(
+              message: LocaleKeys.reports_empty_state.tr(),
+              icon: Icons.description_outlined,
+            );
           } else if (state is OwnerContractsReportLoaded) {
             return RefreshIndicator(
               color: context.primaryColor,
@@ -140,24 +144,6 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
           }
           return const SizedBox.shrink();
         },
-      ),
-    );
-  }
-
-  Widget _buildEmptyView(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.description_outlined,
-              size: 56, color: AppColors.textSecondaryLight),
-          const SizedBox(height: 16),
-          Text(
-            LocaleKeys.reports_empty_state.tr(),
-            style: const TextStyle(
-                color: AppColors.textSecondaryLight, fontSize: 16),
-          ),
-        ],
       ),
     );
   }

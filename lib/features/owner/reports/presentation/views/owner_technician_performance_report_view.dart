@@ -11,6 +11,7 @@ import '../cubit/owner_technician_performance_state.dart';
 import '../widgets/technician_performance_summary_header.dart';
 import '../widgets/technician_performance_report_list.dart';
 import '../widgets/report_skeleton.dart';
+import '../widgets/report_empty_widget.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/builders/technician_performance_pdf_builder.dart';
 import '../../../../../core/services/excel/builders/technician_performance_excel_builder.dart';
@@ -112,18 +113,9 @@ class _OwnerTechnicianPerformanceReportViewState
                 onRetry: () => _cubit.loadReport(refresh: true),
               );
             } else if (state is OwnerTechnicianPerformanceEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.engineering_rounded, size: 64, color: AppColors.textSecondaryLight),
-                    const SizedBox(height: 16),
-                    Text(
-                      LocaleKeys.technicianPerformanceNoData.tr(),
-                      style: const TextStyle(fontSize: 16, color: AppColors.textSecondaryLight),
-                    ),
-                  ],
-                ),
+              return ReportEmptyWidget(
+                message: LocaleKeys.technicianPerformanceNoData.tr(),
+                icon: Icons.engineering_outlined,
               );
             } else if (state is OwnerTechnicianPerformanceLoaded ||
                 (state is OwnerTechnicianPerformanceLoading &&

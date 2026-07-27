@@ -10,6 +10,7 @@ import '../cubit/owner_occupancy_cubit.dart';
 import '../cubit/owner_occupancy_state.dart';
 import '../widgets/occupancy_properties_list.dart';
 import '../widgets/occupancy_skeleton.dart';
+import '../widgets/report_empty_widget.dart';
 import '../widgets/occupancy_summary_header.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
@@ -106,7 +107,10 @@ class _OwnerOccupancyReportViewState extends State<OwnerOccupancyReportView> {
         } else if (state is OwnerOccupancyError) {
           return _buildErrorView(context, state.message);
         } else if (state is OwnerOccupancyEmpty) {
-          return _buildEmptyView(context);
+          return ReportEmptyWidget(
+            message: LocaleKeys.occupancyNoData.tr(),
+            icon: Icons.domain_disabled_rounded,
+          );
         } else if (state is OwnerOccupancyLoaded) {
           return RefreshIndicator(
             color: context.primaryColor,
@@ -153,21 +157,4 @@ class _OwnerOccupancyReportViewState extends State<OwnerOccupancyReportView> {
     );
   }
 
-  Widget _buildEmptyView(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.domain_disabled_rounded,
-              size: 56, color: AppColors.textSecondaryLight),
-          const SizedBox(height: 16),
-          Text(
-            LocaleKeys.occupancyNoData.tr(),
-            style: const TextStyle(
-                color: AppColors.textSecondaryLight, fontSize: 16),
-          ),
-        ],
-      ),
-    );
-  }
 }

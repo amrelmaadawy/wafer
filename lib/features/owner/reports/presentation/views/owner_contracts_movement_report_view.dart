@@ -11,6 +11,7 @@ import '../cubit/owner_contracts_movement_state.dart';
 import '../widgets/contracts_movement_summary_header.dart';
 import '../widgets/contracts_movement_report_list.dart';
 import '../widgets/report_skeleton.dart';
+import '../widgets/report_empty_widget.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/builders/contracts_movement_pdf_builder.dart';
 import '../../../../../core/services/excel/builders/contracts_movement_excel_builder.dart';
@@ -112,18 +113,9 @@ class _OwnerContractsMovementReportViewState
                 onRetry: () => _cubit.loadReport(refresh: true),
               );
             } else if (state is OwnerContractsMovementEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.sync_alt_rounded, size: 64, color: AppColors.textSecondaryLight),
-                    const SizedBox(height: 16),
-                    Text(
-                      LocaleKeys.contractsMovementNoData.tr(),
-                      style: const TextStyle(fontSize: 16, color: AppColors.textSecondaryLight),
-                    ),
-                  ],
-                ),
+              return ReportEmptyWidget(
+                message: LocaleKeys.contractsMovementNoData.tr(),
+                icon: Icons.compare_arrows_rounded,
               );
             } else if (state is OwnerContractsMovementLoaded ||
                 (state is OwnerContractsMovementLoading &&

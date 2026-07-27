@@ -12,6 +12,7 @@ import '../cubit/owner_revenue_state.dart';
 import '../widgets/revenue_animated_bar_chart.dart';
 import '../widgets/revenue_monthly_list.dart';
 import '../widgets/revenue_skeleton.dart';
+import '../widgets/report_empty_widget.dart';
 import '../widgets/revenue_summary_header.dart';
 import '../widgets/reports_filter_bar.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
@@ -61,7 +62,10 @@ class OwnerRevenueReportView extends StatelessWidget {
         } else if (state is OwnerRevenueError) {
           return _buildErrorView(context, state.message);
         } else if (state is OwnerRevenueEmpty) {
-          return _buildEmptyView(context);
+          return ReportEmptyWidget(
+            message: LocaleKeys.revenueNoData.tr(),
+            icon: Icons.account_balance_wallet_outlined,
+          );
         } else if (state is OwnerRevenueLoaded) {
           final cubit = context.read<OwnerRevenueCubit>();
           return RefreshIndicator(
@@ -121,19 +125,4 @@ class OwnerRevenueReportView extends StatelessWidget {
     );
   }
 
-  Widget _buildEmptyView(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.account_balance_wallet_outlined,
-              size: 56, color: AppColors.textSecondaryLight),
-          const SizedBox(height: 16),
-          Text(LocaleKeys.revenueNoData.tr(),
-              style: const TextStyle(
-                  color: AppColors.textSecondaryLight, fontSize: 16)),
-        ],
-      ),
-    );
-  }
 }

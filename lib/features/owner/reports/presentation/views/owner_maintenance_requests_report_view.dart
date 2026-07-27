@@ -11,6 +11,7 @@ import '../cubit/owner_maintenance_requests_state.dart';
 import '../widgets/maintenance_requests_summary_header.dart';
 import '../widgets/maintenance_requests_report_list.dart';
 import '../widgets/report_skeleton.dart';
+import '../widgets/report_empty_widget.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/builders/maintenance_requests_pdf_builder.dart';
 import '../../../../../core/services/excel/builders/maintenance_requests_excel_builder.dart';
@@ -112,18 +113,9 @@ class _OwnerMaintenanceRequestsReportViewState
                 onRetry: () => _cubit.loadReport(refresh: true),
               );
             } else if (state is OwnerMaintenanceRequestsEmpty) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(Icons.build_circle_rounded, size: 64, color: AppColors.textSecondaryLight),
-                    const SizedBox(height: 16),
-                    Text(
-                      LocaleKeys.maintenanceRequestsNoData.tr(),
-                      style: const TextStyle(fontSize: 16, color: AppColors.textSecondaryLight),
-                    ),
-                  ],
-                ),
+              return ReportEmptyWidget(
+                message: LocaleKeys.maintenanceRequestsNoData.tr(),
+                icon: Icons.build_circle_outlined,
               );
             } else if (state is OwnerMaintenanceRequestsLoaded ||
                 (state is OwnerMaintenanceRequestsLoading &&

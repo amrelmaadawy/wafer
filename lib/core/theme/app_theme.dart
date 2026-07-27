@@ -8,6 +8,18 @@ class AppTheme {
   /// Default primary color used on first launch before user customization.
   static const Color defaultPrimary = Color(0xFF1E3A8A);
 
+  /// Predefined curated premium color palette for the application.
+  static const List<Color> premiumPalette = [
+    defaultPrimary, // Midnight Blue
+    Color(0xFF0D9488), // Teal / Emerald
+    Color(0xFF4338CA), // Deep Indigo
+    Color(0xFF6D28D9), // Royal Purple
+    Color(0xFFBE123C), // Crimson Red
+    Color(0xFFD97706), // Warm Amber
+    Color(0xFF334155), // Slate Gray
+    Color(0xFF0F766E), // Pine Green
+  ];
+
   /// Builds a light [ThemeData] using the given [primary] color.
   /// All color-sensitive components (ColorScheme, ElevatedButton, etc.)
   /// are derived from [primary] so the entire UI reacts to theme changes.

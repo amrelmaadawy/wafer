@@ -11,6 +11,7 @@ import '../cubit/owner_defaulters_state.dart';
 import '../widgets/defaulters_summary_header.dart';
 import '../widgets/defaulters_report_list.dart';
 import '../widgets/report_skeleton.dart';
+import '../widgets/report_empty_widget.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
 import '../../../../../core/services/pdf/builders/defaulters_pdf_builder.dart';
@@ -104,7 +105,11 @@ class _OwnerDefaultersReportViewState extends State<OwnerDefaultersReportView> {
           } else if (state is OwnerDefaultersError) {
             return _buildErrorView(context, state.message);
           } else if (state is OwnerDefaultersEmpty) {
-            return _buildEmptyView(context);
+            return ReportEmptyWidget(
+              message: LocaleKeys.defaultersNoData.tr(),
+              icon: Icons.check_circle_outline_rounded,
+              color: AppColors.success,
+            );
           } else if (state is OwnerDefaultersLoaded) {
             return RefreshIndicator(
               color: context.primaryColor,
@@ -160,21 +165,4 @@ class _OwnerDefaultersReportViewState extends State<OwnerDefaultersReportView> {
     );
   }
 
-  Widget _buildEmptyView(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.check_circle_outline_rounded,
-              size: 56, color: AppColors.success),
-          const SizedBox(height: 16),
-          Text(
-            LocaleKeys.defaultersNoData.tr(),
-            style: const TextStyle(
-                color: AppColors.textSecondaryLight, fontSize: 16),
-          ),
-        ],
-      ),
-    );
-  }
 }

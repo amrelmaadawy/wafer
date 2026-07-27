@@ -14,6 +14,7 @@ import '../cubit/owner_employee_tasks_state.dart';
 import '../widgets/employee_tasks_summary_header.dart';
 import '../widgets/employee_tasks_report_list.dart';
 import '../widgets/report_skeleton.dart';
+import '../widgets/report_empty_widget.dart';
 import '../widgets/report_export_button.dart';
 
 class OwnerEmployeeTasksReportView extends StatefulWidget {
@@ -112,8 +113,9 @@ class _OwnerEmployeeTasksReportViewState extends State<OwnerEmployeeTasksReportV
             }
 
             if (state is OwnerEmployeeTasksEmpty) {
-              return Center(
-                child: Text(LocaleKeys.employeeTasksNoData.tr()),
+              return ReportEmptyWidget(
+                message: LocaleKeys.employeeTasksNoData.tr(),
+                icon: Icons.assignment_ind_outlined,
               );
             }
 

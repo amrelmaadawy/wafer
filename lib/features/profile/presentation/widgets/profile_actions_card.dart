@@ -13,6 +13,7 @@ import '../../../../core/di/service_locator.dart';
 import '../../../auth/presentation/cubit/auth_cubit.dart';
 import '../../../auth/presentation/cubit/auth_state.dart';
 import 'profile_action_tile.dart';
+import 'theme_color_selector_bottom_sheet.dart';
 
 class ProfileActionsCard extends StatelessWidget {
   final ProfileEntity profile;
@@ -85,6 +86,22 @@ class ProfileActionsCard extends StatelessWidget {
             iconColor: AppColors.info,
             onTap: () {
               context.push(Routes.ownerReportsCenter);
+            },
+          ),
+          const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
+          ProfileActionTile(
+            icon: Icons.palette_rounded,
+            label: LocaleKeys.profile_theme_color.tr(),
+            subtitle: LocaleKeys.profile_theme_color_subtitle.tr(),
+            iconBg: context.primaryColor.withValues(alpha: 0.1),
+            iconColor: context.primaryColor,
+            onTap: () {
+              showModalBottomSheet(
+                context: context,
+                isScrollControlled: true,
+                backgroundColor: Colors.transparent,
+                builder: (context) => const ThemeColorSelectorBottomSheet(),
+              );
             },
           ),
           const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),

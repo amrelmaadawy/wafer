@@ -11,6 +11,7 @@ import '../cubit/owner_units_status_state.dart';
 import '../widgets/units_status_filter_bar.dart';
 import '../widgets/units_status_list_item.dart';
 import '../widgets/units_status_skeleton.dart';
+import '../widgets/report_empty_widget.dart';
 import '../widgets/units_status_summary_header.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
@@ -108,13 +109,12 @@ class _OwnerUnitsStatusReportViewState
               padding: const EdgeInsets.all(AppSpacing.lg),
               children: [
                 UnitsStatusFilterBar(filterOptions: state.filterOptions),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.2),
-                const Icon(Icons.maps_home_work_outlined, size: 64, color: Colors.grey),
-                const SizedBox(height: 16),
-                Text(
-                  LocaleKeys.reports_empty_state.tr(),
-                  style: const TextStyle(fontSize: 16),
-                  textAlign: TextAlign.center,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.4,
+                  child: ReportEmptyWidget(
+                    message: LocaleKeys.reports_empty_state.tr(),
+                    icon: Icons.maps_home_work_outlined,
+                  ),
                 ),
               ],
             ),
