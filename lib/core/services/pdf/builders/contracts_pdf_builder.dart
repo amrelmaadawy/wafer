@@ -1,53 +1,35 @@
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
 import '../pdf_generator_service.dart';
-import '../../../../features/owner/reports/domain/entities/defaulters_report_item_entity.dart';
+import '../../../../features/owner/reports/domain/entities/contracts_report_item_entity.dart';
 
-class DefaultersPdfBuilder {
+class ContractsPdfBuilder {
   static Future<pw.Document> build(
-    List<DefaultersReportItemEntity> items,
-    double totalRemaining,
-    double totalAmount,
-    int totalInstallments,
+    List<ContractsReportItemEntity> contracts,
+    int totalExpiring,
+    double totalRentValue,
+    int days,
   ) async {
     return PdfGeneratorService.createReportDocument(
-      title: 'تقرير المتأخرات المادية',
-      subtitle: 'المبالغ والأقساط المتأخرة',
+      title: 'تقرير العقود',
+      subtitle: 'تفاصيل العقود والإيجارات',
       buildContent: (theme) {
         return [
-          _buildSummaryCards(totalRemaining, totalAmount, totalInstallments, theme),
+          _buildSummaryCards(totalExpiring, totalRentValue, days, theme),
           pw.SizedBox(height: 24),
-          _buildTable(items, theme),
+          _buildTable(contracts, theme),
         ];
       },
     );
   }
 
-  static pw.Widget _buildSummaryCards(
-    double totalRemaining,
-    double totalAmount,
-    int totalInstallments,
-    pw.ThemeData theme,
-  ) {
+  static pw.Widget _buildSummaryCards(int totalExpiring, double totalRentValue, int days, pw.ThemeData theme) {
     return pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       children: [
-        _buildSummaryCard(
-          'إجمالي المتبقي',
-          '${totalRemaining.toStringAsFixed(2)} ريال',
-          theme,
-          color: PdfColor.fromInt(0xFFEF4444),
-        ),
-        _buildSummaryCard(
-          'إجمالي المبالغ',
-          '${totalAmount.toStringAsFixed(2)} ريال',
-          theme,
-        ),
-        _buildSummaryCard(
-          'إجمالي الأقساط',
-          '$totalInstallments',
-          theme,
-        ),
+        _buildSummaryCard('إجمالي الإيجارات', '${totalRentValue.toStringAsFixed(2)} ريال', theme),
+        _buildSummaryCard('تاريخ التقرير', '$days يوم', theme),
+        _buildSummaryCard('العقود المنتهية', '$totalExpiring', theme, color: PdfColor.fromInt(0xFFF59E0B)),
       ],
     );
   }
@@ -89,8 +71,8 @@ class DefaultersPdfBuilder {
     );
   }
 
-  static pw.Widget _buildTable(List<DefaultersReportItemEntity> items, pw.ThemeData theme) {
-    if (items.isEmpty) {
+  static pw.Widget _buildTable(List<ContractsReportItemEntity> contracts, pw.ThemeData theme) {
+    if (contracts.isEmpty) {
       return pw.Center(
         child: pw.Text(
           'لا توجد بيانات متاحة لهذا التقرير.',
@@ -125,22 +107,16 @@ class DefaultersPdfBuilder {
           ),
         ),
       ),
-      headers: [
-        'المستأجر',
-        'الوحدة',
-        'رقم القسط',
-        'المتبقي',
-        'الاستحقاق',
-        'أيام التأخير'
-      ],
-      data: items.map((item) {
+      headers: ['العقار', 'الوحدة', 'المستأجر', 'النهاية', 'الإيجار', 'الأيام', 'الحالة'],
+      data: contracts.map((c) {
         return [
-          item.renter.name.isNotEmpty ? item.renter.name : 'غير محدد',
-          item.unit.name.isNotEmpty ? item.unit.name : item.unit.unitNumber,
-          item.installmentNumber.toString(),
-          item.remainingAmount.toStringAsFixed(2),
-          item.dueDate,
-          item.daysOverdue.toStringAsFixed(0),
+          c.propertyName.isNotEmpty ? c.propertyName : 'غير محدد',
+          c.unitName.isNotEmpty ? c.unitName : 'غير محدد',
+          c.renterName.isNotEmpty ? c.renterName : 'غير محدد',
+          c.endDate,
+          c.rentValue.toStringAsFixed(2),
+          c.daysRemaining.toString(),
+          c.status,
         ];
       }).toList(),
     );

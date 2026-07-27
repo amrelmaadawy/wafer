@@ -1290,4 +1290,17 @@ abstract class  LocaleKeys {
   static const reports_all_statuses = 'reports.all_statuses';
   static const reports_property = 'reports.property';
   static const reports_status = 'reports.status';
+  // Owner Defaulters Report
+  static const String defaultersList = 'dashboard.defaultersList';
+  static const String defaultersTotalRemaining = 'dashboard.defaultersTotalRemaining';
+  static const String defaultersTotalAmount = 'dashboard.defaultersTotalAmount';
+  static const String defaultersInstallmentsCount = 'dashboard.defaultersInstallmentsCount';
+  static const String defaultersUnknownRenter = 'dashboard.defaultersUnknownRenter';
+  static const String defaultersDays = 'dashboard.defaultersDays';
+  static const String defaultersInstallmentNo = 'dashboard.defaultersInstallmentNo';
+  static const String defaultersDueDate = 'dashboard.defaultersDueDate';
+  static const String defaultersAmount = 'dashboard.defaultersAmount';
+  static const String defaultersRemaining = 'dashboard.defaultersRemaining';
+  static const String defaultersNoData = 'dashboard.defaultersNoData';
+
 }

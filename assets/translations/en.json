@@ -57,8 +57,19 @@
     "maintenance_no_requests": "No Maintenance Requests",
     "maintenance_no_requests_sub": "New maintenance requests will appear here",
     "reports_shortcut": "Reports Center",
-    "reports_shortcut_sub": "Revenue • Occupancy • Defaulters"
-  },
+    "reports_shortcut_sub": "Revenue • Occupancy • Defaulters",
+    "defaultersList": "Defaulters List",
+  "defaultersTotalRemaining": "Total Remaining Amount",
+  "defaultersTotalAmount": "Total Original Amount",
+  "defaultersInstallmentsCount": "Installments Count",
+  "defaultersUnknownRenter": "Unknown Renter",
+  "defaultersDays": "Days",
+  "defaultersInstallmentNo": "Installment No",
+  "defaultersDueDate": "Due Date",
+  "defaultersAmount": "Original Amount",
+  "defaultersRemaining": "Remaining Amount",
+  "defaultersNoData": "No defaulters currently!"
+},
   "profile": {
     "title": "Profile",
     "owner_badge": "Owner",

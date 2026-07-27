@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:wafer/features/owner/reports/data/models/occupancy_report_model.dart';
 import '../../../../../core/network/api_constants.dart';
 import '../../../../../core/error/exceptions.dart';
-import '../models/defaulter_model.dart';
+import '../models/defaulters_report_model.dart';
 import '../models/revenue_report_model.dart';
 import '../models/units_status_report_model.dart';
+import '../models/contracts_report_model.dart';
 
 abstract class OwnerReportsRemoteDataSource {
   Future<RevenueReportModel> getRevenueReport({
@@ -13,12 +14,15 @@ abstract class OwnerReportsRemoteDataSource {
     String? endDate,
   });
   Future<OccupancyReportModel> getOccupancyReport({int page = 1});
-  /// TODO: implement when endpoint is ready (owner/reports/defaulters)
-  Future<List<DefaulterModel>> getDefaultersReport();
+  Future<DefaultersReportModel> getDefaultersReport({int page = 1});
   Future<UnitsStatusReportModel> getUnitsStatusReport({
     int page = 1,
     int? propertyId,
     String? status,
+  });
+  Future<ContractsReportModel> getContractsReport({
+    int page = 1,
+    int? propertyId,
   });
 }
 
@@ -66,18 +70,17 @@ class OwnerReportsRemoteDataSourceImpl
   }
 
   @override
-  Future<List<DefaulterModel>> getDefaultersReport() async {
-    // TODO: replace with real endpoint when ready
-    // final response = await _dio.get(
-    //   '${ApiConstants.baseUrl}${ApiConstants.ownerDefaultersReport}',
-    // );
-    // final data = response.data as Map<String, dynamic>? ?? {};
-    // final list = data['data'] as List<dynamic>? ?? [];
-    // return list
-    //     .whereType<Map<String, dynamic>>()
-    //     .map((json) => DefaulterModel.fromJson(json))
-    //     .toList();
-    return [];
+  Future<DefaultersReportModel> getDefaultersReport({int page = 1}) async {
+    final response = await _dio.get(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerDefaultersReport}',
+      queryParameters: {'page': page},
+    );
+
+    final data = response.data as Map<String, dynamic>? ?? {};
+    if (data['success'] == true && data['data'] != null) {
+      return DefaultersReportModel.fromJson(data['data']);
+    }
+    throw ServerException(data['message'] ?? 'Invalid response format');
   }
 
   @override
@@ -99,8 +102,27 @@ class OwnerReportsRemoteDataSourceImpl
     final data = response.data as Map<String, dynamic>? ?? {};
     if (data['success'] == true && data['data'] != null) {
       return UnitsStatusReportModel.fromJson(data['data']);
-    } else {
-      throw ServerException(data['message']?.toString() ?? 'Server error');
     }
+    throw ServerException(data['message'] ?? 'Invalid response format');
+  }
+
+  @override
+  Future<ContractsReportModel> getContractsReport({
+    int page = 1,
+    int? propertyId,
+  }) async {
+    final queryParams = <String, dynamic>{'page': page};
+    if (propertyId != null) queryParams['property_id'] = propertyId;
+
+    final response = await _dio.get(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerContractsReport}',
+      queryParameters: queryParams,
+    );
+
+    final data = response.data as Map<String, dynamic>? ?? {};
+    if (data['success'] == true && data['data'] != null) {
+      return ContractsReportModel.fromJson(data['data']);
+    }
+    throw ServerException(data['message'] ?? 'Invalid response format');
   }
 }

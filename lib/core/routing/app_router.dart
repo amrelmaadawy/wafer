@@ -30,6 +30,8 @@ import '../../features/owner/reports/presentation/views/owner_occupancy_report_v
 import '../../features/owner/reports/presentation/cubit/owner_occupancy_cubit.dart';
 import '../../features/owner/reports/presentation/views/owner_defaulters_report_view.dart';
 import '../../features/owner/reports/presentation/cubit/owner_defaulters_cubit.dart';
+import '../../features/owner/reports/presentation/cubit/owner_contracts_report_cubit.dart';
+import '../../features/owner/reports/presentation/views/owner_contracts_report_view.dart';
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';
 import '../../features/profile/presentation/screens/change_password_screen.dart';
 import '../../features/profile/presentation/cubit/profile_cubit.dart';
@@ -140,6 +142,13 @@ class AppRouter {
         builder: (context, state) => BlocProvider<OwnerUnitsStatusCubit>(
           create: (_) => sl<OwnerUnitsStatusCubit>()..loadUnitsStatusReport(forceRefresh: true),
           child: const OwnerUnitsStatusReportView(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerContractsReport,
+        builder: (context, state) => BlocProvider<OwnerContractsReportCubit>(
+          create: (_) => sl<OwnerContractsReportCubit>()..loadContractsReport(forceRefresh: true),
+          child: const OwnerContractsReportView(),
         ),
       ),
       GoRoute(

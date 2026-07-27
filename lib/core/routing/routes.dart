@@ -29,7 +29,8 @@ class Routes {
 
   // Reports sub-routes
   static const String ownerRevenueReport = '/owner-revenue-report';
-  static const String ownerUnitsStatusReport = '/owner-units-status-report';
   static const String ownerOccupancyReport = '/owner-occupancy-report';
   static const String ownerDefaultersReport = '/owner-defaulters-report';
+  static const String ownerUnitsStatusReport = '/owner-units-status-report';
+  static const String ownerContractsReport = '/owner-contracts-report';
 }

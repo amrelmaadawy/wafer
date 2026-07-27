@@ -1,9 +1,10 @@
 import 'package:dartz/dartz.dart';
 import '../../../../../core/error/failures.dart';
-import '../entities/defaulter_entity.dart';
+import '../entities/defaulters_report_entity.dart';
 import '../entities/occupancy_report_entity.dart';
 import '../entities/revenue_report_entity.dart';
 import '../entities/units_status_report_entity.dart';
+import '../entities/contracts_report_entity.dart';
 
 abstract class OwnerReportsRepository {
   Future<Either<Failure, RevenueReportEntity>> getRevenueReport({
@@ -18,8 +19,9 @@ abstract class OwnerReportsRepository {
     int page = 1,
   });
 
-  Future<Either<Failure, List<DefaulterEntity>>> getDefaultersReport({
+  Future<Either<Failure, DefaultersReportEntity>> getDefaultersReport({
     bool forceRefresh = false,
+    int page = 1,
   });
 
   Future<Either<Failure, UnitsStatusReportEntity>> getUnitsStatusReport({
@@ -27,5 +29,11 @@ abstract class OwnerReportsRepository {
     int page = 1,
     int? propertyId,
     String? status,
+  });
+
+  Future<Either<Failure, ContractsReportEntity>> getContractsReport({
+    bool forceRefresh = false,
+    int page = 1,
+    int? propertyId,
   });
 }

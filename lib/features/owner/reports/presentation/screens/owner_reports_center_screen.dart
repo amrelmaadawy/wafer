@@ -61,7 +61,21 @@ class OwnerReportsCenterScreen extends StatelessWidget {
               ],
             ),
           ),
-          // Additional categories (Contracts, System Activity) can be added here
+          SliverToBoxAdapter(
+            child: _buildCategorySection(
+              context,
+              title: LocaleKeys.reports_contracts.tr(),
+              reports: [
+                _ReportItem(
+                  title: LocaleKeys.reports_contracts.tr(),
+                  subtitle: 'عرض وتتبع حالة جميع العقود الإيجارية',
+                  icon: Icons.description_outlined,
+                  route: Routes.ownerContractsReport,
+                ),
+              ],
+            ),
+          ),
+          // Additional categories (System Activity) can be added here
           const SliverToBoxAdapter(
             child: SizedBox(height: 40),
           ),

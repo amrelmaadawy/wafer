@@ -6,37 +6,37 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/theme/color_utils.dart';
-import '../cubit/owner_defaulters_cubit.dart';
-import '../cubit/owner_defaulters_state.dart';
-import '../widgets/defaulters_summary_header.dart';
-import '../widgets/defaulters_report_list.dart';
+import '../cubit/owner_contracts_report_cubit.dart';
+import '../cubit/owner_contracts_report_state.dart';
+import '../widgets/contracts_report_list.dart';
+import '../widgets/contracts_summary_header.dart';
 import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
-import '../../../../../core/services/pdf/builders/defaulters_pdf_builder.dart';
+import '../../../../../core/services/pdf/builders/contracts_pdf_builder.dart';
 import '../../../../../core/services/excel/excel_export_service.dart';
-import '../../../../../core/services/excel/builders/defaulters_excel_builder.dart';
+import '../../../../../core/services/excel/builders/contracts_excel_builder.dart';
 
-class OwnerDefaultersReportView extends StatefulWidget {
-  const OwnerDefaultersReportView({super.key});
+class OwnerContractsReportView extends StatefulWidget {
+  const OwnerContractsReportView({super.key});
 
   @override
-  State<OwnerDefaultersReportView> createState() =>
-      _OwnerDefaultersReportViewState();
+  State<OwnerContractsReportView> createState() => _OwnerContractsReportViewState();
 }
 
-class _OwnerDefaultersReportViewState extends State<OwnerDefaultersReportView> {
+class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
   final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
+    context.read<OwnerContractsReportCubit>().loadContractsReport();
   }
 
   void _onScroll() {
     if (_scrollController.position.pixels >=
         _scrollController.position.maxScrollExtent - 200) {
-      context.read<OwnerDefaultersCubit>().loadDefaultersReport();
+      context.read<OwnerContractsReportCubit>().loadContractsReport();
     }
   }
 
@@ -51,39 +51,39 @@ class _OwnerDefaultersReportViewState extends State<OwnerDefaultersReportView> {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       appBar: CustomAppBar(
-        title: LocaleKeys.defaultersReportTitle.tr(),
+        title: LocaleKeys.reports_contracts.tr(),
         actions: [
-          BlocBuilder<OwnerDefaultersCubit, OwnerDefaultersState>(
+          BlocBuilder<OwnerContractsReportCubit, OwnerContractsReportState>(
             builder: (context, state) {
-              if (state is OwnerDefaultersLoaded) {
+              if (state is OwnerContractsReportLoaded) {
                 return ReportExportButton(
                   onPdfPressed: () async {
-                    final pdf = await DefaultersPdfBuilder.build(
+                    final pdf = await ContractsPdfBuilder.build(
                       state.report.items,
-                      state.report.summary.totalRemaining,
-                      state.report.summary.totalAmount,
-                      state.report.summary.totalInstallments,
+                      state.report.summary.totalExpiring,
+                      state.report.summary.totalRentValue,
+                      state.report.summary.days,
                     );
                     if (context.mounted) {
                       await PdfGeneratorService.exportAndPrint(
                         context: context,
                         pdf: pdf,
-                        fileName: 'تقرير_المتأخرات.pdf',
+                        fileName: 'تقرير_العقود.pdf',
                       );
                     }
                   },
                   onExcelPressed: () async {
-                    final bytes = await DefaultersExcelBuilder.build(
+                    final bytes = await ContractsExcelBuilder.build(
                       state.report.items,
-                      state.report.summary.totalRemaining,
-                      state.report.summary.totalAmount,
-                      state.report.summary.totalInstallments,
+                      state.report.summary.totalExpiring,
+                      state.report.summary.totalRentValue,
+                      state.report.summary.days,
                     );
                     if (context.mounted) {
                       await ExcelExportService.saveAndShare(
                         context: context,
                         bytes: bytes,
-                        fileName: 'تقرير_المتأخرات.xlsx',
+                        fileName: 'تقرير_العقود.xlsx',
                       );
                     }
                   },
@@ -94,51 +94,44 @@ class _OwnerDefaultersReportViewState extends State<OwnerDefaultersReportView> {
           ),
         ],
       ),
-      body: BlocBuilder<OwnerDefaultersCubit, OwnerDefaultersState>(
+      body: BlocBuilder<OwnerContractsReportCubit, OwnerContractsReportState>(
         builder: (context, state) {
-          if (state is OwnerDefaultersLoading &&
-              context.read<OwnerDefaultersCubit>().state
-                  is! OwnerDefaultersLoaded) {
+          if (state is OwnerContractsReportLoading && context.read<OwnerContractsReportCubit>().state is! OwnerContractsReportLoaded) {
             return const Center(child: CircularProgressIndicator());
-          } else if (state is OwnerDefaultersError) {
-            return _buildErrorView(context, state.message);
-          } else if (state is OwnerDefaultersEmpty) {
+          } else if (state is OwnerContractsReportError) {
+            return CustomErrorWidget(
+              message: state.message,
+              onRetry: () => context
+                  .read<OwnerContractsReportCubit>()
+                  .loadContractsReport(forceRefresh: true),
+            );
+          } else if (state is OwnerContractsReportEmpty) {
             return _buildEmptyView(context);
-          } else if (state is OwnerDefaultersLoaded) {
+          } else if (state is OwnerContractsReportLoaded) {
             return RefreshIndicator(
               color: context.primaryColor,
               onRefresh: () => context
-                  .read<OwnerDefaultersCubit>()
-                  .loadDefaultersReport(forceRefresh: true),
+                  .read<OwnerContractsReportCubit>()
+                  .loadContractsReport(forceRefresh: true),
               child: SingleChildScrollView(
                 controller: _scrollController,
                 physics: const AlwaysScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20).copyWith(bottom: 100),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    DefaultersSummaryHeader(
-                      totalRemaining: state.report.summary.totalRemaining,
-                      totalAmount: state.report.summary.totalAmount,
-                      totalInstallments: state.report.summary.totalInstallments,
+                    ContractsSummaryHeader(
+                      totalExpiring: state.report.summary.totalExpiring,
+                      totalRentValue: state.report.summary.totalRentValue,
+                      days: state.report.summary.days,
                     ),
-                    const SizedBox(height: 24),
-                    Text(
-                      LocaleKeys.defaultersList.tr(),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.textPrimaryLight,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    DefaultersReportList(items: state.report.items),
+                    const SizedBox(height: 22),
+                    ContractsReportList(contracts: state.report.items),
                     if (!state.hasReachedMax)
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 20),
                         child: Center(child: CircularProgressIndicator()),
                       ),
-                    const SizedBox(height: 30),
                   ],
                 ),
               ),
@@ -150,25 +143,16 @@ class _OwnerDefaultersReportViewState extends State<OwnerDefaultersReportView> {
     );
   }
 
-  Widget _buildErrorView(BuildContext context, String message) {
-    return CustomErrorWidget(
-      message: message,
-      onRetry: () => context
-          .read<OwnerDefaultersCubit>()
-          .loadDefaultersReport(forceRefresh: true),
-    );
-  }
-
   Widget _buildEmptyView(BuildContext context) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.check_circle_outline_rounded,
-              size: 56, color: AppColors.success),
+          const Icon(Icons.description_outlined,
+              size: 56, color: AppColors.textSecondaryLight),
           const SizedBox(height: 16),
           Text(
-            LocaleKeys.defaultersNoData.tr(),
+            LocaleKeys.reports_empty_state.tr(),
             style: const TextStyle(
                 color: AppColors.textSecondaryLight, fontSize: 16),
           ),

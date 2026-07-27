@@ -1,43 +1,41 @@
 import 'package:equatable/equatable.dart';
-import '../../domain/entities/defaulter_entity.dart';
+import '../../domain/entities/defaulters_report_entity.dart';
 
 abstract class OwnerDefaultersState extends Equatable {
   const OwnerDefaultersState();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
-class OwnerDefaultersInitial extends OwnerDefaultersState {
-  const OwnerDefaultersInitial();
-}
+class OwnerDefaultersInitial extends OwnerDefaultersState {}
 
-class OwnerDefaultersLoading extends OwnerDefaultersState {
-  const OwnerDefaultersLoading();
-}
+class OwnerDefaultersLoading extends OwnerDefaultersState {}
 
 class OwnerDefaultersLoaded extends OwnerDefaultersState {
-  final List<DefaulterEntity> defaulters;
-  final double totalOverdueAmount;
-  final int totalDefaultersCount;
+  final DefaultersReportEntity report;
+  final bool hasReachedMax;
 
   const OwnerDefaultersLoaded({
-    required this.defaulters,
-    required this.totalOverdueAmount,
-    required this.totalDefaultersCount,
+    required this.report,
+    required this.hasReachedMax,
   });
 
   @override
-  List<Object?> get props => [
-        defaulters,
-        totalOverdueAmount,
-        totalDefaultersCount,
-      ];
+  List<Object> get props => [report, hasReachedMax];
+
+  OwnerDefaultersLoaded copyWith({
+    DefaultersReportEntity? report,
+    bool? hasReachedMax,
+  }) {
+    return OwnerDefaultersLoaded(
+      report: report ?? this.report,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+    );
+  }
 }
 
-class OwnerDefaultersEmpty extends OwnerDefaultersState {
-  const OwnerDefaultersEmpty();
-}
+class OwnerDefaultersEmpty extends OwnerDefaultersState {}
 
 class OwnerDefaultersError extends OwnerDefaultersState {
   final String message;
@@ -45,5 +43,5 @@ class OwnerDefaultersError extends OwnerDefaultersState {
   const OwnerDefaultersError(this.message);
 
   @override
-  List<Object?> get props => [message];
+  List<Object> get props => [message];
 }

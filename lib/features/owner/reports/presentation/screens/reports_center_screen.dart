@@ -3,6 +3,10 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
+import '../../../../../core/di/service_locator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../views/owner_contracts_report_view.dart';
+import '../cubit/owner_contracts_report_cubit.dart';
 
 class ReportsCenterScreen extends StatelessWidget {
   const ReportsCenterScreen({super.key});
@@ -68,7 +72,10 @@ class ReportsCenterScreen extends StatelessWidget {
           children: [
             _buildEmptyState(LocaleKeys.reports_financial.tr()),
             _buildEmptyState(LocaleKeys.reports_operational.tr()),
-            _buildEmptyState(LocaleKeys.reports_contracts.tr()),
+            BlocProvider(
+              create: (_) => sl<OwnerContractsReportCubit>(),
+              child: const OwnerContractsReportView(),
+            ),
             _buildEmptyState(LocaleKeys.reports_system.tr()),
           ],
         ),

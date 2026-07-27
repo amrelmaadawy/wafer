@@ -3,37 +3,70 @@ import '../../domain/usecases/get_owner_defaulters_report_use_case.dart';
 import 'owner_defaulters_state.dart';
 
 class OwnerDefaultersCubit extends Cubit<OwnerDefaultersState> {
-  final GetOwnerDefaultersReportUseCase _getOwnerDefaultersReportUseCase;
+  final GetOwnerDefaultersReportUseCase getOwnerDefaultersReportUseCase;
 
-  OwnerDefaultersCubit(this._getOwnerDefaultersReportUseCase)
-      : super(const OwnerDefaultersInitial());
+  OwnerDefaultersCubit(this.getOwnerDefaultersReportUseCase)
+      : super(OwnerDefaultersInitial());
+
+  int _currentPage = 1;
+  bool _isFetching = false;
 
   Future<void> loadDefaultersReport({bool forceRefresh = false}) async {
-    if (state is! OwnerDefaultersLoaded) {
-      emit(const OwnerDefaultersLoading());
+    if (_isFetching) return;
+
+    if (forceRefresh) {
+      _currentPage = 1;
+      emit(OwnerDefaultersLoading());
+    } else {
+      if (state is OwnerDefaultersLoaded) {
+        if ((state as OwnerDefaultersLoaded).hasReachedMax) return;
+        _currentPage++;
+      } else {
+        emit(OwnerDefaultersLoading());
+      }
     }
 
-    final result = await _getOwnerDefaultersReportUseCase(
+    _isFetching = true;
+
+    final result = await getOwnerDefaultersReportUseCase(
       forceRefresh: forceRefresh,
+      page: _currentPage,
     );
 
     result.fold(
-      (failure) => emit(OwnerDefaultersError(failure.message)),
-      (defaulters) {
-        if (defaulters.isEmpty) {
-          emit(const OwnerDefaultersEmpty());
+      (failure) {
+        if (_currentPage == 1) {
+          emit(OwnerDefaultersError(failure.message));
         } else {
-          double totalOverdue = 0.0;
-          for (final d in defaulters) {
-            totalOverdue += d.overdueAmount;
+          _currentPage--; 
+          // Do not emit error for pagination to keep current items, could show a toast
+        }
+      },
+      (report) {
+        if (report.items.isEmpty && _currentPage == 1) {
+          emit(OwnerDefaultersEmpty());
+        } else {
+          final hasReachedMax = report.pagination.currentPage >= report.pagination.lastPage;
+
+          if (_currentPage == 1) {
+            emit(OwnerDefaultersLoaded(
+              report: report,
+              hasReachedMax: hasReachedMax,
+            ));
+          } else {
+            final currentState = state as OwnerDefaultersLoaded;
+            emit(currentState.copyWith(
+              report: currentState.report.copyWith(
+                items: List.of(currentState.report.items)..addAll(report.items),
+                pagination: report.pagination,
+              ),
+              hasReachedMax: hasReachedMax,
+            ));
           }
-          emit(OwnerDefaultersLoaded(
-            defaulters: defaulters,
-            totalOverdueAmount: totalOverdue,
-            totalDefaultersCount: defaulters.length,
-          ));
         }
       },
     );
+
+    _isFetching = false;
   }
 }
