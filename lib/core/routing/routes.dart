@@ -31,7 +31,8 @@ class Routes {
   static const String ownerRevenueReport = '/owner-revenue-report';
   static const String ownerOccupancyReport = '/owner-occupancy-report';
   static const String ownerDefaultersReport = '/owner-defaulters-report';
-  static const String ownerUnitsStatusReport = '/owner-units-status-report';
-  static const String ownerContractsReport = '/owner-contracts-report';
-  static const String ownerContractsMovementReport = '/owner-contracts-movement-report';
+  static const String ownerUnitsStatusReport = '/owner/reports/units-status';
+  static const String ownerContractsReport = '/owner/reports/contracts';
+  static const String ownerContractsMovementReport = '/owner/reports/contracts-movement';
+  static const String ownerMaintenanceRequestsReport = '/owner/reports/maintenance-requests';
 }

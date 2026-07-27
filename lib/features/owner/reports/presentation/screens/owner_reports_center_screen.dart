@@ -58,6 +58,12 @@ class OwnerReportsCenterScreen extends StatelessWidget {
                   icon: Icons.maps_home_work_rounded,
                   route: Routes.ownerUnitsStatusReport,
                 ),
+                _ReportItem(
+                  title: LocaleKeys.maintenanceRequestsTitle.tr(),
+                  subtitle: 'متابعة وإدارة طلبات الصيانة',
+                  icon: Icons.build_circle_outlined,
+                  route: Routes.ownerMaintenanceRequestsReport,
+                ),
               ],
             ),
           ),

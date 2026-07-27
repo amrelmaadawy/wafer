@@ -1319,4 +1319,17 @@ abstract class  LocaleKeys {
   static const String contractsMovementTypeRenewal = 'dashboard.contractsMovementTypeRenewal';
   static const String contractsMovementTypeTermination = 'dashboard.contractsMovementTypeTermination';
 
+  // Owner Maintenance Requests Report
+  static const String maintenanceRequestsTitle = 'dashboard.maintenanceRequestsTitle';
+  static const String maintenanceRequestsTotal = 'dashboard.maintenanceRequestsTotal';
+  static const String maintenanceRequestsOpen = 'dashboard.maintenanceRequestsOpen';
+  static const String maintenanceRequestsInProgress = 'dashboard.maintenanceRequestsInProgress';
+  static const String maintenanceRequestsCompleted = 'dashboard.maintenanceRequestsCompleted';
+  static const String maintenanceRequestsRequestNo = 'dashboard.maintenanceRequestsRequestNo';
+  static const String maintenanceRequestsClient = 'dashboard.maintenanceRequestsClient';
+  static const String maintenanceRequestsPhone = 'dashboard.maintenanceRequestsPhone';
+  static const String maintenanceRequestsUnknownRenter = 'dashboard.maintenanceRequestsUnknownRenter';
+  static const String maintenanceRequestsList = 'dashboard.maintenanceRequestsList';
+  static const String maintenanceRequestsNoData = 'dashboard.maintenanceRequestsNoData';
+
 }

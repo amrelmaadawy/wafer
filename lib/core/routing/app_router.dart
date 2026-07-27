@@ -30,6 +30,7 @@ import '../../features/owner/reports/presentation/views/owner_occupancy_report_v
 import '../../features/owner/reports/presentation/cubit/owner_occupancy_cubit.dart';
 import '../../features/owner/reports/presentation/views/owner_defaulters_report_view.dart';
 import '../../features/owner/reports/presentation/views/owner_contracts_movement_report_view.dart';
+import '../../features/owner/reports/presentation/views/owner_maintenance_requests_report_view.dart';
 import '../../features/owner/reports/presentation/cubit/owner_defaulters_cubit.dart';
 import '../../features/owner/reports/presentation/cubit/owner_contracts_report_cubit.dart';
 import '../../features/owner/reports/presentation/views/owner_contracts_report_view.dart';
@@ -169,6 +170,10 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerContractsMovementReport,
         builder: (context, state) => const OwnerContractsMovementReportView(),
+      ),
+      GoRoute(
+        path: Routes.ownerMaintenanceRequestsReport,
+        builder: (context, state) => const OwnerMaintenanceRequestsReportView(),
       ),
       GoRoute(
         path: Routes.editProfile,

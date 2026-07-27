@@ -83,7 +83,18 @@
     "contractsMovementUnknownRenter": "مستأجر غير معروف",
     "contractsMovementTypeCreation": "إنشاء جديد",
     "contractsMovementTypeRenewal": "تجديد عقد",
-    "contractsMovementTypeTermination": "إنهاء عقد"
+    "contractsMovementTypeTermination": "إنهاء عقد",
+    "maintenanceRequestsTitle": "تقرير طلبات الصيانة",
+    "maintenanceRequestsTotal": "إجمالي الطلبات",
+    "maintenanceRequestsOpen": "مفتوحة",
+    "maintenanceRequestsInProgress": "قيد التنفيذ",
+    "maintenanceRequestsCompleted": "مكتملة",
+    "maintenanceRequestsRequestNo": "رقم الطلب",
+    "maintenanceRequestsClient": "العميل",
+    "maintenanceRequestsPhone": "الهاتف",
+    "maintenanceRequestsUnknownRenter": "غير محدد",
+    "maintenanceRequestsList": "سجل طلبات الصيانة",
+    "maintenanceRequestsNoData": "لا توجد طلبات صيانة لعرضها"
   },
   "profile": {
     "title": "الملف الشخصي",

@@ -83,7 +83,18 @@
     "contractsMovementUnknownRenter": "Unknown Renter",
     "contractsMovementTypeCreation": "New Creation",
     "contractsMovementTypeRenewal": "Contract Renewal",
-    "contractsMovementTypeTermination": "Contract Termination"
+    "contractsMovementTypeTermination": "Contract Termination",
+    "maintenanceRequestsTitle": "Maintenance Requests Report",
+    "maintenanceRequestsTotal": "Total Requests",
+    "maintenanceRequestsOpen": "Open",
+    "maintenanceRequestsInProgress": "In Progress",
+    "maintenanceRequestsCompleted": "Completed",
+    "maintenanceRequestsRequestNo": "Request No",
+    "maintenanceRequestsClient": "Client",
+    "maintenanceRequestsPhone": "Phone",
+    "maintenanceRequestsUnknownRenter": "Unknown",
+    "maintenanceRequestsList": "Maintenance Logs",
+    "maintenanceRequestsNoData": "No maintenance requests to show"
   },
   "profile": {
     "title": "Profile",

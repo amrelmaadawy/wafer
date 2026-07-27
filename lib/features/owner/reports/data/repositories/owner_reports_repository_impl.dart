@@ -6,10 +6,11 @@ import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/defaulters_report_entity.dart';
+import '../../domain/entities/maintenance_requests_report_entity.dart';
+import '../../domain/entities/contracts_report_entity.dart';
 import '../../domain/entities/contracts_movement_report_entity.dart';
 import '../../domain/entities/occupancy_report_entity.dart';
 import '../models/revenue_report_model.dart';
-import '../../domain/entities/contracts_report_entity.dart';
 import '../../domain/repositories/owner_reports_repository.dart';
 import '../datasources/owner_reports_remote_data_source.dart';
 
@@ -164,6 +165,20 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
   }) async {
     try {
       final result = await _remoteDataSource.getContractsMovementReport(page: page);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+  @override
+  Future<Either<Failure, MaintenanceRequestsReportEntity>> getMaintenanceRequestsReport({
+    bool forceRefresh = false,
+    int page = 1,
+  }) async {
+    try {
+      final result = await _remoteDataSource.getMaintenanceRequestsReport(page: page);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
