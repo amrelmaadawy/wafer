@@ -1303,4 +1303,20 @@ abstract class  LocaleKeys {
   static const String defaultersRemaining = 'dashboard.defaultersRemaining';
   static const String defaultersNoData = 'dashboard.defaultersNoData';
 
+  // Owner Contracts Movement Report
+  static const String contractsMovementTitle = 'dashboard.contractsMovementTitle';
+  static const String contractsMovementTotalMovements = 'dashboard.contractsMovementTotalMovements';
+  static const String contractsMovementCreations = 'dashboard.contractsMovementCreations';
+  static const String contractsMovementRenewals = 'dashboard.contractsMovementRenewals';
+  static const String contractsMovementTerminations = 'dashboard.contractsMovementTerminations';
+  static const String contractsMovementList = 'dashboard.contractsMovementList';
+  static const String contractsMovementNoData = 'dashboard.contractsMovementNoData';
+  static const String contractsMovementContractNo = 'dashboard.contractsMovementContractNo';
+  static const String contractsMovementDate = 'dashboard.contractsMovementDate';
+  static const String contractsMovementRentValue = 'dashboard.contractsMovementRentValue';
+  static const String contractsMovementUnknownRenter = 'dashboard.contractsMovementUnknownRenter';
+  static const String contractsMovementTypeCreation = 'dashboard.contractsMovementTypeCreation';
+  static const String contractsMovementTypeRenewal = 'dashboard.contractsMovementTypeRenewal';
+  static const String contractsMovementTypeTermination = 'dashboard.contractsMovementTypeTermination';
+
 }

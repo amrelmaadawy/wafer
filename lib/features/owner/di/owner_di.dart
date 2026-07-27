@@ -38,6 +38,8 @@ import '../reports/presentation/cubit/owner_revenue_cubit.dart';
 import '../reports/presentation/cubit/owner_units_status_cubit.dart';
 import '../reports/domain/usecases/get_contracts_report_use_case.dart';
 import '../reports/presentation/cubit/owner_contracts_report_cubit.dart';
+import '../reports/domain/usecases/get_owner_contracts_movement_report_use_case.dart';
+import '../reports/presentation/cubit/owner_contracts_movement_cubit.dart';
 
 // Properties
 import '../properties/data/datasources/properties_remote_data_source.dart';
@@ -368,5 +370,11 @@ void _initReports() {
   }
   if (!sl.isRegistered<OwnerContractsReportCubit>()) {
     sl.registerFactory(() => OwnerContractsReportCubit(getContractsReportUseCase: sl()));
+  }
+  if (!sl.isRegistered<GetOwnerContractsMovementReportUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerContractsMovementReportUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerContractsMovementCubit>()) {
+    sl.registerFactory(() => OwnerContractsMovementCubit(sl()));
   }
 }

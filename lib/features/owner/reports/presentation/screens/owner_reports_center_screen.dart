@@ -72,6 +72,12 @@ class OwnerReportsCenterScreen extends StatelessWidget {
                   icon: Icons.description_outlined,
                   route: Routes.ownerContractsReport,
                 ),
+                _ReportItem(
+                  title: LocaleKeys.contractsMovementTitle.tr(),
+                  subtitle: 'تتبع حركات إنشاء وتجديد وإلغاء العقود',
+                  icon: Icons.sync_alt_rounded,
+                  route: Routes.ownerContractsMovementReport,
+                ),
               ],
             ),
           ),

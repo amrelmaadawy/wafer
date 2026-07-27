@@ -6,6 +6,7 @@ import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/defaulters_report_entity.dart';
+import '../../domain/entities/contracts_movement_report_entity.dart';
 import '../../domain/entities/occupancy_report_entity.dart';
 import '../models/revenue_report_model.dart';
 import '../../domain/entities/contracts_report_entity.dart';
@@ -149,6 +150,21 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
         propertyId: propertyId,
       );
       return Right(model);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ContractsMovementReportEntity>> getContractsMovementReport({
+    bool forceRefresh = false,
+    int page = 1,
+  }) async {
+    try {
+      final result = await _remoteDataSource.getContractsMovementReport(page: page);
+      return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } catch (e) {

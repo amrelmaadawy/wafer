@@ -6,6 +6,7 @@ import '../models/defaulters_report_model.dart';
 import '../models/revenue_report_model.dart';
 import '../models/units_status_report_model.dart';
 import '../models/contracts_report_model.dart';
+import '../models/contracts_movement_report_model.dart';
 
 abstract class OwnerReportsRemoteDataSource {
   Future<RevenueReportModel> getRevenueReport({
@@ -24,6 +25,7 @@ abstract class OwnerReportsRemoteDataSource {
     int page = 1,
     int? propertyId,
   });
+  Future<ContractsMovementReportModel> getContractsMovementReport({int page = 1});
 }
 
 class OwnerReportsRemoteDataSourceImpl
@@ -124,5 +126,23 @@ class OwnerReportsRemoteDataSourceImpl
       return ContractsReportModel.fromJson(data['data']);
     }
     throw ServerException(data['message'] ?? 'Invalid response format');
+  }
+
+  @override
+  Future<ContractsMovementReportModel> getContractsMovementReport({int page = 1}) async {
+    try {
+      final response = await _dio.get(
+        ApiConstants.ownerContractsMovementReport,
+        queryParameters: {'page': page},
+      );
+      if (response.data['success'] == true) {
+        return ContractsMovementReportModel.fromJson(response.data['data']);
+      } else {
+        throw ServerException(response.data['message']);
+      }
+    } catch (e) {
+      if (e is ServerException) rethrow;
+      throw ServerException('حدث خطأ غير متوقع');
+    }
   }
 }
