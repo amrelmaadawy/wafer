@@ -14,11 +14,10 @@ class MaintenanceDetailsHeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final locationTitle = item.unit.name.isNotEmpty
-        ? '${item.property.name} • ${item.unit.name}'
-        : item.property.name.isNotEmpty
-            ? item.property.name
-            : LocaleKeys.maintenanceNotDeterminedYet.tr();
+    final propertyName = item.property?.name ?? LocaleKeys.maintenanceNotDeterminedYet.tr();
+    final unitName = item.unit?.name ?? '';
+    final locationTitle = unitName.isNotEmpty ? '$propertyName • $unitName' : propertyName;
+    final title = (item.title?.isNotEmpty ?? false) ? item.title! : '#${item.requestNumber ?? item.id}';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +37,7 @@ class MaintenanceDetailsHeaderCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      item.title.isNotEmpty ? item.title : '#${item.id}',
+                      title,
                       style: TextStyle(
                         color: context.primaryColor,
                         fontSize: 18,
@@ -47,8 +46,8 @@ class MaintenanceDetailsHeaderCard extends StatelessWidget {
                     ),
                   ),
                   MaintenanceStatusBadge(
-                    status: item.status,
-                    statusLabel: item.statusLabel,
+                    status: item.status ?? 'new',
+                    statusLabel: item.statusLabel ?? '',
                   ),
                 ],
               ),
@@ -73,7 +72,7 @@ class MaintenanceDetailsHeaderCard extends StatelessWidget {
             ],
           ),
         ),
-        if (item.description.isNotEmpty) ...[
+        if (item.description?.isNotEmpty ?? false) ...[
           const SizedBox(height: 16),
           Container(
             width: double.infinity,
@@ -96,7 +95,7 @@ class MaintenanceDetailsHeaderCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  item.description,
+                  item.description!,
                   style: const TextStyle(
                     color: AppColors.textPrimaryLight,
                     fontSize: 14,

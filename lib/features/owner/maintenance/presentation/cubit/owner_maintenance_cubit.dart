@@ -34,11 +34,15 @@ class OwnerMaintenanceCubit extends Cubit<OwnerMaintenanceState> {
           activeStatus: _currentStatus)),
       (response) {
         if (response.items.isEmpty) {
-          emit(OwnerMaintenanceEmpty(activeStatus: _currentStatus));
+          emit(OwnerMaintenanceEmpty(
+            activeStatus: _currentStatus,
+            stats: response.stats,
+          ));
         } else {
           emit(OwnerMaintenanceLoaded(
             items: response.items,
             meta: response.meta,
+            stats: response.stats,
             activeStatus: _currentStatus,
           ));
         }
@@ -79,6 +83,7 @@ class OwnerMaintenanceCubit extends Cubit<OwnerMaintenanceState> {
         emit(OwnerMaintenanceLoaded(
           items: updatedList,
           meta: response.meta,
+          stats: response.stats ?? currentState.stats,
           activeStatus: _currentStatus,
         ));
       },

@@ -19,11 +19,9 @@ class MaintenanceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final locationTitle = item.unit.name.isNotEmpty
-        ? '${item.property.name} • ${item.unit.name}'
-        : item.property.name.isNotEmpty
-            ? item.property.name
-            : LocaleKeys.maintenanceNotDeterminedYet.tr();
+    final propertyName = item.property?.name ?? LocaleKeys.maintenanceNotDeterminedYet.tr();
+    final unitName = item.unit?.name ?? '';
+    final locationTitle = unitName.isNotEmpty ? '$propertyName • $unitName' : propertyName;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
@@ -62,6 +60,10 @@ class MaintenanceCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
+                if (item.client?.name != null && item.client!.name!.isNotEmpty) ...[
+                  const SizedBox(height: 8),
+                  _buildClientRow(context),
+                ],
                 const SizedBox(height: 8),
                 _buildCostBearerRow(context),
                 const Padding(
@@ -69,7 +71,7 @@ class MaintenanceCard extends StatelessWidget {
                   child: Divider(color: AppColors.borderLight, height: 1),
                 ),
                 _buildFinancialRow(context),
-                if (item.advancePayment > 0 || item.requestedDate.isNotEmpty)
+                if ((item.financials?.advancePayment ?? 0) > 0 || (item.dates?.requestedDate?.isNotEmpty ?? false))
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: _buildBottomTimelineRow(context),
@@ -83,6 +85,7 @@ class MaintenanceCard extends StatelessWidget {
   }
 
   Widget _buildTopHeader(BuildContext context) {
+    final title = (item.title?.isNotEmpty ?? false) ? item.title! : '#${item.requestNumber ?? item.id}';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -94,7 +97,7 @@ class MaintenanceCard extends StatelessWidget {
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
-                  item.title.isNotEmpty ? item.title : '#${item.id}',
+                  title,
                   style: TextStyle(
                     color: context.primaryColor,
                     fontSize: 14,
@@ -111,8 +114,8 @@ class MaintenanceCard extends StatelessWidget {
         Row(
           children: [
             MaintenanceStatusBadge(
-              status: item.status,
-              statusLabel: item.statusLabel,
+              status: item.status ?? 'new',
+              statusLabel: item.statusLabel ?? '',
             ),
             const SizedBox(width: 6),
             Icon(
@@ -126,16 +129,37 @@ class MaintenanceCard extends StatelessWidget {
     );
   }
 
+  Widget _buildClientRow(BuildContext context) {
+    return Row(
+      children: [
+        const Icon(Icons.person, size: 16, color: AppColors.textSecondaryLight),
+        const SizedBox(width: 6),
+        Expanded(
+          child: Text(
+            item.client!.name!,
+            style: const TextStyle(
+              color: AppColors.textPrimaryLight,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildCostBearerRow(BuildContext context) {
-    final bearerDisplay = item.costBearerLabel.isNotEmpty
-        ? item.costBearerLabel
+    final bearerDisplay = item.costBearerLabel?.isNotEmpty == true
+        ? item.costBearerLabel!
         : item.costBearer == 'client'
             ? LocaleKeys.maintenanceCostBearerClient.tr()
             : LocaleKeys.maintenanceCostBearerOwner.tr();
 
     return Row(
       children: [
-        const Icon(Icons.person_outline,
+        const Icon(Icons.account_balance_wallet_outlined,
             size: 16, color: AppColors.textSecondaryLight),
         const SizedBox(width: 6),
         Text(
@@ -156,20 +180,23 @@ class MaintenanceCard extends StatelessWidget {
   }
 
   Widget _buildFinancialRow(BuildContext context) {
+    final estimatedCost = item.financials?.estimatedCost?.toDouble() ?? 0.0;
+    final actualCost = item.financials?.actualCost?.toDouble() ?? 0.0;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildCostItem(
           context,
           LocaleKeys.maintenanceEstimatedCost.tr(),
-          item.estimatedCost,
+          estimatedCost,
           context.primaryColor,
         ),
         _buildCostItem(
           context,
           LocaleKeys.maintenanceActualCost.tr(),
-          item.actualCost,
-          item.actualCost > 0 ? AppColors.success : AppColors.textSecondaryLight,
+          actualCost,
+          actualCost > 0 ? AppColors.success : AppColors.textSecondaryLight,
         ),
       ],
     );
@@ -216,17 +243,20 @@ class MaintenanceCard extends StatelessWidget {
   }
 
   Widget _buildBottomTimelineRow(BuildContext context) {
+    final requestedDate = item.dates?.requestedDate ?? '';
+    final advancePayment = item.financials?.advancePayment?.toDouble() ?? 0.0;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (item.requestedDate.isNotEmpty)
+        if (requestedDate.isNotEmpty)
           Row(
             children: [
               const Icon(Icons.calendar_today_outlined,
                   size: 13, color: AppColors.textSecondaryLight),
               const SizedBox(width: 4),
               Text(
-                item.requestedDate,
+                requestedDate,
                 style: const TextStyle(
                   color: AppColors.textSecondaryLight,
                   fontSize: 11.5,
@@ -237,7 +267,7 @@ class MaintenanceCard extends StatelessWidget {
           )
         else
           const SizedBox.shrink(),
-        if (item.advancePayment > 0)
+        if (advancePayment > 0)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
@@ -245,7 +275,7 @@ class MaintenanceCard extends StatelessWidget {
               borderRadius: AppRadius.circularSm,
             ),
             child: Text(
-              '${LocaleKeys.maintenanceAdvancePayment.tr()}: ${item.advancePayment.toStringAsFixed(0)} ${LocaleKeys.contractsCurrency.tr()}',
+              '${LocaleKeys.maintenanceAdvancePayment.tr()}: ${advancePayment.toStringAsFixed(0)} ${LocaleKeys.contractsCurrency.tr()}',
               style: TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w700,

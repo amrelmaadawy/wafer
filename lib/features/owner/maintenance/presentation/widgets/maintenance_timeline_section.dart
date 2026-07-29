@@ -13,6 +13,10 @@ class MaintenanceTimelineSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final requestedDate = item.dates?.requestedDate ?? '';
+    final scheduledDate = item.dates?.scheduledDate ?? '';
+    final completedDate = item.dates?.completedDate ?? '';
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -43,26 +47,24 @@ class MaintenanceTimelineSection extends StatelessWidget {
             context,
             Icons.date_range_rounded,
             LocaleKeys.maintenanceRequestedDate.tr(),
-            item.requestedDate,
-            isCompleted: item.requestedDate.isNotEmpty,
+            requestedDate.isNotEmpty ? requestedDate : LocaleKeys.maintenanceUnspecifiedDate.tr(),
+            isCompleted: requestedDate.isNotEmpty,
             isLast: false,
           ),
           _buildTimelineTile(
             context,
             Icons.schedule_rounded,
             LocaleKeys.maintenanceScheduledDate.tr(),
-            item.scheduledDate ?? LocaleKeys.maintenanceUnspecifiedDate.tr(),
-            isCompleted:
-                item.scheduledDate != null && item.scheduledDate!.isNotEmpty,
+            scheduledDate.isNotEmpty ? scheduledDate : LocaleKeys.maintenanceUnspecifiedDate.tr(),
+            isCompleted: scheduledDate.isNotEmpty,
             isLast: false,
           ),
           _buildTimelineTile(
             context,
             Icons.check_circle_outline_rounded,
             LocaleKeys.maintenanceCompletedDate.tr(),
-            item.completedDate ?? LocaleKeys.maintenanceUnspecifiedDate.tr(),
-            isCompleted:
-                item.completedDate != null && item.completedDate!.isNotEmpty,
+            completedDate.isNotEmpty ? completedDate : LocaleKeys.maintenanceUnspecifiedDate.tr(),
+            isCompleted: completedDate.isNotEmpty,
             isLast: true,
           ),
         ],

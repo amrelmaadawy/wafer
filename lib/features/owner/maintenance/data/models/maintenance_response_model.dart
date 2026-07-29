@@ -1,41 +1,40 @@
 import '../../domain/entities/maintenance_response_entity.dart';
 import 'maintenance_item_model.dart';
 import 'maintenance_pagination_meta_model.dart';
+import 'maintenance_sub_models.dart';
 
 class MaintenanceResponseModel extends MaintenanceResponseEntity {
   const MaintenanceResponseModel({
     required super.items,
     required super.meta,
+    super.stats,
   });
 
   factory MaintenanceResponseModel.fromJson(Map<String, dynamic> json) {
-    Map<String, dynamic> requestsMap = {};
+    Map<String, dynamic> dataMap = {};
 
     if (json['data'] is Map<String, dynamic>) {
-      final dataMap = json['data'] as Map<String, dynamic>;
-      if (dataMap['maintenance_requests'] is Map<String, dynamic>) {
-        requestsMap = dataMap['maintenance_requests'] as Map<String, dynamic>;
-      } else {
-        requestsMap = dataMap;
-      }
-    } else if (json['maintenance_requests'] is Map<String, dynamic>) {
-      requestsMap = json['maintenance_requests'] as Map<String, dynamic>;
+      dataMap = json['data'] as Map<String, dynamic>;
     } else {
-      requestsMap = json;
+      dataMap = json;
     }
 
-    final rawList = requestsMap['data'] as List<dynamic>? ?? [];
+    final rawList = dataMap['maintenance_requests'] as List<dynamic>? ?? [];
     final itemsList = rawList
         .whereType<Map<String, dynamic>>()
         .map((item) => MaintenanceItemModel.fromJson(item))
         .toList();
 
-    final metaMap = requestsMap['meta'] as Map<String, dynamic>? ?? {};
+    final metaMap = dataMap['pagination'] as Map<String, dynamic>? ?? {};
     final meta = MaintenancePaginationMetaModel.fromJson(metaMap);
+
+    final statsMap = dataMap['stats'] as Map<String, dynamic>? ?? {};
+    final stats = MaintenanceStatsModel.fromJson(statsMap);
 
     return MaintenanceResponseModel(
       items: itemsList,
       meta: meta,
+      stats: stats,
     );
   }
 }

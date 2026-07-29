@@ -68,7 +68,7 @@ class OwnerAlertsGrid extends StatelessWidget {
                 subtitle: LocaleKeys.ownerPendingMaintSub.tr(),
                 highlight: data.pendingMaintenance > 0,
                 onTap: () {
-                  context.push('${Routes.ownerMaintenance}?filter=pending');
+                  context.push('${Routes.ownerMaintenance}?filter=new');
                 },
               ),
             ),

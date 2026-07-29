@@ -1,0 +1,5 @@
+Analyzing wafer...                                              
+
+  error - The getter 'ltr' isn't defined for the type 'TextDirection'. Try importing the library that defines 'ltr', correcting the name to the name of an existing getter, or defining a getter or field named 'ltr' - lib\features\owner\maintenance\presentation\widgets\maintenance_client_section.dart:86:54 - undefined_getter
+
+1 issue found. (ran in 22.3s)

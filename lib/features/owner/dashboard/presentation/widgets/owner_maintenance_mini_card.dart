@@ -11,6 +11,16 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final title = (item.title?.isNotEmpty ?? false) ? item.title! : '#${item.requestNumber ?? item.id}';
+    final propertyName = item.property?.name ?? '';
+    final unitName = item.unit?.name ?? '';
+    final locationTitle = unitName.isNotEmpty && propertyName.isNotEmpty
+        ? '$propertyName - $unitName'
+        : propertyName.isNotEmpty
+            ? propertyName
+            : 'غير محدد';
+    final requestedDate = item.dates?.requestedDate ?? '';
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -43,7 +53,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
               _buildStatusBadge(),
               const SizedBox(height: 10),
               Text(
-                item.title,
+                title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -59,7 +69,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(
-                      '${item.property.name} - ${item.unit.name}',
+                      locationTitle,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
@@ -73,7 +83,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                item.requestedDate,
+                requestedDate,
                 style: const TextStyle(
                   color: Color(0xFF94A3B8),
                   fontSize: 10.5,
@@ -91,6 +101,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
     Color color;
     switch (item.status) {
       case 'pending':
+      case 'new':
         color = const Color(0xFFF59E0B);
         break;
       case 'approved':
@@ -98,6 +109,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
         color = const Color(0xFF3B82F6);
         break;
       case 'executed':
+      case 'completed':
         color = const Color(0xFF10B981);
         break;
       case 'rejected':
@@ -124,7 +136,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
           ),
           const SizedBox(width: 4),
           Text(
-            item.statusLabel,
+            item.statusLabel ?? '',
             style: TextStyle(
               color: color,
               fontSize: 10.5,

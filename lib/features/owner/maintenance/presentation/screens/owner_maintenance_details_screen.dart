@@ -13,6 +13,10 @@ import '../widgets/maintenance_cost_section.dart';
 import '../widgets/maintenance_details_header_card.dart';
 import '../widgets/maintenance_images_section.dart';
 import '../widgets/maintenance_timeline_section.dart';
+import '../widgets/maintenance_client_section.dart';
+import '../widgets/maintenance_assignments_section.dart';
+import '../widgets/maintenance_tasks_section.dart';
+import '../widgets/maintenance_action_logs_section.dart';
 
 class OwnerMaintenanceDetailsScreen extends StatelessWidget {
   final MaintenanceItemEntity item;
@@ -23,7 +27,7 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => di.sl<OwnerMaintenanceDetailsCubit>()
-        ..getMaintenanceDetails(item.id),
+        ..getMaintenanceDetails(item.id ?? 0),
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
         appBar: CustomAppBar(
@@ -40,7 +44,7 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
               color: context.primaryColor,
               onRefresh: () => context
                   .read<OwnerMaintenanceDetailsCubit>()
-                  .getMaintenanceDetails(item.id),
+                  .getMaintenanceDetails(item.id ?? 0),
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 padding: const EdgeInsets.all(20),
@@ -54,11 +58,19 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                       ),
                     MaintenanceDetailsHeaderCard(item: displayItem),
                     const SizedBox(height: 16),
+                    MaintenanceClientSection(item: displayItem),
+                    if (displayItem.client != null) const SizedBox(height: 16),
                     MaintenanceCostSection(item: displayItem),
                     const SizedBox(height: 16),
+                    MaintenanceAssignmentsSection(item: displayItem),
+                    if (displayItem.assignments != null && displayItem.assignments!.isNotEmpty) const SizedBox(height: 16),
+                    MaintenanceTasksSection(item: displayItem),
+                    if (displayItem.tasks != null && displayItem.tasks!.isNotEmpty) const SizedBox(height: 16),
                     MaintenanceTimelineSection(item: displayItem),
                     const SizedBox(height: 16),
-                    MaintenanceImagesSection(images: displayItem.images),
+                    MaintenanceActionLogsSection(item: displayItem),
+                    if (displayItem.actionLogs != null && displayItem.actionLogs!.isNotEmpty) const SizedBox(height: 16),
+                    MaintenanceImagesSection(images: displayItem.images ?? []),
                     const SizedBox(height: 30),
                   ],
                 ),

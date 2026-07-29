@@ -1,0 +1,10 @@
+Analyzing wafer...                                              
+
+  error - The argument type 'int?' can't be assigned to the parameter type 'int'.  - lib\features\owner\maintenance\presentation\screens\owner_maintenance_details_screen.dart:26:33 - argument_type_not_assignable
+  error - The argument type 'int?' can't be assigned to the parameter type 'int'.  - lib\features\owner\maintenance\presentation\screens\owner_maintenance_details_screen.dart:43:42 - argument_type_not_assignable
+  error - The getter 'maintenanceStatusTotal' isn't defined for the type 'LocaleKeys'. Try importing the library that defines 'maintenanceStatusTotal', correcting the name to the name of an existing getter, or defining a getter or field named 'maintenanceStatusTotal' - lib\features\owner\maintenance\presentation\widgets\maintenance_stats_widget.dart:30:31 - undefined_getter
+  error - The getter 'maintenanceStatusNew' isn't defined for the type 'LocaleKeys'. Try importing the library that defines 'maintenanceStatusNew', correcting the name to the name of an existing getter, or defining a getter or field named 'maintenanceStatusNew' - lib\features\owner\maintenance\presentation\widgets\maintenance_stats_widget.dart:38:31 - undefined_getter
+  error - The getter 'maintenanceStatusAssigned' isn't defined for the type 'LocaleKeys'. Try importing the library that defines 'maintenanceStatusAssigned', correcting the name to the name of an existing getter, or defining a getter or field named 'maintenanceStatusAssigned' - lib\features\owner\maintenance\presentation\widgets\maintenance_stats_widget.dart:54:31 - undefined_getter
+   info - 'withOpacity' is deprecated and shouldn't be used. Use .withValues() to avoid precision loss. Try replacing the use of the deprecated member with the replacement - lib\features\owner\maintenance\presentation\widgets\maintenance_stats_widget.dart:89:37 - deprecated_member_use
+
+6 issues found. (ran in 65.0s)

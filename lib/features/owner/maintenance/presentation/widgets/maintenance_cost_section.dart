@@ -13,6 +13,10 @@ class MaintenanceCostSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final estimatedCost = item.financials?.estimatedCost?.toDouble() ?? 0.0;
+    final actualCost = item.financials?.actualCost?.toDouble() ?? 0.0;
+    final advancePayment = item.financials?.advancePayment?.toDouble() ?? 0.0;
+
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -45,7 +49,7 @@ class MaintenanceCostSection extends StatelessWidget {
                 child: _buildCostBox(
                   context,
                   LocaleKeys.maintenanceEstimatedCost.tr(),
-                  item.estimatedCost,
+                  estimatedCost,
                   context.primaryColor,
                 ),
               ),
@@ -54,8 +58,8 @@ class MaintenanceCostSection extends StatelessWidget {
                 child: _buildCostBox(
                   context,
                   LocaleKeys.maintenanceActualCost.tr(),
-                  item.actualCost,
-                  item.actualCost > 0
+                  actualCost,
+                  actualCost > 0
                       ? AppColors.success
                       : AppColors.textSecondaryLight,
                 ),
@@ -63,7 +67,7 @@ class MaintenanceCostSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          _buildBearerAndAdvanceRow(context),
+          _buildBearerAndAdvanceRow(context, advancePayment),
         ],
       ),
     );
@@ -118,9 +122,9 @@ class MaintenanceCostSection extends StatelessWidget {
     );
   }
 
-  Widget _buildBearerAndAdvanceRow(BuildContext context) {
-    final bearerDisplay = item.costBearerLabel.isNotEmpty
-        ? item.costBearerLabel
+  Widget _buildBearerAndAdvanceRow(BuildContext context, double advancePayment) {
+    final bearerDisplay = item.costBearerLabel?.isNotEmpty == true
+        ? item.costBearerLabel!
         : item.costBearer == 'client'
             ? LocaleKeys.maintenanceCostBearerClient.tr()
             : LocaleKeys.maintenanceCostBearerOwner.tr();
@@ -154,9 +158,9 @@ class MaintenanceCostSection extends StatelessWidget {
               ),
             ],
           ),
-          if (item.advancePayment > 0)
+          if (advancePayment > 0)
             Text(
-              '${LocaleKeys.maintenanceAdvancePayment.tr()}: ${item.advancePayment.toStringAsFixed(0)} ${LocaleKeys.contractsCurrency.tr()}',
+              '${LocaleKeys.maintenanceAdvancePayment.tr()}: ${advancePayment.toStringAsFixed(0)} ${LocaleKeys.contractsCurrency.tr()}',
               style: TextStyle(
                 color: context.primaryColor,
                 fontSize: 12.5,

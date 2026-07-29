@@ -1,60 +1,86 @@
 import 'package:equatable/equatable.dart';
-import 'maintenance_property_ref_entity.dart';
+
+import 'maintenance_complex_sub_entities.dart';
+import 'maintenance_sub_entities.dart';
 
 class MaintenanceItemEntity extends Equatable {
-  final int id;
-  final String title;
-  final String description;
-  final String status;
-  final String statusLabel;
-  final String costBearer;
-  final String costBearerLabel;
-  final double estimatedCost;
-  final double actualCost;
-  final double advancePayment;
-  final MaintenancePropertyRefEntity property;
-  final MaintenancePropertyRefEntity unit;
-  final String requestedDate;
-  final String? scheduledDate;
-  final String? completedDate;
-  final List<String> images;
+  final int? id;
+  final String? requestNumber;
+  final String? title;
+  final String? description;
+  final String? customType;
+  final MaintenanceClientEntity? client;
+  final String? status;
+  final String? statusLabel;
+  final String? costBearer;
+  final String? costBearerLabel;
+  final bool? isPrivate;
+  final MaintenanceFinancialsEntity? financials;
+  final MaintenancePropertyRefEntity? property;
+  final MaintenanceUnitRefEntity? unit;
+  final List<MaintenanceTypeEntity>? types;
+  final MaintenancePeopleEntity? people;
+  final String? supervisorNotes;
+  final MaintenanceDatesEntity? dates;
+  final MaintenanceQaEntity? qa;
+  final MaintenanceRatingEntity? rating;
+  final List<String>? images;
+  final List<MaintenanceAssignmentEntity>? assignments;
+  final List<MaintenanceTaskEntity>? tasks;
+  final List<MaintenanceActionLogEntity>? actionLogs;
 
   const MaintenanceItemEntity({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.status,
-    required this.statusLabel,
-    required this.costBearer,
-    required this.costBearerLabel,
-    required this.estimatedCost,
-    required this.actualCost,
-    required this.advancePayment,
-    required this.property,
-    required this.unit,
-    required this.requestedDate,
-    this.scheduledDate,
-    this.completedDate,
-    required this.images,
+    this.id,
+    this.requestNumber,
+    this.title,
+    this.description,
+    this.customType,
+    this.client,
+    this.status,
+    this.statusLabel,
+    this.costBearer,
+    this.costBearerLabel,
+    this.isPrivate,
+    this.financials,
+    this.property,
+    this.unit,
+    this.types,
+    this.people,
+    this.supervisorNotes,
+    this.dates,
+    this.qa,
+    this.rating,
+    this.images,
+    this.assignments,
+    this.tasks,
+    this.actionLogs,
   });
 
   @override
   List<Object?> get props => [
         id,
+        requestNumber,
         title,
         description,
+        customType,
+        client,
         status,
         statusLabel,
         costBearer,
         costBearerLabel,
-        estimatedCost,
-        actualCost,
-        advancePayment,
+        isPrivate,
+        financials,
         property,
         unit,
-        requestedDate,
-        scheduledDate,
-        completedDate,
+        types,
+        people,
+        supervisorNotes,
+        dates,
+        qa,
+        rating,
         images,
+        assignments,
+        tasks,
+        actionLogs,
       ];
 }
