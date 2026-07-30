@@ -9,6 +9,7 @@ import '../usecases/approve_owner_maintenance_use_case.dart';
 import '../usecases/assign_owner_maintenance_use_case.dart';
 import '../usecases/complete_owner_maintenance_task_use_case.dart';
 import '../usecases/execute_owner_maintenance_use_case.dart';
+import '../usecases/verify_close_owner_maintenance_use_case.dart';
 import '../entities/execute_owner_maintenance_response_entity.dart';
 
 abstract class OwnerMaintenanceRepository {
@@ -40,4 +41,6 @@ abstract class OwnerMaintenanceRepository {
   );
   Future<Either<Failure, ExecuteOwnerMaintenanceResponseEntity>>
       executeMaintenanceRequest(ExecuteOwnerMaintenanceParams params);
+  Future<Either<Failure, MaintenanceItemEntity>> verifyCloseMaintenanceRequest(
+      VerifyCloseOwnerMaintenanceParams params);
 }

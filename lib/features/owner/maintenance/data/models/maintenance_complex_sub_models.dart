@@ -22,7 +22,7 @@ class MaintenanceQaModel extends MaintenanceQaEntity {
   factory MaintenanceQaModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceQaModel(
       confirmedAt: json['confirmed_at'] as String?,
-      confirmedBy: json['confirmed_by'] as int?,
+      confirmedBy: json['confirmed_by']?.toString(),
     );
   }
 }

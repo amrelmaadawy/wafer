@@ -1734,4 +1734,10 @@ abstract class LocaleKeys {
   static const String maintenanceQaCodeDesc = 'maintenance.qa_code_desc';
   static const String maintenanceCopyQaCode = 'maintenance.copy_qa_code';
   static const String maintenanceQaCodeCopied = 'maintenance.qa_code_copied';
+  static const maintenanceVerifyCloseTitle = 'maintenanceVerifyCloseTitle';
+  static const maintenanceVerifyCloseNotes = 'maintenanceVerifyCloseNotes';
+  static const maintenanceVerifyCloseSubmit = 'maintenanceVerifyCloseSubmit';
+  static const maintenanceVerifyCloseSuccess = 'maintenanceVerifyCloseSuccess';
+  static const maintenanceQaCode = 'maintenanceQaCode';
+  static const maintenanceQaCodeHint = 'maintenanceQaCodeHint';
 }

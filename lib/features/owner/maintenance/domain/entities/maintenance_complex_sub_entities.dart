@@ -21,7 +21,7 @@ class MaintenancePeopleEntity extends Equatable {
 
 class MaintenanceQaEntity extends Equatable {
   final String? confirmedAt;
-  final int? confirmedBy;
+  final String? confirmedBy;
 
   const MaintenanceQaEntity({this.confirmedAt, this.confirmedBy});
 

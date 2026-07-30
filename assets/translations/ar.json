@@ -805,5 +805,11 @@
     "contracts": "تقارير العقود",
     "system": "نشاط النظام",
     "empty_state": "لا توجد بيانات متاحة لعرضها في هذا التقرير حالياً."
-  }
+  },
+  "maintenanceVerifyCloseTitle": "إغلاق وتأكيد الصيانة",
+  "maintenanceVerifyCloseNotes": "ملاحظات الإغلاق",
+  "maintenanceVerifyCloseSubmit": "تأكيد الإغلاق",
+  "maintenanceVerifyCloseSuccess": "تم إغلاق طلب الصيانة بنجاح",
+  "maintenanceQaCode": "كود التأكيد (QA Code)",
+  "maintenanceQaCodeHint": "أدخل الكود الخاص بتأكيد التنفيذ"
 }

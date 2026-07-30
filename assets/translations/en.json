@@ -808,5 +808,11 @@
     "defaulters_report": "Overdue & Defaulters",
     "defaulters_report_desc": "Outstanding balances over 30 days",
     "empty_state": "No data available to display in this report currently."
-  }
+  },
+  "maintenanceVerifyCloseTitle": "Verify & Close Request",
+  "maintenanceVerifyCloseNotes": "Closure Notes",
+  "maintenanceVerifyCloseSubmit": "Verify & Close",
+  "maintenanceVerifyCloseSuccess": "Maintenance request closed successfully",
+  "maintenanceQaCode": "QA Code",
+  "maintenanceQaCodeHint": "Enter the QA Code provided"
 }
