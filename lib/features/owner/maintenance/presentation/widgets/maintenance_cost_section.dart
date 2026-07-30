@@ -29,8 +29,11 @@ class MaintenanceCostSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.account_balance_wallet_outlined,
-                  size: 20, color: context.primaryColor),
+              Icon(
+                Icons.account_balance_wallet_outlined,
+                size: 20,
+                color: context.primaryColor,
+              ),
               const SizedBox(width: 8),
               Text(
                 LocaleKeys.maintenanceCostSection.tr(),
@@ -74,7 +77,11 @@ class MaintenanceCostSection extends StatelessWidget {
   }
 
   Widget _buildCostBox(
-      BuildContext context, String title, double amount, Color valueColor) {
+    BuildContext context,
+    String title,
+    double amount,
+    Color valueColor,
+  ) {
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
@@ -122,12 +129,15 @@ class MaintenanceCostSection extends StatelessWidget {
     );
   }
 
-  Widget _buildBearerAndAdvanceRow(BuildContext context, double advancePayment) {
+  Widget _buildBearerAndAdvanceRow(
+    BuildContext context,
+    double advancePayment,
+  ) {
     final bearerDisplay = item.costBearerLabel?.isNotEmpty == true
         ? item.costBearerLabel!
         : item.costBearer == 'client'
-            ? LocaleKeys.maintenanceCostBearerClient.tr()
-            : LocaleKeys.maintenanceCostBearerOwner.tr();
+        ? LocaleKeys.maintenanceCostBearerClient.tr()
+        : LocaleKeys.maintenanceCostBearerOwner.tr();
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
@@ -140,13 +150,18 @@ class MaintenanceCostSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.person_outline,
-                  size: 16, color: AppColors.textSecondaryLight),
+              const Icon(
+                Icons.person_outline,
+                size: 16,
+                color: AppColors.textSecondaryLight,
+              ),
               const SizedBox(width: 6),
               Text(
                 '${LocaleKeys.maintenanceCostBearerLabel.tr()}: ',
                 style: const TextStyle(
-                    color: AppColors.textSecondaryLight, fontSize: 13),
+                  color: AppColors.textSecondaryLight,
+                  fontSize: 13,
+                ),
               ),
               Text(
                 bearerDisplay,

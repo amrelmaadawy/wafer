@@ -23,56 +23,60 @@ class OwnerCreateMaintenanceCubit extends Cubit<OwnerCreateMaintenanceState> {
 
   Future<void> _loadProperties() async {
     emit(state.copyWith(isPropertiesLoading: true, propertiesError: null));
-    
+
     final result = await _getPropertiesUseCase();
-    
+
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          isPropertiesLoading: false,
-          propertiesError: failure.message,
-        ));
+        emit(
+          state.copyWith(
+            isPropertiesLoading: false,
+            propertiesError: failure.message,
+          ),
+        );
       },
       (data) {
-        emit(state.copyWith(
-          isPropertiesLoading: false,
-          properties: data.items,
-        ));
+        emit(
+          state.copyWith(isPropertiesLoading: false, properties: data.items),
+        );
       },
     );
   }
 
   Future<void> loadUnits(int propertyId) async {
-    emit(state.copyWithNullUnitId(isUnitsLoading: true, unitsError: null, selectedPropertyId: propertyId));
-    
+    emit(
+      state.copyWithNullUnitId(
+        isUnitsLoading: true,
+        unitsError: null,
+        selectedPropertyId: propertyId,
+      ),
+    );
+
     final result = await _getUnitsUseCase(propertyId);
-    
+
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          isUnitsLoading: false,
-          unitsError: failure.message,
-        ));
+        emit(
+          state.copyWith(isUnitsLoading: false, unitsError: failure.message),
+        );
       },
       (data) {
-        emit(state.copyWith(
-          isUnitsLoading: false,
-          units: data.items,
-        ));
+        emit(state.copyWith(isUnitsLoading: false, units: data.items));
       },
     );
   }
 
   void updateClientName(String val) => emit(state.copyWith(clientName: val));
-  
+
   void updateClientPhone(String val) => emit(state.copyWith(clientPhone: val));
-  
+
   void updateDescription(String val) => emit(state.copyWith(description: val));
-  
-  void updateRequestedDate(String val) => emit(state.copyWith(requestedDate: val));
-  
+
+  void updateRequestedDate(String val) =>
+      emit(state.copyWith(requestedDate: val));
+
   void updateIsPrivate(bool val) => emit(state.copyWith(isPrivate: val));
-  
+
   void toggleMaintenanceType(String type) {
     final currentTypes = List<String>.from(state.maintenanceTypes);
     if (currentTypes.contains(type)) {
@@ -92,20 +96,27 @@ class OwnerCreateMaintenanceCubit extends Cubit<OwnerCreateMaintenanceState> {
   }
 
   Future<void> submit() async {
-    if (state.selectedPropertyId == null || 
-        state.clientName.isEmpty || 
-        state.clientPhone.isEmpty || 
-        state.description.isEmpty || 
+    if (state.selectedPropertyId == null ||
+        state.clientName.isEmpty ||
+        state.clientPhone.isEmpty ||
+        state.description.isEmpty ||
         state.requestedDate.isEmpty) {
-      emit(state.copyWith(
-        status: CreateMaintenanceStatus.failure,
-        errorMessage: LocaleKeys.maintenanceCreateFillAllFields.tr(),
-      ));
+      emit(
+        state.copyWith(
+          status: CreateMaintenanceStatus.failure,
+          errorMessage: LocaleKeys.maintenanceCreateFillAllFields.tr(),
+        ),
+      );
       emit(state.copyWith(status: CreateMaintenanceStatus.initial));
       return;
     }
 
-    emit(state.copyWith(status: CreateMaintenanceStatus.loading, errorMessage: null));
+    emit(
+      state.copyWith(
+        status: CreateMaintenanceStatus.loading,
+        errorMessage: null,
+      ),
+    );
 
     final params = CreateOwnerMaintenanceParams(
       propertyId: state.selectedPropertyId!,
@@ -122,10 +133,12 @@ class OwnerCreateMaintenanceCubit extends Cubit<OwnerCreateMaintenanceState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          status: CreateMaintenanceStatus.failure,
-          errorMessage: failure.message,
-        ));
+        emit(
+          state.copyWith(
+            status: CreateMaintenanceStatus.failure,
+            errorMessage: failure.message,
+          ),
+        );
         emit(state.copyWith(status: CreateMaintenanceStatus.initial));
       },
       (_) {

@@ -7,7 +7,7 @@ class OwnerMaintenanceCubit extends Cubit<OwnerMaintenanceState> {
   final GetOwnerMaintenanceUseCase _getMaintenanceUseCase;
 
   OwnerMaintenanceCubit(this._getMaintenanceUseCase)
-      : super(const OwnerMaintenanceInitial());
+    : super(const OwnerMaintenanceInitial());
 
   int _currentPage = 1;
   bool _isFetchingNext = false;
@@ -30,21 +30,26 @@ class OwnerMaintenanceCubit extends Cubit<OwnerMaintenanceState> {
     );
 
     result.fold(
-      (failure) => emit(OwnerMaintenanceError(failure.message,
-          activeStatus: _currentStatus)),
+      (failure) => emit(
+        OwnerMaintenanceError(failure.message, activeStatus: _currentStatus),
+      ),
       (response) {
         if (response.items.isEmpty) {
-          emit(OwnerMaintenanceEmpty(
-            activeStatus: _currentStatus,
-            stats: response.stats,
-          ));
+          emit(
+            OwnerMaintenanceEmpty(
+              activeStatus: _currentStatus,
+              stats: response.stats,
+            ),
+          );
         } else {
-          emit(OwnerMaintenanceLoaded(
-            items: response.items,
-            meta: response.meta,
-            stats: response.stats,
-            activeStatus: _currentStatus,
-          ));
+          emit(
+            OwnerMaintenanceLoaded(
+              items: response.items,
+              meta: response.meta,
+              stats: response.stats,
+              activeStatus: _currentStatus,
+            ),
+          );
         }
       },
     );
@@ -80,12 +85,14 @@ class OwnerMaintenanceCubit extends Cubit<OwnerMaintenanceState> {
         final updatedList = List<MaintenanceItemEntity>.from(currentState.items)
           ..addAll(response.items);
 
-        emit(OwnerMaintenanceLoaded(
-          items: updatedList,
-          meta: response.meta,
-          stats: response.stats ?? currentState.stats,
-          activeStatus: _currentStatus,
-        ));
+        emit(
+          OwnerMaintenanceLoaded(
+            items: updatedList,
+            meta: response.meta,
+            stats: response.stats ?? currentState.stats,
+            activeStatus: _currentStatus,
+          ),
+        );
       },
     );
   }

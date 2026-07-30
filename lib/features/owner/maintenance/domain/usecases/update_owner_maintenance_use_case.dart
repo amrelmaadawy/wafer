@@ -9,7 +9,7 @@ class UpdateOwnerMaintenanceParams extends Equatable {
   final int id;
   final String description;
   final String? scheduledDate;
-  final List<dynamic> maintenanceTypes;
+  final List<String> maintenanceTypes;
 
   const UpdateOwnerMaintenanceParams({
     required this.id,
@@ -27,12 +27,7 @@ class UpdateOwnerMaintenanceParams extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        id,
-        description,
-        scheduledDate,
-        maintenanceTypes,
-      ];
+  List<Object?> get props => [id, description, scheduledDate, maintenanceTypes];
 }
 
 class UpdateOwnerMaintenanceUseCase
@@ -43,7 +38,8 @@ class UpdateOwnerMaintenanceUseCase
 
   @override
   Future<Either<Failure, MaintenanceItemEntity>> call(
-      UpdateOwnerMaintenanceParams params) {
+    UpdateOwnerMaintenanceParams params,
+  ) {
     return _repository.updateMaintenanceRequest(params);
   }
 }

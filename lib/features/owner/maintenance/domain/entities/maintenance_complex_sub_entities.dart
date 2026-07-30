@@ -12,7 +12,11 @@ class MaintenancePeopleEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [assignedEmployee, supervisor, ownerRepresentative];
+  List<Object?> get props => [
+    assignedEmployee,
+    supervisor,
+    ownerRepresentative,
+  ];
 }
 
 class MaintenanceQaEntity extends Equatable {
@@ -77,8 +81,14 @@ class MaintenanceAssignmentEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    id, technician, taskDetails, status,
-    statusLabel, dueDate, assignedAt, completedAt,
+    id,
+    technician,
+    taskDetails,
+    status,
+    statusLabel,
+    dueDate,
+    assignedAt,
+    completedAt,
   ];
 }
 
@@ -103,8 +113,13 @@ class MaintenanceTaskEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    id, title, status, technicianResponse,
-    responsibleId, dueDate, completedAt,
+    id,
+    title,
+    status,
+    technicianResponse,
+    responsibleId,
+    dueDate,
+    completedAt,
   ];
 }
 
@@ -129,7 +144,12 @@ class MaintenanceActionLogEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-    id, action, performedBy, notes,
-    oldStatus, newStatus, createdAt,
+    id,
+    action,
+    performedBy,
+    notes,
+    oldStatus,
+    newStatus,
+    createdAt,
   ];
 }

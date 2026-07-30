@@ -62,15 +62,11 @@ class MaintenanceStatusBadge extends StatelessWidget {
         labelKey = LocaleKeys.maintenanceStatusPending;
     }
 
-    final displayLabel =
-        statusLabel.isNotEmpty ? statusLabel : labelKey.tr();
+    final displayLabel = statusLabel.isNotEmpty ? statusLabel : labelKey.tr();
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: bg,
-        borderRadius: AppRadius.circularMd,
-      ),
+      decoration: BoxDecoration(color: bg, borderRadius: AppRadius.circularMd),
       child: Text(
         displayLabel,
         style: TextStyle(

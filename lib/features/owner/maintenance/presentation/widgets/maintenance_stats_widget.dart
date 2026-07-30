@@ -119,8 +119,9 @@ class MaintenanceStatsWidget extends StatelessWidget {
               child: Text(
                 '$count',
                 style: TextStyle(
-                  color:
-                      isSelected ? Colors.white : AppColors.textSecondaryLight,
+                  color: isSelected
+                      ? Colors.white
+                      : AppColors.textSecondaryLight,
                   fontSize: 11,
                   fontWeight: FontWeight.w800,
                 ),

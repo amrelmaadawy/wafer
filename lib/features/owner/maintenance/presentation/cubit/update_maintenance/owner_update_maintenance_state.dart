@@ -7,9 +7,13 @@ abstract class OwnerUpdateMaintenanceState extends Equatable {
   List<Object?> get props => [];
 }
 
-class OwnerUpdateMaintenanceInitial extends OwnerUpdateMaintenanceState {}
+class OwnerUpdateMaintenanceInitial extends OwnerUpdateMaintenanceState {
+  const OwnerUpdateMaintenanceInitial();
+}
 
-class OwnerUpdateMaintenanceLoading extends OwnerUpdateMaintenanceState {}
+class OwnerUpdateMaintenanceLoading extends OwnerUpdateMaintenanceState {
+  const OwnerUpdateMaintenanceLoading();
+}
 
 class OwnerUpdateMaintenanceSuccess extends OwnerUpdateMaintenanceState {
   final String message;

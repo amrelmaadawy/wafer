@@ -29,8 +29,11 @@ class MaintenanceTimelineSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.timeline_rounded,
-                  size: 20, color: context.primaryColor),
+              Icon(
+                Icons.timeline_rounded,
+                size: 20,
+                color: context.primaryColor,
+              ),
               const SizedBox(width: 8),
               Text(
                 LocaleKeys.maintenanceTimelineSection.tr(),
@@ -47,7 +50,9 @@ class MaintenanceTimelineSection extends StatelessWidget {
             context,
             Icons.date_range_rounded,
             LocaleKeys.maintenanceRequestedDate.tr(),
-            requestedDate.isNotEmpty ? requestedDate : LocaleKeys.maintenanceUnspecifiedDate.tr(),
+            requestedDate.isNotEmpty
+                ? requestedDate
+                : LocaleKeys.maintenanceUnspecifiedDate.tr(),
             isCompleted: requestedDate.isNotEmpty,
             isLast: false,
           ),
@@ -55,7 +60,9 @@ class MaintenanceTimelineSection extends StatelessWidget {
             context,
             Icons.schedule_rounded,
             LocaleKeys.maintenanceScheduledDate.tr(),
-            scheduledDate.isNotEmpty ? scheduledDate : LocaleKeys.maintenanceUnspecifiedDate.tr(),
+            scheduledDate.isNotEmpty
+                ? scheduledDate
+                : LocaleKeys.maintenanceUnspecifiedDate.tr(),
             isCompleted: scheduledDate.isNotEmpty,
             isLast: false,
           ),
@@ -63,7 +70,9 @@ class MaintenanceTimelineSection extends StatelessWidget {
             context,
             Icons.check_circle_outline_rounded,
             LocaleKeys.maintenanceCompletedDate.tr(),
-            completedDate.isNotEmpty ? completedDate : LocaleKeys.maintenanceUnspecifiedDate.tr(),
+            completedDate.isNotEmpty
+                ? completedDate
+                : LocaleKeys.maintenanceUnspecifiedDate.tr(),
             isCompleted: completedDate.isNotEmpty,
             isLast: true,
           ),
@@ -126,8 +135,9 @@ class MaintenanceTimelineSection extends StatelessWidget {
                           ? AppColors.textPrimaryLight
                           : AppColors.textSecondaryLight,
                       fontSize: 13.5,
-                      fontWeight:
-                          isCompleted ? FontWeight.w700 : FontWeight.w500,
+                      fontWeight: isCompleted
+                          ? FontWeight.w700
+                          : FontWeight.w500,
                     ),
                   ),
                   const SizedBox(height: 3),

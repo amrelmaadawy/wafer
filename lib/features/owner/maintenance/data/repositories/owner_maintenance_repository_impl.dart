@@ -37,7 +37,8 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
 
   @override
   Future<Either<Failure, MaintenanceItemEntity>> getMaintenanceDetails(
-      int id) async {
+    int id,
+  ) async {
     try {
       final result = await _remoteDataSource.getMaintenanceDetails(id);
       return Right(result);
@@ -52,7 +53,8 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
 
   @override
   Future<Either<Failure, void>> createMaintenanceRequest(
-      CreateOwnerMaintenanceParams params) async {
+    CreateOwnerMaintenanceParams params,
+  ) async {
     try {
       await _remoteDataSource.createMaintenanceRequest(params);
       return const Right(null);
@@ -67,7 +69,8 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
 
   @override
   Future<Either<Failure, MaintenanceItemEntity>> updateMaintenanceRequest(
-      UpdateOwnerMaintenanceParams params) async {
+    UpdateOwnerMaintenanceParams params,
+  ) async {
     try {
       final result = await _remoteDataSource.updateMaintenanceRequest(params);
       return Right(result);

@@ -26,7 +26,11 @@ class MaintenanceTasksSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.checklist, size: 20, color: Theme.of(context).primaryColor),
+              Icon(
+                Icons.checklist,
+                size: 20,
+                color: Theme.of(context).primaryColor,
+              ),
               const SizedBox(width: 8),
               const Text(
                 'المهام الفرعية', // Localize later
@@ -62,7 +66,9 @@ class MaintenanceTasksSection extends StatelessWidget {
         children: [
           Icon(
             isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
-            color: isCompleted ? AppColors.success : AppColors.textSecondaryLight,
+            color: isCompleted
+                ? AppColors.success
+                : AppColors.textSecondaryLight,
             size: 20,
           ),
           const SizedBox(width: 12),
@@ -73,7 +79,9 @@ class MaintenanceTasksSection extends StatelessWidget {
                 Text(
                   title,
                   style: TextStyle(
-                    color: isCompleted ? AppColors.textSecondaryLight : AppColors.textPrimaryLight,
+                    color: isCompleted
+                        ? AppColors.textSecondaryLight
+                        : AppColors.textPrimaryLight,
                     fontSize: 14,
                     fontWeight: isCompleted ? FontWeight.w500 : FontWeight.w700,
                     decoration: isCompleted ? TextDecoration.lineThrough : null,
@@ -83,7 +91,11 @@ class MaintenanceTasksSection extends StatelessWidget {
                   const SizedBox(height: 4),
                   Row(
                     children: [
-                      const Icon(Icons.calendar_today, size: 12, color: AppColors.textSecondaryLight),
+                      const Icon(
+                        Icons.calendar_today,
+                        size: 12,
+                        color: AppColors.textSecondaryLight,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         task.dueDate!,

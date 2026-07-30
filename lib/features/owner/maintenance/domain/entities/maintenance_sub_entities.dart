@@ -3,9 +3,9 @@ import 'package:equatable/equatable.dart';
 class MaintenanceClientEntity extends Equatable {
   final String? name;
   final String? phone;
-  
+
   const MaintenanceClientEntity({this.name, this.phone});
-  
+
   @override
   List<Object?> get props => [name, phone];
 }
@@ -14,13 +14,13 @@ class MaintenanceFinancialsEntity extends Equatable {
   final num? estimatedCost;
   final num? advancePayment;
   final num? actualCost;
-  
+
   const MaintenanceFinancialsEntity({
     this.estimatedCost,
     this.advancePayment,
     this.actualCost,
   });
-  
+
   @override
   List<Object?> get props => [estimatedCost, advancePayment, actualCost];
 }
@@ -31,7 +31,7 @@ class MaintenancePropertyRefEntity extends Equatable {
   final String? code;
   final String? city;
   final String? district;
-  
+
   const MaintenancePropertyRefEntity({
     this.id,
     this.name,
@@ -39,7 +39,7 @@ class MaintenancePropertyRefEntity extends Equatable {
     this.city,
     this.district,
   });
-  
+
   @override
   List<Object?> get props => [id, name, code, city, district];
 }
@@ -49,14 +49,14 @@ class MaintenanceUnitRefEntity extends Equatable {
   final String? name;
   final String? unitNumber;
   final String? code;
-  
+
   const MaintenanceUnitRefEntity({
     this.id,
     this.name,
     this.unitNumber,
     this.code,
   });
-  
+
   @override
   List<Object?> get props => [id, name, unitNumber, code];
 }
@@ -66,14 +66,9 @@ class MaintenanceTypeEntity extends Equatable {
   final String? name;
   final String? nameAr;
   final bool? isActive;
-  
-  const MaintenanceTypeEntity({
-    this.id,
-    this.name,
-    this.nameAr,
-    this.isActive,
-  });
-  
+
+  const MaintenanceTypeEntity({this.id, this.name, this.nameAr, this.isActive});
+
   @override
   List<Object?> get props => [id, name, nameAr, isActive];
 }
@@ -85,7 +80,7 @@ class MaintenanceDatesEntity extends Equatable {
   final String? qaConfirmedAt;
   final String? createdAt;
   final String? updatedAt;
-  
+
   const MaintenanceDatesEntity({
     this.requestedDate,
     this.scheduledDate,
@@ -94,11 +89,15 @@ class MaintenanceDatesEntity extends Equatable {
     this.createdAt,
     this.updatedAt,
   });
-  
+
   @override
   List<Object?> get props => [
-    requestedDate, scheduledDate, completedDate,
-    qaConfirmedAt, createdAt, updatedAt,
+    requestedDate,
+    scheduledDate,
+    completedDate,
+    qaConfirmedAt,
+    createdAt,
+    updatedAt,
   ];
 }
 

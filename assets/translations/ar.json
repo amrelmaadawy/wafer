@@ -581,7 +581,8 @@
     "create_fill_all_fields": "الرجاء إكمال كافة الحقول المطلوبة",
     "update_request": "تعديل طلب الصيانة",
     "updated_successfully": "تم تحديث طلب الصيانة بنجاح",
-    "edit": "تعديل"
+    "edit": "تعديل",
+    "phone_digits_only": "يجب إدخال أرقام فقط"
   },
   "revenue": {
     "report_title": "تقرير الإيرادات",

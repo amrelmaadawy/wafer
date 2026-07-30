@@ -1399,6 +1399,7 @@ abstract class  LocaleKeys {
   static const String maintenanceCreateSubmit = 'maintenance.create_submit';
   static const String maintenanceCreateRequiredField = 'maintenance.create_required_field';
   static const String maintenanceCreateFillAllFields = 'maintenance.create_fill_all_fields';
+  static const String maintenancePhoneDigitsOnly = 'maintenance.phone_digits_only';
   
   static const String maintenanceUpdateRequest = 'maintenance.update_request';
   static const String maintenanceUpdatedSuccessfully = 'maintenance.updated_successfully';

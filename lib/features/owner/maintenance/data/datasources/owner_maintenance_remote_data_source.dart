@@ -13,7 +13,9 @@ abstract class OwnerMaintenanceRemoteDataSource {
   });
   Future<MaintenanceItemModel> getMaintenanceDetails(int id);
   Future<void> createMaintenanceRequest(CreateOwnerMaintenanceParams params);
-  Future<MaintenanceItemModel> updateMaintenanceRequest(UpdateOwnerMaintenanceParams params);
+  Future<MaintenanceItemModel> updateMaintenanceRequest(
+    UpdateOwnerMaintenanceParams params,
+  );
   Future<void> deleteMaintenanceRequest(int id);
 }
 
@@ -53,8 +55,10 @@ class OwnerMaintenanceRemoteDataSourceImpl
 
     Map<String, dynamic> itemMap = {};
     if (innerData['maintenance_requests'] is Map<String, dynamic>) {
-      final requestsMap = innerData['maintenance_requests'] as Map<String, dynamic>;
-      if (requestsMap['data'] is List && (requestsMap['data'] as List).isNotEmpty) {
+      final requestsMap =
+          innerData['maintenance_requests'] as Map<String, dynamic>;
+      if (requestsMap['data'] is List &&
+          (requestsMap['data'] as List).isNotEmpty) {
         final firstItem = (requestsMap['data'] as List).first;
         if (firstItem is Map<String, dynamic>) itemMap = firstItem;
       }
@@ -70,7 +74,9 @@ class OwnerMaintenanceRemoteDataSourceImpl
   }
 
   @override
-  Future<void> createMaintenanceRequest(CreateOwnerMaintenanceParams params) async {
+  Future<void> createMaintenanceRequest(
+    CreateOwnerMaintenanceParams params,
+  ) async {
     await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenance}',
       data: params.toJson(),
@@ -78,7 +84,9 @@ class OwnerMaintenanceRemoteDataSourceImpl
   }
 
   @override
-  Future<MaintenanceItemModel> updateMaintenanceRequest(UpdateOwnerMaintenanceParams params) async {
+  Future<MaintenanceItemModel> updateMaintenanceRequest(
+    UpdateOwnerMaintenanceParams params,
+  ) async {
     final response = await _dio.patch(
       '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(params.id)}',
       data: params.toJson(),
@@ -99,6 +107,8 @@ class OwnerMaintenanceRemoteDataSourceImpl
 
   @override
   Future<void> deleteMaintenanceRequest(int id) async {
-    await _dio.delete('${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(id)}');
+    await _dio.delete(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(id)}',
+    );
   }
 }

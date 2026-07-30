@@ -31,16 +31,36 @@ class MaintenanceFilterBar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           child: Row(
             children: [
-              _buildChip(context, LocaleKeys.maintenanceFilterAll.tr(), 'all',
-                  active),
-              _buildChip(context, LocaleKeys.maintenanceFilterPending.tr(),
-                  'pending', active),
-              _buildChip(context, LocaleKeys.maintenanceFilterInProgress.tr(),
-                  'in_progress', active),
-              _buildChip(context, LocaleKeys.maintenanceFilterCompleted.tr(),
-                  'executed', active),
-              _buildChip(context, LocaleKeys.maintenanceFilterCancelled.tr(),
-                  'cancelled', active),
+              _buildChip(
+                context,
+                LocaleKeys.maintenanceFilterAll.tr(),
+                'all',
+                active,
+              ),
+              _buildChip(
+                context,
+                LocaleKeys.maintenanceFilterPending.tr(),
+                'pending',
+                active,
+              ),
+              _buildChip(
+                context,
+                LocaleKeys.maintenanceFilterInProgress.tr(),
+                'in_progress',
+                active,
+              ),
+              _buildChip(
+                context,
+                LocaleKeys.maintenanceFilterCompleted.tr(),
+                'executed',
+                active,
+              ),
+              _buildChip(
+                context,
+                LocaleKeys.maintenanceFilterCancelled.tr(),
+                'cancelled',
+                active,
+              ),
             ],
           ),
         );
@@ -49,7 +69,11 @@ class MaintenanceFilterBar extends StatelessWidget {
   }
 
   Widget _buildChip(
-      BuildContext context, String label, String status, String active) {
+    BuildContext context,
+    String label,
+    String status,
+    String active,
+  ) {
     final isSelected = status == active;
     return Padding(
       padding: const EdgeInsets.only(left: 8),
@@ -63,16 +87,16 @@ class MaintenanceFilterBar extends StatelessWidget {
           ),
         ),
         selected: isSelected,
-        onSelected: (_) => context
-            .read<OwnerMaintenanceCubit>()
-            .changeStatusFilter(status),
+        onSelected: (_) =>
+            context.read<OwnerMaintenanceCubit>().changeStatusFilter(status),
         backgroundColor: AppColors.surfaceLight,
         selectedColor: context.primaryColor,
         showCheckmark: false,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadius.circularFull,
           side: BorderSide(
-              color: isSelected ? context.primaryColor : AppColors.borderLight),
+            color: isSelected ? context.primaryColor : AppColors.borderLight,
+          ),
         ),
       ),
     );

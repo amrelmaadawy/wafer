@@ -28,7 +28,8 @@ class GetOwnerMaintenanceUseCase
 
   @override
   Future<Either<Failure, MaintenanceResponseEntity>> call(
-      GetOwnerMaintenanceParams params) {
+    GetOwnerMaintenanceParams params,
+  ) {
     return _repository.getMaintenanceRequests(
       page: params.page,
       status: params.status,

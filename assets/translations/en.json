@@ -581,7 +581,8 @@
     "create_fill_all_fields": "Please fill all required fields",
     "update_request": "Update Maintenance Request",
     "updated_successfully": "Maintenance request updated successfully",
-    "edit": "Edit"
+    "edit": "Edit",
+    "phone_digits_only": "Phone number must contain digits only"
   },
   "revenue": {
     "report_title": "Revenue Report",

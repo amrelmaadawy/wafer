@@ -26,7 +26,11 @@ class MaintenanceActionLogsSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.history, size: 20, color: Theme.of(context).primaryColor),
+              Icon(
+                Icons.history,
+                size: 20,
+                color: Theme.of(context).primaryColor,
+              ),
               const SizedBox(width: 8),
               const Text(
                 'سجل الإجراءات', // Localize later
@@ -52,7 +56,7 @@ class MaintenanceActionLogsSection extends StatelessWidget {
     // Determine icon and color based on action type
     IconData icon = Icons.info_outline;
     Color color = AppColors.primary;
-    
+
     final action = log.action ?? '';
     if (action == 'created') {
       icon = Icons.add_circle_outline;
@@ -86,16 +90,11 @@ class MaintenanceActionLogsSection extends StatelessWidget {
                     color: color.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: Center(
-                    child: Icon(icon, size: 16, color: color),
-                  ),
+                  child: Center(child: Icon(icon, size: 16, color: color)),
                 ),
                 if (!isLast)
                   Expanded(
-                    child: Container(
-                      width: 2,
-                      color: AppColors.borderLight,
-                    ),
+                    child: Container(width: 2, color: AppColors.borderLight),
                   ),
               ],
             ),
@@ -130,7 +129,10 @@ class MaintenanceActionLogsSection extends StatelessWidget {
                   if (log.newStatus != null && log.newStatus!.isNotEmpty) ...[
                     const SizedBox(height: 6),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 2,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.backgroundLight,
                         borderRadius: AppRadius.circularSm,

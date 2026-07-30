@@ -11,17 +11,16 @@ class MaintenanceCard extends StatelessWidget {
   final MaintenanceItemEntity item;
   final VoidCallback? onTap;
 
-  const MaintenanceCard({
-    super.key,
-    required this.item,
-    this.onTap,
-  });
+  const MaintenanceCard({super.key, required this.item, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    final propertyName = item.property?.name ?? LocaleKeys.maintenanceNotDeterminedYet.tr();
+    final propertyName =
+        item.property?.name ?? LocaleKeys.maintenanceNotDeterminedYet.tr();
     final unitName = item.unit?.name ?? '';
-    final locationTitle = unitName.isNotEmpty ? '$propertyName • $unitName' : propertyName;
+    final locationTitle = unitName.isNotEmpty
+        ? '$propertyName • $unitName'
+        : propertyName;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 14),
@@ -60,7 +59,8 @@ class MaintenanceCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                if (item.client?.name != null && item.client!.name!.isNotEmpty) ...[
+                if (item.client?.name != null &&
+                    item.client!.name!.isNotEmpty) ...[
                   const SizedBox(height: 8),
                   _buildClientRow(context),
                 ],
@@ -71,7 +71,8 @@ class MaintenanceCard extends StatelessWidget {
                   child: Divider(color: AppColors.borderLight, height: 1),
                 ),
                 _buildFinancialRow(context),
-                if ((item.financials?.advancePayment ?? 0) > 0 || (item.dates?.requestedDate?.isNotEmpty ?? false))
+                if ((item.financials?.advancePayment ?? 0) > 0 ||
+                    (item.dates?.requestedDate?.isNotEmpty ?? false))
                   Padding(
                     padding: const EdgeInsets.only(top: 10),
                     child: _buildBottomTimelineRow(context),
@@ -85,15 +86,20 @@ class MaintenanceCard extends StatelessWidget {
   }
 
   Widget _buildTopHeader(BuildContext context) {
-    final title = (item.title?.isNotEmpty ?? false) ? item.title! : '#${item.requestNumber ?? item.id}';
+    final title = (item.title?.isNotEmpty ?? false)
+        ? item.title!
+        : '#${item.requestNumber ?? item.id}';
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           child: Row(
             children: [
-              Icon(Icons.build_circle_outlined,
-                  size: 18, color: context.primaryColor),
+              Icon(
+                Icons.build_circle_outlined,
+                size: 18,
+                color: context.primaryColor,
+              ),
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
@@ -154,18 +160,23 @@ class MaintenanceCard extends StatelessWidget {
     final bearerDisplay = item.costBearerLabel?.isNotEmpty == true
         ? item.costBearerLabel!
         : item.costBearer == 'client'
-            ? LocaleKeys.maintenanceCostBearerClient.tr()
-            : LocaleKeys.maintenanceCostBearerOwner.tr();
+        ? LocaleKeys.maintenanceCostBearerClient.tr()
+        : LocaleKeys.maintenanceCostBearerOwner.tr();
 
     return Row(
       children: [
-        const Icon(Icons.account_balance_wallet_outlined,
-            size: 16, color: AppColors.textSecondaryLight),
+        const Icon(
+          Icons.account_balance_wallet_outlined,
+          size: 16,
+          color: AppColors.textSecondaryLight,
+        ),
         const SizedBox(width: 6),
         Text(
           '${LocaleKeys.maintenanceCostBearerLabel.tr()}: ',
-          style:
-              const TextStyle(color: AppColors.textSecondaryLight, fontSize: 13),
+          style: const TextStyle(
+            color: AppColors.textSecondaryLight,
+            fontSize: 13,
+          ),
         ),
         Text(
           bearerDisplay,
@@ -203,14 +214,20 @@ class MaintenanceCard extends StatelessWidget {
   }
 
   Widget _buildCostItem(
-      BuildContext context, String label, double amount, Color valueColor) {
+    BuildContext context,
+    String label,
+    double amount,
+    Color valueColor,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
           style: const TextStyle(
-              color: AppColors.textSecondaryLight, fontSize: 11.5),
+            color: AppColors.textSecondaryLight,
+            fontSize: 11.5,
+          ),
         ),
         const SizedBox(height: 3),
         Row(
@@ -252,8 +269,11 @@ class MaintenanceCard extends StatelessWidget {
         if (requestedDate.isNotEmpty)
           Row(
             children: [
-              const Icon(Icons.calendar_today_outlined,
-                  size: 13, color: AppColors.textSecondaryLight),
+              const Icon(
+                Icons.calendar_today_outlined,
+                size: 13,
+                color: AppColors.textSecondaryLight,
+              ),
               const SizedBox(width: 4),
               Text(
                 requestedDate,

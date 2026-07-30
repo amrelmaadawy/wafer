@@ -14,6 +14,8 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../domain/constants/maintenance_type_constants.dart';
 import '../cubit/create_maintenance/owner_create_maintenance_cubit.dart';
 import '../cubit/create_maintenance/owner_create_maintenance_state.dart';
 
@@ -41,86 +43,92 @@ class _OwnerCreateMaintenanceViewState
     extends State<_OwnerCreateMaintenanceView> {
   final _formKey = GlobalKey<FormState>();
 
-  final List<String> _availableMaintenanceTypes = [
-    'AC',
-    'Electrical',
-    'Plumbing',
-    'Carpentry',
-    'Painting',
-    'Cleaning',
-    'General',
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(
-          LocaleKeys.maintenanceTitle.tr(), // Use a generic title or add a specific one later
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-      ),
-      body: BlocConsumer<OwnerCreateMaintenanceCubit, OwnerCreateMaintenanceState>(
-        listener: (context, state) {
-          if (state.status == CreateMaintenanceStatus.success) {
-            AppToast.showSuccess(context, LocaleKeys.maintenanceCreateSuccess.tr());
-            Navigator.of(context).pop(true);
-          } else if (state.status == CreateMaintenanceStatus.failure) {
-            AppToast.showError(context, state.errorMessage ?? LocaleKeys.errorsServerError.tr());
-          }
-        },
-        builder: (context, state) {
-          return ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              padding: const EdgeInsets.all(AppSpacing.md),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildSectionTitle(LocaleKeys.maintenanceCreatePropertyUnitSection.tr()),
-                  const SizedBox(height: AppSpacing.sm),
-                  _buildPropertiesDropdown(state),
-                  const SizedBox(height: AppSpacing.md),
-                  if (state.selectedPropertyId != null) ...[
-                    _buildUnitsDropdown(state),
-                    const SizedBox(height: AppSpacing.md),
-                  ],
-                  _buildSectionTitle(LocaleKeys.maintenanceCreateClientSection.tr()),
-                  const SizedBox(height: AppSpacing.sm),
-                  _buildClientFields(context, state),
-                  const SizedBox(height: AppSpacing.md),
-                  _buildSectionTitle(LocaleKeys.maintenanceCreateDetailsSection.tr()),
-                  const SizedBox(height: AppSpacing.sm),
-                  _buildRequestDetails(context, state),
-                  const SizedBox(height: AppSpacing.xl),
-                  CustomButton(
-                    text: LocaleKeys.maintenanceCreateSubmit.tr(),
-                    isLoading: state.status == CreateMaintenanceStatus.loading,
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (state.maintenanceTypes.isEmpty) {
-                          AppToast.showError(context, LocaleKeys.maintenanceCreateFillAllFields.tr());
-                          return;
-                        }
-                        context.read<OwnerCreateMaintenanceCubit>().submit();
-                      }
-                    },
+      appBar: CustomAppBar(title: LocaleKeys.maintenanceCreateTitle.tr()),
+      body:
+          BlocConsumer<
+            OwnerCreateMaintenanceCubit,
+            OwnerCreateMaintenanceState
+          >(
+            listener: (context, state) {
+              if (state.status == CreateMaintenanceStatus.success) {
+                AppToast.showSuccess(
+                  context,
+                  LocaleKeys.maintenanceCreateSuccess.tr(),
+                );
+                Navigator.of(context).pop(true);
+              } else if (state.status == CreateMaintenanceStatus.failure) {
+                AppToast.showError(
+                  context,
+                  state.errorMessage ?? LocaleKeys.errorsServerError.tr(),
+                );
+              }
+            },
+            builder: (context, state) {
+              return ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(overscroll: false),
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSectionTitle(
+                          LocaleKeys.maintenanceCreatePropertyUnitSection.tr(),
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        _buildPropertiesDropdown(state),
+                        const SizedBox(height: AppSpacing.md),
+                        if (state.selectedPropertyId != null) ...[
+                          _buildUnitsDropdown(state),
+                          const SizedBox(height: AppSpacing.md),
+                        ],
+                        _buildSectionTitle(
+                          LocaleKeys.maintenanceCreateClientSection.tr(),
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        _buildClientFields(context, state),
+                        const SizedBox(height: AppSpacing.md),
+                        _buildSectionTitle(
+                          LocaleKeys.maintenanceCreateDetailsSection.tr(),
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        _buildRequestDetails(context, state),
+                        const SizedBox(height: AppSpacing.xl),
+                        CustomButton(
+                          text: LocaleKeys.maintenanceCreateSubmit.tr(),
+                          isLoading:
+                              state.status == CreateMaintenanceStatus.loading,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              if (state.maintenanceTypes.isEmpty) {
+                                AppToast.showError(
+                                  context,
+                                  LocaleKeys.maintenanceCreateFillAllFields
+                                      .tr(),
+                                );
+                                return;
+                              }
+                              context
+                                  .read<OwnerCreateMaintenanceCubit>()
+                                  .submit();
+                            }
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-            ),
-          );
-        },
-      ),
+                ),
+              );
+            },
+          ),
     );
   }
 
@@ -141,13 +149,19 @@ class _OwnerCreateMaintenanceViewState
         child: SizedBox(
           height: 55,
           width: double.infinity,
-          child: DecoratedBox(decoration: BoxDecoration(color: Colors.white, borderRadius: AppRadius.circularMd)),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: AppRadius.circularMd,
+            ),
+          ),
         ),
       );
     }
     return FormField<int>(
       initialValue: state.selectedPropertyId,
-      validator: (val) => val == null ? LocaleKeys.maintenanceCreateRequiredField.tr() : null,
+      validator: (val) =>
+          val == null ? LocaleKeys.maintenanceCreateRequiredField.tr() : null,
       builder: (formFieldState) {
         return CustomDropdownMenu<int>(
           hint: LocaleKeys.maintenanceCreateSelectProperty.tr(),
@@ -173,7 +187,12 @@ class _OwnerCreateMaintenanceViewState
         child: SizedBox(
           height: 55,
           width: double.infinity,
-          child: DecoratedBox(decoration: BoxDecoration(color: Colors.white, borderRadius: AppRadius.circularMd)),
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: AppRadius.circularMd,
+            ),
+          ),
         ),
       );
     }
@@ -202,15 +221,21 @@ class _OwnerCreateMaintenanceViewState
     );
   }
 
-  Widget _buildClientFields(BuildContext context, OwnerCreateMaintenanceState state) {
+  Widget _buildClientFields(
+    BuildContext context,
+    OwnerCreateMaintenanceState state,
+  ) {
     return Column(
       children: [
         CustomTextField(
           label: LocaleKeys.maintenanceCreateClientName.tr(),
           hintText: LocaleKeys.maintenanceCreateClientNameHint.tr(),
           initialValue: state.clientName,
-          onChanged: (val) => context.read<OwnerCreateMaintenanceCubit>().updateClientName(val),
-          validator: (val) => val == null || val.isEmpty ? LocaleKeys.maintenanceCreateRequiredField.tr() : null,
+          onChanged: (val) =>
+              context.read<OwnerCreateMaintenanceCubit>().updateClientName(val),
+          validator: (val) => val == null || val.isEmpty
+              ? LocaleKeys.maintenanceCreateRequiredField.tr()
+              : null,
         ),
         const SizedBox(height: AppSpacing.md),
         CustomTextField(
@@ -219,10 +244,16 @@ class _OwnerCreateMaintenanceViewState
           initialValue: state.clientPhone,
           keyboardType: TextInputType.phone,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-          onChanged: (val) => context.read<OwnerCreateMaintenanceCubit>().updateClientPhone(val),
+          onChanged: (val) => context
+              .read<OwnerCreateMaintenanceCubit>()
+              .updateClientPhone(val),
           validator: (val) {
-            if (val == null || val.isEmpty) return LocaleKeys.maintenanceCreateRequiredField.tr();
-            if (!RegExp(r'^[0-9]+$').hasMatch(val)) return 'يجب إدخال أرقام فقط'; // Consider localizing this
+            if (val == null || val.isEmpty) {
+              return LocaleKeys.maintenanceCreateRequiredField.tr();
+            }
+            if (!RegExp(r'^[0-9]+$').hasMatch(val)) {
+              return LocaleKeys.maintenancePhoneDigitsOnly.tr();
+            }
             return null;
           },
         ),
@@ -230,7 +261,10 @@ class _OwnerCreateMaintenanceViewState
     );
   }
 
-  Widget _buildRequestDetails(BuildContext context, OwnerCreateMaintenanceState state) {
+  Widget _buildRequestDetails(
+    BuildContext context,
+    OwnerCreateMaintenanceState state,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -239,8 +273,12 @@ class _OwnerCreateMaintenanceViewState
           hintText: LocaleKeys.maintenanceCreateDescriptionHint.tr(),
           initialValue: state.description,
           maxLines: 4,
-          onChanged: (val) => context.read<OwnerCreateMaintenanceCubit>().updateDescription(val),
-          validator: (val) => val == null || val.isEmpty ? LocaleKeys.maintenanceCreateRequiredField.tr() : null,
+          onChanged: (val) => context
+              .read<OwnerCreateMaintenanceCubit>()
+              .updateDescription(val),
+          validator: (val) => val == null || val.isEmpty
+              ? LocaleKeys.maintenanceCreateRequiredField.tr()
+              : null,
         ),
         const SizedBox(height: AppSpacing.md),
         InkWell(
@@ -265,15 +303,23 @@ class _OwnerCreateMaintenanceViewState
             );
             if (date != null && context.mounted) {
               final formattedDate = DateFormat('yyyy-MM-dd').format(date);
-              context.read<OwnerCreateMaintenanceCubit>().updateRequestedDate(formattedDate);
+              context.read<OwnerCreateMaintenanceCubit>().updateRequestedDate(
+                formattedDate,
+              );
             }
           },
           child: InputDecorator(
-            decoration: _inputDecoration(LocaleKeys.maintenanceRequestedDate.tr()),
+            decoration: _inputDecoration(
+              LocaleKeys.maintenanceRequestedDate.tr(),
+            ),
             child: Text(
-              state.requestedDate.isNotEmpty ? state.requestedDate : LocaleKeys.maintenanceCreateSelectDate.tr(),
+              state.requestedDate.isNotEmpty
+                  ? state.requestedDate
+                  : LocaleKeys.maintenanceCreateSelectDate.tr(),
               style: TextStyle(
-                color: state.requestedDate.isNotEmpty ? AppColors.textPrimaryLight : AppColors.textSecondaryLight,
+                color: state.requestedDate.isNotEmpty
+                    ? AppColors.textPrimaryLight
+                    : AppColors.textSecondaryLight,
               ),
             ),
           ),
@@ -284,25 +330,31 @@ class _OwnerCreateMaintenanceViewState
         Wrap(
           spacing: 8,
           runSpacing: 8,
-          children: _availableMaintenanceTypes.map((type) {
+          children: MaintenanceTypeConstants.availableTypes.map((type) {
             final isSelected = state.maintenanceTypes.contains(type);
             return ChoiceChip(
               label: Text(type),
               selected: isSelected,
               selectedColor: context.primaryColor.withValues(alpha: 0.2),
               labelStyle: TextStyle(
-                color: isSelected ? context.primaryColor : AppColors.textSecondaryLight,
+                color: isSelected
+                    ? context.primaryColor
+                    : AppColors.textSecondaryLight,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
               ),
               backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(AppRadius.lg),
                 side: BorderSide(
-                  color: isSelected ? context.primaryColor : AppColors.borderLight,
+                  color: isSelected
+                      ? context.primaryColor
+                      : AppColors.borderLight,
                 ),
               ),
               showCheckmark: false,
-              onSelected: (_) => context.read<OwnerCreateMaintenanceCubit>().toggleMaintenanceType(type),
+              onSelected: (_) => context
+                  .read<OwnerCreateMaintenanceCubit>()
+                  .toggleMaintenanceType(type),
             );
           }).toList(),
         ),
@@ -320,7 +372,9 @@ class _OwnerCreateMaintenanceViewState
             ),
             CupertinoSwitch(
               value: state.isPrivate,
-              onChanged: (val) => context.read<OwnerCreateMaintenanceCubit>().updateIsPrivate(val),
+              onChanged: (val) => context
+                  .read<OwnerCreateMaintenanceCubit>()
+                  .updateIsPrivate(val),
               activeTrackColor: context.primaryColor,
             ),
           ],
@@ -342,7 +396,10 @@ class _OwnerCreateMaintenanceViewState
         borderRadius: AppRadius.circularMd,
         borderSide: const BorderSide(color: AppColors.borderLight),
       ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
     );
   }
 }

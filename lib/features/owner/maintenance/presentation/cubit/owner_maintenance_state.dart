@@ -62,10 +62,7 @@ class OwnerMaintenanceEmpty extends OwnerMaintenanceState {
   final String activeStatus;
   final MaintenanceStatsEntity? stats;
 
-  const OwnerMaintenanceEmpty({
-    this.activeStatus = 'all',
-    this.stats,
-  });
+  const OwnerMaintenanceEmpty({this.activeStatus = 'all', this.stats});
 
   @override
   List<Object?> get props => [activeStatus, stats];

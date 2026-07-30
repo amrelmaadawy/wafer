@@ -24,8 +24,11 @@ class MaintenanceImagesSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.photo_library_outlined,
-                  size: 20, color: context.primaryColor),
+              Icon(
+                Icons.photo_library_outlined,
+                size: 20,
+                color: context.primaryColor,
+              ),
               const SizedBox(width: 8),
               Text(
                 LocaleKeys.maintenanceImagesSection.tr(),
@@ -50,7 +53,9 @@ class MaintenanceImagesSection extends StatelessWidget {
               child: Text(
                 LocaleKeys.maintenanceNoImages.tr(),
                 style: const TextStyle(
-                    color: AppColors.textSecondaryLight, fontSize: 13),
+                  color: AppColors.textSecondaryLight,
+                  fontSize: 13,
+                ),
               ),
             )
           else
@@ -59,8 +64,7 @@ class MaintenanceImagesSection extends StatelessWidget {
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemCount: images.length,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(width: 10),
+                separatorBuilder: (context, index) => const SizedBox(width: 10),
                 itemBuilder: (context, index) {
                   return ClipRRect(
                     borderRadius: AppRadius.circularLg,
@@ -72,8 +76,10 @@ class MaintenanceImagesSection extends StatelessWidget {
                         images[index],
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.broken_image_outlined,
-                                color: AppColors.textSecondaryLight),
+                            const Icon(
+                              Icons.broken_image_outlined,
+                              color: AppColors.textSecondaryLight,
+                            ),
                       ),
                     ),
                   );

@@ -31,8 +31,11 @@ class MaintenanceAssignmentsSection extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.engineering_outlined,
-                  size: 20, color: context.primaryColor),
+              Icon(
+                Icons.engineering_outlined,
+                size: 20,
+                color: context.primaryColor,
+              ),
               const SizedBox(width: 8),
               Text(
                 'الفنيين المسند إليهم الطلب', // Could be localized later
@@ -45,7 +48,9 @@ class MaintenanceAssignmentsSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          ...item.assignments!.map((assignment) => _buildTechnicianCard(context, assignment)),
+          ...item.assignments!.map(
+            (assignment) => _buildTechnicianCard(context, assignment),
+          ),
         ],
       ),
     );
@@ -83,8 +88,11 @@ class MaintenanceAssignmentsSection extends StatelessWidget {
                         shape: BoxShape.circle,
                       ),
                       child: const Center(
-                        child: Icon(Icons.handyman,
-                            color: AppColors.info, size: 18),
+                        child: Icon(
+                          Icons.handyman,
+                          color: AppColors.info,
+                          size: 18,
+                        ),
                       ),
                     ),
                     const SizedBox(width: 12),
@@ -152,10 +160,12 @@ class MaintenanceAssignmentsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButton(BuildContext context,
-      {required IconData icon,
-      required Color color,
-      required VoidCallback onTap}) {
+  Widget _buildActionButton(
+    BuildContext context, {
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadius.circularMd,

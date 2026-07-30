@@ -31,10 +31,6 @@ class MaintenanceResponseModel extends MaintenanceResponseEntity {
     final statsMap = dataMap['stats'] as Map<String, dynamic>? ?? {};
     final stats = MaintenanceStatsModel.fromJson(statsMap);
 
-    return MaintenanceResponseModel(
-      items: itemsList,
-      meta: meta,
-      stats: stats,
-    );
+    return MaintenanceResponseModel(items: itemsList, meta: meta, stats: stats);
   }
 }

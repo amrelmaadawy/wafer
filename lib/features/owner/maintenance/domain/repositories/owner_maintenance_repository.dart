@@ -13,8 +13,10 @@ abstract class OwnerMaintenanceRepository {
   });
   Future<Either<Failure, MaintenanceItemEntity>> getMaintenanceDetails(int id);
   Future<Either<Failure, void>> createMaintenanceRequest(
-      CreateOwnerMaintenanceParams params);
+    CreateOwnerMaintenanceParams params,
+  );
   Future<Either<Failure, MaintenanceItemEntity>> updateMaintenanceRequest(
-      UpdateOwnerMaintenanceParams params);
+    UpdateOwnerMaintenanceParams params,
+  );
   Future<Either<Failure, void>> deleteMaintenanceRequest(int id);
 }

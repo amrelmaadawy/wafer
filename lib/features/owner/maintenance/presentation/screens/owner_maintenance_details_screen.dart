@@ -97,6 +97,44 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                     OwnerMaintenanceDetailsState
                   >(
                     builder: (context, state) {
+                      if (state is OwnerMaintenanceDetailsError) {
+                        return Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(24),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(
+                                  Icons.error_outline,
+                                  size: 56,
+                                  color: AppColors.error,
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  state.message,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: AppColors.textSecondaryLight,
+                                  ),
+                                ),
+                                const SizedBox(height: 16),
+                                ElevatedButton.icon(
+                                  onPressed: () => context
+                                      .read<OwnerMaintenanceDetailsCubit>()
+                                      .getMaintenanceDetails(item.id ?? 0),
+                                  icon: const Icon(Icons.refresh),
+                                  label: Text(LocaleKeys.common_retry.tr()),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: context.primaryColor,
+                                    foregroundColor: Colors.white,
+                                    elevation: 0,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
                       MaintenanceItemEntity displayItem = item;
                       if (state is OwnerMaintenanceDetailsLoaded) {
                         displayItem = state.item;

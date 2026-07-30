@@ -11,6 +11,8 @@ import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../domain/entities/maintenance_item_entity.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../domain/constants/maintenance_type_constants.dart';
 import '../cubit/update_maintenance/owner_update_maintenance_cubit.dart';
 import '../cubit/update_maintenance/owner_update_maintenance_state.dart';
 
@@ -47,32 +49,26 @@ class _OwnerUpdateMaintenanceViewState
 
   late TextEditingController _descriptionController;
   late TextEditingController _dateController;
-  late List<dynamic> _selectedMaintenanceTypes;
-
-  final List<String> _availableMaintenanceTypes = [
-    'AC',
-    'Electrical',
-    'Plumbing',
-    'Carpentry',
-    'Painting',
-    'Cleaning',
-    'General',
-  ];
+  late List<String> _selectedMaintenanceTypes;
 
   @override
   void initState() {
     super.initState();
-    _descriptionController =
-        TextEditingController(text: widget.maintenanceItem.description ?? '');
+    _descriptionController = TextEditingController(
+      text: widget.maintenanceItem.description ?? '',
+    );
     _dateController = TextEditingController(
-        text: widget.maintenanceItem.dates?.scheduledDate ?? 
-              widget.maintenanceItem.dates?.requestedDate ?? 
-              '');
-    
+      text:
+          widget.maintenanceItem.dates?.scheduledDate ??
+          widget.maintenanceItem.dates?.requestedDate ??
+          '',
+    );
+
     // Extract names of types that are already present
-    _selectedMaintenanceTypes = widget.maintenanceItem.types
-            ?.map((t) => t.name)
-            .where((name) => name != null)
+    _selectedMaintenanceTypes =
+        widget.maintenanceItem.types
+            ?.map((t) => t.name ?? '')
+            .where((name) => name.isNotEmpty)
             .toList() ??
         [];
   }
@@ -124,95 +120,108 @@ class _OwnerUpdateMaintenanceViewState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(
-          LocaleKeys.maintenanceEdit.tr(),
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
-      body: BlocConsumer<OwnerUpdateMaintenanceCubit, OwnerUpdateMaintenanceState>(
-        listener: (context, state) {
-          if (state is OwnerUpdateMaintenanceSuccess) {
-            AppToast.showSuccess(context, state.message);
-            Navigator.of(context).pop(true);
-          } else if (state is OwnerUpdateMaintenanceError) {
-            AppToast.showError(context, state.message);
-          }
-        },
-        builder: (context, state) {
-          return ScrollConfiguration(
-            behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
-            child: SingleChildScrollView(
-              physics: const ClampingScrollPhysics(),
-              padding: const EdgeInsets.all(AppSpacing.md),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildSectionTitle(LocaleKeys.maintenanceCreateDetailsSection.tr()),
-                  const SizedBox(height: AppSpacing.sm),
-                  CustomTextField(
-                    label: LocaleKeys.maintenanceCreateDescription.tr(),
-                    hintText: LocaleKeys.maintenanceCreateDescriptionHint.tr(),
-                    controller: _descriptionController,
-                    maxLines: 4,
-                    validator: (val) => val == null || val.isEmpty
-                        ? LocaleKeys.maintenanceCreateRequiredField.tr()
-                        : null,
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  _buildSectionTitle(LocaleKeys.maintenanceScheduledDate.tr()),
-                  const SizedBox(height: AppSpacing.sm),
-                  GestureDetector(
-                    onTap: () => _selectDate(context),
-                    child: AbsorbPointer(
-                      child: CustomTextField(
-                        label: LocaleKeys.maintenanceScheduledDate.tr(),
-                        controller: _dateController,
-                        readOnly: true,
-                        suffixIcon: Icon(Icons.calendar_today, color: AppColors.textSecondaryLight),
-                      ),
+      appBar: CustomAppBar(title: LocaleKeys.maintenanceEdit.tr()),
+      body:
+          BlocConsumer<
+            OwnerUpdateMaintenanceCubit,
+            OwnerUpdateMaintenanceState
+          >(
+            listener: (context, state) {
+              if (state is OwnerUpdateMaintenanceSuccess) {
+                AppToast.showSuccess(context, state.message);
+                Navigator.of(context).pop(true);
+              } else if (state is OwnerUpdateMaintenanceError) {
+                AppToast.showError(context, state.message);
+              }
+            },
+            builder: (context, state) {
+              return ScrollConfiguration(
+                behavior: ScrollConfiguration.of(
+                  context,
+                ).copyWith(overscroll: false),
+                child: SingleChildScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  padding: const EdgeInsets.all(AppSpacing.md),
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildSectionTitle(
+                          LocaleKeys.maintenanceCreateDetailsSection.tr(),
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        CustomTextField(
+                          label: LocaleKeys.maintenanceCreateDescription.tr(),
+                          hintText: LocaleKeys.maintenanceCreateDescriptionHint
+                              .tr(),
+                          controller: _descriptionController,
+                          maxLines: 4,
+                          validator: (val) => val == null || val.isEmpty
+                              ? LocaleKeys.maintenanceCreateRequiredField.tr()
+                              : null,
+                        ),
+                        const SizedBox(height: AppSpacing.md),
+                        _buildSectionTitle(
+                          LocaleKeys.maintenanceScheduledDate.tr(),
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        GestureDetector(
+                          onTap: () => _selectDate(context),
+                          child: AbsorbPointer(
+                            child: CustomTextField(
+                              label: LocaleKeys.maintenanceScheduledDate.tr(),
+                              controller: _dateController,
+                              readOnly: true,
+                              suffixIcon: Icon(
+                                Icons.calendar_today,
+                                color: AppColors.textSecondaryLight,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.md),
+                        _buildSectionTitle(
+                          LocaleKeys.maintenanceCreateTypes.tr(),
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        _buildMaintenanceTypesChips(context),
+                        const SizedBox(height: AppSpacing.xl),
+                        CustomButton(
+                          text: LocaleKeys.maintenanceUpdateRequest.tr(),
+                          isLoading: state is OwnerUpdateMaintenanceLoading,
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              if (_selectedMaintenanceTypes.isEmpty) {
+                                AppToast.showError(
+                                  context,
+                                  LocaleKeys.maintenanceCreateFillAllFields
+                                      .tr(),
+                                );
+                                return;
+                              }
+
+                              context
+                                  .read<OwnerUpdateMaintenanceCubit>()
+                                  .updateMaintenanceRequest(
+                                    id: widget.maintenanceItem.id!,
+                                    description: _descriptionController.text,
+                                    scheduledDate:
+                                        _dateController.text.isNotEmpty
+                                        ? _dateController.text
+                                        : null,
+                                    maintenanceTypes: _selectedMaintenanceTypes,
+                                  );
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(height: AppSpacing.md),
-                  _buildSectionTitle(LocaleKeys.maintenanceCreateTypes.tr()),
-                  const SizedBox(height: AppSpacing.sm),
-                  _buildMaintenanceTypesChips(context),
-                  const SizedBox(height: AppSpacing.xl),
-                  CustomButton(
-                    text: LocaleKeys.maintenanceUpdateRequest.tr(),
-                    isLoading: state is OwnerUpdateMaintenanceLoading,
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (_selectedMaintenanceTypes.isEmpty) {
-                          AppToast.showError(context, LocaleKeys.maintenanceCreateFillAllFields.tr());
-                          return;
-                        }
-                        
-                        context
-                            .read<OwnerUpdateMaintenanceCubit>()
-                            .updateMaintenanceRequest(
-                              id: widget.maintenanceItem.id!,
-                              description: _descriptionController.text,
-                              scheduledDate: _dateController.text.isNotEmpty
-                                  ? _dateController.text
-                                  : null,
-                              maintenanceTypes: _selectedMaintenanceTypes,
-                            );
-                      }
-                    },
-                  ),
-                ],
-              ),
-            ),
-            ),
-          );
-        },
-      ),
+                ),
+              );
+            },
+          ),
     );
   }
 
@@ -231,14 +240,16 @@ class _OwnerUpdateMaintenanceViewState
     return Wrap(
       spacing: AppSpacing.sm,
       runSpacing: AppSpacing.sm,
-      children: _availableMaintenanceTypes.map((type) {
+      children: MaintenanceTypeConstants.availableTypes.map((type) {
         final isSelected = _selectedMaintenanceTypes.contains(type);
         return ChoiceChip(
           label: Text(type),
           selected: isSelected,
           selectedColor: context.primaryColor.withValues(alpha: 0.2),
           labelStyle: TextStyle(
-            color: isSelected ? context.primaryColor : AppColors.textSecondaryLight,
+            color: isSelected
+                ? context.primaryColor
+                : AppColors.textSecondaryLight,
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
           ),
           backgroundColor: Colors.white,

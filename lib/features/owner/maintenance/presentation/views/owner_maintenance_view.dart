@@ -35,9 +35,10 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
       if (widget.initialStatusFilter != null &&
           widget.initialStatusFilter!.isNotEmpty &&
           widget.initialStatusFilter != 'all') {
-        context
-            .read<OwnerMaintenanceCubit>()
-            .changeStatusFilter(widget.initialStatusFilter!, force: true);
+        context.read<OwnerMaintenanceCubit>().changeStatusFilter(
+          widget.initialStatusFilter!,
+          force: true,
+        );
       } else {
         context.read<OwnerMaintenanceCubit>().getMaintenanceRequests();
       }
@@ -65,7 +66,9 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
         onPressed: () {
           context.push(Routes.ownerMaintenanceCreate).then((value) {
             if (value == true && context.mounted) {
-              context.read<OwnerMaintenanceCubit>().getMaintenanceRequests(forceRefresh: true);
+              context.read<OwnerMaintenanceCubit>().getMaintenanceRequests(
+                forceRefresh: true,
+              );
             }
           });
         },
@@ -110,9 +113,7 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
                       .changeStatusFilter(s),
                 ),
               ),
-            Expanded(
-              child: _buildStateContent(context, state),
-            ),
+            Expanded(child: _buildStateContent(context, state)),
           ],
         );
       },
@@ -142,7 +143,9 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
             .read<OwnerMaintenanceCubit>()
             .getMaintenanceRequests(forceRefresh: true),
         child: ListView.builder(
-          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+          physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics(),
+          ),
           controller: _scrollController,
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 80),
           itemCount: state.items.length + (state.isFetchingMore ? 1 : 0),
@@ -157,13 +160,17 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
             return MaintenanceCard(
               item: item,
               onTap: () async {
-                final result = await Navigator.of(context, rootNavigator: true).push(
-                  MaterialPageRoute(
-                    builder: (_) => OwnerMaintenanceDetailsScreen(item: item),
-                  ),
-                );
+                final result = await Navigator.of(context, rootNavigator: true)
+                    .push(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            OwnerMaintenanceDetailsScreen(item: item),
+                      ),
+                    );
                 if (result == true && context.mounted) {
-                  context.read<OwnerMaintenanceCubit>().getMaintenanceRequests(forceRefresh: true);
+                  context.read<OwnerMaintenanceCubit>().getMaintenanceRequests(
+                    forceRefresh: true,
+                  );
                 }
               },
             );

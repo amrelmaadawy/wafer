@@ -6,16 +6,18 @@ class OwnerDeleteMaintenanceCubit extends Cubit<OwnerDeleteMaintenanceState> {
   final DeleteOwnerMaintenanceUseCase _deleteUseCase;
 
   OwnerDeleteMaintenanceCubit(this._deleteUseCase)
-      : super(const OwnerDeleteMaintenanceState());
+    : super(const OwnerDeleteMaintenanceState());
 
   Future<void> deleteMaintenanceRequest(int id) async {
     emit(state.copyWith(status: DeleteMaintenanceStatus.loading));
     final result = await _deleteUseCase(id);
     result.fold(
-      (failure) => emit(state.copyWith(
-        status: DeleteMaintenanceStatus.failure,
-        errorMessage: failure.message,
-      )),
+      (failure) => emit(
+        state.copyWith(
+          status: DeleteMaintenanceStatus.failure,
+          errorMessage: failure.message,
+        ),
+      ),
       (_) => emit(state.copyWith(status: DeleteMaintenanceStatus.success)),
     );
   }

@@ -26,7 +26,11 @@ class MaintenanceHeader extends StatelessWidget {
                     borderRadius: AppRadius.circularLg,
                   ),
                   child: IconButton(
-                    icon: Icon(Icons.arrow_back_ios_new_rounded, color: context.primaryColor, size: 18),
+                    icon: Icon(
+                      Icons.arrow_back_ios_new_rounded,
+                      color: context.primaryColor,
+                      size: 18,
+                    ),
                     padding: EdgeInsets.zero,
                     onPressed: () => Navigator.pop(context),
                   ),

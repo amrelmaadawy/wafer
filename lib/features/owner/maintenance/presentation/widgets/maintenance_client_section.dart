@@ -36,7 +36,8 @@ class MaintenanceClientSection extends StatelessWidget {
               Icon(Icons.person_outline, size: 20, color: context.primaryColor),
               const SizedBox(width: 8),
               Text(
-                LocaleKeys.maintenanceCostBearerClient.tr(), // Or a more generic 'Client Info' if available
+                LocaleKeys.maintenanceCostBearerClient
+                    .tr(), // Or a more generic 'Client Info' if available
                 style: const TextStyle(
                   color: AppColors.textPrimaryLight,
                   fontSize: 15.5,
@@ -115,10 +116,12 @@ class MaintenanceClientSection extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButton(BuildContext context,
-      {required IconData icon,
-      required Color color,
-      required VoidCallback onTap}) {
+  Widget _buildActionButton(
+    BuildContext context, {
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadius.circularMd,

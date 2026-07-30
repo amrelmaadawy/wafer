@@ -11,7 +11,7 @@ class CreateOwnerMaintenanceParams extends Equatable {
   final String clientPhone;
   final String description;
   final String requestedDate;
-  final List<dynamic> maintenanceTypes;
+  final List<String> maintenanceTypes;
   final bool isPrivate;
 
   const CreateOwnerMaintenanceParams({
@@ -40,15 +40,15 @@ class CreateOwnerMaintenanceParams extends Equatable {
 
   @override
   List<Object?> get props => [
-        propertyId,
-        unitId,
-        clientName,
-        clientPhone,
-        description,
-        requestedDate,
-        maintenanceTypes,
-        isPrivate,
-      ];
+    propertyId,
+    unitId,
+    clientName,
+    clientPhone,
+    description,
+    requestedDate,
+    maintenanceTypes,
+    isPrivate,
+  ];
 }
 
 class CreateOwnerMaintenanceUseCase

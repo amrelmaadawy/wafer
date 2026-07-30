@@ -8,21 +8,24 @@ class OwnerUpdateMaintenanceCubit extends Cubit<OwnerUpdateMaintenanceState> {
   final UpdateOwnerMaintenanceUseCase _updateUseCase;
 
   OwnerUpdateMaintenanceCubit(this._updateUseCase)
-      : super(OwnerUpdateMaintenanceInitial());
+    : super(const OwnerUpdateMaintenanceInitial());
 
   Future<void> updateMaintenanceRequest({
     required int id,
     required String description,
     String? scheduledDate,
-    required List<dynamic> maintenanceTypes,
+    required List<String> maintenanceTypes,
   }) async {
     if (description.trim().isEmpty || maintenanceTypes.isEmpty) {
-      emit(OwnerUpdateMaintenanceError(
-          message: LocaleKeys.maintenanceCreateFillAllFields.tr()));
+      emit(
+        OwnerUpdateMaintenanceError(
+          message: LocaleKeys.maintenanceCreateFillAllFields.tr(),
+        ),
+      );
       return;
     }
 
-    emit(OwnerUpdateMaintenanceLoading());
+    emit(const OwnerUpdateMaintenanceLoading());
 
     final params = UpdateOwnerMaintenanceParams(
       id: id,
@@ -38,8 +41,11 @@ class OwnerUpdateMaintenanceCubit extends Cubit<OwnerUpdateMaintenanceState> {
         emit(OwnerUpdateMaintenanceError(message: failure.message));
       },
       (success) {
-        emit(OwnerUpdateMaintenanceSuccess(
-            message: LocaleKeys.maintenanceUpdatedSuccessfully.tr()));
+        emit(
+          OwnerUpdateMaintenanceSuccess(
+            message: LocaleKeys.maintenanceUpdatedSuccessfully.tr(),
+          ),
+        );
       },
     );
   }

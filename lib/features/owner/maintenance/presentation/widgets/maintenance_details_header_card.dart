@@ -14,10 +14,15 @@ class MaintenanceDetailsHeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final propertyName = item.property?.name ?? LocaleKeys.maintenanceNotDeterminedYet.tr();
+    final propertyName =
+        item.property?.name ?? LocaleKeys.maintenanceNotDeterminedYet.tr();
     final unitName = item.unit?.name ?? '';
-    final locationTitle = unitName.isNotEmpty ? '$propertyName • $unitName' : propertyName;
-    final title = (item.title?.isNotEmpty ?? false) ? item.title! : '#${item.requestNumber ?? item.id}';
+    final locationTitle = unitName.isNotEmpty
+        ? '$propertyName • $unitName'
+        : propertyName;
+    final title = (item.title?.isNotEmpty ?? false)
+        ? item.title!
+        : '#${item.requestNumber ?? item.id}';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,8 +59,11 @@ class MaintenanceDetailsHeaderCard extends StatelessWidget {
               const SizedBox(height: 12),
               Row(
                 children: [
-                  const Icon(Icons.home_work_outlined,
-                      size: 18, color: AppColors.textSecondaryLight),
+                  const Icon(
+                    Icons.home_work_outlined,
+                    size: 18,
+                    color: AppColors.textSecondaryLight,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
@@ -75,12 +83,15 @@ class MaintenanceDetailsHeaderCard extends StatelessWidget {
                   spacing: 8,
                   runSpacing: 8,
                   children: item.types!.map((t) {
-                    final typeName = context.locale.languageCode == 'ar' 
-                        ? (t.nameAr ?? t.name ?? '') 
+                    final typeName = context.locale.languageCode == 'ar'
+                        ? (t.nameAr ?? t.name ?? '')
                         : (t.name ?? '');
                     if (typeName.isEmpty) return const SizedBox.shrink();
                     return Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 6,
+                      ),
                       decoration: BoxDecoration(
                         color: context.primaryColor.withValues(alpha: 0.1),
                         borderRadius: AppRadius.circularMd,
