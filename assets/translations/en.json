@@ -614,7 +614,19 @@
     "task_complete_notes_hint": "Write details of what was done...",
     "task_complete_btn": "Confirm Completion",
     "task_complete_success": "Task status updated successfully",
-    "task_complete_error": "An error occurred while updating the task"
+    "task_complete_error": "An error occurred while updating the task",
+    "execute_work": "Execute Maintenance",
+    "execute_confirm_title": "Confirm Execution",
+    "execute_notes": "Execution Notes",
+    "execute_notes_hint": "Write notes related to maintenance completion...",
+    "execute_cost": "Actual Cost",
+    "execute_cost_hint": "Enter actual cost of maintenance",
+    "execute_submit": "Confirm Execution",
+    "execute_success": "Maintenance executed successfully",
+    "qa_code_title": "QA Confirmation Code",
+    "qa_code_desc": "Please provide this code to the supervisor or client to confirm the final closure of the request.",
+    "copy_qa_code": "Copy Code",
+    "qa_code_copied": "Code copied successfully"
   },
   "revenue": {
     "report_title": "Revenue Report",

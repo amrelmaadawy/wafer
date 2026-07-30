@@ -9,6 +9,8 @@ import '../../domain/usecases/approve_owner_maintenance_use_case.dart';
 import '../../domain/usecases/reject_owner_maintenance_use_case.dart';
 import '../../domain/usecases/assign_owner_maintenance_use_case.dart';
 import '../../domain/usecases/complete_owner_maintenance_task_use_case.dart';
+import '../../domain/usecases/execute_owner_maintenance_use_case.dart';
+import '../models/execute_owner_maintenance_response_model.dart';
 
 abstract class OwnerMaintenanceRemoteDataSource {
   Future<MaintenanceResponseModel> getMaintenanceRequests({
@@ -25,6 +27,8 @@ abstract class OwnerMaintenanceRemoteDataSource {
   Future<void> assignMaintenanceRequest(AssignOwnerMaintenanceParams params);
   Future<MaintenanceItemModel> startMaintenanceRequest(int id);
   Future<MaintenanceItemModel> completeMaintenanceTask(CompleteOwnerMaintenanceTaskParams params);
+  Future<ExecuteOwnerMaintenanceResponseModel> executeMaintenanceRequest(
+      ExecuteOwnerMaintenanceParams params);
   Future<void> deleteMaintenanceRequest(int id);
 }
 
@@ -174,5 +178,16 @@ class OwnerMaintenanceRemoteDataSourceImpl
     final data = response.data['data'] as Map<String, dynamic>;
     final itemMap = data['maintenance_request'] as Map<String, dynamic>;
     return MaintenanceItemModel.fromJson(itemMap);
+  }
+
+  @override
+  Future<ExecuteOwnerMaintenanceResponseModel> executeMaintenanceRequest(
+      ExecuteOwnerMaintenanceParams params) async {
+    final response = await _dio.post(
+      '${ApiConstants.baseUrl}owner/maintenance-requests/${params.id}/execute',
+      data: params.toJson(),
+    );
+    final data = response.data['data'] as Map<String, dynamic>;
+    return ExecuteOwnerMaintenanceResponseModel.fromJson(data);
   }
 }

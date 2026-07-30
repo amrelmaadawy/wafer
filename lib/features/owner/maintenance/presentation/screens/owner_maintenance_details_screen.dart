@@ -24,6 +24,10 @@ import '../widgets/owner_approve_maintenance_bottom_sheet.dart';
 import '../widgets/owner_reject_maintenance_bottom_sheet.dart';
 import '../widgets/owner_assign_maintenance_bottom_sheet.dart';
 import '../widgets/owner_start_maintenance_dialog.dart';
+import '../widgets/owner_execute_maintenance_bottom_sheet.dart';
+import '../widgets/owner_qa_code_dialog.dart';
+import '../cubit/execute_maintenance/owner_execute_maintenance_cubit.dart';
+import '../../domain/entities/execute_owner_maintenance_response_entity.dart';
 import '../cubit/start_maintenance/owner_start_maintenance_cubit.dart';
 import '../cubit/complete_task/owner_complete_task_cubit.dart';
 import '../widgets/maintenance_cost_section.dart';
@@ -475,6 +479,72 @@ class _OwnerMaintenanceDetailsScreenState
                                       ),
                                       child: Text(
                                         LocaleKeys.maintenanceStartWork.tr(),
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } else if (displayItem.status == 'in_progress') {
+                                return Container(
+                                  padding: const EdgeInsets.all(AppSpacing.lg),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 10,
+                                        offset: Offset(0, -2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: SafeArea(
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        final result = await showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          backgroundColor: Colors.transparent,
+                                          builder: (context) => BlocProvider(
+                                            create: (context) => di.sl<OwnerExecuteMaintenanceCubit>(),
+                                            child: OwnerExecuteMaintenanceBottomSheet(
+                                              maintenanceRequest: displayItem,
+                                            ),
+                                          ),
+                                        );
+                                        
+                                        if (result != null && context.mounted) {
+                                          _isModified = true;
+                                          context
+                                              .read<OwnerMaintenanceDetailsCubit>()
+                                              .getMaintenanceDetails(displayItem.id ?? 0);
+                                          
+                                          // Show QA Code dialog if response was successful
+                                          if (result is ExecuteOwnerMaintenanceResponseEntity) {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => OwnerQaCodeDialog(
+                                                qaCode: result.qaCode,
+                                              ),
+                                            );
+                                          }
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: context.primaryColor,
+                                        foregroundColor: Colors.white,
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 16,
+                                        ),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: AppRadius.circularLg,
+                                        ),
+                                        elevation: 0,
+                                      ),
+                                      child: Text(
+                                        LocaleKeys.maintenanceExecuteWork.tr(),
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,

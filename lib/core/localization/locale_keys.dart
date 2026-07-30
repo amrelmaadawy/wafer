@@ -1722,4 +1722,16 @@ abstract class LocaleKeys {
   static const String maintenanceTaskCompleteBtn = 'maintenance.task_complete_btn';
   static const String maintenanceTaskCompleteSuccess = 'maintenance.task_complete_success';
   static const String maintenanceTaskCompleteError = 'maintenance.task_complete_error';
+  static const String maintenanceExecuteWork = 'maintenance.execute_work';
+  static const String maintenanceExecuteConfirmTitle = 'maintenance.execute_confirm_title';
+  static const String maintenanceExecuteNotes = 'maintenance.execute_notes';
+  static const String maintenanceExecuteNotesHint = 'maintenance.execute_notes_hint';
+  static const String maintenanceExecuteCost = 'maintenance.execute_cost';
+  static const String maintenanceExecuteCostHint = 'maintenance.execute_cost_hint';
+  static const String maintenanceExecuteSubmit = 'maintenance.execute_submit';
+  static const String maintenanceExecuteSuccess = 'maintenance.execute_success';
+  static const String maintenanceQaCodeTitle = 'maintenance.qa_code_title';
+  static const String maintenanceQaCodeDesc = 'maintenance.qa_code_desc';
+  static const String maintenanceCopyQaCode = 'maintenance.copy_qa_code';
+  static const String maintenanceQaCodeCopied = 'maintenance.qa_code_copied';
 }

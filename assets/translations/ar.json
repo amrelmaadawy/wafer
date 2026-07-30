@@ -614,7 +614,19 @@
     "task_complete_notes_hint": "اكتب تفاصيل ما تم إنجازه...",
     "task_complete_btn": "تأكيد الإتمام",
     "task_complete_success": "تم تحديث حالة المهمة بنجاح",
-    "task_complete_error": "حدث خطأ أثناء تحديث المهمة"
+    "task_complete_error": "حدث خطأ أثناء تحديث المهمة",
+    "execute_work": "إتمام كلي للصيانة",
+    "execute_confirm_title": "تأكيد الإتمام الكلي",
+    "execute_notes": "ملاحظات التنفيذ",
+    "execute_notes_hint": "اكتب الملاحظات المتعلقة بإتمام الصيانة...",
+    "execute_cost": "التكلفة الفعلية",
+    "execute_cost_hint": "أدخل التكلفة الفعلية للصيانة",
+    "execute_submit": "تأكيد الإتمام",
+    "execute_success": "تم تنفيذ الصيانة بنجاح",
+    "qa_code_title": "كود تأكيد الجودة (QA)",
+    "qa_code_desc": "يرجى تقديم هذا الكود للمشرف أو العميل لتأكيد الإغلاق النهائي للطلب.",
+    "copy_qa_code": "نسخ الكود",
+    "qa_code_copied": "تم نسخ الكود بنجاح"
   },
   "revenue": {
     "report_title": "تقرير الإيرادات",
