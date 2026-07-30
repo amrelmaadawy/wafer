@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/maintenance_item_entity.dart';
+import '../cubit/details/owner_maintenance_details_cubit.dart';
+import 'owner_complete_task_bottom_sheet.dart';
 
 class MaintenanceTasksSection extends StatelessWidget {
   final MaintenanceItemEntity item;
@@ -54,14 +57,33 @@ class MaintenanceTasksSection extends StatelessWidget {
     final status = task.status ?? 'waiting'; // waiting, completed
     final isCompleted = status == 'completed';
 
-    return Container(
-      margin: const EdgeInsets.only(bottom: 8),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.backgroundLight,
-        borderRadius: AppRadius.circularLg,
-      ),
-      child: Row(
+    return InkWell(
+      onTap: isCompleted
+          ? null
+          : () async {
+              final result = await OwnerCompleteTaskBottomSheet.show(
+                context,
+                item,
+                task,
+              );
+              if (result == true && context.mounted) {
+                context
+                    .read<OwnerMaintenanceDetailsCubit>()
+                    .getMaintenanceDetails(item.id ?? 0);
+              }
+            },
+      borderRadius: AppRadius.circularLg,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 8),
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: AppColors.backgroundLight,
+          borderRadius: AppRadius.circularLg,
+          border: Border.all(
+            color: isCompleted ? Colors.transparent : AppColors.borderLight,
+          ),
+        ),
+        child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(
@@ -112,6 +134,7 @@ class MaintenanceTasksSection extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 }

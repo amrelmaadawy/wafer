@@ -603,7 +603,18 @@
     "add_sub_task": "إضافة مهمة فرعية",
     "sub_task": "مهمة",
     "assign_submit": "تأكيد الإسناد",
-    "assign_success": "تم إسناد الطلب للفني بنجاح"
+    "assign_success": "تم إسناد الطلب للفني بنجاح",
+    "start_work": "بدء التنفيذ",
+    "start_confirm_title": "تأكيد بدء أعمال الصيانة",
+    "start_confirm_desc": "هل أنت متأكد من بدء تنفيذ أعمال الصيانة؟ ستتغير الحالة إلى قيد التنفيذ.",
+    "start_submit": "تأكيد البدء",
+    "start_success": "تم تحديث حالة الصيانة إلى قيد التنفيذ بنجاح",
+    "task_complete_title": "إتمام المهمة",
+    "task_complete_notes": "ملاحظات الإنجاز",
+    "task_complete_notes_hint": "اكتب تفاصيل ما تم إنجازه...",
+    "task_complete_btn": "تأكيد الإتمام",
+    "task_complete_success": "تم تحديث حالة المهمة بنجاح",
+    "task_complete_error": "حدث خطأ أثناء تحديث المهمة"
   },
   "revenue": {
     "report_title": "تقرير الإيرادات",

@@ -8,6 +8,7 @@ import '../../domain/usecases/update_owner_maintenance_use_case.dart';
 import '../../domain/usecases/approve_owner_maintenance_use_case.dart';
 import '../../domain/usecases/reject_owner_maintenance_use_case.dart';
 import '../../domain/usecases/assign_owner_maintenance_use_case.dart';
+import '../../domain/usecases/complete_owner_maintenance_task_use_case.dart';
 
 abstract class OwnerMaintenanceRemoteDataSource {
   Future<MaintenanceResponseModel> getMaintenanceRequests({
@@ -22,6 +23,8 @@ abstract class OwnerMaintenanceRemoteDataSource {
   Future<void> approveMaintenanceRequest(ApproveOwnerMaintenanceParams params);
   Future<void> rejectMaintenanceRequest(RejectOwnerMaintenanceParams params);
   Future<void> assignMaintenanceRequest(AssignOwnerMaintenanceParams params);
+  Future<MaintenanceItemModel> startMaintenanceRequest(int id);
+  Future<MaintenanceItemModel> completeMaintenanceTask(CompleteOwnerMaintenanceTaskParams params);
   Future<void> deleteMaintenanceRequest(int id);
 }
 
@@ -129,6 +132,21 @@ class OwnerMaintenanceRemoteDataSourceImpl
   }
 
   @override
+  Future<MaintenanceItemModel> completeMaintenanceTask(CompleteOwnerMaintenanceTaskParams params) async {
+    final response = await _dio.patch(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(params.maintenanceId)}/tasks/${params.taskId}',
+      data: params.toJson(),
+    );
+
+    final data = response.data as Map<String, dynamic>? ?? {};
+    final innerData = data['data'] as Map<String, dynamic>? ?? {};
+    final itemMap =
+        innerData['maintenance_request'] as Map<String, dynamic>? ?? innerData;
+
+    return MaintenanceItemModel.fromJson(itemMap);
+  }
+
+  @override
   Future<void> rejectMaintenanceRequest(
     RejectOwnerMaintenanceParams params,
   ) async {
@@ -146,5 +164,15 @@ class OwnerMaintenanceRemoteDataSourceImpl
       '${ApiConstants.baseUrl}owner/maintenance-requests/${params.id}/assign',
       data: params.toJson(),
     );
+  }
+
+  @override
+  Future<MaintenanceItemModel> startMaintenanceRequest(int id) async {
+    final response = await _dio.post(
+      '${ApiConstants.baseUrl}owner/maintenance-requests/$id/start',
+    );
+    final data = response.data['data'] as Map<String, dynamic>;
+    final itemMap = data['maintenance_request'] as Map<String, dynamic>;
+    return MaintenanceItemModel.fromJson(itemMap);
   }
 }

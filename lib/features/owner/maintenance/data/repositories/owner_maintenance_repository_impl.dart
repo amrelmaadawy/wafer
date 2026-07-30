@@ -10,6 +10,7 @@ import '../../domain/usecases/update_owner_maintenance_use_case.dart';
 import '../../domain/usecases/approve_owner_maintenance_use_case.dart';
 import '../../domain/usecases/reject_owner_maintenance_use_case.dart';
 import '../../domain/usecases/assign_owner_maintenance_use_case.dart';
+import '../../domain/usecases/complete_owner_maintenance_task_use_case.dart';
 import '../datasources/owner_maintenance_remote_data_source.dart';
 
 class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
@@ -142,4 +143,35 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, MaintenanceItemEntity>> startMaintenanceRequest(
+    int id,
+  ) async {
+    try {
+      final result = await _remoteDataSource.startMaintenanceRequest(id);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, MaintenanceItemEntity>> completeMaintenanceTask(
+    CompleteOwnerMaintenanceTaskParams params,
+  ) async {
+    try {
+      final result = await _remoteDataSource.completeMaintenanceTask(params);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }
+

@@ -35,7 +35,9 @@ import '../maintenance/presentation/cubit/update_maintenance/owner_update_mainte
 import '../maintenance/domain/usecases/delete_owner_maintenance_use_case.dart';
 import '../maintenance/presentation/cubit/delete_maintenance/owner_delete_maintenance_cubit.dart';
 import '../maintenance/domain/usecases/assign_owner_maintenance_use_case.dart';
+import '../maintenance/domain/usecases/complete_owner_maintenance_task_use_case.dart';
 import '../maintenance/presentation/cubit/assign_maintenance/owner_assign_maintenance_cubit.dart';
+import '../maintenance/presentation/cubit/complete_task/owner_complete_task_cubit.dart';
 // Reports
 import '../reports/data/datasources/owner_reports_remote_data_source.dart';
 import '../reports/data/repositories/owner_reports_repository_impl.dart';
@@ -108,6 +110,8 @@ import '../properties/domain/usecases/patch_property_use_case.dart';
 import '../properties/presentation/cubit/edit/property_edit_cubit.dart';
 import '../properties/presentation/cubit/owners/sync_owners_cubit.dart';
 import '../properties/presentation/cubit/delete/delete_property_cubit.dart';
+import '../maintenance/domain/usecases/start_owner_maintenance_use_case.dart';
+import '../maintenance/presentation/cubit/start_maintenance/owner_start_maintenance_cubit.dart';
 import '../deeds/di/deeds_di.dart';
 
 void initOwnerModule() {
@@ -387,7 +391,24 @@ void _initMaintenance() {
   if (!sl.isRegistered<OwnerAssignMaintenanceCubit>()) {
     sl.registerFactory(() => OwnerAssignMaintenanceCubit(sl()));
   }
+
+  if (!sl.isRegistered<StartOwnerMaintenanceUseCase>()) {
+    sl.registerLazySingleton(() => StartOwnerMaintenanceUseCase(sl()));
+  }
+
+  if (!sl.isRegistered<OwnerStartMaintenanceCubit>()) {
+    sl.registerFactory(() => OwnerStartMaintenanceCubit(sl()));
+  }
+
+  if (!sl.isRegistered<CompleteOwnerMaintenanceTaskUseCase>()) {
+    sl.registerLazySingleton(() => CompleteOwnerMaintenanceTaskUseCase(sl()));
+  }
+
+  if (!sl.isRegistered<OwnerCompleteTaskCubit>()) {
+    sl.registerFactory(() => OwnerCompleteTaskCubit(sl()));
+  }
 }
+
 
 void _initReports() {
   if (!sl.isRegistered<OwnerReportsRemoteDataSource>()) {

@@ -23,6 +23,9 @@ import '../cubit/reject_maintenance/owner_reject_maintenance_state.dart';
 import '../widgets/owner_approve_maintenance_bottom_sheet.dart';
 import '../widgets/owner_reject_maintenance_bottom_sheet.dart';
 import '../widgets/owner_assign_maintenance_bottom_sheet.dart';
+import '../widgets/owner_start_maintenance_dialog.dart';
+import '../cubit/start_maintenance/owner_start_maintenance_cubit.dart';
+import '../cubit/complete_task/owner_complete_task_cubit.dart';
 import '../widgets/maintenance_cost_section.dart';
 import '../widgets/maintenance_details_header_card.dart';
 import '../widgets/maintenance_images_section.dart';
@@ -32,10 +35,19 @@ import '../widgets/maintenance_assignments_section.dart';
 import '../widgets/maintenance_tasks_section.dart';
 import '../widgets/maintenance_action_logs_section.dart';
 
-class OwnerMaintenanceDetailsScreen extends StatelessWidget {
+class OwnerMaintenanceDetailsScreen extends StatefulWidget {
   final MaintenanceItemEntity item;
 
   const OwnerMaintenanceDetailsScreen({super.key, required this.item});
+
+  @override
+  State<OwnerMaintenanceDetailsScreen> createState() =>
+      _OwnerMaintenanceDetailsScreenState();
+}
+
+class _OwnerMaintenanceDetailsScreenState
+    extends State<OwnerMaintenanceDetailsScreen> {
+  bool _isModified = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +56,13 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               di.sl<OwnerMaintenanceDetailsCubit>()
-                ..getMaintenanceDetails(item.id ?? 0),
+                ..getMaintenanceDetails(widget.item.id ?? 0),
         ),
         BlocProvider(create: (_) => di.sl<OwnerDeleteMaintenanceCubit>()),
         BlocProvider(create: (_) => di.sl<OwnerApproveMaintenanceCubit>()),
         BlocProvider(create: (_) => di.sl<OwnerRejectMaintenanceCubit>()),
+        BlocProvider(create: (_) => di.sl<OwnerStartMaintenanceCubit>()),
+        BlocProvider(create: (_) => di.sl<OwnerCompleteTaskCubit>()),
       ],
       child: Builder(
         builder: (context) {
@@ -108,6 +122,7 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                       backgroundColor: AppColors.backgroundLight,
                       appBar: CustomAppBar(
                         title: LocaleKeys.maintenanceDetailsTitle.tr(),
+                        onBackPressed: () => context.pop(_isModified),
                         actions: [
                           IconButton(
                             icon: const Icon(
@@ -116,7 +131,7 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                             ),
                             onPressed: () => _showDeleteConfirmationBottomSheet(
                               context,
-                              item,
+                              widget.item,
                             ),
                           ),
                           IconButton(
@@ -124,19 +139,25 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                             onPressed: () async {
                               final result = await context.push(
                                 Routes.ownerMaintenanceEdit,
-                                extra: item,
+                                extra: widget.item,
                               );
                               if (result == true && context.mounted) {
+                                _isModified = true;
                                 context
                                     .read<OwnerMaintenanceDetailsCubit>()
-                                    .getMaintenanceDetails(item.id ?? 0);
+                                    .getMaintenanceDetails(widget.item.id ?? 0);
                               }
                             },
                           ),
                         ],
                       ),
-                      body:
-                          BlocBuilder<
+                      body: PopScope(
+                        canPop: false,
+                        onPopInvokedWithResult: (didPop, result) {
+                          if (didPop) return;
+                          context.pop(_isModified);
+                        },
+                        child: BlocBuilder<
                             OwnerMaintenanceDetailsCubit,
                             OwnerMaintenanceDetailsState
                           >(
@@ -168,7 +189,7 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                                                 OwnerMaintenanceDetailsCubit
                                               >()
                                               .getMaintenanceDetails(
-                                                item.id ?? 0,
+                                                widget.item.id ?? 0,
                                               ),
                                           icon: const Icon(Icons.refresh),
                                           label: Text(
@@ -186,7 +207,7 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                                   ),
                                 );
                               }
-                              MaintenanceItemEntity displayItem = item;
+                              MaintenanceItemEntity displayItem = widget.item;
                               if (state is OwnerMaintenanceDetailsLoaded) {
                                 displayItem = state.item;
                               }
@@ -194,7 +215,7 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                                 color: context.primaryColor,
                                 onRefresh: () => context
                                     .read<OwnerMaintenanceDetailsCubit>()
-                                    .getMaintenanceDetails(item.id ?? 0),
+                                    .getMaintenanceDetails(widget.item.id ?? 0),
                                 child: SingleChildScrollView(
                                   physics: const BouncingScrollPhysics(
                                     parent: AlwaysScrollableScrollPhysics(),
@@ -269,13 +290,14 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                               );
                             },
                           ),
+                      ),
                       bottomNavigationBar:
                           BlocBuilder<
                             OwnerMaintenanceDetailsCubit,
                             OwnerMaintenanceDetailsState
                           >(
                             builder: (context, state) {
-                              MaintenanceItemEntity displayItem = item;
+                              MaintenanceItemEntity displayItem = widget.item;
                               if (state is OwnerMaintenanceDetailsLoaded) {
                                 displayItem = state.item;
                               }
@@ -382,11 +404,15 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                                   ),
                                   child: SafeArea(
                                     child: ElevatedButton(
-                                      onPressed: () =>
-                                          OwnerAssignMaintenanceBottomSheet.show(
-                                            context,
-                                            displayItem,
-                                          ),
+                                      onPressed: () async {
+                                        final result = await OwnerAssignMaintenanceBottomSheet.show(
+                                          context,
+                                          displayItem,
+                                        );
+                                        if (result == true && context.mounted) {
+                                          _isModified = true;
+                                        }
+                                      },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: context.primaryColor,
                                         foregroundColor: Colors.white,
@@ -401,6 +427,54 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                                       child: Text(
                                         LocaleKeys.maintenanceAssignTechnician
                                             .tr(),
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } else if (displayItem.status == 'assigned') {
+                                return Container(
+                                  padding: const EdgeInsets.all(AppSpacing.lg),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black12,
+                                        blurRadius: 10,
+                                        offset: Offset(0, -2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: SafeArea(
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        final result = await OwnerStartMaintenanceDialog.show(
+                                          context,
+                                          displayItem.id ?? 0,
+                                        );
+                                        if (result == true && context.mounted) {
+                                          _isModified = true;
+                                          context
+                                              .read<OwnerMaintenanceDetailsCubit>()
+                                              .getMaintenanceDetails(displayItem.id ?? 0);
+                                        }
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: context.primaryColor,
+                                        foregroundColor: Colors.white,
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: 16,
+                                        ),
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: AppRadius.circularLg,
+                                        ),
+                                        elevation: 0,
+                                      ),
+                                      child: Text(
+                                        LocaleKeys.maintenanceStartWork.tr(),
                                         style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,

@@ -19,8 +19,8 @@ class OwnerAssignMaintenanceBottomSheet extends StatefulWidget {
 
   const OwnerAssignMaintenanceBottomSheet({super.key, required this.item});
 
-  static void show(BuildContext context, MaintenanceItemEntity item) {
-    showModalBottomSheet(
+  static Future<bool?> show(BuildContext context, MaintenanceItemEntity item) {
+    return showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,

@@ -603,7 +603,18 @@
     "add_sub_task": "Add Sub Task",
     "sub_task": "Task",
     "assign_submit": "Confirm Assignment",
-    "assign_success": "Maintenance request assigned successfully"
+    "assign_success": "Maintenance request assigned successfully",
+    "start_work": "Start Work",
+    "start_confirm_title": "Start Maintenance Work",
+    "start_confirm_desc": "Are you sure you want to start the maintenance work? The status will change to In Progress.",
+    "start_submit": "Confirm Start",
+    "start_success": "Maintenance request started successfully",
+    "task_complete_title": "Complete Task",
+    "task_complete_notes": "Completion Notes",
+    "task_complete_notes_hint": "Write details of what was done...",
+    "task_complete_btn": "Confirm Completion",
+    "task_complete_success": "Task status updated successfully",
+    "task_complete_error": "An error occurred while updating the task"
   },
   "revenue": {
     "report_title": "Revenue Report",

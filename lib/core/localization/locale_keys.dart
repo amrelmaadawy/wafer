@@ -1711,4 +1711,15 @@ abstract class LocaleKeys {
   static const String maintenanceSubTask = 'maintenance.sub_task';
   static const String maintenanceAssignSubmit = 'maintenance.assign_submit';
   static const String maintenanceAssignSuccess = 'maintenance.assign_success';
+  static const String maintenanceStartWork = 'maintenance.start_work';
+  static const String maintenanceStartConfirmTitle = 'maintenance.start_confirm_title';
+  static const String maintenanceStartConfirmDesc = 'maintenance.start_confirm_desc';
+  static const String maintenanceStartSubmit = 'maintenance.start_submit';
+  static const String maintenanceStartSuccess = 'maintenance.start_success';
+  static const String maintenanceTaskCompleteTitle = 'maintenance.task_complete_title';
+  static const String maintenanceTaskCompleteNotes = 'maintenance.task_complete_notes';
+  static const String maintenanceTaskCompleteNotesHint = 'maintenance.task_complete_notes_hint';
+  static const String maintenanceTaskCompleteBtn = 'maintenance.task_complete_btn';
+  static const String maintenanceTaskCompleteSuccess = 'maintenance.task_complete_success';
+  static const String maintenanceTaskCompleteError = 'maintenance.task_complete_error';
 }
