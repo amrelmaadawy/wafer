@@ -14,6 +14,7 @@ abstract class OwnerMaintenanceRemoteDataSource {
   Future<MaintenanceItemModel> getMaintenanceDetails(int id);
   Future<void> createMaintenanceRequest(CreateOwnerMaintenanceParams params);
   Future<MaintenanceItemModel> updateMaintenanceRequest(UpdateOwnerMaintenanceParams params);
+  Future<void> deleteMaintenanceRequest(int id);
 }
 
 class OwnerMaintenanceRemoteDataSourceImpl
@@ -94,5 +95,10 @@ class OwnerMaintenanceRemoteDataSourceImpl
     }
 
     return MaintenanceItemModel.fromJson(itemMap);
+  }
+
+  @override
+  Future<void> deleteMaintenanceRequest(int id) async {
+    await _dio.delete('${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(id)}');
   }
 }

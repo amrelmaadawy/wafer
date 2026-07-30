@@ -156,12 +156,15 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
             final item = state.items[index];
             return MaintenanceCard(
               item: item,
-              onTap: () {
-                Navigator.of(context, rootNavigator: true).push(
+              onTap: () async {
+                final result = await Navigator.of(context, rootNavigator: true).push(
                   MaterialPageRoute(
                     builder: (_) => OwnerMaintenanceDetailsScreen(item: item),
                   ),
                 );
+                if (result == true && context.mounted) {
+                  context.read<OwnerMaintenanceCubit>().getMaintenanceRequests(forceRefresh: true);
+                }
               },
             );
           },

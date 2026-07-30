@@ -4,6 +4,9 @@ import '../../../../../core/theme/app_radius.dart';
 import '../../../../owner/maintenance/domain/entities/maintenance_item_entity.dart';
 import '../../../../owner/maintenance/presentation/screens/owner_maintenance_details_screen.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../cubit/owner_dashboard_cubit.dart';
+
 class OwnerMaintenanceMiniCard extends StatelessWidget {
   final MaintenanceItemEntity item;
 
@@ -24,12 +27,15 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {
-          Navigator.of(context, rootNavigator: true).push(
+        onTap: () async {
+          final result = await Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute(
               builder: (_) => OwnerMaintenanceDetailsScreen(item: item),
             ),
           );
+          if (result == true && context.mounted) {
+            context.read<OwnerDashboardCubit>().loadDashboardStats(forceRefresh: true);
+          }
         },
         borderRadius: AppRadius.circularXl,
         child: Container(

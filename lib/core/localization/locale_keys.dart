@@ -1407,4 +1407,9 @@ abstract class  LocaleKeys {
   static const String maintenanceCreateDescriptionHint = 'maintenance.create_description_hint';
   static const String maintenanceCreateClientNameHint = 'maintenance.create_client_name_hint';
   static const String maintenanceCreateClientPhoneHint = 'maintenance.create_client_phone_hint';
+  static const String maintenanceDeleteConfirmTitle = 'maintenance.delete_confirm_title';
+  static const String maintenanceDeleteConfirmDesc = 'maintenance.delete_confirm_desc';
+  static const String maintenanceDeleteConfirmBtn = 'maintenance.delete_confirm_btn';
+  static const String maintenanceDeleteCancelBtn = 'maintenance.delete_cancel_btn';
+  static const String maintenanceDeleteSuccess = 'maintenance.delete_success';
 }

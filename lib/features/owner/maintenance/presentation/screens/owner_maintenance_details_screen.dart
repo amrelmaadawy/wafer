@@ -8,9 +8,13 @@ import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../domain/entities/maintenance_item_entity.dart';
 import '../cubit/details/owner_maintenance_details_cubit.dart';
 import '../cubit/details/owner_maintenance_details_state.dart';
+import '../cubit/delete_maintenance/owner_delete_maintenance_cubit.dart';
+import '../cubit/delete_maintenance/owner_delete_maintenance_state.dart';
 import '../widgets/maintenance_cost_section.dart';
 import '../widgets/maintenance_details_header_card.dart';
 import '../widgets/maintenance_images_section.dart';
@@ -27,80 +31,273 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => di.sl<OwnerMaintenanceDetailsCubit>()
-        ..getMaintenanceDetails(item.id ?? 0),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) =>
+              di.sl<OwnerMaintenanceDetailsCubit>()
+                ..getMaintenanceDetails(item.id ?? 0),
+        ),
+        BlocProvider(create: (_) => di.sl<OwnerDeleteMaintenanceCubit>()),
+      ],
       child: Builder(
         builder: (context) {
-          return Scaffold(
-            backgroundColor: AppColors.backgroundLight,
-            appBar: CustomAppBar(
-              title: LocaleKeys.maintenanceDetailsTitle.tr(),
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.edit, color: context.primaryColor),
-                  onPressed: () async {
-                    final result = await context.push(
-                      Routes.ownerMaintenanceEdit,
-                      extra: item,
-                    );
-                if (result == true && context.mounted) {
-                  context
-                      .read<OwnerMaintenanceDetailsCubit>()
-                      .getMaintenanceDetails(item.id ?? 0);
-                }
-              },
-            ),
-          ],
-        ),
-        body: BlocBuilder<OwnerMaintenanceDetailsCubit,
-            OwnerMaintenanceDetailsState>(
-          builder: (context, state) {
-            MaintenanceItemEntity displayItem = item;
-            if (state is OwnerMaintenanceDetailsLoaded) {
-              displayItem = state.item;
-            }
-            return RefreshIndicator(
-              color: context.primaryColor,
-              onRefresh: () => context
-                  .read<OwnerMaintenanceDetailsCubit>()
-                  .getMaintenanceDetails(item.id ?? 0),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (state is OwnerMaintenanceDetailsLoading)
-                      const Padding(
-                        padding: EdgeInsets.only(bottom: 12),
-                        child: LinearProgressIndicator(minHeight: 2),
-                      ),
-                    MaintenanceDetailsHeaderCard(item: displayItem),
-                    const SizedBox(height: 16),
-                    MaintenanceClientSection(item: displayItem),
-                    if (displayItem.client != null) const SizedBox(height: 16),
-                    MaintenanceCostSection(item: displayItem),
-                    const SizedBox(height: 16),
-                    MaintenanceAssignmentsSection(item: displayItem),
-                    if (displayItem.assignments != null && displayItem.assignments!.isNotEmpty) const SizedBox(height: 16),
-                    MaintenanceTasksSection(item: displayItem),
-                    if (displayItem.tasks != null && displayItem.tasks!.isNotEmpty) const SizedBox(height: 16),
-                    MaintenanceTimelineSection(item: displayItem),
-                    const SizedBox(height: 16),
-                    MaintenanceActionLogsSection(item: displayItem),
-                    if (displayItem.actionLogs != null && displayItem.actionLogs!.isNotEmpty) const SizedBox(height: 16),
-                    MaintenanceImagesSection(images: displayItem.images ?? []),
-                    const SizedBox(height: 30),
-                  ],
-                ),
+          return BlocListener<
+            OwnerDeleteMaintenanceCubit,
+            OwnerDeleteMaintenanceState
+          >(
+            listener: (context, state) {
+              if (state.status == DeleteMaintenanceStatus.success) {
+                Navigator.of(context, rootNavigator: true).pop(); // pop modal
+                AppToast.showSuccess(
+                  context,
+                  LocaleKeys.maintenanceDeleteSuccess.tr(),
+                );
+                context.pop(true); // pop details screen
+              } else if (state.status == DeleteMaintenanceStatus.failure) {
+                Navigator.of(context, rootNavigator: true).pop(); // pop modal
+                AppToast.showError(
+                  context,
+                  state.errorMessage ?? LocaleKeys.errorsServerError.tr(),
+                );
+              }
+            },
+            child: Scaffold(
+              backgroundColor: AppColors.backgroundLight,
+              appBar: CustomAppBar(
+                title: LocaleKeys.maintenanceDetailsTitle.tr(),
+                actions: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.delete_outline,
+                      color: AppColors.error,
+                    ),
+                    onPressed: () =>
+                        _showDeleteConfirmationBottomSheet(context, item),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.edit, color: context.primaryColor),
+                    onPressed: () async {
+                      final result = await context.push(
+                        Routes.ownerMaintenanceEdit,
+                        extra: item,
+                      );
+                      if (result == true && context.mounted) {
+                        context
+                            .read<OwnerMaintenanceDetailsCubit>()
+                            .getMaintenanceDetails(item.id ?? 0);
+                      }
+                    },
+                  ),
+                ],
               ),
-            );
-          },
-        ),
-      );
+              body:
+                  BlocBuilder<
+                    OwnerMaintenanceDetailsCubit,
+                    OwnerMaintenanceDetailsState
+                  >(
+                    builder: (context, state) {
+                      MaintenanceItemEntity displayItem = item;
+                      if (state is OwnerMaintenanceDetailsLoaded) {
+                        displayItem = state.item;
+                      }
+                      return RefreshIndicator(
+                        color: context.primaryColor,
+                        onRefresh: () => context
+                            .read<OwnerMaintenanceDetailsCubit>()
+                            .getMaintenanceDetails(item.id ?? 0),
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(
+                            parent: AlwaysScrollableScrollPhysics(),
+                          ),
+                          padding: const EdgeInsets.all(20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (state is OwnerMaintenanceDetailsLoading)
+                                const Padding(
+                                  padding: EdgeInsets.only(bottom: 12),
+                                  child: LinearProgressIndicator(minHeight: 2),
+                                ),
+                              MaintenanceDetailsHeaderCard(item: displayItem),
+                              const SizedBox(height: 16),
+                              MaintenanceClientSection(item: displayItem),
+                              if (displayItem.client != null)
+                                const SizedBox(height: 16),
+                              MaintenanceCostSection(item: displayItem),
+                              const SizedBox(height: 16),
+                              MaintenanceAssignmentsSection(item: displayItem),
+                              if (displayItem.assignments != null &&
+                                  displayItem.assignments!.isNotEmpty)
+                                const SizedBox(height: 16),
+                              MaintenanceTasksSection(item: displayItem),
+                              if (displayItem.tasks != null &&
+                                  displayItem.tasks!.isNotEmpty)
+                                const SizedBox(height: 16),
+                              MaintenanceTimelineSection(item: displayItem),
+                              const SizedBox(height: 16),
+                              MaintenanceActionLogsSection(item: displayItem),
+                              if (displayItem.actionLogs != null &&
+                                  displayItem.actionLogs!.isNotEmpty)
+                                const SizedBox(height: 16),
+                              MaintenanceImagesSection(
+                                images: displayItem.images ?? [],
+                              ),
+                              const SizedBox(height: 30),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+            ),
+          );
         },
       ),
+    );
+  }
+
+  void _showDeleteConfirmationBottomSheet(
+    BuildContext context,
+    MaintenanceItemEntity item,
+  ) {
+    final deleteCubit = context.read<OwnerDeleteMaintenanceCubit>();
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.topXxl),
+      builder: (bottomSheetContext) {
+        return BlocProvider.value(
+          value: deleteCubit,
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom + 24,
+              left: 24,
+              right: 24,
+              top: 24,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 50,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: AppColors.borderLight,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                const Icon(
+                  Icons.warning_amber_rounded,
+                  color: AppColors.error,
+                  size: 64,
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  LocaleKeys.maintenanceDeleteConfirmTitle.tr(),
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimaryLight,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  LocaleKeys.maintenanceDeleteConfirmDesc.tr(),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppColors.textSecondaryLight,
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 32),
+                Row(
+                  children: [
+                    Expanded(
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: AppRadius.circularXl,
+                          ),
+                          side: const BorderSide(color: AppColors.borderLight),
+                        ),
+                        onPressed: () => Navigator.of(bottomSheetContext).pop(),
+                        child: Text(
+                          LocaleKeys.maintenanceDeleteCancelBtn.tr(),
+                          style: const TextStyle(
+                            color: AppColors.textPrimaryLight,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child:
+                          BlocBuilder<
+                            OwnerDeleteMaintenanceCubit,
+                            OwnerDeleteMaintenanceState
+                          >(
+                            bloc: context.read<OwnerDeleteMaintenanceCubit>(),
+                            builder: (context, state) {
+                              final isLoading =
+                                  state.status ==
+                                  DeleteMaintenanceStatus.loading;
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.error,
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 14,
+                                  ),
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: AppRadius.circularXl,
+                                  ),
+                                  elevation: 0,
+                                ),
+                                onPressed: isLoading
+                                    ? null
+                                    : () {
+                                        context
+                                            .read<OwnerDeleteMaintenanceCubit>()
+                                            .deleteMaintenanceRequest(
+                                              item.id ?? 0,
+                                            );
+                                      },
+                                child: isLoading
+                                    ? const SizedBox(
+                                        height: 20,
+                                        width: 20,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : Text(
+                                        LocaleKeys.maintenanceDeleteConfirmBtn
+                                            .tr(),
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15,
+                                        ),
+                                      ),
+                              );
+                            },
+                          ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

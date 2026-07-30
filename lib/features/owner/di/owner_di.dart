@@ -28,6 +28,8 @@ import '../maintenance/presentation/cubit/details/owner_maintenance_details_cubi
 import '../maintenance/presentation/cubit/create_maintenance/owner_create_maintenance_cubit.dart';
 import '../maintenance/domain/usecases/update_owner_maintenance_use_case.dart';
 import '../maintenance/presentation/cubit/update_maintenance/owner_update_maintenance_cubit.dart';
+import '../maintenance/domain/usecases/delete_owner_maintenance_use_case.dart';
+import '../maintenance/presentation/cubit/delete_maintenance/owner_delete_maintenance_cubit.dart';
 // Reports
 import '../reports/data/datasources/owner_reports_remote_data_source.dart';
 import '../reports/data/repositories/owner_reports_repository_impl.dart';
@@ -351,6 +353,12 @@ void _initMaintenance() {
   }
   if (!sl.isRegistered<OwnerUpdateMaintenanceCubit>()) {
     sl.registerFactory(() => OwnerUpdateMaintenanceCubit(sl()));
+  }
+  if (!sl.isRegistered<DeleteOwnerMaintenanceUseCase>()) {
+    sl.registerLazySingleton(() => DeleteOwnerMaintenanceUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerDeleteMaintenanceCubit>()) {
+    sl.registerFactory(() => OwnerDeleteMaintenanceCubit(sl()));
   }
 }
 

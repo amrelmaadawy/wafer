@@ -79,4 +79,18 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> deleteMaintenanceRequest(int id) async {
+    try {
+      await _remoteDataSource.deleteMaintenanceRequest(id);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 }
