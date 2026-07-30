@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/di/service_locator.dart' as di;
 import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
@@ -28,10 +30,28 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => di.sl<OwnerMaintenanceDetailsCubit>()
         ..getMaintenanceDetails(item.id ?? 0),
-      child: Scaffold(
-        backgroundColor: AppColors.backgroundLight,
-        appBar: CustomAppBar(
-          title: LocaleKeys.maintenanceDetailsTitle.tr(),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            backgroundColor: AppColors.backgroundLight,
+            appBar: CustomAppBar(
+              title: LocaleKeys.maintenanceDetailsTitle.tr(),
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.edit, color: context.primaryColor),
+                  onPressed: () async {
+                    final result = await context.push(
+                      Routes.ownerMaintenanceEdit,
+                      extra: item,
+                    );
+                if (result == true && context.mounted) {
+                  context
+                      .read<OwnerMaintenanceDetailsCubit>()
+                      .getMaintenanceDetails(item.id ?? 0);
+                }
+              },
+            ),
+          ],
         ),
         body: BlocBuilder<OwnerMaintenanceDetailsCubit,
             OwnerMaintenanceDetailsState>(
@@ -46,7 +66,7 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
                   .read<OwnerMaintenanceDetailsCubit>()
                   .getMaintenanceDetails(item.id ?? 0),
               child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
+                physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,6 +98,8 @@ class OwnerMaintenanceDetailsScreen extends StatelessWidget {
             );
           },
         ),
+      );
+        },
       ),
     );
   }

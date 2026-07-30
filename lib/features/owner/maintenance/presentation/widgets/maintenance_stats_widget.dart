@@ -19,44 +19,69 @@ class MaintenanceStatsWidget extends StatelessWidget {
     required this.onStatusSelected,
   });
 
+  static const List<String> _statuses = [
+    'all',
+    'new',
+    'pending_supervisor',
+    'approved',
+    'assigned',
+    'in_progress',
+    'executed',
+    'pending_closure',
+    'closed',
+    'forwarded',
+    'rejected',
+    'cancelled',
+  ];
+
+  String _getLabel(String status) {
+    switch (status) {
+      case 'all':
+        return LocaleKeys.maintenanceFilterAll.tr();
+      case 'new':
+        return LocaleKeys.maintenanceStatusPending.tr();
+      case 'pending_supervisor':
+        return LocaleKeys.maintenanceStatusPendingSupervisor.tr();
+      case 'approved':
+        return LocaleKeys.maintenanceStatusApproved.tr();
+      case 'assigned':
+        return LocaleKeys.maintenanceStatusAssigned.tr();
+      case 'in_progress':
+        return LocaleKeys.maintenanceStatusInProgress.tr();
+      case 'executed':
+        return LocaleKeys.maintenanceStatusExecuted.tr();
+      case 'pending_closure':
+        return LocaleKeys.maintenanceStatusPendingClosure.tr();
+      case 'closed':
+        return LocaleKeys.maintenanceStatusClosed.tr();
+      case 'forwarded':
+        return LocaleKeys.maintenanceStatusForwarded.tr();
+      case 'rejected':
+        return LocaleKeys.maintenanceStatusRejected.tr();
+      case 'cancelled':
+        return LocaleKeys.maintenanceStatusCancelled.tr();
+      default:
+        return status;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
       child: Row(
-        children: [
-          _buildChip(
+        children: _statuses.map((status) {
+          final count = status == 'all'
+              ? (stats.total ?? 0)
+              : (stats.byStatus?[status] ?? 0);
+          return _buildChip(
             context,
-            label: LocaleKeys.maintenanceFilterAll.tr(),
-            count: stats.total ?? 0,
-            status: 'all',
-          ),
-          _buildChip(
-            context,
-            label: LocaleKeys.maintenanceStatusPending.tr(),
-            count: stats.byStatus?['new'] ?? 0,
-            status: 'new',
-          ),
-          _buildChip(
-            context,
-            label: LocaleKeys.maintenanceStatusInProgress.tr(),
-            count: stats.byStatus?['assigned'] ?? 0,
-            status: 'assigned',
-          ),
-          _buildChip(
-            context,
-            label: LocaleKeys.maintenanceStatusExecuted.tr(),
-            count: stats.byStatus?['executed'] ?? 0,
-            status: 'executed',
-          ),
-          _buildChip(
-            context,
-            label: LocaleKeys.maintenanceStatusCancelled.tr(),
-            count: stats.byStatus?['cancelled'] ?? 0,
-            status: 'cancelled',
-          ),
-        ],
+            label: _getLabel(status),
+            count: count,
+            status: status,
+          );
+        }).toList(),
       ),
     );
   }

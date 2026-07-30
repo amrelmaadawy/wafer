@@ -69,6 +69,34 @@ class MaintenanceDetailsHeaderCard extends StatelessWidget {
                   ),
                 ],
               ),
+              if (item.types != null && item.types!.isNotEmpty) ...[
+                const SizedBox(height: 16),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: item.types!.map((t) {
+                    final typeName = context.locale.languageCode == 'ar' 
+                        ? (t.nameAr ?? t.name ?? '') 
+                        : (t.name ?? '');
+                    if (typeName.isEmpty) return const SizedBox.shrink();
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: context.primaryColor.withValues(alpha: 0.1),
+                        borderRadius: AppRadius.circularMd,
+                      ),
+                      child: Text(
+                        typeName,
+                        style: TextStyle(
+                          color: context.primaryColor,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ],
             ],
           ),
         ),

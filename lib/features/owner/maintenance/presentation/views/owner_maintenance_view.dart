@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wafer/features/owner/maintenance/domain/entities/maintenance_sub_entities.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../cubit/owner_maintenance_cubit.dart';
 import '../cubit/owner_maintenance_state.dart';
@@ -59,6 +61,17 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.push(Routes.ownerMaintenanceCreate).then((value) {
+            if (value == true && context.mounted) {
+              context.read<OwnerMaintenanceCubit>().getMaintenanceRequests(forceRefresh: true);
+            }
+          });
+        },
+        backgroundColor: context.primaryColor,
+        child: const Icon(Icons.add, color: Colors.white),
+      ),
       body: SafeArea(
         child: Column(
           children: [
@@ -129,6 +142,7 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
             .read<OwnerMaintenanceCubit>()
             .getMaintenanceRequests(forceRefresh: true),
         child: ListView.builder(
+          physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
           controller: _scrollController,
           padding: const EdgeInsets.fromLTRB(20, 12, 20, 80),
           itemCount: state.items.length + (state.isFetchingMore ? 1 : 0),

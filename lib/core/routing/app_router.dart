@@ -21,6 +21,9 @@ import '../../features/owner/finance/presentation/views/owner_finance_view.dart'
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
 import '../../features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
+import '../../features/owner/maintenance/presentation/screens/owner_create_maintenance_screen.dart';
+import '../../features/owner/maintenance/presentation/screens/owner_update_maintenance_screen.dart';
+import '../../features/owner/maintenance/domain/entities/maintenance_item_entity.dart';
 import '../../features/owner/reports/presentation/screens/owner_reports_center_screen.dart';
 import '../../features/owner/reports/presentation/views/owner_revenue_report_view.dart';
 import '../../features/owner/reports/presentation/cubit/owner_revenue_cubit.dart';
@@ -127,6 +130,19 @@ class AppRouter {
             create: (_) => sl<OwnerMaintenanceCubit>(),
             child: OwnerMaintenanceView(initialStatusFilter: filter),
           );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerMaintenanceCreate,
+        builder: (context, state) {
+          return const OwnerCreateMaintenanceScreen();
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerMaintenanceEdit,
+        builder: (context, state) {
+          final item = state.extra as MaintenanceItemEntity;
+          return OwnerUpdateMaintenanceScreen(maintenanceItem: item);
         },
       ),
       GoRoute(

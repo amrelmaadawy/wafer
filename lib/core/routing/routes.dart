@@ -13,6 +13,8 @@ class Routes {
   static const String notifications = '/notifications';
   static const String ownerMaintenance = '/owner-maintenance';
   static const String ownerMaintenanceDetails = '/owner-maintenance/details';
+  static const String ownerMaintenanceCreate = '/owner-maintenance/create';
+  static const String ownerMaintenanceEdit = '/owner-maintenance/edit';
   static const String ownerReportsCenter = '/owner-reports';
   static const String editProfile = '/edit-profile';
   static const String changePassword = '/change-password';

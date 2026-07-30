@@ -3,12 +3,17 @@ import '../../../../../core/network/api_constants.dart';
 import '../models/maintenance_item_model.dart';
 import '../models/maintenance_response_model.dart';
 
+import '../../domain/usecases/create_owner_maintenance_use_case.dart';
+import '../../domain/usecases/update_owner_maintenance_use_case.dart';
+
 abstract class OwnerMaintenanceRemoteDataSource {
   Future<MaintenanceResponseModel> getMaintenanceRequests({
     int page = 1,
     String? status,
   });
   Future<MaintenanceItemModel> getMaintenanceDetails(int id);
+  Future<void> createMaintenanceRequest(CreateOwnerMaintenanceParams params);
+  Future<MaintenanceItemModel> updateMaintenanceRequest(UpdateOwnerMaintenanceParams params);
 }
 
 class OwnerMaintenanceRemoteDataSourceImpl
@@ -56,6 +61,34 @@ class OwnerMaintenanceRemoteDataSourceImpl
       itemMap = innerData['maintenance_request'] as Map<String, dynamic>;
     } else if (innerData['data'] is Map<String, dynamic>) {
       itemMap = innerData['data'] as Map<String, dynamic>;
+    } else {
+      itemMap = innerData;
+    }
+
+    return MaintenanceItemModel.fromJson(itemMap);
+  }
+
+  @override
+  Future<void> createMaintenanceRequest(CreateOwnerMaintenanceParams params) async {
+    await _dio.post(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenance}',
+      data: params.toJson(),
+    );
+  }
+
+  @override
+  Future<MaintenanceItemModel> updateMaintenanceRequest(UpdateOwnerMaintenanceParams params) async {
+    final response = await _dio.patch(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(params.id)}',
+      data: params.toJson(),
+    );
+
+    final data = response.data as Map<String, dynamic>? ?? {};
+    final innerData = data['data'] as Map<String, dynamic>? ?? {};
+
+    Map<String, dynamic> itemMap = {};
+    if (innerData['maintenance_request'] is Map<String, dynamic>) {
+      itemMap = innerData['maintenance_request'] as Map<String, dynamic>;
     } else {
       itemMap = innerData;
     }

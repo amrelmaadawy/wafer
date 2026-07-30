@@ -19,6 +19,8 @@ class CustomTextField extends StatefulWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextInputAction? textInputAction;
   final ValueChanged<String>? onFieldSubmitted;
+  final bool readOnly;
+  final Widget? suffixIcon;
 
   const CustomTextField({
     super.key,
@@ -37,6 +39,8 @@ class CustomTextField extends StatefulWidget {
     this.inputFormatters,
     this.textInputAction,
     this.onFieldSubmitted,
+    this.readOnly = false,
+    this.suffixIcon,
   });
 
   @override
@@ -71,6 +75,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           onChanged: widget.onChanged,
           maxLength: widget.maxLength,
           inputFormatters: widget.inputFormatters,
+          readOnly: widget.readOnly,
           style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             hintText: widget.hintText,
@@ -90,7 +95,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       });
                     },
                   )
-                : null,
+                : widget.suffixIcon,
             border: const OutlineInputBorder(
               borderRadius: AppRadius.circularMd,
               borderSide: BorderSide(color: AppColors.borderLight),

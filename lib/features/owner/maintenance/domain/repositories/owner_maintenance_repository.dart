@@ -2,6 +2,8 @@ import 'package:dartz/dartz.dart';
 import '../../../../../core/error/failures.dart';
 import '../entities/maintenance_item_entity.dart';
 import '../entities/maintenance_response_entity.dart';
+import '../usecases/create_owner_maintenance_use_case.dart';
+import '../usecases/update_owner_maintenance_use_case.dart';
 
 abstract class OwnerMaintenanceRepository {
   Future<Either<Failure, MaintenanceResponseEntity>> getMaintenanceRequests({
@@ -10,4 +12,8 @@ abstract class OwnerMaintenanceRepository {
     bool forceRefresh = false,
   });
   Future<Either<Failure, MaintenanceItemEntity>> getMaintenanceDetails(int id);
+  Future<Either<Failure, void>> createMaintenanceRequest(
+      CreateOwnerMaintenanceParams params);
+  Future<Either<Failure, MaintenanceItemEntity>> updateMaintenanceRequest(
+      UpdateOwnerMaintenanceParams params);
 }

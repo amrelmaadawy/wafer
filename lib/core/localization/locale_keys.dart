@@ -1374,4 +1374,37 @@ abstract class  LocaleKeys {
   static const String activityLogsActionUser = 'dashboard.activityLogsActionUser';
   static const String activityLogsActionIp = 'dashboard.activityLogsActionIp';
   static const String activityLogsActionDate = 'dashboard.activityLogsActionDate';
+  
+  static const String maintenanceStatusPendingSupervisor = 'maintenance.status_pending_supervisor';
+  static const String maintenanceStatusAssigned = 'maintenance.status_assigned';
+  static const String maintenanceStatusPendingClosure = 'maintenance.status_pending_closure';
+  static const String maintenanceStatusClosed = 'maintenance.status_closed';
+  static const String maintenanceStatusForwarded = 'maintenance.status_forwarded';
+
+  // Create Maintenance
+  static const String maintenanceCreateTitle = 'maintenance.create_title';
+  static const String maintenanceCreateSuccess = 'maintenance.create_success';
+  static const String maintenanceCreatePropertyUnitSection = 'maintenance.create_property_unit_section';
+  static const String maintenanceCreateSelectProperty = 'maintenance.create_select_property';
+  static const String maintenanceCreateSelectUnit = 'maintenance.create_select_unit';
+  static const String maintenanceCreateNoUnit = 'maintenance.create_no_unit';
+  static const String maintenanceCreateClientSection = 'maintenance.create_client_section';
+  static const String maintenanceCreateClientName = 'maintenance.create_client_name';
+  static const String maintenanceCreateClientPhone = 'maintenance.create_client_phone';
+  static const String maintenanceCreateDetailsSection = 'maintenance.create_details_section';
+  static const String maintenanceCreateDescription = 'maintenance.create_description';
+  static const String maintenanceCreateSelectDate = 'maintenance.create_select_date';
+  static const String maintenanceCreateTypesSection = 'maintenance.create_types_section';
+  static const String maintenanceCreateIsPrivate = 'maintenance.create_is_private';
+  static const String maintenanceCreateSubmit = 'maintenance.create_submit';
+  static const String maintenanceCreateRequiredField = 'maintenance.create_required_field';
+  static const String maintenanceCreateFillAllFields = 'maintenance.create_fill_all_fields';
+  
+  static const String maintenanceUpdateRequest = 'maintenance.update_request';
+  static const String maintenanceUpdatedSuccessfully = 'maintenance.updated_successfully';
+  static const String maintenanceEdit = 'maintenance.edit';
+  static const String maintenanceCreateTypes = 'maintenance.create_types';
+  static const String maintenanceCreateDescriptionHint = 'maintenance.create_description_hint';
+  static const String maintenanceCreateClientNameHint = 'maintenance.create_client_name_hint';
+  static const String maintenanceCreateClientPhoneHint = 'maintenance.create_client_phone_hint';
 }
