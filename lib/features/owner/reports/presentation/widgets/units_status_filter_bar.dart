@@ -28,7 +28,9 @@ class UnitsStatusFilterBar extends StatelessWidget {
             height: 44,
             itemLabelBuilder: (id) {
               if (id == -1) return LocaleKeys.reports_all_properties.tr();
-              final p = filterOptions.properties.firstWhere((prop) => prop.id == id);
+              final p = filterOptions.properties.firstWhere(
+                (prop) => prop.id == id,
+              );
               return p.name?.isNotEmpty == true ? p.name! : p.code;
             },
             onSelected: (val) {
@@ -49,7 +51,9 @@ class UnitsStatusFilterBar extends StatelessWidget {
             height: 44,
             itemLabelBuilder: (val) {
               if (val == 'ALL') return LocaleKeys.reports_all_statuses.tr();
-              return filterOptions.statuses.firstWhere((s) => s.value == val).label;
+              return filterOptions.statuses
+                  .firstWhere((s) => s.value == val)
+                  .label;
             },
             onSelected: (val) {
               cubit.loadUnitsStatusReport(
@@ -60,7 +64,8 @@ class UnitsStatusFilterBar extends StatelessWidget {
             },
           ),
         ),
-        if (cubit.selectedPropertyId != null || cubit.selectedStatus != null) ...[
+        if (cubit.selectedPropertyId != null ||
+            cubit.selectedStatus != null) ...[
           const SizedBox(width: 8),
           Container(
             decoration: BoxDecoration(
@@ -69,7 +74,11 @@ class UnitsStatusFilterBar extends StatelessWidget {
             ),
             child: IconButton(
               onPressed: cubit.clearFilters,
-              icon: const Icon(Icons.refresh_rounded, color: Colors.red, size: 20),
+              icon: const Icon(
+                Icons.refresh_rounded,
+                color: Colors.red,
+                size: 20,
+              ),
               tooltip: 'إعادة تعيين',
               constraints: const BoxConstraints(),
               padding: const EdgeInsets.all(8),

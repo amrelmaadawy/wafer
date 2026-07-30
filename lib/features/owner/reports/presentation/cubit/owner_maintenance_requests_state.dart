@@ -22,7 +22,10 @@ class OwnerMaintenanceRequestsLoaded extends OwnerMaintenanceRequestsState {
   final MaintenanceRequestsReportEntity report;
   final bool hasReachedMax;
 
-  const OwnerMaintenanceRequestsLoaded(this.report, {this.hasReachedMax = false});
+  const OwnerMaintenanceRequestsLoaded(
+    this.report, {
+    this.hasReachedMax = false,
+  });
 
   @override
   List<Object?> get props => [report, hasReachedMax];

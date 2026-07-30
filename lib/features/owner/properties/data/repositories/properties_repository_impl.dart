@@ -16,32 +16,32 @@ import '../datasources/properties_remote_data_source.dart';
 class PropertiesRepositoryImpl implements PropertiesRepository {
   final PropertiesRemoteDataSource remoteDataSource;
 
-  PropertiesRepositoryImpl({
-    required this.remoteDataSource,
-  });
+  PropertiesRepositoryImpl({required this.remoteDataSource});
 
   @override
   Future<
-      Either<
-          Failure,
-          ({
-            List<PropertyListItemEntity> items,
-            PropertiesPaginationMetaEntity meta,
-            PropertiesStatsEntity stats,
-          })>> getProperties({
-    int page = 1,
-    PropertiesQueryFilterEntity? filter,
-  }) async {
+    Either<
+      Failure,
+      ({
+        List<PropertyListItemEntity> items,
+        PropertiesPaginationMetaEntity meta,
+        PropertiesStatsEntity stats,
+      })
+    >
+  >
+  getProperties({int page = 1, PropertiesQueryFilterEntity? filter}) async {
     try {
-      final queryParams = <String, dynamic>{
-        'page': page,
-      };
+      final queryParams = <String, dynamic>{'page': page};
 
       if (filter != null) {
         if (filter.search != null) queryParams['search'] = filter.search;
         if (filter.status != null) queryParams['status'] = filter.status;
-        if (filter.propertyType != null) queryParams['property_type'] = filter.propertyType;
-        if (filter.usageType != null) queryParams['usage_type'] = filter.usageType;
+        if (filter.propertyType != null) {
+          queryParams['property_type'] = filter.propertyType;
+        }
+        if (filter.usageType != null) {
+          queryParams['usage_type'] = filter.usageType;
+        }
         if (filter.branchId != null) queryParams['branch_id'] = filter.branchId;
         if (filter.deedId != null) queryParams['deed_id'] = filter.deedId;
         queryParams['per_page'] = filter.perPage;
@@ -88,7 +88,9 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
   }
 
   @override
-  Future<Either<Failure, PropertyDetailsEntity>> getPropertyDetails(int propertyId) async {
+  Future<Either<Failure, PropertyDetailsEntity>> getPropertyDetails(
+    int propertyId,
+  ) async {
     try {
       final result = await remoteDataSource.getPropertyDetails(propertyId);
       return Right(result);
@@ -102,7 +104,9 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
   }
 
   @override
-  Future<Either<Failure, int>> createDraftProperty(Map<String, dynamic> body) async {
+  Future<Either<Failure, int>> createDraftProperty(
+    Map<String, dynamic> body,
+  ) async {
     try {
       final result = await remoteDataSource.createDraftProperty(body);
       return Right(result);
@@ -139,10 +143,16 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
 
   @override
   Future<Either<Failure, PropertyDetailsEntity>> autoSaveDeedStep(
-      int propertyId, int deedId, int branchId) async {
+    int propertyId,
+    int deedId,
+    int branchId,
+  ) async {
     try {
       final result = await remoteDataSource.autoSaveDeedStep(
-          propertyId, deedId, branchId);
+        propertyId,
+        deedId,
+        branchId,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -155,10 +165,14 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
 
   @override
   Future<Either<Failure, PropertyDetailsEntity>> autoSaveTypeStep(
-      int propertyId, String propertyType) async {
+    int propertyId,
+    String propertyType,
+  ) async {
     try {
       final result = await remoteDataSource.autoSaveTypeStep(
-          propertyId, propertyType);
+        propertyId,
+        propertyType,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -171,10 +185,14 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
 
   @override
   Future<Either<Failure, PropertyDetailsEntity>> makeRepresentative(
-      int propertyId, int ownerId) async {
+    int propertyId,
+    int ownerId,
+  ) async {
     try {
       final result = await remoteDataSource.makeRepresentative(
-          propertyId, ownerId);
+        propertyId,
+        ownerId,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -187,7 +205,9 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
 
   @override
   Future<Either<Failure, void>> syncOwners(
-      int propertyId, List<Map<String, dynamic>> owners) async {
+    int propertyId,
+    List<Map<String, dynamic>> owners,
+  ) async {
     try {
       await remoteDataSource.syncOwners(propertyId, owners);
       return const Right(null);
@@ -216,7 +236,9 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
 
   @override
   Future<Either<Failure, void>> addUploadedImagePath(
-      int propertyId, String imagePath) async {
+    int propertyId,
+    String imagePath,
+  ) async {
     try {
       await remoteDataSource.addUploadedImagePath(propertyId, imagePath);
       return const Right(null);
@@ -230,7 +252,9 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
   }
 
   @override
-  Future<Either<Failure, PropertyDetailsEntity>> publishProperty(int propertyId) async {
+  Future<Either<Failure, PropertyDetailsEntity>> publishProperty(
+    int propertyId,
+  ) async {
     try {
       final result = await remoteDataSource.publishProperty(propertyId);
       return Right(result);
@@ -258,7 +282,10 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
   }
 
   @override
-  Future<Either<Failure, int>> cloneForDeed(int propertyId, bool copyData) async {
+  Future<Either<Failure, int>> cloneForDeed(
+    int propertyId,
+    bool copyData,
+  ) async {
     try {
       final result = await remoteDataSource.cloneForDeed(propertyId, copyData);
       return Right(result);
@@ -271,12 +298,16 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
     }
   }
 
-
-
   @override
-  Future<Either<Failure, PropertyDetailsEntity>> removeRepresentative(int propertyId, int ownerId) async {
+  Future<Either<Failure, PropertyDetailsEntity>> removeRepresentative(
+    int propertyId,
+    int ownerId,
+  ) async {
     try {
-      final result = await remoteDataSource.removeRepresentative(propertyId, ownerId);
+      final result = await remoteDataSource.removeRepresentative(
+        propertyId,
+        ownerId,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -303,7 +334,9 @@ class PropertiesRepositoryImpl implements PropertiesRepository {
 
   @override
   Future<Either<Failure, void>> patchProperty(
-      int propertyId, Map<String, dynamic> data) async {
+    int propertyId,
+    Map<String, dynamic> data,
+  ) async {
     try {
       await remoteDataSource.patchProperty(propertyId, data);
       return const Right(null);

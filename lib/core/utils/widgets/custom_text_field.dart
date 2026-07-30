@@ -57,9 +57,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
       children: [
         Text(
           widget.label,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 8),
         TextFormField(
@@ -80,8 +80,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
           decoration: InputDecoration(
             hintText: widget.hintText,
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textSecondaryLight.withValues(alpha: 0.45),
-                ),
+              color: AppColors.textSecondaryLight.withValues(alpha: 0.45),
+            ),
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.isPassword
                 ? IconButton(

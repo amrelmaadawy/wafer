@@ -6,7 +6,8 @@ import 'owner_contracts_state.dart';
 class OwnerContractsCubit extends Cubit<OwnerContractsState> {
   final GetOwnerContractsUseCase _getContractsUseCase;
 
-  OwnerContractsCubit(this._getContractsUseCase) : super(const OwnerContractsInitial());
+  OwnerContractsCubit(this._getContractsUseCase)
+    : super(const OwnerContractsInitial());
 
   int _currentPage = 1;
   bool _isFetchingNext = false;
@@ -29,16 +30,20 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
     );
 
     result.fold(
-      (failure) => emit(OwnerContractsError(failure.message, activeStatus: _currentStatus)),
+      (failure) => emit(
+        OwnerContractsError(failure.message, activeStatus: _currentStatus),
+      ),
       (response) {
         if (response.contracts.isEmpty) {
           emit(OwnerContractsEmpty(activeStatus: _currentStatus));
         } else {
-          emit(OwnerContractsLoaded(
-            contracts: response.contracts,
-            meta: response.meta,
-            activeStatus: _currentStatus,
-          ));
+          emit(
+            OwnerContractsLoaded(
+              contracts: response.contracts,
+              meta: response.meta,
+              activeStatus: _currentStatus,
+            ),
+          );
         }
       },
     );
@@ -46,7 +51,9 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
 
   Future<void> loadNextPage() async {
     final currentState = state;
-    if (currentState is! OwnerContractsLoaded || _isFetchingNext || !currentState.meta.hasMore) {
+    if (currentState is! OwnerContractsLoaded ||
+        _isFetchingNext ||
+        !currentState.meta.hasMore) {
       return;
     }
 
@@ -69,14 +76,17 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
       },
       (response) {
         _isFetchingNext = false;
-        final updatedList = List<ContractItemEntity>.from(currentState.contracts)
-          ..addAll(response.contracts);
+        final updatedList = List<ContractItemEntity>.from(
+          currentState.contracts,
+        )..addAll(response.contracts);
 
-        emit(OwnerContractsLoaded(
-          contracts: updatedList,
-          meta: response.meta,
-          activeStatus: _currentStatus,
-        ));
+        emit(
+          OwnerContractsLoaded(
+            contracts: updatedList,
+            meta: response.meta,
+            activeStatus: _currentStatus,
+          ),
+        );
       },
     );
   }

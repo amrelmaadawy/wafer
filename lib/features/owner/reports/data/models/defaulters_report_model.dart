@@ -57,7 +57,7 @@ class DefaulterContractModel extends DefaulterContractEntity {
       totalRentValue: _parseDouble(json['total_rent_value']),
     );
   }
-  
+
   static int _parseInt(dynamic value) {
     if (value == null) return 0;
     if (value is int) return value;
@@ -206,7 +206,8 @@ class DefaultersReportModel extends DefaultersReportEntity {
   factory DefaultersReportModel.fromJson(Map<String, dynamic> json) {
     return DefaultersReportModel(
       summary: DefaultersReportSummaryModel.fromJson(json['summary'] ?? {}),
-      items: (json['items'] as List<dynamic>?)
+      items:
+          (json['items'] as List<dynamic>?)
               ?.map((e) => DefaultersReportItemModel.fromJson(e))
               .toList() ??
           [],

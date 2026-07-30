@@ -17,8 +17,11 @@ class OccupancyPropertiesList extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.domain_rounded,
-                size: 18, color: AppColors.textPrimaryLight),
+            const Icon(
+              Icons.domain_rounded,
+              size: 18,
+              color: AppColors.textPrimaryLight,
+            ),
             const SizedBox(width: 8),
             Text(
               LocaleKeys.occupancyPropertiesSection.tr(),

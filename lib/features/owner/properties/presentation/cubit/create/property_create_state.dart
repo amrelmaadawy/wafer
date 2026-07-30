@@ -5,7 +5,8 @@ import '../../../domain/entities/property_owner_entity.dart';
 import '../../../domain/entities/temp_property_image_entity.dart';
 
 class PropertyCreateState extends Equatable {
-  final int currentStep; // 0: Basic, 1: Details, 2: Images, 3: Owners, 4: Review
+  final int
+  currentStep; // 0: Basic, 1: Details, 2: Images, 3: Owners, 4: Review
   final int? draftPropertyId;
   final bool isLoading;
   final bool isSaving;
@@ -95,7 +96,8 @@ class PropertyCreateState extends Equatable {
       draftPropertyId: draftPropertyId ?? this.draftPropertyId,
       isLoading: isLoading ?? this.isLoading,
       isSaving: isSaving ?? this.isSaving,
-      errorMessage: errorMessage, // We keep it null unless explicitly throwing an error
+      errorMessage:
+          errorMessage, // We keep it null unless explicitly throwing an error
       formData: formData ?? this.formData,
       deeds: deeds ?? this.deeds,
       selectedBranchId: selectedBranchId ?? this.selectedBranchId,
@@ -148,28 +150,28 @@ class PropertyCreateState extends Equatable {
 
   @override
   List<Object?> get props => [
-        currentStep,
-        draftPropertyId,
-        isLoading,
-        isSaving,
-        errorMessage,
-        formData,
-        deeds,
-        selectedBranchId,
-        selectedDeedId,
-        selectedType,
-        name,
-        address,
-        area,
-        constructionYear,
-        usageType,
-        description,
-        isAutoSavingDetails,
-        images,
-        isSavingImages,
-        owners,
-        isSyncingOwners,
-        isPublishing,
-        isPublished,
-      ];
+    currentStep,
+    draftPropertyId,
+    isLoading,
+    isSaving,
+    errorMessage,
+    formData,
+    deeds,
+    selectedBranchId,
+    selectedDeedId,
+    selectedType,
+    name,
+    address,
+    area,
+    constructionYear,
+    usageType,
+    description,
+    isAutoSavingDetails,
+    images,
+    isSavingImages,
+    owners,
+    isSyncingOwners,
+    isPublishing,
+    isPublished,
+  ];
 }

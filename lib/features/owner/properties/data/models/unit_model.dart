@@ -36,13 +36,14 @@ class UnitModel extends UnitEntity {
       typeLabel: json['unit_type_label'] as String?,
       status: json['unit_status'] as String? ?? '',
       statusLabel: json['unit_status_label'] as String?,
-      rentPrice: json['prices']?['monthly'] as num? ?? json['rent_price'] as num? ?? 0,
+      rentPrice:
+          json['prices']?['monthly'] as num? ?? json['rent_price'] as num? ?? 0,
       deposit: json['deposit'] as num?,
       specs: json['specs'] as String?,
       createdAt: json['created_at'] as String?,
       isFurnished: json['is_furnished'] as bool? ?? false,
       image: json['image'] as String?,
-      details: json['details'] != null 
+      details: json['details'] != null
           ? UnitDetailsEntity(
               roomsCount: json['details']['rooms_count'] as int? ?? 0,
               bathroomsCount: json['details']['bathrooms_count'] as int? ?? 0,

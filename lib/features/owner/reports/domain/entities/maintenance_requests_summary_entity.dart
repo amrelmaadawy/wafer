@@ -14,10 +14,5 @@ class MaintenanceRequestsSummaryEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        total,
-        open,
-        inProgress,
-        completed,
-      ];
+  List<Object?> get props => [total, open, inProgress, completed];
 }

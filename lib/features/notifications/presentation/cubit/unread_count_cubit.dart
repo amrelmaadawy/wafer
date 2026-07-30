@@ -6,7 +6,8 @@ import 'unread_count_state.dart';
 class UnreadCountCubit extends Cubit<UnreadCountState> {
   final GetUnreadNotificationsCountUseCase _getUnreadCountUseCase;
 
-  UnreadCountCubit(this._getUnreadCountUseCase) : super(const UnreadCountInitial());
+  UnreadCountCubit(this._getUnreadCountUseCase)
+    : super(const UnreadCountInitial());
 
   int _currentCount = 0;
   int get currentCount => _currentCount;

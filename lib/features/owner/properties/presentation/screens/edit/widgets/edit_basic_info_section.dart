@@ -25,8 +25,8 @@ class EditBasicInfoSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         EditSectionHeader(
-          title: 'المعلومات الأساسية', 
-          icon: Icons.info_outline_rounded
+          title: 'المعلومات الأساسية',
+          icon: Icons.info_outline_rounded,
         ),
         const SizedBox(height: 16),
         EditFormField(
@@ -51,7 +51,9 @@ class EditBasicInfoSection extends StatelessWidget {
                 controller: areaController,
                 label: LocaleKeys.propertyCreateArea.tr(),
                 icon: Icons.square_foot_outlined,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 isNumber: true,
                 hint: 'المساحة (م²)',
                 suffixText: LocaleKeys.propertyDetailsAreaUnit.tr(),

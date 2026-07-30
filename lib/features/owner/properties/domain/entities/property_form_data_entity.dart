@@ -32,17 +32,17 @@ class PropertyFormOptionsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        branches,
-        owners,
-        deeds,
-        propertyTypes,
-        usageTypes,
-        documentTypes,
-        propertyStatuses,
-        unitTypes,
-        unitStatuses,
-        unitPurposes,
-      ];
+    branches,
+    owners,
+    deeds,
+    propertyTypes,
+    usageTypes,
+    documentTypes,
+    propertyStatuses,
+    unitTypes,
+    unitStatuses,
+    unitPurposes,
+  ];
 }
 
 class PropertyFormDefaultsEntity extends Equatable {
@@ -66,14 +66,14 @@ class PropertyFormDefaultsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        defaultOwnerId,
-        defaultOwnerName,
-        defaultOwnerPercentage,
-        isRepresentative,
-        defaultPropertyStatus,
-        defaultPropertyType,
-        defaultUnitStatus,
-      ];
+    defaultOwnerId,
+    defaultOwnerName,
+    defaultOwnerPercentage,
+    isRepresentative,
+    defaultPropertyStatus,
+    defaultPropertyType,
+    defaultUnitStatus,
+  ];
 }
 
 class PropertyFormDataEntity extends Equatable {

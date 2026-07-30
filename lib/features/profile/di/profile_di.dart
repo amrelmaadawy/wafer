@@ -25,9 +25,7 @@ void initProfileModule() {
   }
 
   if (!sl.isRegistered<GetProfileUseCase>()) {
-    sl.registerLazySingleton<GetProfileUseCase>(
-      () => GetProfileUseCase(sl()),
-    );
+    sl.registerLazySingleton<GetProfileUseCase>(() => GetProfileUseCase(sl()));
   }
 
   if (!sl.isRegistered<UpdateProfileUseCase>()) {
@@ -49,5 +47,7 @@ void initProfileModule() {
   }
 
   sl.registerFactory<ProfileCubit>(() => ProfileCubit(sl(), sl(), sl()));
-  sl.registerFactory<ChangePasswordCubit>(() => ChangePasswordCubit(changePasswordUseCase: sl()));
+  sl.registerFactory<ChangePasswordCubit>(
+    () => ChangePasswordCubit(changePasswordUseCase: sl()),
+  );
 }

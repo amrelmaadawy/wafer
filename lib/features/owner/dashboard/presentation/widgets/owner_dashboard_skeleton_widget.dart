@@ -43,7 +43,11 @@ class OwnerDashboardSkeletonWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppShimmer.box(width: 140, height: 16),
-                AppShimmer.box(width: 60, height: 24, borderRadius: AppRadius.circularFull),
+                AppShimmer.box(
+                  width: 60,
+                  height: 24,
+                  borderRadius: AppRadius.circularFull,
+                ),
               ],
             ),
             AppShimmer.box(width: 180, height: 32),
@@ -77,7 +81,11 @@ class OwnerDashboardSkeletonWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppShimmer.box(width: 130, height: 16),
-                AppShimmer.box(width: 50, height: 22, borderRadius: AppRadius.circularFull),
+                AppShimmer.box(
+                  width: 50,
+                  height: 22,
+                  borderRadius: AppRadius.circularFull,
+                ),
               ],
             ),
             AppShimmer.box(height: 12, borderRadius: AppRadius.circularFull),
@@ -110,12 +118,18 @@ class OwnerDashboardSkeletonWidget extends StatelessWidget {
             AppShimmer.box(width: 120, height: 16),
             const SizedBox(height: 14),
             Row(
-              children: List.generate(3, (i) => Expanded(
-                child: Padding(
-                  padding: EdgeInsets.only(right: i < 2 ? 12 : 0),
-                  child: AppShimmer.box(height: 80, borderRadius: AppRadius.circularLg),
+              children: List.generate(
+                3,
+                (i) => Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: i < 2 ? 12 : 0),
+                    child: AppShimmer.box(
+                      height: 80,
+                      borderRadius: AppRadius.circularLg,
+                    ),
+                  ),
                 ),
-              )),
+              ),
             ),
           ],
         ),
@@ -132,9 +146,19 @@ class OwnerDashboardSkeletonWidget extends StatelessWidget {
           const SizedBox(height: 12),
           Row(
             children: [
-              Expanded(child: AppShimmer.box(height: 95, borderRadius: AppRadius.circularXxl)),
+              Expanded(
+                child: AppShimmer.box(
+                  height: 95,
+                  borderRadius: AppRadius.circularXxl,
+                ),
+              ),
               const SizedBox(width: 12),
-              Expanded(child: AppShimmer.box(height: 95, borderRadius: AppRadius.circularXxl)),
+              Expanded(
+                child: AppShimmer.box(
+                  height: 95,
+                  borderRadius: AppRadius.circularXxl,
+                ),
+              ),
             ],
           ),
         ],

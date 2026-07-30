@@ -12,7 +12,7 @@ abstract class AuthRemoteDataSource {
     required String deviceName,
     required String deviceToken,
   });
-  
+
   Future<void> logout();
 }
 
@@ -48,7 +48,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
     } on DioException catch (e) {
       if (e.response != null && e.response?.data is Map) {
-        final message = e.response?.data['message'] ?? LocaleKeys.errorsConnectionError.tr();
+        final message =
+            e.response?.data['message'] ??
+            LocaleKeys.errorsConnectionError.tr();
         throw ServerException(message.toString());
       }
       throw ServerException(e.message ?? LocaleKeys.errorsNetworkError.tr());
@@ -69,7 +71,9 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
       }
     } on DioException catch (e) {
       if (e.response != null && e.response?.data is Map) {
-        final message = e.response?.data['message'] ?? LocaleKeys.errorsConnectionError.tr();
+        final message =
+            e.response?.data['message'] ??
+            LocaleKeys.errorsConnectionError.tr();
         throw ServerException(message.toString());
       }
       throw ServerException(e.message ?? LocaleKeys.errorsNetworkError.tr());

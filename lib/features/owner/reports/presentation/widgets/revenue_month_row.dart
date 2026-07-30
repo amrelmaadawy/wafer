@@ -19,8 +19,8 @@ class RevenueMonthRow extends StatelessWidget {
     final progressColor = item.collectionRate >= 0.7
         ? const Color(0xFF10B981)
         : item.collectionRate >= 0.4
-            ? const Color(0xFFF59E0B)
-            : AppColors.error;
+        ? const Color(0xFFF59E0B)
+        : AppColors.error;
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -47,7 +47,9 @@ class RevenueMonthRow extends StatelessWidget {
                 children: [
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 5),
+                      horizontal: 12,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
                       color: context.primaryColor.withValues(alpha: 0.1),
                       borderRadius: AppRadius.circularSm,
@@ -64,7 +66,10 @@ class RevenueMonthRow extends StatelessWidget {
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: progressColor.withValues(alpha: 0.1),
                   borderRadius: AppRadius.circularFull,
@@ -169,8 +174,19 @@ class RevenueMonthRow extends StatelessWidget {
     if (parts.length < 2) return rawMonth;
     final monthNum = int.tryParse(parts[1]) ?? 0;
     const arabic = [
-      '', 'يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو',
-      'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+      '',
+      'يناير',
+      'فبراير',
+      'مارس',
+      'إبريل',
+      'مايو',
+      'يونيو',
+      'يوليو',
+      'أغسطس',
+      'سبتمبر',
+      'أكتوبر',
+      'نوفمبر',
+      'ديسمبر',
     ];
     final monthName = (monthNum >= 1 && monthNum <= 12)
         ? arabic[monthNum]

@@ -21,10 +21,12 @@ class OwnerEmployeeTasksReportView extends StatefulWidget {
   const OwnerEmployeeTasksReportView({super.key});
 
   @override
-  State<OwnerEmployeeTasksReportView> createState() => _OwnerEmployeeTasksReportViewState();
+  State<OwnerEmployeeTasksReportView> createState() =>
+      _OwnerEmployeeTasksReportViewState();
 }
 
-class _OwnerEmployeeTasksReportViewState extends State<OwnerEmployeeTasksReportView> {
+class _OwnerEmployeeTasksReportViewState
+    extends State<OwnerEmployeeTasksReportView> {
   final _scrollController = ScrollController();
   late OwnerEmployeeTasksCubit _cubit;
 
@@ -100,7 +102,7 @@ class _OwnerEmployeeTasksReportViewState extends State<OwnerEmployeeTasksReportV
         ),
         body: BlocBuilder<OwnerEmployeeTasksCubit, OwnerEmployeeTasksState>(
           builder: (context, state) {
-            if (state is OwnerEmployeeTasksInitial || 
+            if (state is OwnerEmployeeTasksInitial ||
                 (state is OwnerEmployeeTasksLoading && !state.isPagination)) {
               return const ReportSkeleton();
             }
@@ -119,13 +121,16 @@ class _OwnerEmployeeTasksReportViewState extends State<OwnerEmployeeTasksReportV
               );
             }
 
-            if (state is OwnerEmployeeTasksLoaded || 
+            if (state is OwnerEmployeeTasksLoaded ||
                 (state is OwnerEmployeeTasksLoading && state.isPagination)) {
-              final report = state is OwnerEmployeeTasksLoaded 
-                  ? state.report 
-                  : (context.read<OwnerEmployeeTasksCubit>().state as OwnerEmployeeTasksLoaded).report;
-                  
-              final isLoading = state is OwnerEmployeeTasksLoading && state.isPagination;
+              final report = state is OwnerEmployeeTasksLoaded
+                  ? state.report
+                  : (context.read<OwnerEmployeeTasksCubit>().state
+                            as OwnerEmployeeTasksLoaded)
+                        .report;
+
+              final isLoading =
+                  state is OwnerEmployeeTasksLoading && state.isPagination;
 
               return RefreshIndicator(
                 onRefresh: () => _cubit.fetchReport(forceRefresh: true),
@@ -139,12 +144,13 @@ class _OwnerEmployeeTasksReportViewState extends State<OwnerEmployeeTasksReportV
                           EmployeeTasksSummaryHeader(summary: report.summary),
                           const SizedBox(height: 16),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
                             child: Text(
                               LocaleKeys.employeeTasksList.tr(),
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                           ),
                           const SizedBox(height: 8),

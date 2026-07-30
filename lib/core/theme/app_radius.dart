@@ -16,9 +16,15 @@ class AppRadius {
   static const BorderRadius circularMd = BorderRadius.all(Radius.circular(md));
   static const BorderRadius circularLg = BorderRadius.all(Radius.circular(lg));
   static const BorderRadius circularXl = BorderRadius.all(Radius.circular(xl));
-  static const BorderRadius circularXxl = BorderRadius.all(Radius.circular(xxl));
-  static const BorderRadius circularFull = BorderRadius.all(Radius.circular(full));
+  static const BorderRadius circularXxl = BorderRadius.all(
+    Radius.circular(xxl),
+  );
+  static const BorderRadius circularFull = BorderRadius.all(
+    Radius.circular(full),
+  );
 
   // Bottom sheet top-only radius
-  static const BorderRadius topXxl = BorderRadius.vertical(top: Radius.circular(xxl));
+  static const BorderRadius topXxl = BorderRadius.vertical(
+    top: Radius.circular(xxl),
+  );
 }

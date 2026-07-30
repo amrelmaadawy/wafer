@@ -13,9 +13,7 @@ class ChangePasswordView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(
-        title: LocaleKeys.changePasswordTitle.tr(),
-      ),
+      appBar: CustomAppBar(title: LocaleKeys.changePasswordTitle.tr()),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Column(

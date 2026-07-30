@@ -19,19 +19,42 @@ class UnitsStatusPdfBuilder {
     );
   }
 
-  static pw.Widget _buildSummaryCards(UnitsStatusSummaryEntity summary, pw.ThemeData theme) {
+  static pw.Widget _buildSummaryCards(
+    UnitsStatusSummaryEntity summary,
+    pw.ThemeData theme,
+  ) {
     return pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       children: [
         _buildSummaryCard('إجمالي الوحدات', '${summary.total}', theme),
-        _buildSummaryCard('مؤجرة', '${summary.rented}', theme, color: PdfColor.fromInt(0xFF10B981)), // Green
-        _buildSummaryCard('شاغرة', '${summary.vacant}', theme, color: PdfColor.fromInt(0xFFF59E0B)), // Orange
-        _buildSummaryCard('صيانة', '${summary.maintenance}', theme, color: PdfColor.fromInt(0xFFEF4444)), // Red
+        _buildSummaryCard(
+          'مؤجرة',
+          '${summary.rented}',
+          theme,
+          color: PdfColor.fromInt(0xFF10B981),
+        ), // Green
+        _buildSummaryCard(
+          'شاغرة',
+          '${summary.vacant}',
+          theme,
+          color: PdfColor.fromInt(0xFFF59E0B),
+        ), // Orange
+        _buildSummaryCard(
+          'صيانة',
+          '${summary.maintenance}',
+          theme,
+          color: PdfColor.fromInt(0xFFEF4444),
+        ), // Red
       ],
     );
   }
 
-  static pw.Widget _buildSummaryCard(String title, String value, pw.ThemeData theme, {PdfColor? color}) {
+  static pw.Widget _buildSummaryCard(
+    String title,
+    String value,
+    pw.ThemeData theme, {
+    PdfColor? color,
+  }) {
     return pw.Expanded(
       child: pw.Container(
         margin: const pw.EdgeInsets.symmetric(horizontal: 4),
@@ -68,7 +91,10 @@ class UnitsStatusPdfBuilder {
     );
   }
 
-  static pw.Widget _buildTable(UnitsStatusReportEntity report, pw.ThemeData theme) {
+  static pw.Widget _buildTable(
+    UnitsStatusReportEntity report,
+    pw.ThemeData theme,
+  ) {
     if (report.items.isEmpty) {
       return pw.Center(
         child: pw.Text(
@@ -108,7 +134,9 @@ class UnitsStatusPdfBuilder {
       data: report.items.map((item) {
         return [
           item.name.isNotEmpty ? item.name : item.unitNumber,
-          item.property.name.isNotEmpty ? item.property.name : item.property.code,
+          item.property.name.isNotEmpty
+              ? item.property.name
+              : item.property.code,
           item.floorNumber != null ? '${item.floorNumber}' : '-',
           item.statusLabel,
         ];

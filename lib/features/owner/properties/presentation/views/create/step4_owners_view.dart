@@ -19,7 +19,10 @@ class Step4OwnersView extends StatelessWidget {
     return BlocBuilder<PropertyCreateCubit, PropertyCreateState>(
       builder: (context, state) {
         final cubit = context.read<PropertyCreateCubit>();
-        final double totalPercentage = state.owners.fold(0.0, (sum, o) => sum + o.percentage.toDouble());
+        final double totalPercentage = state.owners.fold(
+          0.0,
+          (sum, o) => sum + o.percentage.toDouble(),
+        );
         final is100 = (totalPercentage - 100.0).abs() < 0.01;
 
         return SingleChildScrollView(
@@ -54,7 +57,10 @@ class Step4OwnersView extends StatelessWidget {
                   children: [
                     Text(
                       '${LocaleKeys.propertyCreateOwnersAddedCount.tr()} (${state.owners.length})',
-                      style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                      ),
                     ),
                     TextButton.icon(
                       onPressed: () => cubit.autoDistributePercentages(),
@@ -62,16 +68,21 @@ class Step4OwnersView extends StatelessWidget {
                       label: Text(LocaleKeys.propertyOwnersAutoDistribute.tr()),
                       style: TextButton.styleFrom(
                         foregroundColor: context.primaryColor,
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 12),
-                ...state.owners.map((owner) => OwnerEntryCard(owner: owner, cubit: cubit)),
+                ...state.owners.map(
+                  (owner) => OwnerEntryCard(owner: owner, cubit: cubit),
+                ),
               ] else
                 _buildEmptyState(context),
-              
+
               const SizedBox(height: 40),
             ],
           ),
@@ -80,7 +91,11 @@ class Step4OwnersView extends StatelessWidget {
     );
   }
 
-  Widget _buildAddOwnerSection(BuildContext context, PropertyCreateState state, PropertyCreateCubit cubit) {
+  Widget _buildAddOwnerSection(
+    BuildContext context,
+    PropertyCreateState state,
+    PropertyCreateCubit cubit,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
@@ -101,7 +116,7 @@ class Step4OwnersView extends StatelessWidget {
             child: OutlinedButton.icon(
               onPressed: () {
                 final availableOwners = state.formData?.options.owners ?? [];
-                
+
                 showModalBottomSheet(
                   context: context,
                   isScrollControlled: true,
@@ -111,26 +126,36 @@ class Step4OwnersView extends StatelessWidget {
                       availableOwners: availableOwners,
                       addedOwnerIds: state.owners.map((e) => e.id).toSet(),
                       onSelect: (owner) {
-                        cubit.addOwner(PropertyOwnerEntity(
-                          id: owner.id,
-                          name: owner.name,
-                          percentage: 0,
-                          isRepresentative: false,
-                        ));
+                        cubit.addOwner(
+                          PropertyOwnerEntity(
+                            id: owner.id,
+                            name: owner.name,
+                            percentage: 0,
+                            isRepresentative: false,
+                          ),
+                        );
                       },
                     );
                   },
                 );
               },
-              icon: Icon(Icons.person_add_alt_1_outlined, color: context.primaryColor, size: 20),
+              icon: Icon(
+                Icons.person_add_alt_1_outlined,
+                color: context.primaryColor,
+                size: 20,
+              ),
               label: Text(
                 LocaleKeys.propertyOwnersAddOwner.tr(),
                 style: TextStyle(color: context.primaryColor),
               ),
               style: OutlinedButton.styleFrom(
-                side: BorderSide(color: context.primaryColor.withValues(alpha: 0.3)),
+                side: BorderSide(
+                  color: context.primaryColor.withValues(alpha: 0.3),
+                ),
                 padding: const EdgeInsets.symmetric(vertical: 12),
-                shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadius.circularLg,
+                ),
               ),
             ),
           ),
@@ -139,7 +164,11 @@ class Step4OwnersView extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressBar(BuildContext context, double totalPercentage, bool is100) {
+  Widget _buildProgressBar(
+    BuildContext context,
+    double totalPercentage,
+    bool is100,
+  ) {
     final progressColor = is100 ? AppColors.success : context.primaryColor;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

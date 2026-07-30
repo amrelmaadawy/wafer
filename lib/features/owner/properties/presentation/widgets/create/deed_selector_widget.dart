@@ -32,10 +32,12 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
   @override
   Widget build(BuildContext context) {
     final filteredDeeds = widget.deeds
-        .where((d) =>
-            d.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-            d.code.toLowerCase().contains(_searchQuery.toLowerCase()) ||
-            (d.documentNumber ?? '').contains(_searchQuery))
+        .where(
+          (d) =>
+              d.name.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+              d.code.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+              (d.documentNumber ?? '').contains(_searchQuery),
+        )
         .toList();
 
     return Column(
@@ -50,13 +52,23 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
             ),
             TextButton.icon(
               onPressed: widget.onCreateNew,
-              icon: Icon(Icons.add_rounded, size: 18, color: context.primaryColor),
+              icon: Icon(
+                Icons.add_rounded,
+                size: 18,
+                color: context.primaryColor,
+              ),
               label: Text(
                 LocaleKeys.propertyCreateNewDeed.tr(),
-                style: TextStyle(color: context.primaryColor, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  color: context.primaryColor,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
               style: TextButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
                 minimumSize: Size.zero,
                 tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               ),
@@ -75,11 +87,18 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
             ),
             child: Column(
               children: [
-                const Icon(Icons.description_outlined, size: 40, color: AppColors.textSecondaryLight),
+                const Icon(
+                  Icons.description_outlined,
+                  size: 40,
+                  color: AppColors.textSecondaryLight,
+                ),
                 const SizedBox(height: 12),
                 Text(
                   LocaleKeys.propertyCreateNoDeeds.tr(),
-                  style: const TextStyle(color: AppColors.textSecondaryLight, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                    color: AppColors.textSecondaryLight,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ],
             ),
@@ -89,7 +108,10 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
           TextFormField(
             decoration: InputDecoration(
               hintText: LocaleKeys.propertyCreateSearchDeeds.tr(),
-              prefixIcon: const Icon(Icons.search_rounded, color: AppColors.textSecondaryLight),
+              prefixIcon: const Icon(
+                Icons.search_rounded,
+                color: AppColors.textSecondaryLight,
+              ),
               filled: true,
               fillColor: AppColors.backgroundLight,
               border: OutlineInputBorder(
@@ -100,7 +122,10 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
                 borderRadius: AppRadius.circularLg,
                 borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
               ),
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
             ),
             onChanged: (val) => setState(() => _searchQuery = val),
           ),
@@ -112,34 +137,43 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
               color: AppColors.backgroundLight,
               borderRadius: AppRadius.circularLg,
               border: Border.all(
-                color: widget.errorText != null ? Colors.red : const Color(0xFFE2E8F0),
+                color: widget.errorText != null
+                    ? Colors.red
+                    : const Color(0xFFE2E8F0),
               ),
             ),
             child: filteredDeeds.isEmpty
                 ? Center(
                     child: Text(
                       'لا توجد نتائج',
-                      style: const TextStyle(color: AppColors.textSecondaryLight),
+                      style: const TextStyle(
+                        color: AppColors.textSecondaryLight,
+                      ),
                     ),
                   )
                 : ListView.separated(
                     padding: const EdgeInsets.all(8),
                     itemCount: filteredDeeds.length,
-                    separatorBuilder: (context, index) => const SizedBox(height: 8),
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: 8),
                     itemBuilder: (context, index) {
                       final deed = filteredDeeds[index];
                       final isSelected = widget.selectedDeedId == deed.id;
-                      
+
                       return InkWell(
                         onTap: () => widget.onSelect(deed.id),
                         borderRadius: AppRadius.circularMd,
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
-                            color: isSelected ? context.primaryColor.withValues(alpha: 0.05) : Colors.white,
+                            color: isSelected
+                                ? context.primaryColor.withValues(alpha: 0.05)
+                                : Colors.white,
                             borderRadius: AppRadius.circularMd,
                             border: Border.all(
-                              color: isSelected ? context.primaryColor : const Color(0xFFE2E8F0),
+                              color: isSelected
+                                  ? context.primaryColor
+                                  : const Color(0xFFE2E8F0),
                               width: isSelected ? 1.5 : 1,
                             ),
                           ),
@@ -149,12 +183,18 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
                                 width: 40,
                                 height: 40,
                                 decoration: BoxDecoration(
-                                  color: isSelected ? context.primaryColor.withValues(alpha: 0.1) : AppColors.backgroundLight,
+                                  color: isSelected
+                                      ? context.primaryColor.withValues(
+                                          alpha: 0.1,
+                                        )
+                                      : AppColors.backgroundLight,
                                   shape: BoxShape.circle,
                                 ),
                                 child: Icon(
                                   Icons.description_rounded,
-                                  color: isSelected ? context.primaryColor : AppColors.textSecondaryLight,
+                                  color: isSelected
+                                      ? context.primaryColor
+                                      : AppColors.textSecondaryLight,
                                   size: 20,
                                 ),
                               ),
@@ -169,8 +209,12 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         fontSize: 14,
-                                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
-                                        color: isSelected ? context.primaryColor : AppColors.textPrimaryLight,
+                                        fontWeight: isSelected
+                                            ? FontWeight.w700
+                                            : FontWeight.w600,
+                                        color: isSelected
+                                            ? context.primaryColor
+                                            : AppColors.textPrimaryLight,
                                       ),
                                     ),
                                     const SizedBox(height: 4),
@@ -178,7 +222,10 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
                                       children: [
                                         Text(
                                           deed.code,
-                                          style: const TextStyle(fontSize: 12, color: AppColors.textSecondaryLight),
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: AppColors.textSecondaryLight,
+                                          ),
                                         ),
                                         if (deed.documentNumber != null) ...[
                                           const SizedBox(width: 8),
@@ -186,14 +233,19 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
                                             width: 4,
                                             height: 4,
                                             decoration: const BoxDecoration(
-                                              color: AppColors.textSecondaryLight,
+                                              color:
+                                                  AppColors.textSecondaryLight,
                                               shape: BoxShape.circle,
                                             ),
                                           ),
                                           const SizedBox(width: 8),
                                           Text(
                                             deed.documentNumber!,
-                                            style: const TextStyle(fontSize: 12, color: AppColors.textSecondaryLight),
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              color:
+                                                  AppColors.textSecondaryLight,
+                                            ),
                                           ),
                                         ],
                                       ],
@@ -202,7 +254,10 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
                                 ),
                               ),
                               if (isSelected)
-                                Icon(Icons.check_circle_rounded, color: context.primaryColor),
+                                Icon(
+                                  Icons.check_circle_rounded,
+                                  color: context.primaryColor,
+                                ),
                             ],
                           ),
                         ),
@@ -215,7 +270,11 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
               padding: const EdgeInsets.only(top: 8, right: 16, left: 16),
               child: Text(
                 widget.errorText!,
-                style: const TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.w500),
+                style: const TextStyle(
+                  color: Colors.red,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
         ],

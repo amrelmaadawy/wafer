@@ -38,7 +38,11 @@ class ProfileInfoCard extends StatelessWidget {
                     color: context.primaryColor.withValues(alpha: 0.1),
                     borderRadius: AppRadius.circularMd,
                   ),
-                  child: Icon(Icons.person_outline_rounded, color: context.primaryColor, size: 18),
+                  child: Icon(
+                    Icons.person_outline_rounded,
+                    color: context.primaryColor,
+                    size: 18,
+                  ),
                 ),
                 const SizedBox(width: 10),
                 Text(
@@ -58,36 +62,69 @@ class ProfileInfoCard extends StatelessWidget {
             icon: Icons.phone_android_rounded,
             label: LocaleKeys.profile_phone.tr(),
             value: profile.phone,
-            onCopy: () => _copy(context, LocaleKeys.profile_phone.tr(), profile.phone),
+            onCopy: () =>
+                _copy(context, LocaleKeys.profile_phone.tr(), profile.phone),
           ),
-          const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
+          const Divider(
+            height: 1,
+            color: AppColors.borderLight,
+            indent: 20,
+            endIndent: 20,
+          ),
           ProfileInfoTile(
             icon: Icons.email_outlined,
             label: LocaleKeys.profile_email.tr(),
             value: profile.email,
-            onCopy: () => _copy(context, LocaleKeys.profile_email.tr(), profile.email),
+            onCopy: () =>
+                _copy(context, LocaleKeys.profile_email.tr(), profile.email),
           ),
-          const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
+          const Divider(
+            height: 1,
+            color: AppColors.borderLight,
+            indent: 20,
+            endIndent: 20,
+          ),
           ProfileInfoTile(
             icon: Icons.badge_outlined,
             label: LocaleKeys.profile_identity_number.tr(),
             value: profile.identityNumber,
-            onCopy: () => _copy(context, LocaleKeys.profile_identity_number.tr(), profile.identityNumber),
+            onCopy: () => _copy(
+              context,
+              LocaleKeys.profile_identity_number.tr(),
+              profile.identityNumber,
+            ),
           ),
-          const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
+          const Divider(
+            height: 1,
+            color: AppColors.borderLight,
+            indent: 20,
+            endIndent: 20,
+          ),
           ProfileInfoTile(
             icon: Icons.event_outlined,
             label: LocaleKeys.profile_identity_expiry.tr(),
             value: profile.identityExpiry,
             trailing: expiringSoon ? _expiryBadge() : null,
           ),
-          const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
+          const Divider(
+            height: 1,
+            color: AppColors.borderLight,
+            indent: 20,
+            endIndent: 20,
+          ),
           ProfileInfoTile(
             icon: Icons.wc_rounded,
             label: LocaleKeys.profile_gender.tr(),
-            value: profile.gender.toLowerCase() == 'male' ? LocaleKeys.profile_gender_male.tr() : LocaleKeys.profile_gender_female.tr(),
+            value: profile.gender.toLowerCase() == 'male'
+                ? LocaleKeys.profile_gender_male.tr()
+                : LocaleKeys.profile_gender_female.tr(),
           ),
-          const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
+          const Divider(
+            height: 1,
+            color: AppColors.borderLight,
+            indent: 20,
+            endIndent: 20,
+          ),
           ProfileInfoTile(
             icon: Icons.calendar_month_outlined,
             label: LocaleKeys.profile_joined_date.tr(),
@@ -112,7 +149,11 @@ class ProfileInfoCard extends StatelessWidget {
       ),
       child: Text(
         LocaleKeys.profile_expiring_soon.tr(),
-        style: const TextStyle(color: AppColors.error, fontSize: 11, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          color: AppColors.error,
+          fontSize: 11,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
@@ -128,12 +169,18 @@ class ProfileInfoCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 16),
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: AppColors.error,
+            size: 16,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(
               LocaleKeys.profile_expiry_warning.tr(),
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(color: AppColors.error),
+              style: Theme.of(
+                context,
+              ).textTheme.bodySmall?.copyWith(color: AppColors.error),
             ),
           ),
         ],
@@ -144,7 +191,11 @@ class ProfileInfoCard extends StatelessWidget {
   void _copy(BuildContext context, String label, String value) {
     if (value.isEmpty) return;
     Clipboard.setData(ClipboardData(text: value));
-    AppToast.showSuccess(context, LocaleKeys.profile_copy_success.tr(args: [label]), title: LocaleKeys.profile_copied_title.tr());
+    AppToast.showSuccess(
+      context,
+      LocaleKeys.profile_copy_success.tr(args: [label]),
+      title: LocaleKeys.profile_copied_title.tr(),
+    );
   }
 
   bool _isExpiringSoon(String expiry) {

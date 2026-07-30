@@ -9,10 +9,7 @@ import '../../domain/entities/units_status_summary_entity.dart';
 class UnitsStatusSummaryHeader extends StatelessWidget {
   final UnitsStatusSummaryEntity summary;
 
-  const UnitsStatusSummaryHeader({
-    super.key,
-    required this.summary,
-  });
+  const UnitsStatusSummaryHeader({super.key, required this.summary});
 
   @override
   Widget build(BuildContext context) {

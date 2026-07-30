@@ -5,6 +5,9 @@ import '../models/maintenance_response_model.dart';
 
 import '../../domain/usecases/create_owner_maintenance_use_case.dart';
 import '../../domain/usecases/update_owner_maintenance_use_case.dart';
+import '../../domain/usecases/approve_owner_maintenance_use_case.dart';
+import '../../domain/usecases/reject_owner_maintenance_use_case.dart';
+import '../../domain/usecases/assign_owner_maintenance_use_case.dart';
 
 abstract class OwnerMaintenanceRemoteDataSource {
   Future<MaintenanceResponseModel> getMaintenanceRequests({
@@ -16,6 +19,9 @@ abstract class OwnerMaintenanceRemoteDataSource {
   Future<MaintenanceItemModel> updateMaintenanceRequest(
     UpdateOwnerMaintenanceParams params,
   );
+  Future<void> approveMaintenanceRequest(ApproveOwnerMaintenanceParams params);
+  Future<void> rejectMaintenanceRequest(RejectOwnerMaintenanceParams params);
+  Future<void> assignMaintenanceRequest(AssignOwnerMaintenanceParams params);
   Future<void> deleteMaintenanceRequest(int id);
 }
 
@@ -106,9 +112,39 @@ class OwnerMaintenanceRemoteDataSourceImpl
   }
 
   @override
+  Future<void> approveMaintenanceRequest(
+    ApproveOwnerMaintenanceParams params,
+  ) async {
+    await _dio.post(
+      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceApprove(params.id)}',
+      data: params.toJson(),
+    );
+  }
+
+  @override
   Future<void> deleteMaintenanceRequest(int id) async {
     await _dio.delete(
       '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(id)}',
+    );
+  }
+
+  @override
+  Future<void> rejectMaintenanceRequest(
+    RejectOwnerMaintenanceParams params,
+  ) async {
+    await _dio.post(
+      '${ApiConstants.baseUrl}owner/maintenance-requests/${params.id}/reject',
+      data: params.toJson(),
+    );
+  }
+
+  @override
+  Future<void> assignMaintenanceRequest(
+    AssignOwnerMaintenanceParams params,
+  ) async {
+    await _dio.post(
+      '${ApiConstants.baseUrl}owner/maintenance-requests/${params.id}/assign',
+      data: params.toJson(),
     );
   }
 }

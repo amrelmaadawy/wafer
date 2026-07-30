@@ -26,9 +26,14 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
     } on DioException catch (e) {
       String? serverMsg;
       if (e.response?.data is Map<String, dynamic>) {
-        serverMsg = (e.response?.data as Map<String, dynamic>)['message'] as String?;
+        serverMsg =
+            (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      return Left(ServerFailure(serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(
+        ServerFailure(
+          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -44,9 +49,14 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
     } on DioException catch (e) {
       String? serverMsg;
       if (e.response?.data is Map<String, dynamic>) {
-        serverMsg = (e.response?.data as Map<String, dynamic>)['message'] as String?;
+        serverMsg =
+            (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      return Left(ServerFailure(serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(
+        ServerFailure(
+          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

@@ -9,10 +9,7 @@ import '../../../domain/entities/properties_stats_entity.dart';
 class PropertiesStatsHeaderWidget extends StatelessWidget {
   final PropertiesStatsEntity stats;
 
-  const PropertiesStatsHeaderWidget({
-    super.key,
-    required this.stats,
-  });
+  const PropertiesStatsHeaderWidget({super.key, required this.stats});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +22,8 @@ class PropertiesStatsHeaderWidget extends StatelessWidget {
             context,
             title: LocaleKeys.propertiesStatsTotal.tr(),
             value: '${stats.totalProperties}',
-            subtitle: '${LocaleKeys.propertiesStatsBuildings.tr(args: ['${stats.buildingsCount}'])} | ${LocaleKeys.propertiesStatsLands.tr(args: ['${stats.landsCount}'])}',
+            subtitle:
+                '${LocaleKeys.propertiesStatsBuildings.tr(args: ['${stats.buildingsCount}'])} | ${LocaleKeys.propertiesStatsLands.tr(args: ['${stats.landsCount}'])}',
             icon: Icons.domain_rounded,
             color: context.primaryColor,
             bgColor: context.primarySubtle,
@@ -35,7 +33,9 @@ class PropertiesStatsHeaderWidget extends StatelessWidget {
             context,
             title: LocaleKeys.propertiesStatsUnitsAndDeeds.tr(),
             value: '${stats.totalUnits}',
-            subtitle: LocaleKeys.propertiesStatsDeeds.tr(args: ['${stats.totalDeeds}']),
+            subtitle: LocaleKeys.propertiesStatsDeeds.tr(
+              args: ['${stats.totalDeeds}'],
+            ),
             icon: Icons.grid_view_rounded,
             color: const Color(0xFF0EA5E9),
             bgColor: const Color(0xFFE0F2FE),
@@ -44,8 +44,10 @@ class PropertiesStatsHeaderWidget extends StatelessWidget {
           _buildStatCard(
             context,
             title: LocaleKeys.propertiesStatsUsages.tr(),
-            value: '${stats.residentialCount + stats.commercialCount + stats.mixedCount}',
-            subtitle: '${LocaleKeys.propertiesStatsResidential.tr(args: ['${stats.residentialCount}'])} | ${LocaleKeys.propertiesStatsMixed.tr(args: ['${stats.mixedCount}'])}',
+            value:
+                '${stats.residentialCount + stats.commercialCount + stats.mixedCount}',
+            subtitle:
+                '${LocaleKeys.propertiesStatsResidential.tr(args: ['${stats.residentialCount}'])} | ${LocaleKeys.propertiesStatsMixed.tr(args: ['${stats.mixedCount}'])}',
             icon: Icons.pie_chart_rounded,
             color: const Color(0xFF10B981),
             bgColor: const Color(0xFFD1FAE5),

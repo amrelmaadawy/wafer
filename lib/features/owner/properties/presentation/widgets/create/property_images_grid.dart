@@ -33,11 +33,11 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
 
   Future<void> _pickImage() async {
     if (_isPickerActive) return;
-    
+
     setState(() {
       _isPickerActive = true;
     });
-    
+
     try {
       final picker = ImagePicker();
       final xfile = await picker.pickImage(source: ImageSource.gallery);
@@ -86,7 +86,10 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
         decoration: BoxDecoration(
           color: AppColors.surfaceLight,
           borderRadius: AppRadius.circularXl,
-          border: Border.all(color: const Color(0xFFE2E8F0), style: BorderStyle.solid),
+          border: Border.all(
+            color: const Color(0xFFE2E8F0),
+            style: BorderStyle.solid,
+          ),
         ),
         child: Column(
           children: [
@@ -96,7 +99,11 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
                 color: context.primaryColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.add_a_photo_outlined, size: 32, color: context.primaryColor),
+              child: Icon(
+                Icons.add_a_photo_outlined,
+                size: 32,
+                color: context.primaryColor,
+              ),
             ),
             const SizedBox(height: 16),
             Text(
@@ -128,7 +135,9 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
         decoration: BoxDecoration(
           color: context.primaryColor.withValues(alpha: 0.05),
           borderRadius: AppRadius.circularLg,
-          border: Border.all(color: context.primaryColor.withValues(alpha: 0.3)),
+          border: Border.all(
+            color: context.primaryColor.withValues(alpha: 0.3),
+          ),
         ),
         child: Center(
           child: Column(
@@ -167,111 +176,128 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
               ),
             ),
           ),
-        if (image.isUploading)
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: AppRadius.circularLg,
-              color: Colors.black.withValues(alpha: 0.5),
-            ),
-            child: const Center(
-              child: SizedBox(
-                width: 24,
-                height: 24,
-                child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+          if (image.isUploading)
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: AppRadius.circularLg,
+                color: Colors.black.withValues(alpha: 0.5),
               ),
-            ),
-          ),
-        if (image.uploadFailed)
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: AppRadius.circularLg,
-              color: AppColors.error.withValues(alpha: 0.8),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.error_outline, color: Colors.white, size: 24),
-                  const SizedBox(height: 4),
-                  Text(
-                    LocaleKeys.propertyImagesUploadFailed.tr(),
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(color: Colors.white, fontSize: 10),
+              child: const Center(
+                child: SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
                   ),
-                ],
+                ),
               ),
             ),
-          ),
-        if (!image.isUploading)
-          Positioned(
-            top: 4,
-            right: 4,
-            child: GestureDetector(
-              onTap: () => widget.onRemoveImage(image.tempPath ?? image.localPath),
+          if (image.uploadFailed)
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: AppRadius.circularLg,
+                color: AppColors.error.withValues(alpha: 0.8),
+              ),
+              child: Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.error_outline,
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      LocaleKeys.propertyImagesUploadFailed.tr(),
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          if (!image.isUploading)
+            Positioned(
+              top: 4,
+              right: 4,
+              child: GestureDetector(
+                onTap: () =>
+                    widget.onRemoveImage(image.tempPath ?? image.localPath),
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  decoration: const BoxDecoration(
+                    color: Colors.black54,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.close, size: 14, color: Colors.white),
+                ),
+              ),
+            ),
+          if (!image.isUploading && widget.onUpdateDescription != null)
+            Positioned(
+              bottom: 4,
+              right: 4,
+              child: GestureDetector(
+                onTap: () => _showDescriptionBottomSheet(context, image),
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: context.primaryColor,
+                    shape: BoxShape.circle,
+                  ),
+                  child: const Icon(Icons.edit, size: 14, color: Colors.white),
+                ),
+              ),
+            ),
+          if (image.description != null && image.description!.isNotEmpty)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
               child: Container(
-                padding: const EdgeInsets.all(4),
+                padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
                 decoration: const BoxDecoration(
                   color: Colors.black54,
-                  shape: BoxShape.circle,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(
+                      12,
+                    ), // matching AppRadius.circularLg
+                    bottomRight: Radius.circular(12),
+                  ),
                 ),
-                child: const Icon(Icons.close, size: 14, color: Colors.white),
-              ),
-            ),
-          ),
-        if (!image.isUploading && widget.onUpdateDescription != null)
-          Positioned(
-            bottom: 4,
-            right: 4,
-            child: GestureDetector(
-              onTap: () => _showDescriptionBottomSheet(context, image),
-              child: Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: context.primaryColor,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.edit, size: 14, color: Colors.white),
-              ),
-            ),
-          ),
-        if (image.description != null && image.description!.isNotEmpty)
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
-              decoration: const BoxDecoration(
-                color: Colors.black54,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(12), // matching AppRadius.circularLg
-                  bottomRight: Radius.circular(12),
+                child: Text(
+                  image.description!,
+                  style: const TextStyle(color: Colors.white, fontSize: 8),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
                 ),
               ),
-              child: Text(
-                image.description!,
-                style: const TextStyle(color: Colors.white, fontSize: 8),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-              ),
             ),
-          ),
-      ],
-    ),
+        ],
+      ),
     );
   }
 
-  void _showDescriptionBottomSheet(BuildContext context, TempPropertyImageEntity image) {
-    final TextEditingController controller = TextEditingController(text: image.description);
-    
+  void _showDescriptionBottomSheet(
+    BuildContext context,
+    TempPropertyImageEntity image,
+  ) {
+    final TextEditingController controller = TextEditingController(
+      text: image.description,
+    );
+
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (bottomSheetContext) {
         return Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom),
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(bottomSheetContext).viewInsets.bottom,
+          ),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
             decoration: const BoxDecoration(
@@ -301,7 +327,9 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
                 ),
                 const SizedBox(height: 24),
                 Container(
-                  constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height * 0.35),
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.35,
+                  ),
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade100,
@@ -337,7 +365,10 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: AppRadius.circularMd,
-                      borderSide: BorderSide(color: context.primaryColor, width: 1.5),
+                      borderSide: BorderSide(
+                        color: context.primaryColor,
+                        width: 1.5,
+                      ),
                     ),
                     filled: true,
                     fillColor: Colors.grey.shade50,
@@ -350,7 +381,10 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
                   height: 52,
                   child: ElevatedButton(
                     onPressed: () {
-                      widget.onUpdateDescription!(image.localPath, controller.text);
+                      widget.onUpdateDescription!(
+                        image.localPath,
+                        controller.text,
+                      );
                       Navigator.pop(bottomSheetContext);
                     },
                     style: ElevatedButton.styleFrom(

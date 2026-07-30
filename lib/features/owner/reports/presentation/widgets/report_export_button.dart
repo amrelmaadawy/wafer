@@ -53,7 +53,10 @@ class ReportExportButton extends StatelessWidget {
                   ),
                   child: const Icon(Icons.picture_as_pdf, color: Colors.red),
                 ),
-                title: const Text('تصدير كـ PDF', style: TextStyle(fontWeight: FontWeight.w600)),
+                title: const Text(
+                  'تصدير كـ PDF',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
                 onTap: () {
                   Navigator.pop(ctx);
                   onPdfPressed();
@@ -68,7 +71,10 @@ class ReportExportButton extends StatelessWidget {
                   ),
                   child: const Icon(Icons.table_chart, color: Colors.green),
                 ),
-                title: const Text('تصدير كـ Excel', style: TextStyle(fontWeight: FontWeight.w600)),
+                title: const Text(
+                  'تصدير كـ Excel',
+                  style: TextStyle(fontWeight: FontWeight.w600),
+                ),
                 onTap: () {
                   Navigator.pop(ctx);
                   onExcelPressed();
@@ -95,12 +101,18 @@ class ReportExportButton extends StatelessWidget {
             decoration: BoxDecoration(
               color: context.primaryColor.withValues(alpha: 0.1),
               borderRadius: AppRadius.circularMd,
-              border: Border.all(color: context.primaryColor.withValues(alpha: 0.2)),
+              border: Border.all(
+                color: context.primaryColor.withValues(alpha: 0.2),
+              ),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(Icons.print_rounded, color: context.primaryColor, size: 18),
+                Icon(
+                  Icons.print_rounded,
+                  color: context.primaryColor,
+                  size: 18,
+                ),
                 const SizedBox(width: 6),
                 Text(
                   'تصدير',

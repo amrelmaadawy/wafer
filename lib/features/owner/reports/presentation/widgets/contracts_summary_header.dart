@@ -47,8 +47,11 @@ class ContractsSummaryHeader extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.timer_outlined,
-                      color: Colors.white70, size: 18),
+                  const Icon(
+                    Icons.timer_outlined,
+                    color: Colors.white70,
+                    size: 18,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     'Contracts Expiring in $days Days',
@@ -71,15 +74,16 @@ class ContractsSummaryHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              Container(
-                height: 1,
-                color: Colors.white.withValues(alpha: 0.15),
-              ),
+              Container(height: 1, color: Colors.white.withValues(alpha: 0.15)),
               const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Icons.payments_outlined, color: Colors.white, size: 24),
+                  const Icon(
+                    Icons.payments_outlined,
+                    color: Colors.white,
+                    size: 24,
+                  ),
                   const SizedBox(width: 12),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

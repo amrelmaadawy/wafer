@@ -43,10 +43,10 @@ class OccupancyExcelBuilder {
     // Summary Section
     sheet.getRangeByName('A4').text = 'إجمالي العقارات';
     sheet.getRangeByName('B4').number = properties.length.toDouble();
-    
+
     sheet.getRangeByName('A5').text = 'إجمالي الوحدات';
     sheet.getRangeByName('B5').number = totalUnits.toDouble();
-    
+
     sheet.getRangeByName('A6').text = 'الوحدات المؤجرة';
     sheet.getRangeByName('B6').number = totalRented.toDouble();
 
@@ -88,12 +88,15 @@ class OccupancyExcelBuilder {
     // Data Rows
     int row = startRow + 1;
     for (final prop in properties) {
-      sheet.getRangeByIndex(row, 1).text = prop.propertyName.isEmpty ? 'عقار ${prop.propertyId}' : prop.propertyName;
+      sheet.getRangeByIndex(row, 1).text = prop.propertyName.isEmpty
+          ? 'عقار ${prop.propertyId}'
+          : prop.propertyName;
       sheet.getRangeByIndex(row, 2).text = prop.code;
       sheet.getRangeByIndex(row, 3).number = prop.totalUnits.toDouble();
       sheet.getRangeByIndex(row, 4).number = prop.rentedUnits.toDouble();
       sheet.getRangeByIndex(row, 5).number = prop.vacantUnits.toDouble();
-      sheet.getRangeByIndex(row, 6).text = '${prop.occupancyRate.toStringAsFixed(1)}%';
+      sheet.getRangeByIndex(row, 6).text =
+          '${prop.occupancyRate.toStringAsFixed(1)}%';
 
       sheet.getRangeByIndex(row, 1, row, 6).cellStyle = normalStyle;
       row++;

@@ -6,33 +6,27 @@ class UnitsListCubit extends Cubit<UnitsListState> {
   final GetPropertyUnitsUseCase _getPropertyUnitsUseCase;
 
   UnitsListCubit(this._getPropertyUnitsUseCase)
-      : super(const UnitsListInitial());
+    : super(const UnitsListInitial());
 
   Future<void> loadUnits(int propertyId) async {
     emit(const UnitsListLoading());
     final result = await _getPropertyUnitsUseCase(propertyId);
-    
+
     if (isClosed) return;
 
-    result.fold(
-      (failure) => emit(UnitsListError(failure.message)),
-      (data) {
-        if (data.items.isEmpty) {
-          emit(const UnitsListEmpty());
-        } else {
-          emit(UnitsListLoaded(
-            units: data.items,
-            meta: data.meta,
-          ));
-        }
-      },
-    );
+    result.fold((failure) => emit(UnitsListError(failure.message)), (data) {
+      if (data.items.isEmpty) {
+        emit(const UnitsListEmpty());
+      } else {
+        emit(UnitsListLoaded(units: data.items, meta: data.meta));
+      }
+    });
   }
 
   Future<void> loadMore(int propertyId) async {
     if (state is! UnitsListLoaded) return;
     final currentState = state as UnitsListLoaded;
-    
+
     if (currentState.isFetchingMore || !currentState.meta.hasMore) return;
 
     emit(currentState.copyWith(isFetchingMore: true));
@@ -51,11 +45,13 @@ class UnitsListCubit extends Cubit<UnitsListState> {
     result.fold(
       (failure) => emit(currentState.copyWith(isFetchingMore: false)),
       (data) {
-        emit(currentState.copyWith(
-          units: [...currentState.units, ...data.items],
-          meta: data.meta,
-          isFetchingMore: false,
-        ));
+        emit(
+          currentState.copyWith(
+            units: [...currentState.units, ...data.items],
+            meta: data.meta,
+            isFetchingMore: false,
+          ),
+        );
       },
     );
   }
@@ -66,7 +62,9 @@ class UnitsListCubit extends Cubit<UnitsListState> {
     String? unitStatus,
     String? unitType,
   }) async {
-    final currentState = state is UnitsListLoaded ? state as UnitsListLoaded : null;
+    final currentState = state is UnitsListLoaded
+        ? state as UnitsListLoaded
+        : null;
     final newSearch = search ?? currentState?.searchQuery;
     final newStatus = unitStatus ?? currentState?.unitStatus;
     final newType = unitType ?? currentState?.unitType;
@@ -79,24 +77,23 @@ class UnitsListCubit extends Cubit<UnitsListState> {
       unitStatus: newStatus,
       unitType: newType,
     );
-    
+
     if (isClosed) return;
 
-    result.fold(
-      (failure) => emit(UnitsListError(failure.message)),
-      (data) {
-        if (data.items.isEmpty) {
-          emit(const UnitsListEmpty());
-        } else {
-          emit(UnitsListLoaded(
+    result.fold((failure) => emit(UnitsListError(failure.message)), (data) {
+      if (data.items.isEmpty) {
+        emit(const UnitsListEmpty());
+      } else {
+        emit(
+          UnitsListLoaded(
             units: data.items,
             meta: data.meta,
             searchQuery: newSearch,
             unitStatus: newStatus,
             unitType: newType,
-          ));
-        }
-      },
-    );
+          ),
+        );
+      }
+    });
   }
 }

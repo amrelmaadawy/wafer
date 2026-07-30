@@ -27,14 +27,18 @@ class ProfileContactCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.contact_mail_rounded, color: context.primaryColor, size: 22),
+              Icon(
+                Icons.contact_mail_rounded,
+                color: context.primaryColor,
+                size: 22,
+              ),
               const SizedBox(width: 8),
               Text(
                 LocaleKeys.profile_contact_and_account_info.tr(),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimaryLight,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimaryLight,
+                ),
               ),
             ],
           ),
@@ -93,16 +97,16 @@ class ProfileContactCard extends StatelessWidget {
               Text(
                 label,
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.textSecondaryLight,
-                    ),
+                  color: AppColors.textSecondaryLight,
+                ),
               ),
               const SizedBox(height: 2),
               Text(
                 value.isNotEmpty ? value : LocaleKeys.profile_unspecified.tr(),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: AppColors.textPrimaryLight,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: AppColors.textPrimaryLight,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -123,7 +127,11 @@ class ProfileContactCard extends StatelessWidget {
                 color: context.primaryColor.withValues(alpha: 0.1),
                 borderRadius: AppRadius.circularMd,
               ),
-              child: Icon(Icons.copy_rounded, size: 16, color: context.primaryColor),
+              child: Icon(
+                Icons.copy_rounded,
+                size: 16,
+                color: context.primaryColor,
+              ),
             ),
           ),
       ],

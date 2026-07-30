@@ -29,7 +29,9 @@ class NotificationCard extends StatelessWidget {
           color: unread ? primary.withValues(alpha: 0.04) : Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: unread ? primary.withValues(alpha: 0.25) : const Color(0xFFF1F5F9),
+            color: unread
+                ? primary.withValues(alpha: 0.25)
+                : const Color(0xFFF1F5F9),
             width: unread ? 1.5 : 1,
           ),
         ),
@@ -50,7 +52,9 @@ class NotificationCard extends StatelessWidget {
                           notification.title,
                           style: TextStyle(
                             fontSize: 14.5,
-                            fontWeight: unread ? FontWeight.w700 : FontWeight.w600,
+                            fontWeight: unread
+                                ? FontWeight.w700
+                                : FontWeight.w600,
                             color: const Color(0xFF0F172A),
                           ),
                           maxLines: 1,
@@ -76,7 +80,9 @@ class NotificationCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
-                      color: unread ? const Color(0xFF334155) : const Color(0xFF64748B),
+                      color: unread
+                          ? const Color(0xFF334155)
+                          : const Color(0xFF64748B),
                       height: 1.45,
                     ),
                     maxLines: 2,
@@ -156,9 +162,13 @@ class NotificationCard extends StatelessWidget {
       if (diff.inMinutes < 1) {
         return LocaleKeys.notificationsTimeJustNow.tr();
       } else if (diff.inHours < 1) {
-        return LocaleKeys.notificationsTimeMinutesAgo.tr(args: ['${diff.inMinutes}']);
+        return LocaleKeys.notificationsTimeMinutesAgo.tr(
+          args: ['${diff.inMinutes}'],
+        );
       } else if (diff.inDays < 1) {
-        return LocaleKeys.notificationsTimeHoursAgo.tr(args: ['${diff.inHours}']);
+        return LocaleKeys.notificationsTimeHoursAgo.tr(
+          args: ['${diff.inHours}'],
+        );
       } else {
         return LocaleKeys.notificationsTimeDaysAgo.tr(args: ['${diff.inDays}']);
       }

@@ -13,7 +13,9 @@ class NotificationsResponseModel extends NotificationsResponseEntity {
     // If json has top-level 'data' wrapper, unwrap it
     final Map<String, dynamic> dataMap = json.containsKey('notifications')
         ? json
-        : (json['data'] is Map<String, dynamic> ? json['data'] as Map<String, dynamic> : json);
+        : (json['data'] is Map<String, dynamic>
+              ? json['data'] as Map<String, dynamic>
+              : json);
 
     final notificationsBlock = dataMap['notifications'] is Map<String, dynamic>
         ? dataMap['notifications'] as Map<String, dynamic>

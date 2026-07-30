@@ -37,7 +37,8 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       context.read<PropertiesListCubit>().loadNextPage();
     }
   }
@@ -66,11 +67,7 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
           onPressed: _onAddNewProperty,
           backgroundColor: context.primaryColor,
           elevation: 4,
-          child: const Icon(
-            Icons.add_rounded,
-            color: Colors.white,
-            size: 28,
-          ),
+          child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
         ),
       ),
       body: SafeArea(
@@ -126,7 +123,10 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
               int total = 0;
               if (state is PropertiesListLoaded) total = state.meta.total;
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
                 decoration: BoxDecoration(
                   color: context.primarySubtle,
                   borderRadius: AppRadius.circularFull,
@@ -155,18 +155,23 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
         } else if (state is PropertiesListError) {
           return CustomErrorWidget(
             message: state.message,
-            onRetry: () => context.read<PropertiesListCubit>().getProperties(forceRefresh: true),
+            onRetry: () => context.read<PropertiesListCubit>().getProperties(
+              forceRefresh: true,
+            ),
           );
         } else if (state is PropertiesListEmpty) {
           return PropertiesEmptyWidget(onAddProperty: _onAddNewProperty);
         } else if (state is PropertiesListLoaded) {
           return RefreshIndicator(
             color: context.primaryColor,
-            onRefresh: () => context.read<PropertiesListCubit>().getProperties(forceRefresh: true),
+            onRefresh: () => context.read<PropertiesListCubit>().getProperties(
+              forceRefresh: true,
+            ),
             child: ListView.builder(
               controller: _scrollController,
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 80),
-              itemCount: state.properties.length + (state.isFetchingMore ? 1 : 0),
+              itemCount:
+                  state.properties.length + (state.isFetchingMore ? 1 : 0),
               itemBuilder: (context, index) {
                 if (index == state.properties.length) {
                   return const Padding(
@@ -181,7 +186,9 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
                     property: property,
                     onTap: () async {
                       final cubit = context.read<PropertiesListCubit>();
-                      await context.push('${Routes.ownerPropertyDetails}?id=${property.id}');
+                      await context.push(
+                        '${Routes.ownerPropertyDetails}?id=${property.id}',
+                      );
                       if (mounted) {
                         cubit.getProperties(forceRefresh: true);
                       }

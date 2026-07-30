@@ -17,7 +17,8 @@ class UnitDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<UnitDetailsCubit>()..fetchUnitDetails(propertyId, unitId),
+      create: (context) =>
+          sl<UnitDetailsCubit>()..fetchUnitDetails(propertyId, unitId),
       child: const UnitDetailsView(),
     );
   }

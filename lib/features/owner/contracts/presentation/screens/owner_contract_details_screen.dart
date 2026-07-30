@@ -24,26 +24,30 @@ class OwnerContractDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => di.sl<OwnerContractDetailsCubit>()..getContractDetails(contractId),
+      create: (_) =>
+          di.sl<OwnerContractDetailsCubit>()..getContractDetails(contractId),
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
-        appBar: CustomAppBar(
-          title: LocaleKeys.contractsDetailsTitle.tr(),
-        ),
+        appBar: CustomAppBar(title: LocaleKeys.contractsDetailsTitle.tr()),
         body: BlocBuilder<OwnerContractDetailsCubit, OwnerContractDetailsState>(
           builder: (context, state) {
-            if (state is OwnerContractDetailsLoading || state is OwnerContractDetailsInitial) {
+            if (state is OwnerContractDetailsLoading ||
+                state is OwnerContractDetailsInitial) {
               return const ContractDetailsSkeletonWidget();
             } else if (state is OwnerContractDetailsError) {
               return CustomErrorWidget(
                 message: state.message,
-                onRetry: () => context.read<OwnerContractDetailsCubit>().getContractDetails(contractId),
+                onRetry: () => context
+                    .read<OwnerContractDetailsCubit>()
+                    .getContractDetails(contractId),
               );
             } else if (state is OwnerContractDetailsLoaded) {
               final contract = state.contract;
               return RefreshIndicator(
                 color: context.primaryColor,
-                onRefresh: () => context.read<OwnerContractDetailsCubit>().getContractDetails(contractId),
+                onRefresh: () => context
+                    .read<OwnerContractDetailsCubit>()
+                    .getContractDetails(contractId),
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.fromLTRB(20, 20, 20, 80),

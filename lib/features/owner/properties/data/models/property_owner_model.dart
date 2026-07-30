@@ -12,14 +12,16 @@ class PropertyOwnerModel extends PropertyOwnerEntity {
   });
 
   factory PropertyOwnerModel.fromJson(Map<String, dynamic> json) {
-    final perc = (json['ownership_percentage'] as num?) ??
+    final perc =
+        (json['ownership_percentage'] as num?) ??
         (json['percentage'] as num?) ??
         (json['share'] as num?) ??
         100;
 
     return PropertyOwnerModel(
       id: json['id'] as int? ?? 0,
-      name: json['name']?.toString() ?? json['owner_name']?.toString() ?? 'مالك',
+      name:
+          json['name']?.toString() ?? json['owner_name']?.toString() ?? 'مالك',
       percentage: perc.toDouble(),
       phone: json['phone']?.toString(),
       email: json['email']?.toString(),

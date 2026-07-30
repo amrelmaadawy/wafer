@@ -4,13 +4,25 @@ import '../pdf_generator_service.dart';
 import '../../../../features/owner/reports/domain/entities/occupancy_property_entity.dart';
 
 class OccupancyPdfBuilder {
-  static Future<pw.Document> build(List<OccupancyPropertyEntity> properties, double overallRate, int totalUnits, int totalRented, int totalVacant) async {
+  static Future<pw.Document> build(
+    List<OccupancyPropertyEntity> properties,
+    double overallRate,
+    int totalUnits,
+    int totalRented,
+    int totalVacant,
+  ) async {
     return PdfGeneratorService.createReportDocument(
       title: 'تقرير الإشغال',
       subtitle: 'تحليل الإشغال والشاغر للعقارات',
       buildContent: (theme) {
         return [
-          _buildSummaryCards(overallRate, totalUnits, totalRented, totalVacant, theme),
+          _buildSummaryCards(
+            overallRate,
+            totalUnits,
+            totalRented,
+            totalVacant,
+            theme,
+          ),
           pw.SizedBox(height: 24),
           _buildTable(properties, theme),
         ];
@@ -18,19 +30,45 @@ class OccupancyPdfBuilder {
     );
   }
 
-  static pw.Widget _buildSummaryCards(double rate, int total, int rented, int vacant, pw.ThemeData theme) {
+  static pw.Widget _buildSummaryCards(
+    double rate,
+    int total,
+    int rented,
+    int vacant,
+    pw.ThemeData theme,
+  ) {
     return pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       children: [
         _buildSummaryCard('إجمالي الوحدات', '$total', theme),
-        _buildSummaryCard('مؤجرة', '$rented', theme, color: PdfColor.fromInt(0xFF10B981)),
-        _buildSummaryCard('شاغرة', '$vacant', theme, color: PdfColor.fromInt(0xFFF59E0B)),
-        _buildSummaryCard('نسبة الإشغال الإجمالية', '${rate.toStringAsFixed(1)}%', theme, color: PdfGeneratorService.primaryColor),
+        _buildSummaryCard(
+          'مؤجرة',
+          '$rented',
+          theme,
+          color: PdfColor.fromInt(0xFF10B981),
+        ),
+        _buildSummaryCard(
+          'شاغرة',
+          '$vacant',
+          theme,
+          color: PdfColor.fromInt(0xFFF59E0B),
+        ),
+        _buildSummaryCard(
+          'نسبة الإشغال الإجمالية',
+          '${rate.toStringAsFixed(1)}%',
+          theme,
+          color: PdfGeneratorService.primaryColor,
+        ),
       ],
     );
   }
 
-  static pw.Widget _buildSummaryCard(String title, String value, pw.ThemeData theme, {PdfColor? color}) {
+  static pw.Widget _buildSummaryCard(
+    String title,
+    String value,
+    pw.ThemeData theme, {
+    PdfColor? color,
+  }) {
     return pw.Expanded(
       child: pw.Container(
         margin: const pw.EdgeInsets.symmetric(horizontal: 4),
@@ -67,7 +105,10 @@ class OccupancyPdfBuilder {
     );
   }
 
-  static pw.Widget _buildTable(List<OccupancyPropertyEntity> properties, pw.ThemeData theme) {
+  static pw.Widget _buildTable(
+    List<OccupancyPropertyEntity> properties,
+    pw.ThemeData theme,
+  ) {
     if (properties.isEmpty) {
       return pw.Center(
         child: pw.Text(
@@ -103,7 +144,13 @@ class OccupancyPdfBuilder {
           ),
         ),
       ),
-      headers: ['اسم العقار', 'إجمالي الوحدات', 'مؤجرة', 'شاغرة', 'نسبة الإشغال'],
+      headers: [
+        'اسم العقار',
+        'إجمالي الوحدات',
+        'مؤجرة',
+        'شاغرة',
+        'نسبة الإشغال',
+      ],
       data: properties.map((prop) {
         return [
           prop.propertyName,

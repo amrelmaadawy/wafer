@@ -44,8 +44,12 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
               child: BlocBuilder<OwnerDashboardCubit, OwnerDashboardState>(
                 builder: (context, state) {
                   if (state is OwnerDashboardLoading) return _buildLoading();
-                  if (state is OwnerDashboardError) return _buildError(context, state.message);
-                  if (state is OwnerDashboardLoaded) return _buildContent(context, state);
+                  if (state is OwnerDashboardError) {
+                    return _buildError(context, state.message);
+                  }
+                  if (state is OwnerDashboardLoaded) {
+                    return _buildContent(context, state);
+                  }
                   return const SizedBox.shrink();
                 },
               ),
@@ -62,7 +66,9 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
 
   Widget _buildContent(BuildContext context, OwnerDashboardLoaded state) {
     return RefreshIndicator(
-      onRefresh: () => context.read<OwnerDashboardCubit>().loadDashboardStats(forceRefresh: true),
+      onRefresh: () => context.read<OwnerDashboardCubit>().loadDashboardStats(
+        forceRefresh: true,
+      ),
       color: context.primaryColor,
       child: ListView(
         padding: const EdgeInsets.fromLTRB(16, 20, 16, 120),
@@ -93,7 +99,9 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
   Widget _buildError(BuildContext context, String message) {
     return CustomErrorWidget(
       message: message,
-      onRetry: () => context.read<OwnerDashboardCubit>().loadDashboardStats(forceRefresh: true),
+      onRetry: () => context.read<OwnerDashboardCubit>().loadDashboardStats(
+        forceRefresh: true,
+      ),
     );
   }
 }

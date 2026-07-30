@@ -34,9 +34,9 @@ class ProfileIdentityCard extends StatelessWidget {
               Text(
                 LocaleKeys.profile_identity_section.tr(),
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimaryLight,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimaryLight,
+                ),
               ),
             ],
           ),
@@ -61,19 +61,25 @@ class ProfileIdentityCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.error.withValues(alpha: 0.1),
                 borderRadius: AppRadius.circularLg,
-                border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: AppColors.error.withValues(alpha: 0.3),
+                ),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.warning_amber_rounded, color: AppColors.error, size: 20),
+                  const Icon(
+                    Icons.warning_amber_rounded,
+                    color: AppColors.error,
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       LocaleKeys.profile_identity_warning_banner.tr(),
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.error,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        color: AppColors.error,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ],
@@ -96,18 +102,18 @@ class ProfileIdentityCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.textSecondaryLight,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(color: AppColors.textSecondaryLight),
         ),
         Row(
           children: [
             Text(
               value.isNotEmpty ? value : LocaleKeys.profile_unspecified.tr(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textPrimaryLight,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: AppColors.textPrimaryLight,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             if (canCopy && value.isNotEmpty) ...[
               const SizedBox(width: 8),
@@ -120,7 +126,11 @@ class ProfileIdentityCard extends StatelessWidget {
                     title: LocaleKeys.profile_copied_title.tr(),
                   );
                 },
-                child: Icon(Icons.copy_rounded, size: 18, color: context.primaryColor),
+                child: Icon(
+                  Icons.copy_rounded,
+                  size: 18,
+                  color: context.primaryColor,
+                ),
               ),
             ],
           ],

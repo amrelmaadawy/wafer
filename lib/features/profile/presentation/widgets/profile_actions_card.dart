@@ -34,102 +34,127 @@ class ProfileActionsCard extends StatelessWidget {
         },
         builder: (context, state) {
           return Container(
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularXxl,
-        border: Border.all(color: AppColors.borderLight),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-            child: Row(
+            decoration: BoxDecoration(
+              color: AppColors.surfaceLight,
+              borderRadius: AppRadius.circularXxl,
+              border: Border.all(color: AppColors.borderLight),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: context.primaryColor.withValues(alpha: 0.1),
-                    borderRadius: AppRadius.circularMd,
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                  child: Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: context.primaryColor.withValues(alpha: 0.1),
+                          borderRadius: AppRadius.circularMd,
+                        ),
+                        child: Icon(
+                          Icons.tune_rounded,
+                          color: context.primaryColor,
+                          size: 18,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        LocaleKeys.profile_account_settings.tr(),
+                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimaryLight,
+                        ),
+                      ),
+                    ],
                   ),
-                  child: Icon(Icons.tune_rounded, color: context.primaryColor, size: 18),
                 ),
-                const SizedBox(width: 10),
-                Text(
-                  LocaleKeys.profile_account_settings.tr(),
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimaryLight,
-                  ),
+                const SizedBox(height: 12),
+                const Divider(height: 1, color: AppColors.borderLight),
+                ProfileActionTile(
+                  icon: Icons.edit_rounded,
+                  label: LocaleKeys.profile_edit_profile.tr(),
+                  subtitle: LocaleKeys.profile_edit_profile_subtitle.tr(),
+                  iconBg: context.primaryColor.withValues(alpha: 0.1),
+                  iconColor: context.primaryColor,
+                  onTap: () {
+                    context.push(
+                      Routes.editProfile,
+                      extra: {'profile': profile},
+                    );
+                  },
                 ),
+                const Divider(
+                  height: 1,
+                  color: AppColors.borderLight,
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                ProfileActionTile(
+                  icon: Icons.bar_chart_rounded,
+                  label: LocaleKeys.reports_title.tr(),
+                  subtitle: LocaleKeys.reports_operational
+                      .tr(), // Or some general subtitle
+                  iconBg: AppColors.info.withValues(alpha: 0.1),
+                  iconColor: AppColors.info,
+                  onTap: () {
+                    context.push(Routes.ownerReportsCenter);
+                  },
+                ),
+                const Divider(
+                  height: 1,
+                  color: AppColors.borderLight,
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                ProfileActionTile(
+                  icon: Icons.palette_rounded,
+                  label: LocaleKeys.profile_theme_color.tr(),
+                  subtitle: LocaleKeys.profile_theme_color_subtitle.tr(),
+                  iconBg: context.primaryColor.withValues(alpha: 0.1),
+                  iconColor: context.primaryColor,
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) =>
+                          const ThemeColorSelectorBottomSheet(),
+                    );
+                  },
+                ),
+                const Divider(
+                  height: 1,
+                  color: AppColors.borderLight,
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                ProfileActionTile(
+                  icon: Icons.lock_outline_rounded,
+                  label: LocaleKeys.profile_change_password.tr(),
+                  subtitle: LocaleKeys.profile_change_password_subtitle.tr(),
+                  iconBg: AppColors.warning.withValues(alpha: 0.1),
+                  iconColor: AppColors.warning,
+                  onTap: () {
+                    context.push(Routes.changePassword);
+                  },
+                ),
+
+                const Divider(height: 1, color: AppColors.borderLight),
+                ProfileActionTile(
+                  icon: Icons.logout_rounded,
+                  label: LocaleKeys.profile_logout.tr(),
+                  subtitle: LocaleKeys.profile_logout_subtitle.tr(),
+                  iconBg: AppColors.error.withValues(alpha: 0.1),
+                  iconColor: AppColors.error,
+                  labelColor: AppColors.error,
+                  onTap: () =>
+                      _showLogoutDialog(context, context.read<AuthCubit>()),
+                ),
+                const SizedBox(height: 8),
               ],
             ),
-          ),
-          const SizedBox(height: 12),
-          const Divider(height: 1, color: AppColors.borderLight),
-          ProfileActionTile(
-            icon: Icons.edit_rounded,
-            label: LocaleKeys.profile_edit_profile.tr(),
-            subtitle: LocaleKeys.profile_edit_profile_subtitle.tr(),
-            iconBg: context.primaryColor.withValues(alpha: 0.1),
-            iconColor: context.primaryColor,
-            onTap: () {
-              context.push(Routes.editProfile, extra: {'profile': profile});
-            },
-          ),
-          const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
-          ProfileActionTile(
-            icon: Icons.bar_chart_rounded,
-            label: LocaleKeys.reports_title.tr(),
-            subtitle: LocaleKeys.reports_operational.tr(), // Or some general subtitle
-            iconBg: AppColors.info.withValues(alpha: 0.1),
-            iconColor: AppColors.info,
-            onTap: () {
-              context.push(Routes.ownerReportsCenter);
-            },
-          ),
-          const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
-          ProfileActionTile(
-            icon: Icons.palette_rounded,
-            label: LocaleKeys.profile_theme_color.tr(),
-            subtitle: LocaleKeys.profile_theme_color_subtitle.tr(),
-            iconBg: context.primaryColor.withValues(alpha: 0.1),
-            iconColor: context.primaryColor,
-            onTap: () {
-              showModalBottomSheet(
-                context: context,
-                isScrollControlled: true,
-                backgroundColor: Colors.transparent,
-                builder: (context) => const ThemeColorSelectorBottomSheet(),
-              );
-            },
-          ),
-          const Divider(height: 1, color: AppColors.borderLight, indent: 20, endIndent: 20),
-          ProfileActionTile(
-            icon: Icons.lock_outline_rounded,
-            label: LocaleKeys.profile_change_password.tr(),
-            subtitle: LocaleKeys.profile_change_password_subtitle.tr(),
-            iconBg: AppColors.warning.withValues(alpha: 0.1),
-            iconColor: AppColors.warning,
-            onTap: () {
-              context.push(Routes.changePassword);
-            },
-          ),
-
-          const Divider(height: 1, color: AppColors.borderLight),
-          ProfileActionTile(
-            icon: Icons.logout_rounded,
-            label: LocaleKeys.profile_logout.tr(),
-            subtitle: LocaleKeys.profile_logout_subtitle.tr(),
-            iconBg: AppColors.error.withValues(alpha: 0.1),
-            iconColor: AppColors.error,
-            labelColor: AppColors.error,
-            onTap: () => _showLogoutDialog(context, context.read<AuthCubit>()),
-          ),
-          const SizedBox(height: 8),
-        ],
-      ),
-    );
+          );
         },
       ),
     );
@@ -154,9 +179,11 @@ class ProfileActionsCard extends StatelessWidget {
             },
             builder: (context, state) {
               final isLoading = state is AuthLoading;
-              
+
               return Dialog(
-                shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularXl),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: AppRadius.circularXl,
+                ),
                 backgroundColor: AppColors.backgroundLight,
                 insetPadding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Padding(
@@ -205,10 +232,16 @@ class ProfileActionsCard extends StatelessWidget {
                         children: [
                           Expanded(
                             child: OutlinedButton(
-                              onPressed: isLoading ? null : () => Navigator.pop(dialogContext),
+                              onPressed: isLoading
+                                  ? null
+                                  : () => Navigator.pop(dialogContext),
                               style: OutlinedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(vertical: 14),
-                                side: const BorderSide(color: AppColors.borderLight),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
+                                side: const BorderSide(
+                                  color: AppColors.borderLight,
+                                ),
                                 shape: const RoundedRectangleBorder(
                                   borderRadius: AppRadius.circularLg,
                                 ),
@@ -216,16 +249,22 @@ class ProfileActionsCard extends StatelessWidget {
                               ),
                               child: Text(
                                 LocaleKeys.propertyDetailsCancel.tr(),
-                                style: const TextStyle(fontWeight: FontWeight.w600),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           ),
                           const SizedBox(width: 16),
                           Expanded(
                             child: ElevatedButton(
-                              onPressed: isLoading ? null : () => authCubit.logout(),
+                              onPressed: isLoading
+                                  ? null
+                                  : () => authCubit.logout(),
                               style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(vertical: 14),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 14,
+                                ),
                                 backgroundColor: AppColors.error,
                                 foregroundColor: Colors.white,
                                 elevation: 0,
@@ -237,11 +276,16 @@ class ProfileActionsCard extends StatelessWidget {
                                   ? const SizedBox(
                                       width: 20,
                                       height: 20,
-                                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: Colors.white,
+                                      ),
                                     )
                                   : Text(
                                       LocaleKeys.profile_logout.tr(),
-                                      style: const TextStyle(fontWeight: FontWeight.w600),
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                             ),
                           ),

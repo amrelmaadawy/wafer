@@ -28,7 +28,11 @@ class OwnerContractInstallmentsLoaded extends OwnerContractInstallmentsState {
   });
 
   @override
-  List<Object?> get props => [allInstallments, filteredInstallments, activeFilter];
+  List<Object?> get props => [
+    allInstallments,
+    filteredInstallments,
+    activeFilter,
+  ];
 }
 
 class OwnerContractInstallmentsError extends OwnerContractInstallmentsState {

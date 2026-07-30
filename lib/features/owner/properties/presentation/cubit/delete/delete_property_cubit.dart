@@ -6,7 +6,7 @@ class DeletePropertyCubit extends Cubit<DeletePropertyState> {
   final DeletePropertyUseCase _deletePropertyUseCase;
 
   DeletePropertyCubit(this._deletePropertyUseCase)
-      : super(const DeletePropertyInitial());
+    : super(const DeletePropertyInitial());
 
   Future<void> deleteProperty(int propertyId) async {
     emit(const DeletePropertyLoading());

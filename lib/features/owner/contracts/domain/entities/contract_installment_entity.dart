@@ -23,13 +23,13 @@ class ContractInstallmentEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        installmentNumber,
-        dueDate,
-        amount,
-        paidAmount,
-        remaining,
-        status,
-        statusLabel,
-      ];
+    id,
+    installmentNumber,
+    dueDate,
+    amount,
+    paidAmount,
+    remaining,
+    status,
+    statusLabel,
+  ];
 }

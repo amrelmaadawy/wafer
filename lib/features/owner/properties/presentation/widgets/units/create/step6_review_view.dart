@@ -17,18 +17,27 @@ class Step6ReviewView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('مراجعة وتأكيد', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text(
+                'مراجعة وتأكيد',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 8),
-              const Text('يرجى مراجعة بيانات الوحدة قبل التأكيد', style: TextStyle(color: AppColors.textSecondaryLight)),
+              const Text(
+                'يرجى مراجعة بيانات الوحدة قبل التأكيد',
+                style: TextStyle(color: AppColors.textSecondaryLight),
+              ),
               const SizedBox(height: 24),
-              
+
               _buildSection(
                 context,
                 title: 'البيانات الأساسية',
                 icon: Icons.info_outline,
                 children: [
                   _buildReviewItem('اسم الوحدة', state.name ?? 'غير محدد'),
-                  _buildReviewItem('رقم الوحدة', state.unitNumber ?? 'غير محدد'),
+                  _buildReviewItem(
+                    'رقم الوحدة',
+                    state.unitNumber ?? 'غير محدد',
+                  ),
                   _buildReviewItem('نوع الوحدة', state.unitType),
                   _buildReviewItem('الغرض', state.purpose),
                   _buildReviewItem('التشطيب', state.finishingType),
@@ -36,20 +45,23 @@ class Step6ReviewView extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               _buildSection(
                 context,
                 title: 'المواصفات',
                 icon: Icons.square_foot,
                 children: [
                   _buildReviewItem('المساحة', '${state.area ?? 0} م²'),
-                  _buildReviewItem('الدور', '${state.floorType} (${state.floorNumber ?? 0})'),
+                  _buildReviewItem(
+                    'الدور',
+                    '${state.floorType} (${state.floorNumber ?? 0})',
+                  ),
                   _buildReviewItem('غرف النوم', '${state.roomsCount ?? 0}'),
                   _buildReviewItem('الحمامات', '${state.bathroomsCount ?? 0}'),
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               _buildSection(
                 context,
                 title: 'الموقع والمرافق',
@@ -57,29 +69,46 @@ class Step6ReviewView extends StatelessWidget {
                 children: [
                   _buildReviewItem('المدينة', state.city ?? 'غير محدد'),
                   _buildReviewItem('الحي', state.district ?? 'غير محدد'),
-                  _buildReviewItem('المميزات', state.amenities.isEmpty ? 'لا يوجد' : state.amenities.join('، ')),
+                  _buildReviewItem(
+                    'المميزات',
+                    state.amenities.isEmpty
+                        ? 'لا يوجد'
+                        : state.amenities.join('، '),
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               _buildSection(
                 context,
                 title: 'التفاصيل المالية',
                 icon: Icons.attach_money,
                 children: [
-                  _buildReviewItem('الإيجار (شهري)', '${state.annualRentMonthly ?? 0}'),
-                  _buildReviewItem('الإيجار (دفعتين)', '${state.annualRent2Payments ?? 0}'),
-                  _buildReviewItem('الإيجار (4 دفعات)', '${state.annualRent4Payments ?? 0}'),
+                  _buildReviewItem(
+                    'الإيجار (شهري)',
+                    '${state.annualRentMonthly ?? 0}',
+                  ),
+                  _buildReviewItem(
+                    'الإيجار (دفعتين)',
+                    '${state.annualRent2Payments ?? 0}',
+                  ),
+                  _buildReviewItem(
+                    'الإيجار (4 دفعات)',
+                    '${state.annualRent4Payments ?? 0}',
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               _buildSection(
                 context,
                 title: 'الصور',
                 icon: Icons.image_outlined,
                 children: [
-                  _buildReviewItem('عدد الصور المرفقة', '${state.images.length} صور'),
+                  _buildReviewItem(
+                    'عدد الصور المرفقة',
+                    '${state.images.length} صور',
+                  ),
                 ],
               ),
               const SizedBox(height: 32),
@@ -90,7 +119,12 @@ class Step6ReviewView extends StatelessWidget {
     );
   }
 
-  Widget _buildSection(BuildContext context, {required String title, required IconData icon, required List<Widget> children}) {
+  Widget _buildSection(
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required List<Widget> children,
+  }) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -104,14 +138,24 @@ class Step6ReviewView extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
               color: context.primaryColor.withValues(alpha: 0.05),
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-              border: const Border(bottom: BorderSide(color: AppColors.borderLight)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(12),
+              ),
+              border: const Border(
+                bottom: BorderSide(color: AppColors.borderLight),
+              ),
             ),
             child: Row(
               children: [
                 Icon(icon, color: context.primaryColor, size: 20),
                 const SizedBox(width: 8),
-                Text(title, style: TextStyle(fontWeight: FontWeight.bold, color: context.primaryColor)),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: context.primaryColor,
+                  ),
+                ),
               ],
             ),
           ),
@@ -132,11 +176,20 @@ class Step6ReviewView extends StatelessWidget {
         children: [
           Expanded(
             flex: 2,
-            child: Text(label, style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 13)),
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: AppColors.textSecondaryLight,
+                fontSize: 13,
+              ),
+            ),
           ),
           Expanded(
             flex: 3,
-            child: Text(value, style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14)),
+            child: Text(
+              value,
+              style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+            ),
           ),
         ],
       ),

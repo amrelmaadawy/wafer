@@ -25,7 +25,9 @@ class TechnicianPerformancePdfBuilder {
   }
 
   static pw.Widget _buildSummaryCards(
-      TechnicianPerformanceSummaryEntity summary, pw.ThemeData theme) {
+    TechnicianPerformanceSummaryEntity summary,
+    pw.ThemeData theme,
+  ) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(16),
       decoration: pw.BoxDecoration(
@@ -57,7 +59,10 @@ class TechnicianPerformancePdfBuilder {
   }
 
   static pw.Widget _buildSummaryItem(
-      String label, String value, pw.ThemeData theme) {
+    String label,
+    String value,
+    pw.ThemeData theme,
+  ) {
     return pw.Column(
       children: [
         pw.Text(
@@ -81,7 +86,9 @@ class TechnicianPerformancePdfBuilder {
   }
 
   static pw.Widget _buildTable(
-      List<TechnicianPerformanceItemEntity> items, pw.ThemeData theme) {
+    List<TechnicianPerformanceItemEntity> items,
+    pw.ThemeData theme,
+  ) {
     if (items.isEmpty) {
       return pw.Center(
         child: pw.Text(

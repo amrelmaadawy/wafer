@@ -192,10 +192,7 @@ class _SplashBodyState extends State<_SplashBody>
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(22),
                                 gradient: LinearGradient(
-                                  colors: [
-                                    primary,
-                                    primaryLight,
-                                  ],
+                                  colors: [primary, primaryLight],
                                   begin: Alignment.topLeft,
                                   end: Alignment.bottomRight,
                                 ),

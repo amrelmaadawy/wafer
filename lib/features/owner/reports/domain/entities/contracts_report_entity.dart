@@ -15,11 +15,7 @@ class ContractsReportEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        summary,
-        items,
-        pagination,
-      ];
+  List<Object?> get props => [summary, items, pagination];
 
   ContractsReportEntity copyWith({
     ContractsReportSummaryEntity? summary,

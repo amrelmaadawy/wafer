@@ -10,7 +10,8 @@ class PropertiesPaginationMetaModel extends PropertiesPaginationMetaEntity {
 
   factory PropertiesPaginationMetaModel.fromJson(Map<String, dynamic> json) {
     return PropertiesPaginationMetaModel(
-      currentPage: json['current_page'] as int? ?? json['currentPage'] as int? ?? 1,
+      currentPage:
+          json['current_page'] as int? ?? json['currentPage'] as int? ?? 1,
       lastPage: json['last_page'] as int? ?? json['lastPage'] as int? ?? 1,
       perPage: json['per_page'] as int? ?? json['perPage'] as int? ?? 15,
       total: json['total'] as int? ?? 0,

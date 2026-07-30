@@ -30,36 +30,39 @@ class DeedsListCubit extends Cubit<DeedsListState> {
 
     final result = await _getDeedsUseCase(filter: _currentFilter);
 
-    result.fold(
-      (failure) => emit(DeedsListError(failure.message)),
-      (data) {
-        _allFetchedDeeds = data.items;
-        _lastMeta = data.meta;
-        _emitSuccessOrEmpty();
-      },
-    );
+    result.fold((failure) => emit(DeedsListError(failure.message)), (data) {
+      _allFetchedDeeds = data.items;
+      _lastMeta = data.meta;
+      _emitSuccessOrEmpty();
+    });
   }
 
   void _emitSuccessOrEmpty() {
     if (_allFetchedDeeds.isEmpty) {
       emit(DeedsListEmpty(filter: _currentFilter));
     } else {
-      emit(DeedsListLoaded(
-        deeds: _allFetchedDeeds,
-        meta: _lastMeta,
-        filter: _currentFilter,
-      ));
+      emit(
+        DeedsListLoaded(
+          deeds: _allFetchedDeeds,
+          meta: _lastMeta,
+          filter: _currentFilter,
+        ),
+      );
     }
   }
 
   Future<void> loadNextPage() async {
     final currentState = state;
-    if (currentState is! DeedsListLoaded || currentState.isFetchingMore || !currentState.meta.hasMore) {
+    if (currentState is! DeedsListLoaded ||
+        currentState.isFetchingMore ||
+        !currentState.meta.hasMore) {
       return;
     }
 
     emit(currentState.copyWith(isFetchingMore: true));
-    final nextPageFilter = _currentFilter.copyWith(page: _currentFilter.page + 1);
+    final nextPageFilter = _currentFilter.copyWith(
+      page: _currentFilter.page + 1,
+    );
 
     final result = await _getDeedsUseCase(filter: nextPageFilter);
 
@@ -76,13 +79,15 @@ class DeedsListCubit extends Cubit<DeedsListState> {
 
   void searchDeeds(String query) {
     _debounceTimer?.cancel();
-    
+
     final trimmedQuery = query.trim();
     final isSearching = trimmedQuery.isNotEmpty;
 
     _currentFilter = _currentFilter.copyWith(
       search: () => isSearching ? trimmedQuery : null,
-      branchId: () => isSearching ? null : _currentFilter.branchId, // Reset branch filter on search
+      branchId: () => isSearching
+          ? null
+          : _currentFilter.branchId, // Reset branch filter on search
       page: 1, // Reset pagination on search
     );
 

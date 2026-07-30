@@ -36,14 +36,23 @@ class PropertyTypeSelectorWidget extends StatelessWidget {
           itemBuilder: (context, index) {
             final type = propertyTypes[index];
             final isSelected = selectedType == type.value;
-            
+
             IconData typeIcon;
             switch (type.value) {
-              case 'residential': typeIcon = Icons.home_rounded; break;
-              case 'commercial': typeIcon = Icons.storefront_rounded; break;
-              case 'land': typeIcon = Icons.landscape_rounded; break;
-              case 'administrative': typeIcon = Icons.business_rounded; break;
-              default: typeIcon = Icons.domain_rounded;
+              case 'residential':
+                typeIcon = Icons.home_rounded;
+                break;
+              case 'commercial':
+                typeIcon = Icons.storefront_rounded;
+                break;
+              case 'land':
+                typeIcon = Icons.landscape_rounded;
+                break;
+              case 'administrative':
+                typeIcon = Icons.business_rounded;
+                break;
+              default:
+                typeIcon = Icons.domain_rounded;
             }
 
             return InkWell(
@@ -51,10 +60,14 @@ class PropertyTypeSelectorWidget extends StatelessWidget {
               borderRadius: AppRadius.circularMd,
               child: Container(
                 decoration: BoxDecoration(
-                  color: isSelected ? context.primaryColor.withValues(alpha: 0.05) : Colors.white,
+                  color: isSelected
+                      ? context.primaryColor.withValues(alpha: 0.05)
+                      : Colors.white,
                   borderRadius: AppRadius.circularMd,
                   border: Border.all(
-                    color: isSelected ? context.primaryColor : const Color(0xFFE2E8F0),
+                    color: isSelected
+                        ? context.primaryColor
+                        : const Color(0xFFE2E8F0),
                     width: isSelected ? 1.5 : 1,
                   ),
                 ),
@@ -63,7 +76,9 @@ class PropertyTypeSelectorWidget extends StatelessWidget {
                   children: [
                     Icon(
                       typeIcon,
-                      color: isSelected ? context.primaryColor : AppColors.textSecondaryLight,
+                      color: isSelected
+                          ? context.primaryColor
+                          : AppColors.textSecondaryLight,
                       size: 20,
                     ),
                     const SizedBox(width: 8),
@@ -72,8 +87,12 @@ class PropertyTypeSelectorWidget extends StatelessWidget {
                         type.label,
                         style: TextStyle(
                           fontSize: 13,
-                          fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
-                          color: isSelected ? context.primaryColor : AppColors.textPrimaryLight,
+                          fontWeight: isSelected
+                              ? FontWeight.w700
+                              : FontWeight.w600,
+                          color: isSelected
+                              ? context.primaryColor
+                              : AppColors.textPrimaryLight,
                         ),
                       ),
                     ),
@@ -88,7 +107,11 @@ class PropertyTypeSelectorWidget extends StatelessWidget {
             padding: const EdgeInsets.only(top: 8, right: 12),
             child: Text(
               errorText!,
-              style: const TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.w500),
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
       ],

@@ -14,8 +14,12 @@ class ProfileHeaderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final initials = profile.name.isNotEmpty
-        ? profile.name.trim().split(' ').take(2)
-            .map((e) => e.isNotEmpty ? e[0].toUpperCase() : '').join()
+        ? profile.name
+              .trim()
+              .split(' ')
+              .take(2)
+              .map((e) => e.isNotEmpty ? e[0].toUpperCase() : '')
+              .join()
         : 'U';
     final _ = context.primaryColor;
 
@@ -160,8 +164,12 @@ class ProfileHeaderCard extends StatelessWidget {
           icon: Icons.workspace_premium_rounded,
         ),
         _buildBadge(
-          label: profile.isActive ? LocaleKeys.profile_active.tr() : LocaleKeys.profile_inactive.tr(),
-          icon: profile.isActive ? Icons.verified_rounded : Icons.cancel_rounded,
+          label: profile.isActive
+              ? LocaleKeys.profile_active.tr()
+              : LocaleKeys.profile_inactive.tr(),
+          icon: profile.isActive
+              ? Icons.verified_rounded
+              : Icons.cancel_rounded,
           bgColor: profile.isActive
               ? Colors.white.withValues(alpha: 0.2)
               : AppColors.error.withValues(alpha: 0.4),
@@ -187,7 +195,14 @@ class ProfileHeaderCard extends StatelessWidget {
         children: [
           Icon(icon, size: 14, color: Colors.white),
           const SizedBox(width: 5),
-          Text(label, style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600)),
+          Text(
+            label,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ],
       ),
     );
@@ -195,10 +210,14 @@ class ProfileHeaderCard extends StatelessWidget {
 
   String _accountTypeLabel(String type) {
     switch (type.toLowerCase()) {
-      case 'owner':  return LocaleKeys.profile_owner_type.tr();
-      case 'company': return LocaleKeys.profile_company_type.tr();
-      case 'tenant':  return LocaleKeys.profile_tenant_type.tr();
-      default:        return type;
+      case 'owner':
+        return LocaleKeys.profile_owner_type.tr();
+      case 'company':
+        return LocaleKeys.profile_company_type.tr();
+      case 'tenant':
+        return LocaleKeys.profile_tenant_type.tr();
+      default:
+        return type;
     }
   }
 }

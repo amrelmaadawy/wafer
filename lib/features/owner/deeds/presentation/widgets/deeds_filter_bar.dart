@@ -52,8 +52,10 @@ class _DeedsFilterBarState extends State<DeedsFilterBar> {
                 flex: 2,
                 child: Shortcuts(
                   shortcuts: <LogicalKeySet, Intent>{
-                    LogicalKeySet(LogicalKeyboardKey.arrowDown): const DoNothingAndStopPropagationIntent(),
-                    LogicalKeySet(LogicalKeyboardKey.arrowUp): const DoNothingAndStopPropagationIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.arrowDown):
+                        const DoNothingAndStopPropagationIntent(),
+                    LogicalKeySet(LogicalKeyboardKey.arrowUp):
+                        const DoNothingAndStopPropagationIntent(),
                   },
                   child: TextField(
                     controller: _searchController,
@@ -61,7 +63,11 @@ class _DeedsFilterBarState extends State<DeedsFilterBar> {
                     style: const TextStyle(fontSize: 13),
                     decoration: InputDecoration(
                       hintText: LocaleKeys.deeds_search_hint.tr(),
-                      prefixIcon: const Icon(Icons.search_rounded, size: 20, color: AppColors.textSecondaryLight),
+                      prefixIcon: const Icon(
+                        Icons.search_rounded,
+                        size: 20,
+                        color: AppColors.textSecondaryLight,
+                      ),
                       suffixIcon: _searchController.text.isNotEmpty
                           ? IconButton(
                               icon: const Icon(Icons.close_rounded, size: 18),
@@ -73,7 +79,10 @@ class _DeedsFilterBarState extends State<DeedsFilterBar> {
                           : null,
                       filled: true,
                       fillColor: AppColors.surfaceLight,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 10,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: AppRadius.circularXl,
                         borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
@@ -97,7 +106,9 @@ class _DeedsFilterBarState extends State<DeedsFilterBar> {
                   value: resolvedBranchId,
                   hint: LocaleKeys.deeds_filter_all_branches.tr(),
                   items: branches.map((b) => b['id'] as int).toList(),
-                  itemLabelBuilder: (id) => branches.firstWhere((b) => b['id'] == id)['name'] as String,
+                  itemLabelBuilder: (id) =>
+                      branches.firstWhere((b) => b['id'] == id)['name']
+                          as String,
                   onSelected: (newValue) {
                     cubit.filterByBranch(newValue == -1 ? null : newValue);
                   },

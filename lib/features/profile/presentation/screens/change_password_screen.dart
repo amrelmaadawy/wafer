@@ -12,7 +12,9 @@ class ChangePasswordScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: context.locale.languageCode == 'ar' ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+      textDirection: context.locale.languageCode == 'ar'
+          ? ui.TextDirection.rtl
+          : ui.TextDirection.ltr,
       child: BlocProvider<ChangePasswordCubit>(
         create: (context) => sl<ChangePasswordCubit>(),
         child: const ChangePasswordView(),

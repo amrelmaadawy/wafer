@@ -7,7 +7,7 @@ class OwnerEmployeeTasksCubit extends Cubit<OwnerEmployeeTasksState> {
   final GetOwnerEmployeeTasksReportUseCase _getEmployeeTasksReportUseCase;
 
   OwnerEmployeeTasksCubit(this._getEmployeeTasksReportUseCase)
-      : super(OwnerEmployeeTasksInitial());
+    : super(OwnerEmployeeTasksInitial());
 
   int _currentPage = 1;
   bool _hasReachedMax = false;
@@ -36,14 +36,17 @@ class OwnerEmployeeTasksCubit extends Cubit<OwnerEmployeeTasksState> {
         if (_currentReport == null) {
           emit(OwnerEmployeeTasksError(failure.message));
         } else {
-          emit(OwnerEmployeeTasksLoaded(
-            report: _currentReport!,
-            hasReachedMax: _hasReachedMax,
-          ));
+          emit(
+            OwnerEmployeeTasksLoaded(
+              report: _currentReport!,
+              hasReachedMax: _hasReachedMax,
+            ),
+          );
         }
       },
       (report) {
-        _hasReachedMax = report.pagination.currentPage >= report.pagination.lastPage;
+        _hasReachedMax =
+            report.pagination.currentPage >= report.pagination.lastPage;
 
         if (_currentReport == null || forceRefresh) {
           _currentReport = report;
@@ -56,14 +59,16 @@ class OwnerEmployeeTasksCubit extends Cubit<OwnerEmployeeTasksState> {
         }
 
         _currentPage++;
-        
+
         if (_currentReport!.items.isEmpty) {
           emit(OwnerEmployeeTasksEmpty());
         } else {
-          emit(OwnerEmployeeTasksLoaded(
-            report: _currentReport!,
-            hasReachedMax: _hasReachedMax,
-          ));
+          emit(
+            OwnerEmployeeTasksLoaded(
+              report: _currentReport!,
+              hasReachedMax: _hasReachedMax,
+            ),
+          );
         }
       },
     );

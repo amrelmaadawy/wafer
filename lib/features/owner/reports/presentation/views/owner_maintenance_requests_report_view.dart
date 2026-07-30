@@ -62,8 +62,10 @@ class _OwnerMaintenanceRequestsReportViewState
         appBar: CustomAppBar(
           title: LocaleKeys.maintenanceRequestsTitle.tr(),
           actions: [
-            BlocBuilder<OwnerMaintenanceRequestsCubit,
-                OwnerMaintenanceRequestsState>(
+            BlocBuilder<
+              OwnerMaintenanceRequestsCubit,
+              OwnerMaintenanceRequestsState
+            >(
               builder: (context, state) {
                 if (state is OwnerMaintenanceRequestsLoaded) {
                   return ReportExportButton(
@@ -100,75 +102,80 @@ class _OwnerMaintenanceRequestsReportViewState
             ),
           ],
         ),
-        body: BlocBuilder<OwnerMaintenanceRequestsCubit,
-            OwnerMaintenanceRequestsState>(
-          builder: (context, state) {
-            if (state is OwnerMaintenanceRequestsInitial ||
-                (state is OwnerMaintenanceRequestsLoading &&
-                    !state.isPagination)) {
-              return const ReportSkeleton();
-            } else if (state is OwnerMaintenanceRequestsError) {
-              return CustomErrorWidget(
-                message: state.message,
-                onRetry: () => _cubit.loadReport(refresh: true),
-              );
-            } else if (state is OwnerMaintenanceRequestsEmpty) {
-              return ReportEmptyWidget(
-                message: LocaleKeys.maintenanceRequestsNoData.tr(),
-                icon: Icons.build_circle_outlined,
-              );
-            } else if (state is OwnerMaintenanceRequestsLoaded ||
-                (state is OwnerMaintenanceRequestsLoading &&
-                    state.isPagination)) {
-              final currentState = _cubit.state;
-              if (currentState is! OwnerMaintenanceRequestsLoaded &&
-                  currentState is! OwnerMaintenanceRequestsLoading) {
-                return const SizedBox.shrink();
-              }
-              
-              var report = (currentState is OwnerMaintenanceRequestsLoaded)
-                  ? currentState.report
-                  : null;
-                  
-              if (report == null) return const SizedBox.shrink();
+        body:
+            BlocBuilder<
+              OwnerMaintenanceRequestsCubit,
+              OwnerMaintenanceRequestsState
+            >(
+              builder: (context, state) {
+                if (state is OwnerMaintenanceRequestsInitial ||
+                    (state is OwnerMaintenanceRequestsLoading &&
+                        !state.isPagination)) {
+                  return const ReportSkeleton();
+                } else if (state is OwnerMaintenanceRequestsError) {
+                  return CustomErrorWidget(
+                    message: state.message,
+                    onRetry: () => _cubit.loadReport(refresh: true),
+                  );
+                } else if (state is OwnerMaintenanceRequestsEmpty) {
+                  return ReportEmptyWidget(
+                    message: LocaleKeys.maintenanceRequestsNoData.tr(),
+                    icon: Icons.build_circle_outlined,
+                  );
+                } else if (state is OwnerMaintenanceRequestsLoaded ||
+                    (state is OwnerMaintenanceRequestsLoading &&
+                        state.isPagination)) {
+                  final currentState = _cubit.state;
+                  if (currentState is! OwnerMaintenanceRequestsLoaded &&
+                      currentState is! OwnerMaintenanceRequestsLoading) {
+                    return const SizedBox.shrink();
+                  }
 
-              return RefreshIndicator(
-                onRefresh: () => _cubit.loadReport(refresh: true),
-                color: AppColors.primary,
-                child: ListView(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(20),
-                  children: [
-                    MaintenanceRequestsSummaryHeader(summary: report.summary),
-                    const SizedBox(height: 24),
-                    Text(
-                      LocaleKeys.maintenanceRequestsList.tr(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimaryLight,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    MaintenanceRequestsReportList(items: report.items),
-                    if (currentState is OwnerMaintenanceRequestsLoading &&
-                        currentState.isPagination) ...[
-                      const SizedBox(height: 16),
-                      const Center(
-                        child: SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(strokeWidth: 2),
+                  var report = (currentState is OwnerMaintenanceRequestsLoaded)
+                      ? currentState.report
+                      : null;
+
+                  if (report == null) return const SizedBox.shrink();
+
+                  return RefreshIndicator(
+                    onRefresh: () => _cubit.loadReport(refresh: true),
+                    color: AppColors.primary,
+                    child: ListView(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.all(20),
+                      children: [
+                        MaintenanceRequestsSummaryHeader(
+                          summary: report.summary,
                         ),
-                      ),
-                    ],
-                  ],
-                ),
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          LocaleKeys.maintenanceRequestsList.tr(),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimaryLight,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        MaintenanceRequestsReportList(items: report.items),
+                        if (currentState is OwnerMaintenanceRequestsLoading &&
+                            currentState.isPagination) ...[
+                          const SizedBox(height: 16),
+                          const Center(
+                            child: SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
       ),
     );
   }

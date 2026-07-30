@@ -50,15 +50,26 @@ class ActivityLogsExcelBuilder {
 
     // Summary
     int currentRow = 3;
-    sheet.getRangeByIndex(currentRow, 1).setText(LocaleKeys.activityLogsTotalLogs.tr());
-    sheet.getRangeByIndex(currentRow, 2).setText(LocaleKeys.activityLogsCreates.tr());
-    sheet.getRangeByIndex(currentRow, 3).setText(LocaleKeys.activityLogsUpdates.tr());
-    sheet.getRangeByIndex(currentRow, 4).setText(LocaleKeys.activityLogsDeletes.tr());
+    sheet
+        .getRangeByIndex(currentRow, 1)
+        .setText(LocaleKeys.activityLogsTotalLogs.tr());
+    sheet
+        .getRangeByIndex(currentRow, 2)
+        .setText(LocaleKeys.activityLogsCreates.tr());
+    sheet
+        .getRangeByIndex(currentRow, 3)
+        .setText(LocaleKeys.activityLogsUpdates.tr());
+    sheet
+        .getRangeByIndex(currentRow, 4)
+        .setText(LocaleKeys.activityLogsDeletes.tr());
 
-    sheet.getRangeByIndex(currentRow, 1, currentRow, 4).cellStyle = summaryHeaderStyle;
+    sheet.getRangeByIndex(currentRow, 1, currentRow, 4).cellStyle =
+        summaryHeaderStyle;
     currentRow++;
 
-    sheet.getRangeByIndex(currentRow, 1).setNumber(summary.totalLogs.toDouble());
+    sheet
+        .getRangeByIndex(currentRow, 1)
+        .setNumber(summary.totalLogs.toDouble());
     sheet.getRangeByIndex(currentRow, 2).setNumber(summary.creates.toDouble());
     sheet.getRangeByIndex(currentRow, 3).setNumber(summary.updates.toDouble());
     sheet.getRangeByIndex(currentRow, 4).setNumber(summary.deletes.toDouble());
@@ -85,7 +96,9 @@ class ActivityLogsExcelBuilder {
     // Data Rows
     if (items.isEmpty) {
       sheet.getRangeByIndex(currentRow, 1, currentRow, headers.length).merge();
-      sheet.getRangeByIndex(currentRow, 1).setText(LocaleKeys.activityLogsNoData.tr());
+      sheet
+          .getRangeByIndex(currentRow, 1)
+          .setText(LocaleKeys.activityLogsNoData.tr());
       sheet.getRangeByIndex(currentRow, 1).cellStyle = valueStyle;
     } else {
       for (final item in items) {
@@ -95,7 +108,10 @@ class ActivityLogsExcelBuilder {
         sheet.getRangeByIndex(currentRow, 4).setText(item.ipAddress);
         sheet.getRangeByIndex(currentRow, 5).setText(item.createdAt);
 
-        sheet.getRangeByIndex(currentRow, 1, currentRow, headers.length).cellStyle = valueStyle;
+        sheet
+                .getRangeByIndex(currentRow, 1, currentRow, headers.length)
+                .cellStyle =
+            valueStyle;
         currentRow++;
       }
     }

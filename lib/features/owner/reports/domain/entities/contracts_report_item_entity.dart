@@ -27,15 +27,15 @@ class ContractsReportItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        contractId,
-        contractNumber,
-        propertyName,
-        unitName,
-        renterName,
-        rentValue,
-        startDate,
-        endDate,
-        daysRemaining,
-        status,
-      ];
+    contractId,
+    contractNumber,
+    propertyName,
+    unitName,
+    renterName,
+    rentValue,
+    startDate,
+    endDate,
+    daysRemaining,
+    status,
+  ];
 }

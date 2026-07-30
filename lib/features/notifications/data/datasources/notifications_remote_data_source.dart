@@ -7,7 +7,8 @@ abstract class NotificationsRemoteDataSource {
   Future<int> getUnreadNotificationsCount();
 }
 
-class NotificationsRemoteDataSourceImpl implements NotificationsRemoteDataSource {
+class NotificationsRemoteDataSourceImpl
+    implements NotificationsRemoteDataSource {
   final Dio _dio;
 
   NotificationsRemoteDataSourceImpl(this._dio);

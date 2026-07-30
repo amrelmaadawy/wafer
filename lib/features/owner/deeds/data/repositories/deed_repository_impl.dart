@@ -26,6 +26,7 @@ class DeedRepositoryImpl implements DeedRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
   @override
   Future<Either<Failure, void>> createDeed(AddNewDeedParams params) async {
     try {

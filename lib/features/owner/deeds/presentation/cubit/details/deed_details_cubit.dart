@@ -6,7 +6,7 @@ class DeedDetailsCubit extends Cubit<DeedDetailsState> {
   final GetDeedDetailsUseCase _getDeedDetailsUseCase;
 
   DeedDetailsCubit(this._getDeedDetailsUseCase)
-      : super(const DeedDetailsInitial());
+    : super(const DeedDetailsInitial());
 
   Future<void> fetchDeedDetails(int deedId) async {
     emit(const DeedDetailsLoading());

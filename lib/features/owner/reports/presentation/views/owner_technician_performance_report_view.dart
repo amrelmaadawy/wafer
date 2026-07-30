@@ -62,8 +62,10 @@ class _OwnerTechnicianPerformanceReportViewState
         appBar: CustomAppBar(
           title: LocaleKeys.technicianPerformanceTitle.tr(),
           actions: [
-            BlocBuilder<OwnerTechnicianPerformanceCubit,
-                OwnerTechnicianPerformanceState>(
+            BlocBuilder<
+              OwnerTechnicianPerformanceCubit,
+              OwnerTechnicianPerformanceState
+            >(
               builder: (context, state) {
                 if (state is OwnerTechnicianPerformanceLoaded) {
                   return ReportExportButton(
@@ -81,10 +83,11 @@ class _OwnerTechnicianPerformanceReportViewState
                       }
                     },
                     onExcelPressed: () async {
-                      final bytes = await TechnicianPerformanceExcelBuilder.build(
-                        state.report.summary,
-                        state.report.items,
-                      );
+                      final bytes =
+                          await TechnicianPerformanceExcelBuilder.build(
+                            state.report.summary,
+                            state.report.items,
+                          );
                       if (context.mounted) {
                         await ExcelExportService.saveAndShare(
                           context: context,
@@ -100,75 +103,81 @@ class _OwnerTechnicianPerformanceReportViewState
             ),
           ],
         ),
-        body: BlocBuilder<OwnerTechnicianPerformanceCubit,
-            OwnerTechnicianPerformanceState>(
-          builder: (context, state) {
-            if (state is OwnerTechnicianPerformanceInitial ||
-                (state is OwnerTechnicianPerformanceLoading &&
-                    !state.isPagination)) {
-              return const ReportSkeleton();
-            } else if (state is OwnerTechnicianPerformanceError) {
-              return CustomErrorWidget(
-                message: state.message,
-                onRetry: () => _cubit.loadReport(refresh: true),
-              );
-            } else if (state is OwnerTechnicianPerformanceEmpty) {
-              return ReportEmptyWidget(
-                message: LocaleKeys.technicianPerformanceNoData.tr(),
-                icon: Icons.engineering_outlined,
-              );
-            } else if (state is OwnerTechnicianPerformanceLoaded ||
-                (state is OwnerTechnicianPerformanceLoading &&
-                    state.isPagination)) {
-              final currentState = _cubit.state;
-              if (currentState is! OwnerTechnicianPerformanceLoaded &&
-                  currentState is! OwnerTechnicianPerformanceLoading) {
-                return const SizedBox.shrink();
-              }
-              
-              var report = (currentState is OwnerTechnicianPerformanceLoaded)
-                  ? currentState.report
-                  : null;
-                  
-              if (report == null) return const SizedBox.shrink();
+        body:
+            BlocBuilder<
+              OwnerTechnicianPerformanceCubit,
+              OwnerTechnicianPerformanceState
+            >(
+              builder: (context, state) {
+                if (state is OwnerTechnicianPerformanceInitial ||
+                    (state is OwnerTechnicianPerformanceLoading &&
+                        !state.isPagination)) {
+                  return const ReportSkeleton();
+                } else if (state is OwnerTechnicianPerformanceError) {
+                  return CustomErrorWidget(
+                    message: state.message,
+                    onRetry: () => _cubit.loadReport(refresh: true),
+                  );
+                } else if (state is OwnerTechnicianPerformanceEmpty) {
+                  return ReportEmptyWidget(
+                    message: LocaleKeys.technicianPerformanceNoData.tr(),
+                    icon: Icons.engineering_outlined,
+                  );
+                } else if (state is OwnerTechnicianPerformanceLoaded ||
+                    (state is OwnerTechnicianPerformanceLoading &&
+                        state.isPagination)) {
+                  final currentState = _cubit.state;
+                  if (currentState is! OwnerTechnicianPerformanceLoaded &&
+                      currentState is! OwnerTechnicianPerformanceLoading) {
+                    return const SizedBox.shrink();
+                  }
 
-              return RefreshIndicator(
-                onRefresh: () => _cubit.loadReport(refresh: true),
-                color: AppColors.primary,
-                child: ListView(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(20),
-                  children: [
-                    TechnicianPerformanceSummaryHeader(summary: report.summary),
-                    const SizedBox(height: 24),
-                    Text(
-                      LocaleKeys.technicianPerformanceList.tr(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimaryLight,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    TechnicianPerformanceReportList(items: report.items),
-                    if (currentState is OwnerTechnicianPerformanceLoading &&
-                        currentState.isPagination) ...[
-                      const SizedBox(height: 16),
-                      const Center(
-                        child: SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(strokeWidth: 2),
+                  var report =
+                      (currentState is OwnerTechnicianPerformanceLoaded)
+                      ? currentState.report
+                      : null;
+
+                  if (report == null) return const SizedBox.shrink();
+
+                  return RefreshIndicator(
+                    onRefresh: () => _cubit.loadReport(refresh: true),
+                    color: AppColors.primary,
+                    child: ListView(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.all(20),
+                      children: [
+                        TechnicianPerformanceSummaryHeader(
+                          summary: report.summary,
                         ),
-                      ),
-                    ],
-                  ],
-                ),
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+                        const SizedBox(height: 24),
+                        Text(
+                          LocaleKeys.technicianPerformanceList.tr(),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimaryLight,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        TechnicianPerformanceReportList(items: report.items),
+                        if (currentState is OwnerTechnicianPerformanceLoading &&
+                            currentState.isPagination) ...[
+                          const SizedBox(height: 16),
+                          const Center(
+                            child: SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
       ),
     );
   }

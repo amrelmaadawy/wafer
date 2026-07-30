@@ -5,11 +5,7 @@ class UnitMetersEntity extends Equatable {
   final String? water;
   final String? gas;
 
-  const UnitMetersEntity({
-    this.electricity,
-    this.water,
-    this.gas,
-  });
+  const UnitMetersEntity({this.electricity, this.water, this.gas});
 
   @override
   List<Object?> get props => [electricity, water, gas];
@@ -39,7 +35,7 @@ class UnitFullDetailsEntity extends Equatable {
   final UnitMetersEntity meters;
   final List<String> amenities;
   final List<String> images;
-  
+
   // Details counts
   final int roomsCount;
   final int bathroomsCount;
@@ -95,45 +91,48 @@ class UnitFullDetailsEntity extends Equatable {
   });
 
   bool get isVacant => status.toLowerCase() == 'vacant';
-  bool get isOccupied => status.toLowerCase() == 'occupied' || status.toLowerCase() == 'rented';
+  bool get isOccupied =>
+      status.toLowerCase() == 'occupied' || status.toLowerCase() == 'rented';
   bool get isReserved => status.toLowerCase() == 'reserved';
-  bool get isMaintenance => status.toLowerCase() == 'under_maintenance' || status.toLowerCase() == 'maintenance';
+  bool get isMaintenance =>
+      status.toLowerCase() == 'under_maintenance' ||
+      status.toLowerCase() == 'maintenance';
 
   @override
   List<Object?> get props => [
-        id,
-        propertyId,
-        name,
-        unitNumber,
-        code,
-        type,
-        typeLabel,
-        status,
-        statusLabel,
-        usageType,
-        floor,
-        area,
-        length,
-        width,
-        height,
-        facadeLength,
-        direction,
-        isFurnished,
-        finishingType,
-        description,
-        meters,
-        amenities,
-        images,
-        roomsCount,
-        bathroomsCount,
-        hallsCount,
-        kitchensCount,
-        entrancesCount,
-        rentPrice,
-        monthlyPrice,
-        perTwoPaymentsPrice,
-        quarterlyPrice,
-        currentContract,
-        contractsHistory,
-      ];
+    id,
+    propertyId,
+    name,
+    unitNumber,
+    code,
+    type,
+    typeLabel,
+    status,
+    statusLabel,
+    usageType,
+    floor,
+    area,
+    length,
+    width,
+    height,
+    facadeLength,
+    direction,
+    isFurnished,
+    finishingType,
+    description,
+    meters,
+    amenities,
+    images,
+    roomsCount,
+    bathroomsCount,
+    hallsCount,
+    kitchensCount,
+    entrancesCount,
+    rentPrice,
+    monthlyPrice,
+    perTwoPaymentsPrice,
+    quarterlyPrice,
+    currentContract,
+    contractsHistory,
+  ];
 }

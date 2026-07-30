@@ -8,7 +8,6 @@ import 'package:wafer/features/owner/dashboard/presentation/cubit/owner_dashboar
 import 'package:wafer/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:wafer/features/owner/shell/presentation/widgets/owner_bottom_nav_widget.dart';
 
-
 class OwnerMainScreen extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
 
@@ -20,10 +19,18 @@ class OwnerMainScreen extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<OwnerDashboardCubit>(create: (_) => sl<OwnerDashboardCubit>()),
-          BlocProvider<OwnerContractsCubit>(create: (_) => sl<OwnerContractsCubit>()),
-          BlocProvider<OwnerMaintenanceCubit>(create: (_) => sl<OwnerMaintenanceCubit>()),
-          BlocProvider<ProfileCubit>(create: (_) => sl<ProfileCubit>()..fetchProfile()),
+          BlocProvider<OwnerDashboardCubit>(
+            create: (_) => sl<OwnerDashboardCubit>(),
+          ),
+          BlocProvider<OwnerContractsCubit>(
+            create: (_) => sl<OwnerContractsCubit>(),
+          ),
+          BlocProvider<OwnerMaintenanceCubit>(
+            create: (_) => sl<OwnerMaintenanceCubit>(),
+          ),
+          BlocProvider<ProfileCubit>(
+            create: (_) => sl<ProfileCubit>()..fetchProfile(),
+          ),
         ],
         child: Scaffold(
           extendBody: true,

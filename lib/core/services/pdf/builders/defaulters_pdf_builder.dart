@@ -15,7 +15,12 @@ class DefaultersPdfBuilder {
       subtitle: 'المبالغ والأقساط المتأخرة',
       buildContent: (theme) {
         return [
-          _buildSummaryCards(totalRemaining, totalAmount, totalInstallments, theme),
+          _buildSummaryCards(
+            totalRemaining,
+            totalAmount,
+            totalInstallments,
+            theme,
+          ),
           pw.SizedBox(height: 24),
           _buildTable(items, theme),
         ];
@@ -43,16 +48,17 @@ class DefaultersPdfBuilder {
           '${totalAmount.toStringAsFixed(2)} ريال',
           theme,
         ),
-        _buildSummaryCard(
-          'إجمالي الأقساط',
-          '$totalInstallments',
-          theme,
-        ),
+        _buildSummaryCard('إجمالي الأقساط', '$totalInstallments', theme),
       ],
     );
   }
 
-  static pw.Widget _buildSummaryCard(String title, String value, pw.ThemeData theme, {PdfColor? color}) {
+  static pw.Widget _buildSummaryCard(
+    String title,
+    String value,
+    pw.ThemeData theme, {
+    PdfColor? color,
+  }) {
     return pw.Expanded(
       child: pw.Container(
         margin: const pw.EdgeInsets.symmetric(horizontal: 4),
@@ -89,7 +95,10 @@ class DefaultersPdfBuilder {
     );
   }
 
-  static pw.Widget _buildTable(List<DefaultersReportItemEntity> items, pw.ThemeData theme) {
+  static pw.Widget _buildTable(
+    List<DefaultersReportItemEntity> items,
+    pw.ThemeData theme,
+  ) {
     if (items.isEmpty) {
       return pw.Center(
         child: pw.Text(
@@ -131,7 +140,7 @@ class DefaultersPdfBuilder {
         'رقم القسط',
         'المتبقي',
         'الاستحقاق',
-        'أيام التأخير'
+        'أيام التأخير',
       ],
       data: items.map((item) {
         return [

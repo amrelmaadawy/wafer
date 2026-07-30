@@ -27,13 +27,15 @@ class MaintenanceRequestsExcelBuilder {
     sheet.getRangeByName('A1:D1').merge();
     sheet.getRangeByName('A1').text = 'ملخص طلبات الصيانة';
     sheet.getRangeByName('A1').cellStyle = headerStyle;
-    
+
     // Summary Data
     sheet.getRangeByName('A2').text = LocaleKeys.maintenanceRequestsTotal.tr();
     sheet.getRangeByName('B2').text = LocaleKeys.maintenanceRequestsOpen.tr();
-    sheet.getRangeByName('C2').text = LocaleKeys.maintenanceRequestsInProgress.tr();
-    sheet.getRangeByName('D2').text = LocaleKeys.maintenanceRequestsCompleted.tr();
-    
+    sheet.getRangeByName('C2').text = LocaleKeys.maintenanceRequestsInProgress
+        .tr();
+    sheet.getRangeByName('D2').text = LocaleKeys.maintenanceRequestsCompleted
+        .tr();
+
     sheet.getRangeByName('A3').number = summary.total.toDouble();
     sheet.getRangeByName('B3').number = summary.open.toDouble();
     sheet.getRangeByName('C3').number = summary.inProgress.toDouble();
@@ -62,10 +64,16 @@ class MaintenanceRequestsExcelBuilder {
     for (int i = 0; i < items.length; i++) {
       final item = items[i];
       final row = startRow + 1 + i;
-      
-      final clientName = item.clientName.isNotEmpty ? item.clientName : LocaleKeys.maintenanceRequestsUnknownRenter.tr();
-      final propertyName = item.property.name.isNotEmpty ? item.property.name : item.property.code;
-      final unitName = item.unit.name.isNotEmpty ? item.unit.name : item.unit.unitNumber;
+
+      final clientName = item.clientName.isNotEmpty
+          ? item.clientName
+          : LocaleKeys.maintenanceRequestsUnknownRenter.tr();
+      final propertyName = item.property.name.isNotEmpty
+          ? item.property.name
+          : item.property.code;
+      final unitName = item.unit.name.isNotEmpty
+          ? item.unit.name
+          : item.unit.unitNumber;
 
       sheet.getRangeByIndex(row, 1).text = item.requestNumber;
       sheet.getRangeByIndex(row, 2).text = clientName;

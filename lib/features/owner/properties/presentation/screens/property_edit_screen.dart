@@ -53,33 +53,55 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.property.name);
-    _addressController = TextEditingController(text: widget.property.address ?? '');
+    _addressController = TextEditingController(
+      text: widget.property.address ?? '',
+    );
     _areaController = TextEditingController(
-        text: widget.property.area != null ? widget.property.area.toString() : '');
+      text: widget.property.area != null ? widget.property.area.toString() : '',
+    );
     _yearController = TextEditingController(
-        text: widget.property.constructionYear != null ? widget.property.constructionYear.toString() : '');
-    _descriptionController = TextEditingController(text: widget.property.description ?? '');
+      text: widget.property.constructionYear != null
+          ? widget.property.constructionYear.toString()
+          : '',
+    );
+    _descriptionController = TextEditingController(
+      text: widget.property.description ?? '',
+    );
 
     _cityController = TextEditingController(text: widget.property.city ?? '');
-    _districtController = TextEditingController(text: widget.property.district ?? '');
-    _regionController = TextEditingController(text: widget.property.region ?? '');
-    _streetController = TextEditingController(text: widget.property.streetName ?? '');
-    _buildingController = TextEditingController(text: widget.property.buildingNumber ?? '');
+    _districtController = TextEditingController(
+      text: widget.property.district ?? '',
+    );
+    _regionController = TextEditingController(
+      text: widget.property.region ?? '',
+    );
+    _streetController = TextEditingController(
+      text: widget.property.streetName ?? '',
+    );
+    _buildingController = TextEditingController(
+      text: widget.property.buildingNumber ?? '',
+    );
 
     _lengthController = TextEditingController(
-        text: widget.property.length != null ? widget.property.length.toString() : '');
+      text: widget.property.length != null
+          ? widget.property.length.toString()
+          : '',
+    );
     _widthController = TextEditingController(
-        text: widget.property.width != null ? widget.property.width.toString() : '');
+      text: widget.property.width != null
+          ? widget.property.width.toString()
+          : '',
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PropertyEditCubit>().init(
-            widget.property.id,
-            widget.property.branchId,
-            widget.property.deedId,
-            widget.property.propertyType,
-            usageType: widget.property.usageType,
-            amenities: widget.property.amenities,
-          );
+        widget.property.id,
+        widget.property.branchId,
+        widget.property.deedId,
+        widget.property.propertyType,
+        usageType: widget.property.usageType,
+        amenities: widget.property.amenities,
+      );
     });
   }
 
@@ -116,22 +138,26 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
 
     final cubitState = context.read<PropertyEditCubit>().state;
 
-    final data = {
-      'name': name,
-      'address': _addressController.text.trim(),
-      'area': num.tryParse(_areaController.text.trim()),
-      'construction_year': year,
-      'description': _descriptionController.text.trim(),
-      'city': _cityController.text.trim(),
-      'district': _districtController.text.trim(),
-      'region': _regionController.text.trim(),
-      'street_name': _streetController.text.trim(),
-      'building_number': _buildingController.text.trim(),
-      'length': num.tryParse(_lengthController.text.trim()),
-      'width': num.tryParse(_widthController.text.trim()),
-      if (cubitState.selectedUsageType != null) 'usage_type': cubitState.selectedUsageType,
-      'amenities': cubitState.selectedAmenities,
-    }..removeWhere((key, value) => value == null || (value is String && value.isEmpty));
+    final data =
+        {
+          'name': name,
+          'address': _addressController.text.trim(),
+          'area': num.tryParse(_areaController.text.trim()),
+          'construction_year': year,
+          'description': _descriptionController.text.trim(),
+          'city': _cityController.text.trim(),
+          'district': _districtController.text.trim(),
+          'region': _regionController.text.trim(),
+          'street_name': _streetController.text.trim(),
+          'building_number': _buildingController.text.trim(),
+          'length': num.tryParse(_lengthController.text.trim()),
+          'width': num.tryParse(_widthController.text.trim()),
+          if (cubitState.selectedUsageType != null)
+            'usage_type': cubitState.selectedUsageType,
+          'amenities': cubitState.selectedAmenities,
+        }..removeWhere(
+          (key, value) => value == null || (value is String && value.isEmpty),
+        );
 
     context.read<PropertyEditCubit>().saveChanges(widget.property.id, data);
   }
@@ -140,9 +166,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(
-        title: LocaleKeys.propertyEditTitle.tr(),
-      ),
+      appBar: CustomAppBar(title: LocaleKeys.propertyEditTitle.tr()),
       body: BlocConsumer<PropertyEditCubit, PropertyEditState>(
         listener: (context, state) {
           if (state.isSuccess) {
@@ -169,24 +193,35 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                         if (state.branches.length > 1) ...[
                           Text(
                             LocaleKeys.propertyCreateSelectBranch.tr(),
-                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<FormBranchEntity>(
                             items: state.branches,
-                            value: state.branches.where((b) => b.id == state.selectedBranchId).firstOrNull,
+                            value: state.branches
+                                .where((b) => b.id == state.selectedBranchId)
+                                .firstOrNull,
                             hint: LocaleKeys.propertyCreateSelectBranch.tr(),
                             itemLabelBuilder: (b) => b.name,
-                            onSelected: (b) => context.read<PropertyEditCubit>().selectBranch(b.id),
+                            onSelected: (b) => context
+                                .read<PropertyEditCubit>()
+                                .selectBranch(b.id),
                           ),
                           const SizedBox(height: 24),
                         ],
                         DeedSelectorWidget(
                           deeds: state.deeds,
                           selectedDeedId: state.selectedDeedId,
-                          onSelect: context.read<PropertyEditCubit>().selectDeed,
+                          onSelect: context
+                              .read<PropertyEditCubit>()
+                              .selectDeed,
                           onCreateNew: () async {
-                            final result = await context.push(Routes.ownerDeedsCreate);
+                            final result = await context.push(
+                              Routes.ownerDeedsCreate,
+                            );
                             if (result != null && context.mounted) {
                               context.read<PropertyEditCubit>().loadFormData();
                             }
@@ -196,13 +231,19 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                         if (state.formData?.options.propertyTypes != null) ...[
                           Text(
                             LocaleKeys.propertyCreateSelectType.tr(),
-                            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                           const SizedBox(height: 12),
                           PropertyTypeSelectorWidget(
-                            propertyTypes: state.formData!.options.propertyTypes,
+                            propertyTypes:
+                                state.formData!.options.propertyTypes,
                             selectedType: state.selectedType,
-                            onSelect: context.read<PropertyEditCubit>().selectType,
+                            onSelect: context
+                                .read<PropertyEditCubit>()
+                                .selectType,
                           ),
                           const SizedBox(height: 24),
                         ],
@@ -235,7 +276,10 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                   ),
                 ),
               ),
-              PropertyEditBottomNav(state: state, onSave: () => _onSave(context)),
+              PropertyEditBottomNav(
+                state: state,
+                onSave: () => _onSave(context),
+              ),
             ],
           );
         },

@@ -31,7 +31,9 @@ class DeedsRemoteDataSourceImpl implements DeedsRemoteDataSource {
       data: body,
     );
 
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
     return DeedModel.fromJson(data);
   }
 }

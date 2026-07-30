@@ -14,14 +14,16 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = (item.title?.isNotEmpty ?? false) ? item.title! : '#${item.requestNumber ?? item.id}';
+    final title = (item.title?.isNotEmpty ?? false)
+        ? item.title!
+        : '#${item.requestNumber ?? item.id}';
     final propertyName = item.property?.name ?? '';
     final unitName = item.unit?.name ?? '';
     final locationTitle = unitName.isNotEmpty && propertyName.isNotEmpty
         ? '$propertyName - $unitName'
         : propertyName.isNotEmpty
-            ? propertyName
-            : 'غير محدد';
+        ? propertyName
+        : 'غير محدد';
     final requestedDate = item.dates?.requestedDate ?? '';
 
     return Material(
@@ -34,7 +36,9 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
             ),
           );
           if (result == true && context.mounted) {
-            context.read<OwnerDashboardCubit>().loadDashboardStats(forceRefresh: true);
+            context.read<OwnerDashboardCubit>().loadDashboardStats(
+              forceRefresh: true,
+            );
           }
         },
         borderRadius: AppRadius.circularXl,
@@ -71,7 +75,11 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
               const SizedBox(height: 6),
               Row(
                 children: [
-                  const Icon(Icons.domain_rounded, size: 12, color: Color(0xFF64748B)),
+                  const Icon(
+                    Icons.domain_rounded,
+                    size: 12,
+                    color: Color(0xFF64748B),
+                  ),
                   const SizedBox(width: 4),
                   Expanded(
                     child: Text(

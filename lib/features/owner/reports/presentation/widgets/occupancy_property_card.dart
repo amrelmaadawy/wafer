@@ -16,8 +16,8 @@ class OccupancyPropertyCard extends StatelessWidget {
     final rateColor = property.occupancyRate >= 70
         ? const Color(0xFF10B981)
         : property.occupancyRate >= 40
-            ? const Color(0xFFF59E0B)
-            : AppColors.error;
+        ? const Color(0xFFF59E0B)
+        : AppColors.error;
 
     return Container(
       padding: const EdgeInsets.all(18),
@@ -48,8 +48,11 @@ class OccupancyPropertyCard extends StatelessWidget {
                         color: const Color(0xFF6366F1).withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(Icons.apartment_rounded,
-                          color: Color(0xFF6366F1), size: 20),
+                      child: const Icon(
+                        Icons.apartment_rounded,
+                        color: Color(0xFF6366F1),
+                        size: 20,
+                      ),
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -72,7 +75,9 @@ class OccupancyPropertyCard extends StatelessWidget {
               const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: 12, vertical: 6),
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: rateColor.withValues(alpha: 0.12),
                   borderRadius: AppRadius.circularFull,

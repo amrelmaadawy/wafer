@@ -40,5 +40,13 @@ class PropertyOwnerEntity extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, name, percentage, phone, email, username, isRepresentative];
+  List<Object?> get props => [
+    id,
+    name,
+    percentage,
+    phone,
+    email,
+    username,
+    isRepresentative,
+  ];
 }

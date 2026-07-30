@@ -25,7 +25,9 @@ class ActivityLogsPdfBuilder {
   }
 
   static pw.Widget _buildSummaryCards(
-      ActivityLogsSummaryEntity summary, pw.ThemeData theme) {
+    ActivityLogsSummaryEntity summary,
+    pw.ThemeData theme,
+  ) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(16),
       decoration: pw.BoxDecoration(
@@ -63,8 +65,11 @@ class ActivityLogsPdfBuilder {
   }
 
   static pw.Widget _buildSummaryItem(
-      String title, String value, pw.ThemeData theme,
-      {bool isWarning = false}) {
+    String title,
+    String value,
+    pw.ThemeData theme, {
+    bool isWarning = false,
+  }) {
     return pw.Column(
       children: [
         pw.Text(
@@ -90,7 +95,9 @@ class ActivityLogsPdfBuilder {
   }
 
   static pw.Widget _buildTable(
-      List<ActivityLogsItemEntity> items, pw.ThemeData theme) {
+    List<ActivityLogsItemEntity> items,
+    pw.ThemeData theme,
+  ) {
     if (items.isEmpty) {
       return pw.Center(
         child: pw.Text(
@@ -147,7 +154,7 @@ class ActivityLogsPdfBuilder {
         1: const pw.FlexColumnWidth(1.5), // IP
         2: const pw.FlexColumnWidth(1.5), // User
         3: const pw.FlexColumnWidth(1.2), // Action Type
-        4: const pw.FlexColumnWidth(3),   // Message (widest)
+        4: const pw.FlexColumnWidth(3), // Message (widest)
       },
     );
   }

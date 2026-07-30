@@ -26,12 +26,12 @@ class DefaultersExcelBuilder {
     sheet.getRangeByName('A1:C1').merge();
     sheet.getRangeByName('A1').text = 'ملخص المتأخرات';
     sheet.getRangeByName('A1').cellStyle = headerStyle;
-    
+
     // Summary Data
     sheet.getRangeByName('A2').text = 'إجمالي الأقساط';
     sheet.getRangeByName('B2').text = 'إجمالي المبالغ';
     sheet.getRangeByName('C2').text = 'إجمالي المتبقي';
-    
+
     sheet.getRangeByName('A3').number = totalInstallments.toDouble();
     sheet.getRangeByName('B3').number = totalAmount;
     sheet.getRangeByName('C3').number = totalRemaining;
@@ -61,10 +61,16 @@ class DefaultersExcelBuilder {
     for (int i = 0; i < items.length; i++) {
       final item = items[i];
       final row = startRow + 1 + i;
-      
-      sheet.getRangeByIndex(row, 1).text = item.renter.name.isNotEmpty ? item.renter.name : 'غير محدد';
-      sheet.getRangeByIndex(row, 2).text = item.unit.name.isNotEmpty ? item.unit.name : item.unit.unitNumber;
-      sheet.getRangeByIndex(row, 3).text = item.property.name.isNotEmpty ? item.property.name : item.property.code;
+
+      sheet.getRangeByIndex(row, 1).text = item.renter.name.isNotEmpty
+          ? item.renter.name
+          : 'غير محدد';
+      sheet.getRangeByIndex(row, 2).text = item.unit.name.isNotEmpty
+          ? item.unit.name
+          : item.unit.unitNumber;
+      sheet.getRangeByIndex(row, 3).text = item.property.name.isNotEmpty
+          ? item.property.name
+          : item.property.code;
       sheet.getRangeByIndex(row, 4).text = item.contract.contractNumber;
       sheet.getRangeByIndex(row, 5).number = item.installmentNumber.toDouble();
       sheet.getRangeByIndex(row, 6).text = item.dueDate;

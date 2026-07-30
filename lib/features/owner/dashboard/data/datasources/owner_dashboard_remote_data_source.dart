@@ -6,7 +6,8 @@ abstract class OwnerDashboardRemoteDataSource {
   Future<OwnerDashboardModel> getDashboardStats();
 }
 
-class OwnerDashboardRemoteDataSourceImpl implements OwnerDashboardRemoteDataSource {
+class OwnerDashboardRemoteDataSourceImpl
+    implements OwnerDashboardRemoteDataSource {
   final Dio _dio;
 
   OwnerDashboardRemoteDataSourceImpl(this._dio);

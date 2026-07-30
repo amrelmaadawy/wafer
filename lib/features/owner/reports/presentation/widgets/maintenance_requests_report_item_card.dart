@@ -164,7 +164,9 @@ class MaintenanceRequestsReportItemCard extends StatelessWidget {
                 child: _buildInfoRow(
                   icon: Icons.person_outline_rounded,
                   label: LocaleKeys.maintenanceRequestsClient.tr(),
-                  value: item.clientName.isNotEmpty ? item.clientName : LocaleKeys.maintenanceRequestsUnknownRenter.tr(),
+                  value: item.clientName.isNotEmpty
+                      ? item.clientName
+                      : LocaleKeys.maintenanceRequestsUnknownRenter.tr(),
                 ),
               ),
               Expanded(

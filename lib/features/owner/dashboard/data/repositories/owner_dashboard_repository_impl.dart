@@ -14,14 +14,18 @@ class OwnerDashboardRepositoryImpl implements OwnerDashboardRepository {
   OwnerDashboardRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<Either<Failure, OwnerDashboardEntity>> getDashboardStats({bool forceRefresh = false}) async {
+  Future<Either<Failure, OwnerDashboardEntity>> getDashboardStats({
+    bool forceRefresh = false,
+  }) async {
     try {
       final result = await _remoteDataSource.getDashboardStats();
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(
+        ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

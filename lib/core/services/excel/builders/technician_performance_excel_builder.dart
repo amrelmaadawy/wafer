@@ -41,7 +41,7 @@ class TechnicianPerformanceExcelBuilder {
       LocaleKeys.technicianPerformanceTotalCompleted.tr(),
       LocaleKeys.technicianPerformanceTotalPending.tr(),
     ];
-    
+
     final summaryValues = [
       summary.totalTechnicians.toString(),
       summary.totalCompleted.toString(),
@@ -52,7 +52,7 @@ class TechnicianPerformanceExcelBuilder {
       final cell = sheet.getRangeByIndex(3, i + 1);
       cell.text = summaryHeaders[i];
       cell.cellStyle = headerStyle;
-      
+
       final valCell = sheet.getRangeByIndex(4, i + 1);
       valCell.text = summaryValues[i];
       valCell.cellStyle = valueStyle;
@@ -81,11 +81,16 @@ class TechnicianPerformanceExcelBuilder {
     for (int i = 0; i < items.length; i++) {
       final item = items[i];
       final row = i + 10;
-      
-      sheet.getRangeByIndex(row, 1).text = item.name.isNotEmpty ? item.name : '-';
-      sheet.getRangeByIndex(row, 2).text = item.phone.isNotEmpty ? item.phone : '-';
+
+      sheet.getRangeByIndex(row, 1).text = item.name.isNotEmpty
+          ? item.name
+          : '-';
+      sheet.getRangeByIndex(row, 2).text = item.phone.isNotEmpty
+          ? item.phone
+          : '-';
       sheet.getRangeByIndex(row, 3).text = item.pendingRequestsCount.toString();
-      sheet.getRangeByIndex(row, 4).text = item.completedRequestsCount.toString();
+      sheet.getRangeByIndex(row, 4).text = item.completedRequestsCount
+          .toString();
 
       for (int j = 1; j <= 4; j++) {
         sheet.getRangeByIndex(row, j).cellStyle = valueStyle;

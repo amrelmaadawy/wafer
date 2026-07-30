@@ -23,18 +23,37 @@ class ContractsPdfBuilder {
     );
   }
 
-  static pw.Widget _buildSummaryCards(int totalExpiring, double totalRentValue, int days, pw.ThemeData theme) {
+  static pw.Widget _buildSummaryCards(
+    int totalExpiring,
+    double totalRentValue,
+    int days,
+    pw.ThemeData theme,
+  ) {
     return pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       children: [
-        _buildSummaryCard('إجمالي الإيجارات', '${totalRentValue.toStringAsFixed(2)} ريال', theme),
+        _buildSummaryCard(
+          'إجمالي الإيجارات',
+          '${totalRentValue.toStringAsFixed(2)} ريال',
+          theme,
+        ),
         _buildSummaryCard('تاريخ التقرير', '$days يوم', theme),
-        _buildSummaryCard('العقود المنتهية', '$totalExpiring', theme, color: PdfColor.fromInt(0xFFF59E0B)),
+        _buildSummaryCard(
+          'العقود المنتهية',
+          '$totalExpiring',
+          theme,
+          color: PdfColor.fromInt(0xFFF59E0B),
+        ),
       ],
     );
   }
 
-  static pw.Widget _buildSummaryCard(String title, String value, pw.ThemeData theme, {PdfColor? color}) {
+  static pw.Widget _buildSummaryCard(
+    String title,
+    String value,
+    pw.ThemeData theme, {
+    PdfColor? color,
+  }) {
     return pw.Expanded(
       child: pw.Container(
         margin: const pw.EdgeInsets.symmetric(horizontal: 4),
@@ -71,7 +90,10 @@ class ContractsPdfBuilder {
     );
   }
 
-  static pw.Widget _buildTable(List<ContractsReportItemEntity> contracts, pw.ThemeData theme) {
+  static pw.Widget _buildTable(
+    List<ContractsReportItemEntity> contracts,
+    pw.ThemeData theme,
+  ) {
     if (contracts.isEmpty) {
       return pw.Center(
         child: pw.Text(
@@ -107,7 +129,15 @@ class ContractsPdfBuilder {
           ),
         ),
       ),
-      headers: ['العقار', 'الوحدة', 'المستأجر', 'النهاية', 'الإيجار', 'الأيام', 'الحالة'],
+      headers: [
+        'العقار',
+        'الوحدة',
+        'المستأجر',
+        'النهاية',
+        'الإيجار',
+        'الأيام',
+        'الحالة',
+      ],
       data: contracts.map((c) {
         return [
           c.propertyName.isNotEmpty ? c.propertyName : 'غير محدد',

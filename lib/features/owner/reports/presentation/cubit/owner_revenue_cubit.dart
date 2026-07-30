@@ -6,7 +6,7 @@ class OwnerRevenueCubit extends Cubit<OwnerRevenueState> {
   final GetOwnerRevenueReportUseCase _getReportUseCase;
 
   OwnerRevenueCubit(this._getReportUseCase)
-      : super(const OwnerRevenueInitial());
+    : super(const OwnerRevenueInitial());
 
   int? selectedPropertyId;
   String? selectedStartDate;
@@ -43,16 +43,15 @@ class OwnerRevenueCubit extends Cubit<OwnerRevenueState> {
 
     if (isClosed) return;
 
-    result.fold(
-      (failure) => emit(OwnerRevenueError(failure.message)),
-      (report) {
-        if (report.chart.isEmpty && report.summary.totalExpected == 0) {
-          emit(const OwnerRevenueEmpty());
-        } else {
-          emit(OwnerRevenueLoaded(report: report));
-        }
-      },
-    );
+    result.fold((failure) => emit(OwnerRevenueError(failure.message)), (
+      report,
+    ) {
+      if (report.chart.isEmpty && report.summary.totalExpected == 0) {
+        emit(const OwnerRevenueEmpty());
+      } else {
+        emit(OwnerRevenueLoaded(report: report));
+      }
+    });
   }
 
   void clearFilters() {

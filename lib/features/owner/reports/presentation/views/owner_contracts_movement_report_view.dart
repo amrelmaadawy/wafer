@@ -62,8 +62,10 @@ class _OwnerContractsMovementReportViewState
         appBar: CustomAppBar(
           title: LocaleKeys.contractsMovementTitle.tr(),
           actions: [
-            BlocBuilder<OwnerContractsMovementCubit,
-                OwnerContractsMovementState>(
+            BlocBuilder<
+              OwnerContractsMovementCubit,
+              OwnerContractsMovementState
+            >(
               builder: (context, state) {
                 if (state is OwnerContractsMovementLoaded) {
                   return ReportExportButton(
@@ -100,76 +102,79 @@ class _OwnerContractsMovementReportViewState
             ),
           ],
         ),
-        body: BlocBuilder<OwnerContractsMovementCubit,
-            OwnerContractsMovementState>(
-          builder: (context, state) {
-            if (state is OwnerContractsMovementInitial ||
-                (state is OwnerContractsMovementLoading &&
-                    !state.isPagination)) {
-              return const ReportSkeleton();
-            } else if (state is OwnerContractsMovementError) {
-              return CustomErrorWidget(
-                message: state.message,
-                onRetry: () => _cubit.loadReport(refresh: true),
-              );
-            } else if (state is OwnerContractsMovementEmpty) {
-              return ReportEmptyWidget(
-                message: LocaleKeys.contractsMovementNoData.tr(),
-                icon: Icons.compare_arrows_rounded,
-              );
-            } else if (state is OwnerContractsMovementLoaded ||
-                (state is OwnerContractsMovementLoading &&
-                    state.isPagination)) {
-              final currentState = _cubit.state;
-              if (currentState is! OwnerContractsMovementLoaded &&
-                  currentState is! OwnerContractsMovementLoading) {
-                return const SizedBox.shrink();
-              }
-              
-              // We need to safely get the report from loaded state
-              var report = (currentState is OwnerContractsMovementLoaded)
-                  ? currentState.report
-                  : null;
-                  
-              if (report == null) return const SizedBox.shrink();
+        body:
+            BlocBuilder<
+              OwnerContractsMovementCubit,
+              OwnerContractsMovementState
+            >(
+              builder: (context, state) {
+                if (state is OwnerContractsMovementInitial ||
+                    (state is OwnerContractsMovementLoading &&
+                        !state.isPagination)) {
+                  return const ReportSkeleton();
+                } else if (state is OwnerContractsMovementError) {
+                  return CustomErrorWidget(
+                    message: state.message,
+                    onRetry: () => _cubit.loadReport(refresh: true),
+                  );
+                } else if (state is OwnerContractsMovementEmpty) {
+                  return ReportEmptyWidget(
+                    message: LocaleKeys.contractsMovementNoData.tr(),
+                    icon: Icons.compare_arrows_rounded,
+                  );
+                } else if (state is OwnerContractsMovementLoaded ||
+                    (state is OwnerContractsMovementLoading &&
+                        state.isPagination)) {
+                  final currentState = _cubit.state;
+                  if (currentState is! OwnerContractsMovementLoaded &&
+                      currentState is! OwnerContractsMovementLoading) {
+                    return const SizedBox.shrink();
+                  }
 
-              return RefreshIndicator(
-                onRefresh: () => _cubit.loadReport(refresh: true),
-                color: AppColors.primary,
-                child: ListView(
-                  controller: _scrollController,
-                  padding: const EdgeInsets.all(20),
-                  children: [
-                    ContractsMovementSummaryHeader(summary: report.summary),
-                    const SizedBox(height: 24),
-                    Text(
-                      LocaleKeys.contractsMovementList.tr(),
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimaryLight,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    ContractsMovementReportList(items: report.items),
-                    if (currentState is OwnerContractsMovementLoading &&
-                        currentState.isPagination) ...[
-                      const SizedBox(height: 16),
-                      const Center(
-                        child: SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(strokeWidth: 2),
+                  // We need to safely get the report from loaded state
+                  var report = (currentState is OwnerContractsMovementLoaded)
+                      ? currentState.report
+                      : null;
+
+                  if (report == null) return const SizedBox.shrink();
+
+                  return RefreshIndicator(
+                    onRefresh: () => _cubit.loadReport(refresh: true),
+                    color: AppColors.primary,
+                    child: ListView(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.all(20),
+                      children: [
+                        ContractsMovementSummaryHeader(summary: report.summary),
+                        const SizedBox(height: 24),
+                        Text(
+                          LocaleKeys.contractsMovementList.tr(),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimaryLight,
+                          ),
                         ),
-                      ),
-                    ],
-                  ],
-                ),
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+                        const SizedBox(height: 16),
+                        ContractsMovementReportList(items: report.items),
+                        if (currentState is OwnerContractsMovementLoading &&
+                            currentState.isPagination) ...[
+                          const SizedBox(height: 16),
+                          const Center(
+                            child: SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(strokeWidth: 2),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
       ),
     );
   }

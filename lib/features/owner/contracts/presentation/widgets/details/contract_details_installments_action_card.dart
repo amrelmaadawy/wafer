@@ -56,7 +56,11 @@ class ContractDetailsInstallmentsActionCard extends StatelessWidget {
                 color: primaryColor.withValues(alpha: 0.12),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.account_balance_wallet_rounded, color: primaryColor, size: 24),
+              child: Icon(
+                Icons.account_balance_wallet_rounded,
+                color: primaryColor,
+                size: 24,
+              ),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -105,7 +109,11 @@ class ContractDetailsInstallmentsActionCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 6),
-                  const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Colors.white),
+                  const Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 12,
+                    color: Colors.white,
+                  ),
                 ],
               ),
             ),

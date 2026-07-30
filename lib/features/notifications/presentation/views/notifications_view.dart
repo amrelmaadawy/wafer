@@ -29,7 +29,8 @@ class _NotificationsViewState extends State<NotificationsView> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       context.read<NotificationsCubit>().loadNextPage();
     }
   }
@@ -68,7 +69,8 @@ class _NotificationsViewState extends State<NotificationsView> {
                   final list = state.filteredNotifications;
                   if (list.isEmpty) {
                     return NotificationsEmptyWidget(
-                      onRefresh: () => cubit.getNotifications(forceRefresh: true),
+                      onRefresh: () =>
+                          cubit.getNotifications(forceRefresh: true),
                     );
                   }
                   return RefreshIndicator(
@@ -77,7 +79,10 @@ class _NotificationsViewState extends State<NotificationsView> {
                     child: ListView.builder(
                       controller: _scrollController,
                       physics: const AlwaysScrollableScrollPhysics(),
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 12,
+                      ),
                       itemCount: list.length + (state.isFetchingMore ? 1 : 0),
                       itemBuilder: (context, index) {
                         if (index == list.length) {
@@ -86,7 +91,9 @@ class _NotificationsViewState extends State<NotificationsView> {
                             child: Center(
                               child: CircularProgressIndicator(
                                 strokeWidth: 2.5,
-                                valueColor: AlwaysStoppedAnimation<Color>(context.primaryColor),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  context.primaryColor,
+                                ),
                               ),
                             ),
                           );
@@ -111,7 +118,10 @@ class _NotificationsViewState extends State<NotificationsView> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context, NotificationsCubit cubit) {
+  PreferredSizeWidget _buildAppBar(
+    BuildContext context,
+    NotificationsCubit cubit,
+  ) {
     return CustomAppBar(
       title: LocaleKeys.notificationsTitle.tr(),
       actions: [
@@ -154,14 +164,16 @@ class _NotificationsViewState extends State<NotificationsView> {
                 context: context,
                 label: LocaleKeys.notificationsAll.tr(),
                 isSelected: current == 'all',
-                onTap: () => context.read<NotificationsCubit>().changeFilter('all'),
+                onTap: () =>
+                    context.read<NotificationsCubit>().changeFilter('all'),
               ),
               const SizedBox(width: 10),
               _buildChip(
                 context: context,
                 label: LocaleKeys.notificationsUnread.tr(),
                 isSelected: current == 'unread',
-                onTap: () => context.read<NotificationsCubit>().changeFilter('unread'),
+                onTap: () =>
+                    context.read<NotificationsCubit>().changeFilter('unread'),
               ),
             ],
           );

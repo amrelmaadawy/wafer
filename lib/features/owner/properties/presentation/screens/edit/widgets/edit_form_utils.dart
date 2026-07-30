@@ -37,11 +37,14 @@ class EditFormField extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(label,
-                style: const TextStyle(
-                    fontSize: 13.5,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimaryLight)),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 13.5,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textPrimaryLight,
+              ),
+            ),
             if (isRequired)
               const Text(' *', style: TextStyle(color: AppColors.error)),
           ],
@@ -55,24 +58,34 @@ class EditFormField extends StatelessWidget {
           inputFormatters: isNumber
               ? [
                   FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                  if (maxLength != null) LengthLimitingTextInputFormatter(maxLength),
+                  if (maxLength != null)
+                    LengthLimitingTextInputFormatter(maxLength),
                 ]
               : maxLength != null
-                  ? [LengthLimitingTextInputFormatter(maxLength)]
-                  : null,
+              ? [LengthLimitingTextInputFormatter(maxLength)]
+              : null,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             hintText: hint,
-            hintStyle: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 13),
+            hintStyle: const TextStyle(
+              color: AppColors.textSecondaryLight,
+              fontSize: 13,
+            ),
             suffixText: suffixText,
-            suffixStyle: TextStyle(color: context.primaryColor, fontWeight: FontWeight.bold),
+            suffixStyle: TextStyle(
+              color: context.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
             prefixIcon: maxLines > 1
                 ? Padding(
                     padding: const EdgeInsets.only(bottom: 50.0),
                     child: Icon(icon, size: 20, color: context.primaryColor),
                   )
                 : Icon(icon, size: 20, color: context.primaryColor),
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 14,
+            ),
             filled: true,
             fillColor: Colors.white,
             enabledBorder: const OutlineInputBorder(
@@ -94,11 +107,7 @@ class EditSectionHeader extends StatelessWidget {
   final String title;
   final IconData icon;
 
-  const EditSectionHeader({
-    super.key,
-    required this.title,
-    required this.icon,
-  });
+  const EditSectionHeader({super.key, required this.title, required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -122,9 +131,7 @@ class EditSectionHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        const Expanded(
-          child: Divider(color: Color(0xFFE2E8F0), height: 1),
-        ),
+        const Expanded(child: Divider(color: Color(0xFFE2E8F0), height: 1)),
       ],
     );
   }

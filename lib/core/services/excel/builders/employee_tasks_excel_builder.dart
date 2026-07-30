@@ -42,7 +42,7 @@ class EmployeeTasksExcelBuilder {
       LocaleKeys.employeeTasksTotalPending.tr(),
       LocaleKeys.employeeTasksTotalOverdue.tr(),
     ];
-    
+
     final summaryValues = [
       summary.totalEmployees.toString(),
       summary.totalCompleted.toString(),
@@ -54,7 +54,7 @@ class EmployeeTasksExcelBuilder {
       final cell = sheet.getRangeByIndex(3, i + 1);
       cell.text = summaryHeaders[i];
       cell.cellStyle = headerStyle;
-      
+
       final valCell = sheet.getRangeByIndex(4, i + 1);
       valCell.text = summaryValues[i];
       valCell.cellStyle = valueStyle;
@@ -84,9 +84,13 @@ class EmployeeTasksExcelBuilder {
     for (int i = 0; i < items.length; i++) {
       final item = items[i];
       final row = i + 10;
-      
-      sheet.getRangeByIndex(row, 1).text = item.name.isNotEmpty ? item.name : '-';
-      sheet.getRangeByIndex(row, 2).text = item.phone.isNotEmpty ? item.phone : '-';
+
+      sheet.getRangeByIndex(row, 1).text = item.name.isNotEmpty
+          ? item.name
+          : '-';
+      sheet.getRangeByIndex(row, 2).text = item.phone.isNotEmpty
+          ? item.phone
+          : '-';
       sheet.getRangeByIndex(row, 3).text = item.completedTasks.toString();
       sheet.getRangeByIndex(row, 4).text = item.pendingTasks.toString();
       sheet.getRangeByIndex(row, 5).text = item.overdueTasks.toString();

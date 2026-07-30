@@ -7,10 +7,7 @@ import 'employee_tasks_report_item_card.dart';
 class EmployeeTasksReportList extends StatelessWidget {
   final List<EmployeeTasksItemEntity> items;
 
-  const EmployeeTasksReportList({
-    super.key,
-    required this.items,
-  });
+  const EmployeeTasksReportList({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +26,7 @@ class EmployeeTasksReportList extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 LocaleKeys.employeeTasksNoData.tr(),
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.grey[600],
-                ),
+                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
               ),
             ],
           ),
@@ -43,12 +37,9 @@ class EmployeeTasksReportList extends StatelessWidget {
     return SliverPadding(
       padding: const EdgeInsets.only(bottom: 24),
       sliver: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return EmployeeTasksReportItemCard(item: items[index]);
-          },
-          childCount: items.length,
-        ),
+        delegate: SliverChildBuilderDelegate((context, index) {
+          return EmployeeTasksReportItemCard(item: items[index]);
+        }, childCount: items.length),
       ),
     );
   }

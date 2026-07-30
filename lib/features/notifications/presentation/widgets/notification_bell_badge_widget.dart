@@ -49,12 +49,21 @@ class NotificationBellBadgeWidget extends StatelessWidget {
                           top: 4,
                           right: 4,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                            constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 5,
+                              vertical: 2,
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 16,
+                              minHeight: 16,
+                            ),
                             decoration: BoxDecoration(
                               color: AppColors.error,
                               borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Colors.white, width: 1.5),
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1.5,
+                              ),
                             ),
                             child: Center(
                               child: Text(

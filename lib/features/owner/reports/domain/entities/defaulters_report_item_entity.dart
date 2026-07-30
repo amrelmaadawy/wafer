@@ -21,14 +21,14 @@ class DefaulterContractEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        contractNumber,
-        status,
-        statusLabel,
-        startDate,
-        endDate,
-        totalRentValue,
-      ];
+    id,
+    contractNumber,
+    status,
+    statusLabel,
+    startDate,
+    endDate,
+    totalRentValue,
+  ];
 }
 
 class DefaulterRenterEntity extends Equatable {
@@ -113,16 +113,16 @@ class DefaultersReportItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        installmentNumber,
-        dueDate,
-        amount,
-        paidAmount,
-        remainingAmount,
-        daysOverdue,
-        contract,
-        renter,
-        property,
-        unit,
-      ];
+    id,
+    installmentNumber,
+    dueDate,
+    amount,
+    paidAmount,
+    remainingAmount,
+    daysOverdue,
+    contract,
+    renter,
+    property,
+    unit,
+  ];
 }

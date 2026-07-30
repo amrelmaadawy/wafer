@@ -53,9 +53,26 @@ class Step5ReviewView extends StatelessWidget {
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildRow(LocaleKeys.propertyReviewBranch.tr(), state.formData?.options.branches.where((b) => b.id == state.selectedBranchId).firstOrNull?.name ?? ''),
-                    _buildRow(LocaleKeys.propertyReviewDeed.tr(), state.formData?.options.deeds.where((d) => d.id == state.selectedDeedId).firstOrNull?.documentNumber ?? ''),
-                    _buildRow(LocaleKeys.propertyReviewType.tr(), state.selectedType ?? ''),
+                    _buildRow(
+                      LocaleKeys.propertyReviewBranch.tr(),
+                      state.formData?.options.branches
+                              .where((b) => b.id == state.selectedBranchId)
+                              .firstOrNull
+                              ?.name ??
+                          '',
+                    ),
+                    _buildRow(
+                      LocaleKeys.propertyReviewDeed.tr(),
+                      state.formData?.options.deeds
+                              .where((d) => d.id == state.selectedDeedId)
+                              .firstOrNull
+                              ?.documentNumber ??
+                          '',
+                    ),
+                    _buildRow(
+                      LocaleKeys.propertyReviewType.tr(),
+                      state.selectedType ?? '',
+                    ),
                   ],
                 ),
               ),
@@ -71,10 +88,22 @@ class Step5ReviewView extends StatelessWidget {
                 content: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _buildRow(LocaleKeys.propertyReviewPropertyName.tr(), state.name ?? ''),
-                    _buildRow(LocaleKeys.propertyReviewAddress.tr(), state.address ?? ''),
-                    _buildRow(LocaleKeys.propertyReviewArea.tr(), '${state.area ?? 0} ${LocaleKeys.propertyDetailsAreaUnit.tr()}'),
-                    _buildRow(LocaleKeys.propertyReviewConstructionYear.tr(), state.constructionYear?.toString() ?? ''),
+                    _buildRow(
+                      LocaleKeys.propertyReviewPropertyName.tr(),
+                      state.name ?? '',
+                    ),
+                    _buildRow(
+                      LocaleKeys.propertyReviewAddress.tr(),
+                      state.address ?? '',
+                    ),
+                    _buildRow(
+                      LocaleKeys.propertyReviewArea.tr(),
+                      '${state.area ?? 0} ${LocaleKeys.propertyDetailsAreaUnit.tr()}',
+                    ),
+                    _buildRow(
+                      LocaleKeys.propertyReviewConstructionYear.tr(),
+                      state.constructionYear?.toString() ?? '',
+                    ),
                   ],
                 ),
               ),
@@ -88,7 +117,12 @@ class Step5ReviewView extends StatelessWidget {
                   onGoToStep?.call(2);
                 },
                 content: state.images.isEmpty
-                    ? Text(LocaleKeys.propertyReviewNoImages.tr(), style: const TextStyle(color: AppColors.textSecondaryLight))
+                    ? Text(
+                        LocaleKeys.propertyReviewNoImages.tr(),
+                        style: const TextStyle(
+                          color: AppColors.textSecondaryLight,
+                        ),
+                      )
                     : Wrap(
                         spacing: 8,
                         runSpacing: 8,
@@ -124,8 +158,17 @@ class Step5ReviewView extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(o.name, style: const TextStyle(fontWeight: FontWeight.w600)),
-                          Text('${o.percentage}%', style: TextStyle(color: context.primaryColor, fontWeight: FontWeight.bold)),
+                          Text(
+                            o.name,
+                            style: const TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            '${o.percentage}%',
+                            style: TextStyle(
+                              color: context.primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                     );
@@ -162,12 +205,22 @@ class Step5ReviewView extends StatelessWidget {
             children: [
               Icon(icon, size: 20, color: context.primaryColor),
               const SizedBox(width: 8),
-              Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
               const Spacer(),
               if (onEdit != null)
                 IconButton(
                   onPressed: onEdit,
-                  icon: Icon(Icons.edit_outlined, size: 18, color: context.primaryColor),
+                  icon: Icon(
+                    Icons.edit_outlined,
+                    size: 18,
+                    color: context.primaryColor,
+                  ),
                   visualDensity: VisualDensity.compact,
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
@@ -189,10 +242,19 @@ class Step5ReviewView extends StatelessWidget {
         children: [
           SizedBox(
             width: 100,
-            child: Text(label, style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 13)),
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: AppColors.textSecondaryLight,
+                fontSize: 13,
+              ),
+            ),
           ),
           Expanded(
-            child: Text(value.isEmpty ? '-' : value, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+            child: Text(
+              value.isEmpty ? '-' : value,
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+            ),
           ),
         ],
       ),

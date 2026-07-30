@@ -101,7 +101,10 @@ class RevenueAnimatedBarChart extends StatelessWidget {
   }
 
   Widget _buildMonthBarGroup(
-      BuildContext context, RevenueEntryEntity item, double maxVal) {
+    BuildContext context,
+    RevenueEntryEntity item,
+    double maxVal,
+  ) {
     final expectedRatio = (item.expected / maxVal).clamp(0.02, 1.0);
     final collectedRatio = (item.collected / maxVal).clamp(0.02, 1.0);
     final formattedMonth = _formatMonth(item.month);
@@ -206,8 +209,19 @@ class RevenueAnimatedBarChart extends StatelessWidget {
     final monthNum = int.tryParse(parts[1]) ?? 0;
     final year = parts[0].length >= 4 ? parts[0].substring(2) : parts[0];
     const arabic = [
-      '', 'يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو',
-      'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+      '',
+      'يناير',
+      'فبراير',
+      'مارس',
+      'إبريل',
+      'مايو',
+      'يونيو',
+      'يوليو',
+      'أغسطس',
+      'سبتمبر',
+      'أكتوبر',
+      'نوفمبر',
+      'ديسمبر',
     ];
     final monthName = (monthNum >= 1 && monthNum <= 12)
         ? arabic[monthNum]

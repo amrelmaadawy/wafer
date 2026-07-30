@@ -62,7 +62,11 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
             color: const Color(0xFF8B5CF6).withValues(alpha: 0.1),
             borderRadius: AppRadius.circularMd,
           ),
-          child: const Icon(Icons.build_circle_outlined, color: Color(0xFF8B5CF6), size: 18),
+          child: const Icon(
+            Icons.build_circle_outlined,
+            color: Color(0xFF8B5CF6),
+            size: 18,
+          ),
         ),
         const SizedBox(width: 8),
         Text(
@@ -82,7 +86,7 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
   Widget _buildBadge() {
     final hasPending = pendingCount > 0;
     final color = hasPending ? AppColors.error : const Color(0xFF94A3B8);
-    
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
@@ -90,8 +94,10 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
         borderRadius: AppRadius.circularFull,
       ),
       child: Text(
-        hasPending 
-            ? LocaleKeys.dashboardMaintenancePending.tr(args: [pendingCount.toString()])
+        hasPending
+            ? LocaleKeys.dashboardMaintenancePending.tr(
+                args: [pendingCount.toString()],
+              )
             : '0',
         style: TextStyle(
           color: color,
@@ -113,7 +119,11 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Icon(Icons.handyman_rounded, size: 32, color: Color(0xFFCBD5E1)),
+          const Icon(
+            Icons.handyman_rounded,
+            size: 32,
+            color: Color(0xFFCBD5E1),
+          ),
           const SizedBox(height: 12),
           Text(
             LocaleKeys.dashboardMaintenanceNoRequests.tr(),
@@ -126,10 +136,7 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             LocaleKeys.dashboardMaintenanceNoRequestsSub.tr(),
-            style: const TextStyle(
-              color: Color(0xFF94A3B8),
-              fontSize: 11.5,
-            ),
+            style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 11.5),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
@@ -148,7 +155,8 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
         itemCount: recentItems.length,
         padding: const EdgeInsets.symmetric(horizontal: 4),
         separatorBuilder: (context, index) => const SizedBox(width: 10),
-        itemBuilder: (_, index) => OwnerMaintenanceMiniCard(item: recentItems[index]),
+        itemBuilder: (_, index) =>
+            OwnerMaintenanceMiniCard(item: recentItems[index]),
       ),
     );
   }
@@ -157,7 +165,7 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
     return Center(
       child: TextButton(
         onPressed: () {
-        context.push(Routes.ownerMaintenance);
+          context.push(Routes.ownerMaintenance);
         },
         style: TextButton.styleFrom(
           foregroundColor: context.primaryColor,

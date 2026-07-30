@@ -11,11 +11,7 @@ class ContractCard extends StatelessWidget {
   final ContractItemEntity contract;
   final VoidCallback? onTap;
 
-  const ContractCard({
-    super.key,
-    required this.contract,
-    this.onTap,
-  });
+  const ContractCard({super.key, required this.contract, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +77,11 @@ class ContractCard extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(Icons.description_outlined, size: 18, color: context.primaryColor),
+            Icon(
+              Icons.description_outlined,
+              size: 18,
+              color: context.primaryColor,
+            ),
             const SizedBox(width: 6),
             Text(
               contract.contractNumber,
@@ -111,11 +111,18 @@ class ContractCard extends StatelessWidget {
   Widget _buildTenantRow(BuildContext context) {
     return Row(
       children: [
-        const Icon(Icons.person_outline, size: 16, color: AppColors.textSecondaryLight),
+        const Icon(
+          Icons.person_outline,
+          size: 16,
+          color: AppColors.textSecondaryLight,
+        ),
         const SizedBox(width: 6),
         Text(
           '${LocaleKeys.contractsTenantLabel.tr()} ',
-          style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 13),
+          style: const TextStyle(
+            color: AppColors.textSecondaryLight,
+            fontSize: 13,
+          ),
         ),
         Expanded(
           child: Text(
@@ -143,7 +150,10 @@ class ContractCard extends StatelessWidget {
           children: [
             Text(
               LocaleKeys.contractsRentAmountLabel.tr(),
-              style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 11.5),
+              style: const TextStyle(
+                color: AppColors.textSecondaryLight,
+                fontSize: 11.5,
+              ),
             ),
             const SizedBox(height: 4),
             Row(
@@ -169,7 +179,10 @@ class ContractCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 7,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: context.primaryColor.withValues(alpha: 0.1),
                     borderRadius: AppRadius.circularSm,
@@ -190,7 +203,11 @@ class ContractCard extends StatelessWidget {
         if (contract.startDate.isNotEmpty && contract.endDate.isNotEmpty)
           Row(
             children: [
-              const Icon(Icons.calendar_today_outlined, size: 13, color: AppColors.textSecondaryLight),
+              const Icon(
+                Icons.calendar_today_outlined,
+                size: 13,
+                color: AppColors.textSecondaryLight,
+              ),
               const SizedBox(width: 4),
               Text(
                 '${contract.startDate} › ${contract.endDate}',

@@ -56,12 +56,19 @@ class ProfileActionTile extends StatelessWidget {
                   const SizedBox(height: 2),
                   Text(
                     subtitle,
-                    style: const TextStyle(fontSize: 11.5, color: AppColors.textSecondaryLight),
+                    style: const TextStyle(
+                      fontSize: 11.5,
+                      color: AppColors.textSecondaryLight,
+                    ),
                   ),
                 ],
               ),
             ),
-            Icon(Icons.chevron_right_rounded, color: AppColors.textSecondaryLight.withValues(alpha: 0.5), size: 20),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.textSecondaryLight.withValues(alpha: 0.5),
+              size: 20,
+            ),
           ],
         ),
       ),

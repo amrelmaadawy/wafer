@@ -35,18 +35,18 @@ class ContractsEmptyWidget extends StatelessWidget {
             Text(
               LocaleKeys.contractsNoTitle.tr(),
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: AppColors.textPrimaryLight,
-                    fontWeight: FontWeight.bold,
-                  ),
+                color: AppColors.textPrimaryLight,
+                fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               LocaleKeys.contractsNoSubtitle.tr(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textSecondaryLight,
-                    height: 1.4,
-                  ),
+                color: AppColors.textSecondaryLight,
+                height: 1.4,
+              ),
               textAlign: TextAlign.center,
             ),
             if (onRefresh != null) ...[
@@ -58,8 +58,13 @@ class ContractsEmptyWidget extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: context.primaryColor,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadius.circularLg,
+                  ),
                 ),
               ),
             ],

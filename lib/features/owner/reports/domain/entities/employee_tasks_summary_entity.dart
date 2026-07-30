@@ -15,9 +15,9 @@ class EmployeeTasksSummaryEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        totalEmployees,
-        totalCompleted,
-        totalPending,
-        totalOverdue,
-      ];
+    totalEmployees,
+    totalCompleted,
+    totalPending,
+    totalOverdue,
+  ];
 }

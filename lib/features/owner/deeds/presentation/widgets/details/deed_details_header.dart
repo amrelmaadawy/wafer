@@ -61,10 +61,13 @@ class DeedDetailsHeader extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
-                  color: isElectronic 
-                      ? AppColors.success.withValues(alpha: 0.1) 
+                  color: isElectronic
+                      ? AppColors.success.withValues(alpha: 0.1)
                       : AppColors.warning.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -72,19 +75,25 @@ class DeedDetailsHeader extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Icon(
-                      isElectronic ? Icons.verified_rounded : Icons.insert_drive_file_rounded,
+                      isElectronic
+                          ? Icons.verified_rounded
+                          : Icons.insert_drive_file_rounded,
                       size: 14,
-                      color: isElectronic ? AppColors.success : AppColors.warning,
+                      color: isElectronic
+                          ? AppColors.success
+                          : AppColors.warning,
                     ),
                     const SizedBox(width: 4),
                     Text(
-                      isElectronic 
-                          ? LocaleKeys.deedElectronic.tr() 
+                      isElectronic
+                          ? LocaleKeys.deedElectronic.tr()
                           : LocaleKeys.deedPaper.tr(),
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: isElectronic ? AppColors.success : AppColors.warning,
+                        color: isElectronic
+                            ? AppColors.success
+                            : AppColors.warning,
                       ),
                     ),
                   ],
@@ -101,7 +110,11 @@ class DeedDetailsHeader extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Icon(Icons.business_rounded, color: context.primaryColor, size: 20),
+                Icon(
+                  Icons.business_rounded,
+                  color: context.primaryColor,
+                  size: 20,
+                ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
@@ -113,7 +126,11 @@ class DeedDetailsHeader extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Icon(Icons.date_range_rounded, color: AppColors.textSecondaryLight, size: 16),
+                const Icon(
+                  Icons.date_range_rounded,
+                  color: AppColors.textSecondaryLight,
+                  size: 16,
+                ),
                 const SizedBox(width: 4),
                 Text(
                   deed.createdAt ?? '-',

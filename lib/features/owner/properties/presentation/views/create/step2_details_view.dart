@@ -34,7 +34,9 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
     _nameController = TextEditingController(text: state.name);
     _addressController = TextEditingController(text: state.address);
     _areaController = TextEditingController(text: state.area?.toString() ?? '');
-    _yearController = TextEditingController(text: state.constructionYear?.toString() ?? '');
+    _yearController = TextEditingController(
+      text: state.constructionYear?.toString() ?? '',
+    );
     _descController = TextEditingController(text: state.description);
 
     _nameNode = FocusNode();
@@ -95,8 +97,10 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                 focusNode: _nameNode,
                 prefixIcon: const Icon(Icons.home_work_outlined),
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_addressNode),
-                onChanged: (val) => context.read<PropertyCreateCubit>().updateName(val),
+                onFieldSubmitted: (_) =>
+                    FocusScope.of(context).requestFocus(_addressNode),
+                onChanged: (val) =>
+                    context.read<PropertyCreateCubit>().updateName(val),
               ),
               const SizedBox(height: 16),
               CustomTextField(
@@ -106,8 +110,10 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                 focusNode: _addressNode,
                 prefixIcon: const Icon(Icons.location_on_outlined),
                 textInputAction: TextInputAction.next,
-                onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_areaNode),
-                onChanged: (val) => context.read<PropertyCreateCubit>().updateAddress(val),
+                onFieldSubmitted: (_) =>
+                    FocusScope.of(context).requestFocus(_areaNode),
+                onChanged: (val) =>
+                    context.read<PropertyCreateCubit>().updateAddress(val),
               ),
               const SizedBox(height: 16),
               Row(
@@ -118,14 +124,21 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                       hintText: '0',
                       controller: _areaController,
                       focusNode: _areaNode,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
                       ],
                       prefixIcon: const Icon(Icons.square_foot_outlined),
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_yearNode),
-                      onChanged: (val) => context.read<PropertyCreateCubit>().updateArea(double.tryParse(val) ?? 0.0),
+                      onFieldSubmitted: (_) =>
+                          FocusScope.of(context).requestFocus(_yearNode),
+                      onChanged: (val) => context
+                          .read<PropertyCreateCubit>()
+                          .updateArea(double.tryParse(val) ?? 0.0),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -145,13 +158,18 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                       onChanged: (val) {
                         final year = int.tryParse(val);
                         if (year != null) {
-                          context.read<PropertyCreateCubit>().updateConstructionYear(year);
+                          context
+                              .read<PropertyCreateCubit>()
+                              .updateConstructionYear(year);
                         } else if (val.isEmpty) {
-                          context.read<PropertyCreateCubit>().updateConstructionYear(0);
+                          context
+                              .read<PropertyCreateCubit>()
+                              .updateConstructionYear(0);
                         }
                       },
                       textInputAction: TextInputAction.next,
-                      onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(_descNode),
+                      onFieldSubmitted: (_) =>
+                          FocusScope.of(context).requestFocus(_descNode),
                     ),
                   ),
                 ],
@@ -166,7 +184,8 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                 prefixIcon: const Icon(Icons.description_outlined),
                 textInputAction: TextInputAction.done,
                 onFieldSubmitted: (_) => FocusScope.of(context).unfocus(),
-                onChanged: (val) => context.read<PropertyCreateCubit>().updateDescription(val),
+                onChanged: (val) =>
+                    context.read<PropertyCreateCubit>().updateDescription(val),
               ),
               const SizedBox(height: 40),
             ],

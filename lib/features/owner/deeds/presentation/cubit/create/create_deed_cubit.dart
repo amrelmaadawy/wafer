@@ -11,20 +11,18 @@ class CreateDeedCubit extends Cubit<CreateDeedState> {
 
   List<FormBranchEntity> branches = [];
 
-  CreateDeedCubit(this._createDeedUseCase, this._getOptionsUseCase) : super(const CreateDeedInitial());
+  CreateDeedCubit(this._createDeedUseCase, this._getOptionsUseCase)
+    : super(const CreateDeedInitial());
 
   Future<void> fetchOptions() async {
     emit(const CreateDeedLoading());
     final result = await _getOptionsUseCase();
     if (isClosed) return;
-    
-    result.fold(
-      (failure) => emit(CreateDeedError(failure.message)),
-      (options) {
-        branches = options.branches;
-        emit(FormOptionsLoaded(options.branches));
-      },
-    );
+
+    result.fold((failure) => emit(CreateDeedError(failure.message)), (options) {
+      branches = options.branches;
+      emit(FormOptionsLoaded(options.branches));
+    });
   }
 
   Future<void> submitDeed(AddNewDeedParams params) async {

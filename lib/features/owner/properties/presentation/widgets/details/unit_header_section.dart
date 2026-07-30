@@ -18,9 +18,7 @@ class UnitHeaderSection extends StatelessWidget {
       expandedHeight: hasImages ? 280.0 : 220.0,
       pinned: true,
       backgroundColor: context.primaryColor,
-      flexibleSpace: FlexibleSpaceBar(
-        background: _buildBackground(context),
-      ),
+      flexibleSpace: FlexibleSpaceBar(background: _buildBackground(context)),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(20),
         child: Container(
@@ -126,7 +124,9 @@ class UnitHeaderSection extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(16),
-                          border: Border.all(color: Colors.white.withValues(alpha: 0.20)),
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.20),
+                          ),
                         ),
                         child: const Icon(
                           Icons.meeting_room_rounded,
@@ -140,7 +140,10 @@ class UnitHeaderSection extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              unit.name ?? LocaleKeys.dashboard_unit_prefix.tr(args: [unit.unitNumber]),
+                              unit.name ??
+                                  LocaleKeys.dashboard_unit_prefix.tr(
+                                    args: [unit.unitNumber],
+                                  ),
                               style: AppTextStyles.h1.copyWith(
                                 color: Colors.white,
                                 fontSize: 24,
@@ -177,12 +180,15 @@ class UnitHeaderSection extends StatelessWidget {
                       if (unit.area != null && unit.area! > 0)
                         _buildGlassChip(
                           icon: Icons.square_foot_rounded,
-                          label: '${unit.area!.toStringAsFixed(0)} ${LocaleKeys.commonAreaM2.tr()}',
+                          label:
+                              '${unit.area!.toStringAsFixed(0)} ${LocaleKeys.commonAreaM2.tr()}',
                         ),
                       if (unit.floor != null && unit.floor!.isNotEmpty)
                         _buildGlassChip(
                           icon: Icons.layers_rounded,
-                          label: LocaleKeys.unitDetailsFloorPrefix.tr(args: [unit.floor!]),
+                          label: LocaleKeys.unitDetailsFloorPrefix.tr(
+                            args: [unit.floor!],
+                          ),
                         ),
                       if (unit.isFurnished)
                         _buildGlassChip(
@@ -224,7 +230,11 @@ class UnitHeaderSection extends StatelessWidget {
     return parts.join(' • ');
   }
 
-  Widget _buildGlassChip({required IconData icon, required String label, Color? color}) {
+  Widget _buildGlassChip({
+    required IconData icon,
+    required String label,
+    Color? color,
+  }) {
     final chipColor = color ?? Colors.white;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

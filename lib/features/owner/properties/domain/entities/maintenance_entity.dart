@@ -25,14 +25,14 @@ class MaintenanceEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        requestNumber,
-        description,
-        status,
-        statusLabel,
-        estimatedCost,
-        actualCost,
-        requestedDate,
-        unitName,
-      ];
+    id,
+    requestNumber,
+    description,
+    status,
+    statusLabel,
+    estimatedCost,
+    actualCost,
+    requestedDate,
+    unitName,
+  ];
 }

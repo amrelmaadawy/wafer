@@ -6,7 +6,7 @@ class PublishPropertyCubit extends Cubit<PublishPropertyState> {
   final PublishPropertyUseCase _publishPropertyUseCase;
 
   PublishPropertyCubit(this._publishPropertyUseCase)
-      : super(const PublishPropertyInitial());
+    : super(const PublishPropertyInitial());
 
   Future<void> publishProperty(int propertyId) async {
     emit(const PublishPropertyLoading());

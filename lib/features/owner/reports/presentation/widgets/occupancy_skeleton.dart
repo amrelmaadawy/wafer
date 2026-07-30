@@ -81,7 +81,11 @@ class OccupancySkeleton extends StatelessWidget {
                     AppShimmer.box(width: 120, height: 16),
                   ],
                 ),
-                AppShimmer.box(width: 55, height: 26, borderRadius: AppRadius.circularFull),
+                AppShimmer.box(
+                  width: 55,
+                  height: 26,
+                  borderRadius: AppRadius.circularFull,
+                ),
               ],
             ),
             const SizedBox(height: 16),

@@ -46,17 +46,17 @@ class ChangePasswordHeaderCard extends StatelessWidget {
                 Text(
                   LocaleKeys.profile_change_password_title.tr(),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimaryLight,
-                      ),
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.textPrimaryLight,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   LocaleKeys.profile_change_password_sub.tr(),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.textSecondaryLight,
-                        height: 1.4,
-                      ),
+                    color: AppColors.textSecondaryLight,
+                    height: 1.4,
+                  ),
                 ),
               ],
             ),

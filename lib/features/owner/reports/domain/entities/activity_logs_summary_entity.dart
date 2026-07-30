@@ -14,10 +14,5 @@ class ActivityLogsSummaryEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        totalLogs,
-        creates,
-        updates,
-        deletes,
-      ];
+  List<Object?> get props => [totalLogs, creates, updates, deletes];
 }

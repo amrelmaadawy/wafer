@@ -47,17 +47,22 @@ class Step1BasicInfoView extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-              
+
               // 1. Branch Selector
               if (branches.length > 1) ...[
                 Text(
                   LocaleKeys.propertyCreateSelectBranch.tr(),
-                  style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 CustomDropdownMenu<FormBranchEntity>(
                   items: branches,
-                  value: branches.where((b) => b.id == state.selectedBranchId).firstOrNull,
+                  value: branches
+                      .where((b) => b.id == state.selectedBranchId)
+                      .firstOrNull,
                   hint: LocaleKeys.propertyCreateSelectBranch.tr(),
                   itemLabelBuilder: (b) => b.name,
                   onSelected: (b) => cubit.selectBranch(b.id),
@@ -82,14 +87,17 @@ class Step1BasicInfoView extends StatelessWidget {
               // 3. Property Type Selector
               Text(
                 LocaleKeys.propertyCreateSelectType.tr(),
-                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
               PropertyTypeSelectorWidget(
                 propertyTypes: propertyTypes,
                 selectedType: state.selectedType,
                 onSelect: cubit.selectType,
               ),
-              
+
               const SizedBox(height: 40),
             ],
           ),

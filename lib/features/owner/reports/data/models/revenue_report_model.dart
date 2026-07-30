@@ -6,18 +6,15 @@ class RevenueReportModel extends RevenueReportEntity {
     required RevenueSummaryModel summary,
     required List<RevenueEntryModel> chart,
     required RevenueFilterOptionsModel filterOptions,
-  }) : super(
-          summary: summary,
-          chart: chart,
-          filterOptions: filterOptions,
-        );
+  }) : super(summary: summary, chart: chart, filterOptions: filterOptions);
 
   factory RevenueReportModel.fromJson(Map<String, dynamic> json) {
     return RevenueReportModel(
       summary: json['summary'] != null
           ? RevenueSummaryModel.fromJson(json['summary'])
           : const RevenueSummaryModel.empty(),
-      chart: (json['chart'] as List<dynamic>?)
+      chart:
+          (json['chart'] as List<dynamic>?)
               ?.map((e) => RevenueEntryModel.fromJson(e))
               .toList() ??
           [],
@@ -37,12 +34,12 @@ class RevenueSummaryModel extends RevenueSummaryEntity {
   });
 
   const RevenueSummaryModel.empty()
-      : super(
-          totalExpected: 0.0,
-          totalCollected: 0.0,
-          totalRemaining: 0.0,
-          collectionRate: 0.0,
-        );
+    : super(
+        totalExpected: 0.0,
+        totalCollected: 0.0,
+        totalRemaining: 0.0,
+        collectionRate: 0.0,
+      );
 
   factory RevenueSummaryModel.fromJson(Map<String, dynamic> json) {
     double parseDouble(dynamic val) {
@@ -67,7 +64,8 @@ class RevenueFilterOptionsModel extends RevenueFilterOptionsEntity {
 
   factory RevenueFilterOptionsModel.fromJson(Map<String, dynamic> json) {
     return RevenueFilterOptionsModel(
-      properties: (json['properties'] as List<dynamic>?)
+      properties:
+          (json['properties'] as List<dynamic>?)
               ?.map((e) => PropertyFilterItemModel.fromJson(e))
               .toList() ??
           [],

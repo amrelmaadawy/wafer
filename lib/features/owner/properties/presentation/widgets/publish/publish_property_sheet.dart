@@ -24,7 +24,10 @@ class PublishPropertySheet extends StatelessWidget {
       listener: (context, state) {
         if (state is PublishPropertySuccess) {
           Navigator.pop(context); // Close bottom sheet
-          AppToast.showSuccess(context, LocaleKeys.propertyDetailsPublishSuccess.tr());
+          AppToast.showSuccess(
+            context,
+            LocaleKeys.propertyDetailsPublishSuccess.tr(),
+          );
           onSuccess();
         } else if (state is PublishPropertyError) {
           AppToast.showError(context, state.message);
@@ -34,7 +37,9 @@ class PublishPropertySheet extends StatelessWidget {
         final isLoading = state is PublishPropertyLoading;
 
         return Padding(
-          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
             decoration: const BoxDecoration(
@@ -93,7 +98,9 @@ class PublishPropertySheet extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: isLoading
                         ? null
-                        : () => context.read<PublishPropertyCubit>().publishProperty(propertyId),
+                        : () => context
+                              .read<PublishPropertyCubit>()
+                              .publishProperty(propertyId),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       shape: RoundedRectangleBorder(
@@ -107,7 +114,9 @@ class PublishPropertySheet extends StatelessWidget {
                             height: 24,
                             child: CircularProgressIndicator(
                               strokeWidth: 2.5,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
                             ),
                           )
                         : Text(

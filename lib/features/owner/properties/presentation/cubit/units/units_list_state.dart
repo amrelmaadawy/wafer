@@ -54,13 +54,13 @@ class UnitsListLoaded extends UnitsListState {
 
   @override
   List<Object?> get props => [
-        units,
-        meta,
-        searchQuery,
-        unitStatus,
-        unitType,
-        isFetchingMore,
-      ];
+    units,
+    meta,
+    searchQuery,
+    unitStatus,
+    unitType,
+    isFetchingMore,
+  ];
 }
 
 class UnitsListEmpty extends UnitsListState {

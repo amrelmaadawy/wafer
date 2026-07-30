@@ -11,14 +11,13 @@ import '../../../domain/entities/property_details_entity.dart';
 class PropertyDeedCard extends StatelessWidget {
   final PropertyDetailsEntity property;
 
-  const PropertyDeedCard({
-    super.key,
-    required this.property,
-  });
+  const PropertyDeedCard({super.key, required this.property});
 
   @override
   Widget build(BuildContext context) {
-    if (property.deedId == null || property.deedId == 0) return const SizedBox.shrink();
+    if (property.deedId == null || property.deedId == 0) {
+      return const SizedBox.shrink();
+    }
 
     return Container(
       width: double.infinity,
@@ -47,7 +46,11 @@ class PropertyDeedCard extends StatelessWidget {
                   color: AppColors.info.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(Icons.description_rounded, size: 20, color: AppColors.info),
+                child: const Icon(
+                  Icons.description_rounded,
+                  size: 20,
+                  color: AppColors.info,
+                ),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -82,7 +85,9 @@ class PropertyDeedCard extends StatelessWidget {
             height: 44,
             child: ElevatedButton(
               onPressed: () {
-                context.push('${Routes.ownerDeedDetails}?id=${property.deedId}');
+                context.push(
+                  '${Routes.ownerDeedDetails}?id=${property.deedId}',
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: context.primaryColor,

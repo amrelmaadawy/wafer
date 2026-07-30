@@ -15,9 +15,9 @@ class DefaultersReportSummaryEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        totalInstallments,
-        totalAmount,
-        totalPaid,
-        totalRemaining,
-      ];
+    totalInstallments,
+    totalAmount,
+    totalPaid,
+    totalRemaining,
+  ];
 }

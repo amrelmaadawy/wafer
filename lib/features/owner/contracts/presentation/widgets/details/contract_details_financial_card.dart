@@ -42,7 +42,11 @@ class ContractDetailsFinancialCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.account_balance_wallet_outlined, color: primaryColor, size: 20),
+              Icon(
+                Icons.account_balance_wallet_outlined,
+                color: primaryColor,
+                size: 20,
+              ),
               const SizedBox(width: 8),
               Text(
                 LocaleKeys.contractsSectionFinancial.tr(),
@@ -87,7 +91,10 @@ class ContractDetailsFinancialCard extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: primaryColor.withValues(alpha: 0.1),
                     borderRadius: AppRadius.circularMd,
@@ -121,7 +128,9 @@ class ContractDetailsFinancialCard extends StatelessWidget {
           const SizedBox(height: 12),
           _buildRowItem(
             LocaleKeys.contractsStartDateLabel.tr(),
-            contract.startDate.isNotEmpty ? _formatDate(contract.startDate) : '-',
+            contract.startDate.isNotEmpty
+                ? _formatDate(contract.startDate)
+                : '-',
           ),
           const SizedBox(height: 12),
           const Divider(height: 1, color: AppColors.borderLight),
@@ -141,7 +150,10 @@ class ContractDetailsFinancialCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(fontSize: 13.5, color: AppColors.textSecondaryLight),
+          style: const TextStyle(
+            fontSize: 13.5,
+            color: AppColors.textSecondaryLight,
+          ),
         ),
         Text(
           value,
@@ -160,8 +172,20 @@ class ContractDetailsFinancialCard extends StatelessWidget {
     try {
       final parts = isoDate.split('-');
       if (parts.length != 3) return isoDate;
-      final months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
-        'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+      final months = [
+        'يناير',
+        'فبراير',
+        'مارس',
+        'أبريل',
+        'مايو',
+        'يونيو',
+        'يوليو',
+        'أغسطس',
+        'سبتمبر',
+        'أكتوبر',
+        'نوفمبر',
+        'ديسمبر',
+      ];
       final month = int.tryParse(parts[1]) ?? 1;
       return '${parts[2]} ${months[month - 1]} ${parts[0]}';
     } catch (_) {

@@ -25,13 +25,13 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
     required UploadTempFileUseCase uploadTempFile,
     required SyncOwnersUseCase syncOwners,
     required PublishPropertyUseCase publishProperty,
-  })  : _createDraft = createDraft,
-        _getFormData = getFormData,
-        _autoSavePropertyStep = autoSavePropertyStep,
-        _uploadTempFile = uploadTempFile,
-        _syncOwners = syncOwners,
-        _publishProperty = publishProperty,
-        super(const PropertyCreateState());
+  }) : _createDraft = createDraft,
+       _getFormData = getFormData,
+       _autoSavePropertyStep = autoSavePropertyStep,
+       _uploadTempFile = uploadTempFile,
+       _syncOwners = syncOwners,
+       _publishProperty = publishProperty,
+       super(const PropertyCreateState());
 
   Future<void> loadFormOptions() async {
     emit(state.copyWith(isLoading: true));
@@ -41,22 +41,27 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
       (f) => emit(state.copyWith(isLoading: false, errorMessage: f.message)),
       (formData) {
         List<PropertyOwnerEntity> initialOwners = [];
-        if (formData.defaults.defaultOwnerId != null && formData.defaults.defaultOwnerName != null) {
-          initialOwners.add(PropertyOwnerEntity(
-            id: formData.defaults.defaultOwnerId!,
-            name: formData.defaults.defaultOwnerName!,
-            percentage: formData.defaults.defaultOwnerPercentage ?? 100,
-            isRepresentative: formData.defaults.isRepresentative,
-          ));
+        if (formData.defaults.defaultOwnerId != null &&
+            formData.defaults.defaultOwnerName != null) {
+          initialOwners.add(
+            PropertyOwnerEntity(
+              id: formData.defaults.defaultOwnerId!,
+              name: formData.defaults.defaultOwnerName!,
+              percentage: formData.defaults.defaultOwnerPercentage ?? 100,
+              isRepresentative: formData.defaults.isRepresentative,
+            ),
+          );
         }
 
-        emit(state.copyWith(
-          isLoading: false,
-          formData: formData,
-          deeds: formData.options.deeds,
-          selectedType: formData.defaults.defaultPropertyType,
-          owners: state.owners.isEmpty ? initialOwners : state.owners,
-        ));
+        emit(
+          state.copyWith(
+            isLoading: false,
+            formData: formData,
+            deeds: formData.options.deeds,
+            selectedType: formData.defaults.defaultPropertyType,
+            owners: state.owners.isEmpty ? initialOwners : state.owners,
+          ),
+        );
       },
     );
   }
@@ -68,6 +73,7 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
       emit(state.copyWith(currentStep: state.currentStep + 1));
     }
   }
+
   void previousStep() {
     if (state.currentStep > 0) {
       emit(state.copyWith(currentStep: state.currentStep - 1));
@@ -79,7 +85,8 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
   }
 
   // --- Step 1: Basic Info ---
-  void selectBranch(int branchId) => emit(state.copyWith(selectedBranchId: branchId));
+  void selectBranch(int branchId) =>
+      emit(state.copyWith(selectedBranchId: branchId));
   void selectDeed(int deedId) => emit(state.copyWith(selectedDeedId: deedId));
   void selectType(String type) => emit(state.copyWith(selectedType: type));
 
@@ -92,18 +99,20 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
   }
 
   Future<bool> createDraft() async {
-    if (state.selectedDeedId == null || state.selectedType == null || state.selectedBranchId == null) {
+    if (state.selectedDeedId == null ||
+        state.selectedType == null ||
+        state.selectedBranchId == null) {
       return false;
     }
 
     emit(state.copyWith(isSaving: true).clearError());
-    
+
     final res = await _createDraft({
       'deed_id': state.selectedDeedId,
       'branch_id': state.selectedBranchId,
       'property_type': state.selectedType,
     });
-    
+
     return res.fold(
       (f) {
         emit(state.copyWith(isSaving: false, errorMessage: f.message));
@@ -120,7 +129,8 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
   void updateName(String val) => emit(state.copyWith(name: val));
   void updateAddress(String val) => emit(state.copyWith(address: val));
   void updateArea(double val) => emit(state.copyWith(area: val));
-  void updateConstructionYear(int val) => emit(state.copyWith(constructionYear: val));
+  void updateConstructionYear(int val) =>
+      emit(state.copyWith(constructionYear: val));
   void updateUsageType(String val) => emit(state.copyWith(usageType: val));
   void updateDescription(String val) => emit(state.copyWith(description: val));
 
@@ -144,7 +154,9 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
 
     return res.fold(
       (f) {
-        emit(state.copyWith(isAutoSavingDetails: false, errorMessage: f.message));
+        emit(
+          state.copyWith(isAutoSavingDetails: false, errorMessage: f.message),
+        );
         return false;
       },
       (_) {
@@ -156,8 +168,12 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
 
   // --- Step 3: Images ---
   Future<void> uploadImage(String filePath) async {
-    final localImage = TempPropertyImageEntity(localPath: filePath, isUploading: true);
-    final updatedImages = List<TempPropertyImageEntity>.from(state.images)..add(localImage);
+    final localImage = TempPropertyImageEntity(
+      localPath: filePath,
+      isUploading: true,
+    );
+    final updatedImages = List<TempPropertyImageEntity>.from(state.images)
+      ..add(localImage);
     emit(state.copyWith(images: updatedImages).clearError());
 
     final res = await _uploadTempFile(filePath);
@@ -195,22 +211,23 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
   }
 
   void removeImage(String tempPathOrLocalPath) {
-    final updatedImages = state.images.where((img) => 
-      img.tempPath != tempPathOrLocalPath && img.localPath != tempPathOrLocalPath
-    ).toList();
+    final updatedImages = state.images
+        .where(
+          (img) =>
+              img.tempPath != tempPathOrLocalPath &&
+              img.localPath != tempPathOrLocalPath,
+        )
+        .toList();
     emit(state.copyWith(images: updatedImages));
   }
 
   Future<bool> saveImages() async {
     if (state.draftPropertyId == null) return false;
-    
+
     final propertyImagesPayload = state.images
-      .where((img) => img.tempPath != null)
-      .map((img) => {
-        'path': img.tempPath!,
-        'desc': img.description ?? '',
-      })
-      .toList();
+        .where((img) => img.tempPath != null)
+        .map((img) => {'path': img.tempPath!, 'desc': img.description ?? ''})
+        .toList();
 
     emit(state.copyWith(isSavingImages: true).clearError());
 
@@ -218,9 +235,7 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
     final res = await _autoSavePropertyStep(
       propertyId: state.draftPropertyId!,
       step: 'images',
-      data: {
-        'property_images': propertyImagesPayload,
-      },
+      data: {'property_images': propertyImagesPayload},
     );
 
     return res.fold(
@@ -241,15 +256,17 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
       emit(state.copyWith(errorMessage: 'هذا المالك مضاف بالفعل'));
       return;
     }
-    
+
     // Auto distribute remaining percentage if possible
-    double remaining = 100 - state.owners.fold(0.0, (sum, o) => sum + o.percentage);
+    double remaining =
+        100 - state.owners.fold(0.0, (sum, o) => sum + o.percentage);
     final newOwner = owner.copyWith(
       percentage: remaining > 0 ? remaining : 0.0,
       isRepresentative: state.owners.isEmpty, // Make first owner representative
     );
-    
-    final updatedOwners = List<PropertyOwnerEntity>.from(state.owners)..add(newOwner);
+
+    final updatedOwners = List<PropertyOwnerEntity>.from(state.owners)
+      ..add(newOwner);
     emit(state.copyWith(owners: updatedOwners).clearError());
   }
 
@@ -265,7 +282,8 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
 
   void removeOwner(int ownerId) {
     final updatedOwners = state.owners.where((o) => o.id != ownerId).toList();
-    if (updatedOwners.isNotEmpty && !updatedOwners.any((o) => o.isRepresentative)) {
+    if (updatedOwners.isNotEmpty &&
+        !updatedOwners.any((o) => o.isRepresentative)) {
       updatedOwners[0] = updatedOwners[0].copyWith(isRepresentative: true);
     }
     emit(state.copyWith(owners: updatedOwners));
@@ -280,14 +298,14 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
 
   void autoDistributePercentages() {
     if (state.owners.isEmpty) return;
-    
+
     final count = state.owners.length;
     final share = 100.0 / count;
-    
+
     final updatedOwners = state.owners.map((o) {
       return o.copyWith(percentage: share);
     }).toList();
-    
+
     emit(state.copyWith(owners: updatedOwners));
   }
 
@@ -295,23 +313,27 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
     if (state.draftPropertyId == null) return false;
 
     double total = state.owners.fold(0.0, (sum, o) => sum + o.percentage);
-    if ((total - 100.0).abs() > 0.01) { // Floating point comparison
+    if ((total - 100.0).abs() > 0.01) {
+      // Floating point comparison
       emit(state.copyWith(errorMessage: 'يجب أن يكون مجموع النسب 100% بالضبط'));
       return false;
     }
 
     emit(state.copyWith(isSyncingOwners: true).clearError());
 
-    final ownersData = state.owners.map((o) => {
-      'id': o.id,
-      'percentage': o.percentage % 1 == 0 ? o.percentage.toInt() : o.percentage,
-      'is_representative': o.isRepresentative,
-    }).toList();
+    final ownersData = state.owners
+        .map(
+          (o) => {
+            'id': o.id,
+            'percentage': o.percentage % 1 == 0
+                ? o.percentage.toInt()
+                : o.percentage,
+            'is_representative': o.isRepresentative,
+          },
+        )
+        .toList();
 
-    final res = await _syncOwners(
-      state.draftPropertyId!,
-      ownersData,
-    );
+    final res = await _syncOwners(state.draftPropertyId!, ownersData);
 
     return res.fold(
       (f) {

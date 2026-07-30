@@ -55,7 +55,9 @@ class ContractDetailsRenterCard extends StatelessWidget {
                 radius: 22,
                 backgroundColor: primaryColor.withValues(alpha: 0.1),
                 child: Text(
-                  contract.renterName.isNotEmpty ? contract.renterName[0].toUpperCase() : 'M',
+                  contract.renterName.isNotEmpty
+                      ? contract.renterName[0].toUpperCase()
+                      : 'M',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -102,7 +104,9 @@ class ContractDetailsRenterCard extends StatelessWidget {
                     icon: Icons.phone_in_talk_rounded,
                     color: primaryColor,
                     onTap: () async {
-                      final success = await LauncherUtils.makePhoneCall(contract.renterPhone);
+                      final success = await LauncherUtils.makePhoneCall(
+                        contract.renterPhone,
+                      );
                       if (!success && context.mounted) {
                         AppToast.showError(
                           context,
@@ -120,7 +124,9 @@ class ContractDetailsRenterCard extends StatelessWidget {
                     icon: Icons.chat_rounded,
                     color: const Color(0xFF1EBE5D),
                     onTap: () async {
-                      final success = await LauncherUtils.openWhatsApp(contract.renterPhone);
+                      final success = await LauncherUtils.openWhatsApp(
+                        contract.renterPhone,
+                      );
                       if (!success && context.mounted) {
                         AppToast.showError(
                           context,
@@ -155,7 +161,10 @@ class ContractDetailsRenterCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 8),
           decoration: BoxDecoration(
             borderRadius: AppRadius.circularLg,
-            border: Border.all(color: color.withValues(alpha: 0.25), width: 1.2),
+            border: Border.all(
+              color: color.withValues(alpha: 0.25),
+              width: 1.2,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -15,16 +15,13 @@ class ReportEmptyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveColor = color ?? AppColors.textSecondaryLight.withValues(alpha: 0.5);
+    final effectiveColor =
+        color ?? AppColors.textSecondaryLight.withValues(alpha: 0.5);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            icon,
-            size: 64,
-            color: effectiveColor,
-          ),
+          Icon(icon, size: 64, color: effectiveColor),
           const SizedBox(height: 16),
           Text(
             message,

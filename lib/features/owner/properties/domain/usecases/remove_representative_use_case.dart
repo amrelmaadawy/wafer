@@ -8,7 +8,10 @@ class RemoveRepresentativeUseCase {
 
   RemoveRepresentativeUseCase(this._repository);
 
-  Future<Either<Failure, PropertyDetailsEntity>> call(int propertyId, int ownerId) {
+  Future<Either<Failure, PropertyDetailsEntity>> call(
+    int propertyId,
+    int ownerId,
+  ) {
     return _repository.removeRepresentative(propertyId, ownerId);
   }
 }

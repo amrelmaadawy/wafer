@@ -34,7 +34,8 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       context.read<OwnerContractsCubit>().loadNextPage();
     }
   }
@@ -80,7 +81,10 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
               int total = 0;
               if (state is OwnerContractsLoaded) total = state.meta.total;
               return Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: context.primaryColor.withValues(alpha: 0.1),
                   borderRadius: AppRadius.circularFull,
@@ -109,25 +113,34 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
         } else if (state is OwnerContractsError) {
           return CustomErrorWidget(
             message: state.message,
-            onRetry: () => context.read<OwnerContractsCubit>().getContracts(forceRefresh: true),
+            onRetry: () => context.read<OwnerContractsCubit>().getContracts(
+              forceRefresh: true,
+            ),
           );
         } else if (state is OwnerContractsEmpty) {
           return ContractsEmptyWidget(
-            onRefresh: () => context.read<OwnerContractsCubit>().changeStatusFilter('all', force: true),
+            onRefresh: () => context
+                .read<OwnerContractsCubit>()
+                .changeStatusFilter('all', force: true),
           );
         } else if (state is OwnerContractsLoaded) {
           return RefreshIndicator(
             color: context.primaryColor,
-            onRefresh: () => context.read<OwnerContractsCubit>().getContracts(forceRefresh: true),
+            onRefresh: () => context.read<OwnerContractsCubit>().getContracts(
+              forceRefresh: true,
+            ),
             child: ListView.builder(
               controller: _scrollController,
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 80),
-              itemCount: state.contracts.length + (state.isFetchingMore ? 1 : 0),
+              itemCount:
+                  state.contracts.length + (state.isFetchingMore ? 1 : 0),
               itemBuilder: (context, index) {
                 if (index == state.contracts.length) {
                   return const Padding(
                     padding: EdgeInsets.symmetric(vertical: 16),
-                    child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+                    child: Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    ),
                   );
                 }
                 final contract = state.contracts[index];
@@ -136,7 +149,8 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
                   onTap: () {
                     Navigator.of(context, rootNavigator: true).push(
                       MaterialPageRoute(
-                        builder: (_) => OwnerContractDetailsScreen(contractId: contract.id),
+                        builder: (_) =>
+                            OwnerContractDetailsScreen(contractId: contract.id),
                       ),
                     );
                   },

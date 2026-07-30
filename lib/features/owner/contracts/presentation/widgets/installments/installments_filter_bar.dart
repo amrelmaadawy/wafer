@@ -23,9 +23,21 @@ class InstallmentsFilterBar extends StatelessWidget {
       ),
       child: Row(
         children: [
-          _buildSegmentBtn(context, 'all', LocaleKeys.installmentsFilterAll.tr()),
-          _buildSegmentBtn(context, 'paid', LocaleKeys.installmentsFilterPaid.tr()),
-          _buildSegmentBtn(context, 'unpaid', LocaleKeys.installmentsFilterUnpaid.tr()),
+          _buildSegmentBtn(
+            context,
+            'all',
+            LocaleKeys.installmentsFilterAll.tr(),
+          ),
+          _buildSegmentBtn(
+            context,
+            'paid',
+            LocaleKeys.installmentsFilterPaid.tr(),
+          ),
+          _buildSegmentBtn(
+            context,
+            'unpaid',
+            LocaleKeys.installmentsFilterUnpaid.tr(),
+          ),
         ],
       ),
     );
@@ -37,7 +49,9 @@ class InstallmentsFilterBar extends StatelessWidget {
 
     return Expanded(
       child: GestureDetector(
-        onTap: () => context.read<OwnerContractInstallmentsCubit>().filterInstallments(key),
+        onTap: () => context
+            .read<OwnerContractInstallmentsCubit>()
+            .filterInstallments(key),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 8),
           decoration: BoxDecoration(

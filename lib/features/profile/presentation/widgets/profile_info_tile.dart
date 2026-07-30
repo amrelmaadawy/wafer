@@ -56,19 +56,22 @@ class ProfileInfoTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 3),
                 Text(
-                  value.isNotEmpty ? value : LocaleKeys.profile_unspecified.tr(),
+                  value.isNotEmpty
+                      ? value
+                      : LocaleKeys.profile_unspecified.tr(),
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: value.isNotEmpty ? AppColors.textPrimaryLight : AppColors.textSecondaryLight,
-                    fontStyle: value.isNotEmpty ? FontStyle.normal : FontStyle.italic,
+                    color: value.isNotEmpty
+                        ? AppColors.textPrimaryLight
+                        : AppColors.textSecondaryLight,
+                    fontStyle: value.isNotEmpty
+                        ? FontStyle.normal
+                        : FontStyle.italic,
                   ),
                 ),
               ],
             ),
           ),
-          if (trailing != null) ...[
-            const SizedBox(width: 8),
-            trailing!,
-          ],
+          if (trailing != null) ...[const SizedBox(width: 8), trailing!],
           if (onCopy != null && !isEmpty) ...[
             const SizedBox(width: 8),
             _CopyButton(onTap: onCopy!),
@@ -87,7 +90,8 @@ class _CopyButton extends StatefulWidget {
   State<_CopyButton> createState() => _CopyButtonState();
 }
 
-class _CopyButtonState extends State<_CopyButton> with SingleTickerProviderStateMixin {
+class _CopyButtonState extends State<_CopyButton>
+    with SingleTickerProviderStateMixin {
   bool _copied = false;
 
   void _handleTap() {

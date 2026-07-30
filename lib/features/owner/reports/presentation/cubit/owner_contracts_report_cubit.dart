@@ -9,14 +9,14 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
   bool _isFetching = false;
 
   OwnerContractsReportCubit({required this.getContractsReportUseCase})
-      : super(OwnerContractsReportInitial());
+    : super(OwnerContractsReportInitial());
 
   Future<void> loadContractsReport({
     bool forceRefresh = false,
     int? propertyId,
   }) async {
     if (_isFetching) return;
-    
+
     if (forceRefresh || propertyId != _selectedPropertyId) {
       _currentPage = 1;
       _selectedPropertyId = propertyId ?? _selectedPropertyId;
@@ -44,10 +44,12 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
           // If pagination fails, we just keep the loaded state
           final currentState = state;
           if (currentState is OwnerContractsReportLoaded) {
-            emit(OwnerContractsReportLoaded(
-              report: currentState.report,
-              hasReachedMax: true,
-            ));
+            emit(
+              OwnerContractsReportLoaded(
+                report: currentState.report,
+                hasReachedMax: true,
+              ),
+            );
           }
         }
       },
@@ -56,27 +58,37 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
           if (report.items.isEmpty) {
             emit(OwnerContractsReportEmpty());
           } else {
-            emit(OwnerContractsReportLoaded(
-              report: report,
-              hasReachedMax: report.pagination.currentPage >= report.pagination.lastPage,
-            ));
+            emit(
+              OwnerContractsReportLoaded(
+                report: report,
+                hasReachedMax:
+                    report.pagination.currentPage >= report.pagination.lastPage,
+              ),
+            );
           }
         } else {
           final currentState = state;
           if (currentState is OwnerContractsReportLoaded) {
-            final newItems = List.of(currentState.report.items)..addAll(report.items);
-            final newReport = currentState.report.copyWith(items: newItems, pagination: report.pagination);
-            
-            emit(OwnerContractsReportLoaded(
-              report: newReport,
-              hasReachedMax: report.pagination.currentPage >= report.pagination.lastPage,
-            ));
+            final newItems = List.of(currentState.report.items)
+              ..addAll(report.items);
+            final newReport = currentState.report.copyWith(
+              items: newItems,
+              pagination: report.pagination,
+            );
+
+            emit(
+              OwnerContractsReportLoaded(
+                report: newReport,
+                hasReachedMax:
+                    report.pagination.currentPage >= report.pagination.lastPage,
+              ),
+            );
           }
         }
         _currentPage++;
       },
     );
-    
+
     _isFetching = false;
   }
 }

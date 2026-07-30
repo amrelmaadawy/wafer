@@ -34,11 +34,13 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton<ErrorInterceptor>(() => ErrorInterceptor());
 
   // Network
-  sl.registerLazySingleton<Dio>(() => DioFactory.getDio(
-        authInterceptor: sl(),
-        localeInterceptor: sl(),
-        errorInterceptor: sl(),
-      ));
+  sl.registerLazySingleton<Dio>(
+    () => DioFactory.getDio(
+      authInterceptor: sl(),
+      localeInterceptor: sl(),
+      errorInterceptor: sl(),
+    ),
+  );
 
   // Features
   await initAuthModule();

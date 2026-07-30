@@ -23,7 +23,11 @@ class DeedDetailsSkeleton extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _buildBox(height: 24, width: 150),
-                    _buildBox(height: 24, width: 80, borderRadius: AppRadius.circularFull),
+                    _buildBox(
+                      height: 24,
+                      width: 80,
+                      borderRadius: AppRadius.circularFull,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 12),
@@ -70,7 +74,11 @@ class DeedDetailsSkeleton extends StatelessWidget {
         children: [
           Row(
             children: [
-              _buildBox(height: 32, width: 32, borderRadius: AppRadius.circularLg),
+              _buildBox(
+                height: 32,
+                width: 32,
+                borderRadius: AppRadius.circularLg,
+              ),
               const SizedBox(width: 12),
               _buildBox(height: 20, width: 120),
             ],

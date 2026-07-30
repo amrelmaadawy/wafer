@@ -11,11 +11,7 @@ class PropertyOwnersCard extends StatelessWidget {
   final PropertyDetailsEntity property;
   final VoidCallback? onEditTap;
 
-  const PropertyOwnersCard({
-    super.key,
-    required this.property,
-    this.onEditTap,
-  });
+  const PropertyOwnersCard({super.key, required this.property, this.onEditTap});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +35,11 @@ class PropertyOwnersCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.people_outline_rounded, size: 18, color: context.primaryColor),
+              Icon(
+                Icons.people_outline_rounded,
+                size: 18,
+                color: context.primaryColor,
+              ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -56,7 +56,10 @@ class PropertyOwnersCard extends StatelessWidget {
                 GestureDetector(
                   onTap: onEditTap,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
                     decoration: BoxDecoration(
                       color: context.primaryColor.withValues(alpha: 0.08),
                       borderRadius: AppRadius.circularFull,
@@ -67,7 +70,11 @@ class PropertyOwnersCard extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.edit_outlined, size: 13, color: context.primaryColor),
+                        Icon(
+                          Icons.edit_outlined,
+                          size: 13,
+                          color: context.primaryColor,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           LocaleKeys.propertyOwnersEditBtn.tr(),
@@ -92,7 +99,9 @@ class PropertyOwnersCard extends StatelessWidget {
                   child: Text(
                     LocaleKeys.propertyOwnersNoOwners.tr(),
                     style: const TextStyle(
-                        color: AppColors.textSecondaryLight, fontSize: 13),
+                      color: AppColors.textSecondaryLight,
+                      fontSize: 13,
+                    ),
                   ),
                 )
               : Column(
@@ -146,16 +155,23 @@ class PropertyOwnersCard extends StatelessWidget {
                           const SizedBox(width: 6),
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 2),
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
-                              color: context.primaryColor.withValues(alpha: 0.1),
+                              color: context.primaryColor.withValues(
+                                alpha: 0.1,
+                              ),
                               borderRadius: AppRadius.circularFull,
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Icon(Icons.star_rounded,
-                                    size: 11, color: context.primaryColor),
+                                Icon(
+                                  Icons.star_rounded,
+                                  size: 11,
+                                  color: context.primaryColor,
+                                ),
                                 const SizedBox(width: 3),
                                 Text(
                                   LocaleKeys.propertyOwnersRepresentative.tr(),

@@ -6,10 +6,7 @@ class ContractsResponseEntity extends Equatable {
   final List<ContractItemEntity> contracts;
   final ContractsPaginationMetaEntity meta;
 
-  const ContractsResponseEntity({
-    required this.contracts,
-    required this.meta,
-  });
+  const ContractsResponseEntity({required this.contracts, required this.meta});
 
   @override
   List<Object?> get props => [contracts, meta];

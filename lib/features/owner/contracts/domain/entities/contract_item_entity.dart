@@ -27,15 +27,15 @@ class ContractItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        contractNumber,
-        propertyName,
-        unitName,
-        tenantName,
-        startDate,
-        endDate,
-        rentAmount,
-        paymentCycle,
-        status,
-      ];
+    id,
+    contractNumber,
+    propertyName,
+    unitName,
+    tenantName,
+    startDate,
+    endDate,
+    rentAmount,
+    paymentCycle,
+    status,
+  ];
 }

@@ -12,11 +12,7 @@ class OwnerEntryCard extends StatefulWidget {
   final PropertyOwnerEntity owner;
   final PropertyCreateCubit cubit;
 
-  const OwnerEntryCard({
-    super.key,
-    required this.owner,
-    required this.cubit,
-  });
+  const OwnerEntryCard({super.key, required this.owner, required this.cubit});
 
   @override
   State<OwnerEntryCard> createState() => _OwnerEntryCardState();
@@ -31,7 +27,8 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
     super.initState();
     _controller = TextEditingController(
       text: widget.owner.percentage.toStringAsFixed(
-          widget.owner.percentage % 1 == 0 ? 0 : 1),
+        widget.owner.percentage % 1 == 0 ? 0 : 1,
+      ),
     );
     _focusNode = FocusNode();
     _focusNode.addListener(() {
@@ -48,11 +45,13 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
   void didUpdateWidget(OwnerEntryCard oldWidget) {
     super.didUpdateWidget(oldWidget);
     final newVal = widget.owner.percentage.toStringAsFixed(
-        widget.owner.percentage % 1 == 0 ? 0 : 1);
+      widget.owner.percentage % 1 == 0 ? 0 : 1,
+    );
     if (_controller.text != newVal) {
       _controller.text = newVal;
       _controller.selection = TextSelection.fromPosition(
-          TextPosition(offset: _controller.text.length));
+        TextPosition(offset: _controller.text.length),
+      );
     }
   }
 
@@ -67,7 +66,8 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
   Widget build(BuildContext context) {
     final primary = context.primaryColor;
     final isRep = widget.owner.isRepresentative;
-    final isDefaultOwner = widget.owner.id == widget.cubit.state.formData?.defaults.defaultOwnerId;
+    final isDefaultOwner =
+        widget.owner.id == widget.cubit.state.formData?.defaults.defaultOwnerId;
 
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
@@ -84,7 +84,9 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
         ),
         boxShadow: [
           BoxShadow(
-            color: isRep ? primary.withValues(alpha: 0.1) : Colors.black.withValues(alpha: 0.02),
+            color: isRep
+                ? primary.withValues(alpha: 0.1)
+                : Colors.black.withValues(alpha: 0.02),
             blurRadius: isRep ? 16 : 8,
             offset: const Offset(0, 4),
           ),
@@ -92,9 +94,7 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
       ),
       child: Container(
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14.5),
-        ),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(14.5)),
         child: Stack(
           children: [
             if (isRep)
@@ -103,7 +103,10 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                 start: 0,
                 top: 0,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 6,
+                  ),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [primary, primary.withValues(alpha: 0.8)],
@@ -117,7 +120,11 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.star_rounded, size: 14, color: Colors.white),
+                      const Icon(
+                        Icons.star_rounded,
+                        size: 14,
+                        color: Colors.white,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         LocaleKeys.propertyOwnersRepresentative.tr(),
@@ -148,7 +155,7 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                           gradient: LinearGradient(
                             colors: [
                               primary.withValues(alpha: 0.8),
-                              primary.withValues(alpha: 0.5)
+                              primary.withValues(alpha: 0.5),
                             ],
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -194,22 +201,33 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () => widget.cubit.setRepresentative(widget.owner.id),
+                            onTap: () =>
+                                widget.cubit.setRepresentative(widget.owner.id),
                             child: AnimatedContainer(
                               duration: const Duration(milliseconds: 200),
                               padding: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 color: isRep
-                                    ? const Color(0xFFF59E0B).withValues(alpha: 0.15)
+                                    ? const Color(
+                                        0xFFF59E0B,
+                                      ).withValues(alpha: 0.15)
                                     : const Color(0xFFF1F5F9),
                                 borderRadius: AppRadius.circularMd,
                                 border: Border.all(
-                                  color: isRep ? const Color(0xFFF59E0B).withValues(alpha: 0.3) : Colors.transparent,
+                                  color: isRep
+                                      ? const Color(
+                                          0xFFF59E0B,
+                                        ).withValues(alpha: 0.3)
+                                      : Colors.transparent,
                                 ),
                               ),
                               child: Icon(
-                                isRep ? Icons.star_rounded : Icons.star_outline_rounded,
-                                color: isRep ? const Color(0xFFF59E0B) : AppColors.textSecondaryLight,
+                                isRep
+                                    ? Icons.star_rounded
+                                    : Icons.star_outline_rounded,
+                                color: isRep
+                                    ? const Color(0xFFF59E0B)
+                                    : AppColors.textSecondaryLight,
                                 size: 20,
                               ),
                             ),
@@ -217,13 +235,20 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                           if (!isDefaultOwner) const SizedBox(width: 10),
                           if (!isDefaultOwner)
                             GestureDetector(
-                              onTap: () => widget.cubit.removeOwner(widget.owner.id),
+                              onTap: () =>
+                                  widget.cubit.removeOwner(widget.owner.id),
                               child: Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFFEF4444).withValues(alpha: 0.1),
+                                  color: const Color(
+                                    0xFFEF4444,
+                                  ).withValues(alpha: 0.1),
                                   borderRadius: AppRadius.circularMd,
-                                  border: Border.all(color: const Color(0xFFEF4444).withValues(alpha: 0.2)),
+                                  border: Border.all(
+                                    color: const Color(
+                                      0xFFEF4444,
+                                    ).withValues(alpha: 0.2),
+                                  ),
                                 ),
                                 child: const Icon(
                                   Icons.delete_outline_rounded,
@@ -250,13 +275,17 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                               thumbColor: Colors.white,
                               overlayColor: primary.withValues(alpha: 0.2),
                               thumbShape: const RoundSliderThumbShape(
-                                  enabledThumbRadius: 10,
-                                  elevation: 4,
-                                  pressedElevation: 8),
+                                enabledThumbRadius: 10,
+                                elevation: 4,
+                                pressedElevation: 8,
+                              ),
                               trackShape: const RoundedRectSliderTrackShape(),
                             ),
                             child: Slider(
-                              value: widget.owner.percentage.toDouble().clamp(0.0, 100.0),
+                              value: widget.owner.percentage.toDouble().clamp(
+                                0.0,
+                                100.0,
+                              ),
                               min: 0,
                               max: 100,
                               divisions: 200,
@@ -276,15 +305,21 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                         decoration: BoxDecoration(
                           color: primary.withValues(alpha: 0.05),
                           borderRadius: AppRadius.circularLg,
-                          border: Border.all(color: primary.withValues(alpha: 0.1)),
+                          border: Border.all(
+                            color: primary.withValues(alpha: 0.1),
+                          ),
                         ),
                         child: TextFormField(
                           controller: _controller,
                           focusNode: _focusNode,
-                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
+                          ),
                           textAlign: TextAlign.center,
                           inputFormatters: [
-                            FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                            FilteringTextInputFormatter.allow(
+                              RegExp(r'^\d*\.?\d*'),
+                            ),
                           ],
                           style: TextStyle(
                             fontSize: 16,
@@ -298,14 +333,20 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                               fontWeight: FontWeight.w700,
                               fontSize: 12,
                             ),
-                            contentPadding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                            contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 12,
+                            ),
                             border: InputBorder.none,
                             isDense: true,
                           ),
                           onChanged: (val) {
                             final parsed = double.tryParse(val);
                             if (parsed != null) {
-                              widget.cubit.updateOwnerPercentage(widget.owner.id, parsed);
+                              widget.cubit.updateOwnerPercentage(
+                                widget.owner.id,
+                                parsed,
+                              );
                             }
                           },
                         ),

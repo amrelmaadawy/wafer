@@ -13,5 +13,6 @@ abstract class OwnerContractsRepository {
 
   Future<Either<Failure, ContractDetailsEntity>> getContractDetails(String id);
 
-  Future<Either<Failure, List<ContractInstallmentEntity>>> getContractInstallments(String contractId);
+  Future<Either<Failure, List<ContractInstallmentEntity>>>
+  getContractInstallments(String contractId);
 }

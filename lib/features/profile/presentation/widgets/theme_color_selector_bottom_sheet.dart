@@ -54,15 +54,18 @@ class ThemeColorSelectorBottomSheet extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: BlocBuilder<AppThemeCubit, ThemeData>(
                 builder: (context, theme) {
-                  final activeColorValue = context.read<AppThemeCubit>().currentColorValue;
+                  final activeColorValue = context
+                      .read<AppThemeCubit>()
+                      .currentColorValue;
                   return GridView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
-                    ),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 4,
+                          mainAxisSpacing: 16,
+                          crossAxisSpacing: 16,
+                        ),
                     itemCount: AppTheme.premiumPalette.length,
                     itemBuilder: (context, index) {
                       final color = AppTheme.premiumPalette[index];
@@ -71,7 +74,9 @@ class ThemeColorSelectorBottomSheet extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           // Change color in Cubit
-                          final colorValue = context.read<AppThemeCubit>().changePrimaryColor(color);
+                          final colorValue = context
+                              .read<AppThemeCubit>()
+                              .changePrimaryColor(color);
                           // Persist it
                           sl<CacheHelper>().savePrimaryColor(colorValue);
                           // Close bottom sheet
@@ -92,12 +97,15 @@ class ThemeColorSelectorBottomSheet extends StatelessWidget {
                                       color: color.withValues(alpha: 0.4),
                                       blurRadius: 8,
                                       offset: const Offset(0, 4),
-                                    )
+                                    ),
                                   ]
                                 : [],
                           ),
                           child: isSelected
-                              ? const Icon(Icons.check_rounded, color: Colors.white)
+                              ? const Icon(
+                                  Icons.check_rounded,
+                                  color: Colors.white,
+                                )
                               : null,
                         ),
                       );

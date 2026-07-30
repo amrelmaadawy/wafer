@@ -28,4 +28,3 @@ class CloneForDeedError extends CloneForDeedState {
   @override
   List<Object?> get props => [message];
 }
-

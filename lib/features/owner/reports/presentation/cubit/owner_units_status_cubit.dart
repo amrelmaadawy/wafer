@@ -7,7 +7,7 @@ class OwnerUnitsStatusCubit extends Cubit<OwnerUnitsStatusState> {
   final GetOwnerUnitsStatusReportUseCase _getReportUseCase;
 
   OwnerUnitsStatusCubit(this._getReportUseCase)
-      : super(const OwnerUnitsStatusInitial());
+    : super(const OwnerUnitsStatusInitial());
 
   int? selectedPropertyId;
   String? selectedStatus;
@@ -58,15 +58,19 @@ class OwnerUnitsStatusCubit extends Cubit<OwnerUnitsStatusState> {
           if (report.items.isEmpty) {
             emit(OwnerUnitsStatusEmpty(filterOptions: report.filterOptions));
           } else {
-            emit(OwnerUnitsStatusLoaded(
-              report: report,
-              hasReachedMax: report.pagination.currentPage >= report.pagination.lastPage,
-            ));
+            emit(
+              OwnerUnitsStatusLoaded(
+                report: report,
+                hasReachedMax:
+                    report.pagination.currentPage >= report.pagination.lastPage,
+              ),
+            );
           }
         } else if (state is OwnerUnitsStatusLoaded) {
           final currentState = state as OwnerUnitsStatusLoaded;
-          final updatedItems = List.of(currentState.report.items)..addAll(report.items);
-          
+          final updatedItems = List.of(currentState.report.items)
+            ..addAll(report.items);
+
           final updatedReport = UnitsStatusReportEntity(
             summary: report.summary,
             items: updatedItems,
@@ -74,10 +78,13 @@ class OwnerUnitsStatusCubit extends Cubit<OwnerUnitsStatusState> {
             filterOptions: report.filterOptions,
           );
 
-          emit(OwnerUnitsStatusLoaded(
-            report: updatedReport,
-            hasReachedMax: report.pagination.currentPage >= report.pagination.lastPage,
-          ));
+          emit(
+            OwnerUnitsStatusLoaded(
+              report: updatedReport,
+              hasReachedMax:
+                  report.pagination.currentPage >= report.pagination.lastPage,
+            ),
+          );
         }
       },
     );

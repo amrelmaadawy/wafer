@@ -18,9 +18,15 @@ class Step4ImagesView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('صور الوحدة', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text(
+                'صور الوحدة',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 8),
-              const Text('قم بإضافة صور للوحدة لزيادة فرص التأجير أو البيع', style: TextStyle(color: AppColors.textSecondaryLight)),
+              const Text(
+                'قم بإضافة صور للوحدة لزيادة فرص التأجير أو البيع',
+                style: TextStyle(color: AppColors.textSecondaryLight),
+              ),
               const SizedBox(height: 24),
 
               GridView.builder(
@@ -62,11 +68,18 @@ class Step4ImagesView extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           color: AppColors.primary.withValues(alpha: 0.05),
-          border: Border.all(color: AppColors.primary.withValues(alpha: 0.3), style: BorderStyle.solid),
+          border: Border.all(
+            color: AppColors.primary.withValues(alpha: 0.3),
+            style: BorderStyle.solid,
+          ),
           borderRadius: BorderRadius.circular(8),
         ),
         child: const Center(
-          child: Icon(Icons.add_photo_alternate_outlined, color: AppColors.primary, size: 32),
+          child: Icon(
+            Icons.add_photo_alternate_outlined,
+            color: AppColors.primary,
+            size: 32,
+          ),
         ),
       ),
     );
@@ -78,10 +91,7 @@ class Step4ImagesView extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            image: DecorationImage(
-              image: FileImage(image),
-              fit: BoxFit.cover,
-            ),
+            image: DecorationImage(image: FileImage(image), fit: BoxFit.cover),
           ),
         ),
         Positioned(

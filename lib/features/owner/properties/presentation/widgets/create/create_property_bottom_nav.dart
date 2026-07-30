@@ -22,7 +22,8 @@ class CreatePropertyBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLastStep = state.currentStep == 4;
-    final isBusy = state.isSaving ||
+    final isBusy =
+        state.isSaving ||
         state.isSavingImages ||
         state.isSyncingOwners ||
         state.isPublishing ||
@@ -44,7 +45,9 @@ class CreatePropertyBottomNav extends StatelessWidget {
                   onPressed: isBusy ? null : onPrevious,
                   style: OutlinedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: AppRadius.circularLg,
+                    ),
                     side: const BorderSide(color: Color(0xFFE2E8F0)),
                   ),
                   child: Text(
@@ -68,16 +71,23 @@ class CreatePropertyBottomNav extends StatelessWidget {
                   : ElevatedButton(
                       onPressed: onNext,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: isLastStep ? AppColors.success : context.primaryColor,
+                        backgroundColor: isLastStep
+                            ? AppColors.success
+                            : context.primaryColor,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
-                        shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: AppRadius.circularLg,
+                        ),
                       ),
                       child: Text(
                         isLastStep
                             ? LocaleKeys.propertyWizardPublish.tr()
                             : LocaleKeys.propertyWizardNext.tr(),
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
             ),

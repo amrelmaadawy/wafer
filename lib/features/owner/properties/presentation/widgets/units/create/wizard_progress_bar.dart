@@ -15,7 +15,7 @@ class WizardProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = (currentStep + 1) / totalSteps;
-    
+
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -60,13 +60,20 @@ class WizardProgressBar extends StatelessWidget {
 
   String _getStepTitle(int step) {
     switch (step) {
-      case 0: return 'البيانات الأساسية';
-      case 1: return 'المواصفات';
-      case 2: return 'الموقع والمرافق';
-      case 3: return 'الصور';
-      case 4: return 'التفاصيل المالية';
-      case 5: return 'مراجعة وتأكيد';
-      default: return '';
+      case 0:
+        return 'البيانات الأساسية';
+      case 1:
+        return 'المواصفات';
+      case 2:
+        return 'الموقع والمرافق';
+      case 3:
+        return 'الصور';
+      case 4:
+        return 'التفاصيل المالية';
+      case 5:
+        return 'مراجعة وتأكيد';
+      default:
+        return '';
     }
   }
 }

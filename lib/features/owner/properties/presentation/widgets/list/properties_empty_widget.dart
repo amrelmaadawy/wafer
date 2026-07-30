@@ -8,10 +8,7 @@ import '../../../../../../core/theme/color_utils.dart';
 class PropertiesEmptyWidget extends StatelessWidget {
   final VoidCallback onAddProperty;
 
-  const PropertiesEmptyWidget({
-    super.key,
-    required this.onAddProperty,
-  });
+  const PropertiesEmptyWidget({super.key, required this.onAddProperty});
 
   @override
   Widget build(BuildContext context) {

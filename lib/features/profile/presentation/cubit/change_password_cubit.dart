@@ -5,10 +5,9 @@ import 'change_password_state.dart';
 class ChangePasswordCubit extends Cubit<ChangePasswordState> {
   final ChangePasswordUseCase _changePasswordUseCase;
 
-  ChangePasswordCubit({
-    required ChangePasswordUseCase changePasswordUseCase,
-  })  : _changePasswordUseCase = changePasswordUseCase,
-        super(const ChangePasswordInitial());
+  ChangePasswordCubit({required ChangePasswordUseCase changePasswordUseCase})
+    : _changePasswordUseCase = changePasswordUseCase,
+      super(const ChangePasswordInitial());
 
   Future<void> changePassword({
     required String currentPassword,

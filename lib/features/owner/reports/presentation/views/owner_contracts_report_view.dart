@@ -22,7 +22,8 @@ class OwnerContractsReportView extends StatefulWidget {
   const OwnerContractsReportView({super.key});
 
   @override
-  State<OwnerContractsReportView> createState() => _OwnerContractsReportViewState();
+  State<OwnerContractsReportView> createState() =>
+      _OwnerContractsReportViewState();
 }
 
 class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
@@ -98,7 +99,9 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
       ),
       body: BlocBuilder<OwnerContractsReportCubit, OwnerContractsReportState>(
         builder: (context, state) {
-          if (state is OwnerContractsReportLoading && context.read<OwnerContractsReportCubit>().state is! OwnerContractsReportLoaded) {
+          if (state is OwnerContractsReportLoading &&
+              context.read<OwnerContractsReportCubit>().state
+                  is! OwnerContractsReportLoaded) {
             return const ReportSkeleton();
           } else if (state is OwnerContractsReportError) {
             return CustomErrorWidget(

@@ -11,11 +11,7 @@ class UnitCard extends StatelessWidget {
   final UnitEntity unit;
   final VoidCallback onTap;
 
-  const UnitCard({
-    super.key,
-    required this.unit,
-    required this.onTap,
-  });
+  const UnitCard({super.key, required this.unit, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -74,13 +70,20 @@ class UnitCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            unit.name ?? LocaleKeys.dashboardUnitPrefix.tr(args: [unit.unitNumber]),
-                            style: AppTextStyles.h4.copyWith(color: AppColors.textPrimaryLight),
+                            unit.name ??
+                                LocaleKeys.dashboardUnitPrefix.tr(
+                                  args: [unit.unitNumber],
+                                ),
+                            style: AppTextStyles.h4.copyWith(
+                              color: AppColors.textPrimaryLight,
+                            ),
                           ),
                           if (unit.typeLabel != null || unit.type != null)
                             Text(
                               unit.typeLabel ?? unit.type ?? '',
-                              style: AppTextStyles.labelMedium.copyWith(color: AppColors.textSecondaryLight),
+                              style: AppTextStyles.labelMedium.copyWith(
+                                color: AppColors.textSecondaryLight,
+                              ),
                             ),
                         ],
                       ),
@@ -97,11 +100,26 @@ class UnitCard extends StatelessWidget {
                   runSpacing: 6,
                   children: [
                     if (unit.details.roomsCount > 0)
-                      _buildStat(Icons.bed_outlined, LocaleKeys.commonRooms.tr(args: [unit.details.roomsCount.toString()])),
+                      _buildStat(
+                        Icons.bed_outlined,
+                        LocaleKeys.commonRooms.tr(
+                          args: [unit.details.roomsCount.toString()],
+                        ),
+                      ),
                     if (unit.details.bathroomsCount > 0)
-                      _buildStat(Icons.bathtub_outlined, LocaleKeys.commonBathrooms.tr(args: [unit.details.bathroomsCount.toString()])),
+                      _buildStat(
+                        Icons.bathtub_outlined,
+                        LocaleKeys.commonBathrooms.tr(
+                          args: [unit.details.bathroomsCount.toString()],
+                        ),
+                      ),
                     if (unit.area != null && unit.area! > 0)
-                      _buildStat(Icons.square_foot_outlined, LocaleKeys.commonAreaM2.tr(args: [unit.area!.toStringAsFixed(0)])),
+                      _buildStat(
+                        Icons.square_foot_outlined,
+                        LocaleKeys.commonAreaM2.tr(
+                          args: [unit.area!.toStringAsFixed(0)],
+                        ),
+                      ),
                     if (unit.floor != null && unit.floor!.isNotEmpty)
                       _buildStat(Icons.layers_outlined, 'الطابق ${unit.floor}'),
                   ],
@@ -117,11 +135,15 @@ class UnitCard extends StatelessWidget {
                   children: [
                     // Furnished chip
                     _buildChip(
-                      icon: unit.isFurnished ? Icons.chair_outlined : Icons.chair_alt_outlined,
+                      icon: unit.isFurnished
+                          ? Icons.chair_outlined
+                          : Icons.chair_alt_outlined,
                       label: unit.isFurnished
                           ? LocaleKeys.commonFurnished.tr()
                           : LocaleKeys.commonUnfurnished.tr(),
-                      color: unit.isFurnished ? Colors.teal : const Color(0xFF94A3B8),
+                      color: unit.isFurnished
+                          ? Colors.teal
+                          : const Color(0xFF94A3B8),
                     ),
                     if (unit.code != null) ...[
                       const SizedBox(width: 8),
@@ -137,13 +159,19 @@ class UnitCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          LocaleKeys.commonCurrencySar.tr(args: [formattedPrice]),
-                          style: AppTextStyles.h4.copyWith(color: context.primaryColor),
+                          LocaleKeys.commonCurrencySar.tr(
+                            args: [formattedPrice],
+                          ),
+                          style: AppTextStyles.h4.copyWith(
+                            color: context.primaryColor,
+                          ),
                         ),
                         if (unit.prices.monthly > 0)
                           Text(
                             LocaleKeys.unit_details_monthly.tr(),
-                            style: AppTextStyles.labelSmall.copyWith(color: AppColors.textSecondaryLight),
+                            style: AppTextStyles.labelSmall.copyWith(
+                              color: AppColors.textSecondaryLight,
+                            ),
                           ),
                       ],
                     ),
@@ -174,16 +202,17 @@ class UnitCard extends StatelessWidget {
     );
   }
 
-  Widget _buildChip({required IconData icon, required String label, required Color color}) {
+  Widget _buildChip({
+    required IconData icon,
+    required String label,
+    required Color color,
+  }) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         Icon(icon, size: 14, color: color),
         const SizedBox(width: 4),
-        Text(
-          label,
-          style: AppTextStyles.labelSmall.copyWith(color: color),
-        ),
+        Text(label, style: AppTextStyles.labelSmall.copyWith(color: color)),
       ],
     );
   }
@@ -214,7 +243,10 @@ class UnitCard extends StatelessWidget {
       ),
       child: Text(
         label,
-        style: AppTextStyles.labelSmall.copyWith(color: color, fontWeight: AppFonts.bold),
+        style: AppTextStyles.labelSmall.copyWith(
+          color: color,
+          fontWeight: AppFonts.bold,
+        ),
       ),
     );
   }

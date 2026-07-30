@@ -49,8 +49,11 @@ class AddOwnerDropdown extends StatelessWidget {
                       color: primary.withValues(alpha: 0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(Icons.person_add_alt_1_rounded,
-                        color: primary, size: 18),
+                    child: Icon(
+                      Icons.person_add_alt_1_rounded,
+                      color: primary,
+                      size: 18,
+                    ),
                   ),
                   const SizedBox(width: 14),
                   Text(
@@ -77,9 +80,9 @@ class AddOwnerDropdown extends StatelessWidget {
                 child: Text(
                   owner.name,
                   style: const TextStyle(
-                    fontSize: 15, 
+                    fontSize: 15,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textPrimaryLight
+                    color: AppColors.textPrimaryLight,
                   ),
                 ),
               );
@@ -91,7 +94,9 @@ class AddOwnerDropdown extends StatelessWidget {
                     final added = cubit.addOwner(owner);
                     if (!added) {
                       AppToast.showInfo(
-                          context, LocaleKeys.propertyOwnersAlreadyAdded.tr());
+                        context,
+                        LocaleKeys.propertyOwnersAlreadyAdded.tr(),
+                      );
                     }
                   },
           ),
@@ -114,7 +119,10 @@ class AutoDistributeButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [primary.withValues(alpha: 0.1), primary.withValues(alpha: 0.02)],
+            colors: [
+              primary.withValues(alpha: 0.1),
+              primary.withValues(alpha: 0.02),
+            ],
           ),
           borderRadius: AppRadius.circularLg,
           border: Border.all(color: primary.withValues(alpha: 0.15)),
@@ -162,8 +170,11 @@ class EmptyOwners extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Icon(Icons.people_outline_rounded,
-                  size: 56, color: const Color(0xFFCBD5E1)),
+              child: Icon(
+                Icons.people_outline_rounded,
+                size: 56,
+                color: const Color(0xFFCBD5E1),
+              ),
             ),
             const SizedBox(height: 20),
             Text(
@@ -231,7 +242,7 @@ class SaveButton extends StatelessWidget {
                       color: primary.withValues(alpha: 0.3),
                       blurRadius: 12,
                       offset: const Offset(0, 6),
-                    )
+                    ),
                   ]
                 : [],
           ),
@@ -240,7 +251,9 @@ class SaveButton extends StatelessWidget {
                 ? () async {
                     if (!state.isValid) {
                       AppToast.showError(
-                          context, LocaleKeys.propertyOwnersValidationError.tr());
+                        context,
+                        LocaleKeys.propertyOwnersValidationError.tr(),
+                      );
                       return;
                     }
                     await cubit.syncOwners(propertyId);
@@ -257,17 +270,26 @@ class SaveButton extends StatelessWidget {
                     width: 24,
                     height: 24,
                     child: CircularProgressIndicator(
-                        strokeWidth: 3, color: Colors.white),
+                      strokeWidth: 3,
+                      color: Colors.white,
+                    ),
                   )
                 : Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.check_circle_rounded, size: 20, color: Colors.white),
+                      Icon(
+                        Icons.check_circle_rounded,
+                        size: 20,
+                        color: Colors.white,
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         LocaleKeys.propertyOwnersSaveBtn.tr(),
                         style: const TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w800, letterSpacing: 0.5),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 0.5,
+                        ),
                       ),
                     ],
                   ),

@@ -67,16 +67,28 @@ class UnitFullDetailsModel extends UnitFullDetailsEntity {
               gas: json['meters']['gas'] as String?,
             )
           : const UnitMetersEntity(),
-      amenities: (json['amenities'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? const [],
-      images: (json['images'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? const [],
+      amenities:
+          (json['amenities'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          const [],
+      images:
+          (json['images'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          const [],
       roomsCount: json['details']?['rooms_count'] as int? ?? 0,
       bathroomsCount: json['details']?['bathrooms_count'] as int? ?? 0,
       hallsCount: json['details']?['halls_count'] as int? ?? 0,
       kitchensCount: json['details']?['kitchens_count'] as int? ?? 0,
       entrancesCount: json['details']?['entrances_count'] as int? ?? 0,
-      rentPrice: json['prices']?['monthly'] as num? ?? json['rent_price'] as num? ?? 0,
+      rentPrice:
+          json['prices']?['monthly'] as num? ?? json['rent_price'] as num? ?? 0,
       monthlyPrice: json['prices']?['monthly'] as num? ?? 0,
-      perTwoPaymentsPrice: json['prices']?['per_two_payments'] as num? ?? json['prices']?['per_two_months'] as num? ?? 0,
+      perTwoPaymentsPrice:
+          json['prices']?['per_two_payments'] as num? ??
+          json['prices']?['per_two_months'] as num? ??
+          0,
       quarterlyPrice: json['prices']?['quarterly'] as num? ?? 0,
       currentContract: json['current_contract'],
       contractsHistory: json['contracts_history'] as List<dynamic>? ?? const [],

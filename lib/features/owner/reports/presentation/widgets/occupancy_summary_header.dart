@@ -49,8 +49,11 @@ class OccupancySummaryHeader extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.pie_chart_rounded,
-                      color: Colors.white70, size: 18),
+                  const Icon(
+                    Icons.pie_chart_rounded,
+                    color: Colors.white70,
+                    size: 18,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     LocaleKeys.occupancyOverallRate.tr(),
@@ -73,10 +76,7 @@ class OccupancySummaryHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-              Container(
-                height: 1,
-                color: Colors.white.withValues(alpha: 0.15),
-              ),
+              Container(height: 1, color: Colors.white.withValues(alpha: 0.15)),
               const SizedBox(height: 12),
               Row(
                 children: [
@@ -159,8 +159,7 @@ class OccupancySummaryHeader extends StatelessWidget {
     );
   }
 
-  Widget _miniMetric(
-      String label, int count, Color color, IconData icon) {
+  Widget _miniMetric(String label, int count, Color color, IconData icon) {
     return Column(
       children: [
         Row(

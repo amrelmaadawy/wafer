@@ -20,5 +20,13 @@ class FormOwnerEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, name, username, email, phone, identityNumber, userType];
+  List<Object?> get props => [
+    id,
+    name,
+    username,
+    email,
+    phone,
+    identityNumber,
+    userType,
+  ];
 }

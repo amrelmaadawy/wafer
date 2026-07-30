@@ -19,16 +19,21 @@ class Step3LocationUtilitiesView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('العدادات والمرافق', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text(
+                'العدادات والمرافق',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 16),
-              
+
               CustomTextField(
                 label: 'رقم عداد الكهرباء',
                 hintText: 'مثال: 123456789',
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 initialValue: state.electricityMeterNumber,
-                onChanged: (val) => context.read<UnitCreateCubit>().updateLocationUtilities(electricityMeter: val),
+                onChanged: (val) => context
+                    .read<UnitCreateCubit>()
+                    .updateLocationUtilities(electricityMeter: val),
               ),
               const SizedBox(height: 16),
 
@@ -38,7 +43,9 @@ class Step3LocationUtilitiesView extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 initialValue: state.waterMeterNumber,
-                onChanged: (val) => context.read<UnitCreateCubit>().updateLocationUtilities(waterMeter: val),
+                onChanged: (val) => context
+                    .read<UnitCreateCubit>()
+                    .updateLocationUtilities(waterMeter: val),
               ),
               const SizedBox(height: 16),
 
@@ -48,24 +55,59 @@ class Step3LocationUtilitiesView extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 initialValue: state.gasMeterNumber,
-                onChanged: (val) => context.read<UnitCreateCubit>().updateLocationUtilities(gasMeter: val),
+                onChanged: (val) => context
+                    .read<UnitCreateCubit>()
+                    .updateLocationUtilities(gasMeter: val),
               ),
               const SizedBox(height: 24),
 
-              const Text('المميزات', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text(
+                'المميزات',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 16),
 
               Wrap(
                 spacing: 8,
                 runSpacing: 8,
                 children: [
-                  _buildAmenityChip(context, 'balcony', 'بلكونة', state.amenities),
-                  _buildAmenityChip(context, 'kitchen', 'مطبخ راكب', state.amenities),
+                  _buildAmenityChip(
+                    context,
+                    'balcony',
+                    'بلكونة',
+                    state.amenities,
+                  ),
+                  _buildAmenityChip(
+                    context,
+                    'kitchen',
+                    'مطبخ راكب',
+                    state.amenities,
+                  ),
                   _buildAmenityChip(context, 'ac', 'مكيفات', state.amenities),
-                  _buildAmenityChip(context, 'internet', 'إنترنت', state.amenities),
-                  _buildAmenityChip(context, 'parking', 'موقف سيارات', state.amenities),
-                  _buildAmenityChip(context, 'security', 'حراسة', state.amenities),
-                  _buildAmenityChip(context, 'elevator', 'مصعد', state.amenities),
+                  _buildAmenityChip(
+                    context,
+                    'internet',
+                    'إنترنت',
+                    state.amenities,
+                  ),
+                  _buildAmenityChip(
+                    context,
+                    'parking',
+                    'موقف سيارات',
+                    state.amenities,
+                  ),
+                  _buildAmenityChip(
+                    context,
+                    'security',
+                    'حراسة',
+                    state.amenities,
+                  ),
+                  _buildAmenityChip(
+                    context,
+                    'elevator',
+                    'مصعد',
+                    state.amenities,
+                  ),
                 ],
               ),
             ],
@@ -75,7 +117,12 @@ class Step3LocationUtilitiesView extends StatelessWidget {
     );
   }
 
-  Widget _buildAmenityChip(BuildContext context, String id, String label, List<String> selectedAmenities) {
+  Widget _buildAmenityChip(
+    BuildContext context,
+    String id,
+    String label,
+    List<String> selectedAmenities,
+  ) {
     final isSelected = selectedAmenities.contains(id);
     return FilterChip(
       label: Text(label),

@@ -37,14 +37,21 @@ class PropertyDetailsLoaded extends PropertyDetailsState {
   }) {
     return PropertyDetailsLoaded(
       property ?? this.property,
-      isMakingRepresentative: isMakingRepresentative ?? this.isMakingRepresentative,
-      isRemovingRepresentative: isRemovingRepresentative ?? this.isRemovingRepresentative,
+      isMakingRepresentative:
+          isMakingRepresentative ?? this.isMakingRepresentative,
+      isRemovingRepresentative:
+          isRemovingRepresentative ?? this.isRemovingRepresentative,
       actionOwnerId: actionOwnerId ?? this.actionOwnerId,
     );
   }
 
   @override
-  List<Object?> get props => [property, isMakingRepresentative, isRemovingRepresentative, actionOwnerId];
+  List<Object?> get props => [
+    property,
+    isMakingRepresentative,
+    isRemovingRepresentative,
+    actionOwnerId,
+  ];
 }
 
 class PropertyDetailsError extends PropertyDetailsState {

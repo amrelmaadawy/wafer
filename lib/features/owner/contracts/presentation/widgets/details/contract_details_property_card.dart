@@ -72,7 +72,11 @@ class ContractDetailsPropertyCard extends StatelessWidget {
                     color: primaryColor.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.apartment_rounded, color: primaryColor, size: 22),
+                  child: Icon(
+                    Icons.apartment_rounded,
+                    color: primaryColor,
+                    size: 22,
+                  ),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -100,7 +104,10 @@ class ContractDetailsPropertyCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: AppRadius.circularMd,

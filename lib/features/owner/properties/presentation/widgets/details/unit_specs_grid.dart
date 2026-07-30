@@ -15,21 +15,47 @@ class UnitSpecsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final specs = <_SpecItem>[
       if (unit.area != null && unit.area! > 0)
-        _SpecItem(Icons.square_foot_rounded, '${unit.area!.toStringAsFixed(0)} ${LocaleKeys.commonAreaM2.tr(args: [''])}', LocaleKeys.propertyDetailsArea.tr()),
+        _SpecItem(
+          Icons.square_foot_rounded,
+          '${unit.area!.toStringAsFixed(0)} ${LocaleKeys.commonAreaM2.tr(args: [''])}',
+          LocaleKeys.propertyDetailsArea.tr(),
+        ),
       if (unit.roomsCount > 0)
-        _SpecItem(Icons.bed_outlined, '${unit.roomsCount}', LocaleKeys.commonRooms.tr(args: [''])),
+        _SpecItem(
+          Icons.bed_outlined,
+          '${unit.roomsCount}',
+          LocaleKeys.commonRooms.tr(args: ['']),
+        ),
       if (unit.bathroomsCount > 0)
-        _SpecItem(Icons.bathtub_outlined, '${unit.bathroomsCount}', LocaleKeys.commonBathrooms.tr(args: [''])),
+        _SpecItem(
+          Icons.bathtub_outlined,
+          '${unit.bathroomsCount}',
+          LocaleKeys.commonBathrooms.tr(args: ['']),
+        ),
       if (unit.hallsCount > 0)
-        _SpecItem(Icons.weekend_outlined, '${unit.hallsCount}', LocaleKeys.commonHalls.tr(args: [''])),
+        _SpecItem(
+          Icons.weekend_outlined,
+          '${unit.hallsCount}',
+          LocaleKeys.commonHalls.tr(args: ['']),
+        ),
       if (unit.kitchensCount > 0)
-        _SpecItem(Icons.kitchen_outlined, '${unit.kitchensCount}', LocaleKeys.commonKitchens.tr(args: [''])),
+        _SpecItem(
+          Icons.kitchen_outlined,
+          '${unit.kitchensCount}',
+          LocaleKeys.commonKitchens.tr(args: ['']),
+        ),
       if (unit.entrancesCount > 0)
-        _SpecItem(Icons.door_front_door_outlined, '${unit.entrancesCount}', LocaleKeys.unit_details_entrances_count.tr()),
+        _SpecItem(
+          Icons.door_front_door_outlined,
+          '${unit.entrancesCount}',
+          LocaleKeys.unit_details_entrances_count.tr(),
+        ),
       // Furnished is always shown
       _SpecItem(
         unit.isFurnished ? Icons.chair_rounded : Icons.chair_alt_outlined,
-        unit.isFurnished ? LocaleKeys.unit_details_furnished.tr() : LocaleKeys.unit_details_unfurnished.tr(),
+        unit.isFurnished
+            ? LocaleKeys.unit_details_furnished.tr()
+            : LocaleKeys.unit_details_unfurnished.tr(),
         LocaleKeys.unit_details_is_furnished.tr(),
       ),
     ];
@@ -42,13 +68,20 @@ class UnitSpecsGrid extends StatelessWidget {
         builder: (context, constraints) {
           final colCount = constraints.maxWidth > 320 ? 3 : 2;
           final spacing = 10.0;
-          final itemWidth = (constraints.maxWidth - spacing * (colCount - 1)) / colCount;
+          final itemWidth =
+              (constraints.maxWidth - spacing * (colCount - 1)) / colCount;
 
           return Wrap(
             spacing: spacing,
             runSpacing: spacing,
             children: specs
-                .map((s) => _SpecTile(item: s, width: itemWidth, primaryColor: context.primaryColor))
+                .map(
+                  (s) => _SpecTile(
+                    item: s,
+                    width: itemWidth,
+                    primaryColor: context.primaryColor,
+                  ),
+                )
                 .toList(),
           );
         },
@@ -69,7 +102,11 @@ class _SpecTile extends StatelessWidget {
   final double width;
   final Color primaryColor;
 
-  const _SpecTile({required this.item, required this.width, required this.primaryColor});
+  const _SpecTile({
+    required this.item,
+    required this.width,
+    required this.primaryColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +147,9 @@ class _SpecTile extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             item.label,
-            style: AppTextStyles.labelSmall.copyWith(color: const Color(0xFF64748B)),
+            style: AppTextStyles.labelSmall.copyWith(
+              color: const Color(0xFF64748B),
+            ),
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

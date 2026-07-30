@@ -25,7 +25,9 @@ class EmployeeTasksPdfBuilder {
   }
 
   static pw.Widget _buildSummaryCards(
-      EmployeeTasksSummaryEntity summary, pw.ThemeData theme) {
+    EmployeeTasksSummaryEntity summary,
+    pw.ThemeData theme,
+  ) {
     return pw.Container(
       padding: const pw.EdgeInsets.all(16),
       decoration: pw.BoxDecoration(
@@ -63,8 +65,11 @@ class EmployeeTasksPdfBuilder {
   }
 
   static pw.Widget _buildSummaryItem(
-      String label, String value, pw.ThemeData theme,
-      {bool isWarning = false}) {
+    String label,
+    String value,
+    pw.ThemeData theme, {
+    bool isWarning = false,
+  }) {
     return pw.Column(
       children: [
         pw.Text(
@@ -88,7 +93,9 @@ class EmployeeTasksPdfBuilder {
   }
 
   static pw.Widget _buildTable(
-      List<EmployeeTasksItemEntity> items, pw.ThemeData theme) {
+    List<EmployeeTasksItemEntity> items,
+    pw.ThemeData theme,
+  ) {
     if (items.isEmpty) {
       return pw.Center(
         child: pw.Text(

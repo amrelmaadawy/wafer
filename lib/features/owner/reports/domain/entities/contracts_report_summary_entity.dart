@@ -12,9 +12,5 @@ class ContractsReportSummaryEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        totalExpiring,
-        totalRentValue,
-        days,
-      ];
+  List<Object?> get props => [totalExpiring, totalRentValue, days];
 }

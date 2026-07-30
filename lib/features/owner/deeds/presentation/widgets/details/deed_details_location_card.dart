@@ -36,7 +36,11 @@ class DeedDetailsLocationCard extends StatelessWidget {
                   color: context.primarySubtle,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.location_on_outlined, color: context.primaryColor, size: 20),
+                child: Icon(
+                  Icons.location_on_outlined,
+                  color: context.primaryColor,
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 12),
               Text(
@@ -120,7 +124,12 @@ class DeedDetailsLocationCard extends StatelessWidget {
     );
   }
 
-  Widget _buildLocationItem(BuildContext context, {required IconData icon, required String label, required String value}) {
+  Widget _buildLocationItem(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required String value,
+  }) {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(

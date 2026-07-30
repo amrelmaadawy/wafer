@@ -35,7 +35,8 @@ class UnitDetailsView extends StatelessWidget {
           if (state is UnitDetailsLoaded) {
             final unit = state.unit;
 
-            final hasMeters = unit.meters.electricity != null ||
+            final hasMeters =
+                unit.meters.electricity != null ||
                 unit.meters.water != null ||
                 unit.meters.gas != null;
 
@@ -103,7 +104,8 @@ class _ContractBanner extends StatelessWidget {
     final tenantName = c['tenant']?['name'] as String? ?? '-';
     final startDate = c['start_date'] as String? ?? '';
     final endDate = c['end_date'] as String? ?? '';
-    final statusLabel = c['status_label'] as String? ?? c['status'] as String? ?? '';
+    final statusLabel =
+        c['status_label'] as String? ?? c['status'] as String? ?? '';
 
     return Container(
       padding: const EdgeInsets.all(18),
@@ -130,22 +132,35 @@ class _ContractBanner extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.description_outlined, color: Colors.white70, size: 18),
+              const Icon(
+                Icons.description_outlined,
+                color: Colors.white70,
+                size: 18,
+              ),
               const SizedBox(width: 8),
               Text(
                 'العقد النشط',
-                style: AppTextStyles.labelMedium.copyWith(color: Colors.white70),
+                style: AppTextStyles.labelMedium.copyWith(
+                  color: Colors.white70,
+                ),
               ),
               const Spacer(),
               if (statusLabel.isNotEmpty)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.20),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  child: Text(statusLabel,
-                      style: AppTextStyles.labelSmall.copyWith(color: Colors.white)),
+                  child: Text(
+                    statusLabel,
+                    style: AppTextStyles.labelSmall.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
                 ),
             ],
           ),
@@ -158,11 +173,17 @@ class _ContractBanner extends StatelessWidget {
             const SizedBox(height: 6),
             Row(
               children: [
-                const Icon(Icons.calendar_today_outlined, color: Colors.white60, size: 13),
+                const Icon(
+                  Icons.calendar_today_outlined,
+                  color: Colors.white60,
+                  size: 13,
+                ),
                 const SizedBox(width: 6),
                 Text(
                   '$startDate  →  $endDate',
-                  style: AppTextStyles.labelSmall.copyWith(color: Colors.white70),
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: Colors.white70,
+                  ),
                 ),
               ],
             ),

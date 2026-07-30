@@ -106,7 +106,7 @@ class MaintenanceCostSection extends StatelessWidget {
             textBaseline: TextBaseline.alphabetic,
             children: [
               Text(
-                amount > 0 ? amount.toStringAsFixed(0) : '--',
+                amount.toStringAsFixed(0),
                 style: TextStyle(
                   color: valueColor,
                   fontSize: 20,

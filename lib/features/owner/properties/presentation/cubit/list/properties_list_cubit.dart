@@ -9,9 +9,10 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
   final GetPropertiesListUseCase _getPropertiesListUseCase;
 
   PropertiesListCubit(this._getPropertiesListUseCase)
-      : super(const PropertiesListInitial());
+    : super(const PropertiesListInitial());
 
-  PropertiesQueryFilterEntity _currentFilter = const PropertiesQueryFilterEntity();
+  PropertiesQueryFilterEntity _currentFilter =
+      const PropertiesQueryFilterEntity();
   List<PropertyListItemEntity> _allFetchedProperties = [];
   dynamic _lastMeta;
   dynamic _lastStats;
@@ -32,15 +33,14 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
 
     final result = await _getPropertiesListUseCase(filter: _currentFilter);
 
-    result.fold(
-      (failure) => emit(PropertiesListError(failure.message)),
-      (data) {
-        _allFetchedProperties = data.items;
-        _lastMeta = data.meta;
-        _lastStats = data.stats;
-        _applyLocalFilterAndEmit(_lastMeta, _lastStats);
-      },
-    );
+    result.fold((failure) => emit(PropertiesListError(failure.message)), (
+      data,
+    ) {
+      _allFetchedProperties = data.items;
+      _lastMeta = data.meta;
+      _lastStats = data.stats;
+      _applyLocalFilterAndEmit(_lastMeta, _lastStats);
+    });
   }
 
   void _applyLocalFilterAndEmit(dynamic meta, dynamic stats) {
@@ -51,11 +51,14 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
         _currentFilter.status != 'all' &&
         _currentFilter.status!.isNotEmpty) {
       final statusLower = _currentFilter.status!.toLowerCase();
-      filtered = filtered.where((p) => p.status.toLowerCase() == statusLower).toList();
+      filtered = filtered
+          .where((p) => p.status.toLowerCase() == statusLower)
+          .toList();
     }
 
     // Apply search filter locally if specified
-    if (_currentFilter.search != null && _currentFilter.search!.trim().isNotEmpty) {
+    if (_currentFilter.search != null &&
+        _currentFilter.search!.trim().isNotEmpty) {
       final query = _currentFilter.search!.trim().toLowerCase();
       filtered = filtered.where((p) {
         return p.name.toLowerCase().contains(query) ||
@@ -67,12 +70,14 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
     if (filtered.isEmpty) {
       emit(PropertiesListEmpty(filter: _currentFilter));
     } else {
-      emit(PropertiesListLoaded(
-        properties: filtered,
-        meta: meta,
-        stats: stats,
-        filter: _currentFilter,
-      ));
+      emit(
+        PropertiesListLoaded(
+          properties: filtered,
+          meta: meta,
+          stats: stats,
+          filter: _currentFilter,
+        ),
+      );
     }
   }
 
@@ -85,7 +90,9 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
     }
 
     emit(currentState.copyWith(isFetchingMore: true));
-    final nextPageFilter = _currentFilter.copyWith(page: _currentFilter.page + 1);
+    final nextPageFilter = _currentFilter.copyWith(
+      page: _currentFilter.page + 1,
+    );
 
     final result = await _getPropertiesListUseCase(filter: nextPageFilter);
 
@@ -93,10 +100,15 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
       (failure) => emit(currentState.copyWith(isFetchingMore: false)),
       (data) {
         _currentFilter = nextPageFilter;
-        
-        final newItems = data.items.where((newItem) => 
-            !_allFetchedProperties.any((existing) => existing.id == newItem.id)).toList();
-            
+
+        final newItems = data.items
+            .where(
+              (newItem) => !_allFetchedProperties.any(
+                (existing) => existing.id == newItem.id,
+              ),
+            )
+            .toList();
+
         _allFetchedProperties.addAll(newItems);
         _lastMeta = data.meta;
         _applyLocalFilterAndEmit(_lastMeta, _lastStats);
@@ -118,7 +130,7 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
 
   void searchProperties(String query) {
     _debounceTimer?.cancel();
-    
+
     final trimmedQuery = query.trim();
     final isSearching = trimmedQuery.isNotEmpty;
 

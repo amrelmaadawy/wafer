@@ -23,7 +23,11 @@ class InstallmentsEmptyWidget extends StatelessWidget {
                 color: primaryColor.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.receipt_long_rounded, size: 56, color: primaryColor),
+              child: Icon(
+                Icons.receipt_long_rounded,
+                size: 56,
+                color: primaryColor,
+              ),
             ),
             const SizedBox(height: 20),
             Text(

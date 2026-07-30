@@ -17,12 +17,32 @@ class OwnerBottomNavWidget extends StatelessWidget {
   });
 
   static List<_NavTab> get _tabs => [
-        _NavTab(LocaleKeys.dashboardNavHome.tr(), Icons.dashboard_rounded, Icons.dashboard_outlined),
-        _NavTab(LocaleKeys.dashboardNavProperties.tr(), Icons.apartment_rounded, Icons.apartment_outlined),
-        _NavTab(LocaleKeys.dashboardNavContracts.tr(), Icons.description_rounded, Icons.description_outlined),
-        _NavTab(LocaleKeys.dashboardNavFinance.tr(), Icons.account_balance_wallet_rounded, Icons.account_balance_wallet_outlined),
-        _NavTab(LocaleKeys.dashboardNavProfile.tr(), Icons.person_rounded, Icons.person_outline_rounded),
-      ];
+    _NavTab(
+      LocaleKeys.dashboardNavHome.tr(),
+      Icons.dashboard_rounded,
+      Icons.dashboard_outlined,
+    ),
+    _NavTab(
+      LocaleKeys.dashboardNavProperties.tr(),
+      Icons.apartment_rounded,
+      Icons.apartment_outlined,
+    ),
+    _NavTab(
+      LocaleKeys.dashboardNavContracts.tr(),
+      Icons.description_rounded,
+      Icons.description_outlined,
+    ),
+    _NavTab(
+      LocaleKeys.dashboardNavFinance.tr(),
+      Icons.account_balance_wallet_rounded,
+      Icons.account_balance_wallet_outlined,
+    ),
+    _NavTab(
+      LocaleKeys.dashboardNavProfile.tr(),
+      Icons.person_rounded,
+      Icons.person_outline_rounded,
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +53,9 @@ class OwnerBottomNavWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.surfaceLight,
           borderRadius: AppRadius.circularXxl,
-          border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.8)),
+          border: Border.all(
+            color: AppColors.borderLight.withValues(alpha: 0.8),
+          ),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withValues(alpha: 0.08),
@@ -44,14 +66,17 @@ class OwnerBottomNavWidget extends StatelessWidget {
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: List.generate(_tabs.length, (i) => _NavItem(
-            tab: _tabs[i],
-            isSelected: currentIndex == i,
-            onTap: () {
-              HapticFeedback.lightImpact();
-              onTabChanged(i);
-            },
-          )),
+          children: List.generate(
+            _tabs.length,
+            (i) => _NavItem(
+              tab: _tabs[i],
+              isSelected: currentIndex == i,
+              onTap: () {
+                HapticFeedback.lightImpact();
+                onTabChanged(i);
+              },
+            ),
+          ),
         ),
       ),
     );
@@ -80,7 +105,8 @@ class _NavItem extends StatefulWidget {
   State<_NavItem> createState() => _NavItemState();
 }
 
-class _NavItemState extends State<_NavItem> with SingleTickerProviderStateMixin {
+class _NavItemState extends State<_NavItem>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _ctrl;
   late final Animation<double> _scale;
   late final Animation<double> _bounce;
@@ -88,7 +114,10 @@ class _NavItemState extends State<_NavItem> with SingleTickerProviderStateMixin 
   @override
   void initState() {
     super.initState();
-    _ctrl = AnimationController(vsync: this, duration: const Duration(milliseconds: 400));
+    _ctrl = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    );
     _scale = TweenSequence<double>([
       TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.85), weight: 20),
       TweenSequenceItem(tween: Tween(begin: 0.85, end: 1.15), weight: 40),
@@ -120,19 +149,30 @@ class _NavItemState extends State<_NavItem> with SingleTickerProviderStateMixin 
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeOutCubic,
-        padding: EdgeInsets.symmetric(horizontal: widget.isSelected ? 16 : 10, vertical: 8),
+        padding: EdgeInsets.symmetric(
+          horizontal: widget.isSelected ? 16 : 10,
+          vertical: 8,
+        ),
         decoration: BoxDecoration(
           color: widget.isSelected ? context.primaryColor : Colors.transparent,
           borderRadius: AppRadius.circularXxl,
           boxShadow: widget.isSelected
-              ? [BoxShadow(color: context.primaryShadow, blurRadius: 12, offset: const Offset(0, 4))]
+              ? [
+                  BoxShadow(
+                    color: context.primaryShadow,
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ]
               : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             ScaleTransition(
-              scale: widget.isSelected ? _scale : const AlwaysStoppedAnimation(1.0),
+              scale: widget.isSelected
+                  ? _scale
+                  : const AlwaysStoppedAnimation(1.0),
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
                 transitionBuilder: (child, anim) => FadeTransition(
@@ -155,23 +195,26 @@ class _NavItemState extends State<_NavItem> with SingleTickerProviderStateMixin 
                 curve: Curves.easeOutCubic,
                 alignment: Alignment.centerRight,
                 child: widget.isSelected
-                    ? Row(children: [
-                        const SizedBox(width: 6),
-                        AnimatedBuilder(
-                          animation: _bounce,
-                          builder: (context, child) => Opacity(
-                            opacity: _bounce.value.clamp(0.0, 1.0),
-                            child: child,
+                    ? Row(
+                        children: [
+                          const SizedBox(width: 6),
+                          AnimatedBuilder(
+                            animation: _bounce,
+                            builder: (context, child) => Opacity(
+                              opacity: _bounce.value.clamp(0.0, 1.0),
+                              child: child,
+                            ),
+                            child: Text(
+                              widget.tab.label,
+                              style: Theme.of(context).textTheme.labelSmall
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                            ),
                           ),
-                          child: Text(
-                            widget.tab.label,
-                            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                        ),
-                      ])
+                        ],
+                      )
                     : const SizedBox.shrink(),
               ),
             ),

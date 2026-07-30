@@ -24,7 +24,9 @@ class PropertyListItemModel extends PropertyListItemEntity {
   factory PropertyListItemModel.fromJson(Map<String, dynamic> json) {
     final addrMap = json['address'] as Map<String, dynamic>?;
     final deedMap = json['deed'] as Map<String, dynamic>?;
-    final ownerMap = json['primary_owner'] as Map<String, dynamic>? ?? json['owner'] as Map<String, dynamic>?;
+    final ownerMap =
+        json['primary_owner'] as Map<String, dynamic>? ??
+        json['owner'] as Map<String, dynamic>?;
     final statsMap = json['stats'] as Map<String, dynamic>?;
     final dimMap = json['dimensions'] as Map<String, dynamic>?;
 
@@ -41,13 +43,28 @@ class PropertyListItemModel extends PropertyListItemEntity {
       usageType: json['usage_type']?.toString(),
       area: (json['area'] as num?) ?? (dimMap?['area'] as num?),
       city: json['city']?.toString() ?? addrMap?['city']?.toString(),
-      district: json['district']?.toString() ?? addrMap?['district']?.toString(),
-      deedNumber: json['deed_number']?.toString() ?? deedMap?['deed_number']?.toString(),
+      district:
+          json['district']?.toString() ?? addrMap?['district']?.toString(),
+      deedNumber:
+          json['deed_number']?.toString() ??
+          deedMap?['deed_number']?.toString(),
       primaryOwnerName: ownerMap?['name']?.toString(),
-      unitsCount: (json['units_count'] as int?) ?? (statsMap?['total_units'] as int?) ?? 0,
-      availableUnits: (json['available_units'] as int?) ?? (statsMap?['available_units'] as int?) ?? 0,
-      rentedUnits: (json['rented_units'] as int?) ?? (statsMap?['rented_units'] as int?) ?? 0,
-      occupancyRate: (json['occupancy_rate'] as num?) ?? (statsMap?['occupancy_rate'] as num?) ?? 0,
+      unitsCount:
+          (json['units_count'] as int?) ??
+          (statsMap?['total_units'] as int?) ??
+          0,
+      availableUnits:
+          (json['available_units'] as int?) ??
+          (statsMap?['available_units'] as int?) ??
+          0,
+      rentedUnits:
+          (json['rented_units'] as int?) ??
+          (statsMap?['rented_units'] as int?) ??
+          0,
+      occupancyRate:
+          (json['occupancy_rate'] as num?) ??
+          (statsMap?['occupancy_rate'] as num?) ??
+          0,
       imageUrl: json['image']?.toString() ?? json['image_url']?.toString(),
     );
   }

@@ -7,7 +7,10 @@ class PatchPropertyUseCase {
 
   PatchPropertyUseCase(this._repository);
 
-  Future<Either<Failure, void>> call(int propertyId, Map<String, dynamic> data) {
+  Future<Either<Failure, void>> call(
+    int propertyId,
+    Map<String, dynamic> data,
+  ) {
     return _repository.patchProperty(propertyId, data);
   }
 }

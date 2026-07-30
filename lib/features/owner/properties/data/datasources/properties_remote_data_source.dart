@@ -8,11 +8,13 @@ import '../models/property_list_item_model.dart';
 
 abstract class PropertiesRemoteDataSource {
   Future<
-      ({
-        List<PropertyListItemModel> items,
-        PropertiesPaginationMetaModel meta,
-        PropertiesStatsModel stats,
-      })> getProperties(Map<String, dynamic> queryParams);
+    ({
+      List<PropertyListItemModel> items,
+      PropertiesPaginationMetaModel meta,
+      PropertiesStatsModel stats,
+    })
+  >
+  getProperties(Map<String, dynamic> queryParams);
 
   Future<PropertyFormOptionsModel> getFormOptions();
 
@@ -28,9 +30,16 @@ abstract class PropertiesRemoteDataSource {
     required Map<String, dynamic> data,
   });
 
-  Future<PropertyDetailsModel> autoSaveDeedStep(int propertyId, int deedId, int branchId);
-  
-  Future<PropertyDetailsModel> autoSaveTypeStep(int propertyId, String propertyType);
+  Future<PropertyDetailsModel> autoSaveDeedStep(
+    int propertyId,
+    int deedId,
+    int branchId,
+  );
+
+  Future<PropertyDetailsModel> autoSaveTypeStep(
+    int propertyId,
+    String propertyType,
+  );
 
   Future<PropertyDetailsModel> makeRepresentative(int propertyId, int ownerId);
 
@@ -44,7 +53,10 @@ abstract class PropertiesRemoteDataSource {
 
   Future<int> cloneProperty(int propertyId);
   Future<int> cloneForDeed(int propertyId, bool copyData);
-  Future<PropertyDetailsModel> removeRepresentative(int propertyId, int ownerId);
+  Future<PropertyDetailsModel> removeRepresentative(
+    int propertyId,
+    int ownerId,
+  );
   Future<void> deleteProperty(int propertyId);
   Future<void> patchProperty(int propertyId, Map<String, dynamic> data);
 }
@@ -56,11 +68,13 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
 
   @override
   Future<
-      ({
-        List<PropertyListItemModel> items,
-        PropertiesPaginationMetaModel meta,
-        PropertiesStatsModel stats,
-      })> getProperties(Map<String, dynamic> queryParams) async {
+    ({
+      List<PropertyListItemModel> items,
+      PropertiesPaginationMetaModel meta,
+      PropertiesStatsModel stats,
+    })
+  >
+  getProperties(Map<String, dynamic> queryParams) async {
     final response = await _dio.get(
       '${ApiConstants.baseUrl}${ApiConstants.ownerProperties}',
       queryParameters: queryParams,
@@ -72,7 +86,10 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
         .map((e) => PropertyListItemModel.fromJson(e as Map<String, dynamic>))
         .toList();
 
-    final metaJson = responseData['pagination'] as Map<String, dynamic>? ?? responseData['meta'] as Map<String, dynamic>? ?? {};
+    final metaJson =
+        responseData['pagination'] as Map<String, dynamic>? ??
+        responseData['meta'] as Map<String, dynamic>? ??
+        {};
     final meta = PropertiesPaginationMetaModel.fromJson(metaJson);
 
     final statsJson = responseData['stats'] as Map<String, dynamic>? ?? {};
@@ -87,7 +104,9 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
       '${ApiConstants.baseUrl}${ApiConstants.ownerFormData}',
     );
 
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
     final optionsData = data['options'] as Map<String, dynamic>? ?? {};
     return PropertyFormOptionsModel.fromJson(optionsData);
   }
@@ -98,7 +117,9 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
       '${ApiConstants.baseUrl}${ApiConstants.ownerFormData}',
     );
 
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
     return PropertyFormDataModel.fromJson(data);
   }
 
@@ -108,7 +129,9 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
       '${ApiConstants.baseUrl}${ApiConstants.ownerPropertyDetails(propertyId)}',
     );
 
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
     return PropertyDetailsModel.fromJson(data);
   }
 
@@ -119,7 +142,9 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
       data: body,
     );
 
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
     return data['id'] as int? ?? data['property_id'] as int? ?? 0;
   }
 
@@ -136,32 +161,45 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   }
 
   @override
-  Future<PropertyDetailsModel> autoSaveDeedStep(int propertyId, int deedId, int branchId) async {
+  Future<PropertyDetailsModel> autoSaveDeedStep(
+    int propertyId,
+    int deedId,
+    int branchId,
+  ) async {
     final response = await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveProperty(propertyId)}',
-      data: {
-        'deed_id': deedId,
-        'branch_id': branchId,
-      },
+      data: {'deed_id': deedId, 'branch_id': branchId},
     );
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
-    return PropertyDetailsModel.fromJson(data['property'] as Map<String, dynamic>);
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
+    return PropertyDetailsModel.fromJson(
+      data['property'] as Map<String, dynamic>,
+    );
   }
 
   @override
-  Future<PropertyDetailsModel> autoSaveTypeStep(int propertyId, String propertyType) async {
+  Future<PropertyDetailsModel> autoSaveTypeStep(
+    int propertyId,
+    String propertyType,
+  ) async {
     final response = await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveProperty(propertyId)}',
-      data: {
-        'property_type': propertyType,
-      },
+      data: {'property_type': propertyType},
     );
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
-    return PropertyDetailsModel.fromJson(data['property'] as Map<String, dynamic>);
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
+    return PropertyDetailsModel.fromJson(
+      data['property'] as Map<String, dynamic>,
+    );
   }
 
   @override
-  Future<void> syncOwners(int propertyId, List<Map<String, dynamic>> owners) async {
+  Future<void> syncOwners(
+    int propertyId,
+    List<Map<String, dynamic>> owners,
+  ) async {
     await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerSyncOwners(propertyId)}',
       data: {'owners': owners},
@@ -179,7 +217,9 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
       data: formData,
     );
 
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
     return data['temp_path']?.toString() ?? data['path']?.toString() ?? '';
   }
 
@@ -187,10 +227,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   Future<void> addUploadedImagePath(int propertyId, String imagePath) async {
     await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveProperty(propertyId)}',
-      data: {
-        'step': 'images',
-        'image_path': imagePath,
-      },
+      data: {'step': 'images', 'image_path': imagePath},
     );
   }
 
@@ -199,8 +236,12 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     final response = await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerPublishProperty(propertyId)}',
     );
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
-    return PropertyDetailsModel.fromJson(data['property'] as Map<String, dynamic>);
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
+    return PropertyDetailsModel.fromJson(
+      data['property'] as Map<String, dynamic>,
+    );
   }
 
   @override
@@ -208,7 +249,9 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     final response = await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerCloneProperty(propertyId)}',
     );
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
     return data['id'] as int? ?? data['new_id'] as int? ?? 0;
   }
 
@@ -216,30 +259,44 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   Future<int> cloneForDeed(int propertyId, bool copyData) async {
     final response = await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerCloneForDeed(propertyId)}',
-      data: {
-        'copy_data': copyData,
-      },
+      data: {'copy_data': copyData},
     );
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
     return data['id'] as int? ?? data['new_id'] as int? ?? 0;
   }
 
   @override
-  Future<PropertyDetailsModel> makeRepresentative(int propertyId, int ownerId) async {
+  Future<PropertyDetailsModel> makeRepresentative(
+    int propertyId,
+    int ownerId,
+  ) async {
     final response = await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerMakeRepresentative(propertyId, ownerId)}',
     );
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
-    return PropertyDetailsModel.fromJson(data['property'] as Map<String, dynamic>);
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
+    return PropertyDetailsModel.fromJson(
+      data['property'] as Map<String, dynamic>,
+    );
   }
 
   @override
-  Future<PropertyDetailsModel> removeRepresentative(int propertyId, int ownerId) async {
+  Future<PropertyDetailsModel> removeRepresentative(
+    int propertyId,
+    int ownerId,
+  ) async {
     final response = await _dio.post(
       '${ApiConstants.baseUrl}${ApiConstants.ownerRemoveRepresentative(propertyId, ownerId)}',
     );
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
-    return PropertyDetailsModel.fromJson(data['property'] as Map<String, dynamic>);
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
+    return PropertyDetailsModel.fromJson(
+      data['property'] as Map<String, dynamic>,
+    );
   }
 
   @override

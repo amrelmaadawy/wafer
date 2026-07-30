@@ -19,11 +19,5 @@ class ActivityLogsReportEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        summary,
-        items,
-        pagination,
-        types,
-        actions,
-      ];
+  List<Object?> get props => [summary, items, pagination, types, actions];
 }

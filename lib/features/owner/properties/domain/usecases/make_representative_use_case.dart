@@ -8,7 +8,10 @@ class MakeRepresentativeUseCase {
 
   MakeRepresentativeUseCase(this._repository);
 
-  Future<Either<Failure, PropertyDetailsEntity>> call(int propertyId, int ownerId) {
+  Future<Either<Failure, PropertyDetailsEntity>> call(
+    int propertyId,
+    int ownerId,
+  ) {
     return _repository.makeRepresentative(propertyId, ownerId);
   }
 }

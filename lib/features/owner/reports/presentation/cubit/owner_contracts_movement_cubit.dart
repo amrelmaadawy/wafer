@@ -4,12 +4,12 @@ import 'owner_contracts_movement_state.dart';
 
 class OwnerContractsMovementCubit extends Cubit<OwnerContractsMovementState> {
   final GetOwnerContractsMovementReportUseCase _getReportUseCase;
-  
+
   int _currentPage = 1;
   bool _hasReachedMax = false;
 
   OwnerContractsMovementCubit(this._getReportUseCase)
-      : super(OwnerContractsMovementInitial());
+    : super(OwnerContractsMovementInitial());
 
   Future<void> loadReport({bool refresh = false}) async {
     if (refresh) {
@@ -45,22 +45,27 @@ class OwnerContractsMovementCubit extends Cubit<OwnerContractsMovementState> {
         }
 
         _hasReachedMax = _currentPage >= report.pagination.lastPage;
-        
+
         if (!refresh && state is OwnerContractsMovementLoaded) {
           final currentState = state as OwnerContractsMovementLoaded;
-          final newItems = List.of(currentState.report.items)..addAll(report.items);
+          final newItems = List.of(currentState.report.items)
+            ..addAll(report.items);
           final updatedReport = report.copyWith(items: newItems);
-          emit(OwnerContractsMovementLoaded(
-            report: updatedReport,
-            hasReachedMax: _hasReachedMax,
-          ));
+          emit(
+            OwnerContractsMovementLoaded(
+              report: updatedReport,
+              hasReachedMax: _hasReachedMax,
+            ),
+          );
         } else {
-          emit(OwnerContractsMovementLoaded(
-            report: report,
-            hasReachedMax: _hasReachedMax,
-          ));
+          emit(
+            OwnerContractsMovementLoaded(
+              report: report,
+              hasReachedMax: _hasReachedMax,
+            ),
+          );
         }
-        
+
         if (!_hasReachedMax) {
           _currentPage++;
         }

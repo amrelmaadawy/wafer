@@ -10,7 +10,8 @@ class UnitsStatusItemEntity extends Equatable {
   final int? floorNumber;
   final String status;
   final String statusLabel;
-  final dynamic activeContract; // Can be parsed later if needed, mostly null here
+  final dynamic
+  activeContract; // Can be parsed later if needed, mostly null here
   final String createdAt;
 
   const UnitsStatusItemEntity({
@@ -28,15 +29,15 @@ class UnitsStatusItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        unitNumber,
-        name,
-        code,
-        property,
-        floorNumber,
-        status,
-        statusLabel,
-        activeContract,
-        createdAt,
-      ];
+    id,
+    unitNumber,
+    name,
+    code,
+    property,
+    floorNumber,
+    status,
+    statusLabel,
+    activeContract,
+    createdAt,
+  ];
 }

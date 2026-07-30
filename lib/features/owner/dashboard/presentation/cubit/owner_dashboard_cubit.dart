@@ -5,7 +5,8 @@ import 'owner_dashboard_state.dart';
 class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
   final GetOwnerDashboardUseCase _getDashboardUseCase;
 
-  OwnerDashboardCubit(this._getDashboardUseCase) : super(const OwnerDashboardInitial());
+  OwnerDashboardCubit(this._getDashboardUseCase)
+    : super(const OwnerDashboardInitial());
 
   Future<void> loadDashboardStats({bool forceRefresh = false}) async {
     if (state is! OwnerDashboardLoaded) {

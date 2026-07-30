@@ -26,8 +26,8 @@ class EditSpecsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         EditSectionHeader(
-          title: 'المواصفات والأبعاد', 
-          icon: Icons.straighten_rounded
+          title: 'المواصفات والأبعاد',
+          icon: Icons.straighten_rounded,
         ),
         const SizedBox(height: 16),
         Text(
@@ -57,7 +57,8 @@ class EditSpecsSection extends StatelessWidget {
                 return val;
             }
           },
-          onSelected: (val) => context.read<PropertyEditCubit>().selectUsageType(val),
+          onSelected: (val) =>
+              context.read<PropertyEditCubit>().selectUsageType(val),
         ),
         const SizedBox(height: 16),
         Row(
@@ -67,7 +68,9 @@ class EditSpecsSection extends StatelessWidget {
                 controller: lengthController,
                 label: 'الطول (م)',
                 icon: Icons.height_rounded,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 isNumber: true,
                 hint: 'مثال: 30',
               ),
@@ -78,7 +81,9 @@ class EditSpecsSection extends StatelessWidget {
                 controller: widthController,
                 label: 'العرض (م)',
                 icon: Icons.swap_horiz_rounded,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                keyboardType: const TextInputType.numberWithOptions(
+                  decimal: true,
+                ),
                 isNumber: true,
                 hint: 'مثال: 20',
               ),
@@ -89,43 +94,52 @@ class EditSpecsSection extends StatelessWidget {
 
         // Section 4: Amenities
         EditSectionHeader(
-          title: 'المميزات والإضافات', 
-          icon: Icons.star_outline_rounded
+          title: 'المميزات والإضافات',
+          icon: Icons.star_outline_rounded,
         ),
         const SizedBox(height: 16),
         Wrap(
           spacing: 8,
           runSpacing: 10,
-          children: const [
-            ('elevator', 'مصعد'),
-            ('parking', 'موقف سيارات'),
-            ('security', 'حراسة 24/7'),
-            ('pool', 'مسبح'),
-            ('gym', 'صالة رياضية'),
-            ('generator', 'مولد كهرباء'),
-            ('central_ac', 'تكييف مركزي'),
-            ('internet', 'ألياف بصرية (إنترنت)'),
-          ].map((amenity) {
-            final isSelected = state.selectedAmenities.contains(amenity.$1);
-            return FilterChip(
-              label: Text(amenity.$2),
-              selected: isSelected,
-              onSelected: (_) => context.read<PropertyEditCubit>().toggleAmenity(amenity.$1),
-              selectedColor: context.primaryColor.withValues(alpha: 0.12),
-              checkmarkColor: context.primaryColor,
-              backgroundColor: Colors.white,
-              side: BorderSide(
-                color: isSelected ? context.primaryColor : const Color(0xFFE2E8F0),
-                width: isSelected ? 1.5 : 1,
-              ),
-              labelStyle: TextStyle(
-                color: isSelected ? context.primaryColor : AppColors.textPrimaryLight,
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                fontSize: 13,
-              ),
-              shape: RoundedRectangleBorder(borderRadius: AppRadius.circularFull),
-            );
-          }).toList(),
+          children:
+              const [
+                ('elevator', 'مصعد'),
+                ('parking', 'موقف سيارات'),
+                ('security', 'حراسة 24/7'),
+                ('pool', 'مسبح'),
+                ('gym', 'صالة رياضية'),
+                ('generator', 'مولد كهرباء'),
+                ('central_ac', 'تكييف مركزي'),
+                ('internet', 'ألياف بصرية (إنترنت)'),
+              ].map((amenity) {
+                final isSelected = state.selectedAmenities.contains(amenity.$1);
+                return FilterChip(
+                  label: Text(amenity.$2),
+                  selected: isSelected,
+                  onSelected: (_) => context
+                      .read<PropertyEditCubit>()
+                      .toggleAmenity(amenity.$1),
+                  selectedColor: context.primaryColor.withValues(alpha: 0.12),
+                  checkmarkColor: context.primaryColor,
+                  backgroundColor: Colors.white,
+                  side: BorderSide(
+                    color: isSelected
+                        ? context.primaryColor
+                        : const Color(0xFFE2E8F0),
+                    width: isSelected ? 1.5 : 1,
+                  ),
+                  labelStyle: TextStyle(
+                    color: isSelected
+                        ? context.primaryColor
+                        : AppColors.textPrimaryLight,
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                    fontSize: 13,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadius.circularFull,
+                  ),
+                );
+              }).toList(),
         ),
         const SizedBox(height: 40),
       ],

@@ -14,7 +14,7 @@ class SyncSheetHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = context.primaryColor;
-    
+
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
       decoration: BoxDecoration(
@@ -53,7 +53,10 @@ class SyncSheetHeader extends StatelessWidget {
                 height: 48,
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [primary.withValues(alpha: 0.2), primary.withValues(alpha: 0.05)],
+                    colors: [
+                      primary.withValues(alpha: 0.2),
+                      primary.withValues(alpha: 0.05),
+                    ],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -102,7 +105,11 @@ class SyncSheetHeader extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.close_rounded, size: 20, color: AppColors.textPrimaryLight),
+                  icon: const Icon(
+                    Icons.close_rounded,
+                    size: 20,
+                    color: AppColors.textPrimaryLight,
+                  ),
                 ),
               ),
             ],
@@ -124,21 +131,23 @@ class _PercentageBar extends StatelessWidget {
     final total = state.totalPercentage;
     final isValid = state.isValid;
     final primary = context.primaryColor;
-    
+
     final barColor = isValid
         ? const Color(0xFF10B981) // Vibrant Emerald
         : total > 100
-            ? const Color(0xFFEF4444) // Vibrant Red
-            : total >= 50
-                ? const Color(0xFFF59E0B) // Vibrant Amber
-                : primary;
+        ? const Color(0xFFEF4444) // Vibrant Red
+        : total >= 50
+        ? const Color(0xFFF59E0B) // Vibrant Amber
+        : primary;
 
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: const Color(0xFFE2E8F0).withValues(alpha: 0.5)),
+        border: Border.all(
+          color: const Color(0xFFE2E8F0).withValues(alpha: 0.5),
+        ),
         boxShadow: [
           BoxShadow(
             color: barColor.withValues(alpha: 0.08),
@@ -162,7 +171,10 @@ class _PercentageBar extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: barColor.withValues(alpha: 0.1),
                   borderRadius: AppRadius.circularFull,
@@ -196,7 +208,10 @@ class _PercentageBar extends StatelessWidget {
                 duration: const Duration(milliseconds: 500),
                 curve: Curves.easeOutCubic,
                 height: 10,
-                width: MediaQuery.of(context).size.width * ((total / 100).clamp(0.0, 1.0)) * 0.8, // Approximation for animation width
+                width:
+                    MediaQuery.of(context).size.width *
+                    ((total / 100).clamp(0.0, 1.0)) *
+                    0.8, // Approximation for animation width
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [barColor.withValues(alpha: 0.7), barColor],

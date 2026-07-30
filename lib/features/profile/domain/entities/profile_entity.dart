@@ -31,17 +31,17 @@ class ProfileEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        username,
-        email,
-        phone,
-        avatar,
-        identityNumber,
-        identityExpiry,
-        gender,
-        accountType,
-        isActive,
-        joinedAt,
-      ];
+    id,
+    name,
+    username,
+    email,
+    phone,
+    avatar,
+    identityNumber,
+    identityExpiry,
+    gender,
+    accountType,
+    isActive,
+    joinedAt,
+  ];
 }

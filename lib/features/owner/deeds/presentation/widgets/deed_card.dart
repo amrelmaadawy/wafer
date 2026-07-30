@@ -48,7 +48,7 @@ class DeedCard extends StatelessWidget {
               const Divider(height: 1, color: Color(0xFFF1F5F9)),
               const SizedBox(height: 12),
               _buildAttachmentButton(context),
-            ]
+            ],
           ],
         ),
       ),
@@ -89,7 +89,11 @@ class DeedCard extends StatelessWidget {
               const SizedBox(height: 4),
               Row(
                 children: [
-                  const Icon(Icons.tag_rounded, size: 12, color: AppColors.textSecondaryLight),
+                  const Icon(
+                    Icons.tag_rounded,
+                    size: 12,
+                    color: AppColors.textSecondaryLight,
+                  ),
                   const SizedBox(width: 4),
                   Text(
                     deed.code,
@@ -111,9 +115,15 @@ class DeedCard extends StatelessWidget {
 
   Widget _buildTypeBadge() {
     final bool isElectronic = deed.isElectronic;
-    final Color bgColor = isElectronic ? const Color(0xFFD1FAE5) : const Color(0xFFDBEAFE);
-    final Color textColor = isElectronic ? const Color(0xFF059669) : const Color(0xFF2563EB);
-    final String label = isElectronic ? LocaleKeys.deeds_electronic_deed.tr() : LocaleKeys.deeds_manual_deed.tr();
+    final Color bgColor = isElectronic
+        ? const Color(0xFFD1FAE5)
+        : const Color(0xFFDBEAFE);
+    final Color textColor = isElectronic
+        ? const Color(0xFF059669)
+        : const Color(0xFF2563EB);
+    final String label = isElectronic
+        ? LocaleKeys.deeds_electronic_deed.tr()
+        : LocaleKeys.deeds_manual_deed.tr();
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -160,7 +170,11 @@ class DeedCard extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoItem({required IconData icon, required String label, required String value}) {
+  Widget _buildInfoItem({
+    required IconData icon,
+    required String label,
+    required String value,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -204,7 +218,11 @@ class DeedCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.file_download_outlined, size: 18, color: context.primaryColor),
+          Icon(
+            Icons.file_download_outlined,
+            size: 18,
+            color: context.primaryColor,
+          ),
           const SizedBox(width: 6),
           Text(
             LocaleKeys.deeds_document_attachment.tr(),

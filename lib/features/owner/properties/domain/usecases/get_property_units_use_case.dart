@@ -9,7 +9,13 @@ class GetPropertyUnitsUseCase {
 
   GetPropertyUnitsUseCase(this._repository);
 
-  Future<Either<Failure, ({List<UnitEntity> items, PropertiesPaginationMetaEntity meta})>> call(
+  Future<
+    Either<
+      Failure,
+      ({List<UnitEntity> items, PropertiesPaginationMetaEntity meta})
+    >
+  >
+  call(
     int propertyId, {
     int page = 1,
     String? search,

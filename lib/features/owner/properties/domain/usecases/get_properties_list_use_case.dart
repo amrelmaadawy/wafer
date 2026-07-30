@@ -12,15 +12,16 @@ class GetPropertiesListUseCase {
   GetPropertiesListUseCase(this._repository);
 
   Future<
-      Either<
-          Failure,
-          ({
-            List<PropertyListItemEntity> items,
-            PropertiesPaginationMetaEntity meta,
-            PropertiesStatsEntity stats,
-          })>> call({
-    PropertiesQueryFilterEntity? filter,
-  }) {
+    Either<
+      Failure,
+      ({
+        List<PropertyListItemEntity> items,
+        PropertiesPaginationMetaEntity meta,
+        PropertiesStatsEntity stats,
+      })
+    >
+  >
+  call({PropertiesQueryFilterEntity? filter}) {
     return _repository.getProperties(filter: filter);
   }
 }

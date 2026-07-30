@@ -42,20 +42,14 @@ abstract class OwnerReportsRepository {
     int? propertyId,
   });
 
-  Future<Either<Failure, ContractsMovementReportEntity>> getContractsMovementReport({
-    bool forceRefresh = false,
-    int page = 1,
-  });
+  Future<Either<Failure, ContractsMovementReportEntity>>
+  getContractsMovementReport({bool forceRefresh = false, int page = 1});
 
-  Future<Either<Failure, MaintenanceRequestsReportEntity>> getMaintenanceRequestsReport({
-    bool forceRefresh = false,
-    int page = 1,
-  });
+  Future<Either<Failure, MaintenanceRequestsReportEntity>>
+  getMaintenanceRequestsReport({bool forceRefresh = false, int page = 1});
 
-  Future<Either<Failure, TechnicianPerformanceReportEntity>> getTechnicianPerformanceReport({
-    bool forceRefresh = false,
-    int page = 1,
-  });
+  Future<Either<Failure, TechnicianPerformanceReportEntity>>
+  getTechnicianPerformanceReport({bool forceRefresh = false, int page = 1});
 
   Future<Either<Failure, EmployeeTasksReportEntity>> getEmployeeTasksReport({
     bool forceRefresh = false,

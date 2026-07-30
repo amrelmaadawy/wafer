@@ -12,6 +12,9 @@ class GetOwnerOccupancyReportUseCase {
     bool forceRefresh = false,
     int page = 1,
   }) async {
-    return await repository.getOccupancyReport(forceRefresh: forceRefresh, page: page);
+    return await repository.getOccupancyReport(
+      forceRefresh: forceRefresh,
+      page: page,
+    );
   }
 }

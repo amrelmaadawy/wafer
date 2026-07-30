@@ -8,7 +8,9 @@ class GetOwnerContractInstallmentsUseCase {
 
   GetOwnerContractInstallmentsUseCase(this.repository);
 
-  Future<Either<Failure, List<ContractInstallmentEntity>>> call(String contractId) {
+  Future<Either<Failure, List<ContractInstallmentEntity>>> call(
+    String contractId,
+  ) {
     return repository.getContractInstallments(contractId);
   }
 }

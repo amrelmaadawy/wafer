@@ -16,16 +16,33 @@ class UnitBasicInfoCard extends StatelessWidget {
     // Build the quick-info items list – only non-null / non-zero values
     final items = <_InfoItem>[
       if (unit.code != null && unit.code!.isNotEmpty)
-        _InfoItem(icon: Icons.tag_rounded, label: LocaleKeys.unitDetailsUnitCode.tr(), value: unit.code!),
+        _InfoItem(
+          icon: Icons.tag_rounded,
+          label: LocaleKeys.unitDetailsUnitCode.tr(),
+          value: unit.code!,
+        ),
       if (unit.typeLabel != null || unit.type != null)
-        _InfoItem(icon: Icons.category_outlined, label: LocaleKeys.unitDetailsUnitType.tr(), value: unit.typeLabel ?? unit.type ?? '-'),
+        _InfoItem(
+          icon: Icons.category_outlined,
+          label: LocaleKeys.unitDetailsUnitType.tr(),
+          value: unit.typeLabel ?? unit.type ?? '-',
+        ),
       if (unit.usageType != null)
-        _InfoItem(icon: Icons.business_center_outlined, label: LocaleKeys.unitDetailsUsageType.tr(), value: _usageLabel(unit.usageType)),
+        _InfoItem(
+          icon: Icons.business_center_outlined,
+          label: LocaleKeys.unitDetailsUsageType.tr(),
+          value: _usageLabel(unit.usageType),
+        ),
       if (unit.floor != null && unit.floor!.isNotEmpty)
-        _InfoItem(icon: Icons.layers_outlined, label: LocaleKeys.unit_details_floor_number.tr(), value: unit.floor!),
+        _InfoItem(
+          icon: Icons.layers_outlined,
+          label: LocaleKeys.unit_details_floor_number.tr(),
+          value: unit.floor!,
+        ),
     ];
 
-    if (items.isEmpty && (unit.description == null || unit.description!.isEmpty)) {
+    if (items.isEmpty &&
+        (unit.description == null || unit.description!.isEmpty)) {
       return const SizedBox.shrink();
     }
 
@@ -61,11 +78,17 @@ class UnitBasicInfoCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.notes_rounded, size: 16, color: Colors.grey[400]),
+                      Icon(
+                        Icons.notes_rounded,
+                        size: 16,
+                        color: Colors.grey[400],
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         LocaleKeys.unitDetailsDescription.tr(),
-                        style: AppTextStyles.labelMedium.copyWith(color: Colors.grey[500]),
+                        style: AppTextStyles.labelMedium.copyWith(
+                          color: Colors.grey[500],
+                        ),
                       ),
                     ],
                   ),
@@ -93,16 +116,18 @@ class UnitBasicInfoCard extends StatelessWidget {
     for (var i = 0; i < items.length; i += 2) {
       final left = items[i];
       final right = i + 1 < items.length ? items[i + 1] : null;
-      rows.add(Row(
-        children: [
-          Expanded(child: _buildInfoCell(context, left)),
-          if (right != null) ...[
-            Container(width: 1, height: 52, color: const Color(0xFFF1F5F9)),
-            Expanded(child: _buildInfoCell(context, right)),
-          ] else
-            const Expanded(child: SizedBox()),
-        ],
-      ));
+      rows.add(
+        Row(
+          children: [
+            Expanded(child: _buildInfoCell(context, left)),
+            if (right != null) ...[
+              Container(width: 1, height: 52, color: const Color(0xFFF1F5F9)),
+              Expanded(child: _buildInfoCell(context, right)),
+            ] else
+              const Expanded(child: SizedBox()),
+          ],
+        ),
+      );
       if (i + 2 < items.length) {
         rows.add(const Divider(height: 1, color: Color(0xFFF1F5F9)));
       }
@@ -123,12 +148,16 @@ class UnitBasicInfoCard extends StatelessWidget {
               children: [
                 Text(
                   item.label,
-                  style: AppTextStyles.labelSmall.copyWith(color: Colors.grey[500]),
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: Colors.grey[500],
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   item.value,
-                  style: AppTextStyles.labelLarge.copyWith(color: const Color(0xFF1E293B)),
+                  style: AppTextStyles.labelLarge.copyWith(
+                    color: const Color(0xFF1E293B),
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -158,5 +187,9 @@ class _InfoItem {
   final IconData icon;
   final String label;
   final String value;
-  const _InfoItem({required this.icon, required this.label, required this.value});
+  const _InfoItem({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
 }

@@ -14,7 +14,10 @@ class EditProfileAvatarHeader extends StatelessWidget {
 
   const EditProfileAvatarHeader({super.key, required this.profile});
 
-  Future<void> _pickAndUploadImage(BuildContext context, ImageSource source) async {
+  Future<void> _pickAndUploadImage(
+    BuildContext context,
+    ImageSource source,
+  ) async {
     final picker = ImagePicker();
     final pickedFile = await picker.pickImage(source: source, imageQuality: 85);
     if (pickedFile != null && context.mounted) {
@@ -35,7 +38,9 @@ class EditProfileAvatarHeader extends StatelessWidget {
       builder: (context, state) {
         final currentProfile = state is ProfileLoaded ? state.profile : profile;
         final isUpdating = state is ProfileAvatarUpdating;
-        final initial = currentProfile.name.isNotEmpty ? currentProfile.name[0].toUpperCase() : 'U';
+        final initial = currentProfile.name.isNotEmpty
+            ? currentProfile.name[0].toUpperCase()
+            : 'U';
 
         return Column(
           children: [
@@ -43,13 +48,18 @@ class EditProfileAvatarHeader extends StatelessWidget {
               onTap: isUpdating
                   ? null
                   : () => AvatarPickerBottomSheet.show(
-                        context: context,
-                        onPick: (source) => _pickAndUploadImage(context, source),
-                      ),
+                      context: context,
+                      onPick: (source) => _pickAndUploadImage(context, source),
+                    ),
               child: Stack(
                 alignment: Alignment.bottomLeft,
                 children: [
-                  _buildAvatarCircle(context, currentProfile, initial, isUpdating),
+                  _buildAvatarCircle(
+                    context,
+                    currentProfile,
+                    initial,
+                    isUpdating,
+                  ),
                   _buildEditBadge(context, isUpdating),
                 ],
               ),
@@ -57,7 +67,11 @@ class EditProfileAvatarHeader extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               currentProfile.email,
-              style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 13, fontWeight: FontWeight.w500),
+              style: const TextStyle(
+                color: AppColors.textSecondaryLight,
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         );
@@ -65,7 +79,12 @@ class EditProfileAvatarHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildAvatarCircle(BuildContext context, ProfileEntity currentProfile, String initial, bool isUpdating) {
+  Widget _buildAvatarCircle(
+    BuildContext context,
+    ProfileEntity currentProfile,
+    String initial,
+    bool isUpdating,
+  ) {
     return Container(
       width: 86,
       height: 86,
@@ -74,10 +93,17 @@ class EditProfileAvatarHeader extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: [context.primaryColor, context.primaryColor.withValues(alpha: 0.75)],
+          colors: [
+            context.primaryColor,
+            context.primaryColor.withValues(alpha: 0.75),
+          ],
         ),
         boxShadow: [
-          BoxShadow(color: context.primaryShadow.withValues(alpha: 0.3), blurRadius: 16, offset: const Offset(0, 6)),
+          BoxShadow(
+            color: context.primaryShadow.withValues(alpha: 0.3),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
+          ),
         ],
         border: Border.all(color: Colors.white, width: 3),
       ),
@@ -86,7 +112,8 @@ class EditProfileAvatarHeader extends StatelessWidget {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            if (currentProfile.avatar != null && currentProfile.avatar!.isNotEmpty)
+            if (currentProfile.avatar != null &&
+                currentProfile.avatar!.isNotEmpty)
               Image.network(
                 currentProfile.avatar!,
                 width: 86,
@@ -105,7 +132,10 @@ class EditProfileAvatarHeader extends StatelessWidget {
                 child: const SizedBox(
                   width: 24,
                   height: 24,
-                  child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2.5,
+                  ),
                 ),
               ),
           ],
@@ -122,7 +152,11 @@ class EditProfileAvatarHeader extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(color: Colors.white, width: 2),
       ),
-      child: Icon(isUpdating ? Icons.hourglass_top_rounded : Icons.camera_alt_rounded, color: Colors.white, size: 14),
+      child: Icon(
+        isUpdating ? Icons.hourglass_top_rounded : Icons.camera_alt_rounded,
+        color: Colors.white,
+        size: 14,
+      ),
     );
   }
 
@@ -130,7 +164,11 @@ class EditProfileAvatarHeader extends StatelessWidget {
     return Center(
       child: Text(
         initial,
-        style: const TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }

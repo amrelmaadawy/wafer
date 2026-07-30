@@ -45,8 +45,15 @@ class ProfileCubit extends Cubit<ProfileState> {
     );
 
     result.fold(
-      (failure) => emit(ProfileUpdateError(currentProfile, errorMessage: failure.message)),
-      (updatedProfile) => emit(ProfileUpdateSuccess(updatedProfile, message: LocaleKeys.profileUpdateSuccess.tr())),
+      (failure) => emit(
+        ProfileUpdateError(currentProfile, errorMessage: failure.message),
+      ),
+      (updatedProfile) => emit(
+        ProfileUpdateSuccess(
+          updatedProfile,
+          message: LocaleKeys.profileUpdateSuccess.tr(),
+        ),
+      ),
     );
   }
 
@@ -58,8 +65,15 @@ class ProfileCubit extends Cubit<ProfileState> {
     final result = await _updateAvatarUseCase(imagePath: imagePath);
 
     result.fold(
-      (failure) => emit(ProfileAvatarUpdateError(currentProfile, errorMessage: failure.message)),
-      (updatedProfile) => emit(ProfileAvatarUpdateSuccess(updatedProfile, message: LocaleKeys.profileAvatarSuccess.tr())),
+      (failure) => emit(
+        ProfileAvatarUpdateError(currentProfile, errorMessage: failure.message),
+      ),
+      (updatedProfile) => emit(
+        ProfileAvatarUpdateSuccess(
+          updatedProfile,
+          message: LocaleKeys.profileAvatarSuccess.tr(),
+        ),
+      ),
     );
   }
 }

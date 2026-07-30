@@ -14,7 +14,9 @@ class MaintenanceModel extends MaintenanceEntity {
   });
 
   factory MaintenanceModel.fromJson(Map<String, dynamic> json) {
-    final unitMap = json['unit'] is Map<String, dynamic> ? json['unit'] as Map<String, dynamic> : null;
+    final unitMap = json['unit'] is Map<String, dynamic>
+        ? json['unit'] as Map<String, dynamic>
+        : null;
 
     return MaintenanceModel(
       id: json['id'] as int? ?? 0,

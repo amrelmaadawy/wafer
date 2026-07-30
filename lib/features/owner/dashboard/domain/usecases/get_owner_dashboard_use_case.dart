@@ -8,7 +8,9 @@ class GetOwnerDashboardUseCase {
 
   GetOwnerDashboardUseCase(this._repository);
 
-  Future<Either<Failure, OwnerDashboardEntity>> call({bool forceRefresh = false}) {
+  Future<Either<Failure, OwnerDashboardEntity>> call({
+    bool forceRefresh = false,
+  }) {
     return _repository.getDashboardStats(forceRefresh: forceRefresh);
   }
 }

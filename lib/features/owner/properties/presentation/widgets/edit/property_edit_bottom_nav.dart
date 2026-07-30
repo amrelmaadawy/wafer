@@ -47,11 +47,17 @@ class PropertyEditBottomNav extends StatelessWidget {
                 ? const SizedBox(
                     width: 20,
                     height: 20,
-                    child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
                   )
                 : Text(
                     LocaleKeys.propertyEditSave.tr(),
-                    style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
           ),
         ),

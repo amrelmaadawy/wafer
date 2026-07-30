@@ -25,16 +25,16 @@ class ContractsMovementItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        contractNumber,
-        renter,
-        property,
-        unit,
-        date,
-        type,
-        rentValue,
-        status,
-        statusLabel,
-      ];
+    contractNumber,
+    renter,
+    property,
+    unit,
+    date,
+    type,
+    rentValue,
+    status,
+    statusLabel,
+  ];
 }
 
 class MovementRenterEntity extends Equatable {

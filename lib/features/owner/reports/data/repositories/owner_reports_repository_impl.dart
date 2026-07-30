@@ -44,10 +44,11 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
         serverMsg =
             (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      final msg = serverMsg ?? 
-          (e.type == DioExceptionType.badResponse 
-              ? LocaleKeys.errorsServerError.tr() 
-              : e.message) ?? 
+      final msg =
+          serverMsg ??
+          (e.type == DioExceptionType.badResponse
+              ? LocaleKeys.errorsServerError.tr()
+              : e.message) ??
           LocaleKeys.errorsServerError.tr();
       return Left(ServerFailure(msg));
     } catch (e) {
@@ -71,10 +72,11 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
         serverMsg =
             (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      final msg = serverMsg ?? 
-          (e.type == DioExceptionType.badResponse 
-              ? LocaleKeys.errorsServerError.tr() 
-              : e.message) ?? 
+      final msg =
+          serverMsg ??
+          (e.type == DioExceptionType.badResponse
+              ? LocaleKeys.errorsServerError.tr()
+              : e.message) ??
           LocaleKeys.errorsServerError.tr();
       return Left(ServerFailure(msg));
     } catch (e) {
@@ -98,10 +100,11 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
         serverMsg =
             (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      final msg = serverMsg ?? 
-          (e.type == DioExceptionType.badResponse 
-              ? LocaleKeys.errorsServerError.tr() 
-              : e.message) ?? 
+      final msg =
+          serverMsg ??
+          (e.type == DioExceptionType.badResponse
+              ? LocaleKeys.errorsServerError.tr()
+              : e.message) ??
           LocaleKeys.errorsServerError.tr();
       return Left(ServerFailure(msg));
     } catch (e) {
@@ -131,10 +134,11 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
         serverMsg =
             (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      final msg = serverMsg ?? 
-          (e.type == DioExceptionType.badResponse 
-              ? LocaleKeys.errorsServerError.tr() 
-              : e.message) ?? 
+      final msg =
+          serverMsg ??
+          (e.type == DioExceptionType.badResponse
+              ? LocaleKeys.errorsServerError.tr()
+              : e.message) ??
           LocaleKeys.errorsServerError.tr();
       return Left(ServerFailure(msg));
     } catch (e) {
@@ -162,12 +166,12 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
   }
 
   @override
-  Future<Either<Failure, ContractsMovementReportEntity>> getContractsMovementReport({
-    bool forceRefresh = false,
-    int page = 1,
-  }) async {
+  Future<Either<Failure, ContractsMovementReportEntity>>
+  getContractsMovementReport({bool forceRefresh = false, int page = 1}) async {
     try {
-      final result = await _remoteDataSource.getContractsMovementReport(page: page);
+      final result = await _remoteDataSource.getContractsMovementReport(
+        page: page,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -175,13 +179,17 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
   @override
-  Future<Either<Failure, MaintenanceRequestsReportEntity>> getMaintenanceRequestsReport({
+  Future<Either<Failure, MaintenanceRequestsReportEntity>>
+  getMaintenanceRequestsReport({
     bool forceRefresh = false,
     int page = 1,
   }) async {
     try {
-      final result = await _remoteDataSource.getMaintenanceRequestsReport(page: page);
+      final result = await _remoteDataSource.getMaintenanceRequestsReport(
+        page: page,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
@@ -189,13 +197,17 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
       return Left(ServerFailure(e.toString()));
     }
   }
+
   @override
-  Future<Either<Failure, TechnicianPerformanceReportEntity>> getTechnicianPerformanceReport({
+  Future<Either<Failure, TechnicianPerformanceReportEntity>>
+  getTechnicianPerformanceReport({
     bool forceRefresh = false,
     int page = 1,
   }) async {
     try {
-      final result = await _remoteDataSource.getTechnicianPerformanceReport(page: page);
+      final result = await _remoteDataSource.getTechnicianPerformanceReport(
+        page: page,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

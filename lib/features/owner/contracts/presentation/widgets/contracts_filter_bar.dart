@@ -31,11 +31,36 @@ class ContractsFilterBar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
           child: Row(
             children: [
-              _buildChip(context, LocaleKeys.contractsFilterAll.tr(), 'all', active),
-              _buildChip(context, LocaleKeys.contractsFilterActive.tr(), 'active', active),
-              _buildChip(context, LocaleKeys.contractsFilterExpiring.tr(), 'expiring', active),
-              _buildChip(context, LocaleKeys.contractsFilterDraft.tr(), 'draft', active),
-              _buildChip(context, LocaleKeys.contractsFilterTerminated.tr(), 'terminated', active),
+              _buildChip(
+                context,
+                LocaleKeys.contractsFilterAll.tr(),
+                'all',
+                active,
+              ),
+              _buildChip(
+                context,
+                LocaleKeys.contractsFilterActive.tr(),
+                'active',
+                active,
+              ),
+              _buildChip(
+                context,
+                LocaleKeys.contractsFilterExpiring.tr(),
+                'expiring',
+                active,
+              ),
+              _buildChip(
+                context,
+                LocaleKeys.contractsFilterDraft.tr(),
+                'draft',
+                active,
+              ),
+              _buildChip(
+                context,
+                LocaleKeys.contractsFilterTerminated.tr(),
+                'terminated',
+                active,
+              ),
             ],
           ),
         );
@@ -43,7 +68,12 @@ class ContractsFilterBar extends StatelessWidget {
     );
   }
 
-  Widget _buildChip(BuildContext context, String label, String status, String active) {
+  Widget _buildChip(
+    BuildContext context,
+    String label,
+    String status,
+    String active,
+  ) {
     final isSelected = status == active;
     return Padding(
       padding: const EdgeInsets.only(left: 8),
@@ -57,13 +87,16 @@ class ContractsFilterBar extends StatelessWidget {
           ),
         ),
         selected: isSelected,
-        onSelected: (_) => context.read<OwnerContractsCubit>().changeStatusFilter(status),
+        onSelected: (_) =>
+            context.read<OwnerContractsCubit>().changeStatusFilter(status),
         backgroundColor: AppColors.surfaceLight,
         selectedColor: context.primaryColor,
         showCheckmark: false,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadius.circularFull,
-          side: BorderSide(color: isSelected ? context.primaryColor : AppColors.borderLight),
+          side: BorderSide(
+            color: isSelected ? context.primaryColor : AppColors.borderLight,
+          ),
         ),
       ),
     );

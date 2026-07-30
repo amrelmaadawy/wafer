@@ -56,7 +56,9 @@ class PropertiesListLoaded extends PropertiesListState {
 
 class PropertiesListEmpty extends PropertiesListState {
   final PropertiesQueryFilterEntity filter;
-  const PropertiesListEmpty({this.filter = const PropertiesQueryFilterEntity()});
+  const PropertiesListEmpty({
+    this.filter = const PropertiesQueryFilterEntity(),
+  });
 
   @override
   List<Object?> get props => [filter];

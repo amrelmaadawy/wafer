@@ -62,8 +62,8 @@ class ContractsMovementReportItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.renter.name.isNotEmpty 
-                      ? item.renter.name 
+                  item.renter.name.isNotEmpty
+                      ? item.renter.name
                       : LocaleKeys.contractsMovementUnknownRenter.tr(),
                   style: const TextStyle(
                     fontSize: 16,
@@ -74,8 +74,11 @@ class ContractsMovementReportItemCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(Icons.maps_home_work_outlined,
-                        size: 14, color: AppColors.textSecondaryLight),
+                    const Icon(
+                      Icons.maps_home_work_outlined,
+                      size: 14,
+                      color: AppColors.textSecondaryLight,
+                    ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
@@ -97,7 +100,9 @@ class ContractsMovementReportItemCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: _getTypeColor(item.type).withValues(alpha: 0.1),
               borderRadius: AppRadius.circularSm,
-              border: Border.all(color: _getTypeColor(item.type).withValues(alpha: 0.3)),
+              border: Border.all(
+                color: _getTypeColor(item.type).withValues(alpha: 0.3),
+              ),
             ),
             child: Text(
               _getTypeLabel(item.type),
@@ -192,7 +197,11 @@ class ContractsMovementReportItemCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.payments_outlined, size: 18, color: AppColors.primary),
+              const Icon(
+                Icons.payments_outlined,
+                size: 18,
+                color: AppColors.primary,
+              ),
               const SizedBox(width: 8),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

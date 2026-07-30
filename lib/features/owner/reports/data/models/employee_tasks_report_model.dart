@@ -1,4 +1,5 @@
-import '../../domain/entities/maintenance_requests_report_entity.dart' show PaginationEntity;
+import '../../domain/entities/maintenance_requests_report_entity.dart'
+    show PaginationEntity;
 import '../../domain/entities/employee_tasks_report_entity.dart';
 import 'employee_tasks_item_model.dart';
 import 'employee_tasks_summary_model.dart';
@@ -13,7 +14,8 @@ class EmployeeTasksReportModel extends EmployeeTasksReportEntity {
   factory EmployeeTasksReportModel.fromJson(Map<String, dynamic> json) {
     return EmployeeTasksReportModel(
       summary: EmployeeTasksSummaryModel.fromJson(json['summary'] ?? {}),
-      items: (json['items'] as List?)
+      items:
+          (json['items'] as List?)
               ?.map((item) => EmployeeTasksItemModel.fromJson(item))
               .toList() ??
           [],

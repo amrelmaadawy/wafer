@@ -5,14 +5,16 @@ import '../entities/units_status_report_entity.dart';
 import '../repositories/owner_reports_repository.dart';
 
 class GetOwnerUnitsStatusReportUseCase
-    implements UseCase<UnitsStatusReportEntity, GetOwnerUnitsStatusReportParams> {
+    implements
+        UseCase<UnitsStatusReportEntity, GetOwnerUnitsStatusReportParams> {
   final OwnerReportsRepository repository;
 
   GetOwnerUnitsStatusReportUseCase(this.repository);
 
   @override
   Future<Either<Failure, UnitsStatusReportEntity>> call(
-      GetOwnerUnitsStatusReportParams params) async {
+    GetOwnerUnitsStatusReportParams params,
+  ) async {
     return await repository.getUnitsStatusReport(
       forceRefresh: params.forceRefresh,
       page: params.page,

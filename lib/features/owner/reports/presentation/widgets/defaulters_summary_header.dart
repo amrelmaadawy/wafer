@@ -47,8 +47,11 @@ class DefaultersSummaryHeader extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.warning_amber_rounded,
-                      color: Color(0xFFFBBF24), size: 20),
+                  const Icon(
+                    Icons.warning_amber_rounded,
+                    color: Color(0xFFFBBF24),
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     LocaleKeys.defaultersTotalRemaining.tr(),
@@ -89,10 +92,7 @@ class DefaultersSummaryHeader extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
-              Container(
-                height: 1,
-                color: Colors.white.withValues(alpha: 0.15),
-              ),
+              Container(height: 1, color: Colors.white.withValues(alpha: 0.15)),
               const SizedBox(height: 16),
               Row(
                 children: [

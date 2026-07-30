@@ -32,13 +32,23 @@ class PropertyDetailsCubit extends Cubit<PropertyDetailsState> {
   Future<void> makeRepresentative(int propertyId, int ownerId) async {
     if (state is PropertyDetailsLoaded) {
       final currentState = state as PropertyDetailsLoaded;
-      emit(currentState.copyWith(isMakingRepresentative: true, actionOwnerId: ownerId));
-      
+      emit(
+        currentState.copyWith(
+          isMakingRepresentative: true,
+          actionOwnerId: ownerId,
+        ),
+      );
+
       final result = await _makeRepresentativeUseCase(propertyId, ownerId);
-      
+
       result.fold(
         (failure) {
-          emit(currentState.copyWith(isMakingRepresentative: false, actionOwnerId: null));
+          emit(
+            currentState.copyWith(
+              isMakingRepresentative: false,
+              actionOwnerId: null,
+            ),
+          );
           emit(PropertyDetailsError(failure.message));
           // Re-emit loaded so UI doesn't get stuck in error state
           emit(currentState);
@@ -53,13 +63,23 @@ class PropertyDetailsCubit extends Cubit<PropertyDetailsState> {
   Future<void> removeRepresentative(int propertyId, int ownerId) async {
     if (state is PropertyDetailsLoaded) {
       final currentState = state as PropertyDetailsLoaded;
-      emit(currentState.copyWith(isRemovingRepresentative: true, actionOwnerId: ownerId));
-      
+      emit(
+        currentState.copyWith(
+          isRemovingRepresentative: true,
+          actionOwnerId: ownerId,
+        ),
+      );
+
       final result = await _removeRepresentativeUseCase(propertyId, ownerId);
-      
+
       result.fold(
         (failure) {
-          emit(currentState.copyWith(isRemovingRepresentative: false, actionOwnerId: null));
+          emit(
+            currentState.copyWith(
+              isRemovingRepresentative: false,
+              actionOwnerId: null,
+            ),
+          );
           emit(PropertyDetailsError(failure.message));
           // Re-emit loaded so UI doesn't get stuck in error state
           emit(currentState);

@@ -33,20 +33,20 @@ class OwnerDashboardEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        totalProperties,
-        totalUnits,
-        rentedUnits,
-        vacantUnits,
-        activeContracts,
-        totalRevenue,
-        collectedAmount,
-        pendingAmount,
-        overdueInstallmentsCount,
-        expiringContracts,
-        pendingMaintenance,
-        occupancyRate,
-        recentReceipts,
-      ];
+    totalProperties,
+    totalUnits,
+    rentedUnits,
+    vacantUnits,
+    activeContracts,
+    totalRevenue,
+    collectedAmount,
+    pendingAmount,
+    overdueInstallmentsCount,
+    expiringContracts,
+    pendingMaintenance,
+    occupancyRate,
+    recentReceipts,
+  ];
 }
 
 class ReceiptEntity extends Equatable {
@@ -67,5 +67,12 @@ class ReceiptEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, tenantName, propertyName, unitNumber, amount, date];
+  List<Object?> get props => [
+    id,
+    tenantName,
+    propertyName,
+    unitNumber,
+    amount,
+    date,
+  ];
 }

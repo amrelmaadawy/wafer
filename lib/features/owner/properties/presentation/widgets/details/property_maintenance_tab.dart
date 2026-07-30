@@ -8,10 +8,7 @@ import '../../../domain/entities/maintenance_entity.dart';
 class PropertyMaintenanceTab extends StatelessWidget {
   final List<MaintenanceEntity> maintenanceRequests;
 
-  const PropertyMaintenanceTab({
-    super.key,
-    required this.maintenanceRequests,
-  });
+  const PropertyMaintenanceTab({super.key, required this.maintenanceRequests});
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +39,16 @@ class PropertyMaintenanceTab extends StatelessWidget {
                   children: [
                     Text(
                       request.requestNumber,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.info.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
@@ -62,16 +65,25 @@ class PropertyMaintenanceTab extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-                Text('${LocaleKeys.unitDetailsDescription.tr()}: ${request.description}', style: const TextStyle(color: Colors.black87)),
+                Text(
+                  '${LocaleKeys.unitDetailsDescription.tr()}: ${request.description}',
+                  style: const TextStyle(color: Colors.black87),
+                ),
                 const SizedBox(height: 4),
-                Text('${LocaleKeys.maintenanceUnitLabel.tr()}: ${request.unitName}', style: const TextStyle(color: Colors.grey)),
+                Text(
+                  '${LocaleKeys.maintenanceUnitLabel.tr()}: ${request.unitName}',
+                  style: const TextStyle(color: Colors.grey),
+                ),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       '${LocaleKeys.maintenanceEstimatedCost.tr()}: ${request.estimatedCost} ${LocaleKeys.commonCurrencySar.tr()}',
-                      style: TextStyle(color: context.primaryColor, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: context.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       request.requestedDate ?? '',

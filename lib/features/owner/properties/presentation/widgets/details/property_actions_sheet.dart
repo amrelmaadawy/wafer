@@ -36,133 +36,140 @@ class PropertyActionsSheet extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Center(
-            child: Container(
-              width: 48,
-              height: 5,
-              decoration: const BoxDecoration(
-                color: AppColors.borderLight,
-                borderRadius: AppRadius.circularFull,
+              child: Container(
+                width: 48,
+                height: 5,
+                decoration: const BoxDecoration(
+                  color: AppColors.borderLight,
+                  borderRadius: AppRadius.circularFull,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          // Header with Property info
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: context.primaryColor.withValues(alpha: 0.1),
-                  shape: BoxShape.circle,
+            const SizedBox(height: 20),
+            // Header with Property info
+            Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: context.primaryColor.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.apartment_rounded,
+                    color: context.primaryColor,
+                    size: 24,
+                  ),
                 ),
-                child: Icon(Icons.apartment_rounded, color: context.primaryColor, size: 24),
-              ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      property.name,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w800,
-                        color: AppColors.textPrimaryLight,
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        property.name,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w800,
+                          color: AppColors.textPrimaryLight,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      property.code,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.textSecondaryLight,
+                      const SizedBox(height: 2),
+                      Text(
+                        property.code,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textSecondaryLight,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          // Grouped standard actions
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.surfaceLight,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.borderLight),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.02),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+                    ],
+                  ),
                 ),
               ],
             ),
-            child: Column(
-              children: [
-                if (property.isDraft) ...[
+            const SizedBox(height: 20),
+            // Grouped standard actions
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.surfaceLight,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppColors.borderLight),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.02),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  if (property.isDraft) ...[
+                    _buildActionItem(
+                      context: context,
+                      title: LocaleKeys.propertyDetailsPublishProperty.tr(),
+                      icon: Icons.rocket_launch_rounded,
+                      color: AppColors.success,
+                      onTap: onPublish,
+                      isFirst: true,
+                    ),
+                    const Divider(height: 1, color: AppColors.borderLight),
+                  ],
                   _buildActionItem(
                     context: context,
-                    title: LocaleKeys.propertyDetailsPublishProperty.tr(),
-                    icon: Icons.rocket_launch_rounded,
-                    color: AppColors.success,
-                    onTap: onPublish,
-                    isFirst: true,
+                    title: LocaleKeys.propertyDetailsEdit.tr(),
+                    icon: Icons.edit_rounded,
+                    color: context.primaryColor,
+                    onTap: onEdit,
+                    isFirst: !property.isDraft,
                   ),
                   const Divider(height: 1, color: AppColors.borderLight),
+                  _buildActionItem(
+                    context: context,
+                    title: LocaleKeys.propertyDetailsClone.tr(),
+                    icon: Icons.content_copy_rounded,
+                    color: AppColors.success,
+                    onTap: onClone,
+                    isLast: true,
+                  ),
                 ],
-                _buildActionItem(
-                  context: context,
-                  title: LocaleKeys.propertyDetailsEdit.tr(),
-                  icon: Icons.edit_rounded,
-                  color: context.primaryColor,
-                  onTap: onEdit,
-                  isFirst: !property.isDraft,
-                ),
-                const Divider(height: 1, color: AppColors.borderLight),
-                _buildActionItem(
-                  context: context,
-                  title: LocaleKeys.propertyDetailsClone.tr(),
-                  icon: Icons.content_copy_rounded,
-                  color: AppColors.success,
-                  onTap: onClone,
-                  isLast: true,
-                ),
-              ],
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          // Destructive action separate
-          Container(
-            decoration: BoxDecoration(
-              color: AppColors.surfaceLight,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppColors.error.withValues(alpha: 0.3)),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.error.withValues(alpha: 0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+            const SizedBox(height: 16),
+            // Destructive action separate
+            Container(
+              decoration: BoxDecoration(
+                color: AppColors.surfaceLight,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: AppColors.error.withValues(alpha: 0.3),
                 ),
-              ],
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.error.withValues(alpha: 0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: _buildActionItem(
+                context: context,
+                title: LocaleKeys.propertyDetailsDelete.tr(),
+                icon: Icons.delete_rounded,
+                color: AppColors.error,
+                onTap: onDelete,
+                isDestructive: true,
+                isFirst: true,
+                isLast: true,
+              ),
             ),
-            child: _buildActionItem(
-              context: context,
-              title: LocaleKeys.propertyDetailsDelete.tr(),
-              icon: Icons.delete_rounded,
-              color: AppColors.error,
-              onTap: onDelete,
-              isDestructive: true,
-              isFirst: true,
-              isLast: true,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ));
+    );
   }
 
   Widget _buildActionItem({
@@ -192,7 +199,9 @@ class PropertyActionsSheet extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: isDestructive ? AppColors.error.withValues(alpha: 0.1) : color.withValues(alpha: 0.1),
+                  color: isDestructive
+                      ? AppColors.error.withValues(alpha: 0.1)
+                      : color.withValues(alpha: 0.1),
                   borderRadius: AppRadius.circularMd,
                 ),
                 child: Icon(icon, color: color, size: 20),
@@ -204,7 +213,9 @@ class PropertyActionsSheet extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 15,
-                    color: isDestructive ? AppColors.error : AppColors.textPrimaryLight,
+                    color: isDestructive
+                        ? AppColors.error
+                        : AppColors.textPrimaryLight,
                   ),
                 ),
               ),

@@ -6,7 +6,7 @@ class OwnerDefaultersCubit extends Cubit<OwnerDefaultersState> {
   final GetOwnerDefaultersReportUseCase getOwnerDefaultersReportUseCase;
 
   OwnerDefaultersCubit(this.getOwnerDefaultersReportUseCase)
-      : super(OwnerDefaultersInitial());
+    : super(OwnerDefaultersInitial());
 
   int _currentPage = 1;
   bool _isFetching = false;
@@ -38,7 +38,7 @@ class OwnerDefaultersCubit extends Cubit<OwnerDefaultersState> {
         if (_currentPage == 1) {
           emit(OwnerDefaultersError(failure.message));
         } else {
-          _currentPage--; 
+          _currentPage--;
           // Do not emit error for pagination to keep current items, could show a toast
         }
       },
@@ -46,22 +46,28 @@ class OwnerDefaultersCubit extends Cubit<OwnerDefaultersState> {
         if (report.items.isEmpty && _currentPage == 1) {
           emit(OwnerDefaultersEmpty());
         } else {
-          final hasReachedMax = report.pagination.currentPage >= report.pagination.lastPage;
+          final hasReachedMax =
+              report.pagination.currentPage >= report.pagination.lastPage;
 
           if (_currentPage == 1) {
-            emit(OwnerDefaultersLoaded(
-              report: report,
-              hasReachedMax: hasReachedMax,
-            ));
+            emit(
+              OwnerDefaultersLoaded(
+                report: report,
+                hasReachedMax: hasReachedMax,
+              ),
+            );
           } else {
             final currentState = state as OwnerDefaultersLoaded;
-            emit(currentState.copyWith(
-              report: currentState.report.copyWith(
-                items: List.of(currentState.report.items)..addAll(report.items),
-                pagination: report.pagination,
+            emit(
+              currentState.copyWith(
+                report: currentState.report.copyWith(
+                  items: List.of(currentState.report.items)
+                    ..addAll(report.items),
+                  pagination: report.pagination,
+                ),
+                hasReachedMax: hasReachedMax,
               ),
-              hasReachedMax: hasReachedMax,
-            ));
+            );
           }
         }
       },

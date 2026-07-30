@@ -43,28 +43,31 @@ class PropertyListItemEntity extends Equatable {
   bool get isPublished => status.toLowerCase() == 'published';
 
   String get displayAddress {
-    final parts = [if (city != null && city!.isNotEmpty) city, if (district != null && district!.isNotEmpty) district];
+    final parts = [
+      if (city != null && city!.isNotEmpty) city,
+      if (district != null && district!.isNotEmpty) district,
+    ];
     return parts.isEmpty ? 'غير محدد' : parts.join(' - ');
   }
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        code,
-        status,
-        statusLabel,
-        propertyType,
-        usageType,
-        area,
-        city,
-        district,
-        deedNumber,
-        primaryOwnerName,
-        unitsCount,
-        availableUnits,
-        rentedUnits,
-        occupancyRate,
-        imageUrl,
-      ];
+    id,
+    name,
+    code,
+    status,
+    statusLabel,
+    propertyType,
+    usageType,
+    area,
+    city,
+    district,
+    deedNumber,
+    primaryOwnerName,
+    unitsCount,
+    availableUnits,
+    rentedUnits,
+    occupancyRate,
+    imageUrl,
+  ];
 }

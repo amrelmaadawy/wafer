@@ -18,9 +18,7 @@ class OwnerRevenueReportScreen extends StatelessWidget {
           di.sl<OwnerRevenueCubit>()..loadRevenueReport(forceRefresh: true),
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
-        appBar: CustomAppBar(
-          title: LocaleKeys.revenueReport.tr(),
-        ),
+        appBar: CustomAppBar(title: LocaleKeys.revenueReport.tr()),
         body: const OwnerRevenueReportView(),
       ),
     );

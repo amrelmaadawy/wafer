@@ -24,7 +24,9 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
   @override
   Future<ProfileModel> getProfile() async {
-    final response = await _dio.get('${ApiConstants.baseUrl}${ApiConstants.sharedProfile}');
+    final response = await _dio.get(
+      '${ApiConstants.baseUrl}${ApiConstants.sharedProfile}',
+    );
     final data = response.data['data'] as Map<String, dynamic>;
     return ProfileModel.fromJson(data);
   }
@@ -37,11 +39,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   }) async {
     final response = await _dio.put(
       '${ApiConstants.baseUrl}${ApiConstants.sharedProfile}',
-      data: {
-        'name': name,
-        'phone': phone,
-        'gender': gender,
-      },
+      data: {'name': name, 'phone': phone, 'gender': gender},
     );
     final data = response.data['data'] as Map<String, dynamic>;
     return ProfileModel.fromJson(data);

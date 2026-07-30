@@ -159,10 +159,9 @@ class _OwnerDefaultersReportViewState extends State<OwnerDefaultersReportView> {
   Widget _buildErrorView(BuildContext context, String message) {
     return CustomErrorWidget(
       message: message,
-      onRetry: () => context
-          .read<OwnerDefaultersCubit>()
-          .loadDefaultersReport(forceRefresh: true),
+      onRetry: () => context.read<OwnerDefaultersCubit>().loadDefaultersReport(
+        forceRefresh: true,
+      ),
     );
   }
-
 }

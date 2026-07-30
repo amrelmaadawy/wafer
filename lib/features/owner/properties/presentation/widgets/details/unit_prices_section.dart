@@ -16,16 +16,32 @@ class UnitPricesSection extends StatelessWidget {
     // Gather all non-zero prices
     final prices = <_Price>[];
     if (unit.monthlyPrice > 0) {
-      prices.add(_Price(LocaleKeys.unit_details_monthly.tr(), unit.monthlyPrice, true));
+      prices.add(
+        _Price(LocaleKeys.unit_details_monthly.tr(), unit.monthlyPrice, true),
+      );
     }
     if (unit.perTwoPaymentsPrice > 0) {
-      prices.add(_Price(LocaleKeys.unit_details_per_two_payments.tr(), unit.perTwoPaymentsPrice, false));
+      prices.add(
+        _Price(
+          LocaleKeys.unit_details_per_two_payments.tr(),
+          unit.perTwoPaymentsPrice,
+          false,
+        ),
+      );
     }
     if (unit.quarterlyPrice > 0) {
-      prices.add(_Price(LocaleKeys.unit_details_quarterly.tr(), unit.quarterlyPrice, false));
+      prices.add(
+        _Price(
+          LocaleKeys.unit_details_quarterly.tr(),
+          unit.quarterlyPrice,
+          false,
+        ),
+      );
     }
     if (prices.isEmpty && unit.rentPrice > 0) {
-      prices.add(_Price(LocaleKeys.unit_details_rent_prices.tr(), unit.rentPrice, true));
+      prices.add(
+        _Price(LocaleKeys.unit_details_rent_prices.tr(), unit.rentPrice, true),
+      );
     }
 
     if (prices.isEmpty) return const SizedBox.shrink();
@@ -63,8 +79,11 @@ class UnitPricesSection extends StatelessWidget {
                         color: context.primaryColor.withValues(alpha: 0.08),
                         borderRadius: BorderRadius.circular(14),
                       ),
-                      child: Icon(Icons.account_balance_wallet_outlined,
-                          color: context.primaryColor, size: 26),
+                      child: Icon(
+                        Icons.account_balance_wallet_outlined,
+                        color: context.primaryColor,
+                        size: 26,
+                      ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -73,8 +92,9 @@ class UnitPricesSection extends StatelessWidget {
                         children: [
                           Text(
                             primary.label,
-                            style: AppTextStyles.labelMedium
-                                .copyWith(color: const Color(0xFF64748B)),
+                            style: AppTextStyles.labelMedium.copyWith(
+                              color: const Color(0xFF64748B),
+                            ),
                           ),
                           const SizedBox(height: 4),
                           Row(
@@ -83,7 +103,8 @@ class UnitPricesSection extends StatelessWidget {
                               Text(
                                 _fmt(primary.value),
                                 style: AppTextStyles.h2.copyWith(
-                                    color: const Color(0xFF1E293B)),
+                                  color: const Color(0xFF1E293B),
+                                ),
                               ),
                               const SizedBox(width: 6),
                               Padding(
@@ -91,7 +112,8 @@ class UnitPricesSection extends StatelessWidget {
                                 child: Text(
                                   LocaleKeys.commonCurrencySar.tr(),
                                   style: AppTextStyles.labelLarge.copyWith(
-                                      color: const Color(0xFF64748B)),
+                                    color: const Color(0xFF64748B),
+                                  ),
                                 ),
                               ),
                             ],
@@ -107,13 +129,19 @@ class UnitPricesSection extends StatelessWidget {
               if (prices.length > 1) ...[
                 const Divider(height: 1, color: Color(0xFFF1F5F9)),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 14,
+                  ),
                   child: Row(
                     children: [
                       for (var i = 1; i < prices.length; i++) ...[
                         if (i > 1)
                           Container(
-                              width: 1, height: 36, color: const Color(0xFFF1F5F9)),
+                            width: 1,
+                            height: 36,
+                            color: const Color(0xFFF1F5F9),
+                          ),
                         Expanded(child: _buildSecondary(prices[i])),
                       ],
                     ],
@@ -130,21 +158,30 @@ class UnitPricesSection extends StatelessWidget {
   Widget _buildSecondary(_Price p) {
     return Column(
       children: [
-        Text(p.label,
-            style: AppTextStyles.labelSmall.copyWith(color: const Color(0xFF94A3B8))),
+        Text(
+          p.label,
+          style: AppTextStyles.labelSmall.copyWith(
+            color: const Color(0xFF94A3B8),
+          ),
+        ),
         const SizedBox(height: 4),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            Text(_fmt(p.value),
-                style: AppTextStyles.h4.copyWith(color: const Color(0xFF334155))),
+            Text(
+              _fmt(p.value),
+              style: AppTextStyles.h4.copyWith(color: const Color(0xFF334155)),
+            ),
             const SizedBox(width: 3),
             Padding(
               padding: const EdgeInsets.only(bottom: 1),
-              child: Text(LocaleKeys.commonCurrencySar.tr(),
-                  style: AppTextStyles.labelSmall
-                      .copyWith(color: const Color(0xFF94A3B8))),
+              child: Text(
+                LocaleKeys.commonCurrencySar.tr(),
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: const Color(0xFF94A3B8),
+                ),
+              ),
             ),
           ],
         ),

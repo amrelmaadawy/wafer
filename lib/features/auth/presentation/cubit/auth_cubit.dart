@@ -14,10 +14,10 @@ class AuthCubit extends Cubit<AuthState> {
     required LoginUseCase loginUseCase,
     required LogoutUseCase logoutUseCase,
     required CheckAuthStatusUseCase checkAuthStatusUseCase,
-  })  : _loginUseCase = loginUseCase,
-        _logoutUseCase = logoutUseCase,
-        _checkAuthStatusUseCase = checkAuthStatusUseCase,
-        super(AuthInitial());
+  }) : _loginUseCase = loginUseCase,
+       _logoutUseCase = logoutUseCase,
+       _checkAuthStatusUseCase = checkAuthStatusUseCase,
+       super(AuthInitial());
 
   Future<void> checkAuthStatus() async {
     emit(AuthLoading());
@@ -36,13 +36,15 @@ class AuthCubit extends Cubit<AuthState> {
     required bool rememberMe,
   }) async {
     emit(AuthLoading());
-    final result = await _loginUseCase(LoginParams(
-      username: username,
-      password: password,
-      deviceName: deviceName,
-      deviceToken: deviceToken,
-      rememberMe: rememberMe,
-    ));
+    final result = await _loginUseCase(
+      LoginParams(
+        username: username,
+        password: password,
+        deviceName: deviceName,
+        deviceToken: deviceToken,
+        rememberMe: rememberMe,
+      ),
+    );
     result.fold(
       (failure) => emit(AuthError(failure.message)),
       (user) => emit(Authenticated(user)),

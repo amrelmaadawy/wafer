@@ -21,16 +21,16 @@ class OwnerFinanceView extends StatelessWidget {
               Text(
                 LocaleKeys.ownerFinanceTitle.tr(),
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.textPrimaryLight,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.textPrimaryLight,
+                ),
               ),
               const SizedBox(height: 6),
               Text(
                 LocaleKeys.ownerFinanceSubtitle.tr(),
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.textSecondaryLight,
-                    ),
+                  color: AppColors.textSecondaryLight,
+                ),
               ),
               const SizedBox(height: 24),
               Container(
@@ -50,7 +50,8 @@ class OwnerFinanceView extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       LocaleKeys.ownerFinanceLog.tr(),
-                      style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      style: Theme.of(context).textTheme.headlineSmall
+                          ?.copyWith(
                             fontWeight: FontWeight.bold,
                             color: AppColors.textPrimaryLight,
                           ),
@@ -60,8 +61,8 @@ class OwnerFinanceView extends StatelessWidget {
                       LocaleKeys.ownerFinancePlaceholder.tr(),
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color: AppColors.textSecondaryLight,
-                          ),
+                        color: AppColors.textSecondaryLight,
+                      ),
                     ),
                   ],
                 ),

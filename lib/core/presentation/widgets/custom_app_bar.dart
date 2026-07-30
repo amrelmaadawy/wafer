@@ -30,9 +30,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       toolbarHeight: 70,
       leadingWidth: showBackButton ? 70 : null,
-      leading: showBackButton ? CustomBackButton(onPressed: onBackPressed) : null,
+      leading: showBackButton
+          ? CustomBackButton(onPressed: onBackPressed)
+          : null,
       title: Column(
-        crossAxisAlignment: centerTitle ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+        crossAxisAlignment: centerTitle
+            ? CrossAxisAlignment.center
+            : CrossAxisAlignment.start,
         children: [
           Text(
             title,
@@ -62,5 +66,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(70 + (bottom?.preferredSize.height ?? 0.0));
+  Size get preferredSize =>
+      Size.fromHeight(70 + (bottom?.preferredSize.height ?? 0.0));
 }

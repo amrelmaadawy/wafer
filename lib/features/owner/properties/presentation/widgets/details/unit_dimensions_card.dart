@@ -15,29 +15,58 @@ class UnitDimensionsCard extends StatelessWidget {
     final rows = <_DetailRow>[];
 
     if (unit.length != null && unit.length! > 0) {
-      rows.add(_DetailRow(Icons.straighten_outlined, LocaleKeys.unit_details_length.tr(),
-          '${unit.length!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}'));
+      rows.add(
+        _DetailRow(
+          Icons.straighten_outlined,
+          LocaleKeys.unit_details_length.tr(),
+          '${unit.length!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}',
+        ),
+      );
     }
     if (unit.width != null && unit.width! > 0) {
-      rows.add(_DetailRow(Icons.swap_horiz_outlined, LocaleKeys.unit_details_width.tr(),
-          '${unit.width!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}'));
+      rows.add(
+        _DetailRow(
+          Icons.swap_horiz_outlined,
+          LocaleKeys.unit_details_width.tr(),
+          '${unit.width!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}',
+        ),
+      );
     }
     if (unit.height != null && unit.height! > 0) {
-      rows.add(_DetailRow(Icons.height_outlined, LocaleKeys.unit_details_height.tr(),
-          '${unit.height!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}'));
+      rows.add(
+        _DetailRow(
+          Icons.height_outlined,
+          LocaleKeys.unit_details_height.tr(),
+          '${unit.height!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}',
+        ),
+      );
     }
     if (unit.facadeLength != null && unit.facadeLength! > 0) {
-      rows.add(_DetailRow(Icons.architecture_outlined,
+      rows.add(
+        _DetailRow(
+          Icons.architecture_outlined,
           LocaleKeys.unit_details_facade_length.tr(),
-          '${unit.facadeLength!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}'));
+          '${unit.facadeLength!.toStringAsFixed(2)} ${LocaleKeys.unitDetailsMeters.tr()}',
+        ),
+      );
     }
     if (unit.direction != null && unit.direction!.isNotEmpty) {
-      rows.add(_DetailRow(Icons.explore_outlined, LocaleKeys.unit_details_direction.tr(),
-          unit.direction!));
+      rows.add(
+        _DetailRow(
+          Icons.explore_outlined,
+          LocaleKeys.unit_details_direction.tr(),
+          unit.direction!,
+        ),
+      );
     }
     if (unit.finishingType != null && unit.finishingType!.isNotEmpty) {
-      rows.add(_DetailRow(Icons.format_paint_outlined,
-          LocaleKeys.unit_details_finishing_type.tr(), unit.finishingType!));
+      rows.add(
+        _DetailRow(
+          Icons.format_paint_outlined,
+          LocaleKeys.unit_details_finishing_type.tr(),
+          unit.finishingType!,
+        ),
+      );
     }
 
     if (rows.isEmpty) return const SizedBox.shrink();
@@ -64,8 +93,12 @@ class UnitDimensionsCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: rows.length,
-            separatorBuilder: (_, _) =>
-                const Divider(height: 1, indent: 20, endIndent: 20, color: Color(0xFFF8FAFC)),
+            separatorBuilder: (_, _) => const Divider(
+              height: 1,
+              indent: 20,
+              endIndent: 20,
+              color: Color(0xFFF8FAFC),
+            ),
             itemBuilder: (context, i) => _buildRow(context, rows[i]),
           ),
         ),
@@ -88,13 +121,19 @@ class UnitDimensionsCard extends StatelessWidget {
           ),
           const SizedBox(width: 14),
           Expanded(
-            child: Text(row.label,
-                style: AppTextStyles.bodyMedium
-                    .copyWith(color: const Color(0xFF64748B))),
+            child: Text(
+              row.label,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: const Color(0xFF64748B),
+              ),
+            ),
           ),
-          Text(row.value,
-              style: AppTextStyles.labelLarge
-                  .copyWith(color: const Color(0xFF1E293B))),
+          Text(
+            row.value,
+            style: AppTextStyles.labelLarge.copyWith(
+              color: const Color(0xFF1E293B),
+            ),
+          ),
         ],
       ),
     );

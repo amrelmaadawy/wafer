@@ -18,9 +18,9 @@ class AuthRepositoryImpl implements AuthRepository {
     required AuthRemoteDataSource remoteDataSource,
     required SecureStorageService secureStorageService,
     required CacheHelper cacheHelper,
-  })  : _remoteDataSource = remoteDataSource,
-        _secureStorageService = secureStorageService,
-        _cacheHelper = cacheHelper;
+  }) : _remoteDataSource = remoteDataSource,
+       _secureStorageService = secureStorageService,
+       _cacheHelper = cacheHelper;
 
   @override
   Future<Either<Failure, UserEntity>> login({
@@ -51,7 +51,9 @@ class AuthRepositoryImpl implements AuthRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } catch (e) {
-      return Left(ServerFailure(LocaleKeys.errorsUnexpected.tr(args: [e.toString()])));
+      return Left(
+        ServerFailure(LocaleKeys.errorsUnexpected.tr(args: [e.toString()])),
+      );
     }
   }
 
@@ -82,13 +84,15 @@ class AuthRepositoryImpl implements AuthRepository {
           return Left(ServerFailure(LocaleKeys.errorsNotLoggedIn.tr()));
         }
 
-        return Right(UserEntity(
-          id: '',
-          name: '',
-          email: '',
-          token: token,
-          accountType: accountType ?? 'unknown',
-        ));
+        return Right(
+          UserEntity(
+            id: '',
+            name: '',
+            email: '',
+            token: token,
+            accountType: accountType ?? 'unknown',
+          ),
+        );
       }
       return Left(ServerFailure(LocaleKeys.errorsNotLoggedIn.tr()));
     } catch (e) {

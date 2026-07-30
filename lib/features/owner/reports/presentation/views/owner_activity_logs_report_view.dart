@@ -21,10 +21,12 @@ class OwnerActivityLogsReportView extends StatefulWidget {
   const OwnerActivityLogsReportView({super.key});
 
   @override
-  State<OwnerActivityLogsReportView> createState() => _OwnerActivityLogsReportViewState();
+  State<OwnerActivityLogsReportView> createState() =>
+      _OwnerActivityLogsReportViewState();
 }
 
-class _OwnerActivityLogsReportViewState extends State<OwnerActivityLogsReportView> {
+class _OwnerActivityLogsReportViewState
+    extends State<OwnerActivityLogsReportView> {
   final _scrollController = ScrollController();
   late OwnerActivityLogsCubit _cubit;
 
@@ -100,7 +102,7 @@ class _OwnerActivityLogsReportViewState extends State<OwnerActivityLogsReportVie
         ),
         body: BlocBuilder<OwnerActivityLogsCubit, OwnerActivityLogsState>(
           builder: (context, state) {
-            if (state is OwnerActivityLogsInitial || 
+            if (state is OwnerActivityLogsInitial ||
                 (state is OwnerActivityLogsLoading && !state.isPagination)) {
               return const ReportSkeleton();
             }
@@ -119,13 +121,16 @@ class _OwnerActivityLogsReportViewState extends State<OwnerActivityLogsReportVie
               );
             }
 
-            if (state is OwnerActivityLogsLoaded || 
+            if (state is OwnerActivityLogsLoaded ||
                 (state is OwnerActivityLogsLoading && state.isPagination)) {
-              final report = state is OwnerActivityLogsLoaded 
-                  ? state.report 
-                  : (context.read<OwnerActivityLogsCubit>().state as OwnerActivityLogsLoaded).report;
-                  
-              final isLoading = state is OwnerActivityLogsLoading && state.isPagination;
+              final report = state is OwnerActivityLogsLoaded
+                  ? state.report
+                  : (context.read<OwnerActivityLogsCubit>().state
+                            as OwnerActivityLogsLoaded)
+                        .report;
+
+              final isLoading =
+                  state is OwnerActivityLogsLoading && state.isPagination;
 
               return RefreshIndicator(
                 onRefresh: () async => _cubit.fetchReport(forceRefresh: true),
@@ -139,12 +144,13 @@ class _OwnerActivityLogsReportViewState extends State<OwnerActivityLogsReportVie
                           ActivityLogsSummaryHeader(summary: report.summary),
                           const SizedBox(height: 16),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
                             child: Text(
                               LocaleKeys.activityLogsList.tr(),
-                              style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              style: Theme.of(context).textTheme.titleMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                           ),
                           const SizedBox(height: 8),

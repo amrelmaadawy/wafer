@@ -7,6 +7,9 @@ import '../../domain/entities/maintenance_response_entity.dart';
 import '../../domain/repositories/owner_maintenance_repository.dart';
 import '../../domain/usecases/create_owner_maintenance_use_case.dart';
 import '../../domain/usecases/update_owner_maintenance_use_case.dart';
+import '../../domain/usecases/approve_owner_maintenance_use_case.dart';
+import '../../domain/usecases/reject_owner_maintenance_use_case.dart';
+import '../../domain/usecases/assign_owner_maintenance_use_case.dart';
 import '../datasources/owner_maintenance_remote_data_source.dart';
 
 class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
@@ -84,15 +87,58 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
   }
 
   @override
+  Future<Either<Failure, void>> approveMaintenanceRequest(
+    ApproveOwnerMaintenanceParams params,
+  ) async {
+    try {
+      await _remoteDataSource.approveMaintenanceRequest(params);
+      return const Right(null);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> deleteMaintenanceRequest(int id) async {
     try {
       await _remoteDataSource.deleteMaintenanceRequest(id);
       return const Right(null);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    } on DioException catch (e) {
-      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> rejectMaintenanceRequest(
+    RejectOwnerMaintenanceParams params,
+  ) async {
+    try {
+      await _remoteDataSource.rejectMaintenanceRequest(params);
+      return const Right(null);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> assignMaintenanceRequest(
+    AssignOwnerMaintenanceParams params,
+  ) async {
+    try {
+      await _remoteDataSource.assignMaintenanceRequest(params);
+      return const Right(null);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioException(e));
+      }
       return Left(ServerFailure(e.toString()));
     }
   }

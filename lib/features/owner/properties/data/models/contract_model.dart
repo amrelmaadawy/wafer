@@ -17,12 +17,19 @@ class ContractModel extends ContractEntity {
   });
 
   factory ContractModel.fromJson(Map<String, dynamic> json) {
-    final unitMap = json['unit'] is Map<String, dynamic> ? json['unit'] as Map<String, dynamic> : null;
-    final renterMap = json['renter'] is Map<String, dynamic> ? json['renter'] as Map<String, dynamic> : null;
+    final unitMap = json['unit'] is Map<String, dynamic>
+        ? json['unit'] as Map<String, dynamic>
+        : null;
+    final renterMap = json['renter'] is Map<String, dynamic>
+        ? json['renter'] as Map<String, dynamic>
+        : null;
 
     return ContractModel(
       id: json['id'] as int? ?? 0,
-      contractNumber: json['contract_number']?.toString() ?? json['number']?.toString() ?? '',
+      contractNumber:
+          json['contract_number']?.toString() ??
+          json['number']?.toString() ??
+          '',
       status: json['status']?.toString() ?? 'draft',
       statusLabel: json['status_label']?.toString() ?? 'مسودة',
       contractType: json['contract_type']?.toString() ?? '',

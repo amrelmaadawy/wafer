@@ -3,10 +3,7 @@ import 'contract_item_model.dart';
 import 'contracts_pagination_meta_model.dart';
 
 class ContractsResponseModel extends ContractsResponseEntity {
-  const ContractsResponseModel({
-    required super.contracts,
-    required super.meta,
-  });
+  const ContractsResponseModel({required super.contracts, required super.meta});
 
   factory ContractsResponseModel.fromJson(Map<String, dynamic> json) {
     Map<String, dynamic> contractsMap = {};
@@ -33,9 +30,6 @@ class ContractsResponseModel extends ContractsResponseEntity {
     final metaMap = contractsMap['meta'] as Map<String, dynamic>? ?? {};
     final meta = ContractsPaginationMetaModel.fromJson(metaMap);
 
-    return ContractsResponseModel(
-      contracts: contractsList,
-      meta: meta,
-    );
+    return ContractsResponseModel(contracts: contractsList, meta: meta);
   }
 }

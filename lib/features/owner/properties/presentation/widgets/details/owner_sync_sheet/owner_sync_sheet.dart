@@ -31,7 +31,10 @@ class OwnerSyncSheet extends StatelessWidget {
         if (state.isSuccess) {
           Navigator.of(context).pop();
           onSuccess();
-          AppToast.showSuccess(context, LocaleKeys.propertyOwnersSuccessMsg.tr());
+          AppToast.showSuccess(
+            context,
+            LocaleKeys.propertyOwnersSuccessMsg.tr(),
+          );
         }
         if (state.errorMessage != null) {
           AppToast.showError(context, state.errorMessage!);
@@ -134,17 +137,34 @@ class _SheetBody extends StatelessWidget {
                       ],
                     ),
                   ),
-                  AppShimmer.box(height: 32, width: 32, borderRadius: AppRadius.circularMd),
+                  AppShimmer.box(
+                    height: 32,
+                    width: 32,
+                    borderRadius: AppRadius.circularMd,
+                  ),
                   const SizedBox(width: 10),
-                  AppShimmer.box(height: 32, width: 32, borderRadius: AppRadius.circularMd),
+                  AppShimmer.box(
+                    height: 32,
+                    width: 32,
+                    borderRadius: AppRadius.circularMd,
+                  ),
                 ],
               ),
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Expanded(child: AppShimmer.box(height: 12, borderRadius: AppRadius.circularFull)),
+                  Expanded(
+                    child: AppShimmer.box(
+                      height: 12,
+                      borderRadius: AppRadius.circularFull,
+                    ),
+                  ),
                   const SizedBox(width: 20),
-                  AppShimmer.box(height: 44, width: 80, borderRadius: AppRadius.circularLg),
+                  AppShimmer.box(
+                    height: 44,
+                    width: 80,
+                    borderRadius: AppRadius.circularLg,
+                  ),
                 ],
               ),
             ],

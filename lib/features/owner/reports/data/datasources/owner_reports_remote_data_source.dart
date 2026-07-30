@@ -29,17 +29,19 @@ abstract class OwnerReportsRemoteDataSource {
     int page = 1,
     int? propertyId,
   });
-  Future<ContractsMovementReportModel> getContractsMovementReport({int page = 1});
-  
-  Future<MaintenanceRequestsReportModel> getMaintenanceRequestsReport({int page = 1});
-  
+  Future<ContractsMovementReportModel> getContractsMovementReport({
+    int page = 1,
+  });
+
+  Future<MaintenanceRequestsReportModel> getMaintenanceRequestsReport({
+    int page = 1,
+  });
+
   Future<TechnicianPerformanceReportModel> getTechnicianPerformanceReport({
     int page = 1,
   });
 
-  Future<EmployeeTasksReportModel> getEmployeeTasksReport({
-    int page = 1,
-  });
+  Future<EmployeeTasksReportModel> getEmployeeTasksReport({int page = 1});
 
   Future<ActivityLogsReportModel> getActivityLogsReport({
     int page = 1,
@@ -48,8 +50,7 @@ abstract class OwnerReportsRemoteDataSource {
   });
 }
 
-class OwnerReportsRemoteDataSourceImpl
-    implements OwnerReportsRemoteDataSource {
+class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
   final Dio _dio;
 
   OwnerReportsRemoteDataSourceImpl(this._dio);
@@ -111,9 +112,7 @@ class OwnerReportsRemoteDataSourceImpl
     int? propertyId,
     String? status,
   }) async {
-    final queryParameters = <String, dynamic>{
-      'page': page,
-    };
+    final queryParameters = <String, dynamic>{'page': page};
     if (propertyId != null) queryParameters['property_id'] = propertyId;
     if (status != null) queryParameters['status'] = status;
 
@@ -149,7 +148,9 @@ class OwnerReportsRemoteDataSourceImpl
   }
 
   @override
-  Future<ContractsMovementReportModel> getContractsMovementReport({int page = 1}) async {
+  Future<ContractsMovementReportModel> getContractsMovementReport({
+    int page = 1,
+  }) async {
     try {
       final response = await _dio.get(
         ApiConstants.ownerContractsMovementReport,
@@ -167,7 +168,9 @@ class OwnerReportsRemoteDataSourceImpl
   }
 
   @override
-  Future<MaintenanceRequestsReportModel> getMaintenanceRequestsReport({int page = 1}) async {
+  Future<MaintenanceRequestsReportModel> getMaintenanceRequestsReport({
+    int page = 1,
+  }) async {
     try {
       final response = await _dio.get(
         ApiConstants.ownerMaintenanceRequestsReport,
@@ -185,7 +188,9 @@ class OwnerReportsRemoteDataSourceImpl
   }
 
   @override
-  Future<TechnicianPerformanceReportModel> getTechnicianPerformanceReport({int page = 1}) async {
+  Future<TechnicianPerformanceReportModel> getTechnicianPerformanceReport({
+    int page = 1,
+  }) async {
     try {
       final response = await _dio.get(
         ApiConstants.ownerTechnicianPerformanceReport,
@@ -203,7 +208,9 @@ class OwnerReportsRemoteDataSourceImpl
   }
 
   @override
-  Future<EmployeeTasksReportModel> getEmployeeTasksReport({int page = 1}) async {
+  Future<EmployeeTasksReportModel> getEmployeeTasksReport({
+    int page = 1,
+  }) async {
     try {
       final response = await _dio.get(
         ApiConstants.ownerEmployeeTasksReport,

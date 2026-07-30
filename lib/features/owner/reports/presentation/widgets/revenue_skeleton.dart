@@ -78,7 +78,13 @@ class RevenueSkeleton extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 AppShimmer.box(width: 150, height: 16),
-                Row(children: [AppShimmer.circle(size: 10), const SizedBox(width: 4), AppShimmer.box(width: 45, height: 12)]),
+                Row(
+                  children: [
+                    AppShimmer.circle(size: 10),
+                    const SizedBox(width: 4),
+                    AppShimmer.box(width: 45, height: 12),
+                  ],
+                ),
               ],
             ),
             const SizedBox(height: 24),
@@ -86,21 +92,24 @@ class RevenueSkeleton extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.end,
-                children: List.generate(5, (i) => Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        AppShimmer.box(width: 14, height: 80.0 + (i * 15)),
-                        const SizedBox(width: 4),
-                        AppShimmer.box(width: 14, height: 60.0 + (i * 10)),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    AppShimmer.box(width: 36, height: 12),
-                  ],
-                )),
+                children: List.generate(
+                  5,
+                  (i) => Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          AppShimmer.box(width: 14, height: 80.0 + (i * 15)),
+                          const SizedBox(width: 4),
+                          AppShimmer.box(width: 14, height: 60.0 + (i * 10)),
+                        ],
+                      ),
+                      const SizedBox(height: 10),
+                      AppShimmer.box(width: 36, height: 12),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
@@ -123,8 +132,16 @@ class RevenueSkeleton extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                AppShimmer.box(width: 110, height: 26, borderRadius: AppRadius.circularSm),
-                AppShimmer.box(width: 50, height: 24, borderRadius: AppRadius.circularFull),
+                AppShimmer.box(
+                  width: 110,
+                  height: 26,
+                  borderRadius: AppRadius.circularSm,
+                ),
+                AppShimmer.box(
+                  width: 50,
+                  height: 24,
+                  borderRadius: AppRadius.circularFull,
+                ),
               ],
             ),
             const SizedBox(height: 14),

@@ -19,7 +19,9 @@ class ContractItemModel extends ContractItemEntity {
     final id = json['id'] != null ? json['id'].toString() : '';
 
     // Contract number/code
-    final contractNumber = (json['contract_number'] ?? json['code'] ?? json['number'] ?? 'CNT-$id').toString();
+    final contractNumber =
+        (json['contract_number'] ?? json['code'] ?? json['number'] ?? 'CNT-$id')
+            .toString();
 
     // Property name parsing (nested or flat)
     String propertyName = 'عقار عام';
@@ -27,7 +29,8 @@ class ContractItemModel extends ContractItemEntity {
       propertyName = json['property_name'].toString();
     } else if (json['property'] is Map<String, dynamic>) {
       final propMap = json['property'] as Map<String, dynamic>;
-      propertyName = (propMap['name'] ?? propMap['title'] ?? 'عقار غير محدد').toString();
+      propertyName = (propMap['name'] ?? propMap['title'] ?? 'عقار غير محدد')
+          .toString();
     } else if (json['title'] != null) {
       propertyName = json['title'].toString();
     }
@@ -38,7 +41,12 @@ class ContractItemModel extends ContractItemEntity {
       unitName = json['unit_name'].toString();
     } else if (json['unit'] is Map<String, dynamic>) {
       final unitMap = json['unit'] as Map<String, dynamic>;
-      unitName = (unitMap['name'] ?? unitMap['unit_number'] ?? unitMap['number'] ?? 'وحدة').toString();
+      unitName =
+          (unitMap['name'] ??
+                  unitMap['unit_number'] ??
+                  unitMap['number'] ??
+                  'وحدة')
+              .toString();
     }
 
     // Tenant name parsing
@@ -47,13 +55,15 @@ class ContractItemModel extends ContractItemEntity {
       tenantName = json['tenant_name'].toString();
     } else if (json['tenant'] is Map<String, dynamic>) {
       final tenantMap = json['tenant'] as Map<String, dynamic>;
-      tenantName = (tenantMap['name'] ?? tenantMap['full_name'] ?? 'مستأجر').toString();
+      tenantName = (tenantMap['name'] ?? tenantMap['full_name'] ?? 'مستأجر')
+          .toString();
     } else if (json['party_name'] != null) {
       tenantName = json['party_name'].toString();
     }
 
     // Dates
-    final startDate = (json['start_date'] ?? json['from_date'] ?? '').toString();
+    final startDate = (json['start_date'] ?? json['from_date'] ?? '')
+        .toString();
     final endDate = (json['end_date'] ?? json['to_date'] ?? '').toString();
 
     // Rent amount
@@ -67,7 +77,12 @@ class ContractItemModel extends ContractItemEntity {
     }
 
     // Payment cycle
-    final paymentCycle = (json['payment_cycle'] ?? json['cycle'] ?? json['frequency'] ?? 'monthly').toString();
+    final paymentCycle =
+        (json['payment_cycle'] ??
+                json['cycle'] ??
+                json['frequency'] ??
+                'monthly')
+            .toString();
 
     // Status
     final status = (json['status'] ?? 'active').toString();

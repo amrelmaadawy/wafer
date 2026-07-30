@@ -19,31 +19,53 @@ class LauncherUtils {
     return false;
   }
 
-  static Future<bool> openWhatsApp(String phoneNumber, {String? message}) async {
+  static Future<bool> openWhatsApp(
+    String phoneNumber, {
+    String? message,
+  }) async {
     String cleanPhone = phoneNumber.replaceAll(RegExp(r'\s+|-|\(|\)|\+'), '');
-    if (cleanPhone.startsWith('0') && cleanPhone.length == 11 && cleanPhone.startsWith('01')) {
+    if (cleanPhone.startsWith('0') &&
+        cleanPhone.length == 11 &&
+        cleanPhone.startsWith('01')) {
       cleanPhone = '20${cleanPhone.substring(1)}';
-    } else if (cleanPhone.startsWith('0') && cleanPhone.length == 10 && cleanPhone.startsWith('05')) {
+    } else if (cleanPhone.startsWith('0') &&
+        cleanPhone.length == 10 &&
+        cleanPhone.startsWith('05')) {
       cleanPhone = '966${cleanPhone.substring(1)}';
     }
 
-    final queryMsg = message != null && message.isNotEmpty ? '&text=${Uri.encodeComponent(message)}' : '';
-    final whatsappAppUrl = Uri.parse('whatsapp://send?phone=$cleanPhone$queryMsg');
-    final webUrl = Uri.parse('https://wa.me/$cleanPhone${queryMsg.isNotEmpty ? "?text=${Uri.encodeComponent(message!)}" : ""}');
+    final queryMsg = message != null && message.isNotEmpty
+        ? '&text=${Uri.encodeComponent(message)}'
+        : '';
+    final whatsappAppUrl = Uri.parse(
+      'whatsapp://send?phone=$cleanPhone$queryMsg',
+    );
+    final webUrl = Uri.parse(
+      'https://wa.me/$cleanPhone${queryMsg.isNotEmpty ? "?text=${Uri.encodeComponent(message!)}" : ""}',
+    );
 
     try {
-      final launchedApp = await launchUrl(whatsappAppUrl, mode: LaunchMode.externalApplication);
+      final launchedApp = await launchUrl(
+        whatsappAppUrl,
+        mode: LaunchMode.externalApplication,
+      );
       if (launchedApp) return true;
     } catch (_) {}
 
     try {
-      final launchedWeb = await launchUrl(webUrl, mode: LaunchMode.externalApplication);
+      final launchedWeb = await launchUrl(
+        webUrl,
+        mode: LaunchMode.externalApplication,
+      );
       if (launchedWeb) return true;
     } catch (_) {}
 
     try {
       if (await canLaunchUrl(whatsappAppUrl)) {
-        return await launchUrl(whatsappAppUrl, mode: LaunchMode.externalApplication);
+        return await launchUrl(
+          whatsappAppUrl,
+          mode: LaunchMode.externalApplication,
+        );
       }
       if (await canLaunchUrl(webUrl)) {
         return await launchUrl(webUrl, mode: LaunchMode.externalApplication);

@@ -10,7 +10,7 @@ class PropertyEditState extends Equatable {
   final bool isAutoSaving;
   final bool isSuccess;
   final String? errorMessage;
-  
+
   final PropertyFormDataEntity? formData;
   final int? selectedBranchId;
   final int? selectedDeedId;
@@ -86,17 +86,17 @@ class PropertyEditState extends Equatable {
 
   @override
   List<Object?> get props => [
-        isLoadingForm,
-        isSaving,
-        isAutoSaving,
-        isSuccess,
-        errorMessage,
-        formData,
-        selectedBranchId,
-        selectedDeedId,
-        selectedType,
-        selectedUsageType,
-        selectedAmenities,
-        updatedProperty,
-      ];
+    isLoadingForm,
+    isSaving,
+    isAutoSaving,
+    isSuccess,
+    errorMessage,
+    formData,
+    selectedBranchId,
+    selectedDeedId,
+    selectedType,
+    selectedUsageType,
+    selectedAmenities,
+    updatedProperty,
+  ];
 }

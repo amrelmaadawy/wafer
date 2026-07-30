@@ -12,7 +12,8 @@ class ContractsMovementReportModel extends ContractsMovementReportEntity {
   factory ContractsMovementReportModel.fromJson(Map<String, dynamic> json) {
     return ContractsMovementReportModel(
       summary: ContractsMovementSummaryModel.fromJson(json['summary'] ?? {}),
-      items: (json['items'] as List?)
+      items:
+          (json['items'] as List?)
               ?.map((e) => ContractsMovementItemModel.fromJson(e))
               .toList() ??
           [],

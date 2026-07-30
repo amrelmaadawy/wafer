@@ -30,7 +30,8 @@ class OccupancyReportModel extends OccupancyReportEntity {
   factory OccupancyReportModel.fromJson(Map<String, dynamic> json) {
     return OccupancyReportModel(
       summary: OccupancyReportSummaryModel.fromJson(json['summary'] ?? {}),
-      items: (json['items'] as List<dynamic>?)
+      items:
+          (json['items'] as List<dynamic>?)
               ?.map((e) => OccupancyPropertyModel.fromJson(e))
               .toList() ??
           [],

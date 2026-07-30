@@ -22,7 +22,8 @@ class AppToastWidget extends StatefulWidget {
   State<AppToastWidget> createState() => _AppToastWidgetState();
 }
 
-class _AppToastWidgetState extends State<AppToastWidget> with SingleTickerProviderStateMixin {
+class _AppToastWidgetState extends State<AppToastWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _offsetAnimation;
   late Animation<double> _fadeAnimation;
@@ -62,11 +63,15 @@ class _AppToastWidgetState extends State<AppToastWidget> with SingleTickerProvid
 
   Color get _accentColor => widget.type == AppToastType.success
       ? AppToastColors.success
-      : (widget.type == AppToastType.error ? AppToastColors.error : AppToastColors.info);
+      : (widget.type == AppToastType.error
+            ? AppToastColors.error
+            : AppToastColors.info);
 
   IconData get _icon => widget.type == AppToastType.success
       ? Icons.check_circle_rounded
-      : (widget.type == AppToastType.error ? Icons.error_rounded : Icons.info_rounded);
+      : (widget.type == AppToastType.error
+            ? Icons.error_rounded
+            : Icons.info_rounded);
 
   @override
   Widget build(BuildContext context) {
@@ -83,13 +88,22 @@ class _AppToastWidgetState extends State<AppToastWidget> with SingleTickerProvid
             child: Directionality(
               textDirection: TextDirection.rtl,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
                 decoration: BoxDecoration(
                   color: AppColors.surfaceLight,
                   borderRadius: AppRadius.circularLg,
-                  border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.8)),
+                  border: Border.all(
+                    color: AppColors.borderLight.withValues(alpha: 0.8),
+                  ),
                   boxShadow: [
-                    BoxShadow(color: Colors.black.withValues(alpha: 0.12), blurRadius: 24, offset: const Offset(0, 8)),
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.12),
+                      blurRadius: 24,
+                      offset: const Offset(0, 8),
+                    ),
                   ],
                 ),
                 child: Row(
@@ -97,7 +111,10 @@ class _AppToastWidgetState extends State<AppToastWidget> with SingleTickerProvid
                     Container(
                       width: 42,
                       height: 42,
-                      decoration: BoxDecoration(color: _accentColor.withValues(alpha: 0.12), shape: BoxShape.circle),
+                      decoration: BoxDecoration(
+                        color: _accentColor.withValues(alpha: 0.12),
+                        shape: BoxShape.circle,
+                      ),
                       child: Icon(_icon, color: _accentColor, size: 24),
                     ),
                     const SizedBox(width: 14),
@@ -106,9 +123,23 @@ class _AppToastWidgetState extends State<AppToastWidget> with SingleTickerProvid
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(widget.title, style: const TextStyle(color: AppColors.textPrimaryLight, fontSize: 14, fontWeight: FontWeight.bold)),
+                          Text(
+                            widget.title,
+                            style: const TextStyle(
+                              color: AppColors.textPrimaryLight,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           const SizedBox(height: 2),
-                          Text(widget.message, style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 12.5, fontWeight: FontWeight.w500)),
+                          Text(
+                            widget.message,
+                            style: const TextStyle(
+                              color: AppColors.textSecondaryLight,
+                              fontSize: 12.5,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -120,7 +151,13 @@ class _AppToastWidgetState extends State<AppToastWidget> with SingleTickerProvid
                       borderRadius: AppRadius.circularXl,
                       child: Padding(
                         padding: const EdgeInsets.all(4),
-                        child: Icon(Icons.close_rounded, size: 18, color: AppColors.textSecondaryLight.withValues(alpha: 0.6)),
+                        child: Icon(
+                          Icons.close_rounded,
+                          size: 18,
+                          color: AppColors.textSecondaryLight.withValues(
+                            alpha: 0.6,
+                          ),
+                        ),
                       ),
                     ),
                   ],

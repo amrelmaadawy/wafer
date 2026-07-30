@@ -6,19 +6,25 @@ extension ColorUtils on Color {
   /// Returns a darker shade by reducing HSL lightness by [factor] (0.0–1.0).
   Color darken([double factor = 0.2]) {
     final hsl = HSLColor.fromColor(this);
-    return hsl.withLightness((hsl.lightness - factor).clamp(0.0, 1.0)).toColor();
+    return hsl
+        .withLightness((hsl.lightness - factor).clamp(0.0, 1.0))
+        .toColor();
   }
 
   /// Returns a lighter shade by increasing HSL lightness by [factor] (0.0–1.0).
   Color lighten([double factor = 0.15]) {
     final hsl = HSLColor.fromColor(this);
-    return hsl.withLightness((hsl.lightness + factor).clamp(0.0, 1.0)).toColor();
+    return hsl
+        .withLightness((hsl.lightness + factor).clamp(0.0, 1.0))
+        .toColor();
   }
 
   /// Returns the color with reduced saturation (more muted/neutral look).
   Color muted([double factor = 0.3]) {
     final hsl = HSLColor.fromColor(this);
-    return hsl.withSaturation((hsl.saturation - factor).clamp(0.0, 1.0)).toColor();
+    return hsl
+        .withSaturation((hsl.saturation - factor).clamp(0.0, 1.0))
+        .toColor();
   }
 
   /// Returns the color with [alpha] opacity (0.0–1.0).

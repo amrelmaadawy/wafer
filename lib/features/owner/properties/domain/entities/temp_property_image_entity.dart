@@ -37,11 +37,11 @@ class TempPropertyImageEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        localPath,
-        tempPath,
-        url,
-        description,
-        isUploading,
-        uploadFailed,
-      ];
+    localPath,
+    tempPath,
+    url,
+    description,
+    isUploading,
+    uploadFailed,
+  ];
 }

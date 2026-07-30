@@ -23,10 +23,13 @@ class NotificationItemModel extends NotificationItemEntity {
     final bodyStr = json['body']?.toString().isNotEmpty == true
         ? json['body'].toString()
         : (json['message']?.toString().isNotEmpty == true
-            ? json['message'].toString()
-            : (payload['body']?.toString() ?? payload['message']?.toString() ?? ''));
+              ? json['message'].toString()
+              : (payload['body']?.toString() ??
+                    payload['message']?.toString() ??
+                    ''));
 
-    final typeStr = json['type']?.toString() ?? payload['type']?.toString() ?? 'general';
+    final typeStr =
+        json['type']?.toString() ?? payload['type']?.toString() ?? 'general';
 
     return NotificationItemModel(
       id: json['id']?.toString() ?? '',
@@ -34,18 +37,26 @@ class NotificationItemModel extends NotificationItemEntity {
       body: bodyStr,
       type: _simplifyType(typeStr),
       readAt: json['read_at']?.toString(),
-      createdAt: json['created_at']?.toString() ?? DateTime.now().toIso8601String(),
+      createdAt:
+          json['created_at']?.toString() ?? DateTime.now().toIso8601String(),
       data: payload,
     );
   }
 
   static String _simplifyType(String rawType) {
     final lower = rawType.toLowerCase();
-    if (lower.contains('payment') || lower.contains('receipt') || lower.contains('invoice') || lower.contains('finance')) {
+    if (lower.contains('payment') ||
+        lower.contains('receipt') ||
+        lower.contains('invoice') ||
+        lower.contains('finance')) {
       return 'payment';
-    } else if (lower.contains('lease') || lower.contains('contract') || lower.contains('rent')) {
+    } else if (lower.contains('lease') ||
+        lower.contains('contract') ||
+        lower.contains('rent')) {
       return 'lease';
-    } else if (lower.contains('maint') || lower.contains('repair') || lower.contains('work_order')) {
+    } else if (lower.contains('maint') ||
+        lower.contains('repair') ||
+        lower.contains('work_order')) {
       return 'maintenance';
     }
     return 'general';

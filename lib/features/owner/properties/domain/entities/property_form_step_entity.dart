@@ -23,13 +23,13 @@ class PropertyFormStepEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        key,
-        label,
-        endpoint,
-        fields,
-        autoSave,
-        syncEndpoint,
-        unitWorkflow,
-        visibleWhen,
-      ];
+    key,
+    label,
+    endpoint,
+    fields,
+    autoSave,
+    syncEndpoint,
+    unitWorkflow,
+    visibleWhen,
+  ];
 }

@@ -20,13 +20,16 @@ class GetOwnerContractsParams extends Equatable {
   List<Object?> get props => [page, status, forceRefresh];
 }
 
-class GetOwnerContractsUseCase implements UseCase<ContractsResponseEntity, GetOwnerContractsParams> {
+class GetOwnerContractsUseCase
+    implements UseCase<ContractsResponseEntity, GetOwnerContractsParams> {
   final OwnerContractsRepository _repository;
 
   GetOwnerContractsUseCase(this._repository);
 
   @override
-  Future<Either<Failure, ContractsResponseEntity>> call(GetOwnerContractsParams params) {
+  Future<Either<Failure, ContractsResponseEntity>> call(
+    GetOwnerContractsParams params,
+  ) {
     return _repository.getContracts(
       page: params.page,
       status: params.status,

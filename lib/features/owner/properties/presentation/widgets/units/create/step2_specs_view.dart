@@ -19,9 +19,12 @@ class Step2SpecsView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('المواصفات والمساحات', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text(
+                'المواصفات والمساحات',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 16),
-              
+
               Row(
                 children: [
                   Expanded(
@@ -34,7 +37,9 @@ class Step2SpecsView extends StatelessWidget {
                         'roof': 'روف',
                         'basement': 'بدروم',
                       },
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(floorType: val),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(floorType: val),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -45,14 +50,19 @@ class Step2SpecsView extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: state.floorNumber?.toString(),
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(floorNumber: int.tryParse(val)),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(floorNumber: int.tryParse(val)),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
 
-              const Text('الأبعاد (اختياري)', style: TextStyle(fontWeight: FontWeight.w600)),
+              const Text(
+                'الأبعاد (اختياري)',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -61,9 +71,15 @@ class Step2SpecsView extends StatelessWidget {
                       label: 'الطول (م)',
                       hintText: 'مثال: 12',
                       keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
+                      ],
                       initialValue: state.length?.toString(),
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(length: double.tryParse(val)),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(length: double.tryParse(val)),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -72,9 +88,15 @@ class Step2SpecsView extends StatelessWidget {
                       label: 'المساحة (م²)',
                       hintText: 'مثال: 120',
                       keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
+                      ],
                       initialValue: state.area?.toString(),
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(area: double.tryParse(val)),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(area: double.tryParse(val)),
                     ),
                   ),
                   Expanded(
@@ -82,9 +104,15 @@ class Step2SpecsView extends StatelessWidget {
                       label: 'العرض (م)',
                       hintText: 'مثال: 10',
                       keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
+                      ],
                       initialValue: state.width?.toString(),
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(width: double.tryParse(val)),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(width: double.tryParse(val)),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -93,9 +121,15 @@ class Step2SpecsView extends StatelessWidget {
                       label: 'الارتفاع (م)',
                       hintText: 'مثال: 3',
                       keyboardType: TextInputType.number,
-                      inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
+                      ],
                       initialValue: state.height?.toString(),
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(height: double.tryParse(val)),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(height: double.tryParse(val)),
                     ),
                   ),
                 ],
@@ -105,15 +139,22 @@ class Step2SpecsView extends StatelessWidget {
                 label: 'طول الواجهة (م)',
                 hintText: 'مثال: 8',
                 keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                ],
                 initialValue: state.facadeLength?.toString(),
-                onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(facadeLength: double.tryParse(val)),
+                onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(
+                  facadeLength: double.tryParse(val),
+                ),
               ),
               const SizedBox(height: 24),
 
-              const Text('التقسيم الداخلي', style: TextStyle(fontWeight: FontWeight.w600)),
+              const Text(
+                'التقسيم الداخلي',
+                style: TextStyle(fontWeight: FontWeight.w600),
+              ),
               const SizedBox(height: 8),
-              
+
               Row(
                 children: [
                   Expanded(
@@ -123,7 +164,9 @@ class Step2SpecsView extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: state.roomsCount?.toString(),
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(roomsCount: int.tryParse(val)),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(roomsCount: int.tryParse(val)),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -134,13 +177,15 @@ class Step2SpecsView extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: state.bathroomsCount?.toString(),
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(bathroomsCount: int.tryParse(val)),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(bathroomsCount: int.tryParse(val)),
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 16),
-              
+
               Row(
                 children: [
                   Expanded(
@@ -150,7 +195,9 @@ class Step2SpecsView extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: state.hallsCount?.toString(),
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(hallsCount: int.tryParse(val)),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(hallsCount: int.tryParse(val)),
                     ),
                   ),
                   const SizedBox(width: 16),
@@ -161,7 +208,9 @@ class Step2SpecsView extends StatelessWidget {
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: state.kitchensCount?.toString(),
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateSpecs(kitchensCount: int.tryParse(val)),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(kitchensCount: int.tryParse(val)),
                     ),
                   ),
                 ],
@@ -182,7 +231,13 @@ class Step2SpecsView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontWeight: FontWeight.w600, color: AppColors.textPrimaryLight)),
+        Text(
+          label,
+          style: const TextStyle(
+            fontWeight: FontWeight.w600,
+            color: AppColors.textPrimaryLight,
+          ),
+        ),
         const SizedBox(height: 8),
         CustomDropdownMenu<String>(
           items: items.keys.toList(),

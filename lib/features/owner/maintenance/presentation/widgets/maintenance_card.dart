@@ -235,24 +235,22 @@ class MaintenanceCard extends StatelessWidget {
           textBaseline: TextBaseline.alphabetic,
           children: [
             Text(
-              amount > 0 ? amount.toStringAsFixed(0) : '--',
+              amount.toStringAsFixed(0),
               style: TextStyle(
                 color: valueColor,
                 fontSize: 17,
                 fontWeight: FontWeight.w800,
               ),
             ),
-            if (amount > 0) ...[
-              const SizedBox(width: 4),
-              Text(
-                LocaleKeys.contractsCurrency.tr(),
-                style: TextStyle(
-                  color: valueColor.withValues(alpha: 0.8),
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                ),
+            const SizedBox(width: 4),
+            Text(
+              LocaleKeys.contractsCurrency.tr(),
+              style: TextStyle(
+                color: valueColor.withValues(alpha: 0.8),
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
               ),
-            ],
+            ),
           ],
         ),
       ],

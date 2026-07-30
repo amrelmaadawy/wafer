@@ -11,7 +11,7 @@ class SyncOwnersCubit extends Cubit<SyncOwnersState> {
   final GetPropertyFormDataUseCase _getFormDataUseCase;
 
   SyncOwnersCubit(this._syncOwnersUseCase, this._getFormDataUseCase)
-      : super(const SyncOwnersState());
+    : super(const SyncOwnersState());
 
   Future<void> loadOwnersFromApi({
     required List<PropertyOwnerEntity> currentOwners,
@@ -21,16 +21,20 @@ class SyncOwnersCubit extends Cubit<SyncOwnersState> {
     result.fold(
       (f) => emit(state.copyWith(isLoading: false, errorMessage: f.message)),
       (formData) {
-        emit(SyncOwnersState.fromCurrentOwners(
-          availableOwners: formData.options.owners,
-          currentOwners: currentOwners,
-        ));
+        emit(
+          SyncOwnersState.fromCurrentOwners(
+            availableOwners: formData.options.owners,
+            currentOwners: currentOwners,
+          ),
+        );
       },
     );
   }
 
   bool addOwner(FormOwnerEntity owner) {
-    final alreadyAdded = state.assignedOwners.any((e) => e.owner.id == owner.id);
+    final alreadyAdded = state.assignedOwners.any(
+      (e) => e.owner.id == owner.id,
+    );
     if (alreadyAdded) return false;
 
     final updated = [...state.assignedOwners, DraftOwnerEntry(owner: owner)];
@@ -65,18 +69,16 @@ class SyncOwnersCubit extends Cubit<SyncOwnersState> {
   void autoDistribute() {
     if (state.assignedOwners.isEmpty) return;
     final perOwner = (100.0 / state.assignedOwners.length);
-    final updated = state.assignedOwners
-        .asMap()
-        .entries
-        .map((entry) {
-          final isLast = entry.key == state.assignedOwners.length - 1;
-          // Last owner gets the remainder to avoid float rounding issues
-          final pct = isLast
-              ? 100.0 - perOwner * (state.assignedOwners.length - 1)
-              : perOwner;
-          return entry.value.copyWith(percentage: double.parse(pct.toStringAsFixed(2)));
-        })
-        .toList();
+    final updated = state.assignedOwners.asMap().entries.map((entry) {
+      final isLast = entry.key == state.assignedOwners.length - 1;
+      // Last owner gets the remainder to avoid float rounding issues
+      final pct = isLast
+          ? 100.0 - perOwner * (state.assignedOwners.length - 1)
+          : perOwner;
+      return entry.value.copyWith(
+        percentage: double.parse(pct.toStringAsFixed(2)),
+      );
+    }).toList();
     emit(state.copyWith(assignedOwners: updated, clearError: true));
   }
 
@@ -94,11 +96,15 @@ class SyncOwnersCubit extends Cubit<SyncOwnersState> {
 
     emit(state.copyWith(isSyncing: true, clearError: true));
 
-    final payload = owners.map((e) => {
-      'id': e.owner.id,
-      'percentage': e.percentage,
-      'is_representative': e.isRepresentative,
-    }).toList();
+    final payload = owners
+        .map(
+          (e) => {
+            'id': e.owner.id,
+            'percentage': e.percentage,
+            'is_representative': e.isRepresentative,
+          },
+        )
+        .toList();
 
     final result = await _syncOwnersUseCase(propertyId, payload);
     return result.fold(

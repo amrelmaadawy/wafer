@@ -48,9 +48,15 @@ class DraftCompletionBanner extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(20, 16, 20, 0),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: isReady ? AppColors.success.withValues(alpha: 0.1) : AppColors.warning.withValues(alpha: 0.1),
+        color: isReady
+            ? AppColors.success.withValues(alpha: 0.1)
+            : AppColors.warning.withValues(alpha: 0.1),
         borderRadius: AppRadius.circularLg,
-        border: Border.all(color: isReady ? AppColors.success.withValues(alpha: 0.3) : AppColors.warning.withValues(alpha: 0.3)),
+        border: Border.all(
+          color: isReady
+              ? AppColors.success.withValues(alpha: 0.3)
+              : AppColors.warning.withValues(alpha: 0.3),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,18 +64,24 @@ class DraftCompletionBanner extends StatelessWidget {
           Row(
             children: [
               Icon(
-                isReady ? Icons.check_circle_outline_rounded : Icons.info_outline_rounded,
+                isReady
+                    ? Icons.check_circle_outline_rounded
+                    : Icons.info_outline_rounded,
                 color: isReady ? AppColors.success : AppColors.warning,
                 size: 24,
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
-                  isReady ? LocaleKeys.propertyDetailsReadyToPublish.tr() : LocaleKeys.propertyDraftIncomplete.tr(),
+                  isReady
+                      ? LocaleKeys.propertyDetailsReadyToPublish.tr()
+                      : LocaleKeys.propertyDraftIncomplete.tr(),
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: isReady ? AppColors.success : AppColors.textPrimaryLight,
+                    color: isReady
+                        ? AppColors.success
+                        : AppColors.textPrimaryLight,
                   ),
                 ),
               ),
@@ -121,8 +133,12 @@ class DraftCompletionBanner extends StatelessWidget {
                         child: LinearProgressIndicator(
                           value: property.completionPercentage / 100,
                           minHeight: 6,
-                          backgroundColor: AppColors.warning.withValues(alpha: 0.2),
-                          valueColor: const AlwaysStoppedAnimation<Color>(AppColors.warning),
+                          backgroundColor: AppColors.warning.withValues(
+                            alpha: 0.2,
+                          ),
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                            AppColors.warning,
+                          ),
                         ),
                       ),
                     ],
@@ -132,18 +148,27 @@ class DraftCompletionBanner extends StatelessWidget {
               Expanded(
                 flex: isReady ? 1 : 0,
                 child: ElevatedButton(
-                  onPressed: isReady ? () => _showPublishSheet(context) : onContinue,
+                  onPressed: isReady
+                      ? () => _showPublishSheet(context)
+                      : onContinue,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: isReady ? AppColors.success : AppColors.warning,
+                    backgroundColor: isReady
+                        ? AppColors.success
+                        : AppColors.warning,
                     foregroundColor: Colors.white,
                     elevation: 0,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 12,
+                    ),
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadius.circularMd,
                     ),
                   ),
                   child: Text(
-                    isReady ? LocaleKeys.propertyDetailsPublishNow.tr() : LocaleKeys.propertyDraftContinue.tr(),
+                    isReady
+                        ? LocaleKeys.propertyDetailsPublishNow.tr()
+                        : LocaleKeys.propertyDraftContinue.tr(),
                     style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,

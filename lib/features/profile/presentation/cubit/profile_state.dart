@@ -77,4 +77,3 @@ class ProfileAvatarUpdateError extends ProfileLoaded {
   @override
   List<Object?> get props => [profile, errorMessage];
 }
-

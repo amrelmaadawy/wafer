@@ -42,7 +42,7 @@ class ContractsExcelBuilder {
     // Summary Section
     sheet.getRangeByName('A4').text = 'العقود المنتهية خلال $days يوم';
     sheet.getRangeByName('B4').number = totalExpiring.toDouble();
-    
+
     sheet.getRangeByName('A5').text = 'إجمالي الإيجارات';
     sheet.getRangeByName('B5').number = totalRentValue;
 
@@ -79,16 +79,23 @@ class ContractsExcelBuilder {
       final c = contracts[i];
       final row = startRow + 1 + i;
 
-      sheet.getRangeByIndex(row, 1).text = c.propertyName.isNotEmpty ? c.propertyName : 'غير محدد';
-      sheet.getRangeByIndex(row, 2).text = c.unitName.isNotEmpty ? c.unitName : 'غير محدد';
-      sheet.getRangeByIndex(row, 3).text = c.renterName.isNotEmpty ? c.renterName : 'غير محدد';
+      sheet.getRangeByIndex(row, 1).text = c.propertyName.isNotEmpty
+          ? c.propertyName
+          : 'غير محدد';
+      sheet.getRangeByIndex(row, 2).text = c.unitName.isNotEmpty
+          ? c.unitName
+          : 'غير محدد';
+      sheet.getRangeByIndex(row, 3).text = c.renterName.isNotEmpty
+          ? c.renterName
+          : 'غير محدد';
       sheet.getRangeByIndex(row, 4).text = c.startDate;
       sheet.getRangeByIndex(row, 5).text = c.endDate;
       sheet.getRangeByIndex(row, 6).number = c.rentValue;
       sheet.getRangeByIndex(row, 7).number = c.daysRemaining.toDouble();
       sheet.getRangeByIndex(row, 8).text = c.status;
 
-      sheet.getRangeByIndex(row, 1, row, headers.length).cellStyle = normalStyle;
+      sheet.getRangeByIndex(row, 1, row, headers.length).cellStyle =
+          normalStyle;
     }
 
     final List<int> bytes = workbook.saveAsStream();

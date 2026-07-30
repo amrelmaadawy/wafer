@@ -63,8 +63,8 @@ class DefaultersReportItemCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  item.renter.name.isNotEmpty 
-                      ? item.renter.name 
+                  item.renter.name.isNotEmpty
+                      ? item.renter.name
                       : LocaleKeys.defaultersUnknownRenter.tr(),
                   style: const TextStyle(
                     fontSize: 16,
@@ -75,8 +75,11 @@ class DefaultersReportItemCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(Icons.maps_home_work_outlined,
-                        size: 14, color: AppColors.textSecondaryLight),
+                    const Icon(
+                      Icons.maps_home_work_outlined,
+                      size: 14,
+                      color: AppColors.textSecondaryLight,
+                    ),
                     const SizedBox(width: 4),
                     Expanded(
                       child: Text(
@@ -148,25 +151,25 @@ class DefaultersReportItemCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: AppColors.textSecondaryLight,
-                  fontWeight: FontWeight.w500,
+                Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondaryLight,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                value,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.textPrimaryLight,
-                  fontWeight: FontWeight.w600,
+                const SizedBox(height: 2),
+                Text(
+                  value,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: AppColors.textPrimaryLight,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
           ),
         ],
       ),

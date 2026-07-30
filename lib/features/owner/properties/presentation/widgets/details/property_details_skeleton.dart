@@ -47,10 +47,7 @@ class PropertyDetailsSkeleton extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
-          colors: [
-            context.primaryColor,
-            const Color(0xFF0F172A),
-          ],
+          colors: [context.primaryColor, const Color(0xFF0F172A)],
         ),
       ),
       child: SafeArea(
@@ -74,7 +71,10 @@ class PropertyDetailsSkeleton extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 6,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.05),
                           borderRadius: AppRadius.circularFull,
@@ -142,7 +142,10 @@ class PropertyDetailsSkeleton extends StatelessWidget {
                       child: Container(
                         width: 30,
                         height: 30,
-                        decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                        ),
                       ),
                     ),
                   ),
@@ -279,7 +282,11 @@ class PropertyDetailsSkeleton extends StatelessWidget {
               ],
             ),
             AppShimmer.box(width: 60, height: 22),
-            AppShimmer.box(width: 110, height: 14, borderRadius: AppRadius.circularFull),
+            AppShimmer.box(
+              width: 110,
+              height: 14,
+              borderRadius: AppRadius.circularFull,
+            ),
           ],
         ),
       ),

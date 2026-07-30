@@ -7,7 +7,6 @@ import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/theme/app_colors.dart';
 
-
 class OwnerQuickActions extends StatelessWidget {
   const OwnerQuickActions({super.key});
 
@@ -18,8 +17,11 @@ class OwnerQuickActions extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.grid_view_rounded,
-                size: 17, color: Color(0xFF64748B)),
+            const Icon(
+              Icons.grid_view_rounded,
+              size: 17,
+              color: Color(0xFF64748B),
+            ),
             const SizedBox(width: 6),
             Text(
               LocaleKeys.dashboard_quick_actions.tr(),

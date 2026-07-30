@@ -4,7 +4,8 @@ import '../../../../../core/usecases/usecase.dart';
 import '../entities/property_form_data_entity.dart';
 import '../repositories/properties_repository.dart';
 
-class GetPropertyFormDataUseCase implements UseCase<PropertyFormDataEntity, NoParams> {
+class GetPropertyFormDataUseCase
+    implements UseCase<PropertyFormDataEntity, NoParams> {
   final PropertiesRepository repository;
 
   GetPropertyFormDataUseCase(this.repository);

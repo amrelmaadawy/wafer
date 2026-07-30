@@ -40,7 +40,11 @@ class DeedDetailsPropertiesCard extends StatelessWidget {
                   color: context.primarySubtle,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.apartment_rounded, color: context.primaryColor, size: 20),
+                child: Icon(
+                  Icons.apartment_rounded,
+                  color: context.primaryColor,
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 12),
               Text(
@@ -53,7 +57,10 @@ class DeedDetailsPropertiesCard extends StatelessWidget {
               ),
               const Spacer(),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
                 decoration: BoxDecoration(
                   color: context.primaryColor,
                   borderRadius: BorderRadius.circular(12),
@@ -75,13 +82,16 @@ class DeedDetailsPropertiesCard extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               itemCount: deed.properties.length,
-              separatorBuilder: (_, _) => const Divider(color: AppColors.borderLight, height: 16),
+              separatorBuilder: (_, _) =>
+                  const Divider(color: AppColors.borderLight, height: 16),
               itemBuilder: (context, index) {
                 final property = deed.properties[index];
                 return AnimatedPressCard(
                   onTap: () {
                     FocusManager.instance.primaryFocus?.unfocus();
-                    context.push('${Routes.ownerPropertyDetails}?id=${property.id}');
+                    context.push(
+                      '${Routes.ownerPropertyDetails}?id=${property.id}',
+                    );
                   },
                   child: Row(
                     children: [
@@ -92,7 +102,11 @@ class DeedDetailsPropertiesCard extends StatelessWidget {
                           color: AppColors.backgroundLight,
                           borderRadius: BorderRadius.circular(10),
                         ),
-                        child: Icon(Icons.home_work_rounded, color: context.primaryColor, size: 22),
+                        child: Icon(
+                          Icons.home_work_rounded,
+                          color: context.primaryColor,
+                          size: 22,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -100,7 +114,8 @@ class DeedDetailsPropertiesCard extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              property.name ?? LocaleKeys.occupancyUnnamedProperty.tr(),
+                              property.name ??
+                                  LocaleKeys.occupancyUnnamedProperty.tr(),
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -127,7 +142,9 @@ class DeedDetailsPropertiesCard extends StatelessWidget {
                           if (property.status != null)
                             _buildBadge(
                               property.status!,
-                              property.status == 'published' ? const Color(0xFF10B981) : AppColors.textSecondaryLight,
+                              property.status == 'published'
+                                  ? const Color(0xFF10B981)
+                                  : AppColors.textSecondaryLight,
                             ),
                           if (property.propertyType != null) ...[
                             const SizedBox(height: 4),
@@ -149,10 +166,15 @@ class DeedDetailsPropertiesCard extends StatelessWidget {
               alignment: Alignment.center,
               child: Column(
                 children: [
-                  Icon(Icons.layers_clear_rounded, size: 40, color: AppColors.textSecondaryLight.withValues(alpha: 0.5)),
+                  Icon(
+                    Icons.layers_clear_rounded,
+                    size: 40,
+                    color: AppColors.textSecondaryLight.withValues(alpha: 0.5),
+                  ),
                   const SizedBox(height: 8),
                   Text(
-                    LocaleKeys.deedNoPropertiesFound.tr(), // Fallback or maybe we should add specific empty state key, but this works for now or create a better one.
+                    LocaleKeys.deedNoPropertiesFound
+                        .tr(), // Fallback or maybe we should add specific empty state key, but this works for now or create a better one.
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w500,

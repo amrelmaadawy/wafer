@@ -8,7 +8,10 @@ class GetUnitDetailsUseCase {
 
   GetUnitDetailsUseCase(this._repository);
 
-  Future<Either<Failure, UnitFullDetailsEntity>> call(int propertyId, int unitId) {
+  Future<Either<Failure, UnitFullDetailsEntity>> call(
+    int propertyId,
+    int unitId,
+  ) {
     return _repository.getUnitDetails(propertyId, unitId);
   }
 }

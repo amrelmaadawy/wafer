@@ -15,16 +15,19 @@ class ActivityLogsReportModel extends ActivityLogsReportEntity {
   factory ActivityLogsReportModel.fromJson(Map<String, dynamic> json) {
     return ActivityLogsReportModel(
       summary: ActivityLogsSummaryModel.fromJson(json['summary'] ?? {}),
-      items: (json['items'] as List?)
+      items:
+          (json['items'] as List?)
               ?.map((item) => ActivityLogsItemModel.fromJson(item))
               .toList() ??
           [],
       pagination: ReportPaginationModel.fromJson(json['pagination'] ?? {}),
-      types: (json['filter_options']?['types'] as List?)
+      types:
+          (json['filter_options']?['types'] as List?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      actions: (json['filter_options']?['actions'] as List?)
+      actions:
+          (json['filter_options']?['actions'] as List?)
               ?.map((e) => e.toString())
               .toList() ??
           [],

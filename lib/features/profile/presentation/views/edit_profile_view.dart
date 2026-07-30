@@ -18,9 +18,7 @@ class EditProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(
-        title: LocaleKeys.profileEditScreenTitle.tr(),
-      ),
+      appBar: CustomAppBar(title: LocaleKeys.profileEditScreenTitle.tr()),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
         child: Column(
@@ -52,7 +50,11 @@ class EditProfileView extends StatelessWidget {
           Expanded(
             child: Text(
               LocaleKeys.profileReadonlyBanner.tr(),
-              style: const TextStyle(color: Color(0xFF475569), fontSize: 12, height: 1.4),
+              style: const TextStyle(
+                color: Color(0xFF475569),
+                fontSize: 12,
+                height: 1.4,
+              ),
             ),
           ),
         ],

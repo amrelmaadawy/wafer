@@ -18,19 +18,42 @@ class RevenuePdfBuilder {
     );
   }
 
-  static pw.Widget _buildSummaryCards(RevenueSummaryEntity summary, pw.ThemeData theme) {
+  static pw.Widget _buildSummaryCards(
+    RevenueSummaryEntity summary,
+    pw.ThemeData theme,
+  ) {
     return pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       children: [
-        _buildSummaryCard('إجمالي المتوقع', '${summary.totalExpected.toStringAsFixed(2)} ر.س', theme),
-        _buildSummaryCard('إجمالي المحصل', '${summary.totalCollected.toStringAsFixed(2)} ر.س', theme),
-        _buildSummaryCard('إجمالي المتبقي', '${summary.totalRemaining.toStringAsFixed(2)} ر.س', theme),
-        _buildSummaryCard('نسبة التحصيل', '${summary.collectionRate.toStringAsFixed(1)}%', theme),
+        _buildSummaryCard(
+          'إجمالي المتوقع',
+          '${summary.totalExpected.toStringAsFixed(2)} ر.س',
+          theme,
+        ),
+        _buildSummaryCard(
+          'إجمالي المحصل',
+          '${summary.totalCollected.toStringAsFixed(2)} ر.س',
+          theme,
+        ),
+        _buildSummaryCard(
+          'إجمالي المتبقي',
+          '${summary.totalRemaining.toStringAsFixed(2)} ر.س',
+          theme,
+        ),
+        _buildSummaryCard(
+          'نسبة التحصيل',
+          '${summary.collectionRate.toStringAsFixed(1)}%',
+          theme,
+        ),
       ],
     );
   }
 
-  static pw.Widget _buildSummaryCard(String title, String value, pw.ThemeData theme) {
+  static pw.Widget _buildSummaryCard(
+    String title,
+    String value,
+    pw.ThemeData theme,
+  ) {
     return pw.Expanded(
       child: pw.Container(
         margin: const pw.EdgeInsets.symmetric(horizontal: 4),
@@ -81,7 +104,9 @@ class RevenuePdfBuilder {
       context: null,
       cellAlignment: pw.Alignment.centerRight,
       headerDecoration: pw.BoxDecoration(
-        color: PdfColor.fromInt(0xFF1E3A8A).withAlpha(0.1), // primary with alpha
+        color: PdfColor.fromInt(
+          0xFF1E3A8A,
+        ).withAlpha(0.1), // primary with alpha
       ),
       headerHeight: 35,
       cellHeight: 35,

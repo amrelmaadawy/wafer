@@ -10,15 +10,16 @@ import '../entities/property_list_item_entity.dart';
 abstract class PropertiesRepository {
   /// Fetch list of properties with filter query, pagination page, and stats banner
   Future<
-      Either<
-          Failure,
-          ({
-            List<PropertyListItemEntity> items,
-            PropertiesPaginationMetaEntity meta,
-            PropertiesStatsEntity stats,
-          })>> getProperties({
-    PropertiesQueryFilterEntity? filter,
-  });
+    Either<
+      Failure,
+      ({
+        List<PropertyListItemEntity> items,
+        PropertiesPaginationMetaEntity meta,
+        PropertiesStatsEntity stats,
+      })
+    >
+  >
+  getProperties({PropertiesQueryFilterEntity? filter});
 
   /// Fetch form data (types, options, dropdown values)
   Future<Either<Failure, PropertyFormOptionsEntity>> getFormOptions();
@@ -27,7 +28,9 @@ abstract class PropertiesRepository {
   Future<Either<Failure, PropertyFormDataEntity>> getPropertyFormData();
 
   /// Fetch full property details by ID
-  Future<Either<Failure, PropertyDetailsEntity>> getPropertyDetails(int propertyId);
+  Future<Either<Failure, PropertyDetailsEntity>> getPropertyDetails(
+    int propertyId,
+  );
 
   /// Create draft property (returns draft property ID)
   Future<Either<Failure, int>> createDraftProperty(Map<String, dynamic> body);
@@ -40,15 +43,23 @@ abstract class PropertiesRepository {
   });
 
   /// Auto save deed step
-  Future<Either<Failure, PropertyDetailsEntity>> autoSaveDeedStep(int propertyId, int deedId, int branchId);
+  Future<Either<Failure, PropertyDetailsEntity>> autoSaveDeedStep(
+    int propertyId,
+    int deedId,
+    int branchId,
+  );
 
   /// Auto save type step
-  Future<Either<Failure, PropertyDetailsEntity>> autoSaveTypeStep(int propertyId, String propertyType);
-
-
+  Future<Either<Failure, PropertyDetailsEntity>> autoSaveTypeStep(
+    int propertyId,
+    String propertyType,
+  );
 
   /// Make an owner a representative for the property
-  Future<Either<Failure, PropertyDetailsEntity>> makeRepresentative(int propertyId, int ownerId);
+  Future<Either<Failure, PropertyDetailsEntity>> makeRepresentative(
+    int propertyId,
+    int ownerId,
+  );
 
   /// Sync property owners (percentage must equal 100%)
   Future<Either<Failure, void>> syncOwners(
@@ -65,7 +76,9 @@ abstract class PropertiesRepository {
     String imagePath,
   );
 
-  Future<Either<Failure, PropertyDetailsEntity>> publishProperty(int propertyId);
+  Future<Either<Failure, PropertyDetailsEntity>> publishProperty(
+    int propertyId,
+  );
 
   /// Clone property (returns new property ID)
   Future<Either<Failure, int>> cloneProperty(int propertyId);
@@ -74,11 +87,17 @@ abstract class PropertiesRepository {
   Future<Either<Failure, int>> cloneForDeed(int propertyId, bool copyData);
 
   /// Remove representative
-  Future<Either<Failure, PropertyDetailsEntity>> removeRepresentative(int propertyId, int ownerId);
+  Future<Either<Failure, PropertyDetailsEntity>> removeRepresentative(
+    int propertyId,
+    int ownerId,
+  );
 
   /// Delete property
   Future<Either<Failure, void>> deleteProperty(int propertyId);
 
   /// Patch / edit property
-  Future<Either<Failure, void>> patchProperty(int propertyId, Map<String, dynamic> data);
+  Future<Either<Failure, void>> patchProperty(
+    int propertyId,
+    Map<String, dynamic> data,
+  );
 }

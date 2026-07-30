@@ -24,19 +24,46 @@ class MaintenanceRequestsPdfBuilder {
     );
   }
 
-  static pw.Widget _buildSummaryCards(MaintenanceRequestsSummaryEntity summary, pw.ThemeData theme) {
+  static pw.Widget _buildSummaryCards(
+    MaintenanceRequestsSummaryEntity summary,
+    pw.ThemeData theme,
+  ) {
     return pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       children: [
-        _buildSummaryCard(LocaleKeys.maintenanceRequestsTotal.tr(), summary.total.toString(), theme),
-        _buildSummaryCard(LocaleKeys.maintenanceRequestsOpen.tr(), summary.open.toString(), theme, color: PdfColor.fromInt(0xFF3B82F6)),
-        _buildSummaryCard(LocaleKeys.maintenanceRequestsInProgress.tr(), summary.inProgress.toString(), theme, color: PdfColor.fromInt(0xFFF59E0B)),
-        _buildSummaryCard(LocaleKeys.maintenanceRequestsCompleted.tr(), summary.completed.toString(), theme, color: PdfColor.fromInt(0xFF10B981)),
+        _buildSummaryCard(
+          LocaleKeys.maintenanceRequestsTotal.tr(),
+          summary.total.toString(),
+          theme,
+        ),
+        _buildSummaryCard(
+          LocaleKeys.maintenanceRequestsOpen.tr(),
+          summary.open.toString(),
+          theme,
+          color: PdfColor.fromInt(0xFF3B82F6),
+        ),
+        _buildSummaryCard(
+          LocaleKeys.maintenanceRequestsInProgress.tr(),
+          summary.inProgress.toString(),
+          theme,
+          color: PdfColor.fromInt(0xFFF59E0B),
+        ),
+        _buildSummaryCard(
+          LocaleKeys.maintenanceRequestsCompleted.tr(),
+          summary.completed.toString(),
+          theme,
+          color: PdfColor.fromInt(0xFF10B981),
+        ),
       ],
     );
   }
 
-  static pw.Widget _buildSummaryCard(String title, String value, pw.ThemeData theme, {PdfColor? color}) {
+  static pw.Widget _buildSummaryCard(
+    String title,
+    String value,
+    pw.ThemeData theme, {
+    PdfColor? color,
+  }) {
     return pw.Expanded(
       child: pw.Container(
         margin: const pw.EdgeInsets.symmetric(horizontal: 4),
@@ -75,7 +102,10 @@ class MaintenanceRequestsPdfBuilder {
     );
   }
 
-  static pw.Widget _buildTable(List<MaintenanceRequestsItemEntity> items, pw.ThemeData theme) {
+  static pw.Widget _buildTable(
+    List<MaintenanceRequestsItemEntity> items,
+    pw.ThemeData theme,
+  ) {
     if (items.isEmpty) {
       return pw.Center(
         child: pw.Text(
@@ -99,9 +129,15 @@ class MaintenanceRequestsPdfBuilder {
     ];
 
     final data = items.map((item) {
-      final clientName = item.clientName.isNotEmpty ? item.clientName : LocaleKeys.maintenanceRequestsUnknownRenter.tr();
-      final propertyName = item.property.name.isNotEmpty ? item.property.name : item.property.code;
-      final unitName = item.unit.name.isNotEmpty ? item.unit.name : item.unit.unitNumber;
+      final clientName = item.clientName.isNotEmpty
+          ? item.clientName
+          : LocaleKeys.maintenanceRequestsUnknownRenter.tr();
+      final propertyName = item.property.name.isNotEmpty
+          ? item.property.name
+          : item.property.code;
+      final unitName = item.unit.name.isNotEmpty
+          ? item.unit.name
+          : item.unit.unitNumber;
       final location = '$propertyName - $unitName';
 
       return [

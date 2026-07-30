@@ -22,14 +22,20 @@ import '../maintenance/data/repositories/owner_maintenance_repository_impl.dart'
 import '../maintenance/domain/repositories/owner_maintenance_repository.dart';
 import '../maintenance/domain/usecases/get_owner_maintenance_use_case.dart';
 import '../maintenance/domain/usecases/get_owner_maintenance_details_use_case.dart';
-import '../maintenance/domain/usecases/create_owner_maintenance_use_case.dart';
+import 'package:wafer/features/owner/maintenance/domain/usecases/approve_owner_maintenance_use_case.dart';
+import 'package:wafer/features/owner/maintenance/domain/usecases/reject_owner_maintenance_use_case.dart';
+import 'package:wafer/features/owner/maintenance/domain/usecases/create_owner_maintenance_use_case.dart';
 import '../maintenance/presentation/cubit/owner_maintenance_cubit.dart';
 import '../maintenance/presentation/cubit/details/owner_maintenance_details_cubit.dart';
-import '../maintenance/presentation/cubit/create_maintenance/owner_create_maintenance_cubit.dart';
+import 'package:wafer/features/owner/maintenance/presentation/cubit/approve_maintenance/owner_approve_maintenance_cubit.dart';
+import 'package:wafer/features/owner/maintenance/presentation/cubit/reject_maintenance/owner_reject_maintenance_cubit.dart';
+import 'package:wafer/features/owner/maintenance/presentation/cubit/create_maintenance/owner_create_maintenance_cubit.dart';
 import '../maintenance/domain/usecases/update_owner_maintenance_use_case.dart';
 import '../maintenance/presentation/cubit/update_maintenance/owner_update_maintenance_cubit.dart';
 import '../maintenance/domain/usecases/delete_owner_maintenance_use_case.dart';
 import '../maintenance/presentation/cubit/delete_maintenance/owner_delete_maintenance_cubit.dart';
+import '../maintenance/domain/usecases/assign_owner_maintenance_use_case.dart';
+import '../maintenance/presentation/cubit/assign_maintenance/owner_assign_maintenance_cubit.dart';
 // Reports
 import '../reports/data/datasources/owner_reports_remote_data_source.dart';
 import '../reports/data/repositories/owner_reports_repository_impl.dart';
@@ -121,9 +127,7 @@ void _initUnits() {
     );
   }
   if (!sl.isRegistered<UnitsRepository>()) {
-    sl.registerLazySingleton<UnitsRepository>(
-      () => UnitsRepositoryImpl(sl()),
-    );
+    sl.registerLazySingleton<UnitsRepository>(() => UnitsRepositoryImpl(sl()));
   }
   if (!sl.isRegistered<GetPropertyUnitsUseCase>()) {
     sl.registerLazySingleton(() => GetPropertyUnitsUseCase(sl()));
@@ -171,9 +175,7 @@ void _initProperties() {
     );
   }
   if (!sl.isRegistered<DeedsRepository>()) {
-    sl.registerLazySingleton<DeedsRepository>(
-      () => DeedsRepositoryImpl(sl()),
-    );
+    sl.registerLazySingleton<DeedsRepository>(() => DeedsRepositoryImpl(sl()));
   }
   if (!sl.isRegistered<GetPropertiesListUseCase>()) {
     sl.registerLazySingleton(() => GetPropertiesListUseCase(sl()));
@@ -221,14 +223,16 @@ void _initProperties() {
     sl.registerFactory(() => PropertyDetailsCubit(sl(), sl(), sl()));
   }
   if (!sl.isRegistered<PropertyCreateCubit>()) {
-    sl.registerLazySingleton(() => PropertyCreateCubit(
-          createDraft: sl(),
-          getFormData: sl(),
-          autoSavePropertyStep: sl(),
-          uploadTempFile: sl(),
-          syncOwners: sl(),
-          publishProperty: sl(),
-        ));
+    sl.registerLazySingleton(
+      () => PropertyCreateCubit(
+        createDraft: sl(),
+        getFormData: sl(),
+        autoSavePropertyStep: sl(),
+        uploadTempFile: sl(),
+        syncOwners: sl(),
+        publishProperty: sl(),
+      ),
+    );
   }
   if (!sl.isRegistered<ClonePropertyUseCase>()) {
     sl.registerLazySingleton(() => ClonePropertyUseCase(sl()));
@@ -252,12 +256,14 @@ void _initProperties() {
     sl.registerLazySingleton(() => AutoSaveTypeStepUseCase(sl()));
   }
   if (!sl.isRegistered<PropertyEditCubit>()) {
-    sl.registerFactory(() => PropertyEditCubit(
-          patchProperty: sl(),
-          getFormData: sl(),
-          autoSaveDeedStep: sl(),
-          autoSaveTypeStep: sl(),
-        ));
+    sl.registerFactory(
+      () => PropertyEditCubit(
+        patchProperty: sl(),
+        getFormData: sl(),
+        autoSaveDeedStep: sl(),
+        autoSaveTypeStep: sl(),
+      ),
+    );
   }
   if (!sl.isRegistered<DeletePropertyCubit>()) {
     sl.registerFactory(() => DeletePropertyCubit(sl()));
@@ -266,8 +272,6 @@ void _initProperties() {
     sl.registerFactory(() => SyncOwnersCubit(sl(), sl()));
   }
 }
-
-
 
 void _initDashboard() {
   if (!sl.isRegistered<OwnerDashboardRemoteDataSource>()) {
@@ -360,6 +364,29 @@ void _initMaintenance() {
   if (!sl.isRegistered<OwnerDeleteMaintenanceCubit>()) {
     sl.registerFactory(() => OwnerDeleteMaintenanceCubit(sl()));
   }
+  if (!sl.isRegistered<ApproveOwnerMaintenanceUseCase>()) {
+    sl.registerLazySingleton(() => ApproveOwnerMaintenanceUseCase(sl()));
+  }
+
+  if (!sl.isRegistered<RejectOwnerMaintenanceUseCase>()) {
+    sl.registerLazySingleton(() => RejectOwnerMaintenanceUseCase(sl()));
+  }
+
+  if (!sl.isRegistered<OwnerApproveMaintenanceCubit>()) {
+    sl.registerFactory(() => OwnerApproveMaintenanceCubit(sl()));
+  }
+
+  if (!sl.isRegistered<OwnerRejectMaintenanceCubit>()) {
+    sl.registerFactory(() => OwnerRejectMaintenanceCubit(sl()));
+  }
+
+  if (!sl.isRegistered<AssignOwnerMaintenanceUseCase>()) {
+    sl.registerLazySingleton(() => AssignOwnerMaintenanceUseCase(sl()));
+  }
+
+  if (!sl.isRegistered<OwnerAssignMaintenanceCubit>()) {
+    sl.registerFactory(() => OwnerAssignMaintenanceCubit(sl()));
+  }
 }
 
 void _initReports() {
@@ -401,7 +428,9 @@ void _initReports() {
     sl.registerLazySingleton(() => GetContractsReportUseCase(sl()));
   }
   if (!sl.isRegistered<OwnerContractsReportCubit>()) {
-    sl.registerFactory(() => OwnerContractsReportCubit(getContractsReportUseCase: sl()));
+    sl.registerFactory(
+      () => OwnerContractsReportCubit(getContractsReportUseCase: sl()),
+    );
   }
 
   // Owner Contracts Movement Report

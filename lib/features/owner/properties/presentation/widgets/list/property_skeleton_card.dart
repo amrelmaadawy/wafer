@@ -71,10 +71,7 @@ class PropertySkeletonItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          Container(
-            height: 1,
-            color: const Color(0xFFF1F5F9),
-          ),
+          Container(height: 1, color: const Color(0xFFF1F5F9)),
           const SizedBox(height: 12),
           Row(
             children: [

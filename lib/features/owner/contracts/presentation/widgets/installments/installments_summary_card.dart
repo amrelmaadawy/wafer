@@ -34,10 +34,7 @@ class InstallmentsSummaryCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: AppRadius.circularXxl,
         gradient: LinearGradient(
-          colors: [
-            primaryColor,
-            Color.lerp(primaryColor, Colors.black, 0.28)!,
-          ],
+          colors: [primaryColor, Color.lerp(primaryColor, Colors.black, 0.28)!],
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
         ),
@@ -113,7 +110,10 @@ class InstallmentsSummaryCard extends StatelessWidget {
                     ),
                     // Paid count badge
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
+                      ),
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.15),
                         borderRadius: AppRadius.circularFull,
@@ -202,7 +202,9 @@ class InstallmentsSummaryCard extends StatelessWidget {
                           CircularProgressIndicator(
                             value: progress,
                             strokeWidth: 5,
-                            backgroundColor: Colors.white.withValues(alpha: 0.2),
+                            backgroundColor: Colors.white.withValues(
+                              alpha: 0.2,
+                            ),
                             valueColor: const AlwaysStoppedAnimation<Color>(
                               Color(0xFF86EFAC),
                             ),

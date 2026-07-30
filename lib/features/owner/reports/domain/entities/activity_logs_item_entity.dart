@@ -24,13 +24,13 @@ class ActivityLogsItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        createdAt,
-        user,
-        type,
-        action,
-        message,
-        description,
-        ipAddress,
-      ];
+    id,
+    createdAt,
+    user,
+    type,
+    action,
+    message,
+    description,
+    ipAddress,
+  ];
 }

@@ -41,21 +41,21 @@ class AddNewDeedParams extends Equatable {
 
   @override
   List<Object?> get props => [
-        name,
-        branchId,
-        documentType,
-        documentNumber,
-        documentDate,
-        area,
-        documentAttachment,
-        city,
-        district,
-        region,
-        streetName,
-        buildingNumber,
-        postalCode,
-        notes,
-      ];
+    name,
+    branchId,
+    documentType,
+    documentNumber,
+    documentDate,
+    area,
+    documentAttachment,
+    city,
+    district,
+    region,
+    streetName,
+    buildingNumber,
+    postalCode,
+    notes,
+  ];
 }
 
 class AddNewDeedUseCase implements UseCase<void, AddNewDeedParams> {

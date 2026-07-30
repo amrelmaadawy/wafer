@@ -10,10 +10,7 @@ import 'property_details_metrics_bar.dart';
 class PropertyOverviewTab extends StatelessWidget {
   final PropertyDetailsEntity property;
 
-  const PropertyOverviewTab({
-    super.key,
-    required this.property,
-  });
+  const PropertyOverviewTab({super.key, required this.property});
 
   @override
   Widget build(BuildContext context) {

@@ -23,7 +23,9 @@ class PropertyDetailsSliverAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusColor = property.isDraft ? AppColors.warning : AppColors.success;
+    final statusColor = property.isDraft
+        ? AppColors.warning
+        : AppColors.success;
 
     return SliverAppBar(
       expandedHeight: 210,
@@ -40,7 +42,11 @@ class PropertyDetailsSliverAppBar extends StatelessWidget {
               context.go(Routes.ownerProperties);
             }
           },
-          icon: const Icon(Icons.arrow_back_rounded, color: Colors.white, size: 22),
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+            size: 22,
+          ),
           style: IconButton.styleFrom(
             backgroundColor: Colors.white.withValues(alpha: 0.15),
           ),
@@ -92,7 +98,11 @@ class PropertyDetailsSliverAppBar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
           child: IconButton(
             onPressed: onOpenActions,
-            icon: const Icon(Icons.more_vert_rounded, color: Colors.white, size: 22),
+            icon: const Icon(
+              Icons.more_vert_rounded,
+              color: Colors.white,
+              size: 22,
+            ),
             style: IconButton.styleFrom(
               backgroundColor: Colors.white.withValues(alpha: 0.15),
             ),
@@ -116,9 +126,7 @@ class PropertyDetailsSliverAppBar extends StatelessWidget {
         child: Container(
           height: 70,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          decoration: const BoxDecoration(
-            color: Colors.transparent,
-          ),
+          decoration: const BoxDecoration(color: Colors.transparent),
           child: Container(
             height: 52,
             decoration: BoxDecoration(
@@ -133,8 +141,14 @@ class PropertyDetailsSliverAppBar extends StatelessWidget {
               labelPadding: const EdgeInsets.symmetric(horizontal: 20),
               labelColor: context.primaryColor,
               unselectedLabelColor: Colors.white,
-              labelStyle: const TextStyle(fontWeight: FontWeight.w700, fontSize: 14),
-              unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
+              labelStyle: const TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 14,
+              ),
+              unselectedLabelStyle: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 14,
+              ),
               indicatorSize: TabBarIndicatorSize.tab,
               dividerColor: Colors.transparent,
               indicatorPadding: const EdgeInsets.all(4),

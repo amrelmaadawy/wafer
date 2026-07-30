@@ -12,9 +12,5 @@ class TechnicianPerformanceSummaryEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        totalTechnicians,
-        totalCompleted,
-        totalPending,
-      ];
+  List<Object?> get props => [totalTechnicians, totalCompleted, totalPending];
 }

@@ -8,9 +8,11 @@ abstract class OwnerTechnicianPerformanceState extends Equatable {
   List<Object?> get props => [];
 }
 
-class OwnerTechnicianPerformanceInitial extends OwnerTechnicianPerformanceState {}
+class OwnerTechnicianPerformanceInitial
+    extends OwnerTechnicianPerformanceState {}
 
-class OwnerTechnicianPerformanceLoading extends OwnerTechnicianPerformanceState {
+class OwnerTechnicianPerformanceLoading
+    extends OwnerTechnicianPerformanceState {
   final bool isPagination;
   const OwnerTechnicianPerformanceLoading({this.isPagination = false});
 
@@ -22,7 +24,10 @@ class OwnerTechnicianPerformanceLoaded extends OwnerTechnicianPerformanceState {
   final TechnicianPerformanceReportEntity report;
   final bool hasReachedMax;
 
-  const OwnerTechnicianPerformanceLoaded(this.report, {this.hasReachedMax = false});
+  const OwnerTechnicianPerformanceLoaded(
+    this.report, {
+    this.hasReachedMax = false,
+  });
 
   @override
   List<Object?> get props => [report, hasReachedMax];

@@ -65,71 +65,96 @@ class CustomDropdownMenu<T> extends StatelessWidget {
                   onSelected: onSelected,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        value != null ? itemLabelBuilder(value as T) : hint,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: value != null ? FontWeight.w600 : FontWeight.w500,
-                          color: value != null ? AppColors.textPrimaryLight : AppColors.textSecondaryLight,
-                        ),
-                      ),
-                    ),
-                    const Icon(Icons.keyboard_arrow_down_rounded, color: AppColors.textSecondaryLight, size: 20),
-                  ],
-                ),
-              ),
-              itemBuilder: (context) {
-                return items.map((item) {
-                  final isSelected = value == item;
-                  return PopupMenuItem<T>(
-                    value: item,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: isSelected ? context.primaryColor.withValues(alpha: 0.08) : Colors.transparent,
-                        borderRadius: AppRadius.circularMd,
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              itemLabelBuilder(item),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: isSelected ? context.primaryColor : AppColors.textPrimaryLight,
-                                fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
-                                fontSize: 13,
-                              ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            value != null ? itemLabelBuilder(value as T) : hint,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: value != null
+                                  ? FontWeight.w600
+                                  : FontWeight.w500,
+                              color: value != null
+                                  ? AppColors.textPrimaryLight
+                                  : AppColors.textSecondaryLight,
                             ),
                           ),
-                          if (isSelected)
-                            Icon(Icons.check_circle_rounded, color: context.primaryColor, size: 18),
-                        ],
-                      ),
+                        ),
+                        const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: AppColors.textSecondaryLight,
+                          size: 20,
+                        ),
+                      ],
                     ),
-                  );
-                }).toList();
-              },
-            ),
-          );
-        },
-      ),
-    ),
-    if (errorText != null)
+                  ),
+                  itemBuilder: (context) {
+                    return items.map((item) {
+                      final isSelected = value == item;
+                      return PopupMenuItem<T>(
+                        value: item,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: isSelected
+                                ? context.primaryColor.withValues(alpha: 0.08)
+                                : Colors.transparent,
+                            borderRadius: AppRadius.circularMd,
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 10,
+                          ),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  itemLabelBuilder(item),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    color: isSelected
+                                        ? context.primaryColor
+                                        : AppColors.textPrimaryLight,
+                                    fontWeight: isSelected
+                                        ? FontWeight.w700
+                                        : FontWeight.w600,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                              if (isSelected)
+                                Icon(
+                                  Icons.check_circle_rounded,
+                                  color: context.primaryColor,
+                                  size: 18,
+                                ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }).toList();
+                  },
+                ),
+              );
+            },
+          ),
+        ),
+        if (errorText != null)
           Padding(
             padding: const EdgeInsets.only(top: 8, right: 16, left: 16),
             child: Text(
               errorText!,
-              style: const TextStyle(color: Colors.red, fontSize: 12, fontWeight: FontWeight.w500),
+              style: const TextStyle(
+                color: Colors.red,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
       ],

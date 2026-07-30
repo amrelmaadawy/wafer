@@ -23,13 +23,13 @@ class PropertiesStatsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        totalProperties,
-        landsCount,
-        buildingsCount,
-        residentialCount,
-        commercialCount,
-        mixedCount,
-        totalUnits,
-        totalDeeds,
-      ];
+    totalProperties,
+    landsCount,
+    buildingsCount,
+    residentialCount,
+    commercialCount,
+    mixedCount,
+    totalUnits,
+    totalDeeds,
+  ];
 }

@@ -14,10 +14,7 @@ class DraftOwnerEntry extends Equatable {
     this.isRepresentative = false,
   });
 
-  DraftOwnerEntry copyWith({
-    double? percentage,
-    bool? isRepresentative,
-  }) {
+  DraftOwnerEntry copyWith({double? percentage, bool? isRepresentative}) {
     return DraftOwnerEntry(
       owner: owner,
       percentage: percentage ?? this.percentage,
@@ -80,7 +77,8 @@ class SyncOwnersState extends Equatable {
     final assigned = currentOwners.map((o) {
       final form = availableOwners.where((a) => a.id == o.id).firstOrNull;
       return DraftOwnerEntry(
-        owner: form ??
+        owner:
+            form ??
             FormOwnerEntity(
               id: o.id,
               name: o.name,
@@ -100,11 +98,11 @@ class SyncOwnersState extends Equatable {
 
   @override
   List<Object?> get props => [
-        isLoading,
-        isSyncing,
-        isSuccess,
-        errorMessage,
-        availableOwners,
-        assignedOwners,
-      ];
+    isLoading,
+    isSyncing,
+    isSuccess,
+    errorMessage,
+    availableOwners,
+    assignedOwners,
+  ];
 }

@@ -15,7 +15,11 @@ class OwnerOccupancyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final rate = (data.occupancyRate.toDouble() / 100).clamp(0.0, 1.0);
-    final rateColor = data.occupancyRate >= 70 ? const Color(0xFF10B981) : data.occupancyRate >= 40 ? const Color(0xFFF59E0B) : AppColors.error;
+    final rateColor = data.occupancyRate >= 70
+        ? const Color(0xFF10B981)
+        : data.occupancyRate >= 40
+        ? const Color(0xFFF59E0B)
+        : AppColors.error;
 
     return _card(
       onTap: () {
@@ -29,15 +33,39 @@ class OwnerOccupancyCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.pie_chart_outline_rounded, size: 16, color: Color(0xFF64748B)),
+                  const Icon(
+                    Icons.pie_chart_outline_rounded,
+                    size: 16,
+                    color: Color(0xFF64748B),
+                  ),
                   const SizedBox(width: 7),
-                  Text(LocaleKeys.dashboardOccupancyEfficiency.tr(), style: const TextStyle(color: Color(0xFF0F172A), fontSize: 14, fontWeight: FontWeight.w700)),
+                  Text(
+                    LocaleKeys.dashboardOccupancyEfficiency.tr(),
+                    style: const TextStyle(
+                      color: Color(0xFF0F172A),
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ],
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(color: rateColor.withValues(alpha: 0.1), borderRadius: AppRadius.circularFull),
-                child: Text('${data.occupancyRate}%', style: TextStyle(color: rateColor, fontSize: 13, fontWeight: FontWeight.w800)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 4,
+                ),
+                decoration: BoxDecoration(
+                  color: rateColor.withValues(alpha: 0.1),
+                  borderRadius: AppRadius.circularFull,
+                ),
+                child: Text(
+                  '${data.occupancyRate}%',
+                  style: TextStyle(
+                    color: rateColor,
+                    fontSize: 13,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
               ),
             ],
           ),
@@ -59,11 +87,32 @@ class OwnerOccupancyCard extends StatelessWidget {
           const SizedBox(height: 16),
           Row(
             children: [
-              Expanded(child: _pill(label: LocaleKeys.ownerPillRented.tr(), count: data.rentedUnits, color: const Color(0xFF10B981), icon: Icons.check_circle_rounded)),
+              Expanded(
+                child: _pill(
+                  label: LocaleKeys.ownerPillRented.tr(),
+                  count: data.rentedUnits,
+                  color: const Color(0xFF10B981),
+                  icon: Icons.check_circle_rounded,
+                ),
+              ),
               const SizedBox(width: 8),
-              Expanded(child: _pill(label: LocaleKeys.ownerPillVacant.tr(), count: data.vacantUnits, color: const Color(0xFF64748B), icon: Icons.roofing_rounded)),
+              Expanded(
+                child: _pill(
+                  label: LocaleKeys.ownerPillVacant.tr(),
+                  count: data.vacantUnits,
+                  color: const Color(0xFF64748B),
+                  icon: Icons.roofing_rounded,
+                ),
+              ),
               const SizedBox(width: 8),
-              Expanded(child: _pill(label: LocaleKeys.ownerPillProperties.tr(), count: data.totalProperties, color: const Color(0xFF6366F1), icon: Icons.domain_rounded)),
+              Expanded(
+                child: _pill(
+                  label: LocaleKeys.ownerPillProperties.tr(),
+                  count: data.totalProperties,
+                  color: const Color(0xFF6366F1),
+                  icon: Icons.domain_rounded,
+                ),
+              ),
             ],
           ),
         ],
@@ -71,7 +120,12 @@ class OwnerOccupancyCard extends StatelessWidget {
     );
   }
 
-  Widget _pill({required String label, required int count, required Color color, required IconData icon}) {
+  Widget _pill({
+    required String label,
+    required int count,
+    required Color color,
+    required IconData icon,
+  }) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 10),
       decoration: BoxDecoration(
@@ -86,13 +140,28 @@ class OwnerOccupancyCard extends StatelessWidget {
             children: [
               Icon(icon, color: color, size: 14),
               const SizedBox(width: 4),
-              Text('$count', style: TextStyle(color: color, fontSize: 15, fontWeight: FontWeight.w800)),
+              Text(
+                '$count',
+                style: TextStyle(
+                  color: color,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
             ],
           ),
           const SizedBox(height: 4),
           FittedBox(
             fit: BoxFit.scaleDown,
-            child: Text(label, style: const TextStyle(color: Color(0xFF64748B), fontSize: 11, fontWeight: FontWeight.w600), textAlign: TextAlign.center),
+            child: Text(
+              label,
+              style: const TextStyle(
+                color: Color(0xFF64748B),
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),
@@ -112,8 +181,16 @@ class OwnerOccupancyCard extends StatelessWidget {
             borderRadius: AppRadius.circularXxl,
             border: Border.all(color: const Color(0xFFEDF0F7)),
             boxShadow: [
-              BoxShadow(color: Colors.black.withValues(alpha: 0.04), blurRadius: 20, offset: const Offset(0, 6)),
-              BoxShadow(color: Colors.black.withValues(alpha: 0.02), blurRadius: 6, offset: const Offset(0, 2)),
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.04),
+                blurRadius: 20,
+                offset: const Offset(0, 6),
+              ),
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.02),
+                blurRadius: 6,
+                offset: const Offset(0, 2),
+              ),
             ],
           ),
           child: child,

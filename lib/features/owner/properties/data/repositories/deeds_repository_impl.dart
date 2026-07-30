@@ -26,7 +26,9 @@ class DeedsRepositoryImpl implements DeedsRepository {
   }
 
   @override
-  Future<Either<Failure, DeedEntity>> createDeed(Map<String, dynamic> body) async {
+  Future<Either<Failure, DeedEntity>> createDeed(
+    Map<String, dynamic> body,
+  ) async {
     try {
       final result = await _remoteDataSource.createDeed(body);
       return Right(result);

@@ -7,7 +7,7 @@ class OwnerOccupancyCubit extends Cubit<OwnerOccupancyState> {
   final GetOwnerOccupancyReportUseCase _getOwnerOccupancyReportUseCase;
 
   OwnerOccupancyCubit(this._getOwnerOccupancyReportUseCase)
-      : super(const OwnerOccupancyInitial());
+    : super(const OwnerOccupancyInitial());
 
   int _currentPage = 1;
   bool _isFetching = false;
@@ -44,23 +44,30 @@ class OwnerOccupancyCubit extends Cubit<OwnerOccupancyState> {
         } else {
           if (state is OwnerOccupancyLoaded && !forceRefresh) {
             final currentState = state as OwnerOccupancyLoaded;
-            final updatedItems = List.of(currentState.report.items)..addAll(report.items);
-            
+            final updatedItems = List.of(currentState.report.items)
+              ..addAll(report.items);
+
             final updatedReport = OccupancyReportEntity(
               summary: report.summary,
               pagination: report.pagination,
               items: updatedItems,
             );
 
-            emit(OwnerOccupancyLoaded(
-              report: updatedReport,
-              hasReachedMax: report.pagination.currentPage >= report.pagination.lastPage,
-            ));
+            emit(
+              OwnerOccupancyLoaded(
+                report: updatedReport,
+                hasReachedMax:
+                    report.pagination.currentPage >= report.pagination.lastPage,
+              ),
+            );
           } else {
-            emit(OwnerOccupancyLoaded(
-              report: report,
-              hasReachedMax: report.pagination.currentPage >= report.pagination.lastPage,
-            ));
+            emit(
+              OwnerOccupancyLoaded(
+                report: report,
+                hasReachedMax:
+                    report.pagination.currentPage >= report.pagination.lastPage,
+              ),
+            );
           }
           if (report.pagination.currentPage < report.pagination.lastPage) {
             _currentPage++;

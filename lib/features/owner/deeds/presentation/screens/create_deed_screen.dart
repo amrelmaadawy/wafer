@@ -102,7 +102,8 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
   }
 
   Future<void> _showProfessionalDatePicker() async {
-    DateTime? tempDate = DateTime.tryParse(_docDateController.text) ?? DateTime.now();
+    DateTime? tempDate =
+        DateTime.tryParse(_docDateController.text) ?? DateTime.now();
 
     final date = await showModalBottomSheet<DateTime>(
       context: context,
@@ -116,7 +117,10 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
           builder: (context, setState) {
             return SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24.0,
+                  vertical: 16.0,
+                ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -148,9 +152,15 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
                             decoration: BoxDecoration(
                               color: AppColors.surfaceLight,
                               borderRadius: BorderRadius.circular(12),
-                              border: Border.all(color: const Color(0xFFE2E8F0)),
+                              border: Border.all(
+                                color: const Color(0xFFE2E8F0),
+                              ),
                             ),
-                            child: const Icon(Icons.close_rounded, size: 20, color: AppColors.textSecondaryLight),
+                            child: const Icon(
+                              Icons.close_rounded,
+                              size: 20,
+                              color: AppColors.textSecondaryLight,
+                            ),
                           ),
                         ),
                       ],
@@ -178,8 +188,11 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
                             onSurface: AppColors.textPrimaryLight,
                           ),
                           textTheme: Theme.of(context).textTheme.copyWith(
-                                bodyMedium: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-                              ),
+                            bodyMedium: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
                         ),
                         child: CalendarDatePicker(
                           initialDate: tempDate ?? DateTime.now(),
@@ -276,10 +289,7 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
           );
           Navigator.of(context).pop(true);
         } else if (state is CreateDeedError) {
-          AppToast.showError(
-            context,
-            state.message,
-          );
+          AppToast.showError(context, state.message);
         }
       },
       child: Scaffold(
@@ -312,7 +322,9 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
                         controller: _areaController,
                         isRequired: true,
                         keyboardType: TextInputType.number,
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                       ),
                     ),
                   ],
@@ -345,7 +357,11 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
                         isRequired: true,
                         hintText: 'YYYY-MM-DD',
                         readOnly: true,
-                        suffixIcon: const Icon(Icons.calendar_today_rounded, color: AppColors.textSecondaryLight, size: 20),
+                        suffixIcon: const Icon(
+                          Icons.calendar_today_rounded,
+                          color: AppColors.textSecondaryLight,
+                          size: 20,
+                        ),
                         onTap: _showProfessionalDatePicker,
                       ),
                     ),
@@ -362,25 +378,48 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: _buildTextField(label: LocaleKeys.deeds_region.tr(), controller: _regionController)),
+                    Expanded(
+                      child: _buildTextField(
+                        label: LocaleKeys.deeds_region.tr(),
+                        controller: _regionController,
+                      ),
+                    ),
                     const SizedBox(width: 16),
-                    Expanded(child: _buildTextField(label: LocaleKeys.deeds_city.tr(), controller: _cityController)),
+                    Expanded(
+                      child: _buildTextField(
+                        label: LocaleKeys.deeds_city.tr(),
+                        controller: _cityController,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(child: _buildTextField(label: LocaleKeys.deeds_district.tr(), controller: _districtController)),
+                    Expanded(
+                      child: _buildTextField(
+                        label: LocaleKeys.deeds_district.tr(),
+                        controller: _districtController,
+                      ),
+                    ),
                     const SizedBox(width: 16),
-                    Expanded(child: _buildTextField(label: LocaleKeys.deeds_street_name.tr(), controller: _streetController)),
+                    Expanded(
+                      child: _buildTextField(
+                        label: LocaleKeys.deeds_street_name.tr(),
+                        controller: _streetController,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16),
                 Row(
                   children: [
                     Expanded(
-                      child: _buildTextField(label: LocaleKeys.deeds_building_number.tr(), controller: _buildingController),
+                      child: _buildTextField(
+                        label: LocaleKeys.deeds_building_number.tr(),
+                        controller: _buildingController,
+                      ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -388,7 +427,9 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
                         label: LocaleKeys.deeds_postal_code.tr(),
                         controller: _postalController,
                         keyboardType: TextInputType.number,
-                        inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly,
+                        ],
                       ),
                     ),
                   ],
@@ -459,10 +500,17 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
           children: [
             Text(
               label,
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textSecondaryLight,
+              ),
             ),
             if (isRequired)
-              const Text(' *', style: TextStyle(color: Colors.red, fontSize: 13)),
+              const Text(
+                ' *',
+                style: TextStyle(color: Colors.red, fontSize: 13),
+              ),
           ],
         ),
         const SizedBox(height: 8),
@@ -474,7 +522,9 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
           onTap: onTap,
           inputFormatters: inputFormatters,
           validator: isRequired
-              ? (value) => (value == null || value.trim().isEmpty) ? LocaleKeys.deeds_required_field.tr() : null
+              ? (value) => (value == null || value.trim().isEmpty)
+                    ? LocaleKeys.deeds_required_field.tr()
+                    : null
               : null,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
@@ -482,7 +532,10 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
             suffixIcon: suffixIcon,
             filled: true,
             fillColor: AppColors.backgroundLight,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
             border: OutlineInputBorder(
               borderRadius: AppRadius.circularLg,
               borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
@@ -513,7 +566,11 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
           children: [
             Text(
               LocaleKeys.deeds_branch.tr(),
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textSecondaryLight,
+              ),
             ),
             const Text(' *', style: TextStyle(color: Colors.red, fontSize: 13)),
           ],
@@ -527,7 +584,9 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
               current is CreateDeedError,
           builder: (context, state) {
             final branches = context.read<CreateDeedCubit>().branches;
-            final isLoading = state is CreateDeedInitial || (state is CreateDeedLoading && branches.isEmpty);
+            final isLoading =
+                state is CreateDeedInitial ||
+                (state is CreateDeedLoading && branches.isEmpty);
 
             if (isLoading) {
               return AppShimmer.box(
@@ -541,7 +600,8 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
               value: _selectedBranchId,
               hint: LocaleKeys.deeds_branch.tr(),
               items: branches.map((b) => b.id).toList(),
-              itemLabelBuilder: (id) => branches.firstWhere((b) => b.id == id).name,
+              itemLabelBuilder: (id) =>
+                  branches.firstWhere((b) => b.id == id).name,
               errorText: _branchError,
               onSelected: (value) {
                 setState(() {
@@ -564,7 +624,11 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
           children: [
             Text(
               LocaleKeys.deeds_document_type.tr(),
-              style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight),
+              style: const TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textSecondaryLight,
+              ),
             ),
             const Text(' *', style: TextStyle(color: Colors.red, fontSize: 13)),
           ],
@@ -575,8 +639,8 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
           value: _selectedDocType,
           hint: LocaleKeys.deeds_document_type.tr(),
           items: const ['electronic', 'manual'],
-          itemLabelBuilder: (val) => val == 'electronic' 
-              ? LocaleKeys.deeds_electronic_deed.tr() 
+          itemLabelBuilder: (val) => val == 'electronic'
+              ? LocaleKeys.deeds_electronic_deed.tr()
               : LocaleKeys.deeds_manual_deed.tr(),
           onSelected: (value) {
             setState(() {
@@ -594,7 +658,11 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
       children: [
         Text(
           LocaleKeys.deeds_attachment.tr(),
-          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight),
+          style: const TextStyle(
+            fontSize: 13,
+            fontWeight: FontWeight.w600,
+            color: AppColors.textSecondaryLight,
+          ),
         ),
         const SizedBox(height: 8),
         InkWell(
@@ -615,7 +683,9 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
             child: Column(
               children: [
                 Icon(
-                  _attachment == null ? Icons.upload_file_rounded : Icons.check_circle_rounded,
+                  _attachment == null
+                      ? Icons.upload_file_rounded
+                      : Icons.check_circle_rounded,
                   color: context.primaryColor,
                   size: 32,
                 ),
@@ -651,9 +721,7 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
             style: ElevatedButton.styleFrom(
               backgroundColor: context.primaryColor,
               foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadius.circularXl,
-              ),
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.circularXl),
               elevation: 4,
               shadowColor: context.primaryShadow,
             ),

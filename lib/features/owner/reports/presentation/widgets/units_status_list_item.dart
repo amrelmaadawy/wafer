@@ -9,10 +9,7 @@ import '../../domain/entities/units_status_item_entity.dart';
 class UnitsStatusListItem extends StatelessWidget {
   final UnitsStatusItemEntity item;
 
-  const UnitsStatusListItem({
-    super.key,
-    required this.item,
-  });
+  const UnitsStatusListItem({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +94,9 @@ class UnitsStatusListItem extends StatelessWidget {
                 Expanded(
                   child: _buildInfoColumn(
                     Icons.layers_rounded,
-                    LocaleKeys.unit_details_floor_prefix.tr(args: [item.floorNumber.toString()]),
+                    LocaleKeys.unit_details_floor_prefix.tr(
+                      args: [item.floorNumber.toString()],
+                    ),
                   ),
                 ),
             ],

@@ -35,7 +35,9 @@ class ContractDetailsSkeletonWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.surfaceLight,
           borderRadius: AppRadius.circularXxl,
-          border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.5)),
+          border: Border.all(
+            color: AppColors.borderLight.withValues(alpha: 0.5),
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

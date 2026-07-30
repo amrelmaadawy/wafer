@@ -8,10 +8,7 @@ import '../../domain/entities/employee_tasks_summary_entity.dart';
 class EmployeeTasksSummaryHeader extends StatelessWidget {
   final EmployeeTasksSummaryEntity summary;
 
-  const EmployeeTasksSummaryHeader({
-    super.key,
-    required this.summary,
-  });
+  const EmployeeTasksSummaryHeader({super.key, required this.summary});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +17,7 @@ class EmployeeTasksSummaryHeader extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            context.primaryColor,
-            context.primaryColor.withAlpha(204),
-          ],
+          colors: [context.primaryColor, context.primaryColor.withAlpha(204)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -66,10 +60,7 @@ class EmployeeTasksSummaryHeader extends StatelessWidget {
                   summary.totalEmployees.toString(),
                 ),
                 const SizedBox(height: 16),
-                Container(
-                  height: 1,
-                  color: Colors.white.withAlpha(30),
-                ),
+                Container(height: 1, color: Colors.white.withAlpha(30)),
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -122,17 +113,17 @@ class EmployeeTasksSummaryHeader extends StatelessWidget {
         Text(
           label,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Colors.white.withAlpha(204),
-                fontWeight: FontWeight.w500,
-              ),
+            color: Colors.white.withAlpha(204),
+            fontWeight: FontWeight.w500,
+          ),
         ),
         const SizedBox(height: 4),
         Text(
           value,
           style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );
@@ -156,9 +147,9 @@ class EmployeeTasksSummaryHeader extends StatelessWidget {
               Text(
                 value,
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -167,9 +158,9 @@ class EmployeeTasksSummaryHeader extends StatelessWidget {
             label,
             textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                  color: Colors.white.withAlpha(204),
-                  fontSize: 10,
-                ),
+              color: Colors.white.withAlpha(204),
+              fontSize: 10,
+            ),
           ),
         ],
       ),

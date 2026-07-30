@@ -9,24 +9,35 @@ class UnitCreateCubit extends Cubit<UnitCreateState> {
   final CreateUnitUseCase _createUnitUseCase;
   final PropertiesRepository _propertiesRepository;
 
-  UnitCreateCubit(this._createUnitUseCase, this._propertiesRepository) : super(const UnitCreateState());
+  UnitCreateCubit(this._createUnitUseCase, this._propertiesRepository)
+    : super(const UnitCreateState());
 
   Future<void> init(int propertyId) async {
-    emit(state.copyWith(propertyId: propertyId, currentStep: 0, isLoading: true, error: null));
-    
+    emit(
+      state.copyWith(
+        propertyId: propertyId,
+        currentStep: 0,
+        isLoading: true,
+        error: null,
+      ),
+    );
+
     // Fetch property details to pre-fill address
     final result = await _propertiesRepository.getPropertyDetails(propertyId);
     result.fold(
-      (failure) => emit(state.copyWith(isLoading: false)), // Ignore error for pre-fill
+      (failure) =>
+          emit(state.copyWith(isLoading: false)), // Ignore error for pre-fill
       (property) {
-        emit(state.copyWith(
-          isLoading: false,
-          city: property.city,
-          district: property.district,
-          streetName: property.streetName,
-          buildingNumber: property.buildingNumber,
-        ));
-      }
+        emit(
+          state.copyWith(
+            isLoading: false,
+            city: property.city,
+            district: property.district,
+            streetName: property.streetName,
+            buildingNumber: property.buildingNumber,
+          ),
+        );
+      },
     );
   }
 
@@ -52,15 +63,17 @@ class UnitCreateCubit extends Cubit<UnitCreateState> {
     String? finishingType,
     bool? isFurnished,
   }) {
-    emit(state.copyWith(
-      name: name ?? state.name,
-      unitNumber: unitNumber ?? state.unitNumber,
-      unitType: unitType ?? state.unitType,
-      usageType: usageType ?? state.usageType,
-      purpose: purpose ?? state.purpose,
-      finishingType: finishingType ?? state.finishingType,
-      isFurnished: isFurnished ?? state.isFurnished,
-    ));
+    emit(
+      state.copyWith(
+        name: name ?? state.name,
+        unitNumber: unitNumber ?? state.unitNumber,
+        unitType: unitType ?? state.unitType,
+        usageType: usageType ?? state.usageType,
+        purpose: purpose ?? state.purpose,
+        finishingType: finishingType ?? state.finishingType,
+        isFurnished: isFurnished ?? state.isFurnished,
+      ),
+    );
   }
 
   // --- Step 2 ---
@@ -78,20 +91,22 @@ class UnitCreateCubit extends Cubit<UnitCreateState> {
     int? kitchensCount,
     int? entrancesCount,
   }) {
-    emit(state.copyWith(
-      floorType: floorType ?? state.floorType,
-      floorNumber: floorNumber ?? state.floorNumber,
-      area: area ?? state.area,
-      length: length ?? state.length,
-      width: width ?? state.width,
-      height: height ?? state.height,
-      facadeLength: facadeLength ?? state.facadeLength,
-      roomsCount: roomsCount ?? state.roomsCount,
-      hallsCount: hallsCount ?? state.hallsCount,
-      bathroomsCount: bathroomsCount ?? state.bathroomsCount,
-      kitchensCount: kitchensCount ?? state.kitchensCount,
-      entrancesCount: entrancesCount ?? state.entrancesCount,
-    ));
+    emit(
+      state.copyWith(
+        floorType: floorType ?? state.floorType,
+        floorNumber: floorNumber ?? state.floorNumber,
+        area: area ?? state.area,
+        length: length ?? state.length,
+        width: width ?? state.width,
+        height: height ?? state.height,
+        facadeLength: facadeLength ?? state.facadeLength,
+        roomsCount: roomsCount ?? state.roomsCount,
+        hallsCount: hallsCount ?? state.hallsCount,
+        bathroomsCount: bathroomsCount ?? state.bathroomsCount,
+        kitchensCount: kitchensCount ?? state.kitchensCount,
+        entrancesCount: entrancesCount ?? state.entrancesCount,
+      ),
+    );
   }
 
   // --- Step 3 ---
@@ -109,20 +124,23 @@ class UnitCreateCubit extends Cubit<UnitCreateState> {
     String? waterMeter,
     String? gasMeter,
   }) {
-    emit(state.copyWith(
-      city: city ?? state.city,
-      district: district ?? state.district,
-      streetName: streetName ?? state.streetName,
-      buildingNumber: buildingNumber ?? state.buildingNumber,
-      postalCode: postalCode ?? state.postalCode,
-      additionalNumber: additionalNumber ?? state.additionalNumber,
-      shortAddress: shortAddress ?? state.shortAddress,
-      latitude: latitude ?? state.latitude,
-      longitude: longitude ?? state.longitude,
-      electricityMeterNumber: electricityMeter ?? state.electricityMeterNumber,
-      waterMeterNumber: waterMeter ?? state.waterMeterNumber,
-      gasMeterNumber: gasMeter ?? state.gasMeterNumber,
-    ));
+    emit(
+      state.copyWith(
+        city: city ?? state.city,
+        district: district ?? state.district,
+        streetName: streetName ?? state.streetName,
+        buildingNumber: buildingNumber ?? state.buildingNumber,
+        postalCode: postalCode ?? state.postalCode,
+        additionalNumber: additionalNumber ?? state.additionalNumber,
+        shortAddress: shortAddress ?? state.shortAddress,
+        latitude: latitude ?? state.latitude,
+        longitude: longitude ?? state.longitude,
+        electricityMeterNumber:
+            electricityMeter ?? state.electricityMeterNumber,
+        waterMeterNumber: waterMeter ?? state.waterMeterNumber,
+        gasMeterNumber: gasMeter ?? state.gasMeterNumber,
+      ),
+    );
   }
 
   void toggleAmenity(String amenity) {
@@ -159,12 +177,14 @@ class UnitCreateCubit extends Cubit<UnitCreateState> {
     double? fourPayments,
     bool? useMortgage,
   }) {
-    emit(state.copyWith(
-      annualRentMonthly: monthly ?? state.annualRentMonthly,
-      annualRent2Payments: twoPayments ?? state.annualRent2Payments,
-      annualRent4Payments: fourPayments ?? state.annualRent4Payments,
-      usePriceForMortgage: useMortgage ?? state.usePriceForMortgage,
-    ));
+    emit(
+      state.copyWith(
+        annualRentMonthly: monthly ?? state.annualRentMonthly,
+        annualRent2Payments: twoPayments ?? state.annualRent2Payments,
+        annualRent4Payments: fourPayments ?? state.annualRent4Payments,
+        usePriceForMortgage: useMortgage ?? state.usePriceForMortgage,
+      ),
+    );
   }
 
   // --- Submit ---

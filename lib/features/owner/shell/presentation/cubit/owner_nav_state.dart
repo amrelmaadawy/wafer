@@ -6,9 +6,7 @@ class OwnerNavState extends Equatable {
   const OwnerNavState({this.currentIndex = 0});
 
   OwnerNavState copyWith({int? currentIndex}) {
-    return OwnerNavState(
-      currentIndex: currentIndex ?? this.currentIndex,
-    );
+    return OwnerNavState(currentIndex: currentIndex ?? this.currentIndex);
   }
 
   @override

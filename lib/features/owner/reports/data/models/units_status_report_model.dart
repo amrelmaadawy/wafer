@@ -16,13 +16,15 @@ class UnitsStatusReportModel extends UnitsStatusReportEntity {
   factory UnitsStatusReportModel.fromJson(Map<String, dynamic> json) {
     return UnitsStatusReportModel(
       summary: UnitsStatusSummaryModel.fromJson(json['summary'] ?? {}),
-      items: (json['items'] as List<dynamic>?)
+      items:
+          (json['items'] as List<dynamic>?)
               ?.map((e) => UnitsStatusItemModel.fromJson(e))
               .toList() ??
           [],
       pagination: ReportPaginationModel.fromJson(json['pagination'] ?? {}),
       filterOptions: UnitsStatusFilterOptionsModel.fromJson(
-          json['filter_options'] ?? {}),
+        json['filter_options'] ?? {},
+      ),
     );
   }
 }
@@ -99,11 +101,13 @@ class UnitsStatusFilterOptionsModel extends UnitsStatusFilterOptionsEntity {
 
   factory UnitsStatusFilterOptionsModel.fromJson(Map<String, dynamic> json) {
     return UnitsStatusFilterOptionsModel(
-      statuses: (json['statuses'] as List<dynamic>?)
+      statuses:
+          (json['statuses'] as List<dynamic>?)
               ?.map((e) => UnitsStatusStatusFilterModel.fromJson(e))
               .toList() ??
           [],
-      properties: (json['properties'] as List<dynamic>?)
+      properties:
+          (json['properties'] as List<dynamic>?)
               ?.map((e) => UnitsStatusPropertyFilterModel.fromJson(e))
               .toList() ??
           [],

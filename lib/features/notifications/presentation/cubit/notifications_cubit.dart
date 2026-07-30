@@ -9,7 +9,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   final UnreadCountCubit? _unreadCountCubit;
 
   NotificationsCubit(this._getNotificationsUseCase, [this._unreadCountCubit])
-      : super(const NotificationsInitial());
+    : super(const NotificationsInitial());
 
   int _currentPage = 1;
   bool _isFetchingNext = false;
@@ -25,27 +25,30 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       GetNotificationsParams(page: _currentPage, forceRefresh: forceRefresh),
     );
 
-    result.fold(
-      (failure) => emit(NotificationsError(failure.message)),
-      (response) {
-        _unreadCountCubit?.updateCount(response.unreadCount);
-        if (response.notifications.isEmpty) {
-          emit(NotificationsEmpty(activeFilter: _currentFilter));
-        } else {
-          emit(NotificationsLoaded(
+    result.fold((failure) => emit(NotificationsError(failure.message)), (
+      response,
+    ) {
+      _unreadCountCubit?.updateCount(response.unreadCount);
+      if (response.notifications.isEmpty) {
+        emit(NotificationsEmpty(activeFilter: _currentFilter));
+      } else {
+        emit(
+          NotificationsLoaded(
             notifications: response.notifications,
             meta: response.meta,
             unreadCount: response.unreadCount,
             activeFilter: _currentFilter,
-          ));
-        }
-      },
-    );
+          ),
+        );
+      }
+    });
   }
 
   Future<void> loadNextPage() async {
     final currentState = state;
-    if (currentState is! NotificationsLoaded || _isFetchingNext || !currentState.meta.hasMore) {
+    if (currentState is! NotificationsLoaded ||
+        _isFetchingNext ||
+        !currentState.meta.hasMore) {
       return;
     }
 
@@ -65,15 +68,18 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       (response) {
         _isFetchingNext = false;
         _unreadCountCubit?.updateCount(response.unreadCount);
-        final updatedList = List<NotificationItemEntity>.from(currentState.notifications)
-          ..addAll(response.notifications);
+        final updatedList = List<NotificationItemEntity>.from(
+          currentState.notifications,
+        )..addAll(response.notifications);
 
-        emit(NotificationsLoaded(
-          notifications: updatedList,
-          meta: response.meta,
-          unreadCount: response.unreadCount,
-          activeFilter: _currentFilter,
-        ));
+        emit(
+          NotificationsLoaded(
+            notifications: updatedList,
+            meta: response.meta,
+            unreadCount: response.unreadCount,
+            activeFilter: _currentFilter,
+          ),
+        );
       },
     );
   }
@@ -111,10 +117,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
       _unreadCountCubit?.resetCount();
 
-      emit(currentState.copyWith(
-        notifications: updated,
-        unreadCount: 0,
-      ));
+      emit(currentState.copyWith(notifications: updated, unreadCount: 0));
     }
   }
 }

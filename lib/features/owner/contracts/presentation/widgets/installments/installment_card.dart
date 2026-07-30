@@ -24,7 +24,10 @@ class InstallmentCard extends StatelessWidget {
         color: AppColors.surfaceLight,
         borderRadius: AppRadius.circularXxl,
         border: isOverdue
-            ? Border.all(color: AppColors.error.withValues(alpha: 0.3), width: 1.5)
+            ? Border.all(
+                color: AppColors.error.withValues(alpha: 0.3),
+                width: 1.5,
+              )
             : Border.all(color: AppColors.borderLight.withValues(alpha: 0.5)),
         boxShadow: [
           BoxShadow(
@@ -43,7 +46,10 @@ class InstallmentCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: primaryColor.withValues(alpha: 0.1),
                   borderRadius: AppRadius.circularMd,
@@ -60,7 +66,10 @@ class InstallmentCard extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10,
+                  vertical: 5,
+                ),
                 decoration: BoxDecoration(
                   color: statusConfig.color.withValues(alpha: 0.12),
                   borderRadius: AppRadius.circularMd,
@@ -68,7 +77,11 @@ class InstallmentCard extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(statusConfig.icon, size: 14, color: statusConfig.color),
+                    Icon(
+                      statusConfig.icon,
+                      size: 14,
+                      color: statusConfig.color,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       installment.statusLabel.isNotEmpty
@@ -88,18 +101,27 @@ class InstallmentCard extends StatelessWidget {
           const SizedBox(height: 14),
           Row(
             children: [
-              const Icon(Icons.calendar_today_rounded, size: 16, color: AppColors.textSecondaryLight),
+              const Icon(
+                Icons.calendar_today_rounded,
+                size: 16,
+                color: AppColors.textSecondaryLight,
+              ),
               const SizedBox(width: 6),
               Text(
                 '${LocaleKeys.installmentsDueDate.tr()}: ',
-                style: const TextStyle(fontSize: 13, color: AppColors.textSecondaryLight),
+                style: const TextStyle(
+                  fontSize: 13,
+                  color: AppColors.textSecondaryLight,
+                ),
               ),
               Text(
                 _formatDate(installment.dueDate),
                 style: TextStyle(
                   fontSize: 13.5,
                   fontWeight: FontWeight.w700,
-                  color: isOverdue ? AppColors.error : AppColors.textPrimaryLight,
+                  color: isOverdue
+                      ? AppColors.error
+                      : AppColors.textPrimaryLight,
                 ),
               ),
             ],
@@ -122,7 +144,9 @@ class InstallmentCard extends StatelessWidget {
               _buildValueColumn(
                 label: LocaleKeys.installmentsRemaining.tr(),
                 value: installment.remaining,
-                color: installment.remaining > 0 ? AppColors.warning : AppColors.textSecondaryLight,
+                color: installment.remaining > 0
+                    ? AppColors.warning
+                    : AppColors.textSecondaryLight,
               ),
             ],
           ),
@@ -131,19 +155,30 @@ class InstallmentCard extends StatelessWidget {
     );
   }
 
-  Widget _buildValueColumn({required String label, required double value, required Color color}) {
+  Widget _buildValueColumn({
+    required String label,
+    required double value,
+    required Color color,
+  }) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: const TextStyle(fontSize: 12, color: AppColors.textSecondaryLight),
+            style: const TextStyle(
+              fontSize: 12,
+              color: AppColors.textSecondaryLight,
+            ),
           ),
           const SizedBox(height: 4),
           Text(
             '${value.toStringAsFixed(2)} ${LocaleKeys.contractsCurrency.tr()}',
-            style: TextStyle(fontSize: 13.5, fontWeight: FontWeight.w700, color: color),
+            style: TextStyle(
+              fontSize: 13.5,
+              fontWeight: FontWeight.w700,
+              color: color,
+            ),
           ),
         ],
       ),
@@ -155,8 +190,20 @@ class InstallmentCard extends StatelessWidget {
     try {
       final parts = isoDate.split('-');
       if (parts.length != 3) return isoDate;
-      final months = ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
-        'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'];
+      final months = [
+        'يناير',
+        'فبراير',
+        'مارس',
+        'أبريل',
+        'مايو',
+        'يونيو',
+        'يوليو',
+        'أغسطس',
+        'سبتمبر',
+        'أكتوبر',
+        'نوفمبر',
+        'ديسمبر',
+      ];
       final month = int.tryParse(parts[1]) ?? 1;
       return '${parts[2]} ${months[month - 1]} ${parts[0]}';
     } catch (_) {

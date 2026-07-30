@@ -6,10 +6,7 @@ class DeedsResponseEntity extends Equatable {
   final List<DeedEntity> items;
   final DeedsPaginationMetaEntity meta;
 
-  const DeedsResponseEntity({
-    required this.items,
-    required this.meta,
-  });
+  const DeedsResponseEntity({required this.items, required this.meta});
 
   @override
   List<Object?> get props => [items, meta];

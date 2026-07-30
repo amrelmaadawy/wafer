@@ -43,8 +43,15 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
 
   void _onNext(PropertyCreateCubit cubit, PropertyCreateState state) async {
     if (state.currentStep == 0) {
-      if (state.selectedBranchId == null || state.selectedDeedId == null || state.selectedType == null) {
-        if (mounted) AppToast.showError(context, LocaleKeys.propertyCreateFillRequired.tr());
+      if (state.selectedBranchId == null ||
+          state.selectedDeedId == null ||
+          state.selectedType == null) {
+        if (mounted) {
+          AppToast.showError(
+            context,
+            LocaleKeys.propertyCreateFillRequired.tr(),
+          );
+        }
         return;
       }
       final success = await cubit.createDraft();
@@ -53,12 +60,24 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
 
     if (state.currentStep == 1) {
       if (state.name == null || state.name!.trim().isEmpty) {
-        if (mounted) AppToast.showError(context, LocaleKeys.propertyCreateNameRequired.tr());
+        if (mounted) {
+          AppToast.showError(
+            context,
+            LocaleKeys.propertyCreateNameRequired.tr(),
+          );
+        }
         return;
       }
       final currentYear = DateTime.now().year;
-      if (state.constructionYear != null && (state.constructionYear! < 1900 || state.constructionYear! > currentYear)) {
-        if (mounted) AppToast.showError(context, "سنة البناء غير صالحة. يجب أن تكون بين 1900 و $currentYear");
+      if (state.constructionYear != null &&
+          (state.constructionYear! < 1900 ||
+              state.constructionYear! > currentYear)) {
+        if (mounted) {
+          AppToast.showError(
+            context,
+            "سنة البناء غير صالحة. يجب أن تكون بين 1900 و $currentYear",
+          );
+        }
         return;
       }
       FocusScope.of(context).unfocus();
@@ -68,7 +87,12 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
 
     if (state.currentStep == 2) {
       if (state.images.any((i) => i.isUploading)) {
-        if (mounted) AppToast.showError(context, LocaleKeys.propertyCreateImagesUploading.tr());
+        if (mounted) {
+          AppToast.showError(
+            context,
+            LocaleKeys.propertyCreateImagesUploading.tr(),
+          );
+        }
         return;
       }
       if (state.images.isNotEmpty) {
@@ -86,7 +110,10 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
       final success = await cubit.publishProperty();
       if (success && mounted) {
         final id = state.draftPropertyId;
-        AppToast.showSuccess(context, LocaleKeys.propertyWizardPublishedSuccess.tr());
+        AppToast.showSuccess(
+          context,
+          LocaleKeys.propertyWizardPublishedSuccess.tr(),
+        );
         cubit.reset();
         context.pushReplacement('${Routes.ownerPropertyDetails}?id=$id');
       }
@@ -112,9 +139,7 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(
-        title: LocaleKeys.propertyCreateTitle.tr(),
-      ),
+      appBar: CustomAppBar(title: LocaleKeys.propertyCreateTitle.tr()),
       body: BlocConsumer<PropertyCreateCubit, PropertyCreateState>(
         listener: (context, state) {
           if (state.errorMessage != null) {
@@ -164,7 +189,11 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                               color: AppColors.error.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
                             ),
-                            child: const Icon(Icons.logout_rounded, color: AppColors.error, size: 32),
+                            child: const Icon(
+                              Icons.logout_rounded,
+                              color: AppColors.error,
+                              size: 32,
+                            ),
                           ),
                           const SizedBox(height: 20),
                           Text(
@@ -198,7 +227,9 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                                 child: TextButton(
                                   onPressed: () => Navigator.pop(ctx, false),
                                   style: TextButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(vertical: 14),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 14,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(16),
                                     ),
@@ -206,7 +237,10 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                                   ),
                                   child: Text(
                                     LocaleKeys.propertyCreateExitCancel.tr(),
-                                    style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 15,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -218,14 +252,19 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                                     backgroundColor: AppColors.error,
                                     foregroundColor: Colors.white,
                                     elevation: 0,
-                                    padding: const EdgeInsets.symmetric(vertical: 14),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 14,
+                                    ),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                   ),
                                   child: Text(
                                     LocaleKeys.propertyCreateExitConfirm.tr(),
-                                    style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 15,
+                                    ),
                                   ),
                                 ),
                               ),

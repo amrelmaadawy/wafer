@@ -9,10 +9,14 @@ import '../../utils/widgets/app_toast.dart';
 class PdfGeneratorService {
   static pw.Font? _regularFont;
   static pw.Font? _boldFont;
-  
+
   // Theme colors matching Wafer AppColors
-  static const PdfColor primaryColor = PdfColor.fromInt(0xFF1E3A8A); // AppColors.primary
-  static const PdfColor secondaryColor = PdfColor.fromInt(0xFF3B82F6); // AppColors.secondary
+  static const PdfColor primaryColor = PdfColor.fromInt(
+    0xFF1E3A8A,
+  ); // AppColors.primary
+  static const PdfColor secondaryColor = PdfColor.fromInt(
+    0xFF3B82F6,
+  ); // AppColors.secondary
   static const PdfColor textPrimary = PdfColor.fromInt(0xFF1F2937);
   static const PdfColor textSecondary = PdfColor.fromInt(0xFF6B7280);
   static const PdfColor backgroundLight = PdfColor.fromInt(0xFFF9FAFB);
@@ -23,7 +27,11 @@ class PdfGeneratorService {
     required pw.Document pdf,
     required String fileName,
   }) async {
-    AppToast.showInfo(context, 'جاري تجهيز الملف للطباعة/المشاركة...', title: 'يرجى الانتظار');
+    AppToast.showInfo(
+      context,
+      'جاري تجهيز الملف للطباعة/المشاركة...',
+      title: 'يرجى الانتظار',
+    );
     try {
       await Printing.layoutPdf(
         onLayout: (format) async => pdf.save(),
@@ -38,11 +46,15 @@ class PdfGeneratorService {
 
   static Future<void> init() async {
     if (_regularFont != null) return;
-    
-    final regularData = await rootBundle.load('assets/font/IBMPlexSansArabic-Regular.ttf');
+
+    final regularData = await rootBundle.load(
+      'assets/font/IBMPlexSansArabic-Regular.ttf',
+    );
     _regularFont = pw.Font.ttf(regularData);
 
-    final boldData = await rootBundle.load('assets/font/IBMPlexSansArabic-Bold.ttf');
+    final boldData = await rootBundle.load(
+      'assets/font/IBMPlexSansArabic-Bold.ttf',
+    );
     _boldFont = pw.Font.ttf(boldData);
   }
 
@@ -55,10 +67,7 @@ class PdfGeneratorService {
 
     final pdf = pw.Document();
 
-    final theme = pw.ThemeData.withFont(
-      base: _regularFont,
-      bold: _boldFont,
-    );
+    final theme = pw.ThemeData.withFont(base: _regularFont, bold: _boldFont);
 
     pdf.addPage(
       pw.MultiPage(
@@ -70,9 +79,7 @@ class PdfGeneratorService {
           buildBackground: (context) {
             return pw.FullPage(
               ignoreMargins: true,
-              child: pw.Container(
-                color: PdfColors.white,
-              ),
+              child: pw.Container(color: PdfColors.white),
             );
           },
         ),

@@ -12,7 +12,8 @@ class MaintenanceRequestsReportModel extends MaintenanceRequestsReportEntity {
   factory MaintenanceRequestsReportModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceRequestsReportModel(
       summary: MaintenanceRequestsSummaryModel.fromJson(json['summary'] ?? {}),
-      items: (json['items'] as List?)
+      items:
+          (json['items'] as List?)
               ?.map((item) => MaintenanceRequestsItemModel.fromJson(item))
               .toList() ??
           [],

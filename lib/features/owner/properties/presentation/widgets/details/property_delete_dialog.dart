@@ -13,10 +13,12 @@ class PropertyDeleteDialog extends StatelessWidget {
     showDialog(
       context: context,
       barrierDismissible: true,
-      builder: (dialogContext) => PropertyDeleteDialog(onConfirm: () {
-        Navigator.of(dialogContext).pop();
-        onConfirm();
-      }),
+      builder: (dialogContext) => PropertyDeleteDialog(
+        onConfirm: () {
+          Navigator.of(dialogContext).pop();
+          onConfirm();
+        },
+      ),
     );
   }
 

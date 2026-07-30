@@ -4,10 +4,7 @@ class DeedBranchEntity extends Equatable {
   final int id;
   final String name;
 
-  const DeedBranchEntity({
-    required this.id,
-    required this.name,
-  });
+  const DeedBranchEntity({required this.id, required this.name});
 
   @override
   List<Object?> get props => [id, name];
@@ -86,32 +83,33 @@ class DeedEntity extends Equatable {
   });
 
   bool get isElectronic => documentType?.toLowerCase() == 'electronic';
-  bool get hasAttachment => documentAttachment != null && documentAttachment!.isNotEmpty;
+  bool get hasAttachment =>
+      documentAttachment != null && documentAttachment!.isNotEmpty;
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        code,
-        documentType,
-        documentNumber,
-        documentDate,
-        area,
-        documentAttachment,
-        city,
-        district,
-        region,
-        streetName,
-        buildingNumber,
-        shortAddress,
-        postalCode,
-        additionalNumber,
-        latitude,
-        longitude,
-        notes,
-        branch,
-        propertiesCount,
-        createdAt,
-        properties,
-      ];
+    id,
+    name,
+    code,
+    documentType,
+    documentNumber,
+    documentDate,
+    area,
+    documentAttachment,
+    city,
+    district,
+    region,
+    streetName,
+    buildingNumber,
+    shortAddress,
+    postalCode,
+    additionalNumber,
+    latitude,
+    longitude,
+    notes,
+    branch,
+    propertiesCount,
+    createdAt,
+    properties,
+  ];
 }

@@ -6,7 +6,8 @@ import '../models/unit_full_details_model.dart';
 import '../models/unit_create_model.dart';
 
 abstract class UnitsRemoteDataSource {
-  Future<({List<UnitModel> items, PropertiesPaginationMetaEntity meta})> getPropertyUnits(
+  Future<({List<UnitModel> items, PropertiesPaginationMetaEntity meta})>
+  getPropertyUnits(
     int propertyId, {
     int page = 1,
     String? search,
@@ -15,7 +16,11 @@ abstract class UnitsRemoteDataSource {
   });
   Future<int> createDraftUnit(int propertyId);
   Future<int> createUnitDirect(int propertyId, UnitCreateModel unit);
-  Future<void> autoSaveUnit(int propertyId, int unitId, Map<String, dynamic> data);
+  Future<void> autoSaveUnit(
+    int propertyId,
+    int unitId,
+    Map<String, dynamic> data,
+  );
   Future<UnitFullDetailsModel> getUnitDetails(int propertyId, int unitId);
   Future<void> publishUnit(int propertyId, int unitId);
 }
@@ -26,7 +31,8 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
   UnitsRemoteDataSourceImpl(this._dio);
 
   @override
-  Future<({List<UnitModel> items, PropertiesPaginationMetaEntity meta})> getPropertyUnits(
+  Future<({List<UnitModel> items, PropertiesPaginationMetaEntity meta})>
+  getPropertyUnits(
     int propertyId, {
     int page = 1,
     String? search,
@@ -51,7 +57,7 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
         .toList();
 
     final metaJson = response.data['meta'];
-    final meta = metaJson != null 
+    final meta = metaJson != null
         ? PropertiesPaginationMetaEntity(
             currentPage: metaJson['current_page'] as int? ?? 1,
             lastPage: metaJson['last_page'] as int? ?? 1,
@@ -64,7 +70,7 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
             perPage: items.length,
             total: items.length,
           );
-          
+
     return (items: items, meta: meta);
   }
 
@@ -74,7 +80,9 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
       '${ApiConstants.baseUrl}${ApiConstants.ownerCreateDraftUnit(propertyId)}',
     );
 
-    final data = response.data['data'] as Map<String, dynamic>? ?? response.data as Map<String, dynamic>;
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
+        response.data as Map<String, dynamic>;
     return data['id'] as int? ?? data['unit_id'] as int? ?? 0;
   }
 
@@ -89,7 +97,11 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
   }
 
   @override
-  Future<void> autoSaveUnit(int propertyId, int unitId, Map<String, dynamic> data) async {
+  Future<void> autoSaveUnit(
+    int propertyId,
+    int unitId,
+    Map<String, dynamic> data,
+  ) async {
     await _dio.patch(
       '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveUnit(propertyId, unitId)}',
       data: data,
@@ -97,11 +109,16 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
   }
 
   @override
-  Future<UnitFullDetailsModel> getUnitDetails(int propertyId, int unitId) async {
+  Future<UnitFullDetailsModel> getUnitDetails(
+    int propertyId,
+    int unitId,
+  ) async {
     final response = await _dio.get(
       '${ApiConstants.baseUrl}${ApiConstants.ownerShowUnit(propertyId, unitId)}',
     );
-    return UnitFullDetailsModel.fromJson(response.data['data'] as Map<String, dynamic>);
+    return UnitFullDetailsModel.fromJson(
+      response.data['data'] as Map<String, dynamic>,
+    );
   }
 
   @override

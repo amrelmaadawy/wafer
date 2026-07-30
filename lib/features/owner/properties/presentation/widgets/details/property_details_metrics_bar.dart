@@ -9,10 +9,7 @@ import '../../../domain/entities/property_details_entity.dart';
 class PropertyDetailsMetricsBar extends StatelessWidget {
   final PropertyDetailsEntity property;
 
-  const PropertyDetailsMetricsBar({
-    super.key,
-    required this.property,
-  });
+  const PropertyDetailsMetricsBar({super.key, required this.property});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +22,8 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
             context,
             label: LocaleKeys.propertyDetailsTotalUnits.tr(),
             value: '${property.unitsCount}',
-            subtext: '${property.rentedUnits} ${LocaleKeys.propertyDetailsRentedUnits.tr()} | ${property.availableUnits} ${LocaleKeys.propertyDetailsAvailableUnitsLabel.tr()}',
+            subtext:
+                '${property.rentedUnits} ${LocaleKeys.propertyDetailsRentedUnits.tr()} | ${property.availableUnits} ${LocaleKeys.propertyDetailsAvailableUnitsLabel.tr()}',
             icon: Icons.meeting_room_rounded,
             color: context.primaryColor,
             bgColor: context.primarySubtle,
@@ -45,7 +43,8 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
             _buildMetricCard(
               context,
               label: LocaleKeys.propertyDetailsTotalArea.tr(),
-              value: '${property.area} ${LocaleKeys.propertyDetailsAreaUnit.tr()}',
+              value:
+                  '${property.area} ${LocaleKeys.propertyDetailsAreaUnit.tr()}',
               subtext: property.length != null && property.width != null
                   ? '${property.length}m × ${property.width}m'
                   : LocaleKeys.propertyDetailsTotalArea.tr(),
@@ -59,8 +58,11 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
             _buildMetricCard(
               context,
               label: LocaleKeys.propertyDetailsValuationAmount.tr(),
-              value: '${property.valuationAmount} ${LocaleKeys.propertyDetailsValuationCurrency.tr()}',
-              subtext: property.valuationEntity ?? LocaleKeys.propertyDetailsValuationApproved.tr(),
+              value:
+                  '${property.valuationAmount} ${LocaleKeys.propertyDetailsValuationCurrency.tr()}',
+              subtext:
+                  property.valuationEntity ??
+                  LocaleKeys.propertyDetailsValuationApproved.tr(),
               icon: Icons.account_balance_wallet_rounded,
               color: const Color(0xFFF59E0B),
               bgColor: const Color(0xFFFEF3C7),

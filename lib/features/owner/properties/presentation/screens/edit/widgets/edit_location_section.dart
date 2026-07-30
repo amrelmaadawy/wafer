@@ -22,10 +22,7 @@ class EditLocationSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EditSectionHeader(
-          title: 'تفاصيل الموقع', 
-          icon: Icons.map_outlined
-        ),
+        EditSectionHeader(title: 'تفاصيل الموقع', icon: Icons.map_outlined),
         const SizedBox(height: 16),
         Row(
           children: [

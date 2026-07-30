@@ -11,11 +11,7 @@ class PropertyCard extends StatelessWidget {
   final PropertyListItemEntity property;
   final VoidCallback? onTap;
 
-  const PropertyCard({
-    super.key,
-    required this.property,
-    this.onTap,
-  });
+  const PropertyCard({super.key, required this.property, this.onTap});
 
   IconData get _typeIcon {
     switch (property.propertyType.toLowerCase()) {
@@ -68,7 +64,11 @@ class PropertyCard extends StatelessWidget {
                         color: context.primarySubtle,
                         borderRadius: AppRadius.circularLg,
                       ),
-                      child: Icon(_typeIcon, color: context.primaryColor, size: 22),
+                      child: Icon(
+                        _typeIcon,
+                        color: context.primaryColor,
+                        size: 22,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -103,12 +103,19 @@ class PropertyCard extends StatelessWidget {
                         const SizedBox(height: 4),
                         Row(
                           children: [
-                            const Icon(Icons.location_on_outlined, size: 14, color: AppColors.textSecondaryLight),
+                            const Icon(
+                              Icons.location_on_outlined,
+                              size: 14,
+                              color: AppColors.textSecondaryLight,
+                            ),
                             const SizedBox(width: 4),
                             Expanded(
                               child: Text(
                                 property.displayAddress,
-                                style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 12),
+                                style: const TextStyle(
+                                  color: AppColors.textSecondaryLight,
+                                  fontSize: 12,
+                                ),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -120,14 +127,25 @@ class PropertyCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: statusColor.withValues(alpha: 0.1),
                       borderRadius: AppRadius.circularFull,
                     ),
                     child: Text(
-                      property.statusLabel.isNotEmpty ? property.statusLabel : (isDraft ? LocaleKeys.propertiesStatusDraft.tr() : LocaleKeys.propertiesStatusPublished.tr()),
-                      style: TextStyle(color: statusColor, fontSize: 11, fontWeight: FontWeight.w700),
+                      property.statusLabel.isNotEmpty
+                          ? property.statusLabel
+                          : (isDraft
+                                ? LocaleKeys.propertiesStatusDraft.tr()
+                                : LocaleKeys.propertiesStatusPublished.tr()),
+                      style: TextStyle(
+                        color: statusColor,
+                        fontSize: 11,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                   ),
                 ],
@@ -140,19 +158,34 @@ class PropertyCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.meeting_room_outlined, size: 15, color: context.primaryColor),
+                      Icon(
+                        Icons.meeting_room_outlined,
+                        size: 15,
+                        color: context.primaryColor,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         '${property.unitsCount} ${LocaleKeys.propertiesCardUnits.tr()}',
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       if (property.area != null) ...[
                         const SizedBox(width: 14),
-                        const Icon(Icons.square_foot_outlined, size: 15, color: AppColors.textSecondaryLight),
+                        const Icon(
+                          Icons.square_foot_outlined,
+                          size: 15,
+                          color: AppColors.textSecondaryLight,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           '${property.area} ${LocaleKeys.propertiesCardArea.tr()}',
-                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: AppColors.textSecondaryLight),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textSecondaryLight,
+                          ),
                         ),
                       ],
                     ],
@@ -160,11 +193,19 @@ class PropertyCard extends StatelessWidget {
                   if (property.primaryOwnerName != null)
                     Row(
                       children: [
-                        const Icon(Icons.person_outline_rounded, size: 14, color: AppColors.textSecondaryLight),
+                        const Icon(
+                          Icons.person_outline_rounded,
+                          size: 14,
+                          color: AppColors.textSecondaryLight,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           property.primaryOwnerName!,
-                          style: const TextStyle(fontSize: 11.5, color: AppColors.textSecondaryLight, fontWeight: FontWeight.w500),
+                          style: const TextStyle(
+                            fontSize: 11.5,
+                            color: AppColors.textSecondaryLight,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),

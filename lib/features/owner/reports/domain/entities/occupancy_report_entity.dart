@@ -17,11 +17,11 @@ class OccupancyReportSummaryEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        totalProperties,
-        totalUnits,
-        rentedUnits,
-        overallOccupancy,
-      ];
+    totalProperties,
+    totalUnits,
+    rentedUnits,
+    overallOccupancy,
+  ];
 }
 
 class OccupancyReportEntity extends Equatable {

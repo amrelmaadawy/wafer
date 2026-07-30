@@ -55,74 +55,85 @@ class OwnerRevenueReportView extends StatelessWidget {
       body: BlocBuilder<OwnerRevenueCubit, OwnerRevenueState>(
         builder: (context, state) {
           if (state is OwnerRevenueLoading || state is OwnerRevenueInitial) {
-          return const SingleChildScrollView(
-            padding: EdgeInsets.all(20),
-            child: RevenueSkeleton(),
-          );
-        } else if (state is OwnerRevenueError) {
-          return _buildErrorView(context, state.message);
-        } else if (state is OwnerRevenueEmpty) {
-          return ReportEmptyWidget(
-            message: LocaleKeys.revenueNoData.tr(),
-            icon: Icons.account_balance_wallet_outlined,
-          );
-        } else if (state is OwnerRevenueLoaded) {
-          final cubit = context.read<OwnerRevenueCubit>();
-          return RefreshIndicator(
-            color: context.primaryColor,
-            onRefresh: () => cubit.loadRevenueReport(forceRefresh: true),
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(vertical: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  ReportsFilterBar(
-                    filterOptions: state.report.filterOptions,
-                    selectedPropertyId: cubit.selectedPropertyId,
-                    selectedStartDate: cubit.selectedStartDate,
-                    selectedEndDate: cubit.selectedEndDate,
-                    onPropertySelected: (id) {
-                      cubit.loadRevenueReport(forceRefresh: true, propertyId: id);
-                    },
-                    onDateRangeSelected: (start, end) {
-                      cubit.loadRevenueReport(forceRefresh: true, startDate: start, endDate: end);
-                    },
-                    onReset: cubit.clearFilters,
-                  ),
-                  const SizedBox(height: 20),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: RevenueSummaryHeader(summary: state.report.summary),
-                  ),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: RevenueAnimatedBarChart(entries: state.report.chart),
-                  ),
-                  const SizedBox(height: 16),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: RevenueMonthlyList(entries: state.report.chart),
-                  ),
-                  const SizedBox(height: 30),
-                ],
+            return const SingleChildScrollView(
+              padding: EdgeInsets.all(20),
+              child: RevenueSkeleton(),
+            );
+          } else if (state is OwnerRevenueError) {
+            return _buildErrorView(context, state.message);
+          } else if (state is OwnerRevenueEmpty) {
+            return ReportEmptyWidget(
+              message: LocaleKeys.revenueNoData.tr(),
+              icon: Icons.account_balance_wallet_outlined,
+            );
+          } else if (state is OwnerRevenueLoaded) {
+            final cubit = context.read<OwnerRevenueCubit>();
+            return RefreshIndicator(
+              color: context.primaryColor,
+              onRefresh: () => cubit.loadRevenueReport(forceRefresh: true),
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ReportsFilterBar(
+                      filterOptions: state.report.filterOptions,
+                      selectedPropertyId: cubit.selectedPropertyId,
+                      selectedStartDate: cubit.selectedStartDate,
+                      selectedEndDate: cubit.selectedEndDate,
+                      onPropertySelected: (id) {
+                        cubit.loadRevenueReport(
+                          forceRefresh: true,
+                          propertyId: id,
+                        );
+                      },
+                      onDateRangeSelected: (start, end) {
+                        cubit.loadRevenueReport(
+                          forceRefresh: true,
+                          startDate: start,
+                          endDate: end,
+                        );
+                      },
+                      onReset: cubit.clearFilters,
+                    ),
+                    const SizedBox(height: 20),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: RevenueSummaryHeader(
+                        summary: state.report.summary,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: RevenueAnimatedBarChart(
+                        entries: state.report.chart,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: RevenueMonthlyList(entries: state.report.chart),
+                    ),
+                    const SizedBox(height: 30),
+                  ],
+                ),
               ),
-            ),
-          );
-        }
-        return const SizedBox.shrink();
-      },
-    ));
+            );
+          }
+          return const SizedBox.shrink();
+        },
+      ),
+    );
   }
 
   Widget _buildErrorView(BuildContext context, String message) {
     return CustomErrorWidget(
       message: message,
-      onRetry: () => context
-          .read<OwnerRevenueCubit>()
-          .loadRevenueReport(forceRefresh: true),
+      onRetry: () => context.read<OwnerRevenueCubit>().loadRevenueReport(
+        forceRefresh: true,
+      ),
     );
   }
-
 }

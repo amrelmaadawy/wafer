@@ -58,10 +58,7 @@ class ContractStatusBadge extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-      decoration: BoxDecoration(
-        color: bg,
-        borderRadius: AppRadius.circularMd,
-      ),
+      decoration: BoxDecoration(color: bg, borderRadius: AppRadius.circularMd),
       child: Text(
         labelKey.tr(),
         style: TextStyle(

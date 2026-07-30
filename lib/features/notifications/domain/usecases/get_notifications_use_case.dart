@@ -9,22 +9,22 @@ class GetNotificationsParams extends Equatable {
   final int page;
   final bool forceRefresh;
 
-  const GetNotificationsParams({
-    this.page = 1,
-    this.forceRefresh = false,
-  });
+  const GetNotificationsParams({this.page = 1, this.forceRefresh = false});
 
   @override
   List<Object?> get props => [page, forceRefresh];
 }
 
-class GetNotificationsUseCase implements UseCase<NotificationsResponseEntity, GetNotificationsParams> {
+class GetNotificationsUseCase
+    implements UseCase<NotificationsResponseEntity, GetNotificationsParams> {
   final NotificationsRepository _repository;
 
   GetNotificationsUseCase(this._repository);
 
   @override
-  Future<Either<Failure, NotificationsResponseEntity>> call(GetNotificationsParams params) {
+  Future<Either<Failure, NotificationsResponseEntity>> call(
+    GetNotificationsParams params,
+  ) {
     return _repository.getNotifications(
       page: params.page,
       forceRefresh: params.forceRefresh,

@@ -17,10 +17,10 @@ class TechnicianPerformanceItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        phone,
-        completedRequestsCount,
-        pendingRequestsCount,
-      ];
+    id,
+    name,
+    phone,
+    completedRequestsCount,
+    pendingRequestsCount,
+  ];
 }

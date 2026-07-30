@@ -35,9 +35,18 @@ class ProfileTextField extends StatelessWidget {
         prefixIcon: Icon(icon, color: context.primaryColor, size: 22),
         filled: true,
         fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: const BorderSide(color: AppColors.borderLight)),
-        enabledBorder: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: const BorderSide(color: AppColors.borderLight)),
-        focusedBorder: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: BorderSide(color: context.primaryColor, width: 2)),
+        border: OutlineInputBorder(
+          borderRadius: AppRadius.circularXl,
+          borderSide: const BorderSide(color: AppColors.borderLight),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: AppRadius.circularXl,
+          borderSide: const BorderSide(color: AppColors.borderLight),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: AppRadius.circularXl,
+          borderSide: BorderSide(color: context.primaryColor, width: 2),
+        ),
       ),
     );
   }
@@ -68,19 +77,32 @@ class ProfileGenderCard extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
         decoration: BoxDecoration(
-          color: isSelected ? context.primaryColor.withValues(alpha: 0.1) : Colors.white,
+          color: isSelected
+              ? context.primaryColor.withValues(alpha: 0.1)
+              : Colors.white,
           borderRadius: AppRadius.circularXl,
-          border: Border.all(color: isSelected ? context.primaryColor : AppColors.borderLight, width: isSelected ? 2 : 1),
+          border: Border.all(
+            color: isSelected ? context.primaryColor : AppColors.borderLight,
+            width: isSelected ? 2 : 1,
+          ),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, color: isSelected ? context.primaryColor : AppColors.textSecondaryLight, size: 22),
+            Icon(
+              icon,
+              color: isSelected
+                  ? context.primaryColor
+                  : AppColors.textSecondaryLight,
+              size: 22,
+            ),
             const SizedBox(width: 8),
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? context.primaryColor : AppColors.textPrimaryLight,
+                color: isSelected
+                    ? context.primaryColor
+                    : AppColors.textPrimaryLight,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w600,
                 fontSize: 14.5,
               ),

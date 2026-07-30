@@ -95,7 +95,11 @@ class ReportSkeleton extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   AppShimmer.box(width: 100, height: 16),
-                  AppShimmer.box(width: 60, height: 24, borderRadius: AppRadius.circularXl),
+                  AppShimmer.box(
+                    width: 60,
+                    height: 24,
+                    borderRadius: AppRadius.circularXl,
+                  ),
                 ],
               ),
               const SizedBox(height: 16),

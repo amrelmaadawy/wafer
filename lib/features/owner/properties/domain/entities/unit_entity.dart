@@ -14,7 +14,12 @@ class UnitDetailsEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [roomsCount, bathroomsCount, hallsCount, kitchensCount];
+  List<Object?> get props => [
+    roomsCount,
+    bathroomsCount,
+    hallsCount,
+    kitchensCount,
+  ];
 }
 
 class UnitPricesEntity extends Equatable {
@@ -48,7 +53,7 @@ class UnitEntity extends Equatable {
   final num? deposit;
   final String? specs;
   final String? createdAt;
-  
+
   final bool isFurnished;
   final String? image;
   final UnitDetailsEntity details;
@@ -77,30 +82,33 @@ class UnitEntity extends Equatable {
   });
 
   bool get isVacant => status.toLowerCase() == 'vacant';
-  bool get isOccupied => status.toLowerCase() == 'occupied' || status.toLowerCase() == 'rented';
+  bool get isOccupied =>
+      status.toLowerCase() == 'occupied' || status.toLowerCase() == 'rented';
   bool get isReserved => status.toLowerCase() == 'reserved';
-  bool get isMaintenance => status.toLowerCase() == 'under_maintenance' || status.toLowerCase() == 'maintenance';
+  bool get isMaintenance =>
+      status.toLowerCase() == 'under_maintenance' ||
+      status.toLowerCase() == 'maintenance';
 
   @override
   List<Object?> get props => [
-        id,
-        propertyId,
-        name,
-        code,
-        unitNumber,
-        floor,
-        area,
-        type,
-        typeLabel,
-        status,
-        statusLabel,
-        rentPrice,
-        deposit,
-        specs,
-        createdAt,
-        isFurnished,
-        image,
-        details,
-        prices,
-      ];
+    id,
+    propertyId,
+    name,
+    code,
+    unitNumber,
+    floor,
+    area,
+    type,
+    typeLabel,
+    status,
+    statusLabel,
+    rentPrice,
+    deposit,
+    specs,
+    createdAt,
+    isFurnished,
+    image,
+    details,
+    prices,
+  ];
 }

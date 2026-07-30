@@ -6,7 +6,7 @@ class OwnerContractDetailsCubit extends Cubit<OwnerContractDetailsState> {
   final GetOwnerContractDetailsUseCase _getContractDetailsUseCase;
 
   OwnerContractDetailsCubit(this._getContractDetailsUseCase)
-      : super(const OwnerContractDetailsInitial());
+    : super(const OwnerContractDetailsInitial());
 
   Future<void> getContractDetails(String contractId) async {
     emit(const OwnerContractDetailsLoading());

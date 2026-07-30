@@ -9,10 +9,7 @@ import '../../domain/entities/revenue_report_entity.dart';
 class RevenueSummaryHeader extends StatelessWidget {
   final RevenueSummaryEntity summary;
 
-  const RevenueSummaryHeader({
-    super.key,
-    required this.summary,
-  });
+  const RevenueSummaryHeader({super.key, required this.summary});
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +45,11 @@ class RevenueSummaryHeader extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.trending_up_rounded,
-                      color: Colors.white70, size: 18),
+                  const Icon(
+                    Icons.trending_up_rounded,
+                    color: Colors.white70,
+                    size: 18,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     LocaleKeys.revenueCollectionRate.tr(),
@@ -72,10 +72,7 @@ class RevenueSummaryHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Container(
-                height: 1,
-                color: Colors.white.withValues(alpha: 0.15),
-              ),
+              Container(height: 1, color: Colors.white.withValues(alpha: 0.15)),
               const SizedBox(height: 16),
               Row(
                 children: [

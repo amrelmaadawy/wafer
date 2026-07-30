@@ -4,6 +4,9 @@ import '../entities/maintenance_item_entity.dart';
 import '../entities/maintenance_response_entity.dart';
 import '../usecases/create_owner_maintenance_use_case.dart';
 import '../usecases/update_owner_maintenance_use_case.dart';
+import '../usecases/reject_owner_maintenance_use_case.dart';
+import '../usecases/approve_owner_maintenance_use_case.dart';
+import '../usecases/assign_owner_maintenance_use_case.dart';
 
 abstract class OwnerMaintenanceRepository {
   Future<Either<Failure, MaintenanceResponseEntity>> getMaintenanceRequests({
@@ -18,5 +21,14 @@ abstract class OwnerMaintenanceRepository {
   Future<Either<Failure, MaintenanceItemEntity>> updateMaintenanceRequest(
     UpdateOwnerMaintenanceParams params,
   );
+  Future<Either<Failure, void>> approveMaintenanceRequest(
+    ApproveOwnerMaintenanceParams params,
+  );
   Future<Either<Failure, void>> deleteMaintenanceRequest(int id);
+  Future<Either<Failure, void>> rejectMaintenanceRequest(
+    RejectOwnerMaintenanceParams params,
+  );
+  Future<Either<Failure, void>> assignMaintenanceRequest(
+    AssignOwnerMaintenanceParams params,
+  );
 }

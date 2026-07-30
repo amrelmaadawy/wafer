@@ -16,5 +16,11 @@ class RevenueEntryEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [month, expected, collected, remaining, collectionRate];
+  List<Object?> get props => [
+    month,
+    expected,
+    collected,
+    remaining,
+    collectionRate,
+  ];
 }

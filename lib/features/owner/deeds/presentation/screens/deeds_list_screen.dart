@@ -43,7 +43,8 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       context.read<DeedsListCubit>().loadNextPage();
     }
   }
@@ -76,7 +77,9 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
                 } else if (state is DeedsListError) {
                   return CustomErrorWidget(
                     message: state.message,
-                    onRetry: () => context.read<DeedsListCubit>().getDeeds(forceRefresh: true),
+                    onRetry: () => context.read<DeedsListCubit>().getDeeds(
+                      forceRefresh: true,
+                    ),
                   );
                 } else if (state is DeedsListEmpty) {
                   return const DeedsEmptyState();
@@ -85,15 +88,25 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
                 if (state is DeedsListLoaded) {
                   return RefreshIndicator(
                     onRefresh: () async {
-                      await context.read<DeedsListCubit>().getDeeds(forceRefresh: true);
+                      await context.read<DeedsListCubit>().getDeeds(
+                        forceRefresh: true,
+                      );
                     },
-                    color: context.read<DeedsListCubit>().currentFilter.branchId != null 
-                        ? Theme.of(context).primaryColor 
-                        : Theme.of(context).primaryColor, // Ensure valid color or use AppColors.primary
+                    color:
+                        context.read<DeedsListCubit>().currentFilter.branchId !=
+                            null
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(
+                            context,
+                          ).primaryColor, // Ensure valid color or use AppColors.primary
                     child: ListView.builder(
                       controller: _scrollController,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                      itemCount: state.deeds.length + (state.isFetchingMore ? 1 : 0),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                      itemCount:
+                          state.deeds.length + (state.isFetchingMore ? 1 : 0),
                       itemBuilder: (context, index) {
                         if (index == state.deeds.length) {
                           return const Padding(
@@ -102,7 +115,9 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
                               child: SizedBox(
                                 width: 24,
                                 height: 24,
-                                child: CircularProgressIndicator(strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
                               ),
                             ),
                           );
@@ -117,9 +132,12 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
                               deed: deed,
                               onTap: () {
                                 FocusManager.instance.primaryFocus?.unfocus();
-                                context.push('${Routes.ownerDeedDetails}?id=${deed.id}');
+                                context.push(
+                                  '${Routes.ownerDeedDetails}?id=${deed.id}',
+                                );
                               },
-                              onAttachmentTap: () => _openAttachment(deed.documentAttachment),
+                              onAttachmentTap: () =>
+                                  _openAttachment(deed.documentAttachment),
                             ),
                           ),
                         );
@@ -136,7 +154,9 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          final result = await GoRouter.of(context).push(Routes.ownerDeedsCreate);
+          final result = await GoRouter.of(
+            context,
+          ).push(Routes.ownerDeedsCreate);
           if (result == true && context.mounted) {
             context.read<DeedsListCubit>().getDeeds(forceRefresh: true);
           }
@@ -145,7 +165,10 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
         icon: const Icon(Icons.add_rounded, color: Colors.white),
         label: Text(
           LocaleKeys.deeds_create_deed.tr(),
-          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

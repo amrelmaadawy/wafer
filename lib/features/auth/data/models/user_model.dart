@@ -44,10 +44,7 @@ class UserModel extends UserEntity {
         'phone': phone,
         'avatar': avatar,
       },
-      'tenant': {
-        'id': tenantId,
-        'name': tenantName,
-      },
+      'tenant': {'id': tenantId, 'name': tenantName},
     };
   }
 }

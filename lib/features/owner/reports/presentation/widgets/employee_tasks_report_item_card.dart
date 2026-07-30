@@ -71,7 +71,11 @@ class EmployeeTasksReportItemCard extends StatelessWidget {
                 const SizedBox(height: 2),
                 Row(
                   children: [
-                    const Icon(Icons.phone_outlined, size: 14, color: AppColors.textSecondaryLight),
+                    const Icon(
+                      Icons.phone_outlined,
+                      size: 14,
+                      color: AppColors.textSecondaryLight,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       item.phone.isNotEmpty ? item.phone : '-',

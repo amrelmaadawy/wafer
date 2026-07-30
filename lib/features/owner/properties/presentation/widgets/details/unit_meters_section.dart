@@ -14,28 +14,34 @@ class UnitMetersSection extends StatelessWidget {
     final rows = <_MeterRow>[];
 
     if (unit.meters.electricity != null) {
-      rows.add(_MeterRow(
-        icon: Icons.electric_bolt_rounded,
-        color: const Color(0xFFF59E0B),
-        label: LocaleKeys.unit_details_electricity.tr(),
-        value: unit.meters.electricity!,
-      ));
+      rows.add(
+        _MeterRow(
+          icon: Icons.electric_bolt_rounded,
+          color: const Color(0xFFF59E0B),
+          label: LocaleKeys.unit_details_electricity.tr(),
+          value: unit.meters.electricity!,
+        ),
+      );
     }
     if (unit.meters.water != null) {
-      rows.add(_MeterRow(
-        icon: Icons.water_drop_outlined,
-        color: const Color(0xFF3B82F6),
-        label: LocaleKeys.unit_details_water.tr(),
-        value: unit.meters.water!,
-      ));
+      rows.add(
+        _MeterRow(
+          icon: Icons.water_drop_outlined,
+          color: const Color(0xFF3B82F6),
+          label: LocaleKeys.unit_details_water.tr(),
+          value: unit.meters.water!,
+        ),
+      );
     }
     if (unit.meters.gas != null) {
-      rows.add(_MeterRow(
-        icon: Icons.local_fire_department_outlined,
-        color: const Color(0xFFEF4444),
-        label: LocaleKeys.unit_details_gas.tr(),
-        value: unit.meters.gas!,
-      ));
+      rows.add(
+        _MeterRow(
+          icon: Icons.local_fire_department_outlined,
+          color: const Color(0xFFEF4444),
+          label: LocaleKeys.unit_details_gas.tr(),
+          value: unit.meters.gas!,
+        ),
+      );
     }
 
     if (rows.isEmpty) return const SizedBox.shrink();
@@ -62,8 +68,12 @@ class UnitMetersSection extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: rows.length,
-            separatorBuilder: (_, _) =>
-                const Divider(height: 1, indent: 20, endIndent: 20, color: Color(0xFFF8FAFC)),
+            separatorBuilder: (_, _) => const Divider(
+              height: 1,
+              indent: 20,
+              endIndent: 20,
+              color: Color(0xFFF8FAFC),
+            ),
             itemBuilder: (_, i) => _buildRow(rows[i]),
           ),
         ),
@@ -86,9 +96,12 @@ class UnitMetersSection extends StatelessWidget {
           ),
           const SizedBox(width: 14),
           Expanded(
-            child: Text(row.label,
-                style: AppTextStyles.bodyMedium
-                    .copyWith(color: const Color(0xFF64748B))),
+            child: Text(
+              row.label,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: const Color(0xFF64748B),
+              ),
+            ),
           ),
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -96,8 +109,10 @@ class UnitMetersSection extends StatelessWidget {
               color: row.color.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(20),
             ),
-            child: Text(row.value,
-                style: AppTextStyles.labelLarge.copyWith(color: row.color)),
+            child: Text(
+              row.value,
+              style: AppTextStyles.labelLarge.copyWith(color: row.color),
+            ),
           ),
         ],
       ),
@@ -110,5 +125,10 @@ class _MeterRow {
   final Color color;
   final String label;
   final String value;
-  const _MeterRow({required this.icon, required this.color, required this.label, required this.value});
+  const _MeterRow({
+    required this.icon,
+    required this.color,
+    required this.label,
+    required this.value,
+  });
 }

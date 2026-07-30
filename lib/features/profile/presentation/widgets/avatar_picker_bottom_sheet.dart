@@ -15,9 +15,7 @@ class AvatarPickerBottomSheet {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadius.topXxl,
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.topXxl),
       builder: (bottomSheetContext) => SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
@@ -27,7 +25,10 @@ class AvatarPickerBottomSheet {
             children: [
               Text(
                 LocaleKeys.profile_avatar_change_title.tr(),
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
@@ -35,12 +36,20 @@ class AvatarPickerBottomSheet {
                 leading: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: bottomSheetContext.primaryColor.withValues(alpha: 0.1),
+                    color: bottomSheetContext.primaryColor.withValues(
+                      alpha: 0.1,
+                    ),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.camera_alt_rounded, color: bottomSheetContext.primaryColor),
+                  child: Icon(
+                    Icons.camera_alt_rounded,
+                    color: bottomSheetContext.primaryColor,
+                  ),
                 ),
-                title: Text(LocaleKeys.profile_avatar_camera.tr(), style: const TextStyle(fontWeight: FontWeight.w600)),
+                title: Text(
+                  LocaleKeys.profile_avatar_camera.tr(),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
                 onTap: () {
                   Navigator.pop(bottomSheetContext);
                   onPick(ImageSource.camera);
@@ -51,12 +60,20 @@ class AvatarPickerBottomSheet {
                 leading: Container(
                   padding: const EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                    color: bottomSheetContext.primaryColor.withValues(alpha: 0.1),
+                    color: bottomSheetContext.primaryColor.withValues(
+                      alpha: 0.1,
+                    ),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.photo_library_rounded, color: bottomSheetContext.primaryColor),
+                  child: Icon(
+                    Icons.photo_library_rounded,
+                    color: bottomSheetContext.primaryColor,
+                  ),
                 ),
-                title: Text(LocaleKeys.profile_avatar_gallery.tr(), style: const TextStyle(fontWeight: FontWeight.w600)),
+                title: Text(
+                  LocaleKeys.profile_avatar_gallery.tr(),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
                 onTap: () {
                   Navigator.pop(bottomSheetContext);
                   onPick(ImageSource.gallery);

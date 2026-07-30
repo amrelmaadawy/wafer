@@ -53,8 +53,11 @@ class PropertiesQueryFilterEntity extends Equatable {
       'per_page': perPage,
       'include_tree': includeTree,
       if (search != null && search!.trim().isNotEmpty) 'search': search!.trim(),
-      if (status != null && status != 'all' && status!.isNotEmpty) 'status': status,
-      if (propertyType != null && propertyType != 'all' && propertyType!.isNotEmpty)
+      if (status != null && status != 'all' && status!.isNotEmpty)
+        'status': status,
+      if (propertyType != null &&
+          propertyType != 'all' &&
+          propertyType!.isNotEmpty)
         'property_type': propertyType,
       if (usageType != null && usageType != 'all' && usageType!.isNotEmpty)
         'usage_type': usageType,
@@ -65,14 +68,14 @@ class PropertiesQueryFilterEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        search,
-        status,
-        propertyType,
-        usageType,
-        branchId,
-        deedId,
-        page,
-        perPage,
-        includeTree,
-      ];
+    search,
+    status,
+    propertyType,
+    usageType,
+    branchId,
+    deedId,
+    page,
+    perPage,
+    includeTree,
+  ];
 }

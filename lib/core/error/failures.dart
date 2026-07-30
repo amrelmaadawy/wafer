@@ -10,14 +10,15 @@ abstract class Failure extends Equatable {
   List<Object> get props => [message];
 }
 
-
 class ServerFailure extends Failure {
   const ServerFailure(super.message);
 
   factory ServerFailure.fromDioException(DioException e) {
-    if (e.response != null && e.response!.data != null && e.response!.data is Map<String, dynamic>) {
+    if (e.response != null &&
+        e.response!.data != null &&
+        e.response!.data is Map<String, dynamic>) {
       final data = e.response!.data as Map<String, dynamic>;
-      
+
       // If we have validation errors object
       if (data.containsKey('errors') && data['errors'] is Map) {
         final errors = data['errors'] as Map;
@@ -33,7 +34,7 @@ class ServerFailure extends Failure {
           return ServerFailure(sb.toString().trim());
         }
       }
-      
+
       // If we have a generic message
       if (data.containsKey('message') && data['message'] != null) {
         return ServerFailure(data['message'].toString());

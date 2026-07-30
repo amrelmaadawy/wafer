@@ -45,7 +45,11 @@ class ContractDetailsHeaderCard extends StatelessWidget {
                         color: primaryColor.withValues(alpha: 0.12),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.description_rounded, color: primaryColor, size: 22),
+                      child: Icon(
+                        Icons.description_rounded,
+                        color: primaryColor,
+                        size: 22,
+                      ),
                     ),
                     const SizedBox(width: 14),
                     Expanded(
@@ -83,7 +87,10 @@ class ContractDetailsHeaderCard extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 5,
+                        ),
                         decoration: BoxDecoration(
                           color: contract.isEjarLinked
                               ? AppColors.success.withValues(alpha: 0.1)

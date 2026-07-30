@@ -37,7 +37,7 @@ class CustomButton extends StatelessWidget {
 
   Widget _buildButton(BuildContext context) {
     final bool disabled = isDisabled || isLoading;
-    
+
     switch (type) {
       case ButtonType.primary:
         return ElevatedButton(
@@ -45,7 +45,9 @@ class CustomButton extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: context.primaryColor,
             foregroundColor: Colors.white,
-            shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularMd),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadius.circularMd,
+            ),
             elevation: 0,
             disabledBackgroundColor: AppColors.borderLight,
           ),
@@ -57,16 +59,16 @@ class CustomButton extends StatelessWidget {
           style: OutlinedButton.styleFrom(
             foregroundColor: context.primaryColor,
             side: BorderSide(color: context.primaryColor),
-            shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularMd),
+            shape: const RoundedRectangleBorder(
+              borderRadius: AppRadius.circularMd,
+            ),
           ),
           child: _buildChild(context.primaryColor),
         );
       case ButtonType.text:
         return TextButton(
           onPressed: disabled ? null : onPressed,
-          style: TextButton.styleFrom(
-            foregroundColor: context.primaryColor,
-          ),
+          style: TextButton.styleFrom(foregroundColor: context.primaryColor),
           child: _buildChild(context.primaryColor),
         );
     }

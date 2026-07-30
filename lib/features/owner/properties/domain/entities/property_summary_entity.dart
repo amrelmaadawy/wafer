@@ -23,13 +23,13 @@ class PropertySummaryEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        required,
-        due,
-        collected,
-        expenses,
-        commissions,
-        payments,
-        insurances,
-        balance,
-      ];
+    required,
+    due,
+    collected,
+    expenses,
+    commissions,
+    payments,
+    insurances,
+    balance,
+  ];
 }

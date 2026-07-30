@@ -9,10 +9,7 @@ import '../../../domain/entities/property_details_entity.dart';
 class PropertyBasicInfoCard extends StatelessWidget {
   final PropertyDetailsEntity property;
 
-  const PropertyBasicInfoCard({
-    super.key,
-    required this.property,
-  });
+  const PropertyBasicInfoCard({super.key, required this.property});
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +33,11 @@ class PropertyBasicInfoCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.info_outline_rounded, size: 18, color: context.primaryColor),
+              Icon(
+                Icons.info_outline_rounded,
+                size: 18,
+                color: context.primaryColor,
+              ),
               const SizedBox(width: 8),
               Text(
                 LocaleKeys.propertyDetailsBasicInfoTitle.tr(),
@@ -51,17 +52,45 @@ class PropertyBasicInfoCard extends StatelessWidget {
           const SizedBox(height: 12),
           const Divider(height: 1, color: Color(0xFFF1F5F9)),
           const SizedBox(height: 12),
-          _buildInfoRow(LocaleKeys.propertyDetailsPropertyCode.tr(), property.code, Icons.qr_code_rounded),
-          _buildInfoRow(LocaleKeys.propertyDetailsPropertyTypeLabel.tr(), property.propertyType, Icons.apartment_rounded),
+          _buildInfoRow(
+            LocaleKeys.propertyDetailsPropertyCode.tr(),
+            property.code,
+            Icons.qr_code_rounded,
+          ),
+          _buildInfoRow(
+            LocaleKeys.propertyDetailsPropertyTypeLabel.tr(),
+            property.propertyType,
+            Icons.apartment_rounded,
+          ),
           if (property.usageType != null)
-            _buildInfoRow(LocaleKeys.propertyDetailsUsageTypeLabel.tr(), property.usageType!, Icons.category_outlined),
+            _buildInfoRow(
+              LocaleKeys.propertyDetailsUsageTypeLabel.tr(),
+              property.usageType!,
+              Icons.category_outlined,
+            ),
           if (property.branchName != null)
-            _buildInfoRow(LocaleKeys.propertyDetailsBranchLabel.tr(), property.branchName!, Icons.storefront_outlined),
+            _buildInfoRow(
+              LocaleKeys.propertyDetailsBranchLabel.tr(),
+              property.branchName!,
+              Icons.storefront_outlined,
+            ),
           if (property.constructionYear != null)
-            _buildInfoRow(LocaleKeys.propertyDetailsConstructionYearLabel.tr(), '${property.constructionYear}', Icons.calendar_today_rounded),
-          _buildInfoRow(LocaleKeys.propertyDetailsAddressLabel.tr(), property.formattedAddress, Icons.location_on_outlined),
+            _buildInfoRow(
+              LocaleKeys.propertyDetailsConstructionYearLabel.tr(),
+              '${property.constructionYear}',
+              Icons.calendar_today_rounded,
+            ),
+          _buildInfoRow(
+            LocaleKeys.propertyDetailsAddressLabel.tr(),
+            property.formattedAddress,
+            Icons.location_on_outlined,
+          ),
           if (property.description != null && property.description!.isNotEmpty)
-            _buildInfoRow(LocaleKeys.propertyDetailsNotesLabel.tr(), property.description!, Icons.notes_rounded),
+            _buildInfoRow(
+              LocaleKeys.propertyDetailsNotesLabel.tr(),
+              property.description!,
+              Icons.notes_rounded,
+            ),
         ],
       ),
     );

@@ -9,7 +9,7 @@ class ErrorInterceptor extends Interceptor {
       debugPrint('Unauthorized! Force logout or token refresh needed.');
       // TODO: Dispatch global event to trigger logout UI and clear storage
     }
-    
+
     // Check for 403 Forbidden
     if (err.response?.statusCode == 403) {
       debugPrint('Forbidden! User does not have permissions.');

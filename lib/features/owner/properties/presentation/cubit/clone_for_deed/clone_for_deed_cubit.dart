@@ -16,4 +16,3 @@ class CloneForDeedCubit extends Cubit<CloneForDeedState> {
     );
   }
 }
-

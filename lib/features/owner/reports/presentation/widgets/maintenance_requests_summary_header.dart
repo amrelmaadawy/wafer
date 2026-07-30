@@ -16,10 +16,7 @@ class MaintenanceRequestsSummaryHeader extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            context.primaryColor,
-            context.primaryColor.withAlpha(204),
-          ],
+          colors: [context.primaryColor, context.primaryColor.withAlpha(204)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
@@ -61,10 +58,7 @@ class MaintenanceRequestsSummaryHeader extends StatelessWidget {
                   summary.total.toString(),
                 ),
                 const SizedBox(height: 16),
-                Container(
-                  height: 1,
-                  color: Colors.white.withAlpha(30),
-                ),
+                Container(height: 1, color: Colors.white.withAlpha(30)),
                 const SizedBox(height: 16),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,7 +126,12 @@ class MaintenanceRequestsSummaryHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildSubStat(String label, String value, IconData icon, Color iconColor) {
+  Widget _buildSubStat(
+    String label,
+    String value,
+    IconData icon,
+    Color iconColor,
+  ) {
     return Column(
       children: [
         Icon(icon, size: 20, color: iconColor.withAlpha(200)),

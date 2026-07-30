@@ -38,7 +38,8 @@ class ReportsFilterBar extends StatelessWidget {
           _buildDateRangeChip(context),
           const SizedBox(width: 8),
           _buildPropertyChip(context),
-          if (selectedPropertyId != null || (selectedStartDate != null && selectedEndDate != null)) ...[
+          if (selectedPropertyId != null ||
+              (selectedStartDate != null && selectedEndDate != null)) ...[
             const SizedBox(width: 8),
             Container(
               decoration: BoxDecoration(
@@ -47,7 +48,11 @@ class ReportsFilterBar extends StatelessWidget {
               ),
               child: IconButton(
                 onPressed: onReset,
-                icon: const Icon(Icons.refresh_rounded, color: Colors.red, size: 20),
+                icon: const Icon(
+                  Icons.refresh_rounded,
+                  color: Colors.red,
+                  size: 20,
+                ),
                 tooltip: 'إعادة تعيين',
                 constraints: const BoxConstraints(),
                 padding: const EdgeInsets.all(8),
@@ -152,11 +157,11 @@ class ReportsFilterBar extends StatelessWidget {
 
   Widget _buildPropertyChip(BuildContext context) {
     final hasProperty = selectedPropertyId != null;
-    final selectedProp = filterOptions.properties.cast<PropertyFilterItemEntity?>().firstWhere(
-          (p) => p?.id == selectedPropertyId,
-          orElse: () => null,
-        );
-    final String label = selectedProp?.displayName ?? LocaleKeys.propertiesFilterAll.tr();
+    final selectedProp = filterOptions.properties
+        .cast<PropertyFilterItemEntity?>()
+        .firstWhere((p) => p?.id == selectedPropertyId, orElse: () => null);
+    final String label =
+        selectedProp?.displayName ?? LocaleKeys.propertiesFilterAll.tr();
 
     return ActionChip(
       onPressed: () {
@@ -223,9 +228,15 @@ class ReportsFilterBar extends StatelessWidget {
                 itemBuilder: (context, index) {
                   if (index == 0) {
                     return ListTile(
-                      title: Text(LocaleKeys.propertiesFilterAll.tr(), style: const TextStyle(fontWeight: FontWeight.w600)),
+                      title: Text(
+                        LocaleKeys.propertiesFilterAll.tr(),
+                        style: const TextStyle(fontWeight: FontWeight.w600),
+                      ),
                       trailing: selectedPropertyId == null
-                          ? Icon(Icons.check_circle, color: context.primaryColor)
+                          ? Icon(
+                              Icons.check_circle,
+                              color: context.primaryColor,
+                            )
                           : null,
                       onTap: () {
                         onPropertySelected(-1);
@@ -236,7 +247,10 @@ class ReportsFilterBar extends StatelessWidget {
                   final prop = filterOptions.properties[index - 1];
                   return ListTile(
                     title: Text(prop.displayName),
-                    subtitle: Text(prop.code, style: const TextStyle(fontSize: 12)),
+                    subtitle: Text(
+                      prop.code,
+                      style: const TextStyle(fontSize: 12),
+                    ),
                     trailing: selectedPropertyId == prop.id
                         ? Icon(Icons.check_circle, color: context.primaryColor)
                         : null,

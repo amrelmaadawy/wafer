@@ -43,7 +43,8 @@ class ProfileView extends StatelessWidget {
   Widget _buildContent(BuildContext context, ProfileEntity profile) {
     return RefreshIndicator(
       color: context.primaryColor,
-      onRefresh: () => context.read<ProfileCubit>().fetchProfile(forceRefresh: true),
+      onRefresh: () =>
+          context.read<ProfileCubit>().fetchProfile(forceRefresh: true),
       child: ListView(
         padding: const EdgeInsets.fromLTRB(16, 4, 16, 120),
         children: [
@@ -64,7 +65,8 @@ class ProfileView extends StatelessWidget {
   Widget _buildError(BuildContext context, String message) {
     return CustomErrorWidget(
       message: message,
-      onRetry: () => context.read<ProfileCubit>().fetchProfile(forceRefresh: true),
+      onRetry: () =>
+          context.read<ProfileCubit>().fetchProfile(forceRefresh: true),
     );
   }
 }

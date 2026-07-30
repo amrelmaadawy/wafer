@@ -26,7 +26,8 @@ class GetOwnerRevenueReportUseCase
 
   @override
   Future<Either<Failure, RevenueReportEntity>> call(
-      GetOwnerRevenueReportParams params) {
+    GetOwnerRevenueReportParams params,
+  ) {
     return _repository.getRevenueReport(
       forceRefresh: params.forceRefresh,
       propertyId: params.propertyId,
@@ -35,4 +36,3 @@ class GetOwnerRevenueReportUseCase
     );
   }
 }
-

@@ -20,16 +20,23 @@ class Step5FinancialsView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('التفاصيل المالية', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text(
+                'التفاصيل المالية',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
               const SizedBox(height: 16),
-              
+
               CustomTextField(
                 label: 'الإيجار الشهري',
                 hintText: 'مثال: 2500',
                 keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                ],
                 initialValue: state.annualRentMonthly?.toString(),
-                onChanged: (val) => context.read<UnitCreateCubit>().updateFinancials(monthly: double.tryParse(val)),
+                onChanged: (val) => context
+                    .read<UnitCreateCubit>()
+                    .updateFinancials(monthly: double.tryParse(val)),
               ),
               const SizedBox(height: 16),
 
@@ -37,9 +44,13 @@ class Step5FinancialsView extends StatelessWidget {
                 label: 'الإيجار السنوي (دفعتين)',
                 hintText: 'مثال: 26000',
                 keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                ],
                 initialValue: state.annualRent2Payments?.toString(),
-                onChanged: (val) => context.read<UnitCreateCubit>().updateFinancials(twoPayments: double.tryParse(val)),
+                onChanged: (val) => context
+                    .read<UnitCreateCubit>()
+                    .updateFinancials(twoPayments: double.tryParse(val)),
               ),
               const SizedBox(height: 16),
 
@@ -47,14 +58,21 @@ class Step5FinancialsView extends StatelessWidget {
                 label: 'الإيجار السنوي (4 دفعات)',
                 hintText: 'مثال: 28000',
                 keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                ],
                 initialValue: state.annualRent4Payments?.toString(),
-                onChanged: (val) => context.read<UnitCreateCubit>().updateFinancials(fourPayments: double.tryParse(val)),
+                onChanged: (val) => context
+                    .read<UnitCreateCubit>()
+                    .updateFinancials(fourPayments: double.tryParse(val)),
               ),
               const SizedBox(height: 24),
 
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
@@ -69,12 +87,19 @@ class Step5FinancialsView extends StatelessWidget {
                         children: [
                           Text(
                             'استخدام السعر للتمويل العقاري؟',
-                            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 15, color: AppColors.textPrimaryLight),
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 15,
+                              color: AppColors.textPrimaryLight,
+                            ),
                           ),
                           SizedBox(height: 4),
                           Text(
                             'السماح بعرض هذا السعر في طلبات التمويل',
-                            style: TextStyle(fontSize: 12, color: AppColors.textSecondaryLight),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: AppColors.textSecondaryLight,
+                            ),
                           ),
                         ],
                       ),
@@ -82,7 +107,9 @@ class Step5FinancialsView extends StatelessWidget {
                     CupertinoSwitch(
                       value: state.usePriceForMortgage,
                       activeTrackColor: context.primaryColor,
-                      onChanged: (val) => context.read<UnitCreateCubit>().updateFinancials(useMortgage: val),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateFinancials(useMortgage: val),
                     ),
                   ],
                 ),

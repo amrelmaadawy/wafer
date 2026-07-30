@@ -44,8 +44,9 @@ class UnitAmenitiesSection extends StatelessWidget {
                   const SizedBox(width: 7),
                   Text(
                     meta.label,
-                    style: AppTextStyles.labelMedium
-                        .copyWith(color: const Color(0xFF334155)),
+                    style: AppTextStyles.labelMedium.copyWith(
+                      color: const Color(0xFF334155),
+                    ),
                   ),
                 ],
               ),

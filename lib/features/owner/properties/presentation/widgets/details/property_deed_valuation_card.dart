@@ -9,10 +9,7 @@ import '../../../domain/entities/property_details_entity.dart';
 class PropertyDeedValuationCard extends StatelessWidget {
   final PropertyDetailsEntity property;
 
-  const PropertyDeedValuationCard({
-    super.key,
-    required this.property,
-  });
+  const PropertyDeedValuationCard({super.key, required this.property});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +37,11 @@ class PropertyDeedValuationCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.description_outlined, size: 18, color: context.primaryColor),
+              Icon(
+                Icons.description_outlined,
+                size: 18,
+                color: context.primaryColor,
+              ),
               const SizedBox(width: 8),
               Text(
                 LocaleKeys.propertyDetailsDeedValuationTitle.tr(),
@@ -56,19 +57,43 @@ class PropertyDeedValuationCard extends StatelessWidget {
           const Divider(height: 1, color: Color(0xFFF1F5F9)),
           const SizedBox(height: 12),
           if (property.deedNumber != null) ...[
-            _buildRow(LocaleKeys.deedsNumber.tr(), property.deedNumber!, Icons.tag_rounded),
+            _buildRow(
+              LocaleKeys.deedsNumber.tr(),
+              property.deedNumber!,
+              Icons.tag_rounded,
+            ),
             if (property.deedDate != null)
-              _buildRow(LocaleKeys.deedsDate.tr(), property.deedDate!, Icons.event_available_rounded),
+              _buildRow(
+                LocaleKeys.deedsDate.tr(),
+                property.deedDate!,
+                Icons.event_available_rounded,
+              ),
             if (property.documentType != null)
-              _buildRow(LocaleKeys.deedsDocumentType.tr(), property.documentType!, Icons.file_present_rounded),
+              _buildRow(
+                LocaleKeys.deedsDocumentType.tr(),
+                property.documentType!,
+                Icons.file_present_rounded,
+              ),
           ],
           if (property.valuationAmount != null) ...[
             if (property.deedNumber != null) const SizedBox(height: 8),
-            _buildRow(LocaleKeys.propertyDetailsValuationAmount.tr(), '${property.valuationAmount} ${LocaleKeys.commonCurrencySar.tr()}', Icons.monetization_on_outlined),
+            _buildRow(
+              LocaleKeys.propertyDetailsValuationAmount.tr(),
+              '${property.valuationAmount} ${LocaleKeys.commonCurrencySar.tr()}',
+              Icons.monetization_on_outlined,
+            ),
             if (property.valuationEntity != null)
-              _buildRow(LocaleKeys.propertyDetailsValuationEntity.tr(), property.valuationEntity!, Icons.business_rounded),
+              _buildRow(
+                LocaleKeys.propertyDetailsValuationEntity.tr(),
+                property.valuationEntity!,
+                Icons.business_rounded,
+              ),
             if (property.valuationDate != null)
-              _buildRow(LocaleKeys.propertyDetailsValuationDate.tr(), property.valuationDate!, Icons.date_range_rounded),
+              _buildRow(
+                LocaleKeys.propertyDetailsValuationDate.tr(),
+                property.valuationDate!,
+                Icons.date_range_rounded,
+              ),
           ],
         ],
       ),
@@ -84,12 +109,19 @@ class PropertyDeedValuationCard extends StatelessWidget {
           const SizedBox(width: 8),
           Text(
             label,
-            style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 13),
+            style: const TextStyle(
+              color: AppColors.textSecondaryLight,
+              fontSize: 13,
+            ),
           ),
           const Spacer(),
           Text(
             value,
-            style: const TextStyle(color: AppColors.textPrimaryLight, fontSize: 13, fontWeight: FontWeight.w600),
+            style: const TextStyle(
+              color: AppColors.textPrimaryLight,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
           ),
         ],
       ),

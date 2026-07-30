@@ -18,7 +18,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
   ProfileRepositoryImpl(this._remoteDataSource, this._cacheHelper);
 
   @override
-  Future<Either<Failure, ProfileEntity>> getProfile({bool forceRefresh = false}) async {
+  Future<Either<Failure, ProfileEntity>> getProfile({
+    bool forceRefresh = false,
+  }) async {
     if (!forceRefresh) {
       final cachedJson = _cacheHelper.getCachedProfile();
       if (cachedJson != null && cachedJson.isNotEmpty) {
@@ -49,7 +51,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
           return Right(ProfileModel.fromJson(data));
         } catch (_) {}
       }
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(
+        ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -76,7 +80,9 @@ class ProfileRepositoryImpl implements ProfileRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(
+        ServerFailure(e.message ?? LocaleKeys.errorsServerError.tr()),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -100,18 +106,27 @@ class ProfileRepositoryImpl implements ProfileRepository {
     } on DioException catch (e) {
       String? serverMsg;
       if (e.response?.data is Map<String, dynamic>) {
-        serverMsg = (e.response?.data as Map<String, dynamic>)['message'] as String?;
+        serverMsg =
+            (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      return Left(ServerFailure(serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(
+        ServerFailure(
+          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, ProfileEntity>> updateAvatar({required String imagePath}) async {
+  Future<Either<Failure, ProfileEntity>> updateAvatar({
+    required String imagePath,
+  }) async {
     try {
-      final updatedModel = await _remoteDataSource.updateAvatar(imagePath: imagePath);
+      final updatedModel = await _remoteDataSource.updateAvatar(
+        imagePath: imagePath,
+      );
       try {
         await _cacheHelper.saveCachedProfile(jsonEncode(updatedModel.toJson()));
       } catch (_) {}
@@ -121,12 +136,16 @@ class ProfileRepositoryImpl implements ProfileRepository {
     } on DioException catch (e) {
       String? serverMsg;
       if (e.response?.data is Map<String, dynamic>) {
-        serverMsg = (e.response?.data as Map<String, dynamic>)['message'] as String?;
+        serverMsg =
+            (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      return Left(ServerFailure(serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(
+        ServerFailure(
+          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 }
-

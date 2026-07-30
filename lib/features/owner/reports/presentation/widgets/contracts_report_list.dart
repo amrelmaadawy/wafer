@@ -13,14 +13,17 @@ class ContractsReportList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (contracts.isEmpty) return const SizedBox.shrink();
-    
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            const Icon(Icons.description_rounded,
-                size: 18, color: AppColors.textPrimaryLight),
+            const Icon(
+              Icons.description_rounded,
+              size: 18,
+              color: AppColors.textPrimaryLight,
+            ),
             const SizedBox(width: 8),
             Text(
               LocaleKeys.reports_contracts.tr(),

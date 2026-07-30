@@ -16,11 +16,5 @@ class ActivityLogsUserEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        id,
-        name,
-        email,
-        phone,
-        userType,
-      ];
+  List<Object?> get props => [id, name, email, phone, userType];
 }

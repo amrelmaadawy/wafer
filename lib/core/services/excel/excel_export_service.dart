@@ -18,10 +18,7 @@ class ExcelExportService {
       await file.writeAsBytes(bytes, flush: true);
 
       if (context.mounted) {
-        AppToast.showSuccess(
-          context,
-          'تم تجهيز ملف الإكسل بنجاح',
-        );
+        AppToast.showSuccess(context, 'تم تجهيز ملف الإكسل بنجاح');
       }
 
       final result = await OpenFilex.open(path);
@@ -29,18 +26,12 @@ class ExcelExportService {
         // Fallback: If no application is available to open Excel file directly,
         // use SharePlus.instance.share so the user can save to Files/Drive or share via WhatsApp/Email.
         await SharePlus.instance.share(
-          ShareParams(
-            files: [XFile(path)],
-            text: fileName,
-          ),
+          ShareParams(files: [XFile(path)], text: fileName),
         );
       }
     } catch (e) {
       if (context.mounted) {
-        AppToast.showError(
-          context,
-          'حدث خطأ أثناء تصدير الملف: $e',
-        );
+        AppToast.showError(context, 'حدث خطأ أثناء تصدير الملف: $e');
       }
     }
   }

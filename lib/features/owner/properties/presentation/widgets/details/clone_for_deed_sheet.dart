@@ -13,10 +13,7 @@ import '../../cubit/clone_for_deed/clone_for_deed_state.dart';
 class CloneForDeedSheet extends StatefulWidget {
   final int propertyId;
 
-  const CloneForDeedSheet({
-    super.key,
-    required this.propertyId,
-  });
+  const CloneForDeedSheet({super.key, required this.propertyId});
 
   @override
   State<CloneForDeedSheet> createState() => _CloneForDeedSheetState();
@@ -41,7 +38,9 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
             ),
           );
           // Navigate to the new property details
-          context.pushReplacement('${Routes.ownerPropertyDetails}?id=${state.newPropertyId}');
+          context.pushReplacement(
+            '${Routes.ownerPropertyDetails}?id=${state.newPropertyId}',
+          );
         } else if (state is CloneForDeedError) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -87,7 +86,11 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
                         color: context.primaryColor.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.content_copy_rounded, color: context.primaryColor, size: 24),
+                      child: Icon(
+                        Icons.content_copy_rounded,
+                        color: context.primaryColor,
+                        size: 24,
+                      ),
                     ),
                     const SizedBox(width: 16),
                     Expanded(
@@ -120,19 +123,25 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
                 _buildOptionCard(
                   context,
                   title: LocaleKeys.propertyDetailsCloneForDeedCopyAll.tr(),
-                  subtitle: LocaleKeys.propertyDetailsCloneForDeedCopyAllDesc.tr(),
+                  subtitle: LocaleKeys.propertyDetailsCloneForDeedCopyAllDesc
+                      .tr(),
                   icon: Icons.file_copy_rounded,
                   isSelected: _copyData,
-                  onTap: isLoading ? null : () => setState(() => _copyData = true),
+                  onTap: isLoading
+                      ? null
+                      : () => setState(() => _copyData = true),
                 ),
                 const SizedBox(height: 12),
                 _buildOptionCard(
                   context,
                   title: LocaleKeys.propertyDetailsCloneForDeedEmpty.tr(),
-                  subtitle: LocaleKeys.propertyDetailsCloneForDeedEmptyDesc.tr(),
+                  subtitle: LocaleKeys.propertyDetailsCloneForDeedEmptyDesc
+                      .tr(),
                   icon: Icons.note_add_rounded,
                   isSelected: !_copyData,
-                  onTap: isLoading ? null : () => setState(() => _copyData = false),
+                  onTap: isLoading
+                      ? null
+                      : () => setState(() => _copyData = false),
                 ),
                 const SizedBox(height: 32),
                 SizedBox(
@@ -142,25 +151,33 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
                         ? null
                         : () {
                             context.read<CloneForDeedCubit>().cloneForDeed(
-                                  widget.propertyId,
-                                  _copyData,
-                                );
+                              widget.propertyId,
+                              _copyData,
+                            );
                           },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: context.primaryColor,
                       foregroundColor: Colors.white,
                       elevation: 0,
-                      shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadius.circularLg,
+                      ),
                     ),
                     child: isLoading
                         ? const SizedBox(
                             width: 24,
                             height: 24,
-                            child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white),
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2.5,
+                              color: Colors.white,
+                            ),
                           )
                         : Text(
                             LocaleKeys.propertyDetailsCloneForDeedConfirm.tr(),
-                            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                   ),
                 ),
@@ -181,8 +198,12 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
     required VoidCallback? onTap,
   }) {
     final color = isSelected ? context.primaryColor : const Color(0xFF94A3B8);
-    final bgColor = isSelected ? context.primaryColor.withValues(alpha: 0.05) : Colors.transparent;
-    final borderColor = isSelected ? context.primaryColor : const Color(0xFFE2E8F0);
+    final bgColor = isSelected
+        ? context.primaryColor.withValues(alpha: 0.05)
+        : Colors.transparent;
+    final borderColor = isSelected
+        ? context.primaryColor
+        : const Color(0xFFE2E8F0);
 
     return InkWell(
       onTap: onTap,
@@ -199,7 +220,9 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: isSelected ? context.primaryColor.withValues(alpha: 0.1) : const Color(0xFFF1F5F9),
+                color: isSelected
+                    ? context.primaryColor.withValues(alpha: 0.1)
+                    : const Color(0xFFF1F5F9),
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, color: color, size: 22),
@@ -214,7 +237,9 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,
-                      color: isSelected ? context.primaryColor : AppColors.textPrimaryLight,
+                      color: isSelected
+                          ? context.primaryColor
+                          : AppColors.textPrimaryLight,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -229,13 +254,20 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
               ),
             ),
             if (isSelected)
-              Icon(Icons.check_circle_rounded, color: context.primaryColor, size: 24)
+              Icon(
+                Icons.check_circle_rounded,
+                color: context.primaryColor,
+                size: 24,
+              )
             else
-              const Icon(Icons.circle_outlined, color: Color(0xFFCBD5E1), size: 24),
+              const Icon(
+                Icons.circle_outlined,
+                color: Color(0xFFCBD5E1),
+                size: 24,
+              ),
           ],
         ),
       ),
     );
   }
 }
-

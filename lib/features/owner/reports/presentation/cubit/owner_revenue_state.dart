@@ -19,9 +19,7 @@ class OwnerRevenueLoading extends OwnerRevenueState {
 class OwnerRevenueLoaded extends OwnerRevenueState {
   final RevenueReportEntity report;
 
-  const OwnerRevenueLoaded({
-    required this.report,
-  });
+  const OwnerRevenueLoaded({required this.report});
 
   @override
   List<Object?> get props => [report];

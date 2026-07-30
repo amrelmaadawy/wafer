@@ -40,7 +40,7 @@ class _DeedDetailsScreenState extends State<DeedDetailsScreen> {
       builder: (context, state) {
         bool hasAttachment = false;
         String? attachmentUrl;
-        
+
         if (state is DeedDetailsLoaded) {
           hasAttachment = state.deed.hasAttachment;
           attachmentUrl = state.deed.documentAttachment;
@@ -75,12 +75,14 @@ class _DeedDetailsScreenState extends State<DeedDetailsScreen> {
     } else if (state is DeedDetailsError) {
       return CustomErrorWidget(
         message: state.message,
-        onRetry: () => context.read<DeedDetailsCubit>().fetchDeedDetails(widget.deedId),
+        onRetry: () =>
+            context.read<DeedDetailsCubit>().fetchDeedDetails(widget.deedId),
       );
     } else if (state is DeedDetailsLoaded) {
       final deed = state.deed;
       return RefreshIndicator(
-        onRefresh: () => context.read<DeedDetailsCubit>().fetchDeedDetails(widget.deedId),
+        onRefresh: () =>
+            context.read<DeedDetailsCubit>().fetchDeedDetails(widget.deedId),
         color: context.primaryColor,
         child: ListView(
           padding: const EdgeInsets.all(20),
@@ -137,7 +139,11 @@ class _DeedDetailsScreenState extends State<DeedDetailsScreen> {
                   color: context.primarySubtle,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.note_alt_outlined, color: context.primaryColor, size: 20),
+                child: Icon(
+                  Icons.note_alt_outlined,
+                  color: context.primaryColor,
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 12),
               Text(

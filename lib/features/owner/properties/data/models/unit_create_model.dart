@@ -115,7 +115,9 @@ class UnitCreateModel extends UnitCreateEntity {
       'finishing_type': finishingType,
     };
 
-    if (description != null && description!.isNotEmpty) data['description'] = description;
+    if (description != null && description!.isNotEmpty) {
+      data['description'] = description;
+    }
     if (constructionDate != null) data['construction_date'] = constructionDate;
     if (maxOccupancy != null) data['max_occupancy'] = maxOccupancy;
     if (length != null) data['length'] = length;
@@ -138,12 +140,20 @@ class UnitCreateModel extends UnitCreateEntity {
     if (latitude != null) data['latitude'] = latitude;
     if (longitude != null) data['longitude'] = longitude;
     if (direction != null) data['direction'] = direction;
-    if (electricityMeterNumber != null) data['electricity_meter_number'] = electricityMeterNumber;
+    if (electricityMeterNumber != null) {
+      data['electricity_meter_number'] = electricityMeterNumber;
+    }
     if (waterMeterNumber != null) data['water_meter_number'] = waterMeterNumber;
     if (gasMeterNumber != null) data['gas_meter_number'] = gasMeterNumber;
-    if (annualRent2Payments != null) data['annual_rent_2_payments'] = annualRent2Payments;
-    if (annualRent4Payments != null) data['annual_rent_4_payments'] = annualRent4Payments;
-    if (annualRentMonthly != null) data['annual_rent_monthly'] = annualRentMonthly;
+    if (annualRent2Payments != null) {
+      data['annual_rent_2_payments'] = annualRent2Payments;
+    }
+    if (annualRent4Payments != null) {
+      data['annual_rent_4_payments'] = annualRent4Payments;
+    }
+    if (annualRentMonthly != null) {
+      data['annual_rent_monthly'] = annualRentMonthly;
+    }
 
     for (var i = 0; i < amenities.length; i++) {
       data['amenities[$i]'] = amenities[i];
@@ -152,10 +162,9 @@ class UnitCreateModel extends UnitCreateEntity {
     final formData = FormData.fromMap(data);
 
     for (var i = 0; i < images.length; i++) {
-      formData.files.add(MapEntry(
-        'images[$i]',
-        await MultipartFile.fromFile(images[i].path),
-      ));
+      formData.files.add(
+        MapEntry('images[$i]', await MultipartFile.fromFile(images[i].path)),
+      );
     }
 
     return formData;

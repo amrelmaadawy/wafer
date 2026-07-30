@@ -7,16 +7,22 @@ import '../models/contracts_response_model.dart';
 abstract class OwnerContractsRemoteDataSource {
   Future<ContractsResponseModel> getContracts({int page = 1, String? status});
   Future<ContractDetailsModel> getContractDetails(String id);
-  Future<List<ContractInstallmentModel>> getContractInstallments(String contractId);
+  Future<List<ContractInstallmentModel>> getContractInstallments(
+    String contractId,
+  );
 }
 
-class OwnerContractsRemoteDataSourceImpl implements OwnerContractsRemoteDataSource {
+class OwnerContractsRemoteDataSourceImpl
+    implements OwnerContractsRemoteDataSource {
   final Dio _dio;
 
   OwnerContractsRemoteDataSourceImpl(this._dio);
 
   @override
-  Future<ContractsResponseModel> getContracts({int page = 1, String? status}) async {
+  Future<ContractsResponseModel> getContracts({
+    int page = 1,
+    String? status,
+  }) async {
     final queryParams = <String, dynamic>{'page': page};
     if (status != null && status != 'all' && status.isNotEmpty) {
       queryParams['status'] = status;
@@ -42,7 +48,9 @@ class OwnerContractsRemoteDataSourceImpl implements OwnerContractsRemoteDataSour
   }
 
   @override
-  Future<List<ContractInstallmentModel>> getContractInstallments(String contractId) async {
+  Future<List<ContractInstallmentModel>> getContractInstallments(
+    String contractId,
+  ) async {
     final response = await _dio.get(
       '${ApiConstants.baseUrl}${ApiConstants.ownerContracts}/$contractId/installments',
     );

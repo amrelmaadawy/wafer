@@ -31,19 +31,19 @@ class MaintenanceRequestsItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        requestNumber,
-        description,
-        clientName,
-        clientPhone,
-        property,
-        unit,
-        status,
-        statusLabel,
-        priority,
-        priorityLabel,
-        createdAt,
-      ];
+    id,
+    requestNumber,
+    description,
+    clientName,
+    clientPhone,
+    property,
+    unit,
+    status,
+    statusLabel,
+    priority,
+    priorityLabel,
+    createdAt,
+  ];
 }
 
 class PropertyEntity extends Equatable {

@@ -28,15 +28,12 @@ class DeedsQueryFilterEntity extends Equatable {
   }
 
   Map<String, dynamic> toMap() {
-    final map = <String, dynamic>{
-      'page': page,
-      'per_page': perPage,
-    };
-    
+    final map = <String, dynamic>{'page': page, 'per_page': perPage};
+
     if (search != null && search!.isNotEmpty) {
       map['search'] = search;
     }
-    
+
     if (branchId != null) {
       map['branch_id'] = branchId;
     }

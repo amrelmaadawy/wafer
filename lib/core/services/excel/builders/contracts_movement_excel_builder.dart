@@ -27,13 +27,16 @@ class ContractsMovementExcelBuilder {
     sheet.getRangeByName('A1:D1').merge();
     sheet.getRangeByName('A1').text = 'ملخص حركة العقود';
     sheet.getRangeByName('A1').cellStyle = headerStyle;
-    
+
     // Summary Data
-    sheet.getRangeByName('A2').text = LocaleKeys.contractsMovementTotalMovements.tr();
-    sheet.getRangeByName('B2').text = LocaleKeys.contractsMovementCreations.tr();
+    sheet.getRangeByName('A2').text = LocaleKeys.contractsMovementTotalMovements
+        .tr();
+    sheet.getRangeByName('B2').text = LocaleKeys.contractsMovementCreations
+        .tr();
     sheet.getRangeByName('C2').text = LocaleKeys.contractsMovementRenewals.tr();
-    sheet.getRangeByName('D2').text = LocaleKeys.contractsMovementTerminations.tr();
-    
+    sheet.getRangeByName('D2').text = LocaleKeys.contractsMovementTerminations
+        .tr();
+
     sheet.getRangeByName('A3').number = summary.totalMovements.toDouble();
     sheet.getRangeByName('B3').number = summary.creations.toDouble();
     sheet.getRangeByName('C3').number = summary.renewals.toDouble();
@@ -62,18 +65,28 @@ class ContractsMovementExcelBuilder {
     for (int i = 0; i < items.length; i++) {
       final item = items[i];
       final row = startRow + 1 + i;
-      
-      final renterName = item.renter.name.isNotEmpty 
-          ? item.renter.name 
+
+      final renterName = item.renter.name.isNotEmpty
+          ? item.renter.name
           : LocaleKeys.contractsMovementUnknownRenter.tr();
-      final propertyName = item.property.name.isNotEmpty ? item.property.name : item.property.code;
-      final unitName = item.unit.name.isNotEmpty ? item.unit.name : item.unit.unitNumber;
+      final propertyName = item.property.name.isNotEmpty
+          ? item.property.name
+          : item.property.code;
+      final unitName = item.unit.name.isNotEmpty
+          ? item.unit.name
+          : item.unit.unitNumber;
 
       String typeStr = item.type;
-      if (item.type.toLowerCase() == 'creation') typeStr = LocaleKeys.contractsMovementTypeCreation.tr();
-      if (item.type.toLowerCase() == 'renewal') typeStr = LocaleKeys.contractsMovementTypeRenewal.tr();
-      if (item.type.toLowerCase() == 'termination') typeStr = LocaleKeys.contractsMovementTypeTermination.tr();
-      
+      if (item.type.toLowerCase() == 'creation') {
+        typeStr = LocaleKeys.contractsMovementTypeCreation.tr();
+      }
+      if (item.type.toLowerCase() == 'renewal') {
+        typeStr = LocaleKeys.contractsMovementTypeRenewal.tr();
+      }
+      if (item.type.toLowerCase() == 'termination') {
+        typeStr = LocaleKeys.contractsMovementTypeTermination.tr();
+      }
+
       sheet.getRangeByIndex(row, 1).text = item.contractNumber;
       sheet.getRangeByIndex(row, 2).text = renterName;
       sheet.getRangeByIndex(row, 3).text = propertyName;

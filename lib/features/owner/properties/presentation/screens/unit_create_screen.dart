@@ -33,7 +33,8 @@ class _UnitCreateScreenContent extends StatefulWidget {
   const _UnitCreateScreenContent();
 
   @override
-  State<_UnitCreateScreenContent> createState() => _UnitCreateScreenContentState();
+  State<_UnitCreateScreenContent> createState() =>
+      _UnitCreateScreenContentState();
 }
 
 class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
@@ -58,7 +59,9 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
   Widget build(BuildContext context) {
     return BlocConsumer<UnitCreateCubit, UnitCreateState>(
       listenWhen: (previous, current) {
-        if (previous.error != current.error && current.error != null) return true;
+        if (previous.error != current.error && current.error != null) {
+          return true;
+        }
         if (previous.currentStep != current.currentStep) return true;
         return false;
       },
@@ -66,7 +69,8 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
         if (state.error != null) {
           AppToast.showError(context, state.error!);
         }
-        if (_pageController.hasClients && _pageController.page?.round() != state.currentStep) {
+        if (_pageController.hasClients &&
+            _pageController.page?.round() != state.currentStep) {
           _onStepChanged(context, state.currentStep);
         }
       },
@@ -84,10 +88,7 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
           ),
           body: Column(
             children: [
-              WizardProgressBar(
-                currentStep: state.currentStep,
-                totalSteps: 6,
-              ),
+              WizardProgressBar(currentStep: state.currentStep, totalSteps: 6),
               Expanded(
                 child: Form(
                   key: _formKey,
@@ -133,7 +134,8 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
               Expanded(
                 child: CustomButton(
                   text: 'السابق',
-                  onPressed: () => context.read<UnitCreateCubit>().previousStep(),
+                  onPressed: () =>
+                      context.read<UnitCreateCubit>().previousStep(),
                   type: ButtonType.secondary,
                 ),
               ),
@@ -142,18 +144,15 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
             Expanded(
               flex: 2,
               child: CustomButton(
-                text: state.currentStep == 5 
-                    ? 'إضافة الوحدة' 
-                    : 'التالي',
+                text: state.currentStep == 5 ? 'إضافة الوحدة' : 'التالي',
                 isLoading: state.isLoading,
                 onPressed: () async {
                   if (state.currentStep == 5) {
-                    final success = await context.read<UnitCreateCubit>().submit();
+                    final success = await context
+                        .read<UnitCreateCubit>()
+                        .submit();
                     if (success && context.mounted) {
-                      AppToast.showSuccess(
-                        context,
-                        'تم إضافة الوحدة بنجاح',
-                      );
+                      AppToast.showSuccess(context, 'تم إضافة الوحدة بنجاح');
                       context.pop(true); // Return true to refresh units list
                     }
                   } else {

@@ -67,8 +67,11 @@ class ActivityLogsReportItemCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Row(
                   children: [
-                    const Icon(Icons.access_time_rounded,
-                        size: 14, color: AppColors.textSecondaryLight),
+                    const Icon(
+                      Icons.access_time_rounded,
+                      size: 14,
+                      color: AppColors.textSecondaryLight,
+                    ),
                     const SizedBox(width: 4),
                     Text(
                       item.createdAt,

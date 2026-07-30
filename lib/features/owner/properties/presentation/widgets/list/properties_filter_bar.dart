@@ -33,7 +33,10 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
 
         final filters = [
           {'key': 'all', 'label': LocaleKeys.propertiesFilterAll.tr()},
-          {'key': 'published', 'label': LocaleKeys.propertiesFilterPublished.tr()},
+          {
+            'key': 'published',
+            'label': LocaleKeys.propertiesFilterPublished.tr(),
+          },
           {'key': 'draft', 'label': LocaleKeys.propertiesFilterDraft.tr()},
         ];
 
@@ -47,7 +50,11 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
                 style: const TextStyle(fontSize: 13),
                 decoration: InputDecoration(
                   hintText: LocaleKeys.propertiesSearchHint.tr(),
-                  prefixIcon: const Icon(Icons.search_rounded, size: 20, color: AppColors.textSecondaryLight),
+                  prefixIcon: const Icon(
+                    Icons.search_rounded,
+                    size: 20,
+                    color: AppColors.textSecondaryLight,
+                  ),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
                           icon: const Icon(Icons.close_rounded, size: 18),
@@ -59,7 +66,10 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
                       : null,
                   filled: true,
                   fillColor: AppColors.surfaceLight,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 10,
+                  ),
                   border: OutlineInputBorder(
                     borderRadius: AppRadius.circularXl,
                     borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
@@ -87,7 +97,9 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
                 ),
                 child: LayoutBuilder(
                   builder: (context, constraints) {
-                    final selectedIndex = filters.indexWhere((f) => f['key'] == currentStatus);
+                    final selectedIndex = filters.indexWhere(
+                      (f) => f['key'] == currentStatus,
+                    );
                     final safeIndex = selectedIndex < 0 ? 0 : selectedIndex;
 
                     return Stack(
@@ -108,7 +120,9 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
                                 borderRadius: AppRadius.circularFull,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: context.primaryColor.withValues(alpha: 0.35),
+                                    color: context.primaryColor.withValues(
+                                      alpha: 0.35,
+                                    ),
                                     blurRadius: 8,
                                     offset: const Offset(0, 3),
                                   ),
@@ -133,10 +147,16 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
                                     duration: const Duration(milliseconds: 200),
                                     curve: Curves.easeInOut,
                                     style: TextStyle(
-                                      color: isSelected ? Colors.white : const Color(0xFF64748B),
+                                      color: isSelected
+                                          ? Colors.white
+                                          : const Color(0xFF64748B),
                                       fontSize: 13,
-                                      fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                                      fontFamily: Theme.of(context).textTheme.bodyMedium?.fontFamily,
+                                      fontWeight: isSelected
+                                          ? FontWeight.w700
+                                          : FontWeight.w500,
+                                      fontFamily: Theme.of(
+                                        context,
+                                      ).textTheme.bodyMedium?.fontFamily,
                                     ),
                                     child: Text(
                                       filter['label']!,

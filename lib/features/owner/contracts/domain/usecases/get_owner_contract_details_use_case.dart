@@ -4,7 +4,8 @@ import '../../../../../core/usecases/usecase.dart';
 import '../entities/contract_details_entity.dart';
 import '../repositories/owner_contracts_repository.dart';
 
-class GetOwnerContractDetailsUseCase implements UseCase<ContractDetailsEntity, String> {
+class GetOwnerContractDetailsUseCase
+    implements UseCase<ContractDetailsEntity, String> {
   final OwnerContractsRepository _repository;
 
   GetOwnerContractDetailsUseCase(this._repository);

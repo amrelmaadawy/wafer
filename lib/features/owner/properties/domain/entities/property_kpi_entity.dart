@@ -19,11 +19,11 @@ class PropertyKpiEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        valuationAmount,
-        totalUnits,
-        availableUnits,
-        rentedUnits,
-        maintenanceUnits,
-        occupancyRate,
-      ];
+    valuationAmount,
+    totalUnits,
+    availableUnits,
+    rentedUnits,
+    maintenanceUnits,
+    occupancyRate,
+  ];
 }

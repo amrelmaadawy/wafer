@@ -30,16 +30,18 @@ class RevenueSummaryEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [totalExpected, totalCollected, totalRemaining, collectionRate];
+  List<Object?> get props => [
+    totalExpected,
+    totalCollected,
+    totalRemaining,
+    collectionRate,
+  ];
 }
 
 class RevenueFilterOptionsEntity extends Equatable {
   final List<PropertyFilterItemEntity> properties;
 
-  const RevenueFilterOptionsEntity({
-    required this.properties,
-  });
+  const RevenueFilterOptionsEntity({required this.properties});
 
   @override
   List<Object?> get props => [properties];
@@ -56,7 +58,8 @@ class PropertyFilterItemEntity extends Equatable {
     required this.code,
   });
 
-  String get displayName => name != null && name!.trim().isNotEmpty ? name! : code;
+  String get displayName =>
+      name != null && name!.trim().isNotEmpty ? name! : code;
 
   @override
   List<Object?> get props => [id, name, code];

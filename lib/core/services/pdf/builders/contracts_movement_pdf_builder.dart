@@ -24,19 +24,46 @@ class ContractsMovementPdfBuilder {
     );
   }
 
-  static pw.Widget _buildSummaryCards(ContractsMovementSummaryEntity summary, pw.ThemeData theme) {
+  static pw.Widget _buildSummaryCards(
+    ContractsMovementSummaryEntity summary,
+    pw.ThemeData theme,
+  ) {
     return pw.Row(
       mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
       children: [
-        _buildSummaryCard(LocaleKeys.contractsMovementTotalMovements.tr(), summary.totalMovements.toString(), theme),
-        _buildSummaryCard(LocaleKeys.contractsMovementCreations.tr(), summary.creations.toString(), theme, color: PdfColor.fromInt(0xFF10B981)),
-        _buildSummaryCard(LocaleKeys.contractsMovementRenewals.tr(), summary.renewals.toString(), theme, color: PdfColor.fromInt(0xFF3B82F6)),
-        _buildSummaryCard(LocaleKeys.contractsMovementTerminations.tr(), summary.terminations.toString(), theme, color: PdfColor.fromInt(0xFFEF4444)),
+        _buildSummaryCard(
+          LocaleKeys.contractsMovementTotalMovements.tr(),
+          summary.totalMovements.toString(),
+          theme,
+        ),
+        _buildSummaryCard(
+          LocaleKeys.contractsMovementCreations.tr(),
+          summary.creations.toString(),
+          theme,
+          color: PdfColor.fromInt(0xFF10B981),
+        ),
+        _buildSummaryCard(
+          LocaleKeys.contractsMovementRenewals.tr(),
+          summary.renewals.toString(),
+          theme,
+          color: PdfColor.fromInt(0xFF3B82F6),
+        ),
+        _buildSummaryCard(
+          LocaleKeys.contractsMovementTerminations.tr(),
+          summary.terminations.toString(),
+          theme,
+          color: PdfColor.fromInt(0xFFEF4444),
+        ),
       ],
     );
   }
 
-  static pw.Widget _buildSummaryCard(String title, String value, pw.ThemeData theme, {PdfColor? color}) {
+  static pw.Widget _buildSummaryCard(
+    String title,
+    String value,
+    pw.ThemeData theme, {
+    PdfColor? color,
+  }) {
     return pw.Expanded(
       child: pw.Container(
         margin: const pw.EdgeInsets.symmetric(horizontal: 4),
@@ -75,7 +102,10 @@ class ContractsMovementPdfBuilder {
     );
   }
 
-  static pw.Widget _buildTable(List<ContractsMovementItemEntity> items, pw.ThemeData theme) {
+  static pw.Widget _buildTable(
+    List<ContractsMovementItemEntity> items,
+    pw.ThemeData theme,
+  ) {
     if (items.isEmpty) {
       return pw.Center(
         child: pw.Text(
@@ -99,9 +129,15 @@ class ContractsMovementPdfBuilder {
     ];
 
     final data = items.map((item) {
-      final renterName = item.renter.name.isNotEmpty ? item.renter.name : LocaleKeys.contractsMovementUnknownRenter.tr();
-      final propertyName = item.property.name.isNotEmpty ? item.property.name : item.property.code;
-      final unitName = item.unit.name.isNotEmpty ? item.unit.name : item.unit.unitNumber;
+      final renterName = item.renter.name.isNotEmpty
+          ? item.renter.name
+          : LocaleKeys.contractsMovementUnknownRenter.tr();
+      final propertyName = item.property.name.isNotEmpty
+          ? item.property.name
+          : item.property.code;
+      final unitName = item.unit.name.isNotEmpty
+          ? item.unit.name
+          : item.unit.unitNumber;
       final location = '$propertyName - $unitName';
       final rentValue = '${item.rentValue.toStringAsFixed(2)} ر.س';
 

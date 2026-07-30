@@ -11,7 +11,7 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
   final GetPropertyFormDataUseCase _getFormData;
   final AutoSaveDeedStepUseCase _autoSaveDeedStep;
   final AutoSaveTypeStepUseCase _autoSaveTypeStep;
-  
+
   int? _propertyId;
 
   PropertyEditCubit({
@@ -19,11 +19,11 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
     required GetPropertyFormDataUseCase getFormData,
     required AutoSaveDeedStepUseCase autoSaveDeedStep,
     required AutoSaveTypeStepUseCase autoSaveTypeStep,
-  })  : _patchProperty = patchProperty,
-        _getFormData = getFormData,
-        _autoSaveDeedStep = autoSaveDeedStep,
-        _autoSaveTypeStep = autoSaveTypeStep,
-        super(const PropertyEditState());
+  }) : _patchProperty = patchProperty,
+       _getFormData = getFormData,
+       _autoSaveDeedStep = autoSaveDeedStep,
+       _autoSaveTypeStep = autoSaveTypeStep,
+       super(const PropertyEditState());
 
   void init(
     int propertyId,
@@ -34,13 +34,17 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
     List<String>? amenities,
   }) {
     _propertyId = propertyId;
-    emit(state.copyWith(
-      selectedBranchId: branchId,
-      selectedDeedId: deedId,
-      selectedType: selectedType,
-      selectedUsageType: usageType,
-      selectedAmenities: amenities != null ? List<String>.from(amenities) : [],
-    ));
+    emit(
+      state.copyWith(
+        selectedBranchId: branchId,
+        selectedDeedId: deedId,
+        selectedType: selectedType,
+        selectedUsageType: usageType,
+        selectedAmenities: amenities != null
+            ? List<String>.from(amenities)
+            : [],
+      ),
+    );
     loadFormData();
   }
 
@@ -48,8 +52,11 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
     emit(state.copyWith(isLoadingForm: true).clearError());
     final result = await _getFormData(NoParams());
     result.fold(
-      (failure) => emit(state.copyWith(isLoadingForm: false, errorMessage: failure.message)),
-      (formData) => emit(state.copyWith(isLoadingForm: false, formData: formData)),
+      (failure) => emit(
+        state.copyWith(isLoadingForm: false, errorMessage: failure.message),
+      ),
+      (formData) =>
+          emit(state.copyWith(isLoadingForm: false, formData: formData)),
     );
   }
 
@@ -83,21 +90,26 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
   }
 
   Future<void> _triggerDeedAutoSave() async {
-    if (_propertyId == null || state.selectedBranchId == null || state.selectedDeedId == null) {
+    if (_propertyId == null ||
+        state.selectedBranchId == null ||
+        state.selectedDeedId == null) {
       return;
     }
 
     emit(state.copyWith(isAutoSaving: true).clearError());
-    
+
     final result = await _autoSaveDeedStep(
       propertyId: _propertyId!,
       deedId: state.selectedDeedId!,
       branchId: state.selectedBranchId!,
     );
-    
+
     result.fold(
-      (failure) => emit(state.copyWith(isAutoSaving: false, errorMessage: failure.message)),
-      (property) => emit(state.copyWith(isAutoSaving: false, updatedProperty: property)),
+      (failure) => emit(
+        state.copyWith(isAutoSaving: false, errorMessage: failure.message),
+      ),
+      (property) =>
+          emit(state.copyWith(isAutoSaving: false, updatedProperty: property)),
     );
   }
 
@@ -107,15 +119,18 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
     }
 
     emit(state.copyWith(isAutoSaving: true).clearError());
-    
+
     final result = await _autoSaveTypeStep(
       propertyId: _propertyId!,
       propertyType: state.selectedType!,
     );
-    
+
     result.fold(
-      (failure) => emit(state.copyWith(isAutoSaving: false, errorMessage: failure.message)),
-      (property) => emit(state.copyWith(isAutoSaving: false, updatedProperty: property)),
+      (failure) => emit(
+        state.copyWith(isAutoSaving: false, errorMessage: failure.message),
+      ),
+      (property) =>
+          emit(state.copyWith(isAutoSaving: false, updatedProperty: property)),
     );
   }
 
@@ -123,7 +138,8 @@ class PropertyEditCubit extends Cubit<PropertyEditState> {
     emit(state.copyWith(isSaving: true).clearError());
     final result = await _patchProperty(propertyId, data);
     result.fold(
-      (failure) => emit(state.copyWith(isSaving: false, errorMessage: failure.message)),
+      (failure) =>
+          emit(state.copyWith(isSaving: false, errorMessage: failure.message)),
       (_) => emit(state.copyWith(isSaving: false, isSuccess: true)),
     );
   }

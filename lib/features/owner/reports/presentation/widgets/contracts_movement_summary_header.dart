@@ -8,10 +8,7 @@ import '../../domain/entities/contracts_movement_summary_entity.dart';
 class ContractsMovementSummaryHeader extends StatelessWidget {
   final ContractsMovementSummaryEntity summary;
 
-  const ContractsMovementSummaryHeader({
-    super.key,
-    required this.summary,
-  });
+  const ContractsMovementSummaryHeader({super.key, required this.summary});
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +41,11 @@ class ContractsMovementSummaryHeader extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.sync_alt_rounded,
-                      color: Colors.white, size: 20),
+                  const Icon(
+                    Icons.sync_alt_rounded,
+                    color: Colors.white,
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     LocaleKeys.contractsMovementTotalMovements.tr(),
@@ -69,10 +69,7 @@ class ContractsMovementSummaryHeader extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              Container(
-                height: 1,
-                color: Colors.white.withValues(alpha: 0.15),
-              ),
+              Container(height: 1, color: Colors.white.withValues(alpha: 0.15)),
               const SizedBox(height: 16),
               Row(
                 children: [

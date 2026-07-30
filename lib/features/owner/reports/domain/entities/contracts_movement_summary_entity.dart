@@ -14,5 +14,10 @@ class ContractsMovementSummaryEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [totalMovements, creations, renewals, terminations];
+  List<Object?> get props => [
+    totalMovements,
+    creations,
+    renewals,
+    terminations,
+  ];
 }

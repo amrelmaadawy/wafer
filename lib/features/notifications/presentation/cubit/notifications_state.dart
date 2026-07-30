@@ -57,12 +57,12 @@ class NotificationsLoaded extends NotificationsState {
 
   @override
   List<Object?> get props => [
-        notifications,
-        meta,
-        unreadCount,
-        isFetchingMore,
-        activeFilter,
-      ];
+    notifications,
+    meta,
+    unreadCount,
+    isFetchingMore,
+    activeFilter,
+  ];
 }
 
 class NotificationsError extends NotificationsState {

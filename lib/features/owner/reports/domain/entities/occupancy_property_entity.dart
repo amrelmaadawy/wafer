@@ -21,12 +21,12 @@ class OccupancyPropertyEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        propertyId,
-        propertyName,
-        code,
-        totalUnits,
-        rentedUnits,
-        vacantUnits,
-        occupancyRate,
-      ];
+    propertyId,
+    propertyName,
+    code,
+    totalUnits,
+    rentedUnits,
+    vacantUnits,
+    occupancyRate,
+  ];
 }

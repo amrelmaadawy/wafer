@@ -15,9 +15,7 @@ class OwnerReportsCenterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(
-        title: LocaleKeys.dashboardReports.tr(),
-      ),
+      appBar: CustomAppBar(title: LocaleKeys.dashboardReports.tr()),
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -85,9 +83,7 @@ class OwnerReportsCenterScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 32),
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 32)),
           SliverToBoxAdapter(
             child: _buildCategorySection(
               context,
@@ -109,16 +105,17 @@ class OwnerReportsCenterScreen extends StatelessWidget {
             ),
           ),
           // Additional categories (System Activity) can be added here
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 40),
-          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 40)),
         ],
       ),
     );
   }
 
-  Widget _buildCategorySection(BuildContext context,
-      {required String title, required List<_ReportItem> reports}) {
+  Widget _buildCategorySection(
+    BuildContext context, {
+    required String title,
+    required List<_ReportItem> reports,
+  }) {
     return Padding(
       padding: const EdgeInsets.only(top: 24, left: 20, right: 20),
       child: Column(

@@ -31,7 +31,8 @@ class ContractDetailsModel extends ContractDetailsEntity {
       final dataMap = json['data'] as Map<String, dynamic>;
       if (dataMap['contracts'] is Map<String, dynamic>) {
         final contractsMap = dataMap['contracts'] as Map<String, dynamic>;
-        if (contractsMap['data'] is List && (contractsMap['data'] as List).isNotEmpty) {
+        if (contractsMap['data'] is List &&
+            (contractsMap['data'] as List).isNotEmpty) {
           final firstItem = (contractsMap['data'] as List).first;
           if (firstItem is Map<String, dynamic>) target = firstItem;
         } else {
@@ -44,7 +45,8 @@ class ContractDetailsModel extends ContractDetailsEntity {
       }
     } else if (json['contracts'] is Map<String, dynamic>) {
       final contractsMap = json['contracts'] as Map<String, dynamic>;
-      if (contractsMap['data'] is List && (contractsMap['data'] as List).isNotEmpty) {
+      if (contractsMap['data'] is List &&
+          (contractsMap['data'] as List).isNotEmpty) {
         final firstItem = (contractsMap['data'] as List).first;
         if (firstItem is Map<String, dynamic>) target = firstItem;
       }
@@ -53,7 +55,8 @@ class ContractDetailsModel extends ContractDetailsEntity {
     }
 
     final id = (target['id'] ?? '').toString();
-    final contractNumber = (target['contract_number'] ?? target['code'] ?? 'CNT-$id').toString();
+    final contractNumber =
+        (target['contract_number'] ?? target['code'] ?? 'CNT-$id').toString();
     final contractType = (target['contract_type'] ?? 'residential').toString();
 
     // Property parsing
@@ -94,7 +97,8 @@ class ContractDetailsModel extends ContractDetailsEntity {
       rPhone = (rMap['phone'] ?? rMap['mobile'] ?? '').toString();
     }
 
-    final startDate = (target['start_date'] ?? target['from_date'] ?? '').toString();
+    final startDate = (target['start_date'] ?? target['from_date'] ?? '')
+        .toString();
     final endDate = (target['end_date'] ?? target['to_date'] ?? '').toString();
 
     // Financial
@@ -104,18 +108,31 @@ class ContractDetailsModel extends ContractDetailsEntity {
     double securityDeposit = 0.0;
     if (target['financial'] is Map<String, dynamic>) {
       final fMap = target['financial'] as Map<String, dynamic>;
-      totalRentValue = double.tryParse((fMap['total_rent_value'] ?? fMap['rent_amount'] ?? 0).toString()) ?? 0.0;
+      totalRentValue =
+          double.tryParse(
+            (fMap['total_rent_value'] ?? fMap['rent_amount'] ?? 0).toString(),
+          ) ??
+          0.0;
       paymentCycle = (fMap['payment_cycle'] ?? 'monthly').toString();
       paymentCount = int.tryParse((fMap['payment_count'] ?? 1).toString()) ?? 1;
-      securityDeposit = double.tryParse((fMap['security_deposit'] ?? 0).toString()) ?? 0.0;
+      securityDeposit =
+          double.tryParse((fMap['security_deposit'] ?? 0).toString()) ?? 0.0;
     } else {
-      totalRentValue = double.tryParse((target['total_rent_value'] ?? target['rent_amount'] ?? 0).toString()) ?? 0.0;
+      totalRentValue =
+          double.tryParse(
+            (target['total_rent_value'] ?? target['rent_amount'] ?? 0)
+                .toString(),
+          ) ??
+          0.0;
     }
 
     final status = (target['status'] ?? 'active').toString();
     final statusLabel = (target['status_label'] ?? status).toString();
     final statusBadge = (target['status_badge'] ?? '').toString();
-    final isEjarLinked = target['is_ejar_linked'] == true || target['is_ejar_linked'] == 1 || target['is_ejar_linked'] == 'true';
+    final isEjarLinked =
+        target['is_ejar_linked'] == true ||
+        target['is_ejar_linked'] == 1 ||
+        target['is_ejar_linked'] == 'true';
 
     return ContractDetailsModel(
       id: id,

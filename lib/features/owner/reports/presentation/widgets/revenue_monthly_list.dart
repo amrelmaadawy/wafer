@@ -17,8 +17,11 @@ class RevenueMonthlyList extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.calendar_month_rounded,
-                size: 18, color: AppColors.textPrimaryLight),
+            const Icon(
+              Icons.calendar_month_rounded,
+              size: 18,
+              color: AppColors.textPrimaryLight,
+            ),
             const SizedBox(width: 8),
             Text(
               LocaleKeys.revenueMonthlyBreakdown.tr(),

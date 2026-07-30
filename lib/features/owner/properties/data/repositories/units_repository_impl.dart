@@ -16,7 +16,13 @@ class UnitsRepositoryImpl implements UnitsRepository {
   UnitsRepositoryImpl(this._remoteDataSource);
 
   @override
-  Future<Either<Failure, ({List<UnitEntity> items, PropertiesPaginationMetaEntity meta})>> getPropertyUnits(
+  Future<
+    Either<
+      Failure,
+      ({List<UnitEntity> items, PropertiesPaginationMetaEntity meta})
+    >
+  >
+  getPropertyUnits(
     int propertyId, {
     int page = 1,
     String? search,
@@ -56,7 +62,11 @@ class UnitsRepositoryImpl implements UnitsRepository {
   }
 
   @override
-  Future<Either<Failure, void>> autoSaveUnit(int propertyId, int unitId, Map<String, dynamic> data) async {
+  Future<Either<Failure, void>> autoSaveUnit(
+    int propertyId,
+    int unitId,
+    Map<String, dynamic> data,
+  ) async {
     try {
       await _remoteDataSource.autoSaveUnit(propertyId, unitId, data);
       return const Right(null);
@@ -70,7 +80,10 @@ class UnitsRepositoryImpl implements UnitsRepository {
   }
 
   @override
-  Future<Either<Failure, UnitFullDetailsEntity>> getUnitDetails(int propertyId, int unitId) async {
+  Future<Either<Failure, UnitFullDetailsEntity>> getUnitDetails(
+    int propertyId,
+    int unitId,
+  ) async {
     try {
       final result = await _remoteDataSource.getUnitDetails(propertyId, unitId);
       return Right(result);
@@ -98,10 +111,16 @@ class UnitsRepositoryImpl implements UnitsRepository {
   }
 
   @override
-  Future<Either<Failure, int>> createUnitDirect(int propertyId, UnitCreateEntity unit) async {
+  Future<Either<Failure, int>> createUnitDirect(
+    int propertyId,
+    UnitCreateEntity unit,
+  ) async {
     try {
       final model = UnitCreateModel.fromEntity(unit);
-      final result = await _remoteDataSource.createUnitDirect(propertyId, model);
+      final result = await _remoteDataSource.createUnitDirect(
+        propertyId,
+        model,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

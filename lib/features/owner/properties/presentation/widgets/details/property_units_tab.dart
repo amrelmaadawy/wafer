@@ -30,10 +30,12 @@ class PropertyUnitsTab extends StatelessWidget {
       backgroundColor: Colors.transparent,
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          context.push(Uri(
-            path: Routes.ownerUnitCreate,
-            queryParameters: {'propertyId': propertyId.toString()},
-          ).toString());
+          context.push(
+            Uri(
+              path: Routes.ownerUnitCreate,
+              queryParameters: {'propertyId': propertyId.toString()},
+            ).toString(),
+          );
         },
         backgroundColor: context.primaryColor,
         icon: const Icon(Icons.add_rounded, color: Colors.white),
@@ -50,13 +52,15 @@ class PropertyUnitsTab extends StatelessWidget {
           return UnitCard(
             unit: unit,
             onTap: () {
-              context.push(Uri(
-                path: Routes.ownerPropertyUnitDetails,
-                queryParameters: {
-                  'propertyId': propertyId.toString(),
-                  'unitId': unit.id.toString(),
-                },
-              ).toString());
+              context.push(
+                Uri(
+                  path: Routes.ownerPropertyUnitDetails,
+                  queryParameters: {
+                    'propertyId': propertyId.toString(),
+                    'unitId': unit.id.toString(),
+                  },
+                ).toString(),
+              );
             },
           );
         },
@@ -137,17 +141,28 @@ class PropertyUnitsTab extends StatelessWidget {
               index: 3,
               child: ElevatedButton.icon(
                 onPressed: () {
-                  context.push(Uri(
-                    path: Routes.ownerUnitCreate,
-                    queryParameters: {'propertyId': propertyId.toString()},
-                  ).toString());
+                  context.push(
+                    Uri(
+                      path: Routes.ownerUnitCreate,
+                      queryParameters: {'propertyId': propertyId.toString()},
+                    ).toString(),
+                  );
                 },
                 icon: const Icon(Icons.add_rounded, size: 20),
-                label: Text(LocaleKeys.propertyDetailsAddUnit.tr(), style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+                label: Text(
+                  LocaleKeys.propertyDetailsAddUnit.tr(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 15,
+                  ),
+                ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: context.primaryColor,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
                   elevation: 4,
                   shadowColor: context.primaryColor.withValues(alpha: 0.4),
                   shape: RoundedRectangleBorder(

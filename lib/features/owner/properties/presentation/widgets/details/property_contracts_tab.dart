@@ -8,10 +8,7 @@ import '../../../domain/entities/contract_entity.dart';
 class PropertyContractsTab extends StatelessWidget {
   final List<ContractEntity> contracts;
 
-  const PropertyContractsTab({
-    super.key,
-    required this.contracts,
-  });
+  const PropertyContractsTab({super.key, required this.contracts});
 
   @override
   Widget build(BuildContext context) {
@@ -42,20 +39,28 @@ class PropertyContractsTab extends StatelessWidget {
                   children: [
                     Text(
                       contract.contractNumber,
-                      style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
-                        color: contract.status == 'draft' 
-                            ? AppColors.warning.withValues(alpha: 0.1) 
+                        color: contract.status == 'draft'
+                            ? AppColors.warning.withValues(alpha: 0.1)
                             : AppColors.success.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
                         contract.statusLabel,
                         style: TextStyle(
-                          color: contract.status == 'draft' ? AppColors.warning : AppColors.success,
+                          color: contract.status == 'draft'
+                              ? AppColors.warning
+                              : AppColors.success,
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
                         ),
@@ -64,15 +69,24 @@ class PropertyContractsTab extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 8),
-                Text('${LocaleKeys.contractsSectionPropertyUnit.tr()}: ${contract.unitName}', style: const TextStyle(color: Colors.grey)),
-                Text('${LocaleKeys.contractsTenantLabel.tr()}: ${contract.renterName}', style: const TextStyle(color: Colors.grey)),
+                Text(
+                  '${LocaleKeys.contractsSectionPropertyUnit.tr()}: ${contract.unitName}',
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                Text(
+                  '${LocaleKeys.contractsTenantLabel.tr()}: ${contract.renterName}',
+                  style: const TextStyle(color: Colors.grey),
+                ),
                 const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       '${LocaleKeys.contractsTotalRentValue.tr()}: ${contract.totalRentValue} ${LocaleKeys.commonCurrencySar.tr()}',
-                      style: TextStyle(color: context.primaryColor, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        color: context.primaryColor,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Text(
                       '${LocaleKeys.contractsTypeLabel.tr()}: ${contract.contractType}',

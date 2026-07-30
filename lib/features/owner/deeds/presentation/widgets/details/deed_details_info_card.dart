@@ -36,7 +36,11 @@ class DeedDetailsInfoCard extends StatelessWidget {
                   color: context.primarySubtle,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.info_outline_rounded, color: context.primaryColor, size: 20),
+                child: Icon(
+                  Icons.info_outline_rounded,
+                  color: context.primaryColor,
+                  size: 20,
+                ),
               ),
               const SizedBox(width: 12),
               Text(
@@ -81,7 +85,12 @@ class DeedDetailsInfoCard extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(BuildContext context, {required IconData icon, required String label, required String value}) {
+  Widget _buildInfoRow(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required String value,
+  }) {
     return Row(
       children: [
         Icon(icon, size: 18, color: AppColors.textSecondaryLight),

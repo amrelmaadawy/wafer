@@ -18,5 +18,12 @@ class DeedEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, deedNumber, deedDate, city, district, ownerName];
+  List<Object?> get props => [
+    id,
+    deedNumber,
+    deedDate,
+    city,
+    district,
+    ownerName,
+  ];
 }

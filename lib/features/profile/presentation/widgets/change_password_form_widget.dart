@@ -13,7 +13,8 @@ class ChangePasswordFormWidget extends StatefulWidget {
   const ChangePasswordFormWidget({super.key});
 
   @override
-  State<ChangePasswordFormWidget> createState() => _ChangePasswordFormWidgetState();
+  State<ChangePasswordFormWidget> createState() =>
+      _ChangePasswordFormWidgetState();
 }
 
 class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
@@ -38,10 +39,10 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
     if (_formKey.currentState?.validate() ?? false) {
       FocusScope.of(context).unfocus();
       context.read<ChangePasswordCubit>().changePassword(
-            currentPassword: _currentController.text.trim(),
-            newPassword: _newController.text.trim(),
-            newPasswordConfirmation: _confirmController.text.trim(),
-          );
+        currentPassword: _currentController.text.trim(),
+        newPassword: _newController.text.trim(),
+        newPasswordConfirmation: _confirmController.text.trim(),
+      );
     }
   }
 
@@ -50,7 +51,10 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
     return BlocConsumer<ChangePasswordCubit, ChangePasswordState>(
       listener: (context, state) {
         if (state is ChangePasswordSuccess) {
-          AppToast.showSuccess(context, LocaleKeys.profile_change_password_success.tr());
+          AppToast.showSuccess(
+            context,
+            LocaleKeys.profile_change_password_success.tr(),
+          );
           Navigator.pop(context);
         } else if (state is ChangePasswordError) {
           AppToast.showError(context, state.message);
@@ -67,8 +71,11 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
                 controller: _currentController,
                 label: LocaleKeys.profile_change_password_current.tr(),
                 obscure: _obscureCurrent,
-                onToggle: () => setState(() => _obscureCurrent = !_obscureCurrent),
-                validator: (val) => val == null || val.trim().isEmpty ? LocaleKeys.profile_change_password_val_required.tr() : null,
+                onToggle: () =>
+                    setState(() => _obscureCurrent = !_obscureCurrent),
+                validator: (val) => val == null || val.trim().isEmpty
+                    ? LocaleKeys.profile_change_password_val_required.tr()
+                    : null,
               ),
               const SizedBox(height: 16),
               _buildPasswordField(
@@ -84,7 +91,8 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
                 controller: _confirmController,
                 label: LocaleKeys.profile_change_password_confirm.tr(),
                 obscure: _obscureConfirm,
-                onToggle: () => setState(() => _obscureConfirm = !_obscureConfirm),
+                onToggle: () =>
+                    setState(() => _obscureConfirm = !_obscureConfirm),
                 onChanged: (_) => setState(() {}),
                 validator: _validateConfirmPassword,
               ),
@@ -115,32 +123,58 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
       style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14.5),
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(Icons.lock_outline_rounded, color: context.primaryColor, size: 22),
+        prefixIcon: Icon(
+          Icons.lock_outline_rounded,
+          color: context.primaryColor,
+          size: 22,
+        ),
         suffixIcon: IconButton(
-          icon: Icon(obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined, color: AppColors.textSecondaryLight, size: 20),
+          icon: Icon(
+            obscure ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+            color: AppColors.textSecondaryLight,
+            size: 20,
+          ),
           onPressed: onToggle,
         ),
         filled: true,
         fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: const BorderSide(color: AppColors.borderLight)),
-        enabledBorder: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: const BorderSide(color: AppColors.borderLight)),
-        focusedBorder: OutlineInputBorder(borderRadius: AppRadius.circularXl, borderSide: BorderSide(color: context.primaryColor, width: 2)),
+        border: OutlineInputBorder(
+          borderRadius: AppRadius.circularXl,
+          borderSide: const BorderSide(color: AppColors.borderLight),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: AppRadius.circularXl,
+          borderSide: const BorderSide(color: AppColors.borderLight),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: AppRadius.circularXl,
+          borderSide: BorderSide(color: context.primaryColor, width: 2),
+        ),
       ),
     );
   }
 
   String? _validateNewPassword(String? val) {
-    if (val == null || val.trim().isEmpty) return LocaleKeys.profile_change_password_val_required.tr();
-    if (val.trim().length < 8) return LocaleKeys.profile_change_password_req_min.tr();
-    if (val.trim() == _currentController.text.trim() && _currentController.text.isNotEmpty) {
+    if (val == null || val.trim().isEmpty) {
+      return LocaleKeys.profile_change_password_val_required.tr();
+    }
+    if (val.trim().length < 8) {
+      return LocaleKeys.profile_change_password_req_min.tr();
+    }
+    if (val.trim() == _currentController.text.trim() &&
+        _currentController.text.isNotEmpty) {
       return LocaleKeys.profile_change_password_val_diff.tr();
     }
     return null;
   }
 
   String? _validateConfirmPassword(String? val) {
-    if (val == null || val.trim().isEmpty) return LocaleKeys.profile_change_password_val_required.tr();
-    if (val.trim() != _newController.text.trim()) return LocaleKeys.profile_change_password_val_mismatch.tr();
+    if (val == null || val.trim().isEmpty) {
+      return LocaleKeys.profile_change_password_val_required.tr();
+    }
+    if (val.trim() != _newController.text.trim()) {
+      return LocaleKeys.profile_change_password_val_mismatch.tr();
+    }
     return null;
   }
 
@@ -168,15 +202,34 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
       duration: const Duration(milliseconds: 200),
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
-        color: met ? AppColors.success.withValues(alpha: 0.08) : AppColors.surfaceLight,
+        color: met
+            ? AppColors.success.withValues(alpha: 0.08)
+            : AppColors.surfaceLight,
         borderRadius: AppRadius.circularLg,
-        border: Border.all(color: met ? AppColors.success.withValues(alpha: 0.3) : AppColors.borderLight),
+        border: Border.all(
+          color: met
+              ? AppColors.success.withValues(alpha: 0.3)
+              : AppColors.borderLight,
+        ),
       ),
       child: Row(
         children: [
-          Icon(met ? Icons.check_circle_rounded : Icons.radio_button_unchecked_rounded, size: 18, color: color),
+          Icon(
+            met
+                ? Icons.check_circle_rounded
+                : Icons.radio_button_unchecked_rounded,
+            size: 18,
+            color: color,
+          ),
           const SizedBox(width: 8),
-          Text(text, style: TextStyle(fontSize: 12.5, fontWeight: met ? FontWeight.bold : FontWeight.w500, color: color)),
+          Text(
+            text,
+            style: TextStyle(
+              fontSize: 12.5,
+              fontWeight: met ? FontWeight.bold : FontWeight.w500,
+              color: color,
+            ),
+          ),
         ],
       ),
     );
@@ -194,8 +247,18 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
         shadowColor: context.primaryShadow,
       ),
       child: isLoading
-          ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5))
-          : Text(LocaleKeys.profile_change_password_btn.tr(), style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 2.5,
+              ),
+            )
+          : Text(
+              LocaleKeys.profile_change_password_btn.tr(),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
     );
   }
 }

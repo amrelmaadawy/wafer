@@ -7,13 +7,13 @@ import 'owner_activity_logs_state.dart';
 class OwnerActivityLogsCubit extends Cubit<OwnerActivityLogsState> {
   final GetOwnerActivityLogsReportUseCase _getOwnerActivityLogsReportUseCase;
   ActivityLogsReportEntity? _currentReport;
-  
+
   String? _selectedType;
   String? _selectedAction;
   bool _isFetching = false;
 
   OwnerActivityLogsCubit(this._getOwnerActivityLogsReportUseCase)
-      : super(OwnerActivityLogsInitial());
+    : super(OwnerActivityLogsInitial());
 
   void setFilter({String? type, String? action}) {
     _selectedType = type;
@@ -32,7 +32,8 @@ class OwnerActivityLogsCubit extends Cubit<OwnerActivityLogsState> {
     int nextPage = 1;
 
     if (isPagination) {
-      if (_currentReport!.pagination.currentPage >= _currentReport!.pagination.lastPage) {
+      if (_currentReport!.pagination.currentPage >=
+          _currentReport!.pagination.lastPage) {
         return;
       }
       nextPage = _currentReport!.pagination.currentPage + 1;
@@ -54,14 +55,17 @@ class OwnerActivityLogsCubit extends Cubit<OwnerActivityLogsState> {
           emit(OwnerActivityLogsLoaded(_currentReport!));
         } else {
           // Determine error message if failure has a message field or fallback
-          final errorMessage = failure is ServerFailure ? failure.message : 'حدث خطأ غير متوقع';
+          final errorMessage = failure is ServerFailure
+              ? failure.message
+              : 'حدث خطأ غير متوقع';
           emit(OwnerActivityLogsError(errorMessage));
         }
       },
       (report) {
         _isFetching = false;
         if (isPagination) {
-          final updatedItems = List.of(_currentReport!.items)..addAll(report.items);
+          final updatedItems = List.of(_currentReport!.items)
+            ..addAll(report.items);
           _currentReport = ActivityLogsReportEntity(
             summary: report.summary,
             items: updatedItems,

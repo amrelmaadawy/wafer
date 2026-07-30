@@ -22,23 +22,33 @@ class OwnerContractsRepositoryImpl implements OwnerContractsRepository {
     bool forceRefresh = false,
   }) async {
     try {
-      final result = await _remoteDataSource.getContracts(page: page, status: status);
+      final result = await _remoteDataSource.getContracts(
+        page: page,
+        status: status,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
       String? serverMsg;
       if (e.response?.data is Map<String, dynamic>) {
-        serverMsg = (e.response?.data as Map<String, dynamic>)['message'] as String?;
+        serverMsg =
+            (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      return Left(ServerFailure(serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(
+        ServerFailure(
+          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, ContractDetailsEntity>> getContractDetails(String id) async {
+  Future<Either<Failure, ContractDetailsEntity>> getContractDetails(
+    String id,
+  ) async {
     try {
       final result = await _remoteDataSource.getContractDetails(id);
       return Right(result);
@@ -47,27 +57,40 @@ class OwnerContractsRepositoryImpl implements OwnerContractsRepository {
     } on DioException catch (e) {
       String? serverMsg;
       if (e.response?.data is Map<String, dynamic>) {
-        serverMsg = (e.response?.data as Map<String, dynamic>)['message'] as String?;
+        serverMsg =
+            (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      return Left(ServerFailure(serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(
+        ServerFailure(
+          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
-  Future<Either<Failure, List<ContractInstallmentEntity>>> getContractInstallments(String contractId) async {
+  Future<Either<Failure, List<ContractInstallmentEntity>>>
+  getContractInstallments(String contractId) async {
     try {
-      final result = await _remoteDataSource.getContractInstallments(contractId);
+      final result = await _remoteDataSource.getContractInstallments(
+        contractId,
+      );
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
       String? serverMsg;
       if (e.response?.data is Map<String, dynamic>) {
-        serverMsg = (e.response?.data as Map<String, dynamic>)['message'] as String?;
+        serverMsg =
+            (e.response?.data as Map<String, dynamic>)['message'] as String?;
       }
-      return Left(ServerFailure(serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr()));
+      return Left(
+        ServerFailure(
+          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

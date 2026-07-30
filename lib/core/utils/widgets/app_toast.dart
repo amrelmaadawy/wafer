@@ -14,16 +14,35 @@ class AppToastColors {
 class AppToast {
   AppToast._();
 
-  static void showSuccess(BuildContext context, String message, {String? title}) {
-    _show(context: context, message: message, title: title ?? LocaleKeys.commonSuccess.tr(), type: AppToastType.success);
+  static void showSuccess(
+    BuildContext context,
+    String message, {
+    String? title,
+  }) {
+    _show(
+      context: context,
+      message: message,
+      title: title ?? LocaleKeys.commonSuccess.tr(),
+      type: AppToastType.success,
+    );
   }
 
   static void showError(BuildContext context, String message, {String? title}) {
-    _show(context: context, message: message, title: title ?? LocaleKeys.commonError.tr(), type: AppToastType.error);
+    _show(
+      context: context,
+      message: message,
+      title: title ?? LocaleKeys.commonError.tr(),
+      type: AppToastType.error,
+    );
   }
 
   static void showInfo(BuildContext context, String message, {String? title}) {
-    _show(context: context, message: message, title: title ?? LocaleKeys.commonInfo.tr(), type: AppToastType.info);
+    _show(
+      context: context,
+      message: message,
+      title: title ?? LocaleKeys.commonInfo.tr(),
+      type: AppToastType.info,
+    );
   }
 
   static void _show({

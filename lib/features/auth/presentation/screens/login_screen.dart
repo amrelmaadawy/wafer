@@ -19,7 +19,9 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (context) => sl<AuthCubit>(),
       child: Directionality(
-        textDirection: context.locale.languageCode == 'ar' ? ui.TextDirection.rtl : ui.TextDirection.ltr,
+        textDirection: context.locale.languageCode == 'ar'
+            ? ui.TextDirection.rtl
+            : ui.TextDirection.ltr,
         child: Scaffold(
           body: BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {
@@ -29,7 +31,10 @@ class LoginScreen extends StatelessWidget {
                 AppToast.showSuccess(context, LocaleKeys.authLoginSuccess.tr());
                 if (state.user.requiresPasswordChange) {
                   // TODO: Navigate to ChangePasswordScreen when built
-                  AppToast.showInfo(context, LocaleKeys.authRequirePasswordChange.tr());
+                  AppToast.showInfo(
+                    context,
+                    LocaleKeys.authRequirePasswordChange.tr(),
+                  );
                 } else {
                   context.go(Routes.home);
                 }

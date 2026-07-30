@@ -65,7 +65,8 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.home,
-        builder: (context, state) => const LoginScreen(), // Just placeholder or check auth
+        builder: (context, state) =>
+            const LoginScreen(), // Just placeholder or check auth
         redirect: (context, state) => Routes.ownerDashboard,
       ),
       GoRoute(
@@ -107,18 +108,18 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerPropertyUnitDetails,
         builder: (context, state) {
-          final propertyId = int.tryParse(state.uri.queryParameters['propertyId'] ?? '0') ?? 0;
-          final unitId = int.tryParse(state.uri.queryParameters['unitId'] ?? '0') ?? 0;
-          return UnitDetailsScreen(
-            propertyId: propertyId,
-            unitId: unitId,
-          );
+          final propertyId =
+              int.tryParse(state.uri.queryParameters['propertyId'] ?? '0') ?? 0;
+          final unitId =
+              int.tryParse(state.uri.queryParameters['unitId'] ?? '0') ?? 0;
+          return UnitDetailsScreen(propertyId: propertyId, unitId: unitId);
         },
       ),
       GoRoute(
         path: Routes.ownerUnitCreate,
         builder: (context, state) {
-          final propertyId = int.tryParse(state.uri.queryParameters['propertyId'] ?? '0') ?? 0;
+          final propertyId =
+              int.tryParse(state.uri.queryParameters['propertyId'] ?? '0') ?? 0;
           return UnitCreateScreen(propertyId: propertyId);
         },
       ),
@@ -154,35 +155,44 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerRevenueReport,
         builder: (context, state) => BlocProvider<OwnerRevenueCubit>(
-          create: (_) => sl<OwnerRevenueCubit>()..loadRevenueReport(forceRefresh: true),
+          create: (_) =>
+              sl<OwnerRevenueCubit>()..loadRevenueReport(forceRefresh: true),
           child: const OwnerRevenueReportView(),
         ),
       ),
       GoRoute(
         path: Routes.ownerUnitsStatusReport,
         builder: (context, state) => BlocProvider<OwnerUnitsStatusCubit>(
-          create: (_) => sl<OwnerUnitsStatusCubit>()..loadUnitsStatusReport(forceRefresh: true),
+          create: (_) =>
+              sl<OwnerUnitsStatusCubit>()
+                ..loadUnitsStatusReport(forceRefresh: true),
           child: const OwnerUnitsStatusReportView(),
         ),
       ),
       GoRoute(
         path: Routes.ownerContractsReport,
         builder: (context, state) => BlocProvider<OwnerContractsReportCubit>(
-          create: (_) => sl<OwnerContractsReportCubit>()..loadContractsReport(forceRefresh: true),
+          create: (_) =>
+              sl<OwnerContractsReportCubit>()
+                ..loadContractsReport(forceRefresh: true),
           child: const OwnerContractsReportView(),
         ),
       ),
       GoRoute(
         path: Routes.ownerOccupancyReport,
         builder: (context, state) => BlocProvider<OwnerOccupancyCubit>(
-          create: (_) => sl<OwnerOccupancyCubit>()..loadOccupancyReport(forceRefresh: true),
+          create: (_) =>
+              sl<OwnerOccupancyCubit>()
+                ..loadOccupancyReport(forceRefresh: true),
           child: const OwnerOccupancyReportView(),
         ),
       ),
       GoRoute(
         path: Routes.ownerDefaultersReport,
         builder: (context, state) => BlocProvider<OwnerDefaultersCubit>(
-          create: (_) => sl<OwnerDefaultersCubit>()..loadDefaultersReport(forceRefresh: true),
+          create: (_) =>
+              sl<OwnerDefaultersCubit>()
+                ..loadDefaultersReport(forceRefresh: true),
           child: const OwnerDefaultersReportView(),
         ),
       ),
@@ -194,18 +204,19 @@ class AppRouter {
         path: Routes.ownerMaintenanceRequestsReport,
         builder: (context, state) => const OwnerMaintenanceRequestsReportView(),
       ),
-        GoRoute(
-          path: Routes.ownerTechnicianPerformanceReport,
-          builder: (context, state) => const OwnerTechnicianPerformanceReportView(),
-        ),
-        GoRoute(
-          path: Routes.ownerEmployeeTasksReport,
-          builder: (context, state) => const OwnerEmployeeTasksReportView(),
-        ),
-        GoRoute(
-          path: Routes.ownerActivityLogsReport,
-          builder: (context, state) => const OwnerActivityLogsReportView(),
-        ),
+      GoRoute(
+        path: Routes.ownerTechnicianPerformanceReport,
+        builder: (context, state) =>
+            const OwnerTechnicianPerformanceReportView(),
+      ),
+      GoRoute(
+        path: Routes.ownerEmployeeTasksReport,
+        builder: (context, state) => const OwnerEmployeeTasksReportView(),
+      ),
+      GoRoute(
+        path: Routes.ownerActivityLogsReport,
+        builder: (context, state) => const OwnerActivityLogsReportView(),
+      ),
       GoRoute(
         path: Routes.editProfile,
         builder: (context, state) {

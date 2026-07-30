@@ -13,11 +13,8 @@ class UnitDetailsSkeleton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // ── Header Image Skeleton ──────────────────
-          AppShimmer.box(
-            height: 260,
-            borderRadius: BorderRadius.zero,
-          ),
-          
+          AppShimmer.box(height: 260, borderRadius: BorderRadius.zero),
+
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
@@ -37,7 +34,11 @@ class UnitDetailsSkeleton extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           AppShimmer.box(width: 120, height: 20),
-                          AppShimmer.box(width: 70, height: 24, borderRadius: AppRadius.circularFull),
+                          AppShimmer.box(
+                            width: 70,
+                            height: 24,
+                            borderRadius: AppRadius.circularFull,
+                          ),
                         ],
                       ),
                       const SizedBox(height: 12),
@@ -77,10 +78,7 @@ class UnitDetailsSkeleton extends StatelessWidget {
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                   childAspectRatio: 1.3,
-                  children: List.generate(
-                    6,
-                    (_) => AppShimmer.box(height: 60),
-                  ),
+                  children: List.generate(6, (_) => AppShimmer.box(height: 60)),
                 ),
                 const SizedBox(height: 24),
 

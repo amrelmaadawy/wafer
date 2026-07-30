@@ -28,65 +28,81 @@ class OwnerContractInstallmentsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => di.sl<OwnerContractInstallmentsCubit>()..getContractInstallments(contractId),
+      create: (_) =>
+          di.sl<OwnerContractInstallmentsCubit>()
+            ..getContractInstallments(contractId),
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
         appBar: CustomAppBar(
           title: LocaleKeys.installmentsTitle.tr(),
           subtitle: contractNumber.isNotEmpty ? contractNumber : null,
         ),
-        body: BlocBuilder<OwnerContractInstallmentsCubit, OwnerContractInstallmentsState>(
-          builder: (context, state) {
-            if (state is OwnerContractInstallmentsLoading || state is OwnerContractInstallmentsInitial) {
-              return const InstallmentsSkeletonWidget();
-            } else if (state is OwnerContractInstallmentsError) {
-              return CustomErrorWidget(
-                message: state.message,
-                onRetry: () => context.read<OwnerContractInstallmentsCubit>().getContractInstallments(contractId),
-              );
-            } else if (state is OwnerContractInstallmentsLoaded) {
-              final all = state.allInstallments;
-              if (all.isEmpty) return const InstallmentsEmptyWidget();
-              final filtered = state.filteredInstallments;
-              return RefreshIndicator(
-                color: context.primaryColor,
-                onRefresh: () =>
-                    context.read<OwnerContractInstallmentsCubit>().getContractInstallments(contractId),
-                child: ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.fromLTRB(20, 20, 20, 80),
-                  children: [
-                    InstallmentsSummaryCard(installments: all),
-                    const SizedBox(height: 16),
-                    InstallmentsFilterBar(activeFilter: state.activeFilter),
-                    const SizedBox(height: 16),
-                    AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 280),
-                      switchInCurve: Curves.easeOut,
-                      switchOutCurve: Curves.easeIn,
-                      child: filtered.isEmpty
-                          ? const Padding(
-                              key: ValueKey('empty'),
-                              padding: EdgeInsets.symmetric(vertical: 40),
-                              child: InstallmentsEmptyWidget(),
-                            )
-                          : Column(
-                              key: ValueKey(state.activeFilter),
-                              children: filtered
-                                  .map((inst) => Padding(
-                                        padding: const EdgeInsets.only(bottom: 14),
-                                        child: InstallmentCard(installment: inst),
-                                      ))
-                                  .toList(),
-                            ),
+        body:
+            BlocBuilder<
+              OwnerContractInstallmentsCubit,
+              OwnerContractInstallmentsState
+            >(
+              builder: (context, state) {
+                if (state is OwnerContractInstallmentsLoading ||
+                    state is OwnerContractInstallmentsInitial) {
+                  return const InstallmentsSkeletonWidget();
+                } else if (state is OwnerContractInstallmentsError) {
+                  return CustomErrorWidget(
+                    message: state.message,
+                    onRetry: () => context
+                        .read<OwnerContractInstallmentsCubit>()
+                        .getContractInstallments(contractId),
+                  );
+                } else if (state is OwnerContractInstallmentsLoaded) {
+                  final all = state.allInstallments;
+                  if (all.isEmpty) return const InstallmentsEmptyWidget();
+                  final filtered = state.filteredInstallments;
+                  return RefreshIndicator(
+                    color: context.primaryColor,
+                    onRefresh: () => context
+                        .read<OwnerContractInstallmentsCubit>()
+                        .getContractInstallments(contractId),
+                    child: ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 80),
+                      children: [
+                        InstallmentsSummaryCard(installments: all),
+                        const SizedBox(height: 16),
+                        InstallmentsFilterBar(activeFilter: state.activeFilter),
+                        const SizedBox(height: 16),
+                        AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 280),
+                          switchInCurve: Curves.easeOut,
+                          switchOutCurve: Curves.easeIn,
+                          child: filtered.isEmpty
+                              ? const Padding(
+                                  key: ValueKey('empty'),
+                                  padding: EdgeInsets.symmetric(vertical: 40),
+                                  child: InstallmentsEmptyWidget(),
+                                )
+                              : Column(
+                                  key: ValueKey(state.activeFilter),
+                                  children: filtered
+                                      .map(
+                                        (inst) => Padding(
+                                          padding: const EdgeInsets.only(
+                                            bottom: 14,
+                                          ),
+                                          child: InstallmentCard(
+                                            installment: inst,
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
       ),
     );
   }

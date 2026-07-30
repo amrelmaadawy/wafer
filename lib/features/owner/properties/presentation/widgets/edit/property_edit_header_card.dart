@@ -7,10 +7,7 @@ import '../../../domain/entities/property_details_entity.dart';
 class PropertyEditHeaderCard extends StatelessWidget {
   final PropertyDetailsEntity property;
 
-  const PropertyEditHeaderCard({
-    super.key,
-    required this.property,
-  });
+  const PropertyEditHeaderCard({super.key, required this.property});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +34,9 @@ class PropertyEditHeaderCard extends StatelessWidget {
             height: 120,
             width: double.infinity,
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
               color: context.primarySubtle.withValues(alpha: 0.5),
               image: hasImage
                   ? DecorationImage(
@@ -60,7 +59,10 @@ class PropertyEditHeaderCard extends StatelessWidget {
                   top: 12,
                   right: 12,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.black.withValues(alpha: 0.6),
                       borderRadius: AppRadius.circularFull,
@@ -68,7 +70,11 @@ class PropertyEditHeaderCard extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.qr_code_rounded, color: Colors.white, size: 14),
+                        const Icon(
+                          Icons.qr_code_rounded,
+                          color: Colors.white,
+                          size: 14,
+                        ),
                         const SizedBox(width: 4),
                         Text(
                           property.code,
@@ -86,7 +92,10 @@ class PropertyEditHeaderCard extends StatelessWidget {
                   top: 12,
                   left: 12,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: AppRadius.circularFull,
@@ -132,7 +141,10 @@ class PropertyEditHeaderCard extends StatelessWidget {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 3,
+                      ),
                       decoration: BoxDecoration(
                         color: context.primaryColor.withValues(alpha: 0.08),
                         borderRadius: AppRadius.circularMd,
@@ -166,7 +178,9 @@ class PropertyEditHeaderCard extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
-                          color: completionPct >= 80 ? Colors.green : Colors.orange,
+                          color: completionPct >= 80
+                              ? Colors.green
+                              : Colors.orange,
                         ),
                       ),
                     ],
@@ -178,7 +192,9 @@ class PropertyEditHeaderCard extends StatelessWidget {
                       value: completionPct / 100.0,
                       backgroundColor: const Color(0xFFF1F5F9),
                       valueColor: AlwaysStoppedAnimation<Color>(
-                        completionPct >= 80 ? Colors.green : context.primaryColor,
+                        completionPct >= 80
+                            ? Colors.green
+                            : context.primaryColor,
                       ),
                       minHeight: 6,
                     ),
