@@ -9,64 +9,72 @@ import '../../../../../../core/theme/color_utils.dart';
 class SupervisorCard extends StatelessWidget {
   final SupervisorEntity supervisor;
 
-  const SupervisorCard({
-    super.key,
-    required this.supervisor,
-  });
+  const SupervisorCard({super.key, required this.supervisor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
       padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularMd,
-        border: Border.all(color: AppColors.borderLight),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(AppRadius.lg),
+        border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.5)),
         boxShadow: [
           BoxShadow(
-            color: context.primaryShadow,
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+            color: context.primaryShadow.withValues(alpha: 0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildAvatarWithStatus(context),
-          const SizedBox(width: AppSpacing.md),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _buildAvatarWithStatus(context),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: Text(
-                        supervisor.user?.name ?? '-',
-                        style: AppTextStyles.h4,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                    Text(
+                      supervisor.user?.name ?? '-',
+                      style: AppTextStyles.h4.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimaryLight,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(width: AppSpacing.sm),
+                    const SizedBox(height: 4),
                     _buildScopeBadge(context),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.sm),
-                if (supervisor.user?.phone != null) ...[
-                  _buildIconText(context, Icons.phone_outlined, supervisor.user!.phone!),
-                  const SizedBox(height: AppSpacing.xs),
-                ],
-                if (supervisor.user?.email != null) ...[
-                  _buildIconText(context, Icons.email_outlined, supervisor.user!.email!),
-                ],
-              ],
-            ),
+              ),
+            ],
           ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
+            child: Divider(color: AppColors.borderLight, height: 1),
+          ),
+          if (supervisor.user?.phone != null) ...[
+            _buildIconText(
+              context,
+              Icons.phone_android_outlined,
+              supervisor.user!.phone!,
+            ),
+            const SizedBox(height: AppSpacing.xs),
+          ],
+          if (supervisor.user?.email != null) ...[
+            _buildIconText(
+              context,
+              Icons.mail_outline_rounded,
+              supervisor.user!.email!,
+            ),
+          ],
         ],
       ),
     );
@@ -107,12 +115,21 @@ class SupervisorCard extends StatelessWidget {
   Widget _buildIconText(BuildContext context, IconData icon, String text) {
     return Row(
       children: [
-        Icon(icon, size: 16, color: AppColors.textSecondaryLight),
+        Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: context.primaryFaint,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, size: 14, color: context.primaryColor),
+        ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
           child: Text(
             text,
-            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.textSecondaryLight),
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: AppColors.textSecondaryLight,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.start,
@@ -124,7 +141,10 @@ class SupervisorCard extends StatelessWidget {
 
   Widget _buildScopeBadge(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 4),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 4,
+      ),
       decoration: BoxDecoration(
         color: context.primaryFaint,
         borderRadius: AppRadius.circularSm,

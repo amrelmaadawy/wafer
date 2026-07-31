@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
@@ -46,6 +48,24 @@ class MaintenanceHeader extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: context.primaryColor.withValues(alpha: 0.1),
+              borderRadius: AppRadius.circularLg,
+            ),
+            child: IconButton(
+              icon: Icon(
+                Icons.gavel_rounded,
+                color: context.primaryColor,
+                size: 20,
+              ),
+              padding: EdgeInsets.zero,
+              tooltip: LocaleKeys.negotiation_list_title.tr(),
+              onPressed: () => context.push(Routes.ownerNegotiationsList),
+            ),
           ),
         ],
       ),

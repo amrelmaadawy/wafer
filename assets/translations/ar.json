@@ -130,6 +130,19 @@
     "activityLogsActionIp": "عنوان IP",
     "activityLogsActionDate": "تاريخ العملية"
   },
+  "negotiation": {
+    "settings_title": "إعدادات تفاوض الصيانة",
+    "approval_limit": "حد الاعتماد (بحد أقصى)",
+    "is_active": "مُفعل",
+    "save_settings": "حفظ الإعدادات",
+    "validation_required": "هذا الحقل مطلوب",
+    "validation_min": "أقل قيمة مسموحة هي {}",
+    "list_title": "تفاوضات الصيانة",
+    "empty_list": "لا توجد تفاوضات صيانة",
+    "empty_list_sub": "ستظهر هنا إعدادات التفاوض وحدود الاعتماد الخاصة بك",
+    "active_status": "نشط",
+    "inactive_status": "غير نشط"
+  },
   "profile": {
     "title": "الملف الشخصي",
     "owner_badge": "المالك",
@@ -837,5 +850,6 @@
   "supervisorIsActive": "نشط",
   "supervisorSortOrder": "الترتيب",
   "saveSupervisor": "حفظ المشرف",
-  "supervisorsList": "المشرفين"
+  "supervisorsList": "المشرفين",
+  "negotiation_create_success": "تم حفظ إعدادات التفاوض بنجاح!"
 }

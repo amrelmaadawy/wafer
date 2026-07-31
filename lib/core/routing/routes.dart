@@ -18,6 +18,9 @@ class Routes {
   static const String ownerTechniciansList = '/owner-technicians/list';
   static const String ownerTechnicianCreate = '/owner-technician/create';
   static const String ownerSupervisorsList = '/owner-supervisors/list';
+  static const String ownerSupervisorCreate = '/owner-supervisors/create';
+  static const String ownerNegotiationsList = '/owner-negotiations/list';
+  static const String ownerNegotiationSettings = '/owner-negotiations/settings';
   static const String ownerReportsCenter = '/owner-reports';
   static const String editProfile = '/edit-profile';
   static const String changePassword = '/change-password';

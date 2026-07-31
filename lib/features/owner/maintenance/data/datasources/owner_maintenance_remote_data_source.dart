@@ -12,8 +12,10 @@ import '../../domain/usecases/complete_owner_maintenance_task_use_case.dart';
 import '../../domain/usecases/execute_owner_maintenance_use_case.dart';
 import '../../domain/usecases/verify_close_owner_maintenance_use_case.dart';
 import '../models/execute_owner_maintenance_response_model.dart';
+import '../models/maintenance_form_data_model.dart';
 
 abstract class OwnerMaintenanceRemoteDataSource {
+  Future<MaintenanceFormDataModel> getFormData();
   Future<MaintenanceResponseModel> getMaintenanceRequests({
     int page = 1,
     String? status,
@@ -40,6 +42,16 @@ class OwnerMaintenanceRemoteDataSourceImpl
   final Dio _dio;
 
   OwnerMaintenanceRemoteDataSourceImpl(this._dio);
+
+  @override
+  Future<MaintenanceFormDataModel> getFormData() async {
+    final response = await _dio.get('${ApiConstants.baseUrl}owner/maintenance-requests/form-data');
+    if (response.data['success'] == true && response.data['data'] != null && response.data['data']['options'] != null) {
+      return MaintenanceFormDataModel.fromJson(response.data['data']['options']);
+    } else {
+      throw Exception(response.data['message'] ?? 'Failed to load form data');
+    }
+  }
 
   @override
   Future<MaintenanceResponseModel> getMaintenanceRequests({

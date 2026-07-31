@@ -130,6 +130,19 @@
     "activityLogsActionIp": "IP Address",
     "activityLogsActionDate": "Action Date"
   },
+  "negotiation": {
+    "settings_title": "Maintenance Negotiation Settings",
+    "approval_limit": "Approval Limit",
+    "is_active": "Is Active",
+    "save_settings": "Save Settings",
+    "validation_required": "This field is required",
+    "validation_min": "Minimum value is {}",
+    "list_title": "Maintenance Negotiations",
+    "empty_list": "No maintenance negotiations found",
+    "empty_list_sub": "Your negotiation settings and limits will appear here",
+    "active_status": "Active",
+    "inactive_status": "Inactive"
+  },
   "profile": {
     "title": "Profile",
     "owner_badge": "Owner",
@@ -840,5 +853,6 @@
   "supervisorIsActive": "Active",
   "supervisorSortOrder": "Sort Order",
   "saveSupervisor": "Save Supervisor",
-  "supervisorsList": "Supervisors"
+  "supervisorsList": "Supervisors",
+  "negotiation_create_success": "Negotiation settings saved successfully!"
 }

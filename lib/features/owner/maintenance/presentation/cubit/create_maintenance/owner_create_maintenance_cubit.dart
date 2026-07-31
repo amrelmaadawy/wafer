@@ -1,122 +1,93 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/localization/locale_keys.dart';
-import '../../../../properties/domain/usecases/get_properties_list_use_case.dart';
-import '../../../../properties/domain/usecases/get_property_units_use_case.dart';
+import '../../../domain/usecases/get_owner_maintenance_form_data_use_case.dart';
 import '../../../domain/usecases/create_owner_maintenance_use_case.dart';
 import 'owner_create_maintenance_state.dart';
 
 class OwnerCreateMaintenanceCubit extends Cubit<OwnerCreateMaintenanceState> {
-  final GetPropertiesListUseCase _getPropertiesUseCase;
-  final GetPropertyUnitsUseCase _getUnitsUseCase;
+  final GetOwnerMaintenanceFormDataUseCase _getFormDataUseCase;
   final CreateOwnerMaintenanceUseCase _createMaintenanceUseCase;
 
   OwnerCreateMaintenanceCubit(
-    this._getPropertiesUseCase,
-    this._getUnitsUseCase,
+    this._getFormDataUseCase,
     this._createMaintenanceUseCase,
   ) : super(const OwnerCreateMaintenanceState());
 
   void init() {
-    _loadProperties();
+    _loadFormData();
   }
 
-  Future<void> _loadProperties() async {
-    emit(state.copyWith(isPropertiesLoading: true, propertiesError: null));
+  Future<void> _loadFormData() async {
+    emit(state.copyWith(isFormDataLoading: true, formDataError: null));
 
-    final result = await _getPropertiesUseCase();
+    final result = await _getFormDataUseCase();
 
     result.fold(
       (failure) {
         emit(
           state.copyWith(
-            isPropertiesLoading: false,
-            propertiesError: failure.message,
+            isFormDataLoading: false,
+            formDataError: failure.message,
           ),
         );
       },
       (data) {
         emit(
-          state.copyWith(isPropertiesLoading: false, properties: data.items),
+          state.copyWith(isFormDataLoading: false, formData: data),
         );
       },
     );
   }
 
-  Future<void> loadUnits(int propertyId) async {
+  void loadUnits(int propertyId) {
+    if (state.formData == null) return;
+    
+    // Attempt to find the property and its nested units
+    final property = state.formData!.properties.where((p) => p.id == propertyId).firstOrNull;
+    
+    final units = property?.units ?? [];
+    
     emit(
       state.copyWithNullUnitId(
-        isUnitsLoading: true,
-        unitsError: null,
         selectedPropertyId: propertyId,
+        filteredUnits: units,
       ),
-    );
-
-    final result = await _getUnitsUseCase(propertyId);
-
-    result.fold(
-      (failure) {
-        emit(
-          state.copyWith(isUnitsLoading: false, unitsError: failure.message),
-        );
-      },
-      (data) {
-        emit(state.copyWith(isUnitsLoading: false, units: data.items));
-      },
     );
   }
 
   void updateClientName(String val) => emit(state.copyWith(clientName: val));
-
   void updateClientPhone(String val) => emit(state.copyWith(clientPhone: val));
-
   void updateDescription(String val) => emit(state.copyWith(description: val));
-
   void updateRequestedDate(String val) =>
       emit(state.copyWith(requestedDate: val));
+  void updateSelectedUnit(int val) => emit(state.copyWith(selectedUnitId: val));
 
-  void updateIsPrivate(bool val) => emit(state.copyWith(isPrivate: val));
-
-  void toggleMaintenanceType(String type) {
-    final currentTypes = List<String>.from(state.maintenanceTypes);
-    if (currentTypes.contains(type)) {
-      currentTypes.remove(type);
+  void toggleMaintenanceType(String typeIdStr) {
+    final types = List<String>.from(state.maintenanceTypes);
+    if (types.contains(typeIdStr)) {
+      types.remove(typeIdStr);
     } else {
-      currentTypes.add(type);
+      types.add(typeIdStr);
     }
-    emit(state.copyWith(maintenanceTypes: currentTypes));
+    emit(state.copyWith(maintenanceTypes: types));
   }
 
-  void selectUnit(int? unitId) {
-    if (unitId == null) {
-      emit(state.copyWithNullUnitId());
-    } else {
-      emit(state.copyWith(selectedUnitId: unitId));
-    }
-  }
+  void togglePrivate(bool val) => emit(state.copyWith(isPrivate: val));
 
   Future<void> submit() async {
-    if (state.selectedPropertyId == null ||
-        state.clientName.isEmpty ||
-        state.clientPhone.isEmpty ||
-        state.description.isEmpty ||
-        state.requestedDate.isEmpty) {
+    if (state.selectedPropertyId == null) {
       emit(
         state.copyWith(
           status: CreateMaintenanceStatus.failure,
-          errorMessage: LocaleKeys.maintenanceCreateFillAllFields.tr(),
+          errorMessage: LocaleKeys.maintenanceCreateRequiredField.tr(),
         ),
       );
       emit(state.copyWith(status: CreateMaintenanceStatus.initial));
       return;
     }
 
-    emit(
-      state.copyWith(
-        status: CreateMaintenanceStatus.loading,
-        errorMessage: null,
-      ),
-    );
+    emit(state.copyWith(status: CreateMaintenanceStatus.loading));
 
     final params = CreateOwnerMaintenanceParams(
       propertyId: state.selectedPropertyId!,

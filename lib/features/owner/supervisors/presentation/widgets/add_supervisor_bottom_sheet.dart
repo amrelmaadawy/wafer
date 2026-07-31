@@ -34,9 +34,7 @@ class AddSupervisorBottomSheet extends StatelessWidget {
           BlocProvider(
             create: (_) => sl<SupervisorFormDataCubit>()..getFormData(),
           ),
-          BlocProvider(
-            create: (_) => sl<CreateSupervisorCubit>(),
-          ),
+          BlocProvider(create: (_) => sl<CreateSupervisorCubit>()),
         ],
         child: const AddSupervisorBottomSheet(),
       ),
@@ -48,41 +46,39 @@ class AddSupervisorBottomSheet extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         color: AppColors.backgroundLight,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(AppRadius.xl),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.xl)),
       ),
       padding: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),
       child: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const SizedBox(height: AppSpacing.sm),
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: AppColors.borderLight,
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: AppSpacing.sm),
+              Center(
+                child: Container(
+                  width: 40,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: AppColors.borderLight,
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-              child: Text(
-                LocaleKeys.addSupervisor.tr(),
-                style: AppTextStyles.h3,
-                textAlign: TextAlign.center,
+              const SizedBox(height: AppSpacing.md),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                child: Text(
+                  LocaleKeys.addSupervisor.tr(),
+                  style: AppTextStyles.h3,
+                  textAlign: TextAlign.center,
+                ),
               ),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Flexible(
-              child: BlocConsumer<SupervisorFormDataCubit, SupervisorFormDataState>(
+              const SizedBox(height: AppSpacing.md),
+              BlocConsumer<SupervisorFormDataCubit, SupervisorFormDataState>(
                 listener: (context, state) {
                   if (state is SupervisorFormDataError) {
                     AppToast.showError(context, state.message);
@@ -109,7 +105,9 @@ class AddSupervisorBottomSheet extends StatelessWidget {
                           CustomButton(
                             text: LocaleKeys.retry.tr(),
                             onPressed: () {
-                              context.read<SupervisorFormDataCubit>().getFormData();
+                              context
+                                  .read<SupervisorFormDataCubit>()
+                                  .getFormData();
                             },
                           ),
                         ],
@@ -124,8 +122,8 @@ class AddSupervisorBottomSheet extends StatelessWidget {
                   return const SizedBox.shrink();
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -167,15 +165,27 @@ class _SupervisorFormState extends State<_SupervisorForm> {
     }
 
     if (defaults.scopeType != null) {
-      final index = widget.data.scopeTypes.indexWhere((e) => e.value == defaults.scopeType);
-      _selectedScopeType = index != -1 ? widget.data.scopeTypes[index] : (widget.data.scopeTypes.isNotEmpty ? widget.data.scopeTypes.first : null);
+      final index = widget.data.scopeTypes.indexWhere(
+        (e) => e.value == defaults.scopeType,
+      );
+      _selectedScopeType = index != -1
+          ? widget.data.scopeTypes[index]
+          : (widget.data.scopeTypes.isNotEmpty
+                ? widget.data.scopeTypes.first
+                : null);
     } else if (widget.data.scopeTypes.isNotEmpty) {
       _selectedScopeType = widget.data.scopeTypes.first;
     }
 
     if (defaults.scopeCondition != null) {
-      final index = widget.data.scopeConditions.indexWhere((e) => e.value == defaults.scopeCondition);
-      _selectedCondition = index != -1 ? widget.data.scopeConditions[index] : (widget.data.scopeConditions.isNotEmpty ? widget.data.scopeConditions.first : null);
+      final index = widget.data.scopeConditions.indexWhere(
+        (e) => e.value == defaults.scopeCondition,
+      );
+      _selectedCondition = index != -1
+          ? widget.data.scopeConditions[index]
+          : (widget.data.scopeConditions.isNotEmpty
+                ? widget.data.scopeConditions.first
+                : null);
     } else if (widget.data.scopeConditions.isNotEmpty) {
       _selectedCondition = widget.data.scopeConditions.first;
     }
@@ -186,12 +196,15 @@ class _SupervisorFormState extends State<_SupervisorForm> {
   void _updateScopeValueFromDefaults(SupervisorFormDefaultsEntity defaults) {
     if (_selectedScopeType != null &&
         widget.data.scopeValues.containsKey(_selectedScopeType!.value)) {
-      final availableValues = widget.data.scopeValues[_selectedScopeType!.value]!;
+      final availableValues =
+          widget.data.scopeValues[_selectedScopeType!.value]!;
 
       if (defaults.scopeValues != null && defaults.scopeValues!.isNotEmpty) {
         final defaultValueId = defaults.scopeValues!.first;
         final index = availableValues.indexWhere((e) => e.id == defaultValueId);
-        _selectedScopeValue = index != -1 ? availableValues[index] : (availableValues.isNotEmpty ? availableValues.first : null);
+        _selectedScopeValue = index != -1
+            ? availableValues[index]
+            : (availableValues.isNotEmpty ? availableValues.first : null);
       }
     }
   }
@@ -209,12 +222,14 @@ class _SupervisorFormState extends State<_SupervisorForm> {
 
     if (_formKey.currentState?.validate() ?? false) {
       if (_selectedUser == null || _selectedScopeType == null) return;
-      
+
       final availableScopeValues = _getAvailableScopeValues();
       final requiresScopeValue = widget.data.validation.scopeTypeRequiresValues
           .contains(_selectedScopeType?.value);
 
-      if (requiresScopeValue && availableScopeValues.isNotEmpty && _selectedScopeValue == null) {
+      if (requiresScopeValue &&
+          availableScopeValues.isNotEmpty &&
+          _selectedScopeValue == null) {
         return;
       }
 
@@ -248,7 +263,7 @@ class _SupervisorFormState extends State<_SupervisorForm> {
     final requiresScopeValue = widget.data.validation.scopeTypeRequiresValues
         .contains(_selectedScopeType?.value);
 
-    return SingleChildScrollView(
+    return Padding(
       padding: const EdgeInsets.all(AppSpacing.md),
       child: Form(
         key: _formKey,
@@ -291,7 +306,8 @@ class _SupervisorFormState extends State<_SupervisorForm> {
                 hint: LocaleKeys.supervisorScopeValue.tr(),
                 value: _selectedScopeValue,
                 items: availableScopeValues,
-                itemLabelBuilder: (val) => val.name ?? val.code ?? val.id.toString(),
+                itemLabelBuilder: (val) =>
+                    val.name ?? val.code ?? val.id.toString(),
                 onSelected: (val) {
                   setState(() {
                     _selectedScopeValue = val;
@@ -346,7 +362,10 @@ class _SupervisorFormState extends State<_SupervisorForm> {
             BlocConsumer<CreateSupervisorCubit, CreateSupervisorState>(
               listener: (context, state) {
                 if (state is CreateSupervisorSuccess) {
-                  AppToast.showSuccess(context, LocaleKeys.addSupervisor.tr()); // or a success string from API/locale
+                  AppToast.showSuccess(
+                    context,
+                    LocaleKeys.addSupervisor.tr(),
+                  ); // or a success string from API/locale
                   Navigator.pop(context, true);
                 } else if (state is CreateSupervisorError) {
                   AppToast.showError(context, state.message);

@@ -14,12 +14,27 @@ import '../../domain/usecases/complete_owner_maintenance_task_use_case.dart';
 import '../../domain/usecases/execute_owner_maintenance_use_case.dart';
 import '../../domain/usecases/verify_close_owner_maintenance_use_case.dart';
 import '../../domain/entities/execute_owner_maintenance_response_entity.dart';
+import '../../domain/entities/maintenance_form_data_entity.dart';
 import '../datasources/owner_maintenance_remote_data_source.dart';
 
 class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
   final OwnerMaintenanceRemoteDataSource _remoteDataSource;
 
   OwnerMaintenanceRepositoryImpl(this._remoteDataSource);
+
+  @override
+  Future<Either<Failure, MaintenanceFormDataEntity>> getFormData() async {
+    try {
+      final result = await _remoteDataSource.getFormData();
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 
   @override
   Future<Either<Failure, MaintenanceResponseEntity>> getMaintenanceRequests({

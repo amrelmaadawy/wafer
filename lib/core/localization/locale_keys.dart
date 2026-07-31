@@ -1769,4 +1769,16 @@ abstract class LocaleKeys {
   static const active = 'active';
   static const inactive = 'inactive';
   static const retry = 'retry';
+  static const negotiation_create_success = 'negotiation_create_success';
+  static const negotiation_list_title = 'negotiation.list_title';
+  static const negotiation_settings_title = 'negotiation.settings_title';
+  static const negotiation_approval_limit = 'negotiation.approval_limit';
+  static const negotiation_validation_required = 'negotiation.validation_required';
+  static const negotiation_validation_min = 'negotiation.validation_min';
+  static const negotiation_is_active = 'negotiation.is_active';
+  static const negotiation_save_settings = 'negotiation.save_settings';
+  static const negotiation_empty_list = 'negotiation.empty_list';
+  static const negotiation_empty_list_sub = 'negotiation.empty_list_sub';
+  static const negotiation_active_status = 'negotiation.active_status';
+  static const negotiation_inactive_status = 'negotiation.inactive_status';
 }

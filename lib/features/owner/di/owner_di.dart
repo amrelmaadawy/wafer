@@ -25,6 +25,7 @@ import '../maintenance/domain/usecases/get_owner_maintenance_details_use_case.da
 import 'package:wafer/features/owner/maintenance/domain/usecases/approve_owner_maintenance_use_case.dart';
 import 'package:wafer/features/owner/maintenance/domain/usecases/reject_owner_maintenance_use_case.dart';
 import 'package:wafer/features/owner/maintenance/domain/usecases/create_owner_maintenance_use_case.dart';
+import '../maintenance/domain/usecases/get_owner_maintenance_form_data_use_case.dart';
 import '../maintenance/presentation/cubit/owner_maintenance_cubit.dart';
 import '../maintenance/presentation/cubit/details/owner_maintenance_details_cubit.dart';
 import 'package:wafer/features/owner/maintenance/presentation/cubit/approve_maintenance/owner_approve_maintenance_cubit.dart';
@@ -120,6 +121,16 @@ import '../deeds/di/deeds_di.dart';
 import '../technicians/di/technicians_di.dart';
 import '../supervisors/di/supervisors_di.dart';
 
+import '../maintenance_negotiations/data/datasources/maintenance_negotiation_remote_data_source.dart';
+import '../maintenance_negotiations/data/repositories/maintenance_negotiation_repository_impl.dart';
+import '../maintenance_negotiations/domain/repositories/maintenance_negotiation_repository.dart';
+import '../maintenance_negotiations/domain/usecases/get_negotiation_form_data_use_case.dart';
+import '../maintenance_negotiations/domain/usecases/get_negotiations_list_use_case.dart';
+import '../maintenance_negotiations/domain/usecases/create_negotiation_use_case.dart';
+import '../maintenance_negotiations/presentation/cubit/form_data/negotiation_form_data_cubit.dart';
+import '../maintenance_negotiations/presentation/cubit/list/negotiations_list_cubit.dart';
+import '../maintenance_negotiations/presentation/cubit/create/create_negotiation_cubit.dart';
+
 void initOwnerModule() {
   _initDashboard();
   _initProperties();
@@ -130,6 +141,40 @@ void initOwnerModule() {
   initDeeds();
   initTechnicians();
   initSupervisors();
+  _initMaintenanceNegotiations();
+}
+
+void _initMaintenanceNegotiations() {
+  if (!sl.isRegistered<MaintenanceNegotiationRemoteDataSource>()) {
+    sl.registerLazySingleton<MaintenanceNegotiationRemoteDataSource>(
+      () => MaintenanceNegotiationRemoteDataSourceImpl(dio: sl()),
+    );
+  }
+  if (!sl.isRegistered<MaintenanceNegotiationRepository>()) {
+    sl.registerLazySingleton<MaintenanceNegotiationRepository>(
+      () => MaintenanceNegotiationRepositoryImpl(remoteDataSource: sl()),
+    );
+  }
+  if (!sl.isRegistered<GetNegotiationFormDataUseCase>()) {
+    sl.registerLazySingleton(() => GetNegotiationFormDataUseCase(sl()));
+  }
+  if (!sl.isRegistered<GetNegotiationsListUseCase>()) {
+    sl.registerLazySingleton(() => GetNegotiationsListUseCase(sl()));
+  }
+  if (!sl.isRegistered<CreateNegotiationUseCase>()) {
+    sl.registerLazySingleton(() => CreateNegotiationUseCase(sl()));
+  }
+
+  // Cubits
+  if (!sl.isRegistered<NegotiationFormDataCubit>()) {
+    sl.registerFactory(() => NegotiationFormDataCubit(sl()));
+  }
+  if (!sl.isRegistered<NegotiationsListCubit>()) {
+    sl.registerFactory(() => NegotiationsListCubit(sl()));
+  }
+  if (!sl.isRegistered<CreateNegotiationCubit>()) {
+    sl.registerFactory(() => CreateNegotiationCubit(createNegotiationUseCase: sl()));
+  }
 }
 
 void _initUnits() {
@@ -361,8 +406,11 @@ void _initMaintenance() {
   if (!sl.isRegistered<OwnerMaintenanceDetailsCubit>()) {
     sl.registerFactory(() => OwnerMaintenanceDetailsCubit(sl()));
   }
+  if (!sl.isRegistered<GetOwnerMaintenanceFormDataUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerMaintenanceFormDataUseCase(sl()));
+  }
   if (!sl.isRegistered<OwnerCreateMaintenanceCubit>()) {
-    sl.registerFactory(() => OwnerCreateMaintenanceCubit(sl(), sl(), sl()));
+    sl.registerFactory(() => OwnerCreateMaintenanceCubit(sl(), sl()));
   }
   if (!sl.isRegistered<UpdateOwnerMaintenanceUseCase>()) {
     sl.registerLazySingleton(() => UpdateOwnerMaintenanceUseCase(sl()));

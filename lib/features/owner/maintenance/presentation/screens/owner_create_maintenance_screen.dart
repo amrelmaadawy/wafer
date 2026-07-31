@@ -15,7 +15,6 @@ import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
-import '../../domain/constants/maintenance_type_constants.dart';
 import '../cubit/create_maintenance/owner_create_maintenance_cubit.dart';
 import '../cubit/create_maintenance/owner_create_maintenance_state.dart';
 
@@ -144,7 +143,7 @@ class _OwnerCreateMaintenanceViewState
   }
 
   Widget _buildPropertiesDropdown(OwnerCreateMaintenanceState state) {
-    if (state.isPropertiesLoading) {
+    if (state.isFormDataLoading) {
       return const AppShimmer(
         child: SizedBox(
           height: 55,
@@ -169,7 +168,7 @@ class _OwnerCreateMaintenanceViewState
           value: state.selectedPropertyId,
           itemLabelBuilder: (id) {
             final prop = state.properties.where((p) => p.id == id).firstOrNull;
-            return prop?.name ?? '';
+            return prop?.displayName ?? '';
           },
           errorText: formFieldState.errorText,
           onSelected: (id) {
@@ -182,7 +181,7 @@ class _OwnerCreateMaintenanceViewState
   }
 
   Widget _buildUnitsDropdown(OwnerCreateMaintenanceState state) {
-    if (state.isUnitsLoading) {
+    if (state.isFormDataLoading) {
       return const AppShimmer(
         child: SizedBox(
           height: 55,
@@ -196,7 +195,7 @@ class _OwnerCreateMaintenanceViewState
         ),
       );
     }
-    final List<int?> items = [null, ...state.units.map((u) => u.id)];
+    final List<int?> items = [null, ...state.filteredUnits.map((u) => u.id)];
 
     return FormField<int?>(
       initialValue: state.selectedUnitId,
@@ -207,14 +206,14 @@ class _OwnerCreateMaintenanceViewState
           value: state.selectedUnitId,
           itemLabelBuilder: (id) {
             if (id == null) return LocaleKeys.maintenanceCreateNoUnit.tr();
-            final unit = state.units.where((u) => u.id == id).firstOrNull;
+            final unit = state.filteredUnits.where((u) => u.id == id).firstOrNull;
             if (unit == null) return '';
-            return '${unit.unitNumber} - ${unit.typeLabel ?? ""}';
+            return unit.displayName;
           },
           errorText: formFieldState.errorText,
           onSelected: (id) {
             formFieldState.didChange(id);
-            context.read<OwnerCreateMaintenanceCubit>().selectUnit(id);
+            context.read<OwnerCreateMaintenanceCubit>().updateSelectedUnit(id ?? 0);
           },
         );
       },
@@ -330,10 +329,11 @@ class _OwnerCreateMaintenanceViewState
         Wrap(
           spacing: 8,
           runSpacing: 8,
-          children: MaintenanceTypeConstants.availableTypes.map((type) {
-            final isSelected = state.maintenanceTypes.contains(type);
+          children: state.availableMaintenanceTypes.map((typeObj) {
+            final typeIdStr = typeObj.id.toString();
+            final isSelected = state.maintenanceTypes.contains(typeIdStr);
             return ChoiceChip(
-              label: Text(type),
+              label: Text(typeObj.name ?? typeIdStr),
               selected: isSelected,
               selectedColor: context.primaryColor.withValues(alpha: 0.2),
               labelStyle: TextStyle(
@@ -354,7 +354,7 @@ class _OwnerCreateMaintenanceViewState
               showCheckmark: false,
               onSelected: (_) => context
                   .read<OwnerCreateMaintenanceCubit>()
-                  .toggleMaintenanceType(type),
+                  .toggleMaintenanceType(typeIdStr),
             );
           }).toList(),
         ),
@@ -374,7 +374,7 @@ class _OwnerCreateMaintenanceViewState
               value: state.isPrivate,
               onChanged: (val) => context
                   .read<OwnerCreateMaintenanceCubit>()
-                  .updateIsPrivate(val),
+                  .togglePrivate(val),
               activeTrackColor: context.primaryColor,
             ),
           ],

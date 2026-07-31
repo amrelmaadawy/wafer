@@ -52,6 +52,8 @@ import '../../features/owner/technicians/presentation/views/technicians_list_vie
 import '../../features/owner/technicians/presentation/cubit/list/technicians_list_cubit.dart';
 import '../../features/owner/technicians/presentation/views/add_technician_view.dart';
 import '../../features/owner/supervisors/presentation/views/supervisors_list_view.dart';
+import '../../features/owner/maintenance_negotiations/presentation/views/negotiations_list_view.dart';
+import '../../features/owner/maintenance_negotiations/presentation/views/negotiation_settings_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
@@ -241,6 +243,14 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerActivityLogsReport,
         builder: (context, state) => const OwnerActivityLogsReportView(),
+      ),
+      GoRoute(
+        path: Routes.ownerNegotiationsList,
+        builder: (context, state) => const NegotiationsListView(),
+      ),
+      GoRoute(
+        path: Routes.ownerNegotiationSettings,
+        builder: (context, state) => const NegotiationSettingsView(),
       ),
       GoRoute(
         path: Routes.editProfile,
