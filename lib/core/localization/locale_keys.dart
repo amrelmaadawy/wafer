@@ -1752,6 +1752,18 @@ abstract class LocaleKeys {
   static const noTechniciansFound = 'noTechniciansFound';
   static const noTechniciansFoundDesc = 'noTechniciansFoundDesc';
   static const addTechnician = 'addTechnician';
+
+  // Supervisors
+  static const addSupervisor = 'addSupervisor';
+  static const supervisorSelectUser = 'supervisorSelectUser';
+  static const supervisorScopeType = 'supervisorScopeType';
+  static const supervisorScopeValue = 'supervisorScopeValue';
+  static const supervisorCondition = 'supervisorCondition';
+  static const supervisorIsActive = 'supervisorIsActive';
+  static const supervisorSortOrder = 'supervisorSortOrder';
+  static const saveSupervisor = 'saveSupervisor';
+  static const supervisorsList = 'supervisorsList';
+  static const noSupervisorsFound = 'noSupervisorsFound';
   static const activeAssignments = 'activeAssignments';
   static const totalAssignments = 'totalAssignments';
   static const active = 'active';

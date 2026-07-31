@@ -828,5 +828,14 @@
   "totalAssignments": "إجمالي المهام",
   "active": "نشط",
   "inactive": "غير نشط",
-  "retry": "إعادة المحاولة"
+  "retry": "إعادة المحاولة",
+  "addSupervisor": "إضافة مشرف",
+  "supervisorSelectUser": "اختر المستخدم",
+  "supervisorScopeType": "نطاق الصلاحية",
+  "supervisorScopeValue": "قيمة النطاق",
+  "supervisorCondition": "الشرط",
+  "supervisorIsActive": "نشط",
+  "supervisorSortOrder": "الترتيب",
+  "saveSupervisor": "حفظ المشرف",
+  "supervisorsList": "المشرفين"
 }

@@ -51,6 +51,7 @@ import '../../features/owner/deeds/presentation/cubit/details/deed_details_cubit
 import '../../features/owner/technicians/presentation/views/technicians_list_view.dart';
 import '../../features/owner/technicians/presentation/cubit/list/technicians_list_cubit.dart';
 import '../../features/owner/technicians/presentation/views/add_technician_view.dart';
+import '../../features/owner/supervisors/presentation/views/supervisors_list_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
@@ -158,14 +159,20 @@ class AppRouter {
           );
         },
       ),
-      GoRoute(
-        path: Routes.ownerTechnicianCreate,
-        builder: (context, state) {
-          return const AddTechnicianView();
-        },
-      ),
-      GoRoute(
-        path: Routes.ownerReportsCenter,
+        GoRoute(
+          path: Routes.ownerTechnicianCreate,
+          builder: (context, state) {
+            return const AddTechnicianView();
+          },
+        ),
+        GoRoute(
+          path: Routes.ownerSupervisorsList,
+          builder: (context, state) {
+            return const SupervisorsListView();
+          },
+        ),
+        GoRoute(
+          path: Routes.ownerReportsCenter,
         builder: (context, state) {
           return const OwnerReportsCenterScreen();
         },

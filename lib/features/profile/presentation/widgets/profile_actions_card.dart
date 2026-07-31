@@ -91,6 +91,22 @@ class ProfileActionsCard extends StatelessWidget {
                   endIndent: 20,
                 ),
                 ProfileActionTile(
+                  icon: Icons.admin_panel_settings_rounded,
+                  label: LocaleKeys.supervisorsList.tr(),
+                  subtitle: LocaleKeys.supervisorsList.tr(),
+                  iconBg: context.primaryColor.withValues(alpha: 0.1),
+                  iconColor: context.primaryColor,
+                  onTap: () {
+                    context.push(Routes.ownerSupervisorsList);
+                  },
+                ),
+                const Divider(
+                  height: 1,
+                  color: AppColors.borderLight,
+                  indent: 20,
+                  endIndent: 20,
+                ),
+                ProfileActionTile(
                   icon: Icons.bar_chart_rounded,
                   label: LocaleKeys.reports_title.tr(),
                   subtitle: LocaleKeys.reports_operational

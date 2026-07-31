@@ -118,6 +118,7 @@ import '../maintenance/domain/usecases/start_owner_maintenance_use_case.dart';
 import '../maintenance/presentation/cubit/start_maintenance/owner_start_maintenance_cubit.dart';
 import '../deeds/di/deeds_di.dart';
 import '../technicians/di/technicians_di.dart';
+import '../supervisors/di/supervisors_di.dart';
 
 void initOwnerModule() {
   _initDashboard();
@@ -128,6 +129,7 @@ void initOwnerModule() {
   _initReports();
   initDeeds();
   initTechnicians();
+  initSupervisors();
 }
 
 void _initUnits() {

@@ -831,5 +831,14 @@
   "totalAssignments": "Total Tasks",
   "active": "Active",
   "inactive": "Inactive",
-  "retry": "Retry"
+  "retry": "Retry",
+  "addSupervisor": "Add Supervisor",
+  "supervisorSelectUser": "Select User",
+  "supervisorScopeType": "Scope Type",
+  "supervisorScopeValue": "Scope Value",
+  "supervisorCondition": "Condition",
+  "supervisorIsActive": "Active",
+  "supervisorSortOrder": "Sort Order",
+  "saveSupervisor": "Save Supervisor",
+  "supervisorsList": "Supervisors"
 }
