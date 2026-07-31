@@ -5,6 +5,7 @@
     "login_title": "Sign In",
     "login_subtitle": "Enter your credentials to access your account",
     "username_label": "Username or Email",
+
     "username_validation": "Please enter your username",
     "password_label": "Password",
     "password_validation": "Please enter your password",
@@ -814,5 +815,21 @@
   "maintenanceVerifyCloseSubmit": "Verify & Close",
   "maintenanceVerifyCloseSuccess": "Maintenance request closed successfully",
   "maintenanceQaCode": "QA Code",
-  "maintenanceQaCodeHint": "Enter the QA Code provided"
+  "maintenanceQaCodeHint": "Enter the QA Code provided",
+  "add_technician": "Add Technician",
+  "technician_name": "Technician Name",
+  "technician_phone": "Phone Number",
+  "technician_specialty": "Specialty",
+  "technician_company": "Company",
+  "is_active": "Active",
+  "techNameValidation": "Please enter technician name",
+  "techniciansList": "Technicians List",
+  "noTechniciansFound": "No technicians found",
+  "noTechniciansFoundDesc": "You haven't added any technicians yet, you can add a new technician from the button below.",
+  "addTechnician": "Add Technician",
+  "activeAssignments": "Active Tasks",
+  "totalAssignments": "Total Tasks",
+  "active": "Active",
+  "inactive": "Inactive",
+  "retry": "Retry"
 }

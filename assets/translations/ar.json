@@ -6,6 +6,7 @@
     "login_subtitle": "أدخل بياناتك للوصول إلى حسابك",
     "username_label": "البريد الإلكتروني أو اسم المستخدم",
     "username_validation": "يرجى إدخال اسم المستخدم",
+
     "password_label": "كلمة المرور",
     "password_validation": "يرجى إدخال كلمة المرور",
     "password_min_length": "كلمة المرور يجب أن تكون 6 أحرف على الأقل",
@@ -811,5 +812,21 @@
   "maintenanceVerifyCloseSubmit": "تأكيد الإغلاق",
   "maintenanceVerifyCloseSuccess": "تم إغلاق طلب الصيانة بنجاح",
   "maintenanceQaCode": "كود التأكيد (QA Code)",
-  "maintenanceQaCodeHint": "أدخل الكود الخاص بتأكيد التنفيذ"
+  "maintenanceQaCodeHint": "أدخل الكود الخاص بتأكيد التنفيذ",
+  "add_technician": "إضافة فني",
+  "technician_name": "اسم الفني",
+  "technician_phone": "رقم الهاتف",
+  "technician_specialty": "التخصص",
+  "technician_company": "الشركة",
+  "is_active": "نشط",
+  "techNameValidation": "يرجى إدخال اسم الفني",
+  "techniciansList": "قائمة الفنيين",
+  "noTechniciansFound": "لم يتم العثور على فنيين",
+  "noTechniciansFoundDesc": "لم تقم بإضافة أي فنيين بعد، يمكنك إضافة فني جديد من الزر أدناه.",
+  "addTechnician": "إضافة فني",
+  "activeAssignments": "مهام نشطة",
+  "totalAssignments": "إجمالي المهام",
+  "active": "نشط",
+  "inactive": "غير نشط",
+  "retry": "إعادة المحاولة"
 }

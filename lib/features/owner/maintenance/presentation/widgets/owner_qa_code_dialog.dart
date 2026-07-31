@@ -31,7 +31,7 @@ class OwnerQaCodeDialog extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: context.primaryColor.withOpacity(0.1),
+                color: context.primaryColor.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: Icon(
@@ -65,7 +65,7 @@ class OwnerQaCodeDialog extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.backgroundLight,
                 borderRadius: AppRadius.circularMd,
-                border: Border.all(color: context.primaryColor.withOpacity(0.3)),
+                border: Border.all(color: context.primaryColor.withValues(alpha: 0.3)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,

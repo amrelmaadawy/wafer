@@ -14,17 +14,37 @@ import '../cubit/assign_maintenance/owner_assign_maintenance_state.dart';
 import '../cubit/details/owner_maintenance_details_cubit.dart';
 import '../../../../../../core/utils/widgets/app_toast.dart';
 
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/routing/routes.dart';
+import '../../../technicians/presentation/cubit/list/technicians_list_cubit.dart';
+import '../../../technicians/presentation/cubit/list/technicians_list_state.dart';
+
+
 class OwnerAssignMaintenanceBottomSheet extends StatefulWidget {
   final MaintenanceItemEntity item;
 
   const OwnerAssignMaintenanceBottomSheet({super.key, required this.item});
 
   static Future<bool?> show(BuildContext context, MaintenanceItemEntity item) {
+    final detailsCubit = context.read<OwnerMaintenanceDetailsCubit>();
     return showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => OwnerAssignMaintenanceBottomSheet(item: item),
+      builder: (_) => MultiBlocProvider(
+        providers: [
+          BlocProvider.value(
+            value: detailsCubit,
+          ),
+          BlocProvider(
+            create: (_) => di.sl<TechniciansListCubit>()..loadTechnicians(),
+          ),
+          BlocProvider(
+            create: (_) => di.sl<OwnerAssignMaintenanceCubit>(),
+          ),
+        ],
+        child: OwnerAssignMaintenanceBottomSheet(item: item),
+      ),
     );
   }
 
@@ -40,15 +60,9 @@ class _OwnerAssignMaintenanceBottomSheetState
   final _dueDateController = TextEditingController();
 
   int? _selectedTechnicianId;
+  bool _isSubmitted = false;
 
   final List<TextEditingController> _taskControllers = [];
-
-  // Dummy technicians for now
-  final List<Map<String, dynamic>> _dummyTechnicians = [
-    {'id': 1, 'name': 'محمد أحمد (مكيفات)'},
-    {'id': 2, 'name': 'سعيد علي (كهرباء)'},
-    {'id': 3, 'name': 'فني عام'},
-  ];
 
   @override
   void initState() {
@@ -106,7 +120,11 @@ class _OwnerAssignMaintenanceBottomSheetState
   }
 
   void _submit(BuildContext context) {
-    if (_formKey.currentState!.validate()) {
+    setState(() {
+      _isSubmitted = true;
+    });
+    
+    if (_formKey.currentState!.validate() && _selectedTechnicianId != null) {
       final tasks = _taskControllers
           .map((c) => c.text.trim())
           .where((t) => t.isNotEmpty)
@@ -114,7 +132,7 @@ class _OwnerAssignMaintenanceBottomSheetState
 
       context.read<OwnerAssignMaintenanceCubit>().assignMaintenanceRequest(
         id: widget.item.id ?? 0,
-        technicianId: _selectedTechnicianId ?? 1,
+        technicianId: _selectedTechnicianId!,
         dueDate: _dueDateController.text,
         taskDetails: _taskDetailsController.text,
         tasks: tasks,
@@ -126,80 +144,131 @@ class _OwnerAssignMaintenanceBottomSheetState
   Widget build(BuildContext context) {
     final bottomPadding = MediaQuery.of(context).viewInsets.bottom;
 
-    return BlocProvider(
-      create: (_) => di.sl<OwnerAssignMaintenanceCubit>(),
-      child: BlocConsumer<OwnerAssignMaintenanceCubit, OwnerAssignMaintenanceState>(
-        listener: (context, state) {
-          if (state is OwnerAssignMaintenanceSuccess) {
-            AppToast.showSuccess(
-              context,
-              LocaleKeys.maintenanceAssignSuccess.tr(),
-            );
-            context.read<OwnerMaintenanceDetailsCubit>().getMaintenanceDetails(
-              widget.item.id ?? 0,
-            );
-            Navigator.pop(context);
-          } else if (state is OwnerAssignMaintenanceError) {
-            AppToast.showError(context, state.message);
-          }
-        },
-        builder: (context, state) {
-          return Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-            ),
-            padding: EdgeInsets.only(
-              left: 24,
-              right: 24,
-              top: 24,
-              bottom: bottomPadding + 24,
-            ),
-            child: Form(
-              key: _formKey,
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      LocaleKeys.maintenanceAssignTechnician.tr(),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimaryLight,
-                      ),
-                      textAlign: TextAlign.center,
+    return BlocConsumer<OwnerAssignMaintenanceCubit, OwnerAssignMaintenanceState>(
+      listener: (context, state) {
+        if (state is OwnerAssignMaintenanceSuccess) {
+          AppToast.showSuccess(
+            context,
+            LocaleKeys.maintenanceAssignSuccess.tr(),
+          );
+          context.read<OwnerMaintenanceDetailsCubit>().getMaintenanceDetails(
+            widget.item.id ?? 0,
+          );
+          Navigator.pop(context);
+        } else if (state is OwnerAssignMaintenanceError) {
+          AppToast.showError(context, state.message);
+        }
+      },
+      builder: (context, state) {
+        return Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+          ),
+          padding: EdgeInsets.only(
+            left: 24,
+            right: 24,
+            top: 24,
+            bottom: bottomPadding + 24,
+          ),
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    LocaleKeys.maintenanceAssignTechnician.tr(),
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.textPrimaryLight,
                     ),
-                    const SizedBox(height: 24),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          LocaleKeys.maintenanceTechnician.tr(),
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.textPrimaryLight,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 24),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            LocaleKeys.maintenanceTechnician.tr(),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textPrimaryLight,
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 8),
-                        CustomDropdownMenu<int>(
-                          hint: LocaleKeys.maintenanceSelectTechnician.tr(),
-                          items: _dummyTechnicians.map((t) => t['id'] as int).toList(),
-                          value: _selectedTechnicianId,
-                          itemLabelBuilder: (id) => _dummyTechnicians.firstWhere((t) => t['id'] == id)['name'] as String,
-                          onSelected: (value) {
-                            setState(() {
-                              _selectedTechnicianId = value;
-                            });
-                          },
-                          errorText: _formKey.currentState?.validate() == false && _selectedTechnicianId == null ? LocaleKeys.maintenanceRequiredField.tr() : null,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
+                          TextButton.icon(
+                            onPressed: () {
+                              context.push(Routes.ownerTechnicianCreate).then((_) {
+                                if (context.mounted) {
+                                  context.read<TechniciansListCubit>().loadTechnicians(forceRefresh: true);
+                                }
+                              });
+                            },
+                            icon: const Icon(Icons.add_circle_outline, size: 18),
+                            label: Text(LocaleKeys.addTechnician.tr()),
+                            style: TextButton.styleFrom(
+                              foregroundColor: context.primaryColor,
+                              padding: EdgeInsets.zero,
+                              minimumSize: const Size(0, 0),
+                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      BlocBuilder<TechniciansListCubit, TechniciansListState>(
+                        builder: (context, techState) {
+                          if (techState.status == TechniciansListStatus.loading || techState.status == TechniciansListStatus.initial) {
+                            return const Center(child: CircularProgressIndicator());
+                          } else if (techState.status == TechniciansListStatus.failure) {
+                            return Center(
+                              child: Text(
+                                techState.errorMessage ?? LocaleKeys.commonError.tr(),
+                                style: const TextStyle(color: AppColors.error),
+                              ),
+                            );
+                          }
+                          
+                          final technicians = techState.technicians;
+                          if (technicians.isEmpty) {
+                            return CustomDropdownMenu<int>(
+                              hint: LocaleKeys.noTechniciansFound.tr(),
+                              items: const [],
+                              value: null,
+                              itemLabelBuilder: (_) => '',
+                              onSelected: (_) {},
+                            );
+                          }
+
+                          // Ensure selected technician is still in the list, otherwise reset it
+                          if (_selectedTechnicianId != null && !technicians.any((t) => t.id == _selectedTechnicianId)) {
+                            _selectedTechnicianId = null;
+                          }
+
+                          return CustomDropdownMenu<int>(
+                            hint: LocaleKeys.maintenanceSelectTechnician.tr(),
+                            items: technicians.map((t) => t.id).toList(),
+                            value: _selectedTechnicianId,
+                            itemLabelBuilder: (id) => technicians.firstWhere((t) => t.id == id).name,
+                            onSelected: (value) {
+                              setState(() {
+                                _selectedTechnicianId = value;
+                              });
+                            },
+                            errorText: _isSubmitted && _selectedTechnicianId == null ? LocaleKeys.maintenanceRequiredField.tr() : null,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
                     GestureDetector(
                       onTap: () => _selectDueDate(context),
                       child: AbsorbPointer(
@@ -303,7 +372,6 @@ class _OwnerAssignMaintenanceBottomSheetState
             ),
           );
         },
-      ),
-    );
+      );
   }
 }

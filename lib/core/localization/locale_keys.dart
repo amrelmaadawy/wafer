@@ -1740,4 +1740,21 @@ abstract class LocaleKeys {
   static const maintenanceVerifyCloseSuccess = 'maintenanceVerifyCloseSuccess';
   static const maintenanceQaCode = 'maintenanceQaCode';
   static const maintenanceQaCodeHint = 'maintenanceQaCodeHint';
+  
+  static const technicianName = 'technician_name';
+  static const technicianPhone = 'technician_phone';
+  static const technicianSpecialty = 'technician_specialty';
+  static const technicianCompany = 'technician_company';
+  static const isActive = 'is_active';
+
+  static const techNameValidation = 'techNameValidation';
+  static const techniciansList = 'techniciansList';
+  static const noTechniciansFound = 'noTechniciansFound';
+  static const noTechniciansFoundDesc = 'noTechniciansFoundDesc';
+  static const addTechnician = 'addTechnician';
+  static const activeAssignments = 'activeAssignments';
+  static const totalAssignments = 'totalAssignments';
+  static const active = 'active';
+  static const inactive = 'inactive';
+  static const retry = 'retry';
 }

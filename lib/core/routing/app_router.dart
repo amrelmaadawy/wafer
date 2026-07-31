@@ -48,6 +48,9 @@ import '../../features/owner/deeds/presentation/screens/deeds_list_screen.dart';
 import '../../features/owner/deeds/presentation/screens/create_deed_screen.dart';
 import '../../features/owner/deeds/presentation/screens/deed_details_screen.dart';
 import '../../features/owner/deeds/presentation/cubit/details/deed_details_cubit.dart';
+import '../../features/owner/technicians/presentation/views/technicians_list_view.dart';
+import '../../features/owner/technicians/presentation/cubit/list/technicians_list_cubit.dart';
+import '../../features/owner/technicians/presentation/views/add_technician_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
@@ -144,6 +147,21 @@ class AppRouter {
         builder: (context, state) {
           final item = state.extra as MaintenanceItemEntity;
           return OwnerUpdateMaintenanceScreen(maintenanceItem: item);
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerTechniciansList,
+        builder: (context, state) {
+          return BlocProvider<TechniciansListCubit>(
+            create: (_) => sl<TechniciansListCubit>(),
+            child: const TechniciansListView(),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerTechnicianCreate,
+        builder: (context, state) {
+          return const AddTechnicianView();
         },
       ),
       GoRoute(
