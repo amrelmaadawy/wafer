@@ -6,6 +6,7 @@ import '../../../../../core/error/failures.dart';
 import '../../domain/entities/legal_case_form_data_entity.dart';
 import '../../domain/entities/legal_cases_list_response_entity.dart';
 import '../../domain/entities/legal_case_item_entity.dart';
+import '../../domain/usecases/create_legal_case_use_case.dart';
 import '../../domain/repositories/legal_cases_repository.dart';
 import '../data_sources/legal_cases_remote_data_source.dart';
 
@@ -24,7 +25,7 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.response?.data?['message'] ?? e.message ?? 'Unknown error occurred'));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure('حدث خطأ غير متوقع'));
     }
@@ -46,8 +47,7 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(
-          e.response?.data?['message'] ?? e.message ?? 'Unknown error occurred'));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure('حدث خطأ غير متوقع'));
     }
@@ -61,9 +61,25 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(
-          e.response?.data?['message'] ?? e.message ?? 'Unknown error occurred'));
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
+      return Left(ServerFailure('حدث خطأ غير متوقع'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, LegalCaseItemEntity>> createLegalCase(CreateLegalCaseParams params) async {
+    try {
+      final remoteData = await remoteDataSource.createLegalCase(params);
+      return Right(remoteData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e, s) {
+      print('=== PARSE ERROR DETAILS ===');
+      print(e);
+      print(s);
       return Left(ServerFailure('حدث خطأ غير متوقع'));
     }
   }

@@ -1796,4 +1796,82 @@ abstract class LocaleKeys {
   static const property_name = 'property_name';
   static const contract_number = 'contract_number';
   static const timeline = 'timeline';
+
+  static const enter_case_number = 'enter_case_number';
+
+  static const enter_court = 'enter_court';
+
+  static const enter_circuit = 'enter_circuit';
+
+  static const enter_plaintiff = 'enter_plaintiff';
+
+  static const enter_defendant = 'enter_defendant';
+
+  static const enter_lawyer = 'enter_lawyer';
+
+  static const enter_amount = 'enter_amount';
+
+  static const create_case = 'create_case';
+
+  static const select_branch_validation = 'select_branch_validation';
+
+  static const select_case_type_validation = 'select_case_type_validation';
+
+  static const select_status_validation = 'select_status_validation';
+
+  static const select_hearing_date_validation = 'select_hearing_date_validation';
+
+  static const required_field = 'required_field';
+
+  static const optional = 'optional';
+
+  static const legal_case_created_success = 'legal_case_created_success';
+
+  static const create_legal_case = 'create_legal_case';
+
+  static const general_info = 'general_info';
+
+  static const select_branch = 'select_branch';
+
+  static const select_case_type = 'select_case_type';
+
+  static const select_status = 'select_status';
+
+  static const related_links = 'related_links';
+
+  static const select_property_optional = 'select_property_optional';
+
+  static const select_unit_optional = 'select_unit_optional';
+
+  static const select_contract_optional = 'select_contract_optional';
+
+  static const select_invoice_optional = 'select_invoice_optional';
+
+  static const select_date = 'select_date';
+
+  static const unit = 'unit';
+
+  static const contract = 'contract';
+
+  static const invoice = 'invoice';
+
+  static const court_and_parties = 'court_and_parties';
+
+  static const lawyer_phone = 'lawyer_phone';
+
+  static const lawyer_office = 'lawyer_office';
+
+  static const financials_and_dates = 'financials_and_dates';
+
+  static const hearing_date = 'hearing_date';
+
+  static const notes = 'notes';
+
+  static const case_number = 'case_number';
+
+  static const branch = 'branch';
+  static const next_step = 'next_step';
+  static const previous_step = 'previous_step';
+  static const cancel = 'cancel';
 }
+

@@ -5,6 +5,7 @@ import '../../../../../core/network/api_constants.dart';
 import '../models/legal_case_form_data_model.dart';
 import '../models/legal_cases_list_response_model.dart';
 import '../models/legal_case_item_model.dart';
+import '../../domain/usecases/create_legal_case_use_case.dart';
 
 abstract class LegalCasesRemoteDataSource {
   Future<LegalCaseFormDataModel> getLegalCaseFormData();
@@ -14,6 +15,7 @@ abstract class LegalCasesRemoteDataSource {
     String? status,
   });
   Future<LegalCaseItemModel> getLegalCaseDetails(int id);
+  Future<LegalCaseItemModel> createLegalCase(CreateLegalCaseParams params);
 }
 
 class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
@@ -33,14 +35,8 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
       } else {
         throw const ServerException('Invalid response data');
       }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        throw ServerException(
-          e.response?.data['message'] ?? 'حدث خطأ في الخادم',
-        );
-      } else {
-        throw const ServerException('فشل الاتصال بالخادم');
-      }
+    } on DioException {
+      rethrow;
     }
   }
 
@@ -70,14 +66,8 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
       } else {
         throw const ServerException('Invalid response data');
       }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        throw ServerException(
-          e.response?.data['message'] ?? 'حدث خطأ في الخادم',
-        );
-      } else {
-        throw const ServerException('فشل الاتصال بالخادم');
-      }
+    } on DioException {
+      rethrow;
     }
   }
 
@@ -93,14 +83,26 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
       } else {
         throw const ServerException('Invalid response data');
       }
-    } on DioException catch (e) {
-      if (e.response != null) {
-        throw ServerException(
-          e.response?.data['message'] ?? 'حدث خطأ في الخادم',
-        );
+    } on DioException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<LegalCaseItemModel> createLegalCase(CreateLegalCaseParams params) async {
+    try {
+      final response = await dio.post(
+        '${ApiConstants.baseUrl}owner/legal-cases',
+        data: FormData.fromMap(params.toJson()),
+      );
+
+      if (response.data != null && response.data['data'] != null && response.data['data']['legal_case'] != null) {
+        return LegalCaseItemModel.fromJson(response.data['data']['legal_case']);
       } else {
-        throw const ServerException('فشل الاتصال بالخادم');
+        throw const ServerException('Invalid response data');
       }
+    } on DioException {
+      rethrow;
     }
   }
 }

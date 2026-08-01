@@ -8,6 +8,7 @@ import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_spacing.dart';
+import '../../../../../../core/theme/color_utils.dart';
 import '../cubits/list/legal_cases_list_cubit.dart';
 import '../cubits/list/legal_cases_list_state.dart';
 import '../widgets/legal_case_card_widget.dart';
@@ -60,7 +61,7 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
           title: Text(LocaleKeys.legal_cases.tr(), style: AppTextStyles.h4),
           centerTitle: true,
           backgroundColor: Colors.white,
-          elevation: 0,
+          scrolledUnderElevation: 0,
         ),
         backgroundColor: AppColors.backgroundLight,
         body: BlocBuilder<LegalCasesListCubit, LegalCasesListState>(
@@ -164,7 +165,7 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                                 return LegalCaseCardWidget(
                                   legalCase: legalCase,
                                   onTap: () {
-                                    context.push('${Routes.ownerLegalCases}/${Routes.ownerLegalCaseDetails}/${legalCase.id}');
+                                    context.push('${Routes.ownerLegalCases}/${Routes.ownerLegalCaseDetails.replaceAll(':id', '${legalCase.id}')}');
                                   },
                                 );
                               },
@@ -177,6 +178,21 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
 
             return const SizedBox();
           },
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () async {
+            final result = await context.push<bool>(
+                '${Routes.ownerLegalCases}/${Routes.ownerLegalCaseCreate}');
+            if (result == true) {
+              _cubit.fetchLegalCases(isRefresh: true);
+            }
+          },
+          backgroundColor: context.primaryColor,
+          icon: const Icon(Icons.add, color: Colors.white),
+          label: Text(
+            LocaleKeys.create_legal_case.tr(),
+            style: AppTextStyles.labelLarge.copyWith(color: Colors.white),
+          ),
         ),
       ),
     );

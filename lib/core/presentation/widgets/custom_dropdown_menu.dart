@@ -51,6 +51,7 @@ class CustomDropdownMenu<T> extends StatelessWidget {
                 ),
                 child: PopupMenuButton<T>(
                   initialValue: value,
+                  enabled: items.isNotEmpty,
                   color: Colors.white,
                   elevation: 4,
                   constraints: BoxConstraints(

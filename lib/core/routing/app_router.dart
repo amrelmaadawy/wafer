@@ -55,6 +55,7 @@ import '../../features/owner/technicians/presentation/views/add_technician_view.
 import '../../features/owner/supervisors/presentation/views/supervisors_list_view.dart';
 import '../../features/owner/legal_cases/presentation/views/legal_cases_list_view.dart';
 import '../../features/owner/legal_cases/presentation/views/legal_case_details_view.dart';
+import '../../features/owner/legal_cases/presentation/views/legal_case_create_view.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiations_list_view.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiation_settings_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -196,9 +197,14 @@ class AppRouter {
             },
             routes: [
               GoRoute(
-                path: '${Routes.ownerLegalCaseDetails}/:id',
+                path: Routes.ownerLegalCaseCreate,
+                builder: (context, state) => const LegalCaseCreateView(),
+              ),
+              GoRoute(
+                path: Routes.ownerLegalCaseDetails,
                 builder: (context, state) {
-                  final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+                  final id = int.tryParse(state.pathParameters['id'] ?? '');
+                  if (id == null) return const LegalCasesListView();
                   return LegalCaseDetailsView(legalCaseId: id);
                 },
               ),
