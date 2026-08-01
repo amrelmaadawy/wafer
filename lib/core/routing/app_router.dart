@@ -54,6 +54,7 @@ import '../../features/owner/technicians/presentation/cubit/list/technicians_lis
 import '../../features/owner/technicians/presentation/views/add_technician_view.dart';
 import '../../features/owner/supervisors/presentation/views/supervisors_list_view.dart';
 import '../../features/owner/legal_cases/presentation/views/legal_cases_list_view.dart';
+import '../../features/owner/legal_cases/presentation/views/legal_case_details_view.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiations_list_view.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiation_settings_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -188,12 +189,21 @@ class AppRouter {
           return const OwnerReportsCenterScreen();
         },
       ),
-        GoRoute(
-          path: Routes.ownerLegalCases,
-          builder: (context, state) {
-            return const LegalCasesListView();
-          },
-        ),
+          GoRoute(
+            path: Routes.ownerLegalCases,
+            builder: (context, state) {
+              return const LegalCasesListView();
+            },
+            routes: [
+              GoRoute(
+                path: '${Routes.ownerLegalCaseDetails}/:id',
+                builder: (context, state) {
+                  final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+                  return LegalCaseDetailsView(legalCaseId: id);
+                },
+              ),
+            ],
+          ),
       GoRoute(
         path: Routes.ownerRevenueReport,
         builder: (context, state) => BlocProvider<OwnerRevenueCubit>(

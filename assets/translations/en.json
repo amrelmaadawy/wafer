@@ -856,5 +856,18 @@
   "supervisorsList": "Supervisors",
   "negotiation_create_success": "Negotiation settings saved successfully!",
   "legal_cases": "Legal Cases",
-  "no_legal_cases_found": "No legal cases found"
+  "no_legal_cases_found": "No legal cases found",
+  "case_details": "Case Details",
+  "case_type": "Case Type",
+  "court": "Court",
+  "circuit": "Circuit",
+  "amount": "Amount",
+  "parties_and_lawyer": "Parties & Lawyer",
+  "plaintiff": "Plaintiff",
+  "defendant": "Defendant",
+  "lawyer": "Lawyer",
+  "related_property": "Related Property",
+  "property_name": "Property Name",
+  "contract_number": "Contract Number",
+  "timeline": "Timeline"
 }

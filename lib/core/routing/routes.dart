@@ -23,6 +23,7 @@ class Routes {
   static const String ownerNegotiationSettings = '/owner-negotiations/settings';
   static const String ownerReportsCenter = '/owner-reports';
   static const String ownerLegalCases = '/owner-legal-cases';
+  static const String ownerLegalCaseDetails = 'details'; // Sub-route
   static const String editProfile = '/edit-profile';
   static const String changePassword = '/change-password';
 

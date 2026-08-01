@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/routing/routes.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -162,7 +164,7 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                                 return LegalCaseCardWidget(
                                   legalCase: legalCase,
                                   onTap: () {
-                                    // Navigate to details when ready
+                                    context.push('${Routes.ownerLegalCases}/${Routes.ownerLegalCaseDetails}/${legalCase.id}');
                                   },
                                 );
                               },

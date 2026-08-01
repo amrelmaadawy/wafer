@@ -1783,4 +1783,17 @@ abstract class LocaleKeys {
   static const negotiation_inactive_status = 'negotiation.inactive_status';
   static const legal_cases = 'legal_cases';
   static const no_legal_cases_found = 'no_legal_cases_found';
+  static const case_details = 'case_details';
+  static const case_type = 'case_type';
+  static const court = 'court';
+  static const circuit = 'circuit';
+  static const amount = 'amount';
+  static const parties_and_lawyer = 'parties_and_lawyer';
+  static const plaintiff = 'plaintiff';
+  static const defendant = 'defendant';
+  static const lawyer = 'lawyer';
+  static const related_property = 'related_property';
+  static const property_name = 'property_name';
+  static const contract_number = 'contract_number';
+  static const timeline = 'timeline';
 }

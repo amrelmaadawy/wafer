@@ -4,6 +4,7 @@ import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/network/api_constants.dart';
 import '../models/legal_case_form_data_model.dart';
 import '../models/legal_cases_list_response_model.dart';
+import '../models/legal_case_item_model.dart';
 
 abstract class LegalCasesRemoteDataSource {
   Future<LegalCaseFormDataModel> getLegalCaseFormData();
@@ -12,6 +13,7 @@ abstract class LegalCasesRemoteDataSource {
     int perPage = 15,
     String? status,
   });
+  Future<LegalCaseItemModel> getLegalCaseDetails(int id);
 }
 
 class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
@@ -65,6 +67,29 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
 
       if (response.data != null && response.data['data'] != null) {
         return LegalCasesListResponseModel.fromJson(response.data['data']);
+      } else {
+        throw const ServerException('Invalid response data');
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        throw ServerException(
+          e.response?.data['message'] ?? 'حدث خطأ في الخادم',
+        );
+      } else {
+        throw const ServerException('فشل الاتصال بالخادم');
+      }
+    }
+  }
+
+  @override
+  Future<LegalCaseItemModel> getLegalCaseDetails(int id) async {
+    try {
+      final response = await dio.get(
+        '${ApiConstants.baseUrl}owner/legal-cases/$id',
+      );
+
+      if (response.data != null && response.data['data'] != null) {
+        return LegalCaseItemModel.fromJson(response.data['data']);
       } else {
         throw const ServerException('Invalid response data');
       }

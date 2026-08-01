@@ -853,5 +853,18 @@
   "supervisorsList": "المشرفين",
   "negotiation_create_success": "تم حفظ إعدادات التفاوض بنجاح!",
   "legal_cases": "القضايا القانونية",
-  "no_legal_cases_found": "لا توجد قضايا قانونية"
+  "no_legal_cases_found": "لا توجد قضايا قانونية",
+  "case_details": "تفاصيل القضية",
+  "case_type": "نوع القضية",
+  "court": "المحكمة",
+  "circuit": "الدائرة",
+  "amount": "المبلغ",
+  "parties_and_lawyer": "الأطراف والمحامي",
+  "plaintiff": "المدعي",
+  "defendant": "المدعى عليه",
+  "lawyer": "المحامي",
+  "related_property": "العقار المرتبط",
+  "property_name": "اسم العقار",
+  "contract_number": "رقم العقد",
+  "timeline": "مسار القضية"
 }
