@@ -23,6 +23,7 @@ import '../../features/owner/maintenance/presentation/views/owner_maintenance_vi
 import '../../features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
 import '../../features/owner/maintenance/presentation/screens/owner_create_maintenance_screen.dart';
 import '../../features/owner/maintenance/presentation/screens/owner_update_maintenance_screen.dart';
+import '../../features/owner/maintenance/presentation/screens/owner_maintenance_details_screen.dart';
 import '../../features/owner/maintenance/domain/entities/maintenance_item_entity.dart';
 import '../../features/owner/reports/presentation/screens/owner_reports_center_screen.dart';
 import '../../features/owner/reports/presentation/views/owner_revenue_report_view.dart';
@@ -137,6 +138,13 @@ class AppRouter {
             create: (_) => sl<OwnerMaintenanceCubit>(),
             child: OwnerMaintenanceView(initialStatusFilter: filter),
           );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerMaintenanceDetails,
+        builder: (context, state) {
+          final item = state.extra as MaintenanceItemEntity;
+          return OwnerMaintenanceDetailsScreen(item: item);
         },
       ),
       GoRoute(

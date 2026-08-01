@@ -131,7 +131,7 @@ class _OwnerAssignMaintenanceBottomSheetState
           .toList();
 
       context.read<OwnerAssignMaintenanceCubit>().assignMaintenanceRequest(
-        id: widget.item.id ?? 0,
+        id: widget.item.safeId,
         technicianId: _selectedTechnicianId!,
         dueDate: _dueDateController.text,
         taskDetails: _taskDetailsController.text,
@@ -152,7 +152,7 @@ class _OwnerAssignMaintenanceBottomSheetState
             LocaleKeys.maintenanceAssignSuccess.tr(),
           );
           context.read<OwnerMaintenanceDetailsCubit>().getMaintenanceDetails(
-            widget.item.id ?? 0,
+            widget.item.safeId,
           );
           Navigator.pop(context);
         } else if (state is OwnerAssignMaintenanceError) {

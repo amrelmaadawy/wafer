@@ -8,11 +8,14 @@ import '../../../../../../core/routing/routes.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
-import '../../../../../../core/utils/widgets/app_shimmer.dart';
+
 import '../../../../../../core/utils/widgets/custom_button.dart';
+import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../cubit/list/technicians_list_cubit.dart';
 import '../cubit/list/technicians_list_state.dart';
 import '../widgets/technician_card.dart';
+import '../widgets/technician_shimmer.dart';
 
 class TechniciansListView extends StatefulWidget {
   const TechniciansListView({super.key});
@@ -55,19 +58,8 @@ class _TechniciansListViewState extends State<TechniciansListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: AppBar(
-        title: Text(
-          LocaleKeys.techniciansList.tr(),
-          style: const TextStyle(
-            color: AppColors.textPrimaryLight,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: AppColors.backgroundLight,
-        elevation: 0,
-        centerTitle: true,
-        iconTheme: const IconThemeData(color: AppColors.textPrimaryLight),
+      appBar: CustomAppBar(
+        title: LocaleKeys.techniciansList.tr(),
         actions: [
           IconButton(
             icon: Icon(
@@ -87,12 +79,15 @@ class _TechniciansListViewState extends State<TechniciansListView> {
           if (state.status == TechniciansListStatus.initial ||
               (state.status == TechniciansListStatus.loading &&
                   state.technicians.isEmpty)) {
-            return _buildShimmerLoading();
+            return const TechnicianShimmer();
           }
 
           if (state.status == TechniciansListStatus.failure &&
               state.technicians.isEmpty) {
-            return _buildErrorState(state.errorMessage ?? LocaleKeys.commonError.tr(), context);
+            return CustomErrorWidget(
+              message: state.errorMessage ?? LocaleKeys.commonError.tr(),
+              onRetry: _onRefresh,
+            );
           }
 
           if (state.technicians.isEmpty) {
@@ -125,53 +120,8 @@ class _TechniciansListViewState extends State<TechniciansListView> {
     );
   }
 
-  Widget _buildShimmerLoading() {
-    return ListView.builder(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      itemCount: 5,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.md),
-          child: AppShimmer.box(
-            height: 140,
-            width: double.infinity,
-          ),
-        );
-      },
-    );
-  }
 
-  Widget _buildErrorState(String message, BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.error_outline,
-              color: AppColors.error,
-              size: 64,
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(
-              message,
-              style: const TextStyle(
-                fontSize: 16,
-                color: AppColors.textPrimaryLight,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            CustomButton(
-              text: LocaleKeys.retry.tr(),
-              onPressed: _onRefresh,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+
 
   Widget _buildEmptyState(BuildContext context) {
     return Center(

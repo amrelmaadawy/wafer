@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/maintenance_item_entity.dart';
 import '../cubit/details/owner_maintenance_details_cubit.dart';
 import 'owner_complete_task_bottom_sheet.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
 
 class MaintenanceTasksSection extends StatelessWidget {
   final MaintenanceItemEntity item;
@@ -61,6 +62,14 @@ class MaintenanceTasksSection extends StatelessWidget {
       onTap: isCompleted
           ? null
           : () async {
+              if (item.status != 'in_progress') {
+                AppToast.showInfo(
+                  context,
+                  'يجب بدء التنفيذ أولاً لإكمال المهام', // Localize later
+                );
+                return;
+              }
+              
               final result = await OwnerCompleteTaskBottomSheet.show(
                 context,
                 item,
@@ -69,7 +78,7 @@ class MaintenanceTasksSection extends StatelessWidget {
               if (result == true && context.mounted) {
                 context
                     .read<OwnerMaintenanceDetailsCubit>()
-                    .getMaintenanceDetails(item.id ?? 0);
+                    .getMaintenanceDetails(item.safeId);
               }
             },
       borderRadius: AppRadius.circularLg,

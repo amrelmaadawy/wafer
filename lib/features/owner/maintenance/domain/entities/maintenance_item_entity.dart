@@ -5,6 +5,7 @@ import 'maintenance_sub_entities.dart';
 
 class MaintenanceItemEntity extends Equatable {
   final int? id;
+  int get safeId => id ?? 0;
   final String? requestNumber;
   final String? title;
   final String? description;

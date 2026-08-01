@@ -83,7 +83,7 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
           const SizedBox(height: 16),
           OwnerMaintenanceHubSection(
             pendingCount: state.data.pendingMaintenance,
-            recentItems: const [],
+            recentItems: state.recentMaintenanceItems,
           ),
           const SizedBox(height: 16),
           OwnerRecentReceiptsSection(receipts: state.data.recentReceipts),

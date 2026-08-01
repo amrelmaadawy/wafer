@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wafer/core/utils/widgets/custom_text_field.dart';
@@ -9,10 +10,11 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../domain/entities/maintenance_item_entity.dart';
-import '../../../../../core/presentation/widgets/custom_app_bar.dart';
-import '../../domain/constants/maintenance_type_constants.dart';
 import '../cubit/update_maintenance/owner_update_maintenance_cubit.dart';
 import '../cubit/update_maintenance/owner_update_maintenance_state.dart';
 
@@ -27,7 +29,7 @@ class OwnerUpdateMaintenanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<OwnerUpdateMaintenanceCubit>(),
+      create: (context) => sl<OwnerUpdateMaintenanceCubit>()..init(),
       child: _OwnerUpdateMaintenanceView(maintenanceItem: maintenanceItem),
     );
   }
@@ -127,14 +129,21 @@ class _OwnerUpdateMaintenanceViewState
             OwnerUpdateMaintenanceState
           >(
             listener: (context, state) {
-              if (state is OwnerUpdateMaintenanceSuccess) {
-                AppToast.showSuccess(context, state.message);
-                Navigator.of(context).pop(true);
-              } else if (state is OwnerUpdateMaintenanceError) {
-                AppToast.showError(context, state.message);
+              if (state.status == UpdateMaintenanceStatus.success) {
+                AppToast.showSuccess(context, state.successMessage ?? '');
+                context.pop(true);
+              } else if (state.status == UpdateMaintenanceStatus.failure) {
+                AppToast.showError(context, state.errorMessage ?? '');
               }
             },
             builder: (context, state) {
+              if (state.formDataError != null) {
+                return CustomErrorWidget(
+                  message: state.formDataError!,
+                  onRetry: () => context.read<OwnerUpdateMaintenanceCubit>().init(),
+                );
+              }
+
               return ScrollConfiguration(
                 behavior: ScrollConfiguration.of(
                   context,
@@ -185,11 +194,11 @@ class _OwnerUpdateMaintenanceViewState
                           LocaleKeys.maintenanceCreateTypes.tr(),
                         ),
                         const SizedBox(height: AppSpacing.sm),
-                        _buildMaintenanceTypesChips(context),
+                        _buildMaintenanceTypesChips(context, state),
                         const SizedBox(height: AppSpacing.xl),
                         CustomButton(
                           text: LocaleKeys.maintenanceUpdateRequest.tr(),
-                          isLoading: state is OwnerUpdateMaintenanceLoading,
+                          isLoading: state.status == UpdateMaintenanceStatus.loading,
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               if (_selectedMaintenanceTypes.isEmpty) {
@@ -204,7 +213,7 @@ class _OwnerUpdateMaintenanceViewState
                               context
                                   .read<OwnerUpdateMaintenanceCubit>()
                                   .updateMaintenanceRequest(
-                                    id: widget.maintenanceItem.id!,
+                                    id: widget.maintenanceItem.safeId,
                                     description: _descriptionController.text,
                                     scheduledDate:
                                         _dateController.text.isNotEmpty
@@ -236,14 +245,43 @@ class _OwnerUpdateMaintenanceViewState
     );
   }
 
-  Widget _buildMaintenanceTypesChips(BuildContext context) {
+  Widget _buildMaintenanceTypesChips(BuildContext context, OwnerUpdateMaintenanceState state) {
+    if (state.isFormDataLoading) {
+      return const AppShimmer(
+        child: SizedBox(
+          height: 80,
+          width: double.infinity,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: AppRadius.circularMd,
+            ),
+          ),
+        ),
+      );
+    }
+    
+    if (state.availableMaintenanceTypes.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Text(
+          LocaleKeys.maintenanceNoTitle.tr(),
+          style: const TextStyle(
+            color: AppColors.textSecondaryLight,
+            fontSize: 14,
+          ),
+        ),
+      );
+    }
+
     return Wrap(
       spacing: AppSpacing.sm,
       runSpacing: AppSpacing.sm,
-      children: MaintenanceTypeConstants.availableTypes.map((type) {
-        final isSelected = _selectedMaintenanceTypes.contains(type);
+      children: state.availableMaintenanceTypes.map((typeObj) {
+        final typeStr = typeObj.id?.toString() ?? '';
+        final isSelected = _selectedMaintenanceTypes.contains(typeObj.name) || _selectedMaintenanceTypes.contains(typeStr);
         return ChoiceChip(
-          label: Text(type),
+          label: Text(typeObj.name ?? typeStr),
           selected: isSelected,
           selectedColor: context.primaryColor.withValues(alpha: 0.2),
           labelStyle: TextStyle(
@@ -259,7 +297,8 @@ class _OwnerUpdateMaintenanceViewState
               color: isSelected ? context.primaryColor : AppColors.borderLight,
             ),
           ),
-          onSelected: (_) => _toggleMaintenanceType(type),
+          showCheckmark: false,
+          onSelected: (_) => _toggleMaintenanceType(typeObj.name ?? typeStr),
         );
       }).toList(),
     );

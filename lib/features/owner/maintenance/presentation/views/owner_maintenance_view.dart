@@ -8,7 +8,7 @@ import '../../../../../core/routing/routes.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../cubit/owner_maintenance_cubit.dart';
 import '../cubit/owner_maintenance_state.dart';
-import '../screens/owner_maintenance_details_screen.dart';
+
 import '../widgets/maintenance_card.dart';
 import '../widgets/maintenance_empty_widget.dart';
 import '../widgets/maintenance_header.dart';
@@ -160,13 +160,10 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
             return MaintenanceCard(
               item: item,
               onTap: () async {
-                final result = await Navigator.of(context, rootNavigator: true)
-                    .push(
-                      MaterialPageRoute(
-                        builder: (_) =>
-                            OwnerMaintenanceDetailsScreen(item: item),
-                      ),
-                    );
+                final result = await context.push(
+                  Routes.ownerMaintenanceDetails,
+                  extra: item,
+                );
                 if (result == true && context.mounted) {
                   context.read<OwnerMaintenanceCubit>().getMaintenanceRequests(
                     forceRefresh: true,

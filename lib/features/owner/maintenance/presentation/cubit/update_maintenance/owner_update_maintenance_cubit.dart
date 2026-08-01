@@ -2,13 +2,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../domain/usecases/update_owner_maintenance_use_case.dart';
+import '../../../domain/usecases/get_owner_maintenance_form_data_use_case.dart';
 import 'owner_update_maintenance_state.dart';
 
 class OwnerUpdateMaintenanceCubit extends Cubit<OwnerUpdateMaintenanceState> {
   final UpdateOwnerMaintenanceUseCase _updateUseCase;
+  final GetOwnerMaintenanceFormDataUseCase _getFormDataUseCase;
 
-  OwnerUpdateMaintenanceCubit(this._updateUseCase)
-    : super(const OwnerUpdateMaintenanceInitial());
+  OwnerUpdateMaintenanceCubit(this._updateUseCase, this._getFormDataUseCase)
+    : super(const OwnerUpdateMaintenanceState());
+
+  Future<void> init() async {
+    emit(state.copyWith(isFormDataLoading: true));
+    final result = await _getFormDataUseCase();
+    result.fold(
+      (failure) {
+        emit(
+          state.copyWith(
+            isFormDataLoading: false,
+            formDataError: failure.message,
+          ),
+        );
+      },
+      (formData) {
+        emit(
+          state.copyWith(
+            isFormDataLoading: false,
+            availableMaintenanceTypes: formData.maintenanceTypes,
+          ),
+        );
+      },
+    );
+  }
 
   Future<void> updateMaintenanceRequest({
     required int id,
@@ -18,14 +43,15 @@ class OwnerUpdateMaintenanceCubit extends Cubit<OwnerUpdateMaintenanceState> {
   }) async {
     if (description.trim().isEmpty || maintenanceTypes.isEmpty) {
       emit(
-        OwnerUpdateMaintenanceError(
-          message: LocaleKeys.maintenanceCreateFillAllFields.tr(),
+        state.copyWith(
+          status: UpdateMaintenanceStatus.failure,
+          errorMessage: LocaleKeys.maintenanceCreateFillAllFields.tr(),
         ),
       );
       return;
     }
 
-    emit(const OwnerUpdateMaintenanceLoading());
+    emit(state.copyWith(status: UpdateMaintenanceStatus.loading));
 
     final params = UpdateOwnerMaintenanceParams(
       id: id,
@@ -38,12 +64,18 @@ class OwnerUpdateMaintenanceCubit extends Cubit<OwnerUpdateMaintenanceState> {
 
     result.fold(
       (failure) {
-        emit(OwnerUpdateMaintenanceError(message: failure.message));
+        emit(
+          state.copyWith(
+            status: UpdateMaintenanceStatus.failure,
+            errorMessage: failure.message,
+          ),
+        );
       },
       (success) {
         emit(
-          OwnerUpdateMaintenanceSuccess(
-            message: LocaleKeys.maintenanceUpdatedSuccessfully.tr(),
+          state.copyWith(
+            status: UpdateMaintenanceStatus.success,
+            successMessage: LocaleKeys.maintenanceUpdatedSuccessfully.tr(),
           ),
         );
       },

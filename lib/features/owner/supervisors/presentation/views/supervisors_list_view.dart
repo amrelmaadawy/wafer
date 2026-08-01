@@ -25,100 +25,109 @@ class SupervisorsListView extends StatefulWidget {
 
 class _SupervisorsListViewState extends State<SupervisorsListView> {
   final ScrollController _scrollController = ScrollController();
-  late final SupervisorsListCubit _cubit;
 
   @override
   void initState() {
     super.initState();
-    _cubit = sl<SupervisorsListCubit>()..fetchSupervisors();
-    _scrollController.addListener(_onScroll);
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
-    // Cubit will be closed by BlocProvider
     super.dispose();
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
-      _cubit.fetchSupervisors();
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _cubit,
-      child: Scaffold(
-        appBar: CustomAppBar(
-          title: LocaleKeys.supervisorsList.tr(),
-          showBackButton: true,
-        ),
-        body: BlocBuilder<SupervisorsListCubit, SupervisorsListState>(
-          builder: (context, state) {
-            if (state.status == SupervisorsListStatus.initial ||
-                state.status == SupervisorsListStatus.loading) {
-              return const _SupervisorsListSkeleton();
-            }
-
-            if (state.status == SupervisorsListStatus.failure) {
-              return CustomErrorWidget(
-                message: state.errorMessage ?? 'An error occurred',
-                onRetry: () => context.read<SupervisorsListCubit>().fetchSupervisors(isRefresh: true),
-              );
-            }
-
-            if (state.supervisors.isEmpty) {
-              return Center(
-                child: Text(
-                  LocaleKeys.noSupervisorsFound.tr(),
-                  style: AppTextStyles.h4.copyWith(color: AppColors.textSecondaryLight),
-                ),
-              );
-            }
-
-            return RefreshIndicator(
-              color: context.primaryColor,
-              onRefresh: () async {
-                context.read<SupervisorsListCubit>().fetchSupervisors(isRefresh: true);
+    return BlocProvider(
+      create: (_) => sl<SupervisorsListCubit>()..fetchSupervisors(),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
+            appBar: CustomAppBar(
+              title: LocaleKeys.supervisorsList.tr(),
+              showBackButton: true,
+            ),
+            body: NotificationListener<ScrollNotification>(
+              onNotification: (notification) {
+                if (notification.metrics.pixels >=
+                    notification.metrics.maxScrollExtent - 200) {
+                  context.read<SupervisorsListCubit>().fetchSupervisors();
+                }
+                return false;
               },
-              child: ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.all(AppSpacing.md),
-                itemCount: state.hasReachedMax
-                    ? state.supervisors.length
-                    : state.supervisors.length + 1,
-                itemBuilder: (context, index) {
-                  if (index >= state.supervisors.length) {
+              child: BlocBuilder<SupervisorsListCubit, SupervisorsListState>(
+                builder: (context, state) {
+                  if (state.status == SupervisorsListStatus.initial ||
+                      state.status == SupervisorsListStatus.loading) {
+                    return const _SupervisorsListSkeleton();
+                  }
+
+                  if (state.status == SupervisorsListStatus.failure) {
+                    return CustomErrorWidget(
+                      message: state.errorMessage ?? LocaleKeys.commonError.tr(),
+                      onRetry: () => context
+                          .read<SupervisorsListCubit>()
+                          .fetchSupervisors(isRefresh: true),
+                    );
+                  }
+
+                  if (state.supervisors.isEmpty) {
                     return Center(
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppSpacing.md),
-                        child: CircularProgressIndicator(color: context.primaryColor),
+                      child: Text(
+                        LocaleKeys.noSupervisorsFound.tr(),
+                        style: AppTextStyles.h4
+                            .copyWith(color: AppColors.textSecondaryLight),
                       ),
                     );
                   }
 
-                  final supervisor = state.supervisors[index];
-                  return SupervisorCard(supervisor: supervisor);
+                  return RefreshIndicator(
+                    color: context.primaryColor,
+                    onRefresh: () async {
+                      context
+                          .read<SupervisorsListCubit>()
+                          .fetchSupervisors(isRefresh: true);
+                    },
+                    child: ListView.builder(
+                      controller: _scrollController,
+                      padding: const EdgeInsets.all(AppSpacing.md),
+                      itemCount: state.hasReachedMax
+                          ? state.supervisors.length
+                          : state.supervisors.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index >= state.supervisors.length) {
+                          return Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(AppSpacing.md),
+                              child: CircularProgressIndicator(
+                                  color: context.primaryColor),
+                            ),
+                          );
+                        }
+
+                        final supervisor = state.supervisors[index];
+                        return SupervisorCard(supervisor: supervisor);
+                      },
+                    ),
+                  );
                 },
               ),
-            );
-          },
-        ),
-        floatingActionButton: Builder(
-          builder: (ctx) => FloatingActionButton(
-            backgroundColor: ctx.primaryColor,
-            onPressed: () async {
-              final result = await AddSupervisorBottomSheet.show(ctx);
-              if (result == true && ctx.mounted) {
-                ctx.read<SupervisorsListCubit>().fetchSupervisors(isRefresh: true);
-              }
-            },
-            child: const Icon(Icons.add, color: AppColors.surfaceLight),
-          ),
-        ),
+            ),
+            floatingActionButton: FloatingActionButton(
+              backgroundColor: context.primaryColor,
+              onPressed: () async {
+                final result = await AddSupervisorBottomSheet.show(context);
+                if (result == true && context.mounted) {
+                  context
+                      .read<SupervisorsListCubit>()
+                      .fetchSupervisors(isRefresh: true);
+                }
+              },
+              child: const Icon(Icons.add, color: AppColors.surfaceLight),
+            ),
+          );
+        },
       ),
     );
   }

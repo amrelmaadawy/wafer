@@ -345,7 +345,7 @@ void _initDashboard() {
     sl.registerLazySingleton(() => GetOwnerDashboardUseCase(sl()));
   }
   if (!sl.isRegistered<OwnerDashboardCubit>()) {
-    sl.registerFactory(() => OwnerDashboardCubit(sl()));
+    sl.registerFactory(() => OwnerDashboardCubit(sl(), sl()));
   }
 }
 
@@ -416,7 +416,7 @@ void _initMaintenance() {
     sl.registerLazySingleton(() => UpdateOwnerMaintenanceUseCase(sl()));
   }
   if (!sl.isRegistered<OwnerUpdateMaintenanceCubit>()) {
-    sl.registerFactory(() => OwnerUpdateMaintenanceCubit(sl()));
+    sl.registerFactory(() => OwnerUpdateMaintenanceCubit(sl(), sl()));
   }
   if (!sl.isRegistered<DeleteOwnerMaintenanceUseCase>()) {
     sl.registerLazySingleton(() => DeleteOwnerMaintenanceUseCase(sl()));
@@ -461,28 +461,39 @@ void _initMaintenance() {
     () => CompleteOwnerMaintenanceTaskUseCase(sl()),
   );
   }
-  sl.registerLazySingleton(
-    () => ExecuteOwnerMaintenanceUseCase(sl()),
-  );
-  sl.registerLazySingleton(
-    () => VerifyCloseOwnerMaintenanceUseCase(sl()),
-  );
+  if (!sl.isRegistered<ExecuteOwnerMaintenanceUseCase>()) {
+    sl.registerLazySingleton(
+      () => ExecuteOwnerMaintenanceUseCase(sl()),
+    );
+  }
+  
+  if (!sl.isRegistered<VerifyCloseOwnerMaintenanceUseCase>()) {
+    sl.registerLazySingleton(
+      () => VerifyCloseOwnerMaintenanceUseCase(sl()),
+    );
+  }
 
   if (!sl.isRegistered<OwnerCompleteTaskCubit>()) {
     sl.registerFactory(
       () => OwnerCompleteTaskCubit(sl()),
     );
   }
-  sl.registerFactory(
-    () => OwnerExecuteMaintenanceCubit(
-      executeMaintenanceUseCase: sl(),
-    ),
-  );
-  sl.registerFactory(
-    () => OwnerVerifyCloseMaintenanceCubit(
-      verifyCloseUseCase: sl(),
-    ),
-  );
+  
+  if (!sl.isRegistered<OwnerExecuteMaintenanceCubit>()) {
+    sl.registerFactory(
+      () => OwnerExecuteMaintenanceCubit(
+        executeMaintenanceUseCase: sl(),
+      ),
+    );
+  }
+  
+  if (!sl.isRegistered<OwnerVerifyCloseMaintenanceCubit>()) {
+    sl.registerFactory(
+      () => OwnerVerifyCloseMaintenanceCubit(
+        verifyCloseUseCase: sl(),
+      ),
+    );
+  }
 }
 
 

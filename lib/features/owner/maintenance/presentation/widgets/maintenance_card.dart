@@ -4,6 +4,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/app_fonts.dart';
 import '../../domain/entities/maintenance_item_entity.dart';
 import 'maintenance_status_badge.dart';
 
@@ -51,10 +52,8 @@ class MaintenanceCard extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   locationTitle,
-                  style: const TextStyle(
+                  style: AppTextStyles.h4.copyWith(
                     color: AppColors.textPrimaryLight,
-                    fontSize: 15.5,
-                    fontWeight: FontWeight.w700,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -104,10 +103,8 @@ class MaintenanceCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   title,
-                  style: TextStyle(
+                  style: AppTextStyles.labelLarge.copyWith(
                     color: context.primaryColor,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -143,9 +140,8 @@ class MaintenanceCard extends StatelessWidget {
         Expanded(
           child: Text(
             item.client!.name!,
-            style: const TextStyle(
+            style: AppTextStyles.bodyMedium.copyWith(
               color: AppColors.textPrimaryLight,
-              fontSize: 13,
               fontWeight: FontWeight.w600,
             ),
             maxLines: 1,
@@ -173,16 +169,14 @@ class MaintenanceCard extends StatelessWidget {
         const SizedBox(width: 6),
         Text(
           '${LocaleKeys.maintenanceCostBearerLabel.tr()}: ',
-          style: const TextStyle(
+          style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textSecondaryLight,
-            fontSize: 13,
           ),
         ),
         Text(
           bearerDisplay,
-          style: const TextStyle(
+          style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textPrimaryLight,
-            fontSize: 13,
             fontWeight: FontWeight.w600,
           ),
         ),
@@ -224,9 +218,8 @@ class MaintenanceCard extends StatelessWidget {
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: AppTextStyles.labelMedium.copyWith(
             color: AppColors.textSecondaryLight,
-            fontSize: 11.5,
           ),
         ),
         const SizedBox(height: 3),
@@ -236,18 +229,16 @@ class MaintenanceCard extends StatelessWidget {
           children: [
             Text(
               amount.toStringAsFixed(0),
-              style: TextStyle(
+              style: AppTextStyles.h4.copyWith(
                 color: valueColor,
-                fontSize: 17,
                 fontWeight: FontWeight.w800,
               ),
             ),
             const SizedBox(width: 4),
             Text(
               LocaleKeys.contractsCurrency.tr(),
-              style: TextStyle(
+              style: AppTextStyles.labelMedium.copyWith(
                 color: valueColor.withValues(alpha: 0.8),
-                fontSize: 12,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -275,9 +266,8 @@ class MaintenanceCard extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 requestedDate,
-                style: const TextStyle(
+                style: AppTextStyles.labelMedium.copyWith(
                   color: AppColors.textSecondaryLight,
-                  fontSize: 11.5,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -294,8 +284,7 @@ class MaintenanceCard extends StatelessWidget {
             ),
             child: Text(
               '${LocaleKeys.maintenanceAdvancePayment.tr()}: ${advancePayment.toStringAsFixed(0)} ${LocaleKeys.contractsCurrency.tr()}',
-              style: TextStyle(
-                fontSize: 11,
+              style: AppTextStyles.labelMedium.copyWith(
                 fontWeight: FontWeight.w700,
                 color: context.primaryColor,
               ),

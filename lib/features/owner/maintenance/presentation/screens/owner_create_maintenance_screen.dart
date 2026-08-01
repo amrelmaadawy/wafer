@@ -13,8 +13,9 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
-import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../../../../core/theme/color_utils.dart';
 import '../cubit/create_maintenance/owner_create_maintenance_cubit.dart';
 import '../cubit/create_maintenance/owner_create_maintenance_state.dart';
 
@@ -67,6 +68,13 @@ class _OwnerCreateMaintenanceViewState
               }
             },
             builder: (context, state) {
+              if (state.formDataError != null) {
+                return CustomErrorWidget(
+                  message: state.formDataError!,
+                  onRetry: () => context.read<OwnerCreateMaintenanceCubit>().init(),
+                );
+              }
+
               return ScrollConfiguration(
                 behavior: ScrollConfiguration.of(
                   context,

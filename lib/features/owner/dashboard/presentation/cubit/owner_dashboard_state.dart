@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import '../../../maintenance/domain/entities/maintenance_item_entity.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
 
 abstract class OwnerDashboardState extends Equatable {
@@ -18,11 +19,15 @@ class OwnerDashboardLoading extends OwnerDashboardState {
 
 class OwnerDashboardLoaded extends OwnerDashboardState {
   final OwnerDashboardEntity data;
+  final List<MaintenanceItemEntity> recentMaintenanceItems;
 
-  const OwnerDashboardLoaded(this.data);
+  const OwnerDashboardLoaded(
+    this.data, {
+    this.recentMaintenanceItems = const [],
+  });
 
   @override
-  List<Object?> get props => [data];
+  List<Object?> get props => [data, recentMaintenanceItems];
 }
 
 class OwnerDashboardError extends OwnerDashboardState {

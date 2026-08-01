@@ -109,6 +109,7 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
   }
 
   Widget _buildEmptyState(BuildContext context) {
+    final hasPending = pendingCount > 0;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20),
@@ -119,14 +120,18 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Icon(
-            Icons.handyman_rounded,
+          Icon(
+            hasPending ? Icons.build_circle_outlined : Icons.handyman_rounded,
             size: 32,
-            color: Color(0xFFCBD5E1),
+            color: hasPending ? context.primaryColor : const Color(0xFFCBD5E1),
           ),
           const SizedBox(height: 12),
           Text(
-            LocaleKeys.dashboardMaintenanceNoRequests.tr(),
+            hasPending
+                ? LocaleKeys.dashboardMaintenancePending.tr(
+                    args: [pendingCount.toString()],
+                  )
+                : LocaleKeys.dashboardMaintenanceNoRequests.tr(),
             style: const TextStyle(
               color: Color(0xFF475569),
               fontSize: 13,
@@ -135,7 +140,9 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            LocaleKeys.dashboardMaintenanceNoRequestsSub.tr(),
+            hasPending
+                ? LocaleKeys.maintenanceRequestsList.tr()
+                : LocaleKeys.dashboardMaintenanceNoRequestsSub.tr(),
             style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 11.5),
             textAlign: TextAlign.center,
           ),

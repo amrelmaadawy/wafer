@@ -6,6 +6,7 @@ import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/theme/app_fonts.dart';
 import '../../domain/entities/technician_entity.dart';
 
 class TechnicianCard extends StatelessWidget {
@@ -45,9 +46,7 @@ class TechnicianCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   technician.name,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  style: AppTextStyles.h4.copyWith(
                     color: AppColors.textPrimaryLight,
                   ),
                   maxLines: 1,
@@ -77,8 +76,7 @@ class TechnicianCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             technician.specialty!,
-                            style: const TextStyle(
-                              fontSize: 13,
+                            style: AppTextStyles.bodyMedium.copyWith(
                               color: AppColors.textSecondaryLight,
                             ),
                             maxLines: 1,
@@ -101,8 +99,7 @@ class TechnicianCard extends StatelessWidget {
                         Expanded(
                           child: Text(
                             technician.phone!,
-                            style: const TextStyle(
-                              fontSize: 13,
+                            style: AppTextStyles.bodyMedium.copyWith(
                               color: AppColors.textSecondaryLight,
                             ),
                             maxLines: 1,
@@ -159,8 +156,7 @@ class TechnicianCard extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: TextStyle(
-          fontSize: 12,
+        style: AppTextStyles.labelMedium.copyWith(
           fontWeight: FontWeight.w600,
           color: color,
         ),
@@ -183,8 +179,7 @@ class TechnicianCard extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               value,
-              style: TextStyle(
-                fontSize: 16,
+              style: AppTextStyles.h4.copyWith(
                 fontWeight: FontWeight.bold,
                 color: color,
               ),
@@ -194,8 +189,7 @@ class TechnicianCard extends StatelessWidget {
         const SizedBox(height: 2),
         Text(
           title,
-          style: const TextStyle(
-            fontSize: 12,
+          style: AppTextStyles.labelMedium.copyWith(
             color: AppColors.textSecondaryLight,
           ),
         ),

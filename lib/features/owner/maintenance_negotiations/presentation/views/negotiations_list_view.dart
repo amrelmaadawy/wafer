@@ -26,27 +26,23 @@ class NegotiationsListView extends StatefulWidget {
 
 class _NegotiationsListViewState extends State<NegotiationsListView> {
   late ScrollController _scrollController;
-  late NegotiationsListCubit _cubit;
 
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
     _scrollController.addListener(_onScroll);
-    _cubit = sl<NegotiationsListCubit>();
-    _cubit.fetchNegotiations();
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
-    _cubit.close();
     super.dispose();
   }
 
   void _onScroll() {
     if (_isBottom) {
-      _cubit.fetchNegotiations();
+      context.read<NegotiationsListCubit>().fetchNegotiations();
     }
   }
 
@@ -59,9 +55,11 @@ class _NegotiationsListViewState extends State<NegotiationsListView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _cubit,
-      child: Scaffold(
+    return BlocProvider(
+      create: (_) => sl<NegotiationsListCubit>()..fetchNegotiations(),
+      child: Builder(
+        builder: (context) {
+          return Scaffold(
         appBar: CustomAppBar(
           title: LocaleKeys.negotiation_list_title.tr(),
           showBackButton: true,
@@ -69,8 +67,8 @@ class _NegotiationsListViewState extends State<NegotiationsListView> {
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             final result = await context.push(Routes.ownerNegotiationSettings);
-            if (result == true && mounted) {
-              _cubit.fetchNegotiations(isRefresh: true);
+            if (result == true && mounted && context.mounted) {
+              context.read<NegotiationsListCubit>().fetchNegotiations(isRefresh: true);
             }
           },
           backgroundColor: context.primaryColor,
@@ -88,7 +86,7 @@ class _NegotiationsListViewState extends State<NegotiationsListView> {
                 state.negotiations.isEmpty) {
               return CustomErrorWidget(
                 message: state.errorMessage ?? '',
-                onRetry: () => _cubit.fetchNegotiations(isRefresh: true),
+                onRetry: () => context.read<NegotiationsListCubit>().fetchNegotiations(isRefresh: true),
               );
             }
 
@@ -101,7 +99,7 @@ class _NegotiationsListViewState extends State<NegotiationsListView> {
             }
 
             return RefreshIndicator(
-              onRefresh: () async => _cubit.fetchNegotiations(isRefresh: true),
+              onRefresh: () async => context.read<NegotiationsListCubit>().fetchNegotiations(isRefresh: true),
               child: ListView.separated(
                 controller: _scrollController,
                 padding: const EdgeInsets.all(AppSpacing.md),
@@ -127,6 +125,8 @@ class _NegotiationsListViewState extends State<NegotiationsListView> {
             );
           },
         ),
+          );
+        }
       ),
     );
   }

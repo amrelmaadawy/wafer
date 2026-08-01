@@ -98,7 +98,7 @@ class _AddTechnicianViewBodyState extends State<_AddTechnicianViewBody> {
           if (state is AddTechnicianSuccess) {
             AppToast.showSuccess(
               context,
-              LocaleKeys.propertyImagesSaveSuccess.tr(),
+              LocaleKeys.commonSuccess.tr(),
             );
             context.pop();
           } else if (state is AddTechnicianFailure) {
