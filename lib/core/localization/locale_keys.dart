@@ -1781,4 +1781,6 @@ abstract class LocaleKeys {
   static const negotiation_empty_list_sub = 'negotiation.empty_list_sub';
   static const negotiation_active_status = 'negotiation.active_status';
   static const negotiation_inactive_status = 'negotiation.inactive_status';
+  static const legal_cases = 'legal_cases';
+  static const no_legal_cases_found = 'no_legal_cases_found';
 }

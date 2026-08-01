@@ -851,5 +851,7 @@
   "supervisorSortOrder": "الترتيب",
   "saveSupervisor": "حفظ المشرف",
   "supervisorsList": "المشرفين",
-  "negotiation_create_success": "تم حفظ إعدادات التفاوض بنجاح!"
+  "negotiation_create_success": "تم حفظ إعدادات التفاوض بنجاح!",
+  "legal_cases": "القضايا القانونية",
+  "no_legal_cases_found": "لا توجد قضايا قانونية"
 }

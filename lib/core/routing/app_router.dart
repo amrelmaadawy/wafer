@@ -53,6 +53,7 @@ import '../../features/owner/technicians/presentation/views/technicians_list_vie
 import '../../features/owner/technicians/presentation/cubit/list/technicians_list_cubit.dart';
 import '../../features/owner/technicians/presentation/views/add_technician_view.dart';
 import '../../features/owner/supervisors/presentation/views/supervisors_list_view.dart';
+import '../../features/owner/legal_cases/presentation/views/legal_cases_list_view.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiations_list_view.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiation_settings_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -187,6 +188,12 @@ class AppRouter {
           return const OwnerReportsCenterScreen();
         },
       ),
+        GoRoute(
+          path: Routes.ownerLegalCases,
+          builder: (context, state) {
+            return const LegalCasesListView();
+          },
+        ),
       GoRoute(
         path: Routes.ownerRevenueReport,
         builder: (context, state) => BlocProvider<OwnerRevenueCubit>(

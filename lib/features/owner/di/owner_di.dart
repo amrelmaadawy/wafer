@@ -120,6 +120,7 @@ import '../maintenance/presentation/cubit/start_maintenance/owner_start_maintena
 import '../deeds/di/deeds_di.dart';
 import '../technicians/di/technicians_di.dart';
 import '../supervisors/di/supervisors_di.dart';
+import '../legal_cases/di/legal_cases_di.dart';
 
 import '../maintenance_negotiations/data/datasources/maintenance_negotiation_remote_data_source.dart';
 import '../maintenance_negotiations/data/repositories/maintenance_negotiation_repository_impl.dart';
@@ -142,6 +143,7 @@ void initOwnerModule() {
   initTechnicians();
   initSupervisors();
   _initMaintenanceNegotiations();
+  initLegalCases();
 }
 
 void _initMaintenanceNegotiations() {
