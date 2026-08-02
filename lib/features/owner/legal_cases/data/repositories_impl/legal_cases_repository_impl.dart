@@ -123,4 +123,18 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
       return Left(ServerFailure('حدث خطأ غير متوقع'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> deleteLegalCaseStage({required int legalCaseId, required int stageId}) async {
+    try {
+      await remoteDataSource.deleteLegalCaseStage(legalCaseId: legalCaseId, stageId: stageId);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure('حدث خطأ غير متوقع'));
+    }
+  }
 }

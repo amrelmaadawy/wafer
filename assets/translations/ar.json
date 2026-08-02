@@ -919,5 +919,10 @@
   "stage_added_success": "تم إضافة المرحلة بنجاح",
   "stage_name_required": "يرجى إدخال اسم المرحلة",
   "stage_date_required": "يرجى إدخال تاريخ المرحلة",
-  "no_stages_found": "لا يوجد مسار للقضية حتى الآن"
+  "no_stages_found": "لا يوجد مسار للقضية حتى الآن",
+  "delete_stage": "مسح المرحلة",
+  "delete_stage_confirmation_title": "تأكيد مسح المرحلة",
+  "delete_stage_confirmation_desc": "هل أنت متأكد من مسح هذه المرحلة؟ لا يمكن التراجع عن هذا الإجراء.",
+  "delete_stage_success": "تم مسح المرحلة بنجاح",
+  "cancel": "إلغاء"
 }

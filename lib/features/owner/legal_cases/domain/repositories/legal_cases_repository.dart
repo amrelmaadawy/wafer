@@ -22,4 +22,5 @@ abstract class LegalCasesRepository {
       UpdateLegalCaseParams params);
   Future<Either<Failure, void>> deleteLegalCase(int id);
   Future<Either<Failure, LegalCaseItemEntity>> addLegalCaseStage(AddStageParams params);
+  Future<Either<Failure, void>> deleteLegalCaseStage({required int legalCaseId, required int stageId});
 }

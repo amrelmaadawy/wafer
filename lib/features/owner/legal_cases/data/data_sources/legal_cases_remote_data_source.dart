@@ -21,6 +21,7 @@ abstract class LegalCasesRemoteDataSource {
   Future<LegalCaseItemModel> updateLegalCase(UpdateLegalCaseParams params);
   Future<void> deleteLegalCase(int id);
   Future<LegalCaseItemModel> addLegalCaseStage(AddStageParams params);
+  Future<void> deleteLegalCaseStage({required int legalCaseId, required int stageId});
 }
 
 class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
@@ -174,6 +175,26 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
     } on DioException catch (e) {
       if (e.response != null && e.response?.data != null) {
         throw ServerException(e.response!.data['message'] ?? 'Failed to add stage');
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> deleteLegalCaseStage({required int legalCaseId, required int stageId}) async {
+    try {
+      final response = await dio.delete(
+        '${ApiConstants.baseUrl}owner/legal-cases/$legalCaseId/stages/$stageId',
+      );
+
+      if (response.data != null && response.data['success'] == true) {
+        return;
+      } else {
+        throw ServerException(response.data?['message'] ?? 'Failed to delete stage');
+      }
+    } on DioException catch (e) {
+      if (e.response != null && e.response?.data != null) {
+        throw ServerException(e.response!.data['message'] ?? 'Failed to delete stage');
       }
       rethrow;
     }

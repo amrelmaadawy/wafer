@@ -8,10 +8,12 @@ import '../../domain/entities/legal_case_item_entity.dart';
 
 class CaseStagesTimelineWidget extends StatelessWidget {
   final List<LegalCaseStageEntity> stages;
+  final void Function(int stageId)? onDeleteStage;
 
   const CaseStagesTimelineWidget({
     super.key,
     required this.stages,
+    this.onDeleteStage,
   });
 
   @override
@@ -88,15 +90,40 @@ class CaseStagesTimelineWidget extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              if (stage.stageDate != null)
-                                Text(
-                                  stage.stageDate!,
-                                  style: AppTextStyles.bodySmall.copyWith(
-                                    color: AppColors.textSecondaryLight,
+                              if (onDeleteStage != null)
+                                Container(
+                                  margin: const EdgeInsetsDirectional.only(start: AppSpacing.sm),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.error.withValues(alpha: 0.1),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: InkWell(
+                                      borderRadius: BorderRadius.circular(20),
+                                      onTap: () => onDeleteStage!(stage.id!),
+                                      child: const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Icon(
+                                          Icons.delete_outline,
+                                          color: AppColors.error,
+                                          size: 18,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
                             ],
                           ),
+                          if (stage.stageDate != null) ...[
+                            const SizedBox(height: AppSpacing.xs),
+                            Text(
+                              stage.stageDate!,
+                              style: AppTextStyles.bodySmall.copyWith(
+                                color: AppColors.textSecondaryLight,
+                              ),
+                            ),
+                          ],
                           if (stage.notes != null && stage.notes!.isNotEmpty) ...[
                             const SizedBox(height: AppSpacing.sm),
                             Text(

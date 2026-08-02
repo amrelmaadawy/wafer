@@ -1886,5 +1886,9 @@ abstract class LocaleKeys {
   static const stage_name_required = 'stage_name_required';
   static const stage_date_required = 'stage_date_required';
   static const no_stages_found = 'no_stages_found';
+  static const delete_stage = 'delete_stage';
+  static const delete_stage_confirmation_title = 'delete_stage_confirmation_title';
+  static const delete_stage_confirmation_desc = 'delete_stage_confirmation_desc';
+  static const delete_stage_success = 'delete_stage_success';
 }
 

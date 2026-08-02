@@ -16,6 +16,8 @@ import '../domain/usecases/delete_legal_case_use_case.dart';
 import '../presentation/cubits/delete/legal_case_delete_cubit.dart';
 import '../domain/usecases/add_legal_case_stage_use_case.dart';
 import '../presentation/cubits/add_stage/legal_case_add_stage_cubit.dart';
+import '../domain/usecases/delete_legal_case_stage_use_case.dart';
+import '../presentation/cubits/delete_stage/legal_case_delete_stage_cubit.dart';
 
 // Import service_locator.dart to use the same 'sl' instance
 import '../../../../../core/di/service_locator.dart';
@@ -120,6 +122,18 @@ void initLegalCases() {
   if (!sl.isRegistered<LegalCaseAddStageCubit>()) {
     sl.registerFactory(
       () => LegalCaseAddStageCubit(addLegalCaseStageUseCase: sl()),
+    );
+  }
+
+  if (!sl.isRegistered<DeleteLegalCaseStageUseCase>()) {
+    sl.registerLazySingleton(
+      () => DeleteLegalCaseStageUseCase(sl()),
+    );
+  }
+
+  if (!sl.isRegistered<LegalCaseDeleteStageCubit>()) {
+    sl.registerFactory(
+      () => LegalCaseDeleteStageCubit(deleteLegalCaseStageUseCase: sl()),
     );
   }
 }
