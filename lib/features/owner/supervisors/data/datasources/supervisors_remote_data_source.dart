@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import '../../../../../core/network/api_constants.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../models/supervisor_form_data_response_model.dart';
 import '../models/supervisors_list_response_model.dart';
@@ -20,7 +19,7 @@ class SupervisorsRemoteDataSourceImpl implements SupervisorsRemoteDataSource {
   Future<SupervisorFormDataResponseModel> getFormData() async {
     try {
       final response = await client.get(
-        '${ApiConstants.baseUrl}owner/maintenance-supervisors/form-data',
+        'owner/maintenance-supervisors/form-data',
       );
 
       return SupervisorFormDataResponseModel.fromJson(response.data['data']);
@@ -35,7 +34,7 @@ class SupervisorsRemoteDataSourceImpl implements SupervisorsRemoteDataSource {
   Future<SupervisorsListResponseModel> getSupervisors(int page) async {
     try {
       final response = await client.get(
-        '${ApiConstants.baseUrl}owner/maintenance-supervisors',
+        'owner/maintenance-supervisors',
         queryParameters: {
           'page': page,
         },
@@ -53,7 +52,7 @@ class SupervisorsRemoteDataSourceImpl implements SupervisorsRemoteDataSource {
   Future<SupervisorModel> createSupervisor(Map<String, dynamic> body) async {
     try {
       final response = await client.post(
-        '${ApiConstants.baseUrl}owner/maintenance-supervisors',
+        'owner/maintenance-supervisors',
         data: body,
       );
 

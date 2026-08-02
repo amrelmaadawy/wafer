@@ -16,7 +16,7 @@ class NotificationsRemoteDataSourceImpl
   @override
   Future<NotificationsResponseModel> getNotifications({int page = 1}) async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.sharedNotifications}',
+      ApiConstants.sharedNotifications,
       queryParameters: {'page': page},
     );
     final data = response.data as Map<String, dynamic>;
@@ -26,7 +26,7 @@ class NotificationsRemoteDataSourceImpl
   @override
   Future<int> getUnreadNotificationsCount() async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.sharedUnreadCount}',
+      ApiConstants.sharedUnreadCount,
     );
     final dataMap = response.data as Map<String, dynamic>? ?? {};
     final innerData = dataMap['data'] as Map<String, dynamic>? ?? {};

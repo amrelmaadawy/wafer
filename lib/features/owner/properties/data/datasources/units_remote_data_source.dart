@@ -47,7 +47,7 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
     };
 
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerPropertyUnits(propertyId)}',
+      ApiConstants.ownerPropertyUnits(propertyId),
       queryParameters: queryParameters,
     );
 
@@ -77,7 +77,7 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
   @override
   Future<int> createDraftUnit(int propertyId) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerCreateDraftUnit(propertyId)}',
+      ApiConstants.ownerCreateDraftUnit(propertyId),
     );
 
     final data =
@@ -90,7 +90,7 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
   Future<int> createUnitDirect(int propertyId, UnitCreateModel unit) async {
     final formData = await unit.toFormData();
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerPropertyUnits(propertyId)}',
+      ApiConstants.ownerPropertyUnits(propertyId),
       data: formData,
     );
     return response.data['data']['unit_id'] as int;
@@ -103,7 +103,7 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
     Map<String, dynamic> data,
   ) async {
     await _dio.patch(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveUnit(propertyId, unitId)}',
+      ApiConstants.ownerAutoSaveUnit(propertyId, unitId),
       data: data,
     );
   }
@@ -114,7 +114,7 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
     int unitId,
   ) async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerShowUnit(propertyId, unitId)}',
+      ApiConstants.ownerShowUnit(propertyId, unitId),
     );
     return UnitFullDetailsModel.fromJson(
       response.data['data'] as Map<String, dynamic>,
@@ -124,7 +124,7 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
   @override
   Future<void> publishUnit(int propertyId, int unitId) async {
     await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerPublishUnit(propertyId, unitId)}',
+      ApiConstants.ownerPublishUnit(propertyId, unitId),
     );
   }
 }

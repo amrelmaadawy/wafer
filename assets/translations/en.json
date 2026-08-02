@@ -241,7 +241,11 @@
     "not_logged_in": "Not logged in",
     "auth_disconnected": "Authentication disconnected",
     "login_failed": "Login failed. Check your credentials.",
-    "network_error": "Cannot connect to server. Please check your network."
+    "network_error": "Cannot connect to server. Please check your network.",
+    "request_cancelled": "Request was cancelled",
+    "session_expired": "Your session has expired. Please log in again.",
+    "no_internet_title": "No Internet Connection",
+    "no_internet_subtitle": "Check your network settings and try again"
   },
   "owner": {
     "quick_alerts": "Quick Alerts",

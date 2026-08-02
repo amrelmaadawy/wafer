@@ -132,6 +132,13 @@ import '../maintenance_negotiations/presentation/cubit/form_data/negotiation_for
 import '../maintenance_negotiations/presentation/cubit/list/negotiations_list_cubit.dart';
 import '../maintenance_negotiations/presentation/cubit/create/create_negotiation_cubit.dart';
 
+// Tasks
+import '../tasks/data/datasources/owner_tasks_remote_data_source.dart';
+import '../tasks/data/repositories/owner_tasks_repository_impl.dart';
+import '../tasks/domain/repositories/owner_tasks_repository.dart';
+import '../tasks/domain/usecases/get_task_form_data_use_case.dart';
+import '../tasks/presentation/cubits/form_data/task_form_data_cubit.dart';
+
 void initOwnerModule() {
   _initDashboard();
   _initProperties();
@@ -144,6 +151,7 @@ void initOwnerModule() {
   initSupervisors();
   _initMaintenanceNegotiations();
   initLegalCases();
+  _initTasks();
 }
 
 void _initMaintenanceNegotiations() {
@@ -582,4 +590,25 @@ void _initReports() {
   sl.registerFactory<OwnerActivityLogsCubit>(
     () => OwnerActivityLogsCubit(sl()),
   );
+}
+
+void _initTasks() {
+  if (!sl.isRegistered<OwnerTasksRemoteDataSource>()) {
+    sl.registerLazySingleton<OwnerTasksRemoteDataSource>(
+      () => OwnerTasksRemoteDataSourceImpl(dio: sl()),
+    );
+  }
+  if (!sl.isRegistered<OwnerTasksRepository>()) {
+    sl.registerLazySingleton<OwnerTasksRepository>(
+      () => OwnerTasksRepositoryImpl(remoteDataSource: sl()),
+    );
+  }
+  if (!sl.isRegistered<GetTaskFormDataUseCase>()) {
+    sl.registerLazySingleton(() => GetTaskFormDataUseCase(sl()));
+  }
+  if (!sl.isRegistered<TaskFormDataCubit>()) {
+    sl.registerFactory(
+      () => TaskFormDataCubit(getTaskFormDataUseCase: sl()),
+    );
+  }
 }

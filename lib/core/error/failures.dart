@@ -51,7 +51,7 @@ class ServerFailure extends Failure {
       case DioExceptionType.connectionError:
         return ServerFailure(LocaleKeys.errorsNetworkError.tr());
       case DioExceptionType.cancel:
-        return const ServerFailure('تم إلغاء الطلب');
+        return ServerFailure(LocaleKeys.errorsRequestCancelled.tr());
       default:
         return ServerFailure(LocaleKeys.errorsServerError.tr());
     }

@@ -13,7 +13,7 @@ class CacheHelper {
   }
 
   String getLanguage() {
-    return _prefs.getString(_languageKey) ?? 'en'; // default english
+    return _prefs.getString(_languageKey) ?? 'ar'; // default Arabic (matches startLocale)
   }
 
   Future<void> setOnboardingCompleted() async {

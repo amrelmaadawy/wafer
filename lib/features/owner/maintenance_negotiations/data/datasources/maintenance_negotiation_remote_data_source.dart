@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import '../../../../../core/network/api_constants.dart';
 import '../models/negotiation_form_data_response_model.dart';
 import '../models/negotiations_list_response_model.dart';
 
@@ -22,7 +21,7 @@ class MaintenanceNegotiationRemoteDataSourceImpl implements MaintenanceNegotiati
 
   @override
   Future<NegotiationFormDataModel> getFormData() async {
-    final response = await dio.get('${ApiConstants.baseUrl}owner/maintenance-negotiations/form-data');
+    final response = await dio.get('owner/maintenance-negotiations/form-data');
     final responseModel = NegotiationFormDataResponseModel.fromJson(response.data);
     
     if (!responseModel.success) {
@@ -38,7 +37,7 @@ class MaintenanceNegotiationRemoteDataSourceImpl implements MaintenanceNegotiati
     required int perPage,
   }) async {
     final response = await dio.get(
-      '${ApiConstants.baseUrl}owner/maintenance-negotiations',
+      'owner/maintenance-negotiations',
       queryParameters: {
         'page': page,
         'per_page': perPage,
@@ -60,7 +59,7 @@ class MaintenanceNegotiationRemoteDataSourceImpl implements MaintenanceNegotiati
     required bool isActive,
   }) async {
     final response = await dio.post(
-      '${ApiConstants.baseUrl}owner/maintenance-negotiations',
+      'owner/maintenance-negotiations',
       data: {
         'approval_limit': approvalLimit,
         'is_active': isActive,

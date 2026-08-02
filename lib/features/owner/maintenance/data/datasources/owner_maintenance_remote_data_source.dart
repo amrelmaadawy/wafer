@@ -45,7 +45,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
 
   @override
   Future<MaintenanceFormDataModel> getFormData() async {
-    final response = await _dio.get('${ApiConstants.baseUrl}owner/maintenance-requests/form-data');
+    final response = await _dio.get('owner/maintenance-requests/form-data');
     if (response.data['success'] == true && response.data['data'] != null && response.data['data']['options'] != null) {
       return MaintenanceFormDataModel.fromJson(response.data['data']['options']);
     } else {
@@ -64,7 +64,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
     }
 
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenance}',
+      ApiConstants.ownerMaintenance,
       queryParameters: queryParams,
     );
 
@@ -75,7 +75,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
   @override
   Future<MaintenanceItemModel> getMaintenanceDetails(int id) async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(id)}',
+      ApiConstants.ownerMaintenanceDetails(id),
     );
 
     final data = response.data as Map<String, dynamic>? ?? {};
@@ -106,7 +106,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
     CreateOwnerMaintenanceParams params,
   ) async {
     await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenance}',
+      ApiConstants.ownerMaintenance,
       data: params.toJson(),
     );
   }
@@ -116,7 +116,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
     UpdateOwnerMaintenanceParams params,
   ) async {
     final response = await _dio.patch(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(params.id)}',
+      ApiConstants.ownerMaintenanceDetails(params.id),
       data: params.toJson(),
     );
 
@@ -138,7 +138,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
     ApproveOwnerMaintenanceParams params,
   ) async {
     await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceApprove(params.id)}',
+      ApiConstants.ownerMaintenanceApprove(params.id),
       data: params.toJson(),
     );
   }
@@ -146,14 +146,14 @@ class OwnerMaintenanceRemoteDataSourceImpl
   @override
   Future<void> deleteMaintenanceRequest(int id) async {
     await _dio.delete(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(id)}',
+      ApiConstants.ownerMaintenanceDetails(id),
     );
   }
 
   @override
   Future<MaintenanceItemModel> completeMaintenanceTask(CompleteOwnerMaintenanceTaskParams params) async {
     final response = await _dio.patch(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceDetails(params.maintenanceId)}/tasks/${params.taskId}',
+      '${ApiConstants.ownerMaintenanceDetails(params.maintenanceId)}/tasks/${params.taskId}',
       data: params.toJson(),
     );
 
@@ -170,7 +170,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
     RejectOwnerMaintenanceParams params,
   ) async {
     await _dio.post(
-      '${ApiConstants.baseUrl}owner/maintenance-requests/${params.id}/reject',
+      'owner/maintenance-requests/${params.id}/reject',
       data: params.toJson(),
     );
   }
@@ -180,7 +180,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
     AssignOwnerMaintenanceParams params,
   ) async {
     await _dio.post(
-      '${ApiConstants.baseUrl}owner/maintenance-requests/${params.id}/assign',
+      'owner/maintenance-requests/${params.id}/assign',
       data: params.toJson(),
     );
   }
@@ -188,7 +188,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
   @override
   Future<MaintenanceItemModel> startMaintenanceRequest(int id) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}owner/maintenance-requests/$id/start',
+      'owner/maintenance-requests/$id/start',
     );
     final data = response.data['data'] as Map<String, dynamic>;
     final itemMap = data['maintenance_request'] as Map<String, dynamic>;
@@ -199,7 +199,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
   Future<ExecuteOwnerMaintenanceResponseModel> executeMaintenanceRequest(
       ExecuteOwnerMaintenanceParams params) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}owner/maintenance-requests/${params.id}/execute',
+      'owner/maintenance-requests/${params.id}/execute',
       data: params.toJson(),
     );
     final data = response.data['data'] as Map<String, dynamic>;
@@ -210,7 +210,7 @@ class OwnerMaintenanceRemoteDataSourceImpl
   Future<MaintenanceItemModel> verifyCloseMaintenanceRequest(
       VerifyCloseOwnerMaintenanceParams params) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}owner/maintenance-requests/${params.id}/verify-close',
+      'owner/maintenance-requests/${params.id}/verify-close',
       data: params.toJson(),
     );
     final data = response.data['data'] as Map<String, dynamic>;

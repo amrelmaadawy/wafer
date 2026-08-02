@@ -29,7 +29,7 @@ class OwnerContractsRemoteDataSourceImpl
     }
 
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerContracts}',
+      ApiConstants.ownerContracts,
       queryParameters: queryParams,
     );
 
@@ -40,7 +40,7 @@ class OwnerContractsRemoteDataSourceImpl
   @override
   Future<ContractDetailsModel> getContractDetails(String id) async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerContracts}/$id',
+      '${ApiConstants.ownerContracts}/$id',
     );
 
     final data = response.data as Map<String, dynamic>? ?? {};
@@ -52,7 +52,7 @@ class OwnerContractsRemoteDataSourceImpl
     String contractId,
   ) async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerContracts}/$contractId/installments',
+      '${ApiConstants.ownerContracts}/$contractId/installments',
     );
 
     final data = response.data;

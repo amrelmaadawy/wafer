@@ -15,7 +15,7 @@ class DeedsRemoteDataSourceImpl implements DeedsRemoteDataSource {
   @override
   Future<List<DeedModel>> getOwnerDeeds() async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerDeeds}',
+      ApiConstants.ownerDeeds,
     );
 
     final dataList = response.data['data'] as List<dynamic>? ?? [];
@@ -27,7 +27,7 @@ class DeedsRemoteDataSourceImpl implements DeedsRemoteDataSource {
   @override
   Future<DeedModel> createDeed(Map<String, dynamic> body) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerCreateDeed}',
+      ApiConstants.ownerCreateDeed,
       data: body,
     );
 

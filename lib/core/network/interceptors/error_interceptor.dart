@@ -1,20 +1,27 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import '../connectivity/auth_event_bus.dart';
 
+/// Global Dio error interceptor.
+///
+/// Responsibilities:
+/// - Fires [AuthEvent.unauthorized] via [AuthEventBus] on 401 so the app
+///   can force-logout without needing a BuildContext here.
+/// - Fires [AuthEvent.forbidden] on 403 for permission-denied handling.
+/// - Passes all errors down the interceptor chain unchanged.
 class ErrorInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
-    // Check for 401 Unauthorized
-    if (err.response?.statusCode == 401) {
-      debugPrint('Unauthorized! Force logout or token refresh needed.');
-      // TODO: Dispatch global event to trigger logout UI and clear storage
+    final statusCode = err.response?.statusCode;
+
+    if (statusCode == 401) {
+      // Token expired or invalid — trigger global logout flow.
+      AuthEventBus.fire(AuthEvent.unauthorized);
+    } else if (statusCode == 403) {
+      // Access forbidden — notify the app if needed.
+      AuthEventBus.fire(AuthEvent.forbidden);
     }
 
-    // Check for 403 Forbidden
-    if (err.response?.statusCode == 403) {
-      debugPrint('Forbidden! User does not have permissions.');
-    }
-
+    // Always forward the error so repositories / cubits can handle it.
     handler.next(err);
   }
 }

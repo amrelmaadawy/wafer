@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 
 import '../../../../../core/error/exceptions.dart';
-import '../../../../../core/network/api_constants.dart';
 import '../models/legal_case_form_data_model.dart';
 import '../models/legal_cases_list_response_model.dart';
 import '../models/legal_case_item_model.dart';
@@ -36,7 +35,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   Future<LegalCaseFormDataModel> getLegalCaseFormData() async {
     try {
       final response = await dio.get(
-        '${ApiConstants.baseUrl}owner/legal-cases/form-data',
+        'owner/legal-cases/form-data',
       );
 
       if (response.data != null && response.data['data'] != null) {
@@ -66,7 +65,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
       }
 
       final response = await dio.get(
-        '${ApiConstants.baseUrl}owner/legal-cases',
+        'owner/legal-cases',
         queryParameters: queryParameters,
       );
 
@@ -84,7 +83,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   Future<LegalCaseItemModel> getLegalCaseDetails(int id) async {
     try {
       final response = await dio.get(
-        '${ApiConstants.baseUrl}owner/legal-cases/$id',
+        'owner/legal-cases/$id',
       );
 
       if (response.data != null && response.data['data'] != null) {
@@ -103,7 +102,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   ) async {
     try {
       final response = await dio.post(
-        '${ApiConstants.baseUrl}owner/legal-cases',
+        'owner/legal-cases',
         data: FormData.fromMap(params.toJson()),
       );
 
@@ -125,7 +124,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   ) async {
     try {
       final response = await dio.patch(
-        '${ApiConstants.baseUrl}owner/legal-cases/${params.id}',
+        'owner/legal-cases/${params.id}',
         data: params.toJson(),
       );
 
@@ -160,7 +159,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   Future<void> deleteLegalCase(int id) async {
     try {
       final response = await dio.delete(
-        '${ApiConstants.baseUrl}owner/legal-cases/$id',
+        'owner/legal-cases/$id',
       );
 
       if (response.data != null && response.data['success'] == true) {
@@ -184,7 +183,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   Future<LegalCaseItemModel> addLegalCaseStage(AddStageParams params) async {
     try {
       final response = await dio.post(
-        '${ApiConstants.baseUrl}owner/legal-cases/${params.legalCaseId}/stages',
+        'owner/legal-cases/${params.legalCaseId}/stages',
         data: params.toJson(),
       );
 
@@ -212,7 +211,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   }) async {
     try {
       final response = await dio.delete(
-        '${ApiConstants.baseUrl}owner/legal-cases/$legalCaseId/stages/$stageId',
+        'owner/legal-cases/$legalCaseId/stages/$stageId',
       );
 
       if (response.data != null && response.data['success'] == true) {

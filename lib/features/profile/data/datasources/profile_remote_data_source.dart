@@ -25,7 +25,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
   @override
   Future<ProfileModel> getProfile() async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.sharedProfile}',
+      ApiConstants.sharedProfile,
     );
     final data = response.data['data'] as Map<String, dynamic>;
     return ProfileModel.fromJson(data);
@@ -38,7 +38,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     required String gender,
   }) async {
     final response = await _dio.put(
-      '${ApiConstants.baseUrl}${ApiConstants.sharedProfile}',
+      ApiConstants.sharedProfile,
       data: {'name': name, 'phone': phone, 'gender': gender},
     );
     final data = response.data['data'] as Map<String, dynamic>;
@@ -52,7 +52,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
     required String newPasswordConfirmation,
   }) async {
     await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.sharedChangePassword}',
+      ApiConstants.sharedChangePassword,
       data: {
         'current_password': currentPassword,
         'new_password': newPassword,
@@ -67,7 +67,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
       'avatar': await MultipartFile.fromFile(imagePath),
     });
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.sharedUpdateAvatar}',
+      ApiConstants.sharedUpdateAvatar,
       data: formData,
     );
     final data = response.data['data'] as Map<String, dynamic>;

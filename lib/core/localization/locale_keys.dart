@@ -176,6 +176,10 @@ abstract class LocaleKeys {
   static const errors_auth_disconnected = 'errors.auth_disconnected';
   static const errors_login_failed = 'errors.login_failed';
   static const errors_network_error = 'errors.network_error';
+  static const errors_request_cancelled = 'errors.request_cancelled';
+  static const errors_session_expired = 'errors.session_expired';
+  static const errors_no_internet_title = 'errors.no_internet_title';
+  static const errors_no_internet_subtitle = 'errors.no_internet_subtitle';
   static const errors = 'errors';
   static const owner_quick_alerts = 'owner.quick_alerts';
   static const owner_active_contracts_title = 'owner.active_contracts_title';
@@ -899,6 +903,10 @@ abstract class LocaleKeys {
   static const errorsAuthDisconnected = errors_auth_disconnected;
   static const errorsLoginFailed = errors_login_failed;
   static const errorsNetworkError = errors_network_error;
+  static const errorsRequestCancelled = errors_request_cancelled;
+  static const errorsSessionExpired = errors_session_expired;
+  static const errorsNoInternetTitle = errors_no_internet_title;
+  static const errorsNoInternetSubtitle = errors_no_internet_subtitle;
   static const ownerQuickAlerts = owner_quick_alerts;
   static const ownerActiveContractsTitle = owner_active_contracts_title;
   static const ownerActiveContractsSub = owner_active_contracts_sub;

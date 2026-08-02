@@ -67,7 +67,7 @@ class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
     if (endDate != null) queryParams['end_date'] = endDate;
 
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerRevenueReport}',
+      ApiConstants.ownerRevenueReport,
       queryParameters: queryParams.isNotEmpty ? queryParams : null,
     );
 
@@ -81,7 +81,7 @@ class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
   @override
   Future<OccupancyReportModel> getOccupancyReport({int page = 1}) async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerOccupancyReport}',
+      ApiConstants.ownerOccupancyReport,
       queryParameters: {'page': page},
     );
 
@@ -95,7 +95,7 @@ class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
   @override
   Future<DefaultersReportModel> getDefaultersReport({int page = 1}) async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerDefaultersReport}',
+      ApiConstants.ownerDefaultersReport,
       queryParameters: {'page': page},
     );
 
@@ -136,7 +136,7 @@ class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
     if (propertyId != null) queryParams['property_id'] = propertyId;
 
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerContractsReport}',
+      ApiConstants.ownerContractsReport,
       queryParameters: queryParams,
     );
 

@@ -76,7 +76,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   >
   getProperties(Map<String, dynamic> queryParams) async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerProperties}',
+      ApiConstants.ownerProperties,
       queryParameters: queryParams,
     );
 
@@ -101,7 +101,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   @override
   Future<PropertyFormOptionsModel> getFormOptions() async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerFormData}',
+      ApiConstants.ownerFormData,
     );
 
     final data =
@@ -114,7 +114,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   @override
   Future<PropertyFormDataModel> getPropertyFormData() async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerFormData}',
+      ApiConstants.ownerFormData,
     );
 
     final data =
@@ -126,7 +126,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   @override
   Future<PropertyDetailsModel> getPropertyDetails(int propertyId) async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerPropertyDetails(propertyId)}',
+      ApiConstants.ownerPropertyDetails(propertyId),
     );
 
     final data =
@@ -138,7 +138,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   @override
   Future<int> createDraftProperty(Map<String, dynamic> body) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerCreateDraftProperty}',
+      ApiConstants.ownerCreateDraftProperty,
       data: body,
     );
 
@@ -155,7 +155,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     required Map<String, dynamic> data,
   }) async {
     await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveProperty(propertyId)}',
+      ApiConstants.ownerAutoSaveProperty(propertyId),
       data: data,
     );
   }
@@ -167,7 +167,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     int branchId,
   ) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveProperty(propertyId)}',
+      ApiConstants.ownerAutoSaveProperty(propertyId),
       data: {'deed_id': deedId, 'branch_id': branchId},
     );
     final data =
@@ -184,7 +184,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     String propertyType,
   ) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveProperty(propertyId)}',
+      ApiConstants.ownerAutoSaveProperty(propertyId),
       data: {'property_type': propertyType},
     );
     final data =
@@ -201,7 +201,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     List<Map<String, dynamic>> owners,
   ) async {
     await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerSyncOwners(propertyId)}',
+      ApiConstants.ownerSyncOwners(propertyId),
       data: {'owners': owners},
     );
   }
@@ -213,7 +213,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     });
 
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerUploadTempFile}',
+      ApiConstants.ownerUploadTempFile,
       data: formData,
     );
 
@@ -226,7 +226,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   @override
   Future<void> addUploadedImagePath(int propertyId, String imagePath) async {
     await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerAutoSaveProperty(propertyId)}',
+      ApiConstants.ownerAutoSaveProperty(propertyId),
       data: {'step': 'images', 'image_path': imagePath},
     );
   }
@@ -234,7 +234,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   @override
   Future<PropertyDetailsModel> publishProperty(int propertyId) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerPublishProperty(propertyId)}',
+      ApiConstants.ownerPublishProperty(propertyId),
     );
     final data =
         response.data['data'] as Map<String, dynamic>? ??
@@ -247,7 +247,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   @override
   Future<int> cloneProperty(int propertyId) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerCloneProperty(propertyId)}',
+      ApiConstants.ownerCloneProperty(propertyId),
     );
     final data =
         response.data['data'] as Map<String, dynamic>? ??
@@ -258,7 +258,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   @override
   Future<int> cloneForDeed(int propertyId, bool copyData) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerCloneForDeed(propertyId)}',
+      ApiConstants.ownerCloneForDeed(propertyId),
       data: {'copy_data': copyData},
     );
     final data =
@@ -273,7 +273,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     int ownerId,
   ) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMakeRepresentative(propertyId, ownerId)}',
+      ApiConstants.ownerMakeRepresentative(propertyId, ownerId),
     );
     final data =
         response.data['data'] as Map<String, dynamic>? ??
@@ -289,7 +289,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     int ownerId,
   ) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerRemoveRepresentative(propertyId, ownerId)}',
+      ApiConstants.ownerRemoveRepresentative(propertyId, ownerId),
     );
     final data =
         response.data['data'] as Map<String, dynamic>? ??
@@ -302,14 +302,14 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
   @override
   Future<void> deleteProperty(int propertyId) async {
     await _dio.delete(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerDeleteProperty(propertyId)}',
+      ApiConstants.ownerDeleteProperty(propertyId),
     );
   }
 
   @override
   Future<void> patchProperty(int propertyId, Map<String, dynamic> data) async {
     await _dio.patch(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerPatchProperty(propertyId)}',
+      ApiConstants.ownerPatchProperty(propertyId),
       data: data,
     );
   }

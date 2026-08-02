@@ -6,6 +6,8 @@ import '../network/dio_factory.dart';
 import '../network/interceptors/auth_interceptor.dart';
 import '../network/interceptors/error_interceptor.dart';
 import '../network/interceptors/locale_interceptor.dart';
+import '../network/connectivity/network_info.dart';
+import '../network/connectivity/network_info_impl.dart';
 import '../storage/cache_helper.dart';
 import '../storage/secure_storage_service.dart';
 import '../theme/app_theme_cubit.dart';
@@ -28,6 +30,9 @@ Future<void> setupServiceLocator() async {
   // Theme
   sl.registerLazySingleton<AppThemeCubit>(() => AppThemeCubit());
 
+  // Connectivity
+  sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
+
   // Network Interceptors
   sl.registerLazySingleton<AuthInterceptor>(() => AuthInterceptor(sl()));
   sl.registerLazySingleton<LocaleInterceptor>(() => LocaleInterceptor(sl()));
@@ -39,6 +44,7 @@ Future<void> setupServiceLocator() async {
       authInterceptor: sl(),
       localeInterceptor: sl(),
       errorInterceptor: sl(),
+      networkInfo: sl(),
     ),
   );
 

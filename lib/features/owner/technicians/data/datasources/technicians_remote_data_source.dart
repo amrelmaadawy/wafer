@@ -22,7 +22,7 @@ class TechniciansRemoteDataSourceImpl implements TechniciansRemoteDataSource {
   @override
   Future<TechnicianFormDataModel> getTechnicianFormData() async {
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceTechniciansFormData}',
+      ApiConstants.ownerMaintenanceTechniciansFormData,
     );
 
     final data = response.data['data'] as Map<String, dynamic>? ??
@@ -41,7 +41,7 @@ class TechniciansRemoteDataSourceImpl implements TechniciansRemoteDataSource {
     };
 
     final response = await _dio.get(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceTechnicians}',
+      ApiConstants.ownerMaintenanceTechnicians,
       queryParameters: queryParams,
     );
 
@@ -53,7 +53,7 @@ class TechniciansRemoteDataSourceImpl implements TechniciansRemoteDataSource {
   @override
   Future<TechnicianModel> addTechnician(AddTechnicianParams params) async {
     final response = await _dio.post(
-      '${ApiConstants.baseUrl}${ApiConstants.ownerMaintenanceTechnicians}',
+      ApiConstants.ownerMaintenanceTechnicians,
       data: params.toJson(),
     );
 

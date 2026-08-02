@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import '../../../../../core/network/api_constants.dart';
 import '../models/owner_dashboard_model.dart';
 
 abstract class OwnerDashboardRemoteDataSource {
@@ -14,7 +13,7 @@ class OwnerDashboardRemoteDataSourceImpl
 
   @override
   Future<OwnerDashboardModel> getDashboardStats() async {
-    final response = await _dio.get('${ApiConstants.baseUrl}owner/dashboard');
+    final response = await _dio.get('owner/dashboard');
     final data = response.data['data'] as Map<String, dynamic>;
     return OwnerDashboardModel.fromJson(data);
   }
