@@ -5,13 +5,16 @@ import '../../../../../../core/error/failures.dart';
 import '../entities/legal_case_item_entity.dart';
 import '../repositories/legal_cases_repository.dart';
 
-class AddLegalCaseStageUseCase implements UseCase<LegalCaseItemEntity, AddStageParams> {
+class AddLegalCaseStageUseCase
+    implements UseCase<LegalCaseItemEntity, AddStageParams> {
   final LegalCasesRepository repository;
 
   AddLegalCaseStageUseCase(this.repository);
 
   @override
-  Future<Either<Failure, LegalCaseItemEntity>> call(AddStageParams params) async {
+  Future<Either<Failure, LegalCaseItemEntity>> call(
+    AddStageParams params,
+  ) async {
     return await repository.addLegalCaseStage(params);
   }
 }

@@ -45,73 +45,73 @@ class LegalCaseOptionsModel extends LegalCaseOptionsEntity {
     return LegalCaseOptionsModel(
       properties: json['properties'] != null
           ? (json['properties'] as List)
-              .map((e) => LegalCasePropertyModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCasePropertyModel.fromJson(e))
+                .toList()
           : null,
       units: json['units'] != null
           ? (json['units'] as List)
-              .map((e) => LegalCaseUnitModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseUnitModel.fromJson(e))
+                .toList()
           : null,
       contracts: json['contracts'] != null
           ? (json['contracts'] as List)
-              .map((e) => LegalCaseContractModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseContractModel.fromJson(e))
+                .toList()
           : null,
       invoices: json['invoices'] != null
           ? (json['invoices'] as List)
-              .map((e) => LegalCaseInvoiceModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseInvoiceModel.fromJson(e))
+                .toList()
           : null,
       branches: json['branches'] != null
           ? (json['branches'] as List)
-              .map((e) => LegalCaseBranchModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseBranchModel.fromJson(e))
+                .toList()
           : null,
       statuses: json['statuses'] != null
           ? (json['statuses'] as List)
-              .map((e) => LegalCaseOptionModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseOptionModel.fromJson(e))
+                .toList()
           : null,
       stages: json['stages'] != null
           ? (json['stages'] as List)
-              .map((e) => LegalCaseOptionModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseOptionModel.fromJson(e))
+                .toList()
           : null,
       caseTypes: json['case_types'] != null
           ? (json['case_types'] as List)
-              .map((e) => LegalCaseOptionModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseOptionModel.fromJson(e))
+                .toList()
           : null,
       courts: json['courts'] != null
           ? (json['courts'] as List)
-              .map((e) => LegalCaseOptionModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseOptionModel.fromJson(e))
+                .toList()
           : null,
       circuits: json['circuits'] != null
           ? (json['circuits'] as List)
-              .map((e) => LegalCaseOptionModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseOptionModel.fromJson(e))
+                .toList()
           : null,
       plaintiffs: json['plaintiffs'] != null
           ? (json['plaintiffs'] as List)
-              .map((e) => LegalCaseOptionModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseOptionModel.fromJson(e))
+                .toList()
           : null,
       defendants: json['defendants'] != null
           ? (json['defendants'] as List)
-              .map((e) => LegalCaseOptionModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseOptionModel.fromJson(e))
+                .toList()
           : null,
       lawyers: json['lawyers'] != null
           ? (json['lawyers'] as List)
-              .map((e) => LegalCaseOptionModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseOptionModel.fromJson(e))
+                .toList()
           : null,
       lawyerOffices: json['lawyer_offices'] != null
           ? (json['lawyer_offices'] as List)
-              .map((e) => LegalCaseOptionModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseOptionModel.fromJson(e))
+                .toList()
           : null,
     );
   }
@@ -136,10 +136,7 @@ class LegalCaseDefaultsModel extends LegalCaseDefaultsEntity {
 }
 
 class LegalCaseValidationModel extends LegalCaseValidationEntity {
-  const LegalCaseValidationModel({
-    super.requiredFields,
-    super.attachment,
-  });
+  const LegalCaseValidationModel({super.requiredFields, super.attachment});
 
   factory LegalCaseValidationModel.fromJson(Map<String, dynamic> json) {
     return LegalCaseValidationModel(
@@ -155,13 +152,11 @@ class LegalCaseValidationModel extends LegalCaseValidationEntity {
 
 class LegalCaseAttachmentValidationModel
     extends LegalCaseAttachmentValidationEntity {
-  const LegalCaseAttachmentValidationModel({
-    super.mimes,
-    super.maxKb,
-  });
+  const LegalCaseAttachmentValidationModel({super.mimes, super.maxKb});
 
   factory LegalCaseAttachmentValidationModel.fromJson(
-      Map<String, dynamic> json) {
+    Map<String, dynamic> json,
+  ) {
     return LegalCaseAttachmentValidationModel(
       mimes: json['mimes'] != null
           ? (json['mimes'] as List).map((e) => e.toString()).toList()

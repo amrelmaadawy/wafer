@@ -55,30 +55,30 @@ class LegalCaseItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        caseNumber,
-        caseType,
-        court,
-        circuit,
-        parties,
-        lawyer,
-        status,
-        statusColor,
-        amount,
-        hearingDate,
-        notes,
-        branch,
-        property,
-        unit,
-        contract,
-        invoiceId,
-        attachment,
-        latestStage,
-        stages,
-        createdBy,
-        createdAt,
-        updatedAt,
-      ];
+    id,
+    caseNumber,
+    caseType,
+    court,
+    circuit,
+    parties,
+    lawyer,
+    status,
+    statusColor,
+    amount,
+    hearingDate,
+    notes,
+    branch,
+    property,
+    unit,
+    contract,
+    invoiceId,
+    attachment,
+    latestStage,
+    stages,
+    createdBy,
+    createdAt,
+    updatedAt,
+  ];
 }
 
 class LegalCasePartiesEntity extends Equatable {
@@ -133,19 +133,19 @@ class LegalCaseStageEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        legalCaseId,
-        stageName,
-        stageNameDisplay,
-        stageColor,
-        stageIcon,
-        notes,
-        stageDate,
-        attachment,
-        createdBy,
-        createdAt,
-        updatedAt,
-      ];
+    id,
+    legalCaseId,
+    stageName,
+    stageNameDisplay,
+    stageColor,
+    stageIcon,
+    notes,
+    stageDate,
+    attachment,
+    createdBy,
+    createdAt,
+    updatedAt,
+  ];
 }
 
 class LegalCaseAttachmentEntity extends Equatable {

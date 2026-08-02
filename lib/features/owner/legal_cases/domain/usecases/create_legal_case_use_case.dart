@@ -71,25 +71,25 @@ class CreateLegalCaseParams extends Equatable {
 
   @override
   List<Object?> get props => [
-        caseNumber,
-        branchId,
-        propertyId,
-        unitId,
-        contractId,
-        invoiceId,
-        court,
-        circuit,
-        plaintiff,
-        defendant,
-        lawyer,
-        lawyerPhone,
-        lawyerOffice,
-        caseType,
-        amount,
-        hearingDate,
-        status,
-        notes,
-      ];
+    caseNumber,
+    branchId,
+    propertyId,
+    unitId,
+    contractId,
+    invoiceId,
+    court,
+    circuit,
+    plaintiff,
+    defendant,
+    lawyer,
+    lawyerPhone,
+    lawyerOffice,
+    caseType,
+    amount,
+    hearingDate,
+    status,
+    notes,
+  ];
 }
 
 class CreateLegalCaseUseCase {
@@ -97,7 +97,9 @@ class CreateLegalCaseUseCase {
 
   CreateLegalCaseUseCase(this.repository);
 
-  Future<Either<Failure, LegalCaseItemEntity>> call(CreateLegalCaseParams params) async {
+  Future<Either<Failure, LegalCaseItemEntity>> call(
+    CreateLegalCaseParams params,
+  ) async {
     return await repository.createLegalCase(params);
   }
 }

@@ -7,10 +7,13 @@ class LegalCaseDeleteStageCubit extends Cubit<LegalCaseDeleteStageState> {
 
   LegalCaseDeleteStageCubit({
     required DeleteLegalCaseStageUseCase deleteLegalCaseStageUseCase,
-  })  : _deleteLegalCaseStageUseCase = deleteLegalCaseStageUseCase,
-        super(LegalCaseDeleteStageInitial());
+  }) : _deleteLegalCaseStageUseCase = deleteLegalCaseStageUseCase,
+       super(LegalCaseDeleteStageInitial());
 
-  Future<void> deleteStage({required int legalCaseId, required int stageId}) async {
+  Future<void> deleteStage({
+    required int legalCaseId,
+    required int stageId,
+  }) async {
     emit(LegalCaseDeleteStageLoading());
     final result = await _deleteLegalCaseStageUseCase(
       DeleteStageParams(legalCaseId: legalCaseId, stageId: stageId),

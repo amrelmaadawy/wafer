@@ -5,7 +5,8 @@ import 'legal_case_create_state.dart';
 class LegalCaseCreateCubit extends Cubit<LegalCaseCreateState> {
   final CreateLegalCaseUseCase createLegalCaseUseCase;
 
-  LegalCaseCreateCubit(this.createLegalCaseUseCase) : super(LegalCaseCreateInitial());
+  LegalCaseCreateCubit(this.createLegalCaseUseCase)
+    : super(LegalCaseCreateInitial());
 
   Future<void> createLegalCase(CreateLegalCaseParams params) async {
     emit(LegalCaseCreateLoading());

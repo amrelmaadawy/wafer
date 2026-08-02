@@ -15,12 +15,11 @@ import '../data_sources/legal_cases_remote_data_source.dart';
 class LegalCasesRepositoryImpl implements LegalCasesRepository {
   final LegalCasesRemoteDataSource remoteDataSource;
 
-  LegalCasesRepositoryImpl({
-    required this.remoteDataSource,
-  });
+  LegalCasesRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, LegalCaseFormDataEntity>> getLegalCaseFormData() async {
+  Future<Either<Failure, LegalCaseFormDataEntity>>
+  getLegalCaseFormData() async {
     try {
       final formData = await remoteDataSource.getLegalCaseFormData();
       return Right(formData);
@@ -56,7 +55,9 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
   }
 
   @override
-  Future<Either<Failure, LegalCaseItemEntity>> getLegalCaseDetails(int id) async {
+  Future<Either<Failure, LegalCaseItemEntity>> getLegalCaseDetails(
+    int id,
+  ) async {
     try {
       final remoteData = await remoteDataSource.getLegalCaseDetails(id);
       return Right(remoteData);
@@ -70,7 +71,9 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
   }
 
   @override
-  Future<Either<Failure, LegalCaseItemEntity>> createLegalCase(CreateLegalCaseParams params) async {
+  Future<Either<Failure, LegalCaseItemEntity>> createLegalCase(
+    CreateLegalCaseParams params,
+  ) async {
     try {
       final remoteData = await remoteDataSource.createLegalCase(params);
       return Right(remoteData);
@@ -84,7 +87,9 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
   }
 
   @override
-  Future<Either<Failure, LegalCaseItemEntity>> updateLegalCase(UpdateLegalCaseParams params) async {
+  Future<Either<Failure, LegalCaseItemEntity>> updateLegalCase(
+    UpdateLegalCaseParams params,
+  ) async {
     try {
       final remoteData = await remoteDataSource.updateLegalCase(params);
       return Right(remoteData);
@@ -110,8 +115,11 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
       return Left(ServerFailure('حدث خطأ غير متوقع'));
     }
   }
+
   @override
-  Future<Either<Failure, LegalCaseItemEntity>> addLegalCaseStage(AddStageParams params) async {
+  Future<Either<Failure, LegalCaseItemEntity>> addLegalCaseStage(
+    AddStageParams params,
+  ) async {
     try {
       final remoteData = await remoteDataSource.addLegalCaseStage(params);
       return Right(remoteData);
@@ -125,9 +133,15 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteLegalCaseStage({required int legalCaseId, required int stageId}) async {
+  Future<Either<Failure, void>> deleteLegalCaseStage({
+    required int legalCaseId,
+    required int stageId,
+  }) async {
     try {
-      await remoteDataSource.deleteLegalCaseStage(legalCaseId: legalCaseId, stageId: stageId);
+      await remoteDataSource.deleteLegalCaseStage(
+        legalCaseId: legalCaseId,
+        stageId: stageId,
+      );
       return const Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

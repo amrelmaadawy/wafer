@@ -6,7 +6,7 @@ class LegalCaseDetailsCubit extends Cubit<LegalCaseDetailsState> {
   final GetLegalCaseDetailsUseCase getLegalCaseDetailsUseCase;
 
   LegalCaseDetailsCubit(this.getLegalCaseDetailsUseCase)
-      : super(LegalCaseDetailsInitial());
+    : super(LegalCaseDetailsInitial());
 
   Future<void> fetchLegalCaseDetails(int id) async {
     emit(LegalCaseDetailsLoading());

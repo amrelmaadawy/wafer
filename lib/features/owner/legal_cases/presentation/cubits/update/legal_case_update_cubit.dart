@@ -7,18 +7,15 @@ class LegalCaseUpdateCubit extends Cubit<LegalCaseUpdateState> {
   final UpdateLegalCaseUseCase _updateLegalCaseUseCase;
 
   LegalCaseUpdateCubit(this._updateLegalCaseUseCase)
-      : super(LegalCaseUpdateInitial());
+    : super(LegalCaseUpdateInitial());
 
   Future<void> updateLegalCase(UpdateLegalCaseParams params) async {
     emit(LegalCaseUpdateLoading());
 
     final result = await _updateLegalCaseUseCase(params);
 
-    result.fold(
-      (failure) {
-        emit(LegalCaseUpdateError(failure.message));
-      },
-      (legalCase) => emit(LegalCaseUpdateSuccess(legalCase)),
-    );
+    result.fold((failure) {
+      emit(LegalCaseUpdateError(failure.message));
+    }, (legalCase) => emit(LegalCaseUpdateSuccess(legalCase)));
   }
 }

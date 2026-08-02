@@ -22,10 +22,7 @@ class DeleteStageParams extends Equatable {
   final int legalCaseId;
   final int stageId;
 
-  const DeleteStageParams({
-    required this.legalCaseId,
-    required this.stageId,
-  });
+  const DeleteStageParams({required this.legalCaseId, required this.stageId});
 
   @override
   List<Object?> get props => [legalCaseId, stageId];

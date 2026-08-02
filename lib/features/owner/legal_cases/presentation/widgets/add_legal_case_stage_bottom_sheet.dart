@@ -8,6 +8,7 @@ import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/app_spacing.dart';
+import '../../../../../../core/theme/color_utils.dart';
 import '../../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../cubits/add_stage/legal_case_add_stage_cubit.dart';
@@ -16,16 +17,15 @@ import '../cubits/add_stage/legal_case_add_stage_state.dart';
 class AddLegalCaseStageBottomSheet extends StatefulWidget {
   final int legalCaseId;
 
-  const AddLegalCaseStageBottomSheet({
-    super.key,
-    required this.legalCaseId,
-  });
+  const AddLegalCaseStageBottomSheet({super.key, required this.legalCaseId});
 
   @override
-  State<AddLegalCaseStageBottomSheet> createState() => _AddLegalCaseStageBottomSheetState();
+  State<AddLegalCaseStageBottomSheet> createState() =>
+      _AddLegalCaseStageBottomSheetState();
 }
 
-class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSheet> {
+class _AddLegalCaseStageBottomSheetState
+    extends State<AddLegalCaseStageBottomSheet> {
   final _formKey = GlobalKey<FormState>();
   final _stageDateController = TextEditingController();
   final _notesController = TextEditingController();
@@ -62,7 +62,7 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
         return Theme(
           data: Theme.of(context).copyWith(
             colorScheme: ColorScheme.light(
-              primary: AppColors.primaryDark,
+              primary: context.primaryColor,
               onPrimary: Colors.white,
               onSurface: AppColors.textPrimaryLight,
             ),
@@ -81,16 +81,18 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
 
   void _submit() {
     setState(() {
-      _selectedStageError = _selectedStage == null ? LocaleKeys.stage_name_required.tr() : null;
+      _selectedStageError = _selectedStage == null
+          ? LocaleKeys.stage_name_required.tr()
+          : null;
     });
 
     if (_formKey.currentState!.validate() && _selectedStageError == null) {
       context.read<LegalCaseAddStageCubit>().addStage(
-            legalCaseId: widget.legalCaseId,
-            stageName: _selectedStage!,
-            stageDate: _stageDateController.text.trim(),
-            notes: _notesController.text.trim(),
-          );
+        legalCaseId: widget.legalCaseId,
+        stageName: _selectedStage!,
+        stageDate: _stageDateController.text.trim(),
+        notes: _notesController.text.trim(),
+      );
     }
   }
 
@@ -99,16 +101,10 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
     return BlocListener<LegalCaseAddStageCubit, LegalCaseAddStageState>(
       listener: (context, state) {
         if (state is LegalCaseAddStageSuccess) {
-          AppToast.showSuccess(
-            context,
-            LocaleKeys.stage_added_success.tr(),
-          );
+          AppToast.showSuccess(context, LocaleKeys.stage_added_success.tr());
           context.pop(true);
         } else if (state is LegalCaseAddStageError) {
-          AppToast.showError(
-            context,
-            state.message,
-          );
+          AppToast.showError(context, state.message);
         }
       },
       child: Padding(
@@ -120,7 +116,9 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
             padding: const EdgeInsets.all(AppSpacing.lg),
             decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.lg)),
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(AppRadius.lg),
+              ),
             ),
             child: Form(
               key: _formKey,
@@ -133,10 +131,15 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
                     children: [
                       Text(
                         LocaleKeys.add_stage.tr(),
-                        style: AppTextStyles.h4.copyWith(color: AppColors.textPrimaryLight),
+                        style: AppTextStyles.h4.copyWith(
+                          color: AppColors.textPrimaryLight,
+                        ),
                       ),
                       IconButton(
-                        icon: const Icon(Icons.close, color: AppColors.textSecondaryLight),
+                        icon: const Icon(
+                          Icons.close,
+                          color: AppColors.textSecondaryLight,
+                        ),
                         onPressed: () => context.pop(),
                       ),
                     ],
@@ -146,13 +149,15 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
                   const SizedBox(height: AppSpacing.md),
                   Text(
                     LocaleKeys.stage_name.tr(),
-                    style: AppTextStyles.labelLarge.copyWith(color: AppColors.textPrimaryLight),
+                    style: AppTextStyles.labelLarge.copyWith(
+                      color: AppColors.textPrimaryLight,
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   CustomDropdownMenu<String>(
                     items: _stages,
                     value: _selectedStage,
-                    hint: '-- اختر المرحلة --',
+                    hint: LocaleKeys.select_stage.tr(),
                     itemLabelBuilder: (stage) => stage,
                     onSelected: (stage) {
                       setState(() {
@@ -165,7 +170,9 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
                   const SizedBox(height: AppSpacing.md),
                   Text(
                     LocaleKeys.stage_date.tr(),
-                    style: AppTextStyles.labelLarge.copyWith(color: AppColors.textPrimaryLight),
+                    style: AppTextStyles.labelLarge.copyWith(
+                      color: AppColors.textPrimaryLight,
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   InkWell(
@@ -175,20 +182,30 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
                         controller: _stageDateController,
                         decoration: InputDecoration(
                           hintText: LocaleKeys.stage_date.tr(),
-                          suffixIcon: const Icon(Icons.calendar_today, color: AppColors.textSecondaryLight),
+                          suffixIcon: const Icon(
+                            Icons.calendar_today,
+                            color: AppColors.textSecondaryLight,
+                          ),
                           border: OutlineInputBorder(
                             borderRadius: AppRadius.circularMd,
-                            borderSide: const BorderSide(color: AppColors.borderLight),
+                            borderSide: const BorderSide(
+                              color: AppColors.borderLight,
+                            ),
                           ),
                           enabledBorder: OutlineInputBorder(
                             borderRadius: AppRadius.circularMd,
-                            borderSide: const BorderSide(color: AppColors.borderLight),
+                            borderSide: const BorderSide(
+                              color: AppColors.borderLight,
+                            ),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: AppRadius.circularMd,
-                            borderSide: const BorderSide(color: AppColors.primaryDark),
+                            borderSide: BorderSide(color: context.primaryColor),
                           ),
-                          contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+                          contentPadding: const EdgeInsets.symmetric(
+                            horizontal: AppSpacing.md,
+                            vertical: AppSpacing.sm,
+                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
@@ -202,7 +219,9 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
                   const SizedBox(height: AppSpacing.md),
                   Text(
                     LocaleKeys.notes.tr(),
-                    style: AppTextStyles.labelLarge.copyWith(color: AppColors.textPrimaryLight),
+                    style: AppTextStyles.labelLarge.copyWith(
+                      color: AppColors.textPrimaryLight,
+                    ),
                   ),
                   const SizedBox(height: AppSpacing.sm),
                   TextFormField(
@@ -212,17 +231,24 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
                       hintText: LocaleKeys.notes.tr(),
                       border: OutlineInputBorder(
                         borderRadius: AppRadius.circularMd,
-                        borderSide: const BorderSide(color: AppColors.borderLight),
+                        borderSide: const BorderSide(
+                          color: AppColors.borderLight,
+                        ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: AppRadius.circularMd,
-                        borderSide: const BorderSide(color: AppColors.borderLight),
+                        borderSide: const BorderSide(
+                          color: AppColors.borderLight,
+                        ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: AppRadius.circularMd,
-                        borderSide: const BorderSide(color: AppColors.primaryDark),
+                        borderSide: BorderSide(color: context.primaryColor),
                       ),
-                      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: AppSpacing.md,
+                        vertical: AppSpacing.sm,
+                      ),
                     ),
                   ),
                   const SizedBox(height: AppSpacing.xl),
@@ -232,8 +258,10 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
                       return ElevatedButton(
                         onPressed: isLoading ? null : _submit,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryDark,
-                          padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                          backgroundColor: context.primaryColor,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: AppSpacing.md,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: AppRadius.circularMd,
                           ),
@@ -242,11 +270,16 @@ class _AddLegalCaseStageBottomSheetState extends State<AddLegalCaseStageBottomSh
                             ? const SizedBox(
                                 height: 20,
                                 width: 20,
-                                child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
                               )
                             : Text(
                                 LocaleKeys.save_stage.tr(),
-                                style: AppTextStyles.labelLarge.copyWith(color: Colors.white),
+                                style: AppTextStyles.labelLarge.copyWith(
+                                  color: Colors.white,
+                                ),
                               ),
                       );
                     },

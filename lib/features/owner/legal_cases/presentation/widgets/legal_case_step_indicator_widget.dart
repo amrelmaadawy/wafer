@@ -19,12 +19,13 @@ class LegalCaseStepIndicatorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpacing.md, horizontal: AppSpacing.md),
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.md,
+        horizontal: AppSpacing.md,
+      ),
       decoration: const BoxDecoration(
         color: Colors.white,
-        border: Border(
-          bottom: BorderSide(color: AppColors.borderLight),
-        ),
+        border: Border(bottom: BorderSide(color: AppColors.borderLight)),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +37,9 @@ class LegalCaseStepIndicatorWidget extends StatelessWidget {
             return Expanded(
               child: Container(
                 height: 2,
-                color: isCompleted ? context.primaryColor : AppColors.borderLight,
+                color: isCompleted
+                    ? context.primaryColor
+                    : AppColors.borderLight,
               ),
             );
           } else {
@@ -67,12 +70,14 @@ class LegalCaseStepIndicatorWidget extends StatelessWidget {
     required String icon,
     required int stepNumber,
   }) {
-    final Color color = isActive || isCompleted ? context.primaryColor : AppColors.textSecondaryLight;
+    final Color color = isActive || isCompleted
+        ? context.primaryColor
+        : AppColors.textSecondaryLight;
     final Color bgColor = isActive
         ? context.primaryColor.withValues(alpha: 0.1)
         : isCompleted
-            ? context.primaryColor
-            : AppColors.backgroundLight;
+        ? context.primaryColor
+        : AppColors.backgroundLight;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -84,24 +89,25 @@ class LegalCaseStepIndicatorWidget extends StatelessWidget {
             shape: BoxShape.circle,
             color: bgColor,
             border: Border.all(
-              color: isActive || isCompleted ? context.primaryColor : AppColors.borderLight,
+              color: isActive || isCompleted
+                  ? context.primaryColor
+                  : AppColors.borderLight,
               width: 2,
             ),
           ),
           alignment: Alignment.center,
           child: isCompleted
               ? const Icon(Icons.check, color: Colors.white, size: 20)
-              : Text(
-                  icon,
-                  style: const TextStyle(fontSize: 16),
-                ),
+              : Text(icon, style: const TextStyle(fontSize: 16)),
         ),
         const SizedBox(height: 8),
         Text(
           title,
           style: AppTextStyles.bodySmall.copyWith(
             color: color,
-            fontWeight: isActive || isCompleted ? AppFonts.bold : AppFonts.medium,
+            fontWeight: isActive || isCompleted
+                ? AppFonts.bold
+                : AppFonts.medium,
           ),
         ),
       ],

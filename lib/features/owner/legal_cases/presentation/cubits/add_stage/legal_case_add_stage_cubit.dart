@@ -6,9 +6,8 @@ import 'legal_case_add_stage_state.dart';
 class LegalCaseAddStageCubit extends Cubit<LegalCaseAddStageState> {
   final AddLegalCaseStageUseCase addLegalCaseStageUseCase;
 
-  LegalCaseAddStageCubit({
-    required this.addLegalCaseStageUseCase,
-  }) : super(LegalCaseAddStageInitial());
+  LegalCaseAddStageCubit({required this.addLegalCaseStageUseCase})
+    : super(LegalCaseAddStageInitial());
 
   Future<void> addStage({
     required int legalCaseId,

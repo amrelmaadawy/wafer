@@ -13,8 +13,8 @@ class LegalCasesListResponseModel extends LegalCasesListResponseEntity {
     return LegalCasesListResponseModel(
       legalCases: (json['legal_cases'] != null && json['legal_cases'] is List)
           ? (json['legal_cases'] as List)
-              .map((e) => LegalCaseItemModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseItemModel.fromJson(e))
+                .toList()
           : null,
       pagination: (json['pagination'] != null && json['pagination'] is Map)
           ? LegalCasePaginationModel.fromJson(json['pagination'])
@@ -56,7 +56,9 @@ class LegalCaseFiltersModel extends LegalCaseFiltersEntity {
 
   factory LegalCaseFiltersModel.fromJson(Map<String, dynamic> json) {
     return LegalCaseFiltersModel(
-      applied: (json['applied'] != null && json['applied'] is List) ? json['applied'] as List<dynamic> : null,
+      applied: (json['applied'] != null && json['applied'] is List)
+          ? json['applied'] as List<dynamic>
+          : null,
       supported: (json['supported'] != null && json['supported'] is List)
           ? (json['supported'] as List).map((e) => e.toString()).toList()
           : null,
@@ -71,7 +73,9 @@ class LegalCaseStatsModel extends LegalCaseStatsEntity {
     return LegalCaseStatsModel(
       total: json['total'] as int?,
       byStatus: (json['by_status'] != null && json['by_status'] is Map)
-          ? (json['by_status'] as Map).map((k, v) => MapEntry(k.toString(), int.tryParse(v.toString()) ?? 0))
+          ? (json['by_status'] as Map).map(
+              (k, v) => MapEntry(k.toString(), int.tryParse(v.toString()) ?? 0),
+            )
           : null,
     );
   }

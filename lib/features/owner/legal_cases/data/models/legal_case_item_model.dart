@@ -59,14 +59,15 @@ class LegalCaseItemModel extends LegalCaseItemEntity {
           ? LegalCaseContractModel.fromJson(json['contract'])
           : null,
       invoiceId: json['invoice_id'] as int?,
-      attachment: json['attachment']?.toString(), // Handle attachment string or object if needed
+      attachment: json['attachment']
+          ?.toString(), // Handle attachment string or object if needed
       latestStage: (json['latest_stage'] != null && json['latest_stage'] is Map)
           ? LegalCaseStageModel.fromJson(json['latest_stage'])
           : null,
       stages: (json['stages'] != null && json['stages'] is List)
           ? (json['stages'] as List)
-              .map((e) => LegalCaseStageModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseStageModel.fromJson(e))
+                .toList()
           : null,
       createdBy: json['created_by'] as int?,
       createdAt: json['created_at'] as String?,
@@ -126,7 +127,9 @@ class LegalCaseStageModel extends LegalCaseStageEntity {
       stageDate: json['stage_date'] as String?,
       attachment: json['attachment'] is Map<String, dynamic>
           ? LegalCaseAttachmentModel.fromJson(json['attachment'])
-          : (json['attachment'] is String ? LegalCaseAttachmentModel(url: json['attachment'] as String) : null),
+          : (json['attachment'] is String
+                ? LegalCaseAttachmentModel(url: json['attachment'] as String)
+                : null),
       createdBy: json['created_by'] as int?,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,

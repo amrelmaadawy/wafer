@@ -6,7 +6,8 @@ import 'legal_case_delete_state.dart';
 class LegalCaseDeleteCubit extends Cubit<LegalCaseDeleteState> {
   final DeleteLegalCaseUseCase deleteLegalCaseUseCase;
 
-  LegalCaseDeleteCubit(this.deleteLegalCaseUseCase) : super(LegalCaseDeleteInitial());
+  LegalCaseDeleteCubit(this.deleteLegalCaseUseCase)
+    : super(LegalCaseDeleteInitial());
 
   Future<void> deleteLegalCase(int id) async {
     emit(LegalCaseDeleteLoading());

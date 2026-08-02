@@ -37,8 +37,7 @@ class LegalCasePaginationEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props =>
-      [currentPage, lastPage, perPage, total, from, to];
+  List<Object?> get props => [currentPage, lastPage, perPage, total, from, to];
 }
 
 class LegalCaseFiltersEntity extends Equatable {

@@ -1890,5 +1890,24 @@ abstract class LocaleKeys {
   static const delete_stage_confirmation_title = 'delete_stage_confirmation_title';
   static const delete_stage_confirmation_desc = 'delete_stage_confirmation_desc';
   static const delete_stage_success = 'delete_stage_success';
+  static const legal_case_updated_success = 'legal_case_updated_success';
+  static const discard_changes = 'discard_changes';
+  static const discard_changes_message = 'discard_changes_message';
+  static const discard = 'discard';
+  static const edit_case = 'edit_case';
+  static const add_case = 'add_case';
+  static const case_basics = 'case_basics';
+  static const edit_legal_case = 'edit_legal_case';
+  static const select_stage = 'select_stage';
+  static const no_data_available = 'no_data_available';
+  static const parties = 'parties';
+  static const links = 'links';
+  static const select_property = 'select_property';
+  static const select_unit = 'select_unit';
+  static const select_contract = 'select_contract';
+  static const additional_notes = 'additional_notes';
+  static const enter_notes = 'enter_notes';
+  static const property_and_contract = 'property_and_contract';
+  static const currency = 'currency';
+  static const all = 'all';
 }
-

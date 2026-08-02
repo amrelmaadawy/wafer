@@ -5,7 +5,9 @@ import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../utils/legal_case_status_utils.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../core/localization/locale_keys.dart';
 
 class LegalCaseCardWidget extends StatelessWidget {
   final LegalCaseItemEntity legalCase;
@@ -19,31 +21,12 @@ class LegalCaseCardWidget extends StatelessWidget {
     this.onEditTap,
   });
 
-  Color _getStatusColor(String? colorCode, BuildContext context) {
-    if (colorCode == null) return AppColors.primaryDark;
-    switch (colorCode) {
-      case 'primary':
-        return context.primaryColor;
-      case 'success':
-        return AppColors.success;
-      case 'danger':
-        return AppColors.error;
-      case 'warning':
-        return AppColors.warning;
-      case 'info':
-        return AppColors.info;
-      case 'dark':
-        return AppColors.primaryDark;
-      case 'light':
-        return AppColors.surfaceLight;
-      default:
-        return AppColors.primaryDark;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    final statusColor = _getStatusColor(legalCase.statusColor, context);
+    final statusColor = LegalCaseStatusUtils.getStatusColor(
+      legalCase.statusColor,
+      context,
+    );
 
     return InkWell(
       onTap: onTap,
@@ -81,7 +64,9 @@ class LegalCaseCardWidget extends StatelessWidget {
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.sm, vertical: 4),
+                        horizontal: AppSpacing.sm,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: statusColor.withValues(alpha: 0.1),
                         borderRadius: AppRadius.circularMd,
@@ -101,24 +86,33 @@ class LegalCaseCardWidget extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryLight.withValues(alpha: 0.2),
+                            color: AppColors.primaryLight.withValues(
+                              alpha: 0.2,
+                            ),
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(Icons.edit, size: 16, color: context.primaryColor),
+                          child: Icon(
+                            Icons.edit,
+                            size: 16,
+                            color: context.primaryColor,
+                          ),
                         ),
                       ),
-                    ]
+                    ],
                   ],
                 ),
               ],
             ),
             const SizedBox(height: AppSpacing.sm),
-            
+
             // Court and Type
             Row(
               children: [
-                const Icon(Icons.account_balance,
-                    size: 16, color: AppColors.textSecondaryLight),
+                const Icon(
+                  Icons.account_balance,
+                  size: 16,
+                  color: AppColors.textSecondaryLight,
+                ),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(
@@ -147,8 +141,10 @@ class LegalCaseCardWidget extends StatelessWidget {
                     Icon(
                       Icons.timeline, // You might map bx-icons here
                       size: 16,
-                      color: _getStatusColor(
-                          legalCase.latestStage?.stageColor, context),
+                      color: LegalCaseStatusUtils.getStatusColor(
+                        legalCase.latestStage?.stageColor,
+                        context,
+                      ),
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(
@@ -183,13 +179,16 @@ class LegalCaseCardWidget extends StatelessWidget {
                 if (legalCase.amount != null && legalCase.amount! > 0)
                   Row(
                     children: [
-                      const Icon(Icons.monetization_on_outlined,
-                          size: 16, color: AppColors.primaryDark),
+                      Icon(
+                        Icons.monetization_on_outlined,
+                        size: 16,
+                        color: context.primaryColor,
+                      ),
                       const SizedBox(width: 4),
                       Text(
-                        '${legalCase.amount} ${"currency".tr()}',
+                        '${legalCase.amount} ${LocaleKeys.currency.tr()}',
                         style: AppTextStyles.bodyLarge.copyWith(
-                          color: AppColors.primaryDark,
+                          color: context.primaryColor,
                           fontWeight: AppFonts.bold,
                         ),
                       ),
@@ -200,8 +199,11 @@ class LegalCaseCardWidget extends StatelessWidget {
                 if (legalCase.hearingDate != null)
                   Row(
                     children: [
-                      const Icon(Icons.calendar_today_outlined,
-                          size: 16, color: AppColors.textSecondaryLight),
+                      const Icon(
+                        Icons.calendar_today_outlined,
+                        size: 16,
+                        color: AppColors.textSecondaryLight,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         legalCase.hearingDate!,

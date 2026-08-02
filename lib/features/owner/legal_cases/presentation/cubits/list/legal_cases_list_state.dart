@@ -26,6 +26,8 @@ class LegalCasesListLoaded extends LegalCasesListState {
   final LegalCaseFiltersEntity? filters;
   final LegalCaseStatsEntity? stats;
   final bool hasReachedMax;
+  final bool isPaginating;
+  final String? paginationError;
 
   const LegalCasesListLoaded({
     required this.legalCases,
@@ -33,6 +35,8 @@ class LegalCasesListLoaded extends LegalCasesListState {
     this.filters,
     this.stats,
     this.hasReachedMax = false,
+    this.isPaginating = false,
+    this.paginationError,
   });
 
   LegalCasesListLoaded copyWith({
@@ -41,6 +45,8 @@ class LegalCasesListLoaded extends LegalCasesListState {
     LegalCaseFiltersEntity? filters,
     LegalCaseStatsEntity? stats,
     bool? hasReachedMax,
+    bool? isPaginating,
+    String? paginationError,
   }) {
     return LegalCasesListLoaded(
       legalCases: legalCases ?? this.legalCases,
@@ -48,12 +54,21 @@ class LegalCasesListLoaded extends LegalCasesListState {
       filters: filters ?? this.filters,
       stats: stats ?? this.stats,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      isPaginating: isPaginating ?? this.isPaginating,
+      paginationError: paginationError ?? this.paginationError,
     );
   }
 
   @override
-  List<Object?> get props =>
-      [legalCases, pagination, filters, stats, hasReachedMax];
+  List<Object?> get props => [
+    legalCases,
+    pagination,
+    filters,
+    stats,
+    hasReachedMax,
+    isPaginating,
+    paginationError,
+  ];
 }
 
 class LegalCasesListError extends LegalCasesListState {

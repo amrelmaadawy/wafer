@@ -21,7 +21,10 @@ abstract class LegalCasesRemoteDataSource {
   Future<LegalCaseItemModel> updateLegalCase(UpdateLegalCaseParams params);
   Future<void> deleteLegalCase(int id);
   Future<LegalCaseItemModel> addLegalCaseStage(AddStageParams params);
-  Future<void> deleteLegalCaseStage({required int legalCaseId, required int stageId});
+  Future<void> deleteLegalCaseStage({
+    required int legalCaseId,
+    required int stageId,
+  });
 }
 
 class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
@@ -35,7 +38,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
       final response = await dio.get(
         '${ApiConstants.baseUrl}owner/legal-cases/form-data',
       );
-      
+
       if (response.data != null && response.data['data'] != null) {
         return LegalCaseFormDataModel.fromJson(response.data['data']);
       } else {
@@ -95,14 +98,18 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   }
 
   @override
-  Future<LegalCaseItemModel> createLegalCase(CreateLegalCaseParams params) async {
+  Future<LegalCaseItemModel> createLegalCase(
+    CreateLegalCaseParams params,
+  ) async {
     try {
       final response = await dio.post(
         '${ApiConstants.baseUrl}owner/legal-cases',
         data: FormData.fromMap(params.toJson()),
       );
 
-      if (response.data != null && response.data['data'] != null && response.data['data']['legal_case'] != null) {
+      if (response.data != null &&
+          response.data['data'] != null &&
+          response.data['data']['legal_case'] != null) {
         return LegalCaseItemModel.fromJson(response.data['data']['legal_case']);
       } else {
         throw const ServerException('Invalid response data');
@@ -113,14 +120,18 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   }
 
   @override
-  Future<LegalCaseItemModel> updateLegalCase(UpdateLegalCaseParams params) async {
+  Future<LegalCaseItemModel> updateLegalCase(
+    UpdateLegalCaseParams params,
+  ) async {
     try {
       final response = await dio.patch(
         '${ApiConstants.baseUrl}owner/legal-cases/${params.id}',
         data: params.toJson(),
       );
 
-      if (response.data != null && response.data['data'] != null && response.data['data']['legal_case'] != null) {
+      if (response.data != null &&
+          response.data['data'] != null &&
+          response.data['data']['legal_case'] != null) {
         return LegalCaseItemModel.fromJson(response.data['data']['legal_case']);
       } else {
         throw const ServerException('Invalid response data');
@@ -128,9 +139,15 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
     } on DioException catch (e) {
       if (e.response != null && e.response?.data != null) {
         if (e.response!.data['errors'] != null) {
-          final errorsMap = Map<String, List<dynamic>>.from(e.response!.data['errors']);
-          final errorMessage = errorsMap.values.map((v) => v.join('\n')).join('\n');
-          throw ServerException(errorMessage.isNotEmpty ? errorMessage : 'Validation error');
+          final errorsMap = Map<String, List<dynamic>>.from(
+            e.response!.data['errors'],
+          );
+          final errorMessage = errorsMap.values
+              .map((v) => v.join('\n'))
+              .join('\n');
+          throw ServerException(
+            errorMessage.isNotEmpty ? errorMessage : 'Validation error',
+          );
         } else if (e.response!.data['message'] != null) {
           throw ServerException(e.response!.data['message']);
         }
@@ -149,11 +166,15 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
       if (response.data != null && response.data['success'] == true) {
         return;
       } else {
-        throw ServerException(response.data?['message'] ?? 'Failed to delete legal case');
+        throw ServerException(
+          response.data?['message'] ?? 'Failed to delete legal case',
+        );
       }
     } on DioException catch (e) {
       if (e.response != null && e.response?.data != null) {
-        throw ServerException(e.response!.data['message'] ?? 'Failed to delete legal case');
+        throw ServerException(
+          e.response!.data['message'] ?? 'Failed to delete legal case',
+        );
       }
       rethrow;
     }
@@ -167,21 +188,28 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
         data: params.toJson(),
       );
 
-      if (response.data != null && response.data['data'] != null && response.data['data']['legal_case'] != null) {
+      if (response.data != null &&
+          response.data['data'] != null &&
+          response.data['data']['legal_case'] != null) {
         return LegalCaseItemModel.fromJson(response.data['data']['legal_case']);
       } else {
         throw const ServerException('Invalid response data');
       }
     } on DioException catch (e) {
       if (e.response != null && e.response?.data != null) {
-        throw ServerException(e.response!.data['message'] ?? 'Failed to add stage');
+        throw ServerException(
+          e.response!.data['message'] ?? 'Failed to add stage',
+        );
       }
       rethrow;
     }
   }
 
   @override
-  Future<void> deleteLegalCaseStage({required int legalCaseId, required int stageId}) async {
+  Future<void> deleteLegalCaseStage({
+    required int legalCaseId,
+    required int stageId,
+  }) async {
     try {
       final response = await dio.delete(
         '${ApiConstants.baseUrl}owner/legal-cases/$legalCaseId/stages/$stageId',
@@ -190,11 +218,15 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
       if (response.data != null && response.data['success'] == true) {
         return;
       } else {
-        throw ServerException(response.data?['message'] ?? 'Failed to delete stage');
+        throw ServerException(
+          response.data?['message'] ?? 'Failed to delete stage',
+        );
       }
     } on DioException catch (e) {
       if (e.response != null && e.response?.data != null) {
-        throw ServerException(e.response!.data['message'] ?? 'Failed to delete stage');
+        throw ServerException(
+          e.response!.data['message'] ?? 'Failed to delete stage',
+        );
       }
       rethrow;
     }

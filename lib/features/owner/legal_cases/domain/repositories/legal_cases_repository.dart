@@ -17,10 +17,17 @@ abstract class LegalCasesRepository {
   });
   Future<Either<Failure, LegalCaseItemEntity>> getLegalCaseDetails(int id);
   Future<Either<Failure, LegalCaseItemEntity>> createLegalCase(
-      CreateLegalCaseParams params);
+    CreateLegalCaseParams params,
+  );
   Future<Either<Failure, LegalCaseItemEntity>> updateLegalCase(
-      UpdateLegalCaseParams params);
+    UpdateLegalCaseParams params,
+  );
   Future<Either<Failure, void>> deleteLegalCase(int id);
-  Future<Either<Failure, LegalCaseItemEntity>> addLegalCaseStage(AddStageParams params);
-  Future<Either<Failure, void>> deleteLegalCaseStage({required int legalCaseId, required int stageId});
+  Future<Either<Failure, LegalCaseItemEntity>> addLegalCaseStage(
+    AddStageParams params,
+  );
+  Future<Either<Failure, void>> deleteLegalCaseStage({
+    required int legalCaseId,
+    required int stageId,
+  });
 }

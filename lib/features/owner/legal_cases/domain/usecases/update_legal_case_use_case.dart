@@ -74,26 +74,26 @@ class UpdateLegalCaseParams extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        caseNumber,
-        branchId,
-        propertyId,
-        unitId,
-        contractId,
-        invoiceId,
-        court,
-        circuit,
-        plaintiff,
-        defendant,
-        lawyer,
-        lawyerPhone,
-        lawyerOffice,
-        caseType,
-        amount,
-        hearingDate,
-        status,
-        notes,
-      ];
+    id,
+    caseNumber,
+    branchId,
+    propertyId,
+    unitId,
+    contractId,
+    invoiceId,
+    court,
+    circuit,
+    plaintiff,
+    defendant,
+    lawyer,
+    lawyerPhone,
+    lawyerOffice,
+    caseType,
+    amount,
+    hearingDate,
+    status,
+    notes,
+  ];
 }
 
 class UpdateLegalCaseUseCase
@@ -104,7 +104,8 @@ class UpdateLegalCaseUseCase
 
   @override
   Future<Either<Failure, LegalCaseItemEntity>> call(
-      UpdateLegalCaseParams params) async {
+    UpdateLegalCaseParams params,
+  ) async {
     return await repository.updateLegalCase(params);
   }
 }

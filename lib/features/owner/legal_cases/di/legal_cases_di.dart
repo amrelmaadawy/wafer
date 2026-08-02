@@ -1,4 +1,3 @@
-
 import '../data/data_sources/legal_cases_remote_data_source.dart';
 import '../data/repositories_impl/legal_cases_repository_impl.dart';
 import '../domain/repositories/legal_cases_repository.dart';
@@ -33,42 +32,30 @@ void initLegalCases() {
   // Repositories
   if (!sl.isRegistered<LegalCasesRepository>()) {
     sl.registerLazySingleton<LegalCasesRepository>(
-      () => LegalCasesRepositoryImpl(
-        remoteDataSource: sl(),
-      ),
+      () => LegalCasesRepositoryImpl(remoteDataSource: sl()),
     );
   }
 
   // UseCases
   if (!sl.isRegistered<GetLegalCaseFormDataUseCase>()) {
-    sl.registerLazySingleton(
-      () => GetLegalCaseFormDataUseCase(sl()),
-    );
+    sl.registerLazySingleton(() => GetLegalCaseFormDataUseCase(sl()));
   }
 
-    if (!sl.isRegistered<GetLegalCasesListUseCase>()) {
-      sl.registerLazySingleton(
-        () => GetLegalCasesListUseCase(sl()),
-      );
-    }
+  if (!sl.isRegistered<GetLegalCasesListUseCase>()) {
+    sl.registerLazySingleton(() => GetLegalCasesListUseCase(sl()));
+  }
 
-    if (!sl.isRegistered<GetLegalCaseDetailsUseCase>()) {
-      sl.registerLazySingleton(
-        () => GetLegalCaseDetailsUseCase(sl()),
-      );
-    }
+  if (!sl.isRegistered<GetLegalCaseDetailsUseCase>()) {
+    sl.registerLazySingleton(() => GetLegalCaseDetailsUseCase(sl()));
+  }
 
-    if (!sl.isRegistered<CreateLegalCaseUseCase>()) {
-      sl.registerLazySingleton(
-        () => CreateLegalCaseUseCase(sl()),
-      );
-    }
+  if (!sl.isRegistered<CreateLegalCaseUseCase>()) {
+    sl.registerLazySingleton(() => CreateLegalCaseUseCase(sl()));
+  }
 
-    // Cubits
+  // Cubits
   if (!sl.isRegistered<LegalCaseFormDataCubit>()) {
-    sl.registerFactory(
-      () => LegalCaseFormDataCubit(getFormDataUseCase: sl()),
-    );
+    sl.registerFactory(() => LegalCaseFormDataCubit(getFormDataUseCase: sl()));
   }
 
   if (!sl.isRegistered<LegalCasesListCubit>()) {
@@ -78,45 +65,31 @@ void initLegalCases() {
   }
 
   if (!sl.isRegistered<LegalCaseDetailsCubit>()) {
-    sl.registerFactory(
-      () => LegalCaseDetailsCubit(sl()),
-    );
+    sl.registerFactory(() => LegalCaseDetailsCubit(sl()));
   }
 
   if (!sl.isRegistered<LegalCaseCreateCubit>()) {
-    sl.registerFactory(
-      () => LegalCaseCreateCubit(sl()),
-    );
+    sl.registerFactory(() => LegalCaseCreateCubit(sl()));
   }
 
   if (!sl.isRegistered<UpdateLegalCaseUseCase>()) {
-    sl.registerLazySingleton(
-      () => UpdateLegalCaseUseCase(sl()),
-    );
+    sl.registerLazySingleton(() => UpdateLegalCaseUseCase(sl()));
   }
 
   if (!sl.isRegistered<LegalCaseUpdateCubit>()) {
-    sl.registerFactory(
-      () => LegalCaseUpdateCubit(sl()),
-    );
+    sl.registerFactory(() => LegalCaseUpdateCubit(sl()));
   }
 
   if (!sl.isRegistered<DeleteLegalCaseUseCase>()) {
-    sl.registerLazySingleton(
-      () => DeleteLegalCaseUseCase(sl()),
-    );
+    sl.registerLazySingleton(() => DeleteLegalCaseUseCase(sl()));
   }
 
   if (!sl.isRegistered<LegalCaseDeleteCubit>()) {
-    sl.registerFactory(
-      () => LegalCaseDeleteCubit(sl()),
-    );
+    sl.registerFactory(() => LegalCaseDeleteCubit(sl()));
   }
 
   if (!sl.isRegistered<AddLegalCaseStageUseCase>()) {
-    sl.registerLazySingleton(
-      () => AddLegalCaseStageUseCase(sl()),
-    );
+    sl.registerLazySingleton(() => AddLegalCaseStageUseCase(sl()));
   }
 
   if (!sl.isRegistered<LegalCaseAddStageCubit>()) {
@@ -126,9 +99,7 @@ void initLegalCases() {
   }
 
   if (!sl.isRegistered<DeleteLegalCaseStageUseCase>()) {
-    sl.registerLazySingleton(
-      () => DeleteLegalCaseStageUseCase(sl()),
-    );
+    sl.registerLazySingleton(() => DeleteLegalCaseStageUseCase(sl()));
   }
 
   if (!sl.isRegistered<LegalCaseDeleteStageCubit>()) {

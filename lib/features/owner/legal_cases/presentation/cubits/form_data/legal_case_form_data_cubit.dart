@@ -7,7 +7,7 @@ class LegalCaseFormDataCubit extends Cubit<LegalCaseFormDataState> {
   final GetLegalCaseFormDataUseCase getFormDataUseCase;
 
   LegalCaseFormDataCubit({required this.getFormDataUseCase})
-      : super(LegalCaseFormDataInitial());
+    : super(LegalCaseFormDataInitial());
 
   Future<void> fetchFormData() async {
     emit(LegalCaseFormDataLoading());

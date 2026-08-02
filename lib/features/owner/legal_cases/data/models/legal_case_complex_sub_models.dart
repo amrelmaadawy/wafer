@@ -61,8 +61,8 @@ class LegalCasePropertyModel extends LegalCasePropertyEntity {
           : null,
       units: (json['units'] != null && json['units'] is List)
           ? (json['units'] as List)
-              .map((e) => LegalCaseUnitModel.fromJson(e))
-              .toList()
+                .map((e) => LegalCaseUnitModel.fromJson(e))
+                .toList()
           : null,
     );
   }
@@ -93,11 +93,7 @@ class LegalCaseUnitModel extends LegalCaseUnitEntity {
 }
 
 class LegalCaseRenterModel extends LegalCaseRenterEntity {
-  const LegalCaseRenterModel({
-    super.id,
-    super.name,
-    super.phone,
-  });
+  const LegalCaseRenterModel({super.id, super.name, super.phone});
 
   factory LegalCaseRenterModel.fromJson(Map<String, dynamic> json) {
     return LegalCaseRenterModel(

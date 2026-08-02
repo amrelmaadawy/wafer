@@ -6,12 +6,7 @@ class LegalCaseOptionEntity extends Equatable {
   final String? color;
   final String? icon;
 
-  const LegalCaseOptionEntity({
-    this.value,
-    this.label,
-    this.color,
-    this.icon,
-  });
+  const LegalCaseOptionEntity({this.value, this.label, this.color, this.icon});
 
   @override
   List<Object?> get props => [value, label, color, icon];
@@ -80,14 +75,14 @@ class LegalCaseUnitEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        propertyId,
-        propertyName,
-        name,
-        unitNumber,
-        code,
-        unitStatus,
-      ];
+    id,
+    propertyId,
+    propertyName,
+    name,
+    unitNumber,
+    code,
+    unitStatus,
+  ];
 }
 
 class LegalCaseRenterEntity extends Equatable {
@@ -95,11 +90,7 @@ class LegalCaseRenterEntity extends Equatable {
   final String? name;
   final String? phone;
 
-  const LegalCaseRenterEntity({
-    this.id,
-    this.name,
-    this.phone,
-  });
+  const LegalCaseRenterEntity({this.id, this.name, this.phone});
 
   @override
   List<Object?> get props => [id, name, phone];
@@ -124,13 +115,13 @@ class LegalCaseContractEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        contractNumber,
-        propertyId,
-        unitId,
-        status,
-        renter,
-      ];
+    id,
+    contractNumber,
+    propertyId,
+    unitId,
+    status,
+    renter,
+  ];
 }
 
 class LegalCaseInvoiceEntity extends Equatable {
@@ -152,11 +143,11 @@ class LegalCaseInvoiceEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        invoiceNumber,
-        contractId,
-        amount,
-        status,
-        renter,
-      ];
+    id,
+    invoiceNumber,
+    contractId,
+    amount,
+    status,
+    renter,
+  ];
 }

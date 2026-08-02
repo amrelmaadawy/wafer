@@ -7,11 +7,7 @@ class LegalCaseFormDataEntity extends Equatable {
   final LegalCaseDefaultsEntity? defaults;
   final LegalCaseValidationEntity? validation;
 
-  const LegalCaseFormDataEntity({
-    this.options,
-    this.defaults,
-    this.validation,
-  });
+  const LegalCaseFormDataEntity({this.options, this.defaults, this.validation});
 
   @override
   List<Object?> get props => [options, defaults, validation];
@@ -52,21 +48,21 @@ class LegalCaseOptionsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        properties,
-        units,
-        contracts,
-        invoices,
-        branches,
-        statuses,
-        stages,
-        caseTypes,
-        courts,
-        circuits,
-        plaintiffs,
-        defendants,
-        lawyers,
-        lawyerOffices,
-      ];
+    properties,
+    units,
+    contracts,
+    invoices,
+    branches,
+    statuses,
+    stages,
+    caseTypes,
+    courts,
+    circuits,
+    plaintiffs,
+    defendants,
+    lawyers,
+    lawyerOffices,
+  ];
 }
 
 class LegalCaseDefaultsEntity extends Equatable {
@@ -90,10 +86,7 @@ class LegalCaseValidationEntity extends Equatable {
   final List<String>? requiredFields;
   final LegalCaseAttachmentValidationEntity? attachment;
 
-  const LegalCaseValidationEntity({
-    this.requiredFields,
-    this.attachment,
-  });
+  const LegalCaseValidationEntity({this.requiredFields, this.attachment});
 
   @override
   List<Object?> get props => [requiredFields, attachment];
@@ -103,10 +96,7 @@ class LegalCaseAttachmentValidationEntity extends Equatable {
   final List<String>? mimes;
   final int? maxKb;
 
-  const LegalCaseAttachmentValidationEntity({
-    this.mimes,
-    this.maxKb,
-  });
+  const LegalCaseAttachmentValidationEntity({this.mimes, this.maxKb});
 
   @override
   List<Object?> get props => [mimes, maxKb];

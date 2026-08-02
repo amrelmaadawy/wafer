@@ -14,7 +14,8 @@ class GetLegalCasesListUseCase
 
   @override
   Future<Either<Failure, LegalCasesListResponseEntity>> call(
-      GetLegalCasesListParams params) {
+    GetLegalCasesListParams params,
+  ) {
     return repository.getLegalCasesList(
       page: params.page,
       perPage: params.perPage,

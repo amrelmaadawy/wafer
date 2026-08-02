@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:wafer/features/owner/legal_cases/domain/entities/legal_case_item_entity.dart';
 
-
 abstract class LegalCaseAddStageState extends Equatable {
   const LegalCaseAddStageState();
 

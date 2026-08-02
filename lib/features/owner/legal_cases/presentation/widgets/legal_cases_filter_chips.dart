@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
@@ -28,9 +30,9 @@ class LegalCasesFilterChips extends StatelessWidget {
         children: [
           _buildChip(
             context: context,
-            label: 'الكل',
+            label: LocaleKeys.all.tr(),
             count: statsByStatus.values.fold(0, (sum, val) => sum + val),
-            isSelected: selectedStatus == null || selectedStatus == 'الكل',
+            isSelected: selectedStatus == null,
             onTap: () => onStatusSelected(null),
           ),
           ...statsByStatus.entries.map((entry) {
@@ -78,7 +80,7 @@ class LegalCasesFilterChips extends StatelessWidget {
                       color: context.primaryColor.withValues(alpha: 0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
-                    )
+                    ),
                   ]
                 : [],
           ),
@@ -105,7 +107,9 @@ class LegalCasesFilterChips extends StatelessWidget {
                 child: Text(
                   count.toString(),
                   style: AppTextStyles.bodySmall.copyWith(
-                    color: isSelected ? Colors.white : AppColors.textSecondaryLight,
+                    color: isSelected
+                        ? Colors.white
+                        : AppColors.textSecondaryLight,
                     fontSize: 11,
                     fontWeight: AppFonts.semiBold,
                   ),

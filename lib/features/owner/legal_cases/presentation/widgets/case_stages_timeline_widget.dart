@@ -3,7 +3,7 @@ import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/app_spacing.dart';
-import '../../../../../../core/theme/color_utils.dart';
+import '../utils/legal_case_status_utils.dart';
 import '../../domain/entities/legal_case_item_entity.dart';
 
 class CaseStagesTimelineWidget extends StatelessWidget {
@@ -42,14 +42,20 @@ class CaseStagesTimelineWidget extends StatelessWidget {
                         height: 16,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: _getStatusColor(stage.stageColor, context),
+                          color: LegalCaseStatusUtils.getStatusColor(
+                            stage.stageColor,
+                            context,
+                          ),
                           border: Border.all(color: Colors.white, width: 2),
                           boxShadow: [
                             BoxShadow(
-                              color: _getStatusColor(stage.stageColor, context).withValues(alpha: 0.3),
+                              color: LegalCaseStatusUtils.getStatusColor(
+                                stage.stageColor,
+                                context,
+                              ).withValues(alpha: 0.3),
                               blurRadius: 4,
                               offset: const Offset(0, 2),
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -83,7 +89,9 @@ class CaseStagesTimelineWidget extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: Text(
-                                  stage.stageNameDisplay ?? stage.stageName ?? '',
+                                  stage.stageNameDisplay ??
+                                      stage.stageName ??
+                                      '',
                                   style: AppTextStyles.bodyMedium.copyWith(
                                     fontWeight: AppFonts.semiBold,
                                     color: AppColors.textPrimaryLight,
@@ -92,9 +100,13 @@ class CaseStagesTimelineWidget extends StatelessWidget {
                               ),
                               if (onDeleteStage != null)
                                 Container(
-                                  margin: const EdgeInsetsDirectional.only(start: AppSpacing.sm),
+                                  margin: const EdgeInsetsDirectional.only(
+                                    start: AppSpacing.sm,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: AppColors.error.withValues(alpha: 0.1),
+                                    color: AppColors.error.withValues(
+                                      alpha: 0.1,
+                                    ),
                                     shape: BoxShape.circle,
                                   ),
                                   child: Material(
@@ -124,7 +136,8 @@ class CaseStagesTimelineWidget extends StatelessWidget {
                               ),
                             ),
                           ],
-                          if (stage.notes != null && stage.notes!.isNotEmpty) ...[
+                          if (stage.notes != null &&
+                              stage.notes!.isNotEmpty) ...[
                             const SizedBox(height: AppSpacing.sm),
                             Text(
                               stage.notes!,
@@ -144,27 +157,5 @@ class CaseStagesTimelineWidget extends StatelessWidget {
         }),
       ],
     );
-  }
-
-  Color _getStatusColor(String? colorCode, BuildContext context) {
-    if (colorCode == null) return AppColors.primaryDark;
-    switch (colorCode) {
-      case 'primary':
-        return context.primaryColor;
-      case 'success':
-        return AppColors.success;
-      case 'danger':
-        return AppColors.error;
-      case 'warning':
-        return AppColors.warning;
-      case 'info':
-        return AppColors.info;
-      case 'dark':
-        return AppColors.primaryDark;
-      case 'light':
-        return AppColors.surfaceLight;
-      default:
-        return AppColors.primaryDark;
-    }
   }
 }

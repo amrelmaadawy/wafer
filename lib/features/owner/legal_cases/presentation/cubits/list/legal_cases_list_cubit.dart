@@ -8,7 +8,7 @@ class LegalCasesListCubit extends Cubit<LegalCasesListState> {
   final GetLegalCasesListUseCase getLegalCasesListUseCase;
 
   LegalCasesListCubit({required this.getLegalCasesListUseCase})
-      : super(LegalCasesListInitial());
+    : super(LegalCasesListInitial());
 
   int _currentPage = 1;
   bool _isFetching = false;
@@ -28,7 +28,13 @@ class LegalCasesListCubit extends Cubit<LegalCasesListState> {
         _isFetching = false;
         return;
       }
-      emit(LegalCasesListLoading(isFirstFetch: _currentPage == 1));
+
+      if (_currentPage == 1) {
+        emit(LegalCasesListLoading(isFirstFetch: true));
+      } else if (state is LegalCasesListLoaded) {
+        final currentState = state as LegalCasesListLoaded;
+        emit(currentState.copyWith(isPaginating: true, paginationError: null));
+      }
     }
 
     final result = await getLegalCasesListUseCase(
@@ -41,31 +47,48 @@ class LegalCasesListCubit extends Cubit<LegalCasesListState> {
 
     result.fold(
       (failure) {
-        emit(LegalCasesListError(message: failure.message));
+        if (_currentPage == 1) {
+          emit(LegalCasesListError(message: failure.message));
+        } else {
+          final currentState = state as LegalCasesListLoaded;
+          emit(
+            currentState.copyWith(
+              isPaginating: false,
+              paginationError: failure.message,
+            ),
+          );
+        }
         _isFetching = false;
       },
       (response) {
         final List<LegalCaseItemEntity> newCases = response.legalCases ?? [];
         final hasReachedMax =
-            newCases.isEmpty || (response.pagination?.currentPage == response.pagination?.lastPage);
+            newCases.isEmpty ||
+            (response.pagination?.currentPage == response.pagination?.lastPage);
 
         if (_currentPage == 1) {
-          emit(LegalCasesListLoaded(
-            legalCases: newCases,
-            pagination: response.pagination,
-            filters: response.filters,
-            stats: response.stats,
-            hasReachedMax: hasReachedMax,
-          ));
+          emit(
+            LegalCasesListLoaded(
+              legalCases: newCases,
+              pagination: response.pagination,
+              filters: response.filters,
+              stats: response.stats,
+              hasReachedMax: hasReachedMax,
+            ),
+          );
         } else {
           final currentState = state as LegalCasesListLoaded;
-          emit(currentState.copyWith(
-            legalCases: currentState.legalCases + newCases,
-            pagination: response.pagination,
-            hasReachedMax: hasReachedMax,
-          ));
+          emit(
+            currentState.copyWith(
+              legalCases: currentState.legalCases + newCases,
+              pagination: response.pagination,
+              hasReachedMax: hasReachedMax,
+              isPaginating: false,
+              paginationError: null,
+            ),
+          );
         }
-        
+
         if (!hasReachedMax) {
           _currentPage++;
         }
