@@ -10,11 +10,13 @@ import 'package:easy_localization/easy_localization.dart';
 class LegalCaseCardWidget extends StatelessWidget {
   final LegalCaseItemEntity legalCase;
   final VoidCallback onTap;
+  final VoidCallback? onEditTap;
 
   const LegalCaseCardWidget({
     super.key,
     required this.legalCase,
     required this.onTap,
+    this.onEditTap,
   });
 
   Color _getStatusColor(String? colorCode, BuildContext context) {
@@ -75,20 +77,38 @@ class LegalCaseCardWidget extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.sm, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: statusColor.withValues(alpha: 0.1),
-                    borderRadius: AppRadius.circularMd,
-                  ),
-                  child: Text(
-                    legalCase.status ?? '',
-                    style: AppTextStyles.bodySmall.copyWith(
-                      color: statusColor,
-                      fontWeight: AppFonts.bold,
+                Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.sm, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: statusColor.withValues(alpha: 0.1),
+                        borderRadius: AppRadius.circularMd,
+                      ),
+                      child: Text(
+                        legalCase.status ?? '',
+                        style: AppTextStyles.bodySmall.copyWith(
+                          color: statusColor,
+                          fontWeight: AppFonts.bold,
+                        ),
+                      ),
                     ),
-                  ),
+                    if (onEditTap != null) ...[
+                      const SizedBox(width: AppSpacing.xs),
+                      InkWell(
+                        onTap: onEditTap,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryLight.withValues(alpha: 0.2),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.edit, size: 16, color: context.primaryColor),
+                        ),
+                      ),
+                    ]
+                  ],
                 ),
               ],
             ),

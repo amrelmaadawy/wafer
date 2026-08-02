@@ -6,6 +6,8 @@ import '../models/legal_case_form_data_model.dart';
 import '../models/legal_cases_list_response_model.dart';
 import '../models/legal_case_item_model.dart';
 import '../../domain/usecases/create_legal_case_use_case.dart';
+import '../../domain/usecases/update_legal_case_use_case.dart';
+import '../../domain/usecases/add_legal_case_stage_use_case.dart';
 
 abstract class LegalCasesRemoteDataSource {
   Future<LegalCaseFormDataModel> getLegalCaseFormData();
@@ -16,6 +18,9 @@ abstract class LegalCasesRemoteDataSource {
   });
   Future<LegalCaseItemModel> getLegalCaseDetails(int id);
   Future<LegalCaseItemModel> createLegalCase(CreateLegalCaseParams params);
+  Future<LegalCaseItemModel> updateLegalCase(UpdateLegalCaseParams params);
+  Future<void> deleteLegalCase(int id);
+  Future<LegalCaseItemModel> addLegalCaseStage(AddStageParams params);
 }
 
 class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
@@ -102,6 +107,74 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
         throw const ServerException('Invalid response data');
       }
     } on DioException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<LegalCaseItemModel> updateLegalCase(UpdateLegalCaseParams params) async {
+    try {
+      final response = await dio.patch(
+        '${ApiConstants.baseUrl}owner/legal-cases/${params.id}',
+        data: params.toJson(),
+      );
+
+      if (response.data != null && response.data['data'] != null && response.data['data']['legal_case'] != null) {
+        return LegalCaseItemModel.fromJson(response.data['data']['legal_case']);
+      } else {
+        throw const ServerException('Invalid response data');
+      }
+    } on DioException catch (e) {
+      if (e.response != null && e.response?.data != null) {
+        if (e.response!.data['errors'] != null) {
+          final errorsMap = Map<String, List<dynamic>>.from(e.response!.data['errors']);
+          final errorMessage = errorsMap.values.map((v) => v.join('\n')).join('\n');
+          throw ServerException(errorMessage.isNotEmpty ? errorMessage : 'Validation error');
+        } else if (e.response!.data['message'] != null) {
+          throw ServerException(e.response!.data['message']);
+        }
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> deleteLegalCase(int id) async {
+    try {
+      final response = await dio.delete(
+        '${ApiConstants.baseUrl}owner/legal-cases/$id',
+      );
+
+      if (response.data != null && response.data['success'] == true) {
+        return;
+      } else {
+        throw ServerException(response.data?['message'] ?? 'Failed to delete legal case');
+      }
+    } on DioException catch (e) {
+      if (e.response != null && e.response?.data != null) {
+        throw ServerException(e.response!.data['message'] ?? 'Failed to delete legal case');
+      }
+      rethrow;
+    }
+  }
+
+  @override
+  Future<LegalCaseItemModel> addLegalCaseStage(AddStageParams params) async {
+    try {
+      final response = await dio.post(
+        '${ApiConstants.baseUrl}owner/legal-cases/${params.legalCaseId}/stages',
+        data: params.toJson(),
+      );
+
+      if (response.data != null && response.data['data'] != null && response.data['data']['legal_case'] != null) {
+        return LegalCaseItemModel.fromJson(response.data['data']['legal_case']);
+      } else {
+        throw const ServerException('Invalid response data');
+      }
+    } on DioException catch (e) {
+      if (e.response != null && e.response?.data != null) {
+        throw ServerException(e.response!.data['message'] ?? 'Failed to add stage');
+      }
       rethrow;
     }
   }

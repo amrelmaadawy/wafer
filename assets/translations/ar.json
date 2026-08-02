@@ -906,5 +906,18 @@
   "case_number": "رقم القضية",
   "branch": "الفرع",
   "status": "الحالة",
-  "property": "العقار"
+  "property": "العقار",
+  "delete_legal_case": "حذف القضية",
+  "delete_legal_case_confirm_title": "تأكيد الحذف",
+  "delete_legal_case_confirm_body": "هل أنت متأكد من حذف هذه القضية؟ لا يمكن التراجع عن هذا الإجراء.",
+  "delete_legal_case_confirm_btn": "حذف",
+  "legal_case_deleted_success": "تم حذف القضية بنجاح",
+  "add_stage": "إضافة مرحلة",
+  "stage_name": "اسم المرحلة",
+  "stage_date": "تاريخ المرحلة",
+  "save_stage": "حفظ المرحلة",
+  "stage_added_success": "تم إضافة المرحلة بنجاح",
+  "stage_name_required": "يرجى إدخال اسم المرحلة",
+  "stage_date_required": "يرجى إدخال تاريخ المرحلة",
+  "no_stages_found": "لا يوجد مسار للقضية حتى الآن"
 }

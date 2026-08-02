@@ -25,6 +25,7 @@ class Routes {
   static const String ownerLegalCases = '/owner-legal-cases';
   static const String ownerLegalCaseDetails = 'details/:id';
   static const String ownerLegalCaseCreate = 'create'; // Sub-route
+  static const String ownerLegalCaseEdit = 'edit'; // Sub-route
   static const String editProfile = '/edit-profile';
   static const String changePassword = '/change-password';
 

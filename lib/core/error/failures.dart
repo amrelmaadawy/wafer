@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/localization/locale_keys.dart';
 
 abstract class Failure extends Equatable {
   final String message;
@@ -40,7 +42,19 @@ class ServerFailure extends Failure {
         return ServerFailure(data['message'].toString());
       }
     }
-    return ServerFailure(e.message ?? 'An unknown error occurred');
+    
+    switch (e.type) {
+      case DioExceptionType.connectionTimeout:
+      case DioExceptionType.sendTimeout:
+      case DioExceptionType.receiveTimeout:
+        return ServerFailure(LocaleKeys.errorsConnectionError.tr());
+      case DioExceptionType.connectionError:
+        return ServerFailure(LocaleKeys.errorsNetworkError.tr());
+      case DioExceptionType.cancel:
+        return const ServerFailure('تم إلغاء الطلب');
+      default:
+        return ServerFailure(LocaleKeys.errorsServerError.tr());
+    }
   }
 }
 

@@ -1873,5 +1873,18 @@ abstract class LocaleKeys {
   static const next_step = 'next_step';
   static const previous_step = 'previous_step';
   static const cancel = 'cancel';
+  static const delete_legal_case = 'delete_legal_case';
+  static const delete_legal_case_confirm_title = 'delete_legal_case_confirm_title';
+  static const delete_legal_case_confirm_body = 'delete_legal_case_confirm_body';
+  static const delete_legal_case_confirm_btn = 'delete_legal_case_confirm_btn';
+  static const legal_case_deleted_success = 'legal_case_deleted_success';
+  static const add_stage = 'add_stage';
+  static const stage_name = 'stage_name';
+  static const stage_date = 'stage_date';
+  static const save_stage = 'save_stage';
+  static const stage_added_success = 'stage_added_success';
+  static const stage_name_required = 'stage_name_required';
+  static const stage_date_required = 'stage_date_required';
+  static const no_stages_found = 'no_stages_found';
 }
 

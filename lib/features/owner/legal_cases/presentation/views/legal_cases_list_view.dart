@@ -167,6 +167,15 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                                   onTap: () {
                                     context.push('${Routes.ownerLegalCases}/${Routes.ownerLegalCaseDetails.replaceAll(':id', '${legalCase.id}')}');
                                   },
+                                  onEditTap: () async {
+                                    final result = await context.push<bool>(
+                                      '${Routes.ownerLegalCases}/${Routes.ownerLegalCaseEdit}',
+                                      extra: legalCase,
+                                    );
+                                    if (result == true) {
+                                      _cubit.fetchLegalCases(isRefresh: true);
+                                    }
+                                  },
                                 );
                               },
                             ),

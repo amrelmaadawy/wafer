@@ -5,6 +5,8 @@ import '../entities/legal_case_form_data_entity.dart';
 import '../entities/legal_cases_list_response_entity.dart';
 import '../entities/legal_case_item_entity.dart';
 import '../usecases/create_legal_case_use_case.dart';
+import '../usecases/update_legal_case_use_case.dart';
+import '../usecases/add_legal_case_stage_use_case.dart';
 
 abstract class LegalCasesRepository {
   Future<Either<Failure, LegalCaseFormDataEntity>> getLegalCaseFormData();
@@ -14,5 +16,10 @@ abstract class LegalCasesRepository {
     String? status,
   });
   Future<Either<Failure, LegalCaseItemEntity>> getLegalCaseDetails(int id);
-  Future<Either<Failure, LegalCaseItemEntity>> createLegalCase(CreateLegalCaseParams params);
+  Future<Either<Failure, LegalCaseItemEntity>> createLegalCase(
+      CreateLegalCaseParams params);
+  Future<Either<Failure, LegalCaseItemEntity>> updateLegalCase(
+      UpdateLegalCaseParams params);
+  Future<Either<Failure, void>> deleteLegalCase(int id);
+  Future<Either<Failure, LegalCaseItemEntity>> addLegalCaseStage(AddStageParams params);
 }

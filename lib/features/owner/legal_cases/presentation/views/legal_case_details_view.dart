@@ -11,8 +11,13 @@ import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../cubits/details/legal_case_details_cubit.dart';
 import '../cubits/details/legal_case_details_state.dart';
+import '../cubits/delete/legal_case_delete_cubit.dart';
+import '../cubits/delete/legal_case_delete_state.dart';
+import '../cubits/add_stage/legal_case_add_stage_cubit.dart';
+import 'package:go_router/go_router.dart';
 import '../widgets/legal_case_details_skeleton.dart';
 import '../widgets/case_stages_timeline_widget.dart';
+import '../widgets/add_legal_case_stage_bottom_sheet.dart';
 
 class LegalCaseDetailsView extends StatefulWidget {
   final int legalCaseId;
@@ -28,30 +33,69 @@ class LegalCaseDetailsView extends StatefulWidget {
 
 class _LegalCaseDetailsViewState extends State<LegalCaseDetailsView> {
   late final LegalCaseDetailsCubit _cubit;
+  late final LegalCaseDeleteCubit _deleteCubit;
 
   @override
   void initState() {
     super.initState();
     _cubit = sl<LegalCaseDetailsCubit>()..fetchLegalCaseDetails(widget.legalCaseId);
+    _deleteCubit = sl<LegalCaseDeleteCubit>();
   }
 
   @override
   void dispose() {
     _cubit.close();
+    _deleteCubit.close();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _cubit,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(LocaleKeys.case_details.tr(), style: AppTextStyles.h4),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          scrolledUnderElevation: 0,
-        ),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: _cubit),
+        BlocProvider.value(value: _deleteCubit),
+      ],
+      child: BlocListener<LegalCaseDeleteCubit, LegalCaseDeleteState>(
+        listener: (context, state) {
+          if (state is LegalCaseDeleteLoading) {
+            showDialog(
+              context: context,
+              barrierDismissible: false,
+              builder: (_) => const Center(child: CircularProgressIndicator()),
+            );
+          } else if (state is LegalCaseDeleteSuccess) {
+            Navigator.of(context).pop(); // Close loading
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(LocaleKeys.legal_case_deleted_success.tr()),
+                backgroundColor: AppColors.success,
+              ),
+            );
+            context.pop(true);
+          } else if (state is LegalCaseDeleteError) {
+            Navigator.of(context).pop(); // Close loading
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: AppColors.error,
+              ),
+            );
+          }
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(LocaleKeys.case_details.tr(), style: AppTextStyles.h4),
+            centerTitle: true,
+            backgroundColor: Colors.white,
+            scrolledUnderElevation: 0,
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.delete_outline, color: AppColors.error),
+                onPressed: () => _showDeleteDialog(context),
+              ),
+            ],
+          ),
         backgroundColor: AppColors.backgroundLight,
         body: BlocBuilder<LegalCaseDetailsCubit, LegalCaseDetailsState>(
           builder: (context, state) {
@@ -96,14 +140,55 @@ class _LegalCaseDetailsViewState extends State<LegalCaseDetailsView> {
                       _buildPropertyCard(legalCase),
                       const SizedBox(height: AppSpacing.md),
                     ],
-                    if (legalCase.stages != null && legalCase.stages!.isNotEmpty) ...[
-                      Text(
-                        LocaleKeys.timeline.tr(),
-                        style: AppTextStyles.h4.copyWith(color: AppColors.textPrimaryLight),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          LocaleKeys.timeline.tr(),
+                          style: AppTextStyles.h4.copyWith(color: AppColors.textPrimaryLight),
+                        ),
+                        TextButton.icon(
+                          onPressed: () => _showAddStageBottomSheet(context, widget.legalCaseId),
+                          icon: const Icon(Icons.add, size: 18),
+                          label: Text(LocaleKeys.add_stage.tr()),
+                          style: TextButton.styleFrom(
+                            foregroundColor: AppColors.primaryDark,
+                            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.md),
+                    if (legalCase.stages != null && legalCase.stages!.isNotEmpty)
+                      CaseStagesTimelineWidget(stages: legalCase.stages!)
+                    else
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl * 1.5),
+                        decoration: BoxDecoration(
+                          color: AppColors.backgroundLight,
+                          borderRadius: AppRadius.circularLg,
+                          border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.5)),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(
+                              Icons.timeline_rounded,
+                              size: 48,
+                              color: AppColors.borderLight,
+                            ),
+                            const SizedBox(height: AppSpacing.sm),
+                            Text(
+                              LocaleKeys.no_stages_found.tr(),
+                              style: AppTextStyles.bodyMedium.copyWith(
+                                color: AppColors.textSecondaryLight,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(height: AppSpacing.md),
-                      CaseStagesTimelineWidget(stages: legalCase.stages!),
-                    ],
                   ],
                 ),
               );
@@ -112,6 +197,61 @@ class _LegalCaseDetailsViewState extends State<LegalCaseDetailsView> {
             return const SizedBox();
           },
         ),
+      ),
+    ));
+  }
+
+  void _showAddStageBottomSheet(BuildContext context, int legalCaseId) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (bottomSheetContext) => BlocProvider(
+        create: (_) => sl<LegalCaseAddStageCubit>(),
+        child: AddLegalCaseStageBottomSheet(legalCaseId: legalCaseId),
+      ),
+    ).then((result) {
+      if (result == true) {
+        _cubit.fetchLegalCaseDetails(widget.legalCaseId);
+      }
+    });
+  }
+
+  void _showDeleteDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(
+          LocaleKeys.delete_legal_case_confirm_title.tr(),
+          style: AppTextStyles.h4.copyWith(color: AppColors.error),
+        ),
+        content: Text(
+          LocaleKeys.delete_legal_case_confirm_body.tr(),
+          style: AppTextStyles.bodyMedium,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: AppRadius.circularLg,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(
+              LocaleKeys.cancel.tr(),
+              style: AppTextStyles.labelLarge.copyWith(color: AppColors.textSecondaryLight),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              Navigator.of(dialogContext).pop();
+              _deleteCubit.deleteLegalCase(widget.legalCaseId);
+            },
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
+            child: Text(
+              LocaleKeys.delete_legal_case_confirm_btn.tr(),
+              style: AppTextStyles.labelLarge.copyWith(color: Colors.white),
+            ),
+          ),
+        ],
       ),
     );
   }

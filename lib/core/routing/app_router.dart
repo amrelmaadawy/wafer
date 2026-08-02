@@ -56,6 +56,7 @@ import '../../features/owner/supervisors/presentation/views/supervisors_list_vie
 import '../../features/owner/legal_cases/presentation/views/legal_cases_list_view.dart';
 import '../../features/owner/legal_cases/presentation/views/legal_case_details_view.dart';
 import '../../features/owner/legal_cases/presentation/views/legal_case_create_view.dart';
+import '../../features/owner/legal_cases/domain/entities/legal_case_item_entity.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiations_list_view.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiation_settings_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -199,6 +200,16 @@ class AppRouter {
               GoRoute(
                 path: Routes.ownerLegalCaseCreate,
                 builder: (context, state) => const LegalCaseCreateView(),
+              ),
+              GoRoute(
+                path: Routes.ownerLegalCaseEdit,
+                builder: (context, state) {
+                  final extra = state.extra;
+                  if (extra is! LegalCaseItemEntity) {
+                    return const LegalCasesListView();
+                  }
+                  return LegalCaseCreateView(legalCaseToEdit: extra);
+                },
               ),
               GoRoute(
                 path: Routes.ownerLegalCaseDetails,

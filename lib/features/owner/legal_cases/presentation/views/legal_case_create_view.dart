@@ -19,11 +19,17 @@ import '../cubits/create/legal_case_create_state.dart';
 import '../cubits/form_data/legal_case_form_data_cubit.dart';
 import '../cubits/form_data/legal_case_form_data_state.dart';
 import '../../domain/entities/legal_case_form_data_entity.dart';
+import '../../domain/entities/legal_case_item_entity.dart';
+import '../../domain/usecases/update_legal_case_use_case.dart';
+import '../cubits/update/legal_case_update_cubit.dart';
+import '../cubits/update/legal_case_update_state.dart';
 import '../widgets/legal_case_details_skeleton.dart';
 import '../widgets/legal_case_step_indicator_widget.dart';
 
 class LegalCaseCreateView extends StatefulWidget {
-  const LegalCaseCreateView({super.key});
+  final LegalCaseItemEntity? legalCaseToEdit;
+
+  const LegalCaseCreateView({super.key, this.legalCaseToEdit});
 
   @override
   State<LegalCaseCreateView> createState() => _LegalCaseCreateViewState();
@@ -32,6 +38,9 @@ class LegalCaseCreateView extends StatefulWidget {
 class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
   late final LegalCaseFormDataCubit _formDataCubit;
   late final LegalCaseCreateCubit _createCubit;
+  late final LegalCaseUpdateCubit _updateCubit;
+
+  bool get isEditMode => widget.legalCaseToEdit != null;
 
   final _step1FormKey = GlobalKey<FormState>();
   final _step2FormKey = GlobalKey<FormState>();
@@ -68,12 +77,40 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
     super.initState();
     _formDataCubit = sl<LegalCaseFormDataCubit>()..fetchFormData();
     _createCubit = sl<LegalCaseCreateCubit>();
+    _updateCubit = sl<LegalCaseUpdateCubit>();
+
+    if (isEditMode) {
+      final item = widget.legalCaseToEdit!;
+      _caseNumberController.text = item.caseNumber ?? '';
+      _selectedBranchId = item.branch?.id;
+      _selectedPropertyId = item.property?.id;
+      _selectedUnitId = item.unit?.id;
+      _selectedContractId = item.contract?.id;
+      _selectedInvoiceId = item.invoiceId;
+      _courtController.text = item.court ?? '';
+      _circuitController.text = item.circuit ?? '';
+      _plaintiffController.text = item.parties?.plaintiff ?? '';
+      _defendantController.text = item.parties?.defendant ?? '';
+      _lawyerController.text = item.lawyer?.name ?? '';
+      _lawyerPhoneController.text = item.lawyer?.phone ?? '';
+      _lawyerOfficeController.text = item.lawyer?.office ?? '';
+      _selectedCaseType = item.caseType;
+      _amountController.text = item.amount?.toString() ?? '';
+      if (item.hearingDate != null) {
+        try {
+          _hearingDate = DateTime.parse(item.hearingDate!);
+        } catch (_) {}
+      }
+      _selectedStatus = item.status;
+      _notesController.text = item.notes ?? '';
+    }
   }
 
   @override
   void dispose() {
     _formDataCubit.close();
     _createCubit.close();
+    _updateCubit.close();
     _caseNumberController.dispose();
     _courtController.dispose();
     _circuitController.dispose();
@@ -147,28 +184,52 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
       return;
     }
 
-    final params = CreateLegalCaseParams(
-      caseNumber: _caseNumberController.text.trim(),
-      branchId: _selectedBranchId!,
-      propertyId: _selectedPropertyId,
-      unitId: _selectedUnitId,
-      contractId: _selectedContractId,
-      invoiceId: _selectedInvoiceId,
-      court: _courtController.text.trim(),
-      circuit: _circuitController.text.trim(),
-      plaintiff: _plaintiffController.text.trim(),
-      defendant: _defendantController.text.trim(),
-      lawyer: _lawyerController.text.trim(),
-      lawyerPhone: _lawyerPhoneController.text.trim().isNotEmpty ? _lawyerPhoneController.text.trim() : null,
-      lawyerOffice: _lawyerOfficeController.text.trim().isNotEmpty ? _lawyerOfficeController.text.trim() : null,
-      caseType: _selectedCaseType!,
-      amount: double.tryParse(_amountController.text.trim()) ?? 0.0,
-      hearingDate: DateFormat('yyyy-MM-dd').format(_hearingDate!),
-      status: _selectedStatus!,
-      notes: _notesController.text.trim().isNotEmpty ? _notesController.text.trim() : null,
-    );
-
-    _createCubit.createLegalCase(params);
+    if (isEditMode) {
+      final params = UpdateLegalCaseParams(
+        id: widget.legalCaseToEdit!.id!,
+        caseNumber: _caseNumberController.text.trim(),
+        branchId: _selectedBranchId,
+        propertyId: _selectedPropertyId,
+        unitId: _selectedUnitId,
+        contractId: _selectedContractId,
+        invoiceId: _selectedInvoiceId,
+        court: _courtController.text.trim(),
+        circuit: _circuitController.text.trim(),
+        plaintiff: _plaintiffController.text.trim(),
+        defendant: _defendantController.text.trim(),
+        lawyer: _lawyerController.text.trim(),
+        lawyerPhone: _lawyerPhoneController.text.trim().isNotEmpty ? _lawyerPhoneController.text.trim() : null,
+        lawyerOffice: _lawyerOfficeController.text.trim().isNotEmpty ? _lawyerOfficeController.text.trim() : null,
+        caseType: _selectedCaseType,
+        amount: double.tryParse(_amountController.text.trim()) ?? 0.0,
+        hearingDate: DateFormat('yyyy-MM-dd').format(_hearingDate!),
+        status: _selectedStatus,
+        notes: _notesController.text.trim().isNotEmpty ? _notesController.text.trim() : null,
+      );
+      _updateCubit.updateLegalCase(params);
+    } else {
+      final params = CreateLegalCaseParams(
+        caseNumber: _caseNumberController.text.trim(),
+        branchId: _selectedBranchId!,
+        propertyId: _selectedPropertyId,
+        unitId: _selectedUnitId,
+        contractId: _selectedContractId,
+        invoiceId: _selectedInvoiceId,
+        court: _courtController.text.trim(),
+        circuit: _circuitController.text.trim(),
+        plaintiff: _plaintiffController.text.trim(),
+        defendant: _defendantController.text.trim(),
+        lawyer: _lawyerController.text.trim(),
+        lawyerPhone: _lawyerPhoneController.text.trim().isNotEmpty ? _lawyerPhoneController.text.trim() : null,
+        lawyerOffice: _lawyerOfficeController.text.trim().isNotEmpty ? _lawyerOfficeController.text.trim() : null,
+        caseType: _selectedCaseType!,
+        amount: double.tryParse(_amountController.text.trim()) ?? 0.0,
+        hearingDate: DateFormat('yyyy-MM-dd').format(_hearingDate!),
+        status: _selectedStatus!,
+        notes: _notesController.text.trim().isNotEmpty ? _notesController.text.trim() : null,
+      );
+      _createCubit.createLegalCase(params);
+    }
   }
 
   @override
@@ -177,19 +238,37 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
       providers: [
         BlocProvider.value(value: _formDataCubit),
         BlocProvider.value(value: _createCubit),
+        BlocProvider.value(value: _updateCubit),
       ],
-      child: BlocListener<LegalCaseCreateCubit, LegalCaseCreateState>(
-        listener: (context, state) {
-          if (state is LegalCaseCreateSuccess) {
-            AppToast.showSuccess(context, LocaleKeys.legal_case_created_success.tr());
-            context.pop(true);
-          } else if (state is LegalCaseCreateError) {
-            AppToast.showError(context, state.message);
-          }
-        },
+      child: MultiBlocListener(
+        listeners: [
+          BlocListener<LegalCaseCreateCubit, LegalCaseCreateState>(
+            listener: (context, state) {
+              if (state is LegalCaseCreateSuccess) {
+                AppToast.showSuccess(context, LocaleKeys.legal_case_created_success.tr());
+                context.pop(true);
+              } else if (state is LegalCaseCreateError) {
+                AppToast.showError(context, state.message);
+              }
+            },
+          ),
+          BlocListener<LegalCaseUpdateCubit, LegalCaseUpdateState>(
+            listener: (context, state) {
+              if (state is LegalCaseUpdateSuccess) {
+                AppToast.showSuccess(context, 'تم تعديل القضية بنجاح');
+                context.pop(true);
+              } else if (state is LegalCaseUpdateError) {
+                AppToast.showError(context, state.message);
+              }
+            },
+          ),
+        ],
         child: Scaffold(
           appBar: AppBar(
-            title: Text(LocaleKeys.create_legal_case.tr(), style: AppTextStyles.h4),
+            title: Text(
+              isEditMode ? 'تعديل القضية' : LocaleKeys.create_legal_case.tr(),
+              style: AppTextStyles.h4,
+            ),
             centerTitle: true,
             backgroundColor: Colors.white,
             scrolledUnderElevation: 0,

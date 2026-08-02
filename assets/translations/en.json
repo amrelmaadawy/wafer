@@ -909,5 +909,18 @@
   "case_number": "Case Number",
   "branch": "Branch",
   "status": "Status",
-  "property": "Property"
+  "property": "Property",
+  "delete_legal_case": "Delete Legal Case",
+  "delete_legal_case_confirm_title": "Confirm Deletion",
+  "delete_legal_case_confirm_body": "Are you sure you want to delete this legal case? This action cannot be undone.",
+  "delete_legal_case_confirm_btn": "Delete",
+  "legal_case_deleted_success": "Legal case deleted successfully",
+  "add_stage": "Add Stage",
+  "stage_name": "Stage Name",
+  "stage_date": "Stage Date",
+  "save_stage": "Save Stage",
+  "stage_added_success": "Stage added successfully",
+  "stage_name_required": "Please enter stage name",
+  "stage_date_required": "Please enter stage date",
+  "no_stages_found": "No stages found for this case yet"
 }

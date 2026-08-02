@@ -10,6 +10,12 @@ import '../presentation/cubits/form_data/legal_case_form_data_cubit.dart';
 import '../presentation/cubits/list/legal_cases_list_cubit.dart';
 import '../presentation/cubits/details/legal_case_details_cubit.dart';
 import '../presentation/cubits/create/legal_case_create_cubit.dart';
+import '../domain/usecases/update_legal_case_use_case.dart';
+import '../presentation/cubits/update/legal_case_update_cubit.dart';
+import '../domain/usecases/delete_legal_case_use_case.dart';
+import '../presentation/cubits/delete/legal_case_delete_cubit.dart';
+import '../domain/usecases/add_legal_case_stage_use_case.dart';
+import '../presentation/cubits/add_stage/legal_case_add_stage_cubit.dart';
 
 // Import service_locator.dart to use the same 'sl' instance
 import '../../../../../core/di/service_locator.dart';
@@ -78,6 +84,42 @@ void initLegalCases() {
   if (!sl.isRegistered<LegalCaseCreateCubit>()) {
     sl.registerFactory(
       () => LegalCaseCreateCubit(sl()),
+    );
+  }
+
+  if (!sl.isRegistered<UpdateLegalCaseUseCase>()) {
+    sl.registerLazySingleton(
+      () => UpdateLegalCaseUseCase(sl()),
+    );
+  }
+
+  if (!sl.isRegistered<LegalCaseUpdateCubit>()) {
+    sl.registerFactory(
+      () => LegalCaseUpdateCubit(sl()),
+    );
+  }
+
+  if (!sl.isRegistered<DeleteLegalCaseUseCase>()) {
+    sl.registerLazySingleton(
+      () => DeleteLegalCaseUseCase(sl()),
+    );
+  }
+
+  if (!sl.isRegistered<LegalCaseDeleteCubit>()) {
+    sl.registerFactory(
+      () => LegalCaseDeleteCubit(sl()),
+    );
+  }
+
+  if (!sl.isRegistered<AddLegalCaseStageUseCase>()) {
+    sl.registerLazySingleton(
+      () => AddLegalCaseStageUseCase(sl()),
+    );
+  }
+
+  if (!sl.isRegistered<LegalCaseAddStageCubit>()) {
+    sl.registerFactory(
+      () => LegalCaseAddStageCubit(addLegalCaseStageUseCase: sl()),
     );
   }
 }

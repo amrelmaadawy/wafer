@@ -6,8 +6,10 @@ import '../../../../../core/error/failures.dart';
 import '../../domain/entities/legal_case_form_data_entity.dart';
 import '../../domain/entities/legal_cases_list_response_entity.dart';
 import '../../domain/entities/legal_case_item_entity.dart';
-import '../../domain/usecases/create_legal_case_use_case.dart';
 import '../../domain/repositories/legal_cases_repository.dart';
+import '../../domain/usecases/create_legal_case_use_case.dart';
+import '../../domain/usecases/update_legal_case_use_case.dart';
+import '../../domain/usecases/add_legal_case_stage_use_case.dart';
 import '../data_sources/legal_cases_remote_data_source.dart';
 
 class LegalCasesRepositoryImpl implements LegalCasesRepository {
@@ -76,10 +78,48 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioException(e));
-    } catch (e, s) {
-      print('=== PARSE ERROR DETAILS ===');
-      print(e);
-      print(s);
+    } catch (e) {
+      return Left(ServerFailure('حدث خطأ غير متوقع'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, LegalCaseItemEntity>> updateLegalCase(UpdateLegalCaseParams params) async {
+    try {
+      final remoteData = await remoteDataSource.updateLegalCase(params);
+      return Right(remoteData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure('حدث خطأ غير متوقع'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteLegalCase(int id) async {
+    try {
+      await remoteDataSource.deleteLegalCase(id);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure('حدث خطأ غير متوقع'));
+    }
+  }
+  @override
+  Future<Either<Failure, LegalCaseItemEntity>> addLegalCaseStage(AddStageParams params) async {
+    try {
+      final remoteData = await remoteDataSource.addLegalCaseStage(params);
+      return Right(remoteData);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
       return Left(ServerFailure('حدث خطأ غير متوقع'));
     }
   }
