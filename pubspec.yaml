@@ -80,6 +80,7 @@ flutter:
   assets:
     - assets/translations/
     - assets/font/
+    - shorebird.yaml
 
   fonts:
     - family: IBMPlexSansArabic
