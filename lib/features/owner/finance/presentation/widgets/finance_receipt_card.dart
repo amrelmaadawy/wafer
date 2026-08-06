@@ -78,7 +78,7 @@ class FinanceReceiptCard extends StatelessWidget {
                 Row(
                   children: [
                     _buildStatusBadge(context, statusText, statusColor),
-                    if (onEditTap != null) ...[
+                    if (onEditTap != null && receipt.status != 'cancelled') ...[
                       const SizedBox(width: 8),
                       GestureDetector(
                         onTap: onEditTap,

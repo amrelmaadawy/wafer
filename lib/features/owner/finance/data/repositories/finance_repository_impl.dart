@@ -155,13 +155,29 @@ class FinanceRepositoryImpl extends BaseRepository
 
   @override
   Future<Either<Failure, ReceiptEntity>> getReceiptDetails(int receiptId) async {
-    try {
-      final receiptModel = await remoteDataSource.getReceiptDetails(receiptId);
-      return Right(receiptModel);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
+    if (await networkInfo.isConnected) {
+      try {
+        final receipt = await remoteDataSource.getReceiptDetails(receiptId);
+        return Right(receipt);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure('No internet connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ReceiptEntity>> cancelReceipt(int receiptId, String reason) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final receipt = await remoteDataSource.cancelReceipt(receiptId, reason);
+        return Right(receipt);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure('No internet connection'));
     }
   }
 }

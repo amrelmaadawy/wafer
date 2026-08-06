@@ -13,6 +13,12 @@ import '../../../../../generated/locale_keys.dart';
 import '../../domain/entities/receipt_entity.dart';
 import '../cubit/receipts/finance_receipt_details_cubit.dart';
 import '../cubit/receipts/finance_receipt_details_state.dart';
+import '../cubit/receipts/cancel_finance_receipt_cubit.dart';
+import '../cubit/receipts/cancel_finance_receipt_state.dart';
+import '../cubit/receipts/finance_receipts_cubit.dart';
+import '../widgets/cancel_receipt_dialog.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../core/di/service_locator.dart';
 
 class OwnerReceiptDetailsView extends StatefulWidget {
   final int receiptId;
@@ -47,20 +53,38 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
         backgroundColor: Colors.white,
         elevation: 0,
       ),
-      body: BlocBuilder<FinanceReceiptDetailsCubit, FinanceReceiptDetailsState>(
-        builder: (context, state) {
-          if (state is FinanceReceiptDetailsLoading) {
-            return _buildLoading();
-          } else if (state is FinanceReceiptDetailsError) {
-            return CustomErrorWidget(
-              message: state.message,
-              onRetry: _fetchDetails,
+      body: BlocProvider(
+        create: (_) => sl<CancelFinanceReceiptCubit>(),
+        child: BlocConsumer<CancelFinanceReceiptCubit, CancelFinanceReceiptState>(
+          listener: (context, cancelState) {
+            if (cancelState is CancelFinanceReceiptLoading) {
+              AppToast.showInfo(context, 'جاري الإلغاء...');
+            } else if (cancelState is CancelFinanceReceiptSuccess) {
+              AppToast.showSuccess(context, 'تم إلغاء السند المالي بنجاح');
+              _fetchDetails();
+              context.read<FinanceReceiptsCubit>().fetchReceipts(isRefresh: true);
+            } else if (cancelState is CancelFinanceReceiptError) {
+              AppToast.showError(context, cancelState.message);
+            }
+          },
+          builder: (context, cancelState) {
+            return BlocBuilder<FinanceReceiptDetailsCubit, FinanceReceiptDetailsState>(
+              builder: (context, state) {
+                if (state is FinanceReceiptDetailsLoading) {
+                  return _buildLoading();
+                } else if (state is FinanceReceiptDetailsError) {
+                  return CustomErrorWidget(
+                    message: state.message,
+                    onRetry: _fetchDetails,
+                  );
+                } else if (state is FinanceReceiptDetailsSuccess) {
+                  return _buildDetails(context, state.receipt);
+                }
+                return const SizedBox.shrink();
+              },
             );
-          } else if (state is FinanceReceiptDetailsSuccess) {
-            return _buildDetails(context, state.receipt);
-          }
-          return const SizedBox.shrink();
-        },
+          },
+        ),
       ),
     );
   }
@@ -134,6 +158,43 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
                 _buildDetailRow(context, 'إجمالي الدائن', '${receipt.journalEntry!.totalCredit} ر.س'),
               ],
             ),
+          ],
+          if (receipt.status != 'cancelled') ...[
+            const SizedBox(height: 32),
+            SizedBox(
+              width: double.infinity,
+              height: 54,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (dialogContext) => CancelReceiptDialog(
+                      onConfirm: (reason) {
+                        context.read<CancelFinanceReceiptCubit>().cancelReceipt(receipt.id, reason);
+                      },
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.cancel_outlined, color: Colors.white),
+                label: const Text(
+                  'إلغاء السند المالي',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.error,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadius.circularLg,
+                  ),
+                  elevation: 0,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
           ],
         ],
       ),

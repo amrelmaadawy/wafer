@@ -171,12 +171,12 @@ class AppRouter {
               BlocProvider(create: (_) => sl<PropertiesListCubit>()),
               BlocProvider(create: (_) => sl<OwnerContractsCubit>()),
               if (extraCubit != null)
-                BlocProvider.value(
+                BlocProvider<FinanceReceiptsCubit>.value(
                   value: extraCubit,
                   key: const ValueKey('finance_receipts_cubit_value'),
                 )
               else
-                BlocProvider(
+                BlocProvider<FinanceReceiptsCubit>(
                   create: (_) => sl<FinanceReceiptsCubit>(),
                   key: const ValueKey('finance_receipts_cubit_create'),
                 ),
@@ -196,12 +196,12 @@ class AppRouter {
             providers: [
               BlocProvider(create: (_) => sl<UpdateFinanceReceiptCubit>()),
               if (extraCubit != null)
-                BlocProvider.value(
+                BlocProvider<FinanceReceiptsCubit>.value(
                   value: extraCubit,
                   key: const ValueKey('finance_receipts_cubit_value'),
                 )
               else
-                BlocProvider(
+                BlocProvider<FinanceReceiptsCubit>(
                   create: (_) => sl<FinanceReceiptsCubit>(),
                   key: const ValueKey('finance_receipts_cubit_create'),
                 ),
@@ -214,8 +214,21 @@ class AppRouter {
         path: Routes.ownerFinanceReceiptDetails,
         builder: (context, state) {
           final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
-          return BlocProvider(
-            create: (_) => sl<FinanceReceiptDetailsCubit>(),
+          final extraCubit = state.extra as FinanceReceiptsCubit?;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => sl<FinanceReceiptDetailsCubit>()),
+              if (extraCubit != null)
+                BlocProvider<FinanceReceiptsCubit>.value(
+                  value: extraCubit,
+                  key: const ValueKey('finance_receipts_cubit_value'),
+                )
+              else
+                BlocProvider<FinanceReceiptsCubit>(
+                  create: (_) => sl<FinanceReceiptsCubit>(),
+                  key: const ValueKey('finance_receipts_cubit_create'),
+                ),
+            ],
             child: OwnerReceiptDetailsView(receiptId: id),
           );
         },

@@ -164,6 +164,7 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
                           onTap: () {
                             context.push(
                               Routes.ownerFinanceReceiptDetails.replaceFirst(':id', receipt.id.toString()),
+                              extra: context.read<FinanceReceiptsCubit>(),
                             );
                           },
                           onEditTap: () {

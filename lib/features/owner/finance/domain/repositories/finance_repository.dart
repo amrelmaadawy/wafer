@@ -34,6 +34,8 @@ abstract class FinanceRepository {
     UpdateFinanceReceiptParams params,
   );
 
+  Future<Either<Failure, ReceiptEntity>> cancelReceipt(int receiptId, String reason);
+
   Future<Either<Failure, ReceiptEntity>> getReceiptDetails(int receiptId);
 
   Future<Either<Failure, FinanceAccountEntity>> updateAccount(

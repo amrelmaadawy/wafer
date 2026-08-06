@@ -36,6 +36,7 @@ abstract class FinanceRemoteDataSource {
   Future<ReceiptModel> updateReceipt(int receiptId, Map<String, dynamic> body);
 
   Future<ReceiptModel> getReceiptDetails(int receiptId);
+  Future<ReceiptModel> cancelReceipt(int receiptId, String reason);
 }
 
 class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
@@ -212,6 +213,26 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
     } on DioException catch (e) {
       throw ServerException(
         e.response?.data['message'] ?? 'Failed to get receipt details',
+      );
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<ReceiptModel> cancelReceipt(int receiptId, String reason) async {
+    try {
+      final response = await dio.post(
+        'owner/accounting/receipts/$receiptId/action',
+        data: {
+          "action": "cancel",
+          "reason": reason,
+        },
+      );
+      return ReceiptModel.fromJson(response.data['data']['receipt']);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to cancel receipt',
       );
     } catch (e) {
       throw ServerException(e.toString());
