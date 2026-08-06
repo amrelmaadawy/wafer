@@ -32,6 +32,10 @@ abstract class FinanceRemoteDataSource {
   });
 
   Future<ReceiptModel> createReceipt(Map<String, dynamic> body);
+  
+  Future<ReceiptModel> updateReceipt(int receiptId, Map<String, dynamic> body);
+
+  Future<ReceiptModel> getReceiptDetails(int receiptId);
 }
 
 class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
@@ -177,6 +181,37 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
     } on DioException catch (e) {
       throw ServerException(
         e.response?.data['message'] ?? 'Failed to create receipt',
+      );
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<ReceiptModel> updateReceipt(int receiptId, Map<String, dynamic> body) async {
+    try {
+      final response = await dio.patch(
+        'owner/accounting/receipts/$receiptId',
+        data: body,
+      );
+      return ReceiptModel.fromJson(response.data['data']['receipt']);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to update receipt',
+      );
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<ReceiptModel> getReceiptDetails(int receiptId) async {
+    try {
+      final response = await dio.get('owner/accounting/receipts/$receiptId');
+      return ReceiptModel.fromJson(response.data['data']['receipt']);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to get receipt details',
       );
     } catch (e) {
       throw ServerException(e.toString());

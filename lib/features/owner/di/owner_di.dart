@@ -54,6 +54,8 @@ import '../finance/domain/usecases/update_finance_account_use_case.dart';
 import '../finance/domain/usecases/get_finance_account_details_use_case.dart';
 import '../finance/domain/usecases/get_finance_receipts_use_case.dart';
 import '../finance/domain/usecases/create_finance_receipt_use_case.dart';
+import '../finance/domain/usecases/update_finance_receipt_use_case.dart';
+import '../finance/domain/usecases/get_finance_receipt_details_use_case.dart';
 import '../finance/presentation/cubit/finance_overview_cubit.dart';
 import '../finance/presentation/cubit/accounts/finance_accounts_cubit.dart';
 import '../finance/presentation/cubit/accounts/create_finance_account_cubit.dart';
@@ -61,6 +63,8 @@ import '../finance/presentation/cubit/accounts/update_finance_account_cubit.dart
 import '../finance/presentation/cubit/accounts/finance_account_details_cubit.dart';
 import '../finance/presentation/cubit/receipts/finance_receipts_cubit.dart';
 import '../finance/presentation/cubit/receipts/create_finance_receipt_cubit.dart';
+import '../finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
+import '../finance/presentation/cubit/receipts/finance_receipt_details_cubit.dart';
 // Reports
 import '../reports/data/datasources/owner_reports_remote_data_source.dart';
 import '../reports/data/repositories/owner_reports_repository_impl.dart';
@@ -210,6 +214,12 @@ void _initFinance() {
   if (!sl.isRegistered<CreateFinanceReceiptUseCase>()) {
     sl.registerLazySingleton(() => CreateFinanceReceiptUseCase(sl()));
   }
+  if (!sl.isRegistered<UpdateFinanceReceiptUseCase>()) {
+    sl.registerLazySingleton(() => UpdateFinanceReceiptUseCase(sl()));
+  }
+  if (!sl.isRegistered<GetFinanceReceiptDetailsUseCase>()) {
+    sl.registerLazySingleton(() => GetFinanceReceiptDetailsUseCase(sl()));
+  }
 
   // Cubits
   if (!sl.isRegistered<FinanceAccountsCubit>()) {
@@ -229,6 +239,12 @@ void _initFinance() {
   }
   if (!sl.isRegistered<CreateFinanceReceiptCubit>()) {
     sl.registerFactory(() => CreateFinanceReceiptCubit(sl()));
+  }
+  if (!sl.isRegistered<UpdateFinanceReceiptCubit>()) {
+    sl.registerFactory(() => UpdateFinanceReceiptCubit(updateFinanceReceiptUseCase: sl()));
+  }
+  if (!sl.isRegistered<FinanceReceiptDetailsCubit>()) {
+    sl.registerFactory(() => FinanceReceiptDetailsCubit(getFinanceReceiptDetailsUseCase: sl()));
   }
 }
 

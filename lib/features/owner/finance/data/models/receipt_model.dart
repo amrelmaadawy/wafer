@@ -13,7 +13,12 @@ class ReceiptModel extends ReceiptEntity {
     required super.owner,
     super.debitAccount,
     super.creditAccount,
+    super.propertyId,
+    super.contractId,
+    super.journalEntry,
     super.notes,
+    super.createdAt,
+    super.updatedAt,
   });
 
   factory ReceiptModel.fromJson(Map<String, dynamic> json) {
@@ -33,7 +38,12 @@ class ReceiptModel extends ReceiptEntity {
       creditAccount: json['credit_account'] != null
           ? FinanceAccountModel.fromJson(json['credit_account'])
           : null,
+      propertyId: json['property_id'] is int ? json['property_id'] : int.tryParse(json['property_id']?.toString() ?? ''),
+      contractId: json['contract_id'] is int ? json['contract_id'] : int.tryParse(json['contract_id']?.toString() ?? ''),
+      journalEntry: json['journal_entry'] != null ? JournalEntryModel.fromJson(json['journal_entry']) : null,
       notes: json['notes'],
+      createdAt: json['created_at'],
+      updatedAt: json['updated_at'],
     );
   }
 }
@@ -68,6 +78,28 @@ class ReceiptOwnerModel extends ReceiptOwnerEntity {
       email: json['email'],
       phone: json['phone'],
       userType: json['user_type'] ?? '',
+    );
+  }
+}
+
+class JournalEntryModel extends JournalEntryEntity {
+  const JournalEntryModel({
+    required super.id,
+    required super.entryNumber,
+    required super.entryDate,
+    required super.status,
+    required super.totalDebit,
+    required super.totalCredit,
+  });
+
+  factory JournalEntryModel.fromJson(Map<String, dynamic> json) {
+    return JournalEntryModel(
+      id: json['id'] is int ? json['id'] : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+      entryNumber: json['entry_number'] ?? '',
+      entryDate: json['entry_date'] ?? '',
+      status: json['status'] ?? '',
+      totalDebit: json['total_debit'] is num ? json['total_debit'] : num.tryParse(json['total_debit']?.toString() ?? '0') ?? 0.0,
+      totalCredit: json['total_credit'] is num ? json['total_credit'] : num.tryParse(json['total_credit']?.toString() ?? '0') ?? 0.0,
     );
   }
 }

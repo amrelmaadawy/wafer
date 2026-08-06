@@ -9,6 +9,7 @@ import '../../domain/entities/finance_overview_entity.dart';
 import '../../domain/repositories/finance_repository.dart';
 import '../../domain/usecases/create_finance_account_use_case.dart';
 import '../../domain/usecases/update_finance_account_use_case.dart';
+import '../../domain/usecases/update_finance_receipt_use_case.dart';
 import '../datasources/finance_remote_data_source.dart';
 import '../../domain/entities/receipts_response_entity.dart';
 import '../../domain/entities/receipt_entity.dart';
@@ -125,6 +126,42 @@ class FinanceRepositoryImpl extends BaseRepository
       return Right(response);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ReceiptEntity>> updateReceipt(UpdateFinanceReceiptParams params) async {
+    if (!await networkInfo.isConnected) {
+      return const Left(NetworkFailure('No internet connection'));
+    }
+
+    try {
+      final body = {
+        'amount': params.amount,
+        'receipt_date': params.receiptDate,
+        if (params.notes != null && params.notes!.isNotEmpty) 'notes': params.notes,
+      };
+
+      final receiptModel = await remoteDataSource.updateReceipt(params.receiptId, body);
+      return Right(receiptModel);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ReceiptEntity>> getReceiptDetails(int receiptId) async {
+    try {
+      final receiptModel = await remoteDataSource.getReceiptDetails(receiptId);
+      return Right(receiptModel);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
     }
   }
 }

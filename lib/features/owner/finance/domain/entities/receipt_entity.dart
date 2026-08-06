@@ -13,7 +13,12 @@ class ReceiptEntity extends Equatable {
   final ReceiptOwnerEntity owner;
   final FinanceAccountEntity? debitAccount;
   final FinanceAccountEntity? creditAccount;
+  final int? propertyId;
+  final int? contractId;
+  final JournalEntryEntity? journalEntry;
   final String? notes;
+  final String? createdAt;
+  final String? updatedAt;
 
   const ReceiptEntity({
     required this.id,
@@ -26,7 +31,12 @@ class ReceiptEntity extends Equatable {
     required this.owner,
     this.debitAccount,
     this.creditAccount,
+    this.propertyId,
+    this.contractId,
+    this.journalEntry,
     this.notes,
+    this.createdAt,
+    this.updatedAt,
   });
 
   @override
@@ -41,7 +51,12 @@ class ReceiptEntity extends Equatable {
         owner,
         debitAccount,
         creditAccount,
+        propertyId,
+        contractId,
+        journalEntry,
         notes,
+        createdAt,
+        updatedAt,
       ];
 }
 
@@ -75,4 +90,26 @@ class ReceiptOwnerEntity extends Equatable {
 
   @override
   List<Object?> get props => [id, name, email, phone, userType];
+}
+
+class JournalEntryEntity extends Equatable {
+  final int id;
+  final String entryNumber;
+  final String entryDate;
+  final String status;
+  final num totalDebit;
+  final num totalCredit;
+
+  const JournalEntryEntity({
+    required this.id,
+    required this.entryNumber,
+    required this.entryDate,
+    required this.status,
+    required this.totalDebit,
+    required this.totalCredit,
+  });
+
+  @override
+  List<Object?> get props =>
+      [id, entryNumber, entryDate, status, totalDebit, totalCredit];
 }

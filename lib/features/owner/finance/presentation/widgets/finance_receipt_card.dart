@@ -10,11 +10,13 @@ import '../../domain/entities/receipt_entity.dart';
 class FinanceReceiptCard extends StatelessWidget {
   final ReceiptEntity receipt;
   final VoidCallback? onTap;
+  final VoidCallback? onEditTap;
 
   const FinanceReceiptCard({
     super.key,
     required this.receipt,
     this.onTap,
+    this.onEditTap,
   });
 
   @override
@@ -73,7 +75,30 @@ class FinanceReceiptCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                _buildStatusBadge(context, statusText, statusColor),
+                Row(
+                  children: [
+                    _buildStatusBadge(context, statusText, statusColor),
+                    if (onEditTap != null) ...[
+                      const SizedBox(width: 8),
+                      GestureDetector(
+                        onTap: onEditTap,
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: AppColors.backgroundLight,
+                            shape: BoxShape.circle,
+                            border: Border.all(color: AppColors.borderLight),
+                          ),
+                          child: const Icon(
+                            Icons.edit_outlined,
+                            size: 16,
+                            color: AppColors.textSecondaryLight,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
               ],
             ),
             const SizedBox(height: 16),

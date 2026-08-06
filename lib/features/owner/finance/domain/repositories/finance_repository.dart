@@ -8,6 +8,7 @@ import '../entities/receipt_entity.dart';
 import '../usecases/create_finance_account_use_case.dart';
 import '../usecases/create_finance_receipt_use_case.dart';
 import '../usecases/update_finance_account_use_case.dart';
+import '../usecases/update_finance_receipt_use_case.dart';
 
 abstract class FinanceRepository {
   Future<Either<Failure, FinanceOverviewEntity>> getFinanceOverview();
@@ -28,6 +29,12 @@ abstract class FinanceRepository {
   Future<Either<Failure, ReceiptEntity>> createReceipt(
     CreateFinanceReceiptParams params,
   );
+
+  Future<Either<Failure, ReceiptEntity>> updateReceipt(
+    UpdateFinanceReceiptParams params,
+  );
+
+  Future<Either<Failure, ReceiptEntity>> getReceiptDetails(int receiptId);
 
   Future<Either<Failure, FinanceAccountEntity>> updateAccount(
     UpdateFinanceAccountParams params,

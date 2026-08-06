@@ -159,7 +159,23 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
                     itemBuilder: (context, index) {
                       if (index < receipts.length) {
                         final receipt = receipts[index];
-                        return FinanceReceiptCard(receipt: receipt);
+                        return FinanceReceiptCard(
+                          receipt: receipt,
+                          onTap: () {
+                            context.push(
+                              Routes.ownerFinanceReceiptDetails.replaceFirst(':id', receipt.id.toString()),
+                            );
+                          },
+                          onEditTap: () {
+                            context.push(
+                              Routes.ownerFinanceReceiptUpdate,
+                              extra: {
+                                'cubit': context.read<FinanceReceiptsCubit>(),
+                                'receipt': receipt,
+                              },
+                            );
+                          },
+                        );
                       } else {
                         return const Padding(
                           padding: EdgeInsets.symmetric(vertical: 16),

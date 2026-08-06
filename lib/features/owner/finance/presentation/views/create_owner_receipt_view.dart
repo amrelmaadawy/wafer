@@ -17,6 +17,7 @@ import '../../../contracts/presentation/cubit/list/owner_contracts_state.dart';
 import '../cubit/receipts/create_finance_receipt_cubit.dart';
 import '../cubit/receipts/create_finance_receipt_state.dart';
 import '../cubit/receipts/finance_receipts_cubit.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/theme/color_utils.dart';
 
 class CreateOwnerReceiptView extends StatefulWidget {
@@ -82,15 +83,11 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
     return BlocListener<CreateFinanceReceiptCubit, CreateFinanceReceiptState>(
       listener: (context, state) {
         if (state is CreateFinanceReceiptSuccess) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          AppToast.showSuccess(context, state.message);
           context.read<FinanceReceiptsCubit>().fetchReceipts(isRefresh: true);
           context.pop();
         } else if (state is CreateFinanceReceiptError) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
+          AppToast.showError(context, state.message);
         }
       },
       child: Scaffold(

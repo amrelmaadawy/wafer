@@ -31,8 +31,12 @@ import '../../features/owner/finance/presentation/views/create_owner_receipt_vie
 import '../../features/owner/contracts/presentation/cubit/list/owner_contracts_cubit.dart';
 import '../../features/owner/finance/presentation/views/update_owner_account_view.dart';
 import '../../features/owner/finance/presentation/views/owner_account_details_view.dart';
+import '../../features/owner/finance/presentation/views/update_owner_receipt_view.dart';
+import '../../features/owner/finance/presentation/views/owner_receipt_details_view.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/finance_receipts_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/create_finance_receipt_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/receipts/finance_receipt_details_cubit.dart';
 import '../../features/owner/finance/presentation/views/owner_receipts_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
@@ -167,11 +171,52 @@ class AppRouter {
               BlocProvider(create: (_) => sl<PropertiesListCubit>()),
               BlocProvider(create: (_) => sl<OwnerContractsCubit>()),
               if (extraCubit != null)
-                BlocProvider.value(value: extraCubit)
+                BlocProvider.value(
+                  value: extraCubit,
+                  key: const ValueKey('finance_receipts_cubit_value'),
+                )
               else
-                BlocProvider(create: (_) => sl<FinanceReceiptsCubit>()),
+                BlocProvider(
+                  create: (_) => sl<FinanceReceiptsCubit>(),
+                  key: const ValueKey('finance_receipts_cubit_create'),
+                ),
             ],
             child: const CreateOwnerReceiptView(),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceReceiptUpdate,
+        builder: (context, state) {
+          final extraMap = state.extra as Map<String, dynamic>? ?? {};
+          final extraCubit = extraMap['cubit'] as FinanceReceiptsCubit?;
+          final receipt = extraMap['receipt']; // ReceiptEntity
+          
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => sl<UpdateFinanceReceiptCubit>()),
+              if (extraCubit != null)
+                BlocProvider.value(
+                  value: extraCubit,
+                  key: const ValueKey('finance_receipts_cubit_value'),
+                )
+              else
+                BlocProvider(
+                  create: (_) => sl<FinanceReceiptsCubit>(),
+                  key: const ValueKey('finance_receipts_cubit_create'),
+                ),
+            ],
+            child: UpdateOwnerReceiptView(receipt: receipt),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceReceiptDetails,
+        builder: (context, state) {
+          final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+          return BlocProvider(
+            create: (_) => sl<FinanceReceiptDetailsCubit>(),
+            child: OwnerReceiptDetailsView(receiptId: id),
           );
         },
       ),
