@@ -116,6 +116,8 @@ class _ResourceCard extends StatelessWidget {
         onTap: () {
           if (resource.key == 'accounts') {
             context.push(Routes.ownerFinanceAccounts);
+          } else if (resource.key == 'receipts') {
+            context.push(Routes.ownerFinanceReceipts);
           }
           // TODO: Navigate to other resource lists
         },

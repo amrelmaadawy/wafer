@@ -11,11 +11,18 @@ class FinanceAccountsResponseModel extends FinanceAccountsResponseEntity {
     final data = json['data'] as Map<String, dynamic>;
     
     return FinanceAccountsResponseModel(
-      accounts: (data['accounts'] as List?)
-              ?.map((e) => FinanceAccountModel.fromJson(e))
-              .toList() ??
-          [],
-      pagination: FinancePaginationModel.fromJson(data['pagination'] ?? {}),
+      accounts: () {
+        final accountsData = data['accounts'];
+        if (accountsData is List) {
+          return accountsData.map((e) => FinanceAccountModel.fromJson(e)).toList();
+        } else if (accountsData is Map && accountsData.containsKey('data') && accountsData['data'] is List) {
+          return (accountsData['data'] as List).map((e) => FinanceAccountModel.fromJson(e)).toList();
+        }
+        return <FinanceAccountModel>[];
+      }(),
+      pagination: FinancePaginationModel.fromJson(
+        data['pagination'] ?? (data['accounts'] is Map ? data['accounts'] : {}),
+      ),
     );
   }
 }

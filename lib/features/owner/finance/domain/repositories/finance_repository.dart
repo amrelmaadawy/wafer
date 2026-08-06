@@ -3,6 +3,7 @@ import '../../../../../core/error/failures.dart';
 import '../entities/finance_account_entity.dart';
 import '../entities/finance_accounts_response_entity.dart';
 import '../entities/finance_overview_entity.dart';
+import '../entities/receipts_response_entity.dart';
 import '../usecases/create_finance_account_use_case.dart';
 import '../usecases/update_finance_account_use_case.dart';
 
@@ -25,4 +26,12 @@ abstract class FinanceRepository {
   Future<Either<Failure, FinanceAccountEntity>> updateAccount(
     UpdateFinanceAccountParams params,
   );
+
+  Future<Either<Failure, FinanceAccountEntity>> getAccountDetails(int id);
+
+  Future<Either<Failure, ReceiptsResponseEntity>> getReceipts({
+    int page = 1,
+    int perPage = 15,
+    String? search,
+  });
 }

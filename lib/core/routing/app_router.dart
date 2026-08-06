@@ -23,9 +23,13 @@ import '../../features/owner/finance/domain/entities/finance_account_entity.dart
 import '../../features/owner/finance/presentation/cubit/accounts/finance_accounts_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/accounts/create_finance_account_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/accounts/update_finance_account_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/accounts/finance_account_details_cubit.dart';
 import '../../features/owner/finance/presentation/views/owner_accounts_view.dart';
 import '../../features/owner/finance/presentation/views/create_owner_account_view.dart';
 import '../../features/owner/finance/presentation/views/update_owner_account_view.dart';
+import '../../features/owner/finance/presentation/views/owner_account_details_view.dart';
+import '../../features/owner/finance/presentation/cubit/receipts/finance_receipts_cubit.dart';
+import '../../features/owner/finance/presentation/views/owner_receipts_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
 import '../../features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
@@ -130,6 +134,23 @@ class AppRouter {
             child: UpdateOwnerAccountView(account: account),
           );
         },
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceAccountDetails,
+        builder: (context, state) {
+          final id = int.parse(state.pathParameters['id']!);
+          return BlocProvider(
+            create: (_) => sl<FinanceAccountDetailsCubit>(),
+            child: OwnerAccountDetailsView(accountId: id),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceReceipts,
+        builder: (context, state) => BlocProvider(
+          create: (_) => sl<FinanceReceiptsCubit>(),
+          child: const OwnerReceiptsView(),
+        ),
       ),
 
       GoRoute(

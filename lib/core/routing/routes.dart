@@ -14,6 +14,8 @@ class Routes {
   static const String ownerFinanceAccounts = '/owner-main/finance/accounts';
   static const String ownerFinanceAccountCreate = '/owner-main/finance/accounts/create';
   static const String ownerFinanceAccountUpdate = '/owner-main/finance/accounts/update';
+  static const String ownerFinanceAccountDetails = '/owner-main/finance/accounts/details/:id';
+  static const String ownerFinanceReceipts = '/owner-main/finance/receipts';
   static const String ownerProfile = '/owner-main/profile';
   static const String notifications = '/notifications';
   static const String ownerMaintenance = '/owner-maintenance';

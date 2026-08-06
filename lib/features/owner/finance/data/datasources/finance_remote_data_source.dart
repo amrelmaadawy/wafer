@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../models/finance_account_model.dart';
 import '../models/finance_accounts_response_model.dart';
 import '../models/finance_overview_model.dart';
+import '../models/receipts_response_model.dart';
 
 abstract class FinanceRemoteDataSource {
   Future<FinanceOverviewModel> getFinanceOverview();
@@ -19,6 +21,14 @@ abstract class FinanceRemoteDataSource {
   Future<FinanceAccountModel> createAccount(Map<String, dynamic> body);
 
   Future<FinanceAccountModel> updateAccount(int id, Map<String, dynamic> body);
+
+  Future<FinanceAccountModel> getAccountDetails(int id);
+
+  Future<ReceiptsResponseModel> getReceipts({
+    int page = 1,
+    int perPage = 15,
+    String? search,
+  });
 }
 
 class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
@@ -55,8 +65,8 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       'per_page': perPage,
       if (search != null && search.isNotEmpty) 'search': search,
       if (accountType != null && accountType.isNotEmpty) 'account_type': accountType,
-      if (isActive != null) 'is_active': isActive,
-      if (isPostable != null) 'is_postable': isPostable,
+      'is_active': ?isActive,
+      'is_postable': ?isPostable,
     };
 
     try {
@@ -105,6 +115,52 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       );
     } catch (e) {
       throw const ServerException('Unexpected error occurred');
+    }
+  }
+
+  @override
+  Future<FinanceAccountModel> getAccountDetails(int id) async {
+    try {
+      final response = await dio.get('owner/accounting/accounts/$id');
+      return FinanceAccountModel.fromJson(response.data['data']['account']);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to get account details',
+      );
+    } catch (e) {
+      throw const ServerException('Unexpected error occurred');
+    }
+  }
+
+  @override
+  Future<ReceiptsResponseModel> getReceipts({
+    int page = 1,
+    int perPage = 15,
+    String? search,
+  }) async {
+    try {
+      final queryParameters = {
+        'page': page,
+        'per_page': perPage,
+        if (search != null && search.isNotEmpty) 'search': search,
+      };
+
+      final response = await dio.get(
+        'owner/accounting/receipts',
+        queryParameters: queryParameters,
+      );
+
+      final responseData = response.data is String
+          ? jsonDecode(response.data)
+          : response.data;
+
+      return ReceiptsResponseModel.fromJson(responseData);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to get receipts',
+      );
+    } catch (e) {
+      throw ServerException(e.toString());
     }
   }
 }

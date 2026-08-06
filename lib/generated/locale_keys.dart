@@ -283,6 +283,7 @@ abstract class  LocaleKeys {
   static const owner_finance_account_desc = 'owner.finance_account_desc';
   static const owner_finance_account_submit = 'owner.finance_account_submit';
   static const owner_finance_account_update_submit = 'owner.finance_account_update_submit';
+  static const owner_finance_receipts = 'owner.finance_receipts';
   static const owner_finance_account_success = 'owner.finance_account_success';
   static const owner_more_title = 'owner.more_title';
   static const owner_more_subtitle = 'owner.more_subtitle';

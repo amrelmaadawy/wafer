@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:async';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/presentation/widgets/custom_back_button.dart';
 import '../../../../../core/routing/routes.dart';
@@ -23,6 +24,7 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
+  Timer? _debounce;
 
   @override
   void initState() {
@@ -42,7 +44,17 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
   void dispose() {
     _scrollController.dispose();
     _searchController.dispose();
+    _debounce?.cancel();
     super.dispose();
+  }
+
+  void _onSearchChanged(String query) {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        context.read<FinanceAccountsCubit>().fetchAccounts(search: query, isRefresh: true);
+      }
+    });
   }
 
   @override
@@ -71,9 +83,7 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                 ),
-                onChanged: (value) {
-                  context.read<FinanceAccountsCubit>().fetchAccounts(search: value, isRefresh: true);
-                },
+                onChanged: _onSearchChanged,
               )
             : const Text('الحسابات المالية'),
         actions: [
@@ -142,6 +152,11 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
 
                   return FinanceAccountCard(
                     account: accounts[index],
+                    onTap: () {
+                      context.push(
+                        Routes.ownerFinanceAccountDetails.replaceFirst(':id', accounts[index].id.toString()),
+                      );
+                    },
                     onEdit: () async {
                       final result = await context.push(
                         Routes.ownerFinanceAccountUpdate,
