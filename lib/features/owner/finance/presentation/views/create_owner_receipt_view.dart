@@ -14,7 +14,6 @@ import '../cubit/form_data/finance_form_data_state.dart';
 import '../cubit/receipts/create_finance_receipt_cubit.dart';
 import '../cubit/receipts/create_finance_receipt_state.dart';
 import '../cubit/receipts/finance_receipts_cubit.dart';
-import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/theme/color_utils.dart';
 
 class CreateOwnerReceiptView extends StatefulWidget {

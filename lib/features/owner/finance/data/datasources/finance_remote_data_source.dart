@@ -56,6 +56,25 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
 
   FinanceRemoteDataSourceImpl(this.dio);
 
+  ServerException _handleDioException(DioException e, String defaultMessage) {
+    if (e.response?.statusCode == 422) {
+      final data = e.response?.data;
+      if (data != null && data['errors'] is Map) {
+        final errors = data['errors'] as Map;
+        if (errors.isNotEmpty) {
+          final firstErrorKey = errors.keys.first;
+          final firstErrorList = errors[firstErrorKey];
+          if (firstErrorList is List && firstErrorList.isNotEmpty) {
+            return ServerException(firstErrorList.first.toString());
+          }
+        }
+      }
+    }
+    return ServerException(
+      e.response?.data['message'] ?? defaultMessage,
+    );
+  }
+
   @override
   Future<FinanceOverviewModel> getFinanceOverview() async {
     try {
@@ -63,9 +82,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       final data = response.data['data'] as Map<String, dynamic>;
       return FinanceOverviewModel.fromJson(data);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to get finance overview',
-      );
+      throw _handleDioException(e, 'Failed to get finance overview');
     } catch (e) {
       throw const ServerException('Unexpected error occurred');
     }
@@ -78,9 +95,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       final data = response.data['data'] as Map<String, dynamic>;
       return FinanceFormDataModel.fromJson(data);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to get finance form data',
-      );
+      throw _handleDioException(e, 'Failed to get finance form data');
     } catch (e) {
       throw const ServerException('Unexpected error occurred');
     }
@@ -111,9 +126,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       );
       return FinanceAccountsResponseModel.fromJson(response.data);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to get finance accounts',
-      );
+      throw _handleDioException(e, 'Failed to get finance accounts');
     } catch (e) {
       throw const ServerException('Unexpected error occurred');
     }
@@ -128,9 +141,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       );
       return FinanceAccountModel.fromJson(response.data['data']['account']);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to create finance account',
-      );
+      throw _handleDioException(e, 'Failed to create finance account');
     } catch (e) {
       throw const ServerException('Unexpected error occurred');
     }
@@ -145,9 +156,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       );
       return FinanceAccountModel.fromJson(response.data['data']['account']);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to update finance account',
-      );
+      throw _handleDioException(e, 'Failed to update finance account');
     } catch (e) {
       throw const ServerException('Unexpected error occurred');
     }
@@ -159,9 +168,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       final response = await dio.get('owner/accounting/accounts/$id');
       return FinanceAccountModel.fromJson(response.data['data']['account']);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to get account details',
-      );
+      throw _handleDioException(e, 'Failed to get account details');
     } catch (e) {
       throw const ServerException('Unexpected error occurred');
     }
@@ -191,9 +198,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
 
       return ReceiptsResponseModel.fromJson(responseData);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to get receipts',
-      );
+      throw _handleDioException(e, 'Failed to get receipts');
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -207,9 +212,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       );
       return ReceiptModel.fromJson(response.data['data']['receipt']);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to create receipt',
-      );
+      throw _handleDioException(e, 'Failed to create receipt');
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -234,9 +237,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       );
       return PaymentsResponseModel.fromJson(response.data['data']);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to get payments',
-      );
+      throw _handleDioException(e, 'Failed to get payments');
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -251,14 +252,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       );
       return PaymentModel.fromJson(response.data['data']['payment']);
     } on DioException catch (e) {
-      if (e.response?.statusCode == 422) {
-         throw ServerException(
-           e.response?.data['message'] ?? 'Validation failed',
-         );
-      }
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to create payment',
-      );
+      throw _handleDioException(e, 'Validation failed');
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -273,25 +267,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       );
       return ReceiptModel.fromJson(response.data['data']['receipt']);
     } on DioException catch (e) {
-      if (e.response?.statusCode == 422) {
-        final data = e.response?.data;
-        if (data != null && data['errors'] is Map) {
-          final errors = data['errors'] as Map;
-          if (errors.isNotEmpty) {
-            final firstErrorKey = errors.keys.first;
-            final firstErrorList = errors[firstErrorKey];
-            if (firstErrorList is List && firstErrorList.isNotEmpty) {
-              throw ServerException(firstErrorList.first.toString());
-            }
-          }
-        }
-        throw ServerException(
-          e.response?.data['message'] ?? 'Validation failed',
-        );
-      }
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to update receipt',
-      );
+      throw _handleDioException(e, 'Validation failed');
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -303,9 +279,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       final response = await dio.get('owner/accounting/receipts/$receiptId');
       return ReceiptModel.fromJson(response.data['data']['receipt']);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to get receipt details',
-      );
+      throw _handleDioException(e, 'Failed to get receipt details');
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -323,9 +297,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       );
       return ReceiptModel.fromJson(response.data['data']['receipt']);
     } on DioException catch (e) {
-      throw ServerException(
-        e.response?.data['message'] ?? 'Failed to cancel receipt',
-      );
+      throw _handleDioException(e, 'Failed to cancel receipt');
     } catch (e) {
       throw ServerException(e.toString());
     }

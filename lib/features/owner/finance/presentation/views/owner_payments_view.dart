@@ -141,8 +141,11 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: context.primaryColor,
-        onPressed: () {
-          context.push(Routes.ownerFinanceCreatePayment);
+        onPressed: () async {
+          final result = await context.push(Routes.ownerFinanceCreatePayment);
+          if (result == true && mounted) {
+            _onRefresh();
+          }
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),

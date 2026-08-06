@@ -13,8 +13,6 @@ import '../cubit/form_data/finance_form_data_cubit.dart';
 import '../cubit/form_data/finance_form_data_state.dart';
 import '../cubit/payments/create_finance_payment_cubit.dart';
 import '../cubit/payments/create_finance_payment_state.dart';
-import '../cubit/payments/finance_payments_cubit.dart';
-import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/theme/color_utils.dart';
 
 class CreateOwnerPaymentView extends StatefulWidget {
@@ -80,8 +78,7 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
           AppToast.showInfo(context, 'جاري الحفظ...');
         } else if (state is CreateFinancePaymentSuccess) {
           AppToast.showSuccess(context, 'تم حفظ السند المالي بنجاح');
-          context.read<FinancePaymentsCubit>().fetchPayments(isRefresh: true);
-          context.pop();
+          context.pop(true);
         } else if (state is CreateFinancePaymentError) {
           AppToast.showError(context, state.message);
         }
