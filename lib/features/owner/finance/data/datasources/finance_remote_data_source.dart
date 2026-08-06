@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import '../../../../../core/error/exceptions.dart';
+import '../models/finance_account_model.dart';
 import '../models/finance_accounts_response_model.dart';
 import '../models/finance_overview_model.dart';
 
@@ -13,6 +15,8 @@ abstract class FinanceRemoteDataSource {
     bool? isActive,
     bool? isPostable,
   });
+
+  Future<FinanceAccountModel> createAccount(Map<String, dynamic> body);
 }
 
 class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
@@ -22,9 +26,17 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
 
   @override
   Future<FinanceOverviewModel> getFinanceOverview() async {
-    final response = await dio.get('owner/accounting');
-    final data = response.data['data'] as Map<String, dynamic>;
-    return FinanceOverviewModel.fromJson(data);
+    try {
+      final response = await dio.get('owner/accounting');
+      final data = response.data['data'] as Map<String, dynamic>;
+      return FinanceOverviewModel.fromJson(data);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to get finance overview',
+      );
+    } catch (e) {
+      throw const ServerException('Unexpected error occurred');
+    }
   }
 
   @override
@@ -41,14 +53,39 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       'per_page': perPage,
       if (search != null && search.isNotEmpty) 'search': search,
       if (accountType != null && accountType.isNotEmpty) 'account_type': accountType,
-      'is_active': ?isActive,
-      'is_postable': ?isPostable,
+      if (isActive != null) 'is_active': isActive,
+      if (isPostable != null) 'is_postable': isPostable,
     };
 
-    final response = await dio.get(
-      'owner/accounting/accounts',
-      queryParameters: queryParameters,
-    );
-    return FinanceAccountsResponseModel.fromJson(response.data);
+    try {
+      final response = await dio.get(
+        'owner/accounting/accounts',
+        queryParameters: queryParameters,
+      );
+      return FinanceAccountsResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to get finance accounts',
+      );
+    } catch (e) {
+      throw const ServerException('Unexpected error occurred');
+    }
+  }
+
+  @override
+  Future<FinanceAccountModel> createAccount(Map<String, dynamic> body) async {
+    try {
+      final response = await dio.post(
+        'owner/accounting/accounts',
+        data: body,
+      );
+      return FinanceAccountModel.fromJson(response.data['data']['account']);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to create finance account',
+      );
+    } catch (e) {
+      throw const ServerException('Unexpected error occurred');
+    }
   }
 }

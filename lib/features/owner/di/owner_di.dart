@@ -49,8 +49,10 @@ import '../finance/data/repositories/finance_repository_impl.dart';
 import '../finance/domain/repositories/finance_repository.dart';
 import '../finance/domain/usecases/get_finance_overview_usecase.dart';
 import '../finance/domain/usecases/get_finance_accounts_use_case.dart';
+import '../finance/domain/usecases/create_finance_account_use_case.dart';
 import '../finance/presentation/cubit/finance_overview_cubit.dart';
 import '../finance/presentation/cubit/accounts/finance_accounts_cubit.dart';
+import '../finance/presentation/cubit/accounts/create_finance_account_cubit.dart';
 // Reports
 import '../reports/data/datasources/owner_reports_remote_data_source.dart';
 import '../reports/data/repositories/owner_reports_repository_impl.dart';
@@ -187,6 +189,12 @@ void _initFinance() {
   }
   if (!sl.isRegistered<FinanceAccountsCubit>()) {
     sl.registerFactory(() => FinanceAccountsCubit(sl()));
+  }
+  if (!sl.isRegistered<CreateFinanceAccountUseCase>()) {
+    sl.registerLazySingleton(() => CreateFinanceAccountUseCase(sl()));
+  }
+  if (!sl.isRegistered<CreateFinanceAccountCubit>()) {
+    sl.registerFactory(() => CreateFinanceAccountCubit(sl()));
   }
 }
 

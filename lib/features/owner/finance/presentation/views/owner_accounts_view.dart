@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/presentation/widgets/custom_back_button.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/presentation/widgets/custom_empty_widget.dart';
 import '../cubit/accounts/finance_accounts_cubit.dart';
@@ -74,6 +77,7 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
               )
             : const Text('الحسابات المالية'),
         actions: [
+
           IconButton(
             icon: Icon(_isSearching ? Icons.close : Icons.search),
             onPressed: () {
@@ -144,6 +148,19 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
 
           return const SizedBox.shrink();
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final result = await context.push(Routes.ownerFinanceAccountCreate);
+          if (result == true && context.mounted) {
+            context.read<FinanceAccountsCubit>().fetchAccounts(isRefresh: true);
+          }
+        },
+        backgroundColor: context.primaryColor,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
     );
   }
