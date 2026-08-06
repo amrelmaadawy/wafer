@@ -11,6 +11,8 @@ import '../../domain/usecases/create_finance_account_use_case.dart';
 import '../../domain/usecases/update_finance_account_use_case.dart';
 import '../datasources/finance_remote_data_source.dart';
 import '../../domain/entities/receipts_response_entity.dart';
+import '../../domain/entities/receipt_entity.dart';
+import '../../domain/usecases/create_finance_receipt_use_case.dart';
 
 class FinanceRepositoryImpl extends BaseRepository
     implements FinanceRepository {
@@ -25,6 +27,15 @@ class FinanceRepositoryImpl extends BaseRepository
   Future<Either<Failure, FinanceOverviewEntity>> getFinanceOverview() async {
     return executeApiCall<FinanceOverviewEntity>(
       call: () => remoteDataSource.getFinanceOverview(),
+    );
+  }
+
+  @override
+  Future<Either<Failure, ReceiptEntity>> createReceipt(
+    CreateFinanceReceiptParams params,
+  ) async {
+    return executeApiCall<ReceiptEntity>(
+      call: () => remoteDataSource.createReceipt(params.toJson()),
     );
   }
 

@@ -5,6 +5,7 @@ import '../models/finance_account_model.dart';
 import '../models/finance_accounts_response_model.dart';
 import '../models/finance_overview_model.dart';
 import '../models/receipts_response_model.dart';
+import '../models/receipt_model.dart';
 
 abstract class FinanceRemoteDataSource {
   Future<FinanceOverviewModel> getFinanceOverview();
@@ -29,6 +30,8 @@ abstract class FinanceRemoteDataSource {
     int perPage = 15,
     String? search,
   });
+
+  Future<ReceiptModel> createReceipt(Map<String, dynamic> body);
 }
 
 class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
@@ -158,6 +161,22 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
     } on DioException catch (e) {
       throw ServerException(
         e.response?.data['message'] ?? 'Failed to get receipts',
+      );
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+  @override
+  Future<ReceiptModel> createReceipt(Map<String, dynamic> body) async {
+    try {
+      final response = await dio.post(
+        'owner/accounting/receipts',
+        data: body,
+      );
+      return ReceiptModel.fromJson(response.data['data']['receipt']);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to create receipt',
       );
     } catch (e) {
       throw ServerException(e.toString());

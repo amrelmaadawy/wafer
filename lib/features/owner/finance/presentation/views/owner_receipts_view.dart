@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'dart:async';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../../core/presentation/widgets/custom_back_button.dart';
+import '../../../../../../core/routing/routes.dart';
 import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/color_utils.dart';
 import '../../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../../core/presentation/widgets/custom_empty_widget.dart';
 import '../../../../../../generated/locale_keys.dart';
@@ -170,6 +173,13 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.push(Routes.ownerFinanceReceiptCreate, extra: context.read<FinanceReceiptsCubit>());
+        },
+        backgroundColor: context.primaryColor,
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }
