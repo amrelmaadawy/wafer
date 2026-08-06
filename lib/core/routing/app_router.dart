@@ -32,9 +32,11 @@ import '../../features/owner/contracts/presentation/cubit/list/owner_contracts_c
 import '../../features/owner/finance/presentation/views/update_owner_account_view.dart';
 import '../../features/owner/finance/presentation/views/owner_account_details_view.dart';
 import '../../features/owner/finance/presentation/views/update_owner_receipt_view.dart';
+import '../../features/owner/finance/presentation/views/owner_payments_view.dart';
 import '../../features/owner/finance/presentation/views/owner_receipt_details_view.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/finance_receipts_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/create_finance_receipt_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/payments/finance_payments_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/finance_receipt_details_cubit.dart';
 import '../../features/owner/finance/presentation/views/owner_receipts_view.dart';
@@ -158,6 +160,13 @@ class AppRouter {
         builder: (context, state) => BlocProvider(
           create: (_) => sl<FinanceReceiptsCubit>(),
           child: const OwnerReceiptsView(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerFinancePayments,
+        builder: (context, state) => BlocProvider(
+          create: (_) => sl<FinancePaymentsCubit>(),
+          child: const OwnerPaymentsView(),
         ),
       ),
       GoRoute(

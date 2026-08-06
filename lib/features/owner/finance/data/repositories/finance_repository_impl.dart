@@ -6,6 +6,7 @@ import '../../../../../core/error/failures.dart';
 import '../../domain/entities/finance_account_entity.dart';
 import '../../domain/entities/finance_accounts_response_entity.dart';
 import '../../domain/entities/finance_overview_entity.dart';
+import '../../domain/entities/payments_response_entity.dart';
 import '../../domain/repositories/finance_repository.dart';
 import '../../domain/usecases/create_finance_account_use_case.dart';
 import '../../domain/usecases/update_finance_account_use_case.dart';
@@ -178,6 +179,28 @@ class FinanceRepositoryImpl extends BaseRepository
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PaymentsResponseEntity>> getPayments({
+    int page = 1,
+    int perPage = 15,
+    String? search,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remotePayments = await remoteDataSource.getPayments(
+          page: page,
+          perPage: perPage,
+          search: search,
+        );
+        return Right(remotePayments);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure('لا يوجد اتصال بالإنترنت'));
     }
   }
 }

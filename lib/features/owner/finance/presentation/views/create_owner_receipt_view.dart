@@ -60,9 +60,7 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedDebitAccountId == null || _selectedCreditAccountId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('الرجاء اختيار الحساب الدائن والمدين')),
-      );
+      AppToast.showError(context, 'الرجاء اختيار الحساب الدائن والمدين');
       return;
     }
 
@@ -93,6 +91,7 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           leadingWidth: 68,
           leading: const CustomBackButton(),
           title: const Text('إنشاء سند مالي'),

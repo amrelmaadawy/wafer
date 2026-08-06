@@ -4,6 +4,7 @@ import '../../../../../core/error/exceptions.dart';
 import '../models/finance_account_model.dart';
 import '../models/finance_accounts_response_model.dart';
 import '../models/finance_overview_model.dart';
+import '../models/payments_response_model.dart';
 import '../models/receipts_response_model.dart';
 import '../models/receipt_model.dart';
 
@@ -26,6 +27,12 @@ abstract class FinanceRemoteDataSource {
   Future<FinanceAccountModel> getAccountDetails(int id);
 
   Future<ReceiptsResponseModel> getReceipts({
+    int page = 1,
+    int perPage = 15,
+    String? search,
+  });
+
+  Future<PaymentsResponseModel> getPayments({
     int page = 1,
     int perPage = 15,
     String? search,
@@ -182,6 +189,33 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
     } on DioException catch (e) {
       throw ServerException(
         e.response?.data['message'] ?? 'Failed to create receipt',
+      );
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<PaymentsResponseModel> getPayments({
+    int page = 1,
+    int perPage = 15,
+    String? search,
+  }) async {
+    try {
+      final queryParameters = {
+        'page': page,
+        'per_page': perPage,
+        if (search != null && search.isNotEmpty) 'search': search,
+      };
+
+      final response = await dio.get(
+        'owner/accounting/payments',
+        queryParameters: queryParameters,
+      );
+      return PaymentsResponseModel.fromJson(response.data['data']);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to get payments',
       );
     } catch (e) {
       throw ServerException(e.toString());

@@ -118,6 +118,8 @@ class _ResourceCard extends StatelessWidget {
             context.push(Routes.ownerFinanceAccounts);
           } else if (resource.key == 'receipts') {
             context.push(Routes.ownerFinanceReceipts);
+          } else if (resource.key == 'payments') {
+            context.push(Routes.ownerFinancePayments);
           }
           // TODO: Navigate to other resource lists
         },

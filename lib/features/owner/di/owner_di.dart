@@ -56,6 +56,7 @@ import '../finance/domain/usecases/get_finance_receipts_use_case.dart';
 import '../finance/domain/usecases/create_finance_receipt_use_case.dart';
 import '../finance/domain/usecases/update_finance_receipt_use_case.dart';
 import '../finance/domain/usecases/get_finance_receipt_details_use_case.dart';
+import '../finance/domain/usecases/get_finance_payments_use_case.dart';
 import '../finance/domain/usecases/cancel_finance_receipt_use_case.dart';
 import '../finance/presentation/cubit/finance_overview_cubit.dart';
 import '../finance/presentation/cubit/accounts/finance_accounts_cubit.dart';
@@ -67,6 +68,7 @@ import '../finance/presentation/cubit/receipts/create_finance_receipt_cubit.dart
 import '../finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
 import '../finance/presentation/cubit/receipts/finance_receipt_details_cubit.dart';
 import '../finance/presentation/cubit/receipts/cancel_finance_receipt_cubit.dart';
+import '../finance/presentation/cubit/payments/finance_payments_cubit.dart';
 // Reports
 import '../reports/data/datasources/owner_reports_remote_data_source.dart';
 import '../reports/data/repositories/owner_reports_repository_impl.dart';
@@ -225,6 +227,9 @@ void _initFinance() {
   if (!sl.isRegistered<CancelFinanceReceiptUseCase>()) {
     sl.registerLazySingleton(() => CancelFinanceReceiptUseCase(sl()));
   }
+  if (!sl.isRegistered<GetFinancePaymentsUseCase>()) {
+    sl.registerLazySingleton(() => GetFinancePaymentsUseCase(sl()));
+  }
 
   // Cubits
   if (!sl.isRegistered<FinanceAccountsCubit>()) {
@@ -253,6 +258,9 @@ void _initFinance() {
   }
   if (!sl.isRegistered<CancelFinanceReceiptCubit>()) {
     sl.registerFactory(() => CancelFinanceReceiptCubit(cancelFinanceReceiptUseCase: sl()));
+  }
+  if (!sl.isRegistered<FinancePaymentsCubit>()) {
+    sl.registerFactory(() => FinancePaymentsCubit(sl()));
   }
 }
 
