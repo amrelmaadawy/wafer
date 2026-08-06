@@ -8,6 +8,7 @@ import '../../domain/entities/finance_accounts_response_entity.dart';
 import '../../domain/entities/finance_overview_entity.dart';
 import '../../domain/repositories/finance_repository.dart';
 import '../../domain/usecases/create_finance_account_use_case.dart';
+import '../../domain/usecases/update_finance_account_use_case.dart';
 import '../datasources/finance_remote_data_source.dart';
 
 class FinanceRepositoryImpl extends BaseRepository
@@ -57,6 +58,22 @@ class FinanceRepositoryImpl extends BaseRepository
 
     try {
       final accountModel = await remoteDataSource.createAccount(params.toJson());
+      return Right(accountModel);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, FinanceAccountEntity>> updateAccount(
+    UpdateFinanceAccountParams params,
+  ) async {
+    if (!await networkInfo.isConnected) {
+      return const Left(NetworkFailure('No internet connection'));
+    }
+
+    try {
+      final accountModel = await remoteDataSource.updateAccount(params.id, params.toJson());
       return Right(accountModel);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

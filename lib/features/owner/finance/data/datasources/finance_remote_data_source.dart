@@ -17,6 +17,8 @@ abstract class FinanceRemoteDataSource {
   });
 
   Future<FinanceAccountModel> createAccount(Map<String, dynamic> body);
+
+  Future<FinanceAccountModel> updateAccount(int id, Map<String, dynamic> body);
 }
 
 class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
@@ -83,6 +85,23 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
     } on DioException catch (e) {
       throw ServerException(
         e.response?.data['message'] ?? 'Failed to create finance account',
+      );
+    } catch (e) {
+      throw const ServerException('Unexpected error occurred');
+    }
+  }
+
+  @override
+  Future<FinanceAccountModel> updateAccount(int id, Map<String, dynamic> body) async {
+    try {
+      final response = await dio.patch(
+        'owner/accounting/accounts/$id',
+        data: body,
+      );
+      return FinanceAccountModel.fromJson(response.data['data']['account']);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to update finance account',
       );
     } catch (e) {
       throw const ServerException('Unexpected error occurred');

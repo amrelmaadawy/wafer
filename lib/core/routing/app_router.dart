@@ -19,10 +19,13 @@ import '../../features/owner/properties/presentation/cubit/edit/property_edit_cu
 import '../../features/owner/contracts/presentation/views/owner_leases_view.dart';
 import '../../features/owner/finance/presentation/views/owner_finance_view.dart';
 import '../../features/owner/finance/presentation/cubit/finance_overview_cubit.dart';
+import '../../features/owner/finance/domain/entities/finance_account_entity.dart';
 import '../../features/owner/finance/presentation/cubit/accounts/finance_accounts_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/accounts/create_finance_account_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/accounts/update_finance_account_cubit.dart';
 import '../../features/owner/finance/presentation/views/owner_accounts_view.dart';
 import '../../features/owner/finance/presentation/views/create_owner_account_view.dart';
+import '../../features/owner/finance/presentation/views/update_owner_account_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
 import '../../features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
@@ -117,6 +120,16 @@ class AppRouter {
           create: (_) => sl<CreateFinanceAccountCubit>(),
           child: const CreateOwnerAccountView(),
         ),
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceAccountUpdate,
+        builder: (context, state) {
+          final account = state.extra as FinanceAccountEntity;
+          return BlocProvider(
+            create: (_) => sl<UpdateFinanceAccountCubit>(),
+            child: UpdateOwnerAccountView(account: account),
+          );
+        },
       ),
 
       GoRoute(

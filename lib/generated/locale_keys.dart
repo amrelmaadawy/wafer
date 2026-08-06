@@ -269,6 +269,7 @@ abstract class  LocaleKeys {
   static const owner_finance_accounts = 'owner.finance_accounts';
   static const owner_finance_postable = 'owner.finance_postable';
   static const owner_finance_create_account = 'owner.finance_create_account';
+  static const owner_finance_update_account = 'owner.finance_update_account';
   static const owner_finance_account_name_ar = 'owner.finance_account_name_ar';
   static const owner_finance_account_name_en = 'owner.finance_account_name_en';
   static const owner_finance_account_code = 'owner.finance_account_code';
@@ -281,6 +282,7 @@ abstract class  LocaleKeys {
   static const owner_finance_account_is_active = 'owner.finance_account_is_active';
   static const owner_finance_account_desc = 'owner.finance_account_desc';
   static const owner_finance_account_submit = 'owner.finance_account_submit';
+  static const owner_finance_account_update_submit = 'owner.finance_account_update_submit';
   static const owner_finance_account_success = 'owner.finance_account_success';
   static const owner_more_title = 'owner.more_title';
   static const owner_more_subtitle = 'owner.more_subtitle';

@@ -10,11 +10,13 @@ import '../../domain/entities/finance_account_entity.dart';
 class FinanceAccountCard extends StatelessWidget {
   final FinanceAccountEntity account;
   final VoidCallback? onTap;
+  final VoidCallback? onEdit;
 
   const FinanceAccountCard({
     super.key,
     required this.account,
     this.onTap,
+    this.onEdit,
   });
 
   @override
@@ -59,7 +61,30 @@ class FinanceAccountCard extends StatelessWidget {
                         ),
                   ),
                 ),
-                _buildStatusBadge(context),
+                Row(
+                  children: [
+                    _buildStatusBadge(context),
+                    if (onEdit != null) ...[
+                      const SizedBox(width: 8),
+                      InkWell(
+                        onTap: onEdit,
+                        borderRadius: BorderRadius.circular(20),
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.edit_outlined,
+                            size: 16,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
               ],
             ),
             const SizedBox(height: 12),

@@ -140,7 +140,18 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
                     );
                   }
 
-                  return FinanceAccountCard(account: accounts[index]);
+                  return FinanceAccountCard(
+                    account: accounts[index],
+                    onEdit: () async {
+                      final result = await context.push(
+                        Routes.ownerFinanceAccountUpdate,
+                        extra: accounts[index],
+                      );
+                      if (result == true && context.mounted) {
+                        context.read<FinanceAccountsCubit>().fetchAccounts(isRefresh: true);
+                      }
+                    },
+                  );
                 },
               ),
             );
