@@ -29,7 +29,16 @@ class SplashScreen extends StatelessWidget {
           if (!context.mounted) return;
 
           if (state is Authenticated) {
-            context.go(Routes.ownerDashboard);
+            if (state.user.accountType == 'owner') {
+              context.go(Routes.ownerDashboard);
+            } else if (state.user.accountType == 'system' ||
+                state.user.accountType == 'company') {
+              context.go(Routes.companyDashboard);
+            } else if (state.user.accountType == 'tenant') {
+              context.go(Routes.tenantDashboard);
+            } else {
+              context.go(Routes.ownerDashboard); // Fallback
+            }
           } else if (state is Unauthenticated) {
             context.go(Routes.login);
           }

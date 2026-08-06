@@ -33,17 +33,17 @@ class TechnicianEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        ownerId,
-        name,
-        phone,
-        specialty,
-        companyName,
-        isActive,
-        notes,
-        stats,
-        assignments,
-        createdAt,
-        updatedAt,
-      ];
+    id,
+    ownerId,
+    name,
+    phone,
+    specialty,
+    companyName,
+    isActive,
+    notes,
+    stats,
+    assignments,
+    createdAt,
+    updatedAt,
+  ];
 }

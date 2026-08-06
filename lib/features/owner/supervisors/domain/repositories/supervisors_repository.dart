@@ -6,6 +6,10 @@ import '../entities/supervisors_list_response_entity.dart';
 
 abstract class SupervisorsRepository {
   Future<Either<Failure, SupervisorFormDataEntity>> getFormData();
-  Future<Either<Failure, SupervisorsListResponseEntity>> getSupervisors(int page);
-  Future<Either<Failure, SupervisorEntity>> createSupervisor(Map<String, dynamic> body);
+  Future<Either<Failure, SupervisorsListResponseEntity>> getSupervisors(
+    int page,
+  );
+  Future<Either<Failure, SupervisorEntity>> createSupervisor(
+    Map<String, dynamic> body,
+  );
 }

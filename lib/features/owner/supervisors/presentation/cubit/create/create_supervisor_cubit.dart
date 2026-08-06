@@ -6,7 +6,7 @@ class CreateSupervisorCubit extends Cubit<CreateSupervisorState> {
   final CreateSupervisorUseCase createSupervisorUseCase;
 
   CreateSupervisorCubit({required this.createSupervisorUseCase})
-      : super(CreateSupervisorInitial());
+    : super(CreateSupervisorInitial());
 
   Future<void> createSupervisor(Map<String, dynamic> body) async {
     emit(CreateSupervisorLoading());

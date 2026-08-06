@@ -14,7 +14,8 @@ abstract class MaintenanceNegotiationRemoteDataSource {
   });
 }
 
-class MaintenanceNegotiationRemoteDataSourceImpl implements MaintenanceNegotiationRemoteDataSource {
+class MaintenanceNegotiationRemoteDataSourceImpl
+    implements MaintenanceNegotiationRemoteDataSource {
   final Dio dio;
 
   MaintenanceNegotiationRemoteDataSourceImpl({required this.dio});
@@ -22,12 +23,14 @@ class MaintenanceNegotiationRemoteDataSourceImpl implements MaintenanceNegotiati
   @override
   Future<NegotiationFormDataModel> getFormData() async {
     final response = await dio.get('owner/maintenance-negotiations/form-data');
-    final responseModel = NegotiationFormDataResponseModel.fromJson(response.data);
-    
+    final responseModel = NegotiationFormDataResponseModel.fromJson(
+      response.data,
+    );
+
     if (!responseModel.success) {
       throw Exception(responseModel.message);
     }
-    
+
     return responseModel.data;
   }
 
@@ -38,10 +41,7 @@ class MaintenanceNegotiationRemoteDataSourceImpl implements MaintenanceNegotiati
   }) async {
     final response = await dio.get(
       'owner/maintenance-negotiations',
-      queryParameters: {
-        'page': page,
-        'per_page': perPage,
-      },
+      queryParameters: {'page': page, 'per_page': perPage},
     );
     final dataMap = response.data as Map<String, dynamic>;
     final responseModel = NegotiationsListResponseModel.fromJson(dataMap);
@@ -60,10 +60,7 @@ class MaintenanceNegotiationRemoteDataSourceImpl implements MaintenanceNegotiati
   }) async {
     final response = await dio.post(
       'owner/maintenance-negotiations',
-      data: {
-        'approval_limit': approvalLimit,
-        'is_active': isActive,
-      },
+      data: {'approval_limit': approvalLimit, 'is_active': isActive},
     );
 
     final dataMap = response.data as Map<String, dynamic>;
@@ -72,7 +69,8 @@ class MaintenanceNegotiationRemoteDataSourceImpl implements MaintenanceNegotiati
     }
 
     final data = dataMap['data'] as Map<String, dynamic>;
-    final negotiationMap = data['maintenance_negotiation'] as Map<String, dynamic>;
+    final negotiationMap =
+        data['maintenance_negotiation'] as Map<String, dynamic>;
     return NegotiationModel.fromJson(negotiationMap);
   }
 }

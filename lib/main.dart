@@ -79,18 +79,19 @@ class _RealEstateAppState extends State<RealEstateApp> {
       value: sl<AppThemeCubit>(),
       child: BlocBuilder<AppThemeCubit, ThemeData>(
         builder: (context, theme) {
-          return NoInternetBanner(
-            child: MaterialApp.router(
-              title: 'Wafer Real Estate ERP',
-              debugShowCheckedModeBanner: false,
-              theme: theme,
-              darkTheme: AppTheme.buildDark(theme.colorScheme.primary),
-              themeMode: ThemeMode.light,
-              localizationsDelegates: context.localizationDelegates,
-              supportedLocales: context.supportedLocales,
-              locale: context.locale,
-              routerConfig: AppRouter.router,
-            ),
+          return MaterialApp.router(
+            title: 'Wafer Real Estate ERP',
+            debugShowCheckedModeBanner: false,
+            theme: theme,
+            darkTheme: AppTheme.buildDark(theme.colorScheme.primary),
+            themeMode: ThemeMode.light,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            routerConfig: AppRouter.router,
+            builder: (context, child) {
+              return NoInternetBanner(child: child!);
+            },
           );
         },
       ),

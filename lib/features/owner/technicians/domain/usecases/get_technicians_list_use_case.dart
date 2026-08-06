@@ -7,7 +7,8 @@ import '../entities/technicians_list_response_entity.dart';
 import '../repositories/technicians_repository.dart';
 
 class GetTechniciansListUseCase
-    implements UseCase<TechniciansListResponseEntity, GetTechniciansListParams> {
+    implements
+        UseCase<TechniciansListResponseEntity, GetTechniciansListParams> {
   final TechniciansRepository repository;
 
   GetTechniciansListUseCase(this.repository);
@@ -27,10 +28,7 @@ class GetTechniciansListParams extends Equatable {
   final int page;
   final Map<String, dynamic>? filters;
 
-  const GetTechniciansListParams({
-    required this.page,
-    this.filters,
-  });
+  const GetTechniciansListParams({required this.page, this.filters});
 
   @override
   List<Object?> get props => [page, filters];

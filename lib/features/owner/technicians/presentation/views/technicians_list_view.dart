@@ -49,9 +49,9 @@ class _TechniciansListViewState extends State<TechniciansListView> {
   }
 
   Future<void> _onRefresh() async {
-    await context
-        .read<TechniciansListCubit>()
-        .loadTechnicians(forceRefresh: true);
+    await context.read<TechniciansListCubit>().loadTechnicians(
+      forceRefresh: true,
+    );
   }
 
   @override
@@ -62,16 +62,13 @@ class _TechniciansListViewState extends State<TechniciansListView> {
         title: LocaleKeys.techniciansList.tr(),
         actions: [
           IconButton(
-            icon: Icon(
-              Icons.add_circle_outline,
-              color: context.primaryColor,
-            ),
+            icon: Icon(Icons.add_circle_outline, color: context.primaryColor),
             onPressed: () {
               context.push(Routes.ownerTechnicianCreate).then((_) {
                 _onRefresh();
               });
             },
-          )
+          ),
         ],
       ),
       body: BlocBuilder<TechniciansListCubit, TechniciansListState>(
@@ -100,7 +97,8 @@ class _TechniciansListViewState extends State<TechniciansListView> {
             child: ListView.builder(
               controller: _scrollController,
               padding: const EdgeInsets.all(AppSpacing.md),
-              itemCount: state.technicians.length +
+              itemCount:
+                  state.technicians.length +
                   (state.status == TechniciansListStatus.loadingMore ? 1 : 0),
               itemBuilder: (context, index) {
                 if (index >= state.technicians.length) {
@@ -119,9 +117,6 @@ class _TechniciansListViewState extends State<TechniciansListView> {
       ),
     );
   }
-
-
-
 
   Widget _buildEmptyState(BuildContext context) {
     return Center(

@@ -101,6 +101,7 @@ class UnitCard extends StatelessWidget {
                   children: [
                     if (unit.details.roomsCount > 0)
                       _buildStat(
+                        context,
                         Icons.bed_outlined,
                         LocaleKeys.commonRooms.tr(
                           args: [unit.details.roomsCount.toString()],
@@ -108,6 +109,7 @@ class UnitCard extends StatelessWidget {
                       ),
                     if (unit.details.bathroomsCount > 0)
                       _buildStat(
+                        context,
                         Icons.bathtub_outlined,
                         LocaleKeys.commonBathrooms.tr(
                           args: [unit.details.bathroomsCount.toString()],
@@ -115,13 +117,18 @@ class UnitCard extends StatelessWidget {
                       ),
                     if (unit.area != null && unit.area! > 0)
                       _buildStat(
+                        context,
                         Icons.square_foot_outlined,
                         LocaleKeys.commonAreaM2.tr(
                           args: [unit.area!.toStringAsFixed(0)],
                         ),
                       ),
                     if (unit.floor != null && unit.floor!.isNotEmpty)
-                      _buildStat(Icons.layers_outlined, 'الطابق ${unit.floor}'),
+                      _buildStat(
+                        context,
+                        Icons.layers_outlined,
+                        'الطابق ${unit.floor}',
+                      ),
                   ],
                 ),
 
@@ -142,15 +149,15 @@ class UnitCard extends StatelessWidget {
                           ? LocaleKeys.commonFurnished.tr()
                           : LocaleKeys.commonUnfurnished.tr(),
                       color: unit.isFurnished
-                          ? Colors.teal
-                          : const Color(0xFF94A3B8),
+                          ? context.primaryColor
+                          : AppColors.textSecondaryLight,
                     ),
                     if (unit.code != null) ...[
                       const SizedBox(width: 8),
                       _buildChip(
                         icon: Icons.tag_rounded,
                         label: unit.code!,
-                        color: const Color(0xFF94A3B8),
+                        color: AppColors.textSecondaryLight,
                       ),
                     ],
                     const Spacer(),
@@ -185,16 +192,16 @@ class UnitCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStat(IconData icon, String label) {
+  Widget _buildStat(BuildContext context, IconData icon, String label) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Icon(icon, size: 15, color: const Color(0xFF94A3B8)),
+        Icon(icon, size: 15, color: context.primaryColor),
         const SizedBox(width: 5),
         Text(
           label,
           style: AppTextStyles.bodySmall.copyWith(
-            color: const Color(0xFF475569),
+            color: AppColors.textPrimaryLight,
             fontWeight: AppFonts.semiBold,
           ),
         ),

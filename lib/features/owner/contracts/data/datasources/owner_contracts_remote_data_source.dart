@@ -39,9 +39,7 @@ class OwnerContractsRemoteDataSourceImpl
 
   @override
   Future<ContractDetailsModel> getContractDetails(String id) async {
-    final response = await _dio.get(
-      '${ApiConstants.ownerContracts}/$id',
-    );
+    final response = await _dio.get('${ApiConstants.ownerContracts}/$id');
 
     final data = response.data as Map<String, dynamic>? ?? {};
     return ContractDetailsModel.fromJson(data);

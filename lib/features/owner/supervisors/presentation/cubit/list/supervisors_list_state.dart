@@ -37,10 +37,10 @@ class SupervisorsListState extends Equatable {
 
   @override
   List<Object?> get props => [
-        status,
-        supervisors,
-        pagination,
-        errorMessage,
-        hasReachedMax,
-      ];
+    status,
+    supervisors,
+    pagination,
+    errorMessage,
+    hasReachedMax,
+  ];
 }

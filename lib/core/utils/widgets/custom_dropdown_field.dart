@@ -27,9 +27,9 @@ class CustomDropdownField<T> extends StatelessWidget {
       children: [
         Text(
           label,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 8),
         DropdownButtonFormField<T>(
@@ -40,8 +40,8 @@ class CustomDropdownField<T> extends StatelessWidget {
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: AppColors.textSecondaryLight.withValues(alpha: 0.45),
-                ),
+              color: AppColors.textSecondaryLight.withValues(alpha: 0.45),
+            ),
             border: const OutlineInputBorder(
               borderRadius: AppRadius.circularMd,
               borderSide: BorderSide(color: AppColors.borderLight, width: 1.5),
@@ -67,9 +67,15 @@ class CustomDropdownField<T> extends StatelessWidget {
             ),
             filled: true,
             fillColor: Colors.white,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 12,
+            ),
           ),
-          icon: const Icon(Icons.arrow_drop_down, color: AppColors.textSecondaryLight),
+          icon: const Icon(
+            Icons.arrow_drop_down,
+            color: AppColors.textSecondaryLight,
+          ),
           dropdownColor: Colors.white,
           isExpanded: true,
         ),

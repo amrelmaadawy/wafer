@@ -24,9 +24,7 @@ class ProfileRemoteDataSourceImpl implements ProfileRemoteDataSource {
 
   @override
   Future<ProfileModel> getProfile() async {
-    final response = await _dio.get(
-      ApiConstants.sharedProfile,
-    );
+    final response = await _dio.get(ApiConstants.sharedProfile);
     final data = response.data['data'] as Map<String, dynamic>;
     return ProfileModel.fromJson(data);
   }

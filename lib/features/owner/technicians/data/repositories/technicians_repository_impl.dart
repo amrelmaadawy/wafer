@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
-
 import '../../../../../core/error/failures.dart';
 import '../../domain/entities/technician_form_data_entity.dart';
 import '../../domain/entities/technicians_list_response_entity.dart';
@@ -16,7 +15,8 @@ class TechniciansRepositoryImpl implements TechniciansRepository {
   TechniciansRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, TechnicianFormDataEntity>> getTechnicianFormData() async {
+  Future<Either<Failure, TechnicianFormDataEntity>>
+  getTechnicianFormData() async {
     try {
       final result = await remoteDataSource.getTechnicianFormData();
       return Right(result);
@@ -48,7 +48,9 @@ class TechniciansRepositoryImpl implements TechniciansRepository {
   }
 
   @override
-  Future<Either<Failure, TechnicianEntity>> addTechnician(AddTechnicianParams params) async {
+  Future<Either<Failure, TechnicianEntity>> addTechnician(
+    AddTechnicianParams params,
+  ) async {
     try {
       final result = await remoteDataSource.addTechnician(params);
       return Right(result);

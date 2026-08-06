@@ -35,7 +35,8 @@ class AddTechnicianParams extends Equatable {
   List<Object?> get props => [name, phone, specialty, companyName, isActive];
 }
 
-class AddTechnicianUseCase implements UseCase<TechnicianEntity, AddTechnicianParams> {
+class AddTechnicianUseCase
+    implements UseCase<TechnicianEntity, AddTechnicianParams> {
   final TechniciansRepository repository;
 
   AddTechnicianUseCase(this.repository);

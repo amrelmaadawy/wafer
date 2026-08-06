@@ -2,12 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/usecases/verify_close_owner_maintenance_use_case.dart';
 import 'owner_verify_close_maintenance_state.dart';
 
-class OwnerVerifyCloseMaintenanceCubit extends Cubit<OwnerVerifyCloseMaintenanceState> {
+class OwnerVerifyCloseMaintenanceCubit
+    extends Cubit<OwnerVerifyCloseMaintenanceState> {
   final VerifyCloseOwnerMaintenanceUseCase verifyCloseUseCase;
 
-  OwnerVerifyCloseMaintenanceCubit({
-    required this.verifyCloseUseCase,
-  }) : super(const OwnerVerifyCloseMaintenanceState());
+  OwnerVerifyCloseMaintenanceCubit({required this.verifyCloseUseCase})
+    : super(const OwnerVerifyCloseMaintenanceState());
 
   Future<void> verifyCloseMaintenanceRequest({
     required int id,

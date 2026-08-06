@@ -31,5 +31,10 @@ class NegotiationsListState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [status, negotiations, errorMessage, hasReachedMax];
+  List<Object?> get props => [
+    status,
+    negotiations,
+    errorMessage,
+    hasReachedMax,
+  ];
 }

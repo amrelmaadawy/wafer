@@ -36,7 +36,16 @@ class LoginScreen extends StatelessWidget {
                     LocaleKeys.authRequirePasswordChange.tr(),
                   );
                 } else {
-                  context.go(Routes.home);
+                  if (state.user.accountType == 'owner') {
+                    context.go(Routes.ownerDashboard);
+                  } else if (state.user.accountType == 'system' ||
+                      state.user.accountType == 'company') {
+                    context.go(Routes.companyDashboard);
+                  } else if (state.user.accountType == 'tenant') {
+                    context.go(Routes.tenantDashboard);
+                  } else {
+                    context.go(Routes.ownerDashboard); // Fallback
+                  }
                 }
               }
             },

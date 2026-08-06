@@ -20,7 +20,15 @@ class SupervisorEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, user, scope, sortOrder, isActive, createdBy, createdAt];
+  List<Object?> get props => [
+    id,
+    user,
+    scope,
+    sortOrder,
+    isActive,
+    createdBy,
+    createdAt,
+  ];
 }
 
 class SupervisorUserListEntity extends Equatable {

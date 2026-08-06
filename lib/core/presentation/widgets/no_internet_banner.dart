@@ -105,11 +105,7 @@ class _NoInternetBannerState extends State<NoInternetBanner>
           ),
           child: Row(
             children: [
-              const Icon(
-                Icons.wifi_off_rounded,
-                color: Colors.white,
-                size: 20,
-              ),
+              const Icon(Icons.wifi_off_rounded, color: Colors.white, size: 20),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
@@ -139,8 +135,10 @@ class _NoInternetBannerState extends State<NoInternetBanner>
               GestureDetector(
                 onTap: _checkConnectivity,
                 child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 5,
+                  ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),

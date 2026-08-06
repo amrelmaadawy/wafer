@@ -194,7 +194,7 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
 
   @override
   Future<Either<Failure, ExecuteOwnerMaintenanceResponseEntity>>
-      executeMaintenanceRequest(ExecuteOwnerMaintenanceParams params) async {
+  executeMaintenanceRequest(ExecuteOwnerMaintenanceParams params) async {
     try {
       final result = await _remoteDataSource.executeMaintenanceRequest(params);
       return Right(result);
@@ -207,9 +207,12 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
 
   @override
   Future<Either<Failure, MaintenanceItemEntity>> verifyCloseMaintenanceRequest(
-      VerifyCloseOwnerMaintenanceParams params) async {
+    VerifyCloseOwnerMaintenanceParams params,
+  ) async {
     try {
-      final result = await _remoteDataSource.verifyCloseMaintenanceRequest(params);
+      final result = await _remoteDataSource.verifyCloseMaintenanceRequest(
+        params,
+      );
       return Right(result);
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioException(e));

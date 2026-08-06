@@ -43,8 +43,8 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
   }
 
   void _submit() {
+    FocusScope.of(context).unfocus();
     if (_formKey.currentState?.validate() ?? false) {
-      FocusScope.of(context).unfocus();
       context.read<ProfileCubit>().updateProfile(
         name: _nameController.text.trim(),
         phone: _phoneController.text.trim(),
@@ -89,7 +89,7 @@ class _EditProfileFormWidgetState extends State<EditProfileFormWidget> {
                 icon: Icons.phone_outlined,
                 keyboardType: TextInputType.phone,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                validator: (val) => val == null || val.trim().length < 9
+                validator: (val) => val == null || val.trim().length < 8
                     ? LocaleKeys.profile_phone_validation.tr()
                     : null,
               ),

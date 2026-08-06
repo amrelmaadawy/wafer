@@ -35,17 +35,18 @@ class OwnerUpdateMaintenanceState extends Equatable {
       successMessage: successMessage ?? this.successMessage,
       isFormDataLoading: isFormDataLoading ?? this.isFormDataLoading,
       formDataError: formDataError ?? this.formDataError,
-      availableMaintenanceTypes: availableMaintenanceTypes ?? this.availableMaintenanceTypes,
+      availableMaintenanceTypes:
+          availableMaintenanceTypes ?? this.availableMaintenanceTypes,
     );
   }
 
   @override
   List<Object?> get props => [
-        status,
-        errorMessage,
-        successMessage,
-        isFormDataLoading,
-        formDataError,
-        availableMaintenanceTypes,
-      ];
+    status,
+    errorMessage,
+    successMessage,
+    isFormDataLoading,
+    formDataError,
+    availableMaintenanceTypes,
+  ];
 }

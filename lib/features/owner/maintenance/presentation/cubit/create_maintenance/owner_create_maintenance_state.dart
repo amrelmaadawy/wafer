@@ -46,9 +46,12 @@ class OwnerCreateMaintenanceState extends Equatable {
     this.isPrivate = false,
   });
 
-  List<MaintenanceFormDataPropertyEntity> get properties => formData?.properties ?? [];
-  List<MaintenanceTypeEntity> get availableMaintenanceTypes => formData?.maintenanceTypes ?? [];
-  List<MaintenanceTechnicianEntity> get availableTechnicians => formData?.technicians ?? [];
+  List<MaintenanceFormDataPropertyEntity> get properties =>
+      formData?.properties ?? [];
+  List<MaintenanceTypeEntity> get availableMaintenanceTypes =>
+      formData?.maintenanceTypes ?? [];
+  List<MaintenanceTechnicianEntity> get availableTechnicians =>
+      formData?.technicians ?? [];
 
   OwnerCreateMaintenanceState copyWith({
     CreateMaintenanceStatus? status,

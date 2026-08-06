@@ -6,6 +6,8 @@ import '../../../../../../../core/theme/color_utils.dart';
 import '../../../../../../../core/utils/widgets/custom_text_field.dart';
 import '../../../cubit/units/unit_create_cubit.dart';
 import '../../../cubit/units/unit_create_state.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../../core/localization/locale_keys.dart';
 
 class Step3LocationUtilitiesView extends StatelessWidget {
   const Step3LocationUtilitiesView({super.key});
@@ -19,15 +21,18 @@ class Step3LocationUtilitiesView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'العدادات والمرافق',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                LocaleKeys.unitsLocationUtilsTitle.tr(),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
 
               CustomTextField(
-                label: 'رقم عداد الكهرباء',
-                hintText: 'مثال: 123456789',
+                label: LocaleKeys.unitsElectricityMeterLabel.tr(),
+                hintText: LocaleKeys.unitsElectricityMeterHint.tr(),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 initialValue: state.electricityMeterNumber,
@@ -38,8 +43,8 @@ class Step3LocationUtilitiesView extends StatelessWidget {
               const SizedBox(height: 16),
 
               CustomTextField(
-                label: 'رقم عداد المياه',
-                hintText: 'مثال: 123456789',
+                label: LocaleKeys.unitsWaterMeterLabel.tr(),
+                hintText: LocaleKeys.unitsWaterMeterHint.tr(),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 initialValue: state.waterMeterNumber,
@@ -50,8 +55,8 @@ class Step3LocationUtilitiesView extends StatelessWidget {
               const SizedBox(height: 16),
 
               CustomTextField(
-                label: 'رقم عداد الغاز',
-                hintText: 'مثال: 123456789',
+                label: LocaleKeys.unitsGasMeterLabel.tr(),
+                hintText: LocaleKeys.unitsGasMeterHint.tr(),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 initialValue: state.gasMeterNumber,
@@ -61,9 +66,12 @@ class Step3LocationUtilitiesView extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
-              const Text(
-                'المميزات',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                LocaleKeys.unitsUnitAmenitiesLabel.tr(),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
 
@@ -74,38 +82,43 @@ class Step3LocationUtilitiesView extends StatelessWidget {
                   _buildAmenityChip(
                     context,
                     'balcony',
-                    'بلكونة',
+                    LocaleKeys.unitsAmenityBalcony.tr(),
                     state.amenities,
                   ),
                   _buildAmenityChip(
                     context,
                     'kitchen',
-                    'مطبخ راكب',
+                    LocaleKeys.unitsAmenityKitchen.tr(),
                     state.amenities,
                   ),
-                  _buildAmenityChip(context, 'ac', 'مكيفات', state.amenities),
+                  _buildAmenityChip(
+                    context,
+                    'ac',
+                    LocaleKeys.unitsAmenityAc.tr(),
+                    state.amenities,
+                  ),
                   _buildAmenityChip(
                     context,
                     'internet',
-                    'إنترنت',
+                    LocaleKeys.unitsAmenityInternet.tr(),
                     state.amenities,
                   ),
                   _buildAmenityChip(
                     context,
                     'parking',
-                    'موقف سيارات',
+                    LocaleKeys.unitsAmenityParking.tr(),
                     state.amenities,
                   ),
                   _buildAmenityChip(
                     context,
                     'security',
-                    'حراسة',
+                    LocaleKeys.unitsAmenitySecurity.tr(),
                     state.amenities,
                   ),
                   _buildAmenityChip(
                     context,
                     'elevator',
-                    'مصعد',
+                    LocaleKeys.unitsAmenityElevator.tr(),
                     state.amenities,
                   ),
                 ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../../core/theme/color_utils.dart';
 import '../../../../../../../core/theme/app_colors.dart';
+import '../../../../../../../core/localization/locale_keys.dart';
 
 class WizardProgressBar extends StatelessWidget {
   final int currentStep;
@@ -12,68 +14,97 @@ class WizardProgressBar extends StatelessWidget {
     required this.totalSteps,
   });
 
+  final List<String> _titles = const [
+    LocaleKeys.unitsBasicInfoTitle,
+    LocaleKeys.unitsSpecsTitle,
+    LocaleKeys.unitsLocationUtilsTitle,
+    LocaleKeys.unitsImagesTitle,
+    LocaleKeys.unitsFinancialsTitle,
+    LocaleKeys.unitsReviewTitle,
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final progress = (currentStep + 1) / totalSteps;
-
     return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      decoration: const BoxDecoration(color: Colors.white),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Row(
+            children: List.generate((totalSteps * 2) - 1, (i) {
+              if (i % 2 == 0) {
+                final index = i ~/ 2;
+                return _buildStepIndicator(context, index);
+              } else {
+                final index = i ~/ 2;
+                return Expanded(
+                  child: Container(
+                    height: 2,
+                    margin: const EdgeInsets.symmetric(horizontal: 4),
+                    color: index < currentStep
+                        ? context.primaryColor
+                        : const Color(0xFFE2E8F0),
+                  ),
+                );
+              }
+            }),
+          ),
+          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'الخطوة ${currentStep + 1} من $totalSteps',
+                _titles[currentStep].tr(),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: context.primaryColor,
+                ),
+              ),
+              Text(
+                '$totalSteps / ${currentStep + 1}',
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: AppColors.textSecondaryLight,
                 ),
               ),
-              Text(
-                _getStepTitle(currentStep),
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: context.primaryColor,
-                ),
-              ),
             ],
-          ),
-          const SizedBox(height: 8),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(4),
-            child: LinearProgressIndicator(
-              value: progress,
-              minHeight: 8,
-              backgroundColor: Colors.grey[200],
-              valueColor: AlwaysStoppedAnimation<Color>(context.primaryColor),
-            ),
           ),
         ],
       ),
     );
   }
 
-  String _getStepTitle(int step) {
-    switch (step) {
-      case 0:
-        return 'البيانات الأساسية';
-      case 1:
-        return 'المواصفات';
-      case 2:
-        return 'الموقع والمرافق';
-      case 3:
-        return 'الصور';
-      case 4:
-        return 'التفاصيل المالية';
-      case 5:
-        return 'مراجعة وتأكيد';
-      default:
-        return '';
-    }
+  Widget _buildStepIndicator(BuildContext context, int index) {
+    final isActive = index <= currentStep;
+    final isCompleted = index < currentStep;
+
+    return Container(
+      width: 28,
+      height: 28,
+      decoration: BoxDecoration(
+        color: isActive ? context.primaryColor : const Color(0xFFF1F5F9),
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: isActive ? context.primaryColor : const Color(0xFFCBD5E1),
+          width: 2,
+        ),
+      ),
+      child: Center(
+        child: isCompleted
+            ? const Icon(Icons.check, size: 16, color: Colors.white)
+            : Text(
+                '${index + 1}',
+                style: TextStyle(
+                  color: isActive ? Colors.white : const Color(0xFF94A3B8),
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+      ),
+    );
   }
 }

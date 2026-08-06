@@ -4,7 +4,8 @@ import '../../../../../core/usecases/usecase.dart';
 import '../entities/supervisors_list_response_entity.dart';
 import '../repositories/supervisors_repository.dart';
 
-class GetSupervisorsUseCase implements UseCase<SupervisorsListResponseEntity, int> {
+class GetSupervisorsUseCase
+    implements UseCase<SupervisorsListResponseEntity, int> {
   final SupervisorsRepository repository;
 
   GetSupervisorsUseCase(this.repository);

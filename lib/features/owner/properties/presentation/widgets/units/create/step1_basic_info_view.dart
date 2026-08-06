@@ -8,6 +8,8 @@ import '../../../../../../../core/utils/widgets/custom_text_field.dart';
 import '../../../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../../../cubit/units/unit_create_cubit.dart';
 import '../../../cubit/units/unit_create_state.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../../core/localization/locale_keys.dart';
 
 class Step1BasicInfoView extends StatelessWidget {
   const Step1BasicInfoView({super.key});
@@ -21,21 +23,24 @@ class Step1BasicInfoView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'البيانات الأساسية للوحدة',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                LocaleKeys.unitsBasicInfoTitle.tr(),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
 
               CustomTextField(
-                label: 'اسم الوحدة',
-                hintText: 'مثال: شقة 101',
+                label: LocaleKeys.unitsUnitNameLabel.tr(),
+                hintText: LocaleKeys.unitsUnitNameHint.tr(),
                 initialValue: state.name,
                 onChanged: (val) =>
                     context.read<UnitCreateCubit>().updateBasicInfo(name: val),
                 validator: (val) {
                   if (val == null || val.trim().isEmpty) {
-                    return 'يرجى إدخال اسم الوحدة';
+                    return LocaleKeys.unitsUnitNameValidation.tr();
                   }
                   return null;
                 },
@@ -43,8 +48,8 @@ class Step1BasicInfoView extends StatelessWidget {
               const SizedBox(height: 16),
 
               CustomTextField(
-                label: 'رقم الوحدة',
-                hintText: 'مثال: 101',
+                label: LocaleKeys.unitsUnitNumberLabel.tr(),
+                hintText: LocaleKeys.unitsUnitNumberHint.tr(),
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                 initialValue: state.unitNumber,
@@ -53,7 +58,7 @@ class Step1BasicInfoView extends StatelessWidget {
                     .updateBasicInfo(unitNumber: val),
                 validator: (val) {
                   if (val == null || val.trim().isEmpty) {
-                    return 'يرجى إدخال رقم الوحدة';
+                    return LocaleKeys.unitsUnitNumberValidation.tr();
                   }
                   return null;
                 },
@@ -61,13 +66,13 @@ class Step1BasicInfoView extends StatelessWidget {
               const SizedBox(height: 16),
 
               _buildDropdown(
-                label: 'نوع الوحدة',
+                label: LocaleKeys.unitsUnitTypeLabel.tr(),
                 value: state.unitType,
-                items: const {
-                  'apartment': 'شقة',
-                  'office': 'مكتب',
-                  'shop': 'محل',
-                  'villa': 'فيلا',
+                items: {
+                  'apartment': LocaleKeys.unitsUnitTypeApartment.tr(),
+                  'office': LocaleKeys.unitsUnitTypeOffice.tr(),
+                  'shop': LocaleKeys.unitsUnitTypeShop.tr(),
+                  'villa': LocaleKeys.unitsUnitTypeVilla.tr(),
                 },
                 onChanged: (val) => context
                     .read<UnitCreateCubit>()
@@ -76,12 +81,11 @@ class Step1BasicInfoView extends StatelessWidget {
               const SizedBox(height: 16),
 
               _buildDropdown(
-                label: 'نوع الاستخدام',
+                label: LocaleKeys.unitsUsageTypeLabel.tr(),
                 value: state.usageType,
-                items: const {
-                  'residential': 'سكني',
-                  'commercial': 'تجاري',
-                  'administrative': 'إداري',
+                items: {
+                  'residential': LocaleKeys.unitsUsageTypeResidential.tr(),
+                  'commercial': LocaleKeys.unitsUsageTypeCommercial.tr(),
                 },
                 onChanged: (val) => context
                     .read<UnitCreateCubit>()
@@ -90,9 +94,12 @@ class Step1BasicInfoView extends StatelessWidget {
               const SizedBox(height: 16),
 
               _buildDropdown(
-                label: 'الغرض',
+                label: LocaleKeys.unitsPurposeLabel.tr(),
                 value: state.purpose,
-                items: const {'for_rent': 'للإيجار', 'for_sale': 'للبيع'},
+                items: {
+                  'for_rent': LocaleKeys.unitsPurposeRent.tr(),
+                  'for_sale': LocaleKeys.unitsPurposeSale.tr(),
+                },
                 onChanged: (val) => context
                     .read<UnitCreateCubit>()
                     .updateBasicInfo(purpose: val),
@@ -100,12 +107,13 @@ class Step1BasicInfoView extends StatelessWidget {
               const SizedBox(height: 16),
 
               _buildDropdown(
-                label: 'نوع التشطيب',
+                label: LocaleKeys.unitsFinishingTypeLabel.tr(),
                 value: state.finishingType,
-                items: const {
-                  'finished': 'مشطب',
-                  'semi_finished': 'نصف مشطب',
-                  'without_finish': 'بدون تشطيب',
+                items: {
+                  'finished': LocaleKeys.unitsFinishingTypeFinished.tr(),
+                  'semi_finished': LocaleKeys.unitsFinishingTypeSemiFinished
+                      .tr(),
+                  'without_finish': LocaleKeys.unitsFinishingTypeWithout.tr(),
                 },
                 onChanged: (val) => context
                     .read<UnitCreateCubit>()
@@ -126,9 +134,9 @@ class Step1BasicInfoView extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      'الوحدة مفروشة؟',
-                      style: TextStyle(
+                    Text(
+                      LocaleKeys.unitsIsFurnishedLabel.tr(),
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15,
                         color: AppColors.textPrimaryLight,
@@ -171,7 +179,7 @@ class Step1BasicInfoView extends StatelessWidget {
         CustomDropdownMenu<String>(
           items: items.keys.toList(),
           value: items.containsKey(value) ? value : items.keys.first,
-          hint: 'اختر $label',
+          hint: '${LocaleKeys.unitsSelectPrefix.tr()} $label',
           itemLabelBuilder: (key) => items[key] ?? key,
           onSelected: (val) => onChanged(val),
         ),

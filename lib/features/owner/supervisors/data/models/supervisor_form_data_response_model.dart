@@ -13,15 +13,17 @@ class SupervisorFormDataResponseModel extends SupervisorFormDataEntity {
 
   factory SupervisorFormDataResponseModel.fromJson(Map<String, dynamic> json) {
     final options = json['options'] as Map<String, dynamic>? ?? {};
-    
+
     // Parse users
-    final usersList = (options['users'] as List<dynamic>?)
+    final usersList =
+        (options['users'] as List<dynamic>?)
             ?.map((e) => SupervisorUserModel.fromJson(e))
             .toList() ??
         [];
 
     // Parse scopeTypes
-    final scopeTypesList = (options['scope_types'] as List<dynamic>?)
+    final scopeTypesList =
+        (options['scope_types'] as List<dynamic>?)
             ?.map((e) => SupervisorScopeTypeModel.fromJson(e))
             .toList() ??
         [];
@@ -31,20 +33,23 @@ class SupervisorFormDataResponseModel extends SupervisorFormDataEntity {
     if (options['scope_values'] is Map<String, dynamic>) {
       (options['scope_values'] as Map<String, dynamic>).forEach((key, value) {
         if (value is List<dynamic>) {
-          scopeValuesMap[key] =
-              value.map((e) => SupervisorScopeValueModel.fromJson(e)).toList();
+          scopeValuesMap[key] = value
+              .map((e) => SupervisorScopeValueModel.fromJson(e))
+              .toList();
         }
       });
     }
 
     // Parse scopeConditions
-    final scopeConditionsList = (options['scope_conditions'] as List<dynamic>?)
+    final scopeConditionsList =
+        (options['scope_conditions'] as List<dynamic>?)
             ?.map((e) => SupervisorScopeConditionModel.fromJson(e))
             .toList() ??
         [];
 
     // Parse booleanValues
-    final booleanValuesList = (options['boolean_values'] as List<dynamic>?)
+    final booleanValuesList =
+        (options['boolean_values'] as List<dynamic>?)
             ?.map((e) => SupervisorBooleanValueModel.fromJson(e))
             .toList() ??
         [];
@@ -56,9 +61,11 @@ class SupervisorFormDataResponseModel extends SupervisorFormDataEntity {
       scopeConditions: scopeConditionsList,
       booleanValues: booleanValuesList,
       defaults: SupervisorFormDefaultsModel.fromJson(
-          json['defaults'] as Map<String, dynamic>? ?? {}),
+        json['defaults'] as Map<String, dynamic>? ?? {},
+      ),
       validation: SupervisorFormValidationModel.fromJson(
-          json['validation'] as Map<String, dynamic>? ?? {}),
+        json['validation'] as Map<String, dynamic>? ?? {},
+      ),
     );
   }
 }
@@ -84,10 +91,7 @@ class SupervisorUserModel extends SupervisorUserEntity {
 }
 
 class SupervisorScopeTypeModel extends SupervisorScopeTypeEntity {
-  const SupervisorScopeTypeModel({
-    required super.value,
-    required super.label,
-  });
+  const SupervisorScopeTypeModel({required super.value, required super.label});
 
   factory SupervisorScopeTypeModel.fromJson(Map<String, dynamic> json) {
     return SupervisorScopeTypeModel(
@@ -173,15 +177,16 @@ class SupervisorFormValidationModel extends SupervisorFormValidationEntity {
 
   factory SupervisorFormValidationModel.fromJson(Map<String, dynamic> json) {
     return SupervisorFormValidationModel(
-      requiredFields: (json['required'] as List<dynamic>?)
+      requiredFields:
+          (json['required'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
       scopeTypeRequiresValues:
           (json['scope_type_requires_values'] as List<dynamic>?)
-                  ?.map((e) => e.toString())
-                  .toList() ??
-              [],
+              ?.map((e) => e.toString())
+              .toList() ??
+          [],
     );
   }
 }

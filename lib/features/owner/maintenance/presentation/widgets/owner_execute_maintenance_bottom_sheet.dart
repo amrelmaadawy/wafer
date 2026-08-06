@@ -41,27 +41,36 @@ class _OwnerExecuteMaintenanceBottomSheetState
 
   void _submit() {
     if (_formKey.currentState?.validate() ?? false) {
-      final double actualCost = double.tryParse(_costController.text.trim()) ?? 0.0;
+      final double actualCost =
+          double.tryParse(_costController.text.trim()) ?? 0.0;
       context.read<OwnerExecuteMaintenanceCubit>().executeMaintenanceRequest(
-            id: widget.maintenanceRequest.id ?? 0,
-            technicianResponse: _notesController.text.trim(),
-            actualCost: actualCost,
-          );
+        id: widget.maintenanceRequest.id ?? 0,
+        technicianResponse: _notesController.text.trim(),
+        actualCost: actualCost,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<OwnerExecuteMaintenanceCubit,
-        OwnerExecuteMaintenanceState>(
+    return BlocConsumer<
+      OwnerExecuteMaintenanceCubit,
+      OwnerExecuteMaintenanceState
+    >(
       listener: (context, state) {
         if (state.status == OwnerExecuteMaintenanceStatus.success) {
           AppToast.showSuccess(
-              context, LocaleKeys.maintenanceExecuteSuccess.tr());
-          context.pop(state.responseEntity); // Return response to show QA Dialog
+            context,
+            LocaleKeys.maintenanceExecuteSuccess.tr(),
+          );
+          context.pop(
+            state.responseEntity,
+          ); // Return response to show QA Dialog
         } else if (state.status == OwnerExecuteMaintenanceStatus.failure) {
           AppToast.showError(
-              context, state.errorMessage ?? LocaleKeys.common_error.tr());
+            context,
+            state.errorMessage ?? LocaleKeys.common_error.tr(),
+          );
         }
       },
       builder: (context, state) {
@@ -115,9 +124,13 @@ class _OwnerExecuteMaintenanceBottomSheetState
                       controller: _costController,
                       label: LocaleKeys.maintenanceExecuteCost.tr(),
                       hintText: LocaleKeys.maintenanceExecuteCostHint.tr(),
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
                       ],
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {

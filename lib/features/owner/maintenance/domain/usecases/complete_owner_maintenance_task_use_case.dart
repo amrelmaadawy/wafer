@@ -5,7 +5,8 @@ import '../repositories/owner_maintenance_repository.dart';
 import '../entities/maintenance_item_entity.dart';
 
 class CompleteOwnerMaintenanceTaskUseCase
-    implements UseCase<MaintenanceItemEntity, CompleteOwnerMaintenanceTaskParams> {
+    implements
+        UseCase<MaintenanceItemEntity, CompleteOwnerMaintenanceTaskParams> {
   final OwnerMaintenanceRepository repository;
 
   CompleteOwnerMaintenanceTaskUseCase(this.repository);
@@ -30,9 +31,6 @@ class CompleteOwnerMaintenanceTaskParams {
   });
 
   Map<String, dynamic> toJson() {
-    return {
-      'status': 'completed',
-      'technician_response': technicianResponse,
-    };
+    return {'status': 'completed', 'technician_response': technicianResponse};
   }
 }

@@ -2,6 +2,15 @@ import '../../domain/entities/maintenance_form_data_entity.dart';
 import 'maintenance_sub_models.dart';
 import 'maintenance_complex_sub_models.dart';
 
+int? _parseIntOrMap(dynamic value) {
+  if (value is int) return value;
+  if (value is Map<String, dynamic> && value['id'] is int) {
+    return value['id'] as int;
+  }
+  if (value is String) return int.tryParse(value);
+  return null;
+}
+
 class MaintenanceFormDataUnitModel extends MaintenanceFormDataUnitEntity {
   const MaintenanceFormDataUnitModel({
     required super.id,
@@ -16,8 +25,8 @@ class MaintenanceFormDataUnitModel extends MaintenanceFormDataUnitEntity {
 
   factory MaintenanceFormDataUnitModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceFormDataUnitModel(
-      id: json['id'] as int,
-      propertyId: json['property_id'] as int?,
+      id: _parseIntOrMap(json['id']) ?? 0,
+      propertyId: _parseIntOrMap(json['property_id']),
       propertyName: json['property_name'] as String?,
       name: json['name'] as String?,
       unitNumber: json['unit_number'] as String?,
@@ -28,7 +37,8 @@ class MaintenanceFormDataUnitModel extends MaintenanceFormDataUnitEntity {
   }
 }
 
-class MaintenanceFormDataPropertyModel extends MaintenanceFormDataPropertyEntity {
+class MaintenanceFormDataPropertyModel
+    extends MaintenanceFormDataPropertyEntity {
   const MaintenanceFormDataPropertyModel({
     required super.id,
     super.name,
@@ -49,7 +59,11 @@ class MaintenanceFormDataPropertyModel extends MaintenanceFormDataPropertyEntity
       city: json['city'] as String?,
       district: json['district'] as String?,
       units: unitsList
-          .map((u) => MaintenanceFormDataUnitModel.fromJson(u as Map<String, dynamic>))
+          .map(
+            (u) => MaintenanceFormDataUnitModel.fromJson(
+              u as Map<String, dynamic>,
+            ),
+          )
           .toList(),
     );
   }
@@ -71,16 +85,27 @@ class MaintenanceFormDataModel extends MaintenanceFormDataEntity {
 
     return MaintenanceFormDataModel(
       properties: propertiesList
-          .map((p) => MaintenanceFormDataPropertyModel.fromJson(p as Map<String, dynamic>))
+          .map(
+            (p) => MaintenanceFormDataPropertyModel.fromJson(
+              p as Map<String, dynamic>,
+            ),
+          )
           .toList(),
       units: unitsList
-          .map((u) => MaintenanceFormDataUnitModel.fromJson(u as Map<String, dynamic>))
+          .map(
+            (u) => MaintenanceFormDataUnitModel.fromJson(
+              u as Map<String, dynamic>,
+            ),
+          )
           .toList(),
       maintenanceTypes: typesList
           .map((t) => MaintenanceTypeModel.fromJson(t as Map<String, dynamic>))
           .toList(),
       technicians: techniciansList
-          .map((t) => MaintenanceTechnicianModel.fromJson(t as Map<String, dynamic>))
+          .map(
+            (t) =>
+                MaintenanceTechnicianModel.fromJson(t as Map<String, dynamic>),
+          )
           .toList(),
     );
   }

@@ -37,8 +37,8 @@ class _OwnerVerifyCloseMaintenanceBottomSheetState
   void initState() {
     super.initState();
     if (widget.maintenanceRequest.financials?.actualCost != null) {
-      _costController.text =
-          widget.maintenanceRequest.financials!.actualCost.toString();
+      _costController.text = widget.maintenanceRequest.financials!.actualCost
+          .toString();
     }
   }
 
@@ -54,7 +54,9 @@ class _OwnerVerifyCloseMaintenanceBottomSheetState
     if (_formKey.currentState?.validate() ?? false) {
       final double actualCost =
           double.tryParse(_costController.text.trim()) ?? 0.0;
-      context.read<OwnerVerifyCloseMaintenanceCubit>().verifyCloseMaintenanceRequest(
+      context
+          .read<OwnerVerifyCloseMaintenanceCubit>()
+          .verifyCloseMaintenanceRequest(
             id: widget.maintenanceRequest.id ?? 0,
             qaCode: _qaCodeController.text.trim(),
             actualCost: actualCost,
@@ -65,16 +67,22 @@ class _OwnerVerifyCloseMaintenanceBottomSheetState
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<OwnerVerifyCloseMaintenanceCubit,
-        OwnerVerifyCloseMaintenanceState>(
+    return BlocConsumer<
+      OwnerVerifyCloseMaintenanceCubit,
+      OwnerVerifyCloseMaintenanceState
+    >(
       listener: (context, state) {
         if (state.status == OwnerVerifyCloseMaintenanceStatus.success) {
           AppToast.showSuccess(
-              context, LocaleKeys.maintenanceVerifyCloseSuccess.tr());
+            context,
+            LocaleKeys.maintenanceVerifyCloseSuccess.tr(),
+          );
           context.pop(true); // Return true to indicate success
         } else if (state.status == OwnerVerifyCloseMaintenanceStatus.failure) {
           AppToast.showError(
-              context, state.errorMessage ?? LocaleKeys.common_error.tr());
+            context,
+            state.errorMessage ?? LocaleKeys.common_error.tr(),
+          );
         }
       },
       builder: (context, state) {
@@ -128,10 +136,13 @@ class _OwnerVerifyCloseMaintenanceBottomSheetState
                       controller: _costController,
                       label: LocaleKeys.maintenanceExecuteCost.tr(),
                       hintText: LocaleKeys.maintenanceExecuteCostHint.tr(),
-                      keyboardType:
-                          const TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
                       inputFormatters: [
-                        FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
                       ],
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {

@@ -27,15 +27,15 @@ class MaintenanceFormDataUnitEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        propertyId,
-        propertyName,
-        name,
-        unitNumber,
-        code,
-        unitType,
-        unitStatus,
-      ];
+    id,
+    propertyId,
+    propertyName,
+    name,
+    unitNumber,
+    code,
+    unitType,
+    unitStatus,
+  ];
 }
 
 class MaintenanceFormDataPropertyEntity extends Equatable {
@@ -61,14 +61,14 @@ class MaintenanceFormDataPropertyEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        code,
-        propertyType,
-        city,
-        district,
-        units,
-      ];
+    id,
+    name,
+    code,
+    propertyType,
+    city,
+    district,
+    units,
+  ];
 }
 
 class MaintenanceFormDataEntity extends Equatable {

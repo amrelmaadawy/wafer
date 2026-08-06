@@ -7,7 +7,7 @@ class TaskFormDataCubit extends Cubit<TaskFormDataState> {
   final GetTaskFormDataUseCase getTaskFormDataUseCase;
 
   TaskFormDataCubit({required this.getTaskFormDataUseCase})
-      : super(TaskFormDataInitial());
+    : super(TaskFormDataInitial());
 
   Future<void> fetchFormData() async {
     emit(TaskFormDataLoading());

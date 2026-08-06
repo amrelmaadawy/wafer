@@ -44,53 +44,53 @@ class TaskFormOptionsModel extends TaskFormOptionsEntity {
     return TaskFormOptionsModel(
       properties: json['properties'] != null
           ? (json['properties'] as List)
-              .map((e) => TaskPropertyOptionModel.fromJson(e))
-              .toList()
+                .map((e) => TaskPropertyOptionModel.fromJson(e))
+                .toList()
           : null,
       deeds: json['deeds'] != null
           ? (json['deeds'] as List)
-              .map((e) => TaskDeedOptionModel.fromJson(e))
-              .toList()
+                .map((e) => TaskDeedOptionModel.fromJson(e))
+                .toList()
           : null,
       branches: json['branches'] != null
           ? (json['branches'] as List)
-              .map((e) => TaskBranchOptionModel.fromJson(e))
-              .toList()
+                .map((e) => TaskBranchOptionModel.fromJson(e))
+                .toList()
           : null,
       assignees: json['assignees'] != null
           ? (json['assignees'] as List)
-              .map((e) => TaskAssigneeOptionModel.fromJson(e))
-              .toList()
+                .map((e) => TaskAssigneeOptionModel.fromJson(e))
+                .toList()
           : null,
       statuses: json['statuses'] != null
           ? (json['statuses'] as List)
-              .map((e) => TaskStatusOptionModel.fromJson(e))
-              .toList()
+                .map((e) => TaskStatusOptionModel.fromJson(e))
+                .toList()
           : null,
       kanbanStatuses: json['kanban_statuses'] != null
           ? (json['kanban_statuses'] as List)
-              .map((e) => TaskStatusOptionModel.fromJson(e))
-              .toList()
+                .map((e) => TaskStatusOptionModel.fromJson(e))
+                .toList()
           : null,
       priorities: json['priorities'] != null
           ? (json['priorities'] as List)
-              .map((e) => TaskStatusOptionModel.fromJson(e))
-              .toList()
+                .map((e) => TaskStatusOptionModel.fromJson(e))
+                .toList()
           : null,
       categories: json['categories'] != null
           ? (json['categories'] as List)
-              .map((e) => TaskStatusOptionModel.fromJson(e))
-              .toList()
+                .map((e) => TaskStatusOptionModel.fromJson(e))
+                .toList()
           : null,
       linkedTo: json['linked_to'] != null
           ? (json['linked_to'] as List)
-              .map((e) => TaskStatusOptionModel.fromJson(e))
-              .toList()
+                .map((e) => TaskStatusOptionModel.fromJson(e))
+                .toList()
           : null,
       booleanValues: json['boolean_values'] != null
           ? (json['boolean_values'] as List)
-              .map((e) => TaskBooleanValueModel.fromJson(e))
-              .toList()
+                .map((e) => TaskBooleanValueModel.fromJson(e))
+                .toList()
           : null,
     );
   }
@@ -205,16 +205,10 @@ class TaskStatusOptionModel extends TaskStatusOptionEntity {
 }
 
 class TaskBooleanValueModel extends TaskBooleanValueEntity {
-  const TaskBooleanValueModel({
-    super.value,
-    super.label,
-  });
+  const TaskBooleanValueModel({super.value, super.label});
 
   factory TaskBooleanValueModel.fromJson(Map<String, dynamic> json) {
-    return TaskBooleanValueModel(
-      value: json['value'],
-      label: json['label'],
-    );
+    return TaskBooleanValueModel(value: json['value'], label: json['label']);
   }
 }
 
@@ -277,10 +271,7 @@ class TaskFormValidationModel extends TaskFormValidationEntity {
 }
 
 class TaskFormWorkflowModel extends TaskFormWorkflowEntity {
-  const TaskFormWorkflowModel({
-    super.sequence,
-    super.terminal,
-  });
+  const TaskFormWorkflowModel({super.sequence, super.terminal});
 
   factory TaskFormWorkflowModel.fromJson(Map<String, dynamic> json) {
     return TaskFormWorkflowModel(

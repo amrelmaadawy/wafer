@@ -71,7 +71,8 @@ class _OwnerCreateMaintenanceViewState
               if (state.formDataError != null) {
                 return CustomErrorWidget(
                   message: state.formDataError!,
-                  onRetry: () => context.read<OwnerCreateMaintenanceCubit>().init(),
+                  onRetry: () =>
+                      context.read<OwnerCreateMaintenanceCubit>().init(),
                 );
               }
 
@@ -214,14 +215,18 @@ class _OwnerCreateMaintenanceViewState
           value: state.selectedUnitId,
           itemLabelBuilder: (id) {
             if (id == null) return LocaleKeys.maintenanceCreateNoUnit.tr();
-            final unit = state.filteredUnits.where((u) => u.id == id).firstOrNull;
+            final unit = state.filteredUnits
+                .where((u) => u.id == id)
+                .firstOrNull;
             if (unit == null) return '';
             return unit.displayName;
           },
           errorText: formFieldState.errorText,
           onSelected: (id) {
             formFieldState.didChange(id);
-            context.read<OwnerCreateMaintenanceCubit>().updateSelectedUnit(id ?? 0);
+            context.read<OwnerCreateMaintenanceCubit>().updateSelectedUnit(
+              id ?? 0,
+            );
           },
         );
       },

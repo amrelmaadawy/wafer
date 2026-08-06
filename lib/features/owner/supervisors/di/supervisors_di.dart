@@ -11,12 +11,8 @@ import '../presentation/cubit/create/create_supervisor_cubit.dart';
 
 void initSupervisors() {
   // Cubits
-  sl.registerFactory(
-    () => SupervisorFormDataCubit(sl()),
-  );
-  sl.registerFactory(
-    () => SupervisorsListCubit(getSupervisorsUseCase: sl()),
-  );
+  sl.registerFactory(() => SupervisorFormDataCubit(sl()));
+  sl.registerFactory(() => SupervisorsListCubit(getSupervisorsUseCase: sl()));
   sl.registerFactory(
     () => CreateSupervisorCubit(createSupervisorUseCase: sl()),
   );

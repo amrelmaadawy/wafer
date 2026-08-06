@@ -7,7 +7,10 @@ class UserEntity extends Equatable {
   final String? phone;
   final String? avatar;
   final String? token;
-  final String accountType; // e.g. "owner", "company", "tenant"
+  final String accountType; // e.g. "owner", "company", "tenant", "system"
+  final String? userType; // e.g. "system"
+  final String? clientType; // e.g. "client"
+  final bool? isTenantAdmin;
   final String? tenantId;
   final String? tenantName;
   final bool requiresPasswordChange;
@@ -20,6 +23,9 @@ class UserEntity extends Equatable {
     this.avatar,
     this.token,
     required this.accountType,
+    this.userType,
+    this.clientType,
+    this.isTenantAdmin,
     this.tenantId,
     this.tenantName,
     this.requiresPasswordChange = false,
@@ -34,6 +40,9 @@ class UserEntity extends Equatable {
     avatar,
     token,
     accountType,
+    userType,
+    clientType,
+    isTenantAdmin,
     tenantId,
     tenantName,
     requiresPasswordChange,

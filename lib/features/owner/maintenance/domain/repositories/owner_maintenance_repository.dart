@@ -37,12 +37,15 @@ abstract class OwnerMaintenanceRepository {
   Future<Either<Failure, void>> assignMaintenanceRequest(
     AssignOwnerMaintenanceParams params,
   );
-  Future<Either<Failure, MaintenanceItemEntity>> startMaintenanceRequest(int id);
+  Future<Either<Failure, MaintenanceItemEntity>> startMaintenanceRequest(
+    int id,
+  );
   Future<Either<Failure, MaintenanceItemEntity>> completeMaintenanceTask(
     CompleteOwnerMaintenanceTaskParams params,
   );
   Future<Either<Failure, ExecuteOwnerMaintenanceResponseEntity>>
-      executeMaintenanceRequest(ExecuteOwnerMaintenanceParams params);
+  executeMaintenanceRequest(ExecuteOwnerMaintenanceParams params);
   Future<Either<Failure, MaintenanceItemEntity>> verifyCloseMaintenanceRequest(
-      VerifyCloseOwnerMaintenanceParams params);
+    VerifyCloseOwnerMaintenanceParams params,
+  );
 }

@@ -12,10 +12,7 @@ import '../../domain/entities/technician_entity.dart';
 class TechnicianCard extends StatelessWidget {
   final TechnicianEntity technician;
 
-  const TechnicianCard({
-    super.key,
-    required this.technician,
-  });
+  const TechnicianCard({super.key, required this.technician});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +29,7 @@ class TechnicianCard extends StatelessWidget {
             offset: const Offset(0, 4),
           ),
         ],
-        border: Border.all(
-          color: context.primaryColor.withValues(alpha: 0.1),
-        ),
+        border: Border.all(color: context.primaryColor.withValues(alpha: 0.1)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

@@ -34,9 +34,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   @override
   Future<LegalCaseFormDataModel> getLegalCaseFormData() async {
     try {
-      final response = await dio.get(
-        'owner/legal-cases/form-data',
-      );
+      final response = await dio.get('owner/legal-cases/form-data');
 
       if (response.data != null && response.data['data'] != null) {
         return LegalCaseFormDataModel.fromJson(response.data['data']);
@@ -82,9 +80,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   @override
   Future<LegalCaseItemModel> getLegalCaseDetails(int id) async {
     try {
-      final response = await dio.get(
-        'owner/legal-cases/$id',
-      );
+      final response = await dio.get('owner/legal-cases/$id');
 
       if (response.data != null && response.data['data'] != null) {
         return LegalCaseItemModel.fromJson(response.data['data']);
@@ -158,9 +154,7 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
   @override
   Future<void> deleteLegalCase(int id) async {
     try {
-      final response = await dio.delete(
-        'owner/legal-cases/$id',
-      );
+      final response = await dio.delete('owner/legal-cases/$id');
 
       if (response.data != null && response.data['success'] == true) {
         return;

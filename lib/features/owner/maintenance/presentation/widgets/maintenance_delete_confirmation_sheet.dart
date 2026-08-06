@@ -107,48 +107,51 @@ class MaintenanceDeleteConfirmationSheet extends StatelessWidget {
                 ),
                 const SizedBox(width: 12),
                 Expanded(
-                  child: BlocBuilder<OwnerDeleteMaintenanceCubit, OwnerDeleteMaintenanceState>(
-                    bloc: deleteCubit,
-                    builder: (context, state) {
-                      final isLoading = state.status == DeleteMaintenanceStatus.loading;
-                      return ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.error,
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 14,
-                          ),
-                          shape: const RoundedRectangleBorder(
-                            borderRadius: AppRadius.circularXl,
-                          ),
-                          elevation: 0,
-                        ),
-                        onPressed: isLoading
-                            ? null
-                            : () {
-                                deleteCubit.deleteMaintenanceRequest(
-                                  item.safeId,
-                                );
-                              },
-                        child: isLoading
-                            ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : Text(
-                                LocaleKeys.maintenanceDeleteConfirmBtn.tr(),
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15,
-                                ),
+                  child:
+                      BlocBuilder<
+                        OwnerDeleteMaintenanceCubit,
+                        OwnerDeleteMaintenanceState
+                      >(
+                        bloc: deleteCubit,
+                        builder: (context, state) {
+                          final isLoading =
+                              state.status == DeleteMaintenanceStatus.loading;
+                          return ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.error,
+                              padding: const EdgeInsets.symmetric(vertical: 14),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: AppRadius.circularXl,
                               ),
-                      );
-                    },
-                  ),
+                              elevation: 0,
+                            ),
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                                    deleteCubit.deleteMaintenanceRequest(
+                                      item.safeId,
+                                    );
+                                  },
+                            child: isLoading
+                                ? const SizedBox(
+                                    height: 20,
+                                    width: 20,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 2,
+                                    ),
+                                  )
+                                : Text(
+                                    LocaleKeys.maintenanceDeleteConfirmBtn.tr(),
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                          );
+                        },
+                      ),
                 ),
               ],
             ),

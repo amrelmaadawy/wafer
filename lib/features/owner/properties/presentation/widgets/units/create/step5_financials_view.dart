@@ -7,6 +7,8 @@ import '../../../../../../../core/theme/color_utils.dart';
 import '../../../../../../../core/utils/widgets/custom_text_field.dart';
 import '../../../cubit/units/unit_create_cubit.dart';
 import '../../../cubit/units/unit_create_state.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../../core/localization/locale_keys.dart';
 
 class Step5FinancialsView extends StatelessWidget {
   const Step5FinancialsView({super.key});
@@ -20,15 +22,18 @@ class Step5FinancialsView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'التفاصيل المالية',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                LocaleKeys.unitsFinancialsTitle.tr(),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
 
               CustomTextField(
-                label: 'الإيجار الشهري',
-                hintText: 'مثال: 2500',
+                label: LocaleKeys.unitsAnnualRentMonthlyLabel.tr(),
+                hintText: LocaleKeys.unitsAnnualRentMonthlyHint.tr(),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -41,8 +46,8 @@ class Step5FinancialsView extends StatelessWidget {
               const SizedBox(height: 16),
 
               CustomTextField(
-                label: 'الإيجار السنوي (دفعتين)',
-                hintText: 'مثال: 26000',
+                label: LocaleKeys.unitsAnnualRent2PaymentsLabel.tr(),
+                hintText: LocaleKeys.unitsAnnualRent2PaymentsHint.tr(),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -55,8 +60,8 @@ class Step5FinancialsView extends StatelessWidget {
               const SizedBox(height: 16),
 
               CustomTextField(
-                label: 'الإيجار السنوي (4 دفعات)',
-                hintText: 'مثال: 28000',
+                label: LocaleKeys.unitsAnnualRent4PaymentsLabel.tr(),
+                hintText: LocaleKeys.unitsAnnualRent4PaymentsHint.tr(),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -81,22 +86,22 @@ class Step5FinancialsView extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Expanded(
+                    Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'استخدام السعر للتمويل العقاري؟',
-                            style: TextStyle(
+                            LocaleKeys.unitsUsePriceForMortgage.tr(),
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 15,
                               color: AppColors.textPrimaryLight,
                             ),
                           ),
-                          SizedBox(height: 4),
+                          const SizedBox(height: 4),
                           Text(
-                            'السماح بعرض هذا السعر في طلبات التمويل',
-                            style: TextStyle(
+                            LocaleKeys.unitsUsePriceForMortgageDesc.tr(),
+                            style: const TextStyle(
                               fontSize: 12,
                               color: AppColors.textSecondaryLight,
                             ),

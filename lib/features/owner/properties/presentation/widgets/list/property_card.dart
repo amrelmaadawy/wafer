@@ -55,19 +55,22 @@ class PropertyCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Material(
-                    color: Colors.transparent,
-                    child: Container(
-                      width: 44,
-                      height: 44,
-                      decoration: BoxDecoration(
-                        color: context.primarySubtle,
-                        borderRadius: AppRadius.circularLg,
-                      ),
-                      child: Icon(
-                        _typeIcon,
-                        color: context.primaryColor,
-                        size: 22,
+                  Hero(
+                    tag: 'property_icon_${property.id}',
+                    child: Material(
+                      color: Colors.transparent,
+                      child: Container(
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: context.primarySubtle,
+                          borderRadius: AppRadius.circularLg,
+                        ),
+                        child: Icon(
+                          _typeIcon,
+                          color: context.primaryColor,
+                          size: 22,
+                        ),
                       ),
                     ),
                   ),

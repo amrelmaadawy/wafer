@@ -1,13 +1,26 @@
 import '../../domain/entities/maintenance_requests_list_entity.dart';
 
-class MaintenanceRequestsListResponseModel extends MaintenanceRequestsListResponseEntity {
+int _parseIntOrMap(dynamic value) {
+  if (value is int) return value;
+  if (value is Map<String, dynamic> && value['id'] is int) {
+    return value['id'] as int;
+  }
+  if (value is String) return int.tryParse(value) ?? 0;
+  return 0;
+}
+
+class MaintenanceRequestsListResponseModel
+    extends MaintenanceRequestsListResponseEntity {
   const MaintenanceRequestsListResponseModel({
     required super.maintenanceRequests,
   });
 
-  factory MaintenanceRequestsListResponseModel.fromJson(Map<String, dynamic> json) {
+  factory MaintenanceRequestsListResponseModel.fromJson(
+    Map<String, dynamic> json,
+  ) {
     return MaintenanceRequestsListResponseModel(
-      maintenanceRequests: (json['maintenance_requests'] as List?)
+      maintenanceRequests:
+          (json['maintenance_requests'] as List?)
               ?.map((e) => MaintenanceRequestListItemModel.fromJson(e))
               .toList() ??
           [],
@@ -33,7 +46,7 @@ class MaintenanceRequestListItemModel extends MaintenanceRequestListItemEntity {
 
   factory MaintenanceRequestListItemModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceRequestListItemModel(
-      id: json['id'] as int,
+      id: _parseIntOrMap(json['id']),
       requestNumber: json['request_number'] as String?,
       title: json['title'] as String?,
       description: json['description'] as String?,
@@ -54,10 +67,7 @@ class MaintenanceRequestListItemModel extends MaintenanceRequestListItemEntity {
 }
 
 class MaintenanceClientModel extends MaintenanceClientEntity {
-  const MaintenanceClientModel({
-    super.name,
-    super.phone,
-  });
+  const MaintenanceClientModel({super.name, super.phone});
 
   factory MaintenanceClientModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceClientModel(

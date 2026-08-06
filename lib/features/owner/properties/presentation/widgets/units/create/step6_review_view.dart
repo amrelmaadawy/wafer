@@ -4,6 +4,8 @@ import '../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../core/theme/color_utils.dart';
 import '../../../cubit/units/unit_create_cubit.dart';
 import '../../../cubit/units/unit_create_state.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../../core/localization/locale_keys.dart';
 
 class Step6ReviewView extends StatelessWidget {
   const Step6ReviewView({super.key});
@@ -17,62 +19,97 @@ class Step6ReviewView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'مراجعة وتأكيد',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                LocaleKeys.unitsReviewTitle.tr(),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'يرجى مراجعة بيانات الوحدة قبل التأكيد',
-                style: TextStyle(color: AppColors.textSecondaryLight),
+              Text(
+                LocaleKeys.unitsReviewSubtitle.tr(),
+                style: const TextStyle(color: AppColors.textSecondaryLight),
               ),
               const SizedBox(height: 24),
 
               _buildSection(
                 context,
-                title: 'البيانات الأساسية',
+                title: LocaleKeys.unitsBasicInfoTitle.tr(),
                 icon: Icons.info_outline,
                 children: [
-                  _buildReviewItem('اسم الوحدة', state.name ?? 'غير محدد'),
                   _buildReviewItem(
-                    'رقم الوحدة',
-                    state.unitNumber ?? 'غير محدد',
+                    LocaleKeys.unitsUnitNameLabel.tr(),
+                    state.name ?? LocaleKeys.unitsNotSpecified.tr(),
                   ),
-                  _buildReviewItem('نوع الوحدة', state.unitType),
-                  _buildReviewItem('الغرض', state.purpose),
-                  _buildReviewItem('التشطيب', state.finishingType),
-                  _buildReviewItem('مفروشة', state.isFurnished ? 'نعم' : 'لا'),
+                  _buildReviewItem(
+                    LocaleKeys.unitsUnitNumberLabel.tr(),
+                    state.unitNumber ?? LocaleKeys.unitsNotSpecified.tr(),
+                  ),
+                  _buildReviewItem(
+                    LocaleKeys.unitsUnitTypeLabel.tr(),
+                    state.unitType,
+                  ),
+                  _buildReviewItem(
+                    LocaleKeys.unitsPurposeLabel.tr(),
+                    state.purpose,
+                  ),
+                  _buildReviewItem(
+                    LocaleKeys.unitsFinishingTypeLabel.tr(),
+                    state.finishingType,
+                  ),
+                  _buildReviewItem(
+                    LocaleKeys.unitsIsFurnishedLabel.tr(),
+                    state.isFurnished
+                        ? LocaleKeys.unitsYes.tr()
+                        : LocaleKeys.unitsNo.tr(),
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
 
               _buildSection(
                 context,
-                title: 'المواصفات',
+                title: LocaleKeys.unitsSpecsTitle.tr(),
                 icon: Icons.square_foot,
                 children: [
-                  _buildReviewItem('المساحة', '${state.area ?? 0} م²'),
                   _buildReviewItem(
-                    'الدور',
+                    LocaleKeys.unitsAreaLabel.tr(),
+                    '${state.area ?? 0} م²',
+                  ),
+                  _buildReviewItem(
+                    LocaleKeys.unitsFloorTypeLabel.tr(),
                     '${state.floorType} (${state.floorNumber ?? 0})',
                   ),
-                  _buildReviewItem('غرف النوم', '${state.roomsCount ?? 0}'),
-                  _buildReviewItem('الحمامات', '${state.bathroomsCount ?? 0}'),
+                  _buildReviewItem(
+                    LocaleKeys.unitsRooms.tr(),
+                    '${state.roomsCount ?? 0}',
+                  ),
+                  _buildReviewItem(
+                    LocaleKeys.unitsBathrooms.tr(),
+                    '${state.bathroomsCount ?? 0}',
+                  ),
                 ],
               ),
               const SizedBox(height: 16),
 
               _buildSection(
                 context,
-                title: 'الموقع والمرافق',
+                title: LocaleKeys.unitsLocationUtilsTitle.tr(),
                 icon: Icons.location_on_outlined,
                 children: [
-                  _buildReviewItem('المدينة', state.city ?? 'غير محدد'),
-                  _buildReviewItem('الحي', state.district ?? 'غير محدد'),
                   _buildReviewItem(
-                    'المميزات',
+                    LocaleKeys.unitsCity.tr(),
+                    state.city ?? LocaleKeys.unitsNotSpecified.tr(),
+                  ),
+                  _buildReviewItem(
+                    LocaleKeys.unitsDistrict.tr(),
+                    state.district ?? LocaleKeys.unitsNotSpecified.tr(),
+                  ),
+                  _buildReviewItem(
+                    LocaleKeys.unitsFeatures.tr(),
                     state.amenities.isEmpty
-                        ? 'لا يوجد'
+                        ? LocaleKeys.unitsNone.tr()
                         : state.amenities.join('، '),
                   ),
                 ],
@@ -81,19 +118,19 @@ class Step6ReviewView extends StatelessWidget {
 
               _buildSection(
                 context,
-                title: 'التفاصيل المالية',
+                title: LocaleKeys.unitsFinancialsTitle.tr(),
                 icon: Icons.attach_money,
                 children: [
                   _buildReviewItem(
-                    'الإيجار (شهري)',
+                    LocaleKeys.unitsAnnualRentMonthlyLabel.tr(),
                     '${state.annualRentMonthly ?? 0}',
                   ),
                   _buildReviewItem(
-                    'الإيجار (دفعتين)',
+                    LocaleKeys.unitsAnnualRent2PaymentsLabel.tr(),
                     '${state.annualRent2Payments ?? 0}',
                   ),
                   _buildReviewItem(
-                    'الإيجار (4 دفعات)',
+                    LocaleKeys.unitsAnnualRent4PaymentsLabel.tr(),
                     '${state.annualRent4Payments ?? 0}',
                   ),
                 ],
@@ -102,12 +139,12 @@ class Step6ReviewView extends StatelessWidget {
 
               _buildSection(
                 context,
-                title: 'الصور',
+                title: LocaleKeys.unitsImagesTitle.tr(),
                 icon: Icons.image_outlined,
                 children: [
                   _buildReviewItem(
-                    'عدد الصور المرفقة',
-                    '${state.images.length} صور',
+                    LocaleKeys.unitsAttachedImagesCount.tr(),
+                    '${state.images.length} ${LocaleKeys.unitsImagesCount.tr()}',
                   ),
                 ],
               ),

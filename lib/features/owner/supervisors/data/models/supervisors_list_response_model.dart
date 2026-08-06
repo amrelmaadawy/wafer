@@ -10,7 +10,8 @@ class SupervisorsListResponseModel extends SupervisorsListResponseEntity {
 
   factory SupervisorsListResponseModel.fromJson(Map<String, dynamic> json) {
     return SupervisorsListResponseModel(
-      supervisors: (json['maintenance_supervisors'] as List?)
+      supervisors:
+          (json['maintenance_supervisors'] as List?)
               ?.map((e) => SupervisorModel.fromJson(e))
               .toList() ??
           [],

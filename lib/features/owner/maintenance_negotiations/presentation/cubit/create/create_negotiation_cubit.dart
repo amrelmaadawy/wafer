@@ -6,7 +6,7 @@ class CreateNegotiationCubit extends Cubit<CreateNegotiationState> {
   final CreateNegotiationUseCase createNegotiationUseCase;
 
   CreateNegotiationCubit({required this.createNegotiationUseCase})
-      : super(CreateNegotiationInitial());
+    : super(CreateNegotiationInitial());
 
   Future<void> createNegotiation({
     required num approvalLimit,
@@ -15,10 +15,7 @@ class CreateNegotiationCubit extends Cubit<CreateNegotiationState> {
     emit(CreateNegotiationLoading());
 
     final result = await createNegotiationUseCase(
-      CreateNegotiationParams(
-        approvalLimit: approvalLimit,
-        isActive: isActive,
-      ),
+      CreateNegotiationParams(approvalLimit: approvalLimit, isActive: isActive),
     );
 
     result.fold(

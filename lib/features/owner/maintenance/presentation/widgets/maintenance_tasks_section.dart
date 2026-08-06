@@ -69,7 +69,7 @@ class MaintenanceTasksSection extends StatelessWidget {
                 );
                 return;
               }
-              
+
               final result = await OwnerCompleteTaskBottomSheet.show(
                 context,
                 item,
@@ -93,57 +93,61 @@ class MaintenanceTasksSection extends StatelessWidget {
           ),
         ),
         child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
-            color: isCompleted
-                ? AppColors.success
-                : AppColors.textSecondaryLight,
-            size: 20,
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: isCompleted
-                        ? AppColors.textSecondaryLight
-                        : AppColors.textPrimaryLight,
-                    fontSize: 14,
-                    fontWeight: isCompleted ? FontWeight.w500 : FontWeight.w700,
-                    decoration: isCompleted ? TextDecoration.lineThrough : null,
-                  ),
-                ),
-                if (task.dueDate != null) ...[
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.calendar_today,
-                        size: 12,
-                        color: AppColors.textSecondaryLight,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        task.dueDate!,
-                        style: const TextStyle(
-                          color: AppColors.textSecondaryLight,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ],
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              isCompleted ? Icons.check_circle : Icons.radio_button_unchecked,
+              color: isCompleted
+                  ? AppColors.success
+                  : AppColors.textSecondaryLight,
+              size: 20,
             ),
-          ),
-        ],
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: isCompleted
+                          ? AppColors.textSecondaryLight
+                          : AppColors.textPrimaryLight,
+                      fontSize: 14,
+                      fontWeight: isCompleted
+                          ? FontWeight.w500
+                          : FontWeight.w700,
+                      decoration: isCompleted
+                          ? TextDecoration.lineThrough
+                          : null,
+                    ),
+                  ),
+                  if (task.dueDate != null) ...[
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.calendar_today,
+                          size: 12,
+                          color: AppColors.textSecondaryLight,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          task.dueDate!,
+                          style: const TextStyle(
+                            color: AppColors.textSecondaryLight,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 }

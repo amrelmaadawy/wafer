@@ -1,5 +1,14 @@
 import '../../domain/entities/maintenance_complex_sub_entities.dart';
 
+int? _parseIntOrMap(dynamic value) {
+  if (value is int) return value;
+  if (value is Map<String, dynamic> && value['id'] is int) {
+    return value['id'] as int;
+  }
+  if (value is String) return int.tryParse(value);
+  return null;
+}
+
 class MaintenancePeopleModel extends MaintenancePeopleEntity {
   const MaintenancePeopleModel({
     super.assignedEmployee,
@@ -9,9 +18,9 @@ class MaintenancePeopleModel extends MaintenancePeopleEntity {
 
   factory MaintenancePeopleModel.fromJson(Map<String, dynamic> json) {
     return MaintenancePeopleModel(
-      assignedEmployee: json['assigned_employee'] as int?,
-      supervisor: json['supervisor'] as int?,
-      ownerRepresentative: json['owner_representative'] as int?,
+      assignedEmployee: _parseIntOrMap(json['assigned_employee']),
+      supervisor: _parseIntOrMap(json['supervisor']),
+      ownerRepresentative: _parseIntOrMap(json['owner_representative']),
     );
   }
 }
@@ -32,7 +41,7 @@ class MaintenanceRatingModel extends MaintenanceRatingEntity {
 
   factory MaintenanceRatingModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceRatingModel(
-      value: json['value'] as int?,
+      value: _parseIntOrMap(json['value']),
       comment: json['comment'] as String?,
     );
   }
@@ -49,7 +58,7 @@ class MaintenanceTechnicianModel extends MaintenanceTechnicianEntity {
 
   factory MaintenanceTechnicianModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceTechnicianModel(
-      id: json['id'] as int?,
+      id: _parseIntOrMap(json['id']),
       name: json['name'] as String?,
       phone: json['phone'] as String?,
       specialty: json['specialty'] as String?,
@@ -72,7 +81,7 @@ class MaintenanceAssignmentModel extends MaintenanceAssignmentEntity {
 
   factory MaintenanceAssignmentModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceAssignmentModel(
-      id: json['id'] as int?,
+      id: _parseIntOrMap(json['id']),
       technician: json['technician'] != null
           ? MaintenanceTechnicianModel.fromJson(json['technician'])
           : null,
@@ -99,11 +108,11 @@ class MaintenanceTaskModel extends MaintenanceTaskEntity {
 
   factory MaintenanceTaskModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceTaskModel(
-      id: json['id'] as int?,
+      id: _parseIntOrMap(json['id']),
       title: json['title'] as String?,
       status: json['status'] as String?,
       technicianResponse: json['technician_response'] as String?,
-      responsibleId: json['responsible_id'] as int?,
+      responsibleId: _parseIntOrMap(json['responsible_id']),
       dueDate: json['due_date'] as String?,
       completedAt: json['completed_at'] as String?,
     );
@@ -123,9 +132,9 @@ class MaintenanceActionLogModel extends MaintenanceActionLogEntity {
 
   factory MaintenanceActionLogModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceActionLogModel(
-      id: json['id'] as int?,
+      id: _parseIntOrMap(json['id']),
       action: json['action'] as String?,
-      performedBy: json['performed_by'] as int?,
+      performedBy: _parseIntOrMap(json['performed_by']),
       notes: json['notes'] as String?,
       oldStatus: json['old_status'] as String?,
       newStatus: json['new_status'] as String?,

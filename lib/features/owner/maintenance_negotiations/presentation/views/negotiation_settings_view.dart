@@ -23,7 +23,8 @@ class NegotiationSettingsView extends StatefulWidget {
   const NegotiationSettingsView({super.key});
 
   @override
-  State<NegotiationSettingsView> createState() => _NegotiationSettingsViewState();
+  State<NegotiationSettingsView> createState() =>
+      _NegotiationSettingsViewState();
 }
 
 class _NegotiationSettingsViewState extends State<NegotiationSettingsView> {
@@ -41,10 +42,10 @@ class _NegotiationSettingsViewState extends State<NegotiationSettingsView> {
   void _onDataLoaded(NegotiationFormDataState state) {
     if (state.formData != null) {
       final data = state.formData!;
-      
+
       final current = data.currentNegotiation;
       final defaults = data.defaults;
-      
+
       _minLimit = data.validation?.approvalLimitMin;
 
       if (current != null) {
@@ -61,7 +62,9 @@ class _NegotiationSettingsViewState extends State<NegotiationSettingsView> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => sl<NegotiationFormDataCubit>()..getFormData()),
+        BlocProvider(
+          create: (_) => sl<NegotiationFormDataCubit>()..getFormData(),
+        ),
         BlocProvider(create: (_) => sl<CreateNegotiationCubit>()),
       ],
       child: Scaffold(
@@ -84,7 +87,8 @@ class _NegotiationSettingsViewState extends State<NegotiationSettingsView> {
             if (state.status == NegotiationFormDataStatus.failure) {
               return CustomErrorWidget(
                 message: state.errorMessage ?? '',
-                onRetry: () => context.read<NegotiationFormDataCubit>().getFormData(),
+                onRetry: () =>
+                    context.read<NegotiationFormDataCubit>().getFormData(),
               );
             }
 
@@ -123,7 +127,9 @@ class _NegotiationSettingsViewState extends State<NegotiationSettingsView> {
                   CustomTextField(
                     controller: _approvalLimitController,
                     label: LocaleKeys.negotiation_approval_limit.tr(),
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return LocaleKeys.negotiation_validation_required.tr();
@@ -133,7 +139,9 @@ class _NegotiationSettingsViewState extends State<NegotiationSettingsView> {
                         return LocaleKeys.negotiation_validation_required.tr();
                       }
                       if (_minLimit != null && numValue < _minLimit!) {
-                        return LocaleKeys.negotiation_validation_min.tr(args: [_minLimit.toString()]);
+                        return LocaleKeys.negotiation_validation_min.tr(
+                          args: [_minLimit.toString()],
+                        );
                       }
                       return null;
                     },
@@ -164,7 +172,10 @@ class _NegotiationSettingsViewState extends State<NegotiationSettingsView> {
             BlocConsumer<CreateNegotiationCubit, CreateNegotiationState>(
               listener: (context, state) {
                 if (state is CreateNegotiationSuccess) {
-                  AppToast.showSuccess(context, LocaleKeys.negotiation_create_success.tr());
+                  AppToast.showSuccess(
+                    context,
+                    LocaleKeys.negotiation_create_success.tr(),
+                  );
                   Navigator.pop(context, true);
                 } else if (state is CreateNegotiationFailure) {
                   AppToast.showError(context, state.errorMessage);
@@ -177,9 +188,9 @@ class _NegotiationSettingsViewState extends State<NegotiationSettingsView> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       context.read<CreateNegotiationCubit>().createNegotiation(
-                            approvalLimit: num.parse(_approvalLimitController.text),
-                            isActive: _isActive,
-                          );
+                        approvalLimit: num.parse(_approvalLimitController.text),
+                        isActive: _isActive,
+                      );
                     }
                   },
                 );
@@ -212,20 +223,32 @@ class _NegotiationSettingsSkeleton extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AppShimmer.box(width: double.infinity, height: 50, borderRadius: AppRadius.circularMd),
+                AppShimmer.box(
+                  width: double.infinity,
+                  height: 50,
+                  borderRadius: AppRadius.circularMd,
+                ),
                 const SizedBox(height: AppSpacing.xl),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     AppShimmer.box(width: 100, height: 20),
-                    AppShimmer.box(width: 40, height: 24, borderRadius: AppRadius.circularLg),
+                    AppShimmer.box(
+                      width: 40,
+                      height: 24,
+                      borderRadius: AppRadius.circularLg,
+                    ),
                   ],
                 ),
               ],
             ),
           ),
           const SizedBox(height: AppSpacing.xxl),
-          AppShimmer.box(width: double.infinity, height: 50, borderRadius: AppRadius.circularLg),
+          AppShimmer.box(
+            width: double.infinity,
+            height: 50,
+            borderRadius: AppRadius.circularLg,
+          ),
         ],
       ),
     );

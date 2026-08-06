@@ -25,9 +25,7 @@ class NotificationsRemoteDataSourceImpl
 
   @override
   Future<int> getUnreadNotificationsCount() async {
-    final response = await _dio.get(
-      ApiConstants.sharedUnreadCount,
-    );
+    final response = await _dio.get(ApiConstants.sharedUnreadCount);
     final dataMap = response.data as Map<String, dynamic>? ?? {};
     final innerData = dataMap['data'] as Map<String, dynamic>? ?? {};
     return innerData['count'] as int? ?? 0;

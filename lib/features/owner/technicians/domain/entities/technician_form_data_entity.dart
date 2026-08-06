@@ -73,10 +73,10 @@ class TechnicianFormValidationEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        requiredFields,
-        name,
-        phone,
-        specialty,
-        companyName,
-      ];
+    requiredFields,
+    name,
+    phone,
+    specialty,
+    companyName,
+  ];
 }

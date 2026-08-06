@@ -21,6 +21,7 @@ import '../widgets/edit/property_edit_header_card.dart';
 import 'edit/widgets/edit_basic_info_section.dart';
 import 'edit/widgets/edit_location_section.dart';
 import 'edit/widgets/edit_specs_section.dart';
+import 'edit/widgets/property_edit_shimmer.dart';
 
 class PropertyEditScreen extends StatefulWidget {
   final PropertyDetailsEntity property;
@@ -171,7 +172,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
         listener: (context, state) {
           if (state.isSuccess) {
             AppToast.showSuccess(context, LocaleKeys.propertyEditSuccess.tr());
-            context.pop();
+            context.pop(true);
           } else if (state.errorMessage != null) {
             AppToast.showError(context, state.errorMessage!);
           }
@@ -188,7 +189,7 @@ class _PropertyEditScreenState extends State<PropertyEditScreen> {
                       PropertyEditHeaderCard(property: widget.property),
                       const SizedBox(height: 24),
                       if (state.isLoadingForm)
-                        const Center(child: CircularProgressIndicator())
+                        const PropertyEditShimmer()
                       else if (state.formData != null) ...[
                         if (state.branches.length > 1) ...[
                           Text(

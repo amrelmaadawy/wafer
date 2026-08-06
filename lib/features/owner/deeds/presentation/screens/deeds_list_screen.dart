@@ -95,10 +95,8 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
                     color:
                         context.read<DeedsListCubit>().currentFilter.branchId !=
                             null
-                        ? Theme.of(context).primaryColor
-                        : Theme.of(
-                            context,
-                          ).primaryColor, // Ensure valid color or use AppColors.primary
+                        ? context.primaryColor
+                        : context.primaryColor,
                     child: ListView.builder(
                       controller: _scrollController,
                       padding: const EdgeInsets.symmetric(

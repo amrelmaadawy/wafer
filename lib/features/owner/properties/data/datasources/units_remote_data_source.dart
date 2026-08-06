@@ -123,8 +123,6 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
 
   @override
   Future<void> publishUnit(int propertyId, int unitId) async {
-    await _dio.post(
-      ApiConstants.ownerPublishUnit(propertyId, unitId),
-    );
+    await _dio.post(ApiConstants.ownerPublishUnit(propertyId, unitId));
   }
 }

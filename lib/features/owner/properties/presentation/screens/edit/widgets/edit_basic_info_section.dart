@@ -45,6 +45,7 @@ class EditBasicInfoSection extends StatelessWidget {
         ),
         const SizedBox(height: 16),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               child: EditFormField(
@@ -55,7 +56,6 @@ class EditBasicInfoSection extends StatelessWidget {
                   decimal: true,
                 ),
                 isNumber: true,
-                hint: 'المساحة (م²)',
                 suffixText: LocaleKeys.propertyDetailsAreaUnit.tr(),
               ),
             ),
@@ -67,7 +67,6 @@ class EditBasicInfoSection extends StatelessWidget {
                 icon: Icons.calendar_today_outlined,
                 keyboardType: TextInputType.number,
                 isNumber: true,
-                hint: 'YYYY',
                 maxLength: 4,
               ),
             ),

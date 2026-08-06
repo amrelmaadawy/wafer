@@ -30,9 +30,7 @@ class AddTechnicianView extends StatelessWidget {
         BlocProvider(
           create: (context) => sl<TechnicianFormDataCubit>()..getFormData(),
         ),
-        BlocProvider(
-          create: (context) => sl<AddTechnicianCubit>(),
-        ),
+        BlocProvider(create: (context) => sl<AddTechnicianCubit>()),
       ],
       child: const _AddTechnicianViewBody(),
     );
@@ -66,12 +64,12 @@ class _AddTechnicianViewBodyState extends State<_AddTechnicianViewBody> {
   void _submitForm() {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AddTechnicianCubit>().submit(
-            name: _nameController.text.trim(),
-            phone: _phoneController.text.trim(),
-            specialty: _specialtyController.text.trim(),
-            companyName: _companyController.text.trim(),
-            isActive: _isActive,
-          );
+        name: _nameController.text.trim(),
+        phone: _phoneController.text.trim(),
+        specialty: _specialtyController.text.trim(),
+        companyName: _companyController.text.trim(),
+        isActive: _isActive,
+      );
     }
   }
 
@@ -96,16 +94,10 @@ class _AddTechnicianViewBodyState extends State<_AddTechnicianViewBody> {
       body: BlocListener<AddTechnicianCubit, AddTechnicianState>(
         listener: (context, state) {
           if (state is AddTechnicianSuccess) {
-            AppToast.showSuccess(
-              context,
-              LocaleKeys.commonSuccess.tr(),
-            );
+            AppToast.showSuccess(context, LocaleKeys.commonSuccess.tr());
             context.pop();
           } else if (state is AddTechnicianFailure) {
-            AppToast.showError(
-              context,
-              state.errorMessage,
-            );
+            AppToast.showError(context, state.errorMessage);
           }
         },
         child: BlocConsumer<TechnicianFormDataCubit, TechnicianFormDataState>(
@@ -115,10 +107,7 @@ class _AddTechnicianViewBodyState extends State<_AddTechnicianViewBody> {
                 _isActive = state.data.defaults.isActive;
               });
             } else if (state is TechnicianFormDataError) {
-              AppToast.showError(
-                context,
-                state.message,
-              );
+              AppToast.showError(context, state.message);
             }
           },
           builder: (context, state) {
@@ -217,8 +206,9 @@ class _AddTechnicianViewBodyState extends State<_AddTechnicianViewBody> {
                           return CustomButton(
                             text: LocaleKeys.addTechnician.tr(),
                             isLoading: addState is AddTechnicianLoading,
-                            onPressed:
-                                addState is AddTechnicianLoading ? () {} : _submitForm,
+                            onPressed: addState is AddTechnicianLoading
+                                ? () {}
+                                : _submitForm,
                           );
                         },
                       ),
@@ -275,4 +265,3 @@ class _TechnicianFormSkeleton extends StatelessWidget {
     );
   }
 }
-

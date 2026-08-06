@@ -6,14 +6,19 @@ import '../entities/execute_owner_maintenance_response_entity.dart';
 import '../repositories/owner_maintenance_repository.dart';
 
 class ExecuteOwnerMaintenanceUseCase
-    implements UseCase<ExecuteOwnerMaintenanceResponseEntity, ExecuteOwnerMaintenanceParams> {
+    implements
+        UseCase<
+          ExecuteOwnerMaintenanceResponseEntity,
+          ExecuteOwnerMaintenanceParams
+        > {
   final OwnerMaintenanceRepository repository;
 
   ExecuteOwnerMaintenanceUseCase(this.repository);
 
   @override
   Future<Either<Failure, ExecuteOwnerMaintenanceResponseEntity>> call(
-      ExecuteOwnerMaintenanceParams params) {
+    ExecuteOwnerMaintenanceParams params,
+  ) {
     return repository.executeMaintenanceRequest(params);
   }
 }
@@ -30,9 +35,9 @@ class ExecuteOwnerMaintenanceParams extends Equatable {
   });
 
   Map<String, dynamic> toJson() => {
-        'technician_response': technicianResponse,
-        'actual_cost': actualCost,
-      };
+    'technician_response': technicianResponse,
+    'actual_cost': actualCost,
+  };
 
   @override
   List<Object?> get props => [id, technicianResponse, actualCost];

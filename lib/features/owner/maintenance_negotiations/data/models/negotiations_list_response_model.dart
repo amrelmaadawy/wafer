@@ -11,7 +11,8 @@ class NegotiationsListResponseModel extends NegotiationsListResponseEntity {
   factory NegotiationsListResponseModel.fromJson(Map<String, dynamic> json) {
     final data = json['data'] as Map<String, dynamic>? ?? {};
     return NegotiationsListResponseModel(
-      negotiations: (data['maintenance_negotiations'] as List?)
+      negotiations:
+          (data['maintenance_negotiations'] as List?)
               ?.map((e) => NegotiationModel.fromJson(e))
               .toList() ??
           [],

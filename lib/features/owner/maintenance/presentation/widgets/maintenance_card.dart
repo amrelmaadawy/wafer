@@ -135,7 +135,7 @@ class MaintenanceCard extends StatelessWidget {
   Widget _buildClientRow(BuildContext context) {
     return Row(
       children: [
-        const Icon(Icons.person, size: 16, color: AppColors.textSecondaryLight),
+        Icon(Icons.person, size: 16, color: context.primaryColor),
         const SizedBox(width: 6),
         Expanded(
           child: Text(
@@ -161,10 +161,10 @@ class MaintenanceCard extends StatelessWidget {
 
     return Row(
       children: [
-        const Icon(
+        Icon(
           Icons.account_balance_wallet_outlined,
           size: 16,
-          color: AppColors.textSecondaryLight,
+          color: context.primaryColor,
         ),
         const SizedBox(width: 6),
         Text(
@@ -258,10 +258,10 @@ class MaintenanceCard extends StatelessWidget {
         if (requestedDate.isNotEmpty)
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.calendar_today_outlined,
                 size: 13,
-                color: AppColors.textSecondaryLight,
+                color: context.primaryColor,
               ),
               const SizedBox(width: 4),
               Text(

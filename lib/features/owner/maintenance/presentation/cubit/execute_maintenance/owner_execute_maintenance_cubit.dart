@@ -5,9 +5,8 @@ import 'owner_execute_maintenance_state.dart';
 class OwnerExecuteMaintenanceCubit extends Cubit<OwnerExecuteMaintenanceState> {
   final ExecuteOwnerMaintenanceUseCase executeMaintenanceUseCase;
 
-  OwnerExecuteMaintenanceCubit({
-    required this.executeMaintenanceUseCase,
-  }) : super(const OwnerExecuteMaintenanceState());
+  OwnerExecuteMaintenanceCubit({required this.executeMaintenanceUseCase})
+    : super(const OwnerExecuteMaintenanceState());
 
   Future<void> executeMaintenanceRequest({
     required int id,

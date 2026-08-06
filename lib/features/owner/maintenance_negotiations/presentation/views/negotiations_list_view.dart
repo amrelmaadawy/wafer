@@ -60,73 +60,81 @@ class _NegotiationsListViewState extends State<NegotiationsListView> {
       child: Builder(
         builder: (context) {
           return Scaffold(
-        appBar: CustomAppBar(
-          title: LocaleKeys.negotiation_list_title.tr(),
-          showBackButton: true,
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            final result = await context.push(Routes.ownerNegotiationSettings);
-            if (result == true && mounted && context.mounted) {
-              context.read<NegotiationsListCubit>().fetchNegotiations(isRefresh: true);
-            }
-          },
-          backgroundColor: context.primaryColor,
-          child: const Icon(Icons.settings, color: Colors.white),
-        ),
-        body: BlocBuilder<NegotiationsListCubit, NegotiationsListState>(
-          builder: (context, state) {
-            if (state.status == NegotiationsListStatus.initial ||
-                (state.status == NegotiationsListStatus.loading &&
-                    state.negotiations.isEmpty)) {
-              return const _NegotiationsListSkeleton();
-            }
+            appBar: CustomAppBar(
+              title: LocaleKeys.negotiation_list_title.tr(),
+              showBackButton: true,
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+                final result = await context.push(
+                  Routes.ownerNegotiationSettings,
+                );
+                if (result == true && mounted && context.mounted) {
+                  context.read<NegotiationsListCubit>().fetchNegotiations(
+                    isRefresh: true,
+                  );
+                }
+              },
+              backgroundColor: context.primaryColor,
+              child: const Icon(Icons.settings, color: Colors.white),
+            ),
+            body: BlocBuilder<NegotiationsListCubit, NegotiationsListState>(
+              builder: (context, state) {
+                if (state.status == NegotiationsListStatus.initial ||
+                    (state.status == NegotiationsListStatus.loading &&
+                        state.negotiations.isEmpty)) {
+                  return const _NegotiationsListSkeleton();
+                }
 
-            if (state.status == NegotiationsListStatus.failure &&
-                state.negotiations.isEmpty) {
-              return CustomErrorWidget(
-                message: state.errorMessage ?? '',
-                onRetry: () => context.read<NegotiationsListCubit>().fetchNegotiations(isRefresh: true),
-              );
-            }
+                if (state.status == NegotiationsListStatus.failure &&
+                    state.negotiations.isEmpty) {
+                  return CustomErrorWidget(
+                    message: state.errorMessage ?? '',
+                    onRetry: () => context
+                        .read<NegotiationsListCubit>()
+                        .fetchNegotiations(isRefresh: true),
+                  );
+                }
 
-            if (state.negotiations.isEmpty) {
-              return _EmptyStateWidget(
-                title: LocaleKeys.negotiation_empty_list.tr(),
-                subtitle: LocaleKeys.negotiation_empty_list_sub.tr(),
-                icon: Icons.list_alt,
-              );
-            }
+                if (state.negotiations.isEmpty) {
+                  return _EmptyStateWidget(
+                    title: LocaleKeys.negotiation_empty_list.tr(),
+                    subtitle: LocaleKeys.negotiation_empty_list_sub.tr(),
+                    icon: Icons.list_alt,
+                  );
+                }
 
-            return RefreshIndicator(
-              onRefresh: () async => context.read<NegotiationsListCubit>().fetchNegotiations(isRefresh: true),
-              child: ListView.separated(
-                controller: _scrollController,
-                padding: const EdgeInsets.all(AppSpacing.md),
-                itemCount: state.hasReachedMax
-                    ? state.negotiations.length
-                    : state.negotiations.length + 1,
-                separatorBuilder: (context, index) =>
-                    const SizedBox(height: AppSpacing.md),
-                itemBuilder: (context, index) {
-                  if (index >= state.negotiations.length) {
-                    return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(AppSpacing.md),
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
+                return RefreshIndicator(
+                  onRefresh: () async => context
+                      .read<NegotiationsListCubit>()
+                      .fetchNegotiations(isRefresh: true),
+                  child: ListView.separated(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    itemCount: state.hasReachedMax
+                        ? state.negotiations.length
+                        : state.negotiations.length + 1,
+                    separatorBuilder: (context, index) =>
+                        const SizedBox(height: AppSpacing.md),
+                    itemBuilder: (context, index) {
+                      if (index >= state.negotiations.length) {
+                        return const Center(
+                          child: Padding(
+                            padding: EdgeInsets.all(AppSpacing.md),
+                            child: CircularProgressIndicator(),
+                          ),
+                        );
+                      }
 
-                  final item = state.negotiations[index];
-                  return _NegotiationCard(negotiation: item);
-                },
-              ),
-            );
-          },
-        ),
+                      final item = state.negotiations[index];
+                      return _NegotiationCard(negotiation: item);
+                    },
+                  ),
+                );
+              },
+            ),
           );
-        }
+        },
       ),
     );
   }

@@ -61,15 +61,15 @@ class NegotiationEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        owner,
-        approvalLimit,
-        isActive,
-        createdBy,
-        updatedBy,
-        createdAt,
-        updatedAt,
-      ];
+    id,
+    owner,
+    approvalLimit,
+    isActive,
+    createdBy,
+    updatedBy,
+    createdAt,
+    updatedAt,
+  ];
 }
 
 class NegotiationDefaultsEntity extends Equatable {

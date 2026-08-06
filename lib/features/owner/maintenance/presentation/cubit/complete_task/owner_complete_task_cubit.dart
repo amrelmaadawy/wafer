@@ -6,7 +6,7 @@ class OwnerCompleteTaskCubit extends Cubit<OwnerCompleteTaskState> {
   final CompleteOwnerMaintenanceTaskUseCase _completeTaskUseCase;
 
   OwnerCompleteTaskCubit(this._completeTaskUseCase)
-      : super(const OwnerCompleteTaskState());
+    : super(const OwnerCompleteTaskState());
 
   Future<void> completeTask({
     required int maintenanceId,
@@ -33,9 +33,7 @@ class OwnerCompleteTaskCubit extends Cubit<OwnerCompleteTaskState> {
         );
       },
       (item) {
-        emit(
-          state.copyWith(status: CompleteTaskStatus.success, item: item),
-        );
+        emit(state.copyWith(status: CompleteTaskStatus.success, item: item));
       },
     );
   }

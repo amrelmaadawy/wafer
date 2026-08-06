@@ -33,21 +33,21 @@ class OwnerCreateMaintenanceCubit extends Cubit<OwnerCreateMaintenanceState> {
         );
       },
       (data) {
-        emit(
-          state.copyWith(isFormDataLoading: false, formData: data),
-        );
+        emit(state.copyWith(isFormDataLoading: false, formData: data));
       },
     );
   }
 
   void loadUnits(int propertyId) {
     if (state.formData == null) return;
-    
+
     // Attempt to find the property and its nested units
-    final property = state.formData!.properties.where((p) => p.id == propertyId).firstOrNull;
-    
+    final property = state.formData!.properties
+        .where((p) => p.id == propertyId)
+        .firstOrNull;
+
     final units = property?.units ?? [];
-    
+
     emit(
       state.copyWithNullUnitId(
         selectedPropertyId: propertyId,

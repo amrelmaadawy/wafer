@@ -11,7 +11,9 @@ class GetSupervisorFormDataUseCase
   GetSupervisorFormDataUseCase(this.repository);
 
   @override
-  Future<Either<Failure, SupervisorFormDataEntity>> call(NoParams params) async {
+  Future<Either<Failure, SupervisorFormDataEntity>> call(
+    NoParams params,
+  ) async {
     return await repository.getFormData();
   }
 }

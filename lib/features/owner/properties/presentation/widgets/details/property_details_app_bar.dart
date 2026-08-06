@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:go_router/go_router.dart';
 import '../../../../../../core/localization/locale_keys.dart';
-import '../../../../../../core/routing/routes.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -13,12 +11,14 @@ class PropertyDetailsSliverAppBar extends StatelessWidget {
   final PropertyDetailsEntity property;
   final TabController tabController;
   final VoidCallback onOpenActions;
+  final VoidCallback onBackPressed;
 
   const PropertyDetailsSliverAppBar({
     super.key,
     required this.property,
     required this.tabController,
     required this.onOpenActions,
+    required this.onBackPressed,
   });
 
   @override
@@ -35,13 +35,7 @@ class PropertyDetailsSliverAppBar extends StatelessWidget {
       leading: Padding(
         padding: const EdgeInsets.all(8.0),
         child: IconButton(
-          onPressed: () {
-            if (context.canPop()) {
-              context.pop();
-            } else {
-              context.go(Routes.ownerProperties);
-            }
-          },
+          onPressed: onBackPressed,
           icon: const Icon(
             Icons.arrow_back_rounded,
             color: Colors.white,

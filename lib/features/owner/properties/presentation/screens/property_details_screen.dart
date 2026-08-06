@@ -43,6 +43,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool _isLoadingDialogOpen = false;
+  bool _wasModified = false;
 
   @override
   void initState() {
@@ -69,6 +70,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
         child: PublishPropertySheet(
           propertyId: property.id,
           onSuccess: () {
+            _wasModified = true;
             context.read<PropertyDetailsCubit>().loadDetails(property.id);
           },
         ),
@@ -117,12 +119,17 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
 
     switch (action) {
       case 'edit':
-        await context.push(Routes.ownerPropertyEdit, extra: property);
-        if (context.mounted) {
+        final result = await context.push(
+          Routes.ownerPropertyEdit,
+          extra: property,
+        );
+        if (result == true && context.mounted) {
+          _wasModified = true;
           context.read<PropertyDetailsCubit>().loadDetails(property.id);
         }
         break;
       case 'clone':
+        _wasModified = true;
         _showCloneForDeedSheet(context, property);
         break;
       case 'delete':
@@ -233,35 +240,56 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
                     } else if (state is PropertyDetailsLoaded) {
                       final property = state.property;
 
-                      return NestedScrollView(
-                        headerSliverBuilder: (context, innerBoxIsScrolled) {
-                          return [
-                            PropertyDetailsSliverAppBar(
-                              property: property,
-                              tabController: _tabController,
-                              onOpenActions: () =>
-                                  _showActionsSheet(ctx, property),
-                            ),
-                          ];
+                      return PopScope(
+                        canPop: false,
+                        onPopInvokedWithResult: (didPop, result) {
+                          if (didPop) return;
+                          if (context.canPop()) {
+                            context.pop(_wasModified);
+                          } else {
+                            context.go(Routes.ownerProperties);
+                          }
                         },
-                        body: Container(
-                          color: AppColors.backgroundLight,
-                          child: TabBarView(
-                            controller: _tabController,
-                            children: [
-                              PropertyOverviewTab(property: property),
-                              PropertyUnitsTab(
-                                units: property.units,
-                                propertyId: widget.propertyId,
+                        child: NestedScrollView(
+                          headerSliverBuilder: (context, innerBoxIsScrolled) {
+                            return [
+                              PropertyDetailsSliverAppBar(
+                                property: property,
+                                tabController: _tabController,
+                                onOpenActions: () =>
+                                    _showActionsSheet(ctx, property),
+                                onBackPressed: () {
+                                  if (context.canPop()) {
+                                    context.pop(_wasModified);
+                                  } else {
+                                    context.go(Routes.ownerProperties);
+                                  }
+                                },
                               ),
-                              PropertyContractsTab(
-                                contracts: property.contracts,
-                              ),
-                              PropertyMaintenanceTab(
-                                maintenanceRequests: property.maintenance,
-                              ),
-                              PropertyOwnersTab(property: property),
-                            ],
+                            ];
+                          },
+                          body: Container(
+                            color: AppColors.backgroundLight,
+                            child: TabBarView(
+                              controller: _tabController,
+                              children: [
+                                PropertyOverviewTab(property: property),
+                                PropertyUnitsTab(
+                                  units: property.units,
+                                  propertyId: widget.propertyId,
+                                  onUnitCreated: () {
+                                    _wasModified = true;
+                                  },
+                                ),
+                                PropertyContractsTab(
+                                  contracts: property.contracts,
+                                ),
+                                PropertyMaintenanceTab(
+                                  maintenanceRequests: property.maintenance,
+                                ),
+                                PropertyOwnersTab(property: property),
+                              ],
+                            ),
                           ),
                         ),
                       );

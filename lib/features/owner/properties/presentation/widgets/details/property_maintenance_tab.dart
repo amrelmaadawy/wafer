@@ -4,6 +4,7 @@ import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/maintenance_entity.dart';
+import '../../../../../../core/presentation/widgets/custom_empty_widget.dart';
 
 class PropertyMaintenanceTab extends StatelessWidget {
   final List<MaintenanceEntity> maintenanceRequests;
@@ -13,7 +14,11 @@ class PropertyMaintenanceTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (maintenanceRequests.isEmpty) {
-      return Center(child: Text(LocaleKeys.maintenanceNoRequestsTitle.tr()));
+      return CustomEmptyWidget(
+        icon: Icons.handyman_outlined,
+        title: LocaleKeys.maintenanceNoRequestsTitle.tr(),
+        subtitle: LocaleKeys.dashboard_no_data.tr(),
+      );
     }
 
     return ListView.builder(

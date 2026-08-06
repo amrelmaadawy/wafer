@@ -14,6 +14,8 @@ import '../widgets/units/create/step5_financials_view.dart';
 import '../widgets/units/create/step6_review_view.dart';
 import '../widgets/units/create/wizard_progress_bar.dart';
 import 'package:go_router/go_router.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/localization/locale_keys.dart';
 
 class UnitCreateScreen extends StatelessWidget {
   final int propertyId;
@@ -77,37 +79,52 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
       builder: (context, state) {
         return Scaffold(
           appBar: CustomAppBar(
-            title: 'إضافة وحدة جديدة',
+            title: LocaleKeys.unitsAddNewUnit.tr(),
             onBackPressed: () {
               if (state.currentStep > 0) {
                 context.read<UnitCreateCubit>().previousStep();
               } else {
-                context.pop();
+                _showExitDialog(context);
               }
             },
           ),
-          body: Column(
-            children: [
-              WizardProgressBar(currentStep: state.currentStep, totalSteps: 6),
-              Expanded(
-                child: Form(
-                  key: _formKey,
-                  child: PageView(
-                    controller: _pageController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: const [
-                      Step1BasicInfoView(),
-                      Step2SpecsView(),
-                      Step3LocationUtilitiesView(),
-                      Step4ImagesView(),
-                      Step5FinancialsView(),
-                      Step6ReviewView(),
-                    ],
+          body: PopScope(
+            canPop: false,
+            onPopInvokedWithResult: (didPop, result) {
+              if (didPop) return;
+
+              if (state.currentStep > 0) {
+                context.read<UnitCreateCubit>().previousStep();
+              } else {
+                _showExitDialog(context);
+              }
+            },
+            child: Column(
+              children: [
+                WizardProgressBar(
+                  currentStep: state.currentStep,
+                  totalSteps: 6,
+                ),
+                Expanded(
+                  child: Form(
+                    key: _formKey,
+                    child: PageView(
+                      controller: _pageController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: const [
+                        Step1BasicInfoView(),
+                        Step2SpecsView(),
+                        Step3LocationUtilitiesView(),
+                        Step4ImagesView(),
+                        Step5FinancialsView(),
+                        Step6ReviewView(),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              _buildBottomNavigation(context, state),
-            ],
+                _buildBottomNavigation(context, state),
+              ],
+            ),
           ),
         );
       },
@@ -133,7 +150,7 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
             if (state.currentStep > 0) ...[
               Expanded(
                 child: CustomButton(
-                  text: 'السابق',
+                  text: LocaleKeys.unitsWizardPrevious.tr(),
                   onPressed: () =>
                       context.read<UnitCreateCubit>().previousStep(),
                   type: ButtonType.secondary,
@@ -144,7 +161,9 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
             Expanded(
               flex: 2,
               child: CustomButton(
-                text: state.currentStep == 5 ? 'إضافة الوحدة' : 'التالي',
+                text: state.currentStep == 5
+                    ? LocaleKeys.unitsWizardSubmit.tr()
+                    : LocaleKeys.unitsWizardNext.tr(),
                 isLoading: state.isLoading,
                 onPressed: () async {
                   if (state.currentStep == 5) {
@@ -152,7 +171,10 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
                         .read<UnitCreateCubit>()
                         .submit();
                     if (success && context.mounted) {
-                      AppToast.showSuccess(context, 'تم إضافة الوحدة بنجاح');
+                      AppToast.showSuccess(
+                        context,
+                        LocaleKeys.unitsWizardSuccess.tr(),
+                      );
                       context.pop(true); // Return true to refresh units list
                     }
                   } else {
@@ -167,5 +189,32 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
         ),
       ),
     );
+  }
+
+  Future<void> _showExitDialog(BuildContext context) async {
+    final shouldExit = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(LocaleKeys.propertyCreateExitCancel.tr()),
+        content: Text(LocaleKeys.propertyCreateExitMessage.tr()),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: Text(LocaleKeys.cancel.tr()),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+            child: Text(LocaleKeys.propertyCreateExitCancel.tr()),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldExit == true && context.mounted) {
+      context.pop();
+    }
   }
 }

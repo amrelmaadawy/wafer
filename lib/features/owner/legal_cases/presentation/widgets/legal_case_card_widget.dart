@@ -86,9 +86,7 @@ class LegalCaseCardWidget extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryLight.withValues(
-                              alpha: 0.2,
-                            ),
+                            color: context.primaryColor.withValues(alpha: 0.15),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
@@ -108,10 +106,10 @@ class LegalCaseCardWidget extends StatelessWidget {
             // Court and Type
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.account_balance,
                   size: 16,
-                  color: AppColors.textSecondaryLight,
+                  color: context.primaryColor,
                 ),
                 const SizedBox(width: 4),
                 Expanded(
@@ -199,10 +197,10 @@ class LegalCaseCardWidget extends StatelessWidget {
                 if (legalCase.hearingDate != null)
                   Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.calendar_today_outlined,
                         size: 16,
-                        color: AppColors.textSecondaryLight,
+                        color: context.primaryColor,
                       ),
                       const SizedBox(width: 4),
                       Text(

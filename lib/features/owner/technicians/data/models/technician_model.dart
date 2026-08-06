@@ -29,10 +29,15 @@ class TechnicianModel extends TechnicianEntity {
       isActive: json['is_active'] as bool? ?? false,
       notes: json['notes'] as String?,
       stats: TechnicianStatsModel.fromJson(
-          json['stats'] as Map<String, dynamic>? ?? {}),
-      assignments: (json['assignments'] as List<dynamic>?)
-              ?.map((e) => TechnicianAssignmentModel.fromJson(
-                  e as Map<String, dynamic>))
+        json['stats'] as Map<String, dynamic>? ?? {},
+      ),
+      assignments:
+          (json['assignments'] as List<dynamic>?)
+              ?.map(
+                (e) => TechnicianAssignmentModel.fromJson(
+                  e as Map<String, dynamic>,
+                ),
+              )
               .toList() ??
           [],
       createdAt: json['created_at'] as String?,

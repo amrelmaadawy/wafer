@@ -7,7 +7,7 @@ class SupervisorFormDataCubit extends Cubit<SupervisorFormDataState> {
   final GetSupervisorFormDataUseCase getSupervisorFormDataUseCase;
 
   SupervisorFormDataCubit(this.getSupervisorFormDataUseCase)
-      : super(SupervisorFormDataInitial());
+    : super(SupervisorFormDataInitial());
 
   Future<void> getFormData() async {
     emit(SupervisorFormDataLoading());

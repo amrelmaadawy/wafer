@@ -25,7 +25,9 @@ class SupervisorsRepositoryImpl implements SupervisorsRepository {
   }
 
   @override
-  Future<Either<Failure, SupervisorsListResponseEntity>> getSupervisors(int page) async {
+  Future<Either<Failure, SupervisorsListResponseEntity>> getSupervisors(
+    int page,
+  ) async {
     try {
       final response = await remoteDataSource.getSupervisors(page);
       return Right(response);
@@ -37,7 +39,9 @@ class SupervisorsRepositoryImpl implements SupervisorsRepository {
   }
 
   @override
-  Future<Either<Failure, SupervisorEntity>> createSupervisor(Map<String, dynamic> body) async {
+  Future<Either<Failure, SupervisorEntity>> createSupervisor(
+    Map<String, dynamic> body,
+  ) async {
     try {
       final response = await remoteDataSource.createSupervisor(body);
       return Right(response);

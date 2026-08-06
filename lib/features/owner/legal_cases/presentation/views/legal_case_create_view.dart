@@ -180,7 +180,10 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
       return;
     }
     if (_hearingDate == null) {
-      AppToast.showError(context, LocaleKeys.select_hearing_date_validation.tr());
+      AppToast.showError(
+        context,
+        LocaleKeys.select_hearing_date_validation.tr(),
+      );
       return;
     }
 
@@ -198,13 +201,19 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
         plaintiff: _plaintiffController.text.trim(),
         defendant: _defendantController.text.trim(),
         lawyer: _lawyerController.text.trim(),
-        lawyerPhone: _lawyerPhoneController.text.trim().isNotEmpty ? _lawyerPhoneController.text.trim() : null,
-        lawyerOffice: _lawyerOfficeController.text.trim().isNotEmpty ? _lawyerOfficeController.text.trim() : null,
+        lawyerPhone: _lawyerPhoneController.text.trim().isNotEmpty
+            ? _lawyerPhoneController.text.trim()
+            : null,
+        lawyerOffice: _lawyerOfficeController.text.trim().isNotEmpty
+            ? _lawyerOfficeController.text.trim()
+            : null,
         caseType: _selectedCaseType,
         amount: double.tryParse(_amountController.text.trim()) ?? 0.0,
         hearingDate: DateFormat('yyyy-MM-dd').format(_hearingDate!),
         status: _selectedStatus,
-        notes: _notesController.text.trim().isNotEmpty ? _notesController.text.trim() : null,
+        notes: _notesController.text.trim().isNotEmpty
+            ? _notesController.text.trim()
+            : null,
       );
       _updateCubit.updateLegalCase(params);
     } else {
@@ -220,13 +229,19 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
         plaintiff: _plaintiffController.text.trim(),
         defendant: _defendantController.text.trim(),
         lawyer: _lawyerController.text.trim(),
-        lawyerPhone: _lawyerPhoneController.text.trim().isNotEmpty ? _lawyerPhoneController.text.trim() : null,
-        lawyerOffice: _lawyerOfficeController.text.trim().isNotEmpty ? _lawyerOfficeController.text.trim() : null,
+        lawyerPhone: _lawyerPhoneController.text.trim().isNotEmpty
+            ? _lawyerPhoneController.text.trim()
+            : null,
+        lawyerOffice: _lawyerOfficeController.text.trim().isNotEmpty
+            ? _lawyerOfficeController.text.trim()
+            : null,
         caseType: _selectedCaseType!,
         amount: double.tryParse(_amountController.text.trim()) ?? 0.0,
         hearingDate: DateFormat('yyyy-MM-dd').format(_hearingDate!),
         status: _selectedStatus!,
-        notes: _notesController.text.trim().isNotEmpty ? _notesController.text.trim() : null,
+        notes: _notesController.text.trim().isNotEmpty
+            ? _notesController.text.trim()
+            : null,
       );
       _createCubit.createLegalCase(params);
     }
@@ -245,7 +260,10 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
           BlocListener<LegalCaseCreateCubit, LegalCaseCreateState>(
             listener: (context, state) {
               if (state is LegalCaseCreateSuccess) {
-                AppToast.showSuccess(context, LocaleKeys.legal_case_created_success.tr());
+                AppToast.showSuccess(
+                  context,
+                  LocaleKeys.legal_case_created_success.tr(),
+                );
                 context.pop(true);
               } else if (state is LegalCaseCreateError) {
                 AppToast.showError(context, state.message);
@@ -255,7 +273,10 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
           BlocListener<LegalCaseUpdateCubit, LegalCaseUpdateState>(
             listener: (context, state) {
               if (state is LegalCaseUpdateSuccess) {
-                AppToast.showSuccess(context, LocaleKeys.legal_case_updated_success.tr());
+                AppToast.showSuccess(
+                  context,
+                  LocaleKeys.legal_case_updated_success.tr(),
+                );
                 context.pop(true);
               } else if (state is LegalCaseUpdateError) {
                 AppToast.showError(context, state.message);
@@ -267,8 +288,9 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
           canPop: false,
           onPopInvokedWithResult: (didPop, result) async {
             if (didPop) return;
-            
-            final bool hasChanges = _caseNumberController.text.isNotEmpty ||
+
+            final bool hasChanges =
+                _caseNumberController.text.isNotEmpty ||
                 _amountController.text.isNotEmpty ||
                 _circuitController.text.isNotEmpty ||
                 _plaintiffController.text.isNotEmpty ||
@@ -309,19 +331,22 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
               context.pop();
             }
           },
-            child: Scaffold(
+          child: Scaffold(
             backgroundColor: AppColors.backgroundLight,
             appBar: AppBar(
               backgroundColor: Colors.white,
               title: Text(
-                isEditMode ? LocaleKeys.edit_case.tr() : LocaleKeys.add_case.tr(),
+                isEditMode
+                    ? LocaleKeys.edit_case.tr()
+                    : LocaleKeys.add_case.tr(),
                 style: AppTextStyles.h4,
               ),
               centerTitle: true,
             ),
             body: BlocBuilder<LegalCaseFormDataCubit, LegalCaseFormDataState>(
               builder: (context, formDataState) {
-                if (formDataState is LegalCaseFormDataLoading || formDataState is LegalCaseFormDataInitial) {
+                if (formDataState is LegalCaseFormDataLoading ||
+                    formDataState is LegalCaseFormDataInitial) {
                   return const Center(child: CircularProgressIndicator());
                 }
 
@@ -330,11 +355,17 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.error_outline, size: 48, color: AppColors.error),
+                        const Icon(
+                          Icons.error_outline,
+                          size: 48,
+                          color: AppColors.error,
+                        ),
                         const SizedBox(height: AppSpacing.md),
                         Text(
                           formDataState.message,
-                          style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: AppColors.error,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: AppSpacing.md),
@@ -371,17 +402,25 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
                               child: SingleChildScrollView(
                                 padding: const EdgeInsets.all(AppSpacing.md),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     LegalCaseGeneralInfoCard(
                                       options: options,
-                                      caseNumberController: _caseNumberController,
+                                      caseNumberController:
+                                          _caseNumberController,
                                       selectedBranchId: _selectedBranchId,
                                       selectedCaseType: _selectedCaseType,
                                       selectedStatus: _selectedStatus,
-                                      onBranchSelected: (id) => setState(() => _selectedBranchId = id),
-                                      onCaseTypeSelected: (type) => setState(() => _selectedCaseType = type),
-                                      onStatusSelected: (status) => setState(() => _selectedStatus = status),
+                                      onBranchSelected: (id) => setState(
+                                        () => _selectedBranchId = id,
+                                      ),
+                                      onCaseTypeSelected: (type) => setState(
+                                        () => _selectedCaseType = type,
+                                      ),
+                                      onStatusSelected: (status) => setState(
+                                        () => _selectedStatus = status,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -393,7 +432,8 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
                               child: SingleChildScrollView(
                                 padding: const EdgeInsets.all(AppSpacing.md),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     LegalCaseCourtAndPartiesCard(
                                       courtController: _courtController,
@@ -411,7 +451,8 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
                               child: SingleChildScrollView(
                                 padding: const EdgeInsets.all(AppSpacing.md),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: [
                                     LegalCaseLinksCard(
                                       options: options,
@@ -432,7 +473,6 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
                                         _selectedContractId = id;
                                         _selectedInvoiceId = null;
                                       }),
-                                      
                                     ),
                                     const SizedBox(height: AppSpacing.md),
                                     LegalCaseFinancialsCard(
@@ -441,7 +481,8 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
                                       onSelectDate: () async {
                                         final date = await showDatePicker(
                                           context: context,
-                                          initialDate: _hearingDate ?? DateTime.now(),
+                                          initialDate:
+                                              _hearingDate ?? DateTime.now(),
                                           firstDate: DateTime(2000),
                                           lastDate: DateTime(2100),
                                           builder: (context, child) {
@@ -489,7 +530,9 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
                           children: [
                             Expanded(
                               child: CustomButton(
-                                text: _currentStep == 0 ? LocaleKeys.cancel.tr() : LocaleKeys.previous_step.tr(),
+                                text: _currentStep == 0
+                                    ? LocaleKeys.cancel.tr()
+                                    : LocaleKeys.previous_step.tr(),
                                 type: ButtonType.secondary,
                                 onPressed: _previousStep,
                               ),
@@ -502,17 +545,29 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
                                       text: LocaleKeys.next_step.tr(),
                                       onPressed: _nextStep,
                                     )
-                                  : BlocBuilder<LegalCaseCreateCubit, LegalCaseCreateState>(
+                                  : BlocBuilder<
+                                      LegalCaseCreateCubit,
+                                      LegalCaseCreateState
+                                    >(
                                       builder: (context, createState) {
-                                        return BlocBuilder<LegalCaseUpdateCubit, LegalCaseUpdateState>(
+                                        return BlocBuilder<
+                                          LegalCaseUpdateCubit,
+                                          LegalCaseUpdateState
+                                        >(
                                           builder: (context, updateState) {
-                                            final isEdit = widget.legalCaseToEdit != null;
-                                            final isLoading = isEdit 
-                                                ? updateState is LegalCaseUpdateLoading 
-                                                : createState is LegalCaseCreateLoading;
-                                                
+                                            final isEdit =
+                                                widget.legalCaseToEdit != null;
+                                            final isLoading = isEdit
+                                                ? updateState
+                                                      is LegalCaseUpdateLoading
+                                                : createState
+                                                      is LegalCaseCreateLoading;
+
                                             return CustomButton(
-                                              text: isEdit ? LocaleKeys.edit_legal_case.tr() : LocaleKeys.create_case.tr(),
+                                              text: isEdit
+                                                  ? LocaleKeys.edit_legal_case
+                                                        .tr()
+                                                  : LocaleKeys.create_case.tr(),
                                               onPressed: _submitForm,
                                               isLoading: isLoading,
                                             );

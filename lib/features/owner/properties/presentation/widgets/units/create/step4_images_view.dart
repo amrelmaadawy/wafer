@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import '../../../../../../../core/theme/app_colors.dart';
+import '../../../../../../../core/theme/color_utils.dart';
+import '../../../../../../../core/theme/app_radius.dart';
 import '../../../cubit/units/unit_create_cubit.dart';
 import '../../../cubit/units/unit_create_state.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../../core/localization/locale_keys.dart';
 
 class Step4ImagesView extends StatelessWidget {
   const Step4ImagesView({super.key});
@@ -18,14 +22,17 @@ class Step4ImagesView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'صور الوحدة',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                LocaleKeys.unitsImagesTitle.tr(),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 8),
-              const Text(
-                'قم بإضافة صور للوحدة لزيادة فرص التأجير أو البيع',
-                style: TextStyle(color: AppColors.textSecondaryLight),
+              Text(
+                LocaleKeys.unitsImagesSubtitle.tr(),
+                style: const TextStyle(color: AppColors.textSecondaryLight),
               ),
               const SizedBox(height: 24),
 
@@ -67,19 +74,22 @@ class Step4ImagesView extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
       child: Container(
         decoration: BoxDecoration(
-          color: AppColors.primary.withValues(alpha: 0.05),
+          color: context.primaryColor.withValues(alpha: 0.05),
           border: Border.all(
-            color: AppColors.primary.withValues(alpha: 0.3),
-            style: BorderStyle.solid,
+            color: context.primaryColor.withValues(alpha: 0.3),
+            width: 1.5,
           ),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: AppRadius.circularLg,
         ),
-        child: const Center(
-          child: Icon(
-            Icons.add_photo_alternate_outlined,
-            color: AppColors.primary,
-            size: 32,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              Icons.add_photo_alternate_outlined,
+              color: context.primaryColor,
+              size: 32,
+            ),
+          ],
         ),
       ),
     );

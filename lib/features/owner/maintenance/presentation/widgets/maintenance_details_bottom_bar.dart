@@ -32,7 +32,8 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (displayItem.status == 'new' || displayItem.status == 'pending_supervisor') {
+    if (displayItem.status == 'new' ||
+        displayItem.status == 'pending_supervisor') {
       return _ActionBarContainer(
         child: Row(
           children: [
@@ -40,19 +41,21 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
               child: _buildButton(
                 context,
                 title: LocaleKeys.maintenanceApproveRequest.tr(),
-                onPressed: () => MaintenanceActionSheetsHelper.showApproveBottomSheet(
-                  context,
-                  displayItem.safeId,
-                ),
+                onPressed: () =>
+                    MaintenanceActionSheetsHelper.showApproveBottomSheet(
+                      context,
+                      displayItem.safeId,
+                    ),
               ),
             ),
             const SizedBox(width: AppSpacing.md),
             Expanded(
               child: OutlinedButton(
-                onPressed: () => MaintenanceActionSheetsHelper.showRejectBottomSheet(
-                  context,
-                  displayItem.safeId,
-                ),
+                onPressed: () =>
+                    MaintenanceActionSheetsHelper.showRejectBottomSheet(
+                      context,
+                      displayItem.safeId,
+                    ),
                 style: OutlinedButton.styleFrom(
                   foregroundColor: AppColors.error,
                   side: const BorderSide(color: AppColors.error),
@@ -135,9 +138,8 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
               if (result is ExecuteOwnerMaintenanceResponseEntity) {
                 showDialog(
                   context: context,
-                  builder: (context) => OwnerQaCodeDialog(
-                    qaCode: result.qaCode,
-                  ),
+                  builder: (context) =>
+                      OwnerQaCodeDialog(qaCode: result.qaCode),
                 );
               }
             }
@@ -186,9 +188,7 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
         backgroundColor: context.primaryColor,
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 16),
-        shape: const RoundedRectangleBorder(
-          borderRadius: AppRadius.circularLg,
-        ),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
         elevation: 0,
       ),
       child: Text(
@@ -221,9 +221,7 @@ class _ActionBarContainer extends StatelessWidget {
           ),
         ],
       ),
-      child: SafeArea(
-        child: child,
-      ),
+      child: SafeArea(child: child),
     );
   }
 }

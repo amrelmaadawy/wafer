@@ -9,15 +9,19 @@ import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/unit_entity.dart';
 import '../units/unit_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../cubit/details/property_details_cubit.dart';
 
 class PropertyUnitsTab extends StatelessWidget {
   final List<UnitEntity> units;
   final int propertyId;
+  final VoidCallback? onUnitCreated;
 
   const PropertyUnitsTab({
     super.key,
     required this.units,
     required this.propertyId,
+    this.onUnitCreated,
   });
 
   @override
@@ -29,13 +33,18 @@ class PropertyUnitsTab extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          context.push(
+        onPressed: () async {
+          final result = await context.push(
             Uri(
               path: Routes.ownerUnitCreate,
               queryParameters: {'propertyId': propertyId.toString()},
             ).toString(),
           );
+
+          if (result == true && context.mounted) {
+            onUnitCreated?.call();
+            context.read<PropertyDetailsCubit>().loadDetails(propertyId);
+          }
         },
         backgroundColor: context.primaryColor,
         icon: const Icon(Icons.add_rounded, color: Colors.white),
@@ -51,8 +60,8 @@ class PropertyUnitsTab extends StatelessWidget {
           final unit = units[index];
           return UnitCard(
             unit: unit,
-            onTap: () {
-              context.push(
+            onTap: () async {
+              final result = await context.push(
                 Uri(
                   path: Routes.ownerPropertyUnitDetails,
                   queryParameters: {
@@ -61,6 +70,11 @@ class PropertyUnitsTab extends StatelessWidget {
                   },
                 ).toString(),
               );
+
+              if (result == true && context.mounted) {
+                onUnitCreated?.call();
+                context.read<PropertyDetailsCubit>().loadDetails(propertyId);
+              }
             },
           );
         },
@@ -140,13 +154,20 @@ class PropertyUnitsTab extends StatelessWidget {
             StaggeredListItem(
               index: 3,
               child: ElevatedButton.icon(
-                onPressed: () {
-                  context.push(
+                onPressed: () async {
+                  final result = await context.push(
                     Uri(
                       path: Routes.ownerUnitCreate,
                       queryParameters: {'propertyId': propertyId.toString()},
                     ).toString(),
                   );
+
+                  if (result == true && context.mounted) {
+                    onUnitCreated?.call();
+                    context.read<PropertyDetailsCubit>().loadDetails(
+                      propertyId,
+                    );
+                  }
                 },
                 icon: const Icon(Icons.add_rounded, size: 20),
                 label: Text(

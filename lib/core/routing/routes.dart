@@ -6,9 +6,12 @@ class Routes {
   static const String login = '/login';
   static const String ownerMain = '/owner-main';
   static const String ownerDashboard = '/owner-main/dashboard';
+  static const String companyDashboard = '/company-main/dashboard';
+  static const String tenantDashboard = '/tenant-main/dashboard';
   static const String ownerProperties = '/owner-main/properties';
   static const String ownerContracts = '/owner-main/contracts';
   static const String ownerFinance = '/owner-main/finance';
+  static const String ownerFinanceAccounts = '/owner-main/finance/accounts';
   static const String ownerProfile = '/owner-main/profile';
   static const String notifications = '/notifications';
   static const String ownerMaintenance = '/owner-maintenance';

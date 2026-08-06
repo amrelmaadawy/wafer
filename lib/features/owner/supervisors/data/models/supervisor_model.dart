@@ -13,12 +13,27 @@ class SupervisorModel extends SupervisorEntity {
 
   factory SupervisorModel.fromJson(Map<String, dynamic> json) {
     return SupervisorModel(
-      id: json['id'] is int ? json['id'] : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
-      user: json['user'] != null ? SupervisorUserListModel.fromJson(json['user']) : null,
-      scope: json['scope'] != null ? SupervisorScopeModel.fromJson(json['scope']) : null,
-      sortOrder: json['sort_order'] != null ? (json['sort_order'] is int ? json['sort_order'] : int.tryParse(json['sort_order'].toString())) : null,
-      isActive: json['is_active'] == 1 || json['is_active'] == true || json['is_active'] == '1',
-      createdBy: json['created_by'] != null ? SupervisorUserListModel.fromJson(json['created_by']) : null,
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+      user: json['user'] != null
+          ? SupervisorUserListModel.fromJson(json['user'])
+          : null,
+      scope: json['scope'] != null
+          ? SupervisorScopeModel.fromJson(json['scope'])
+          : null,
+      sortOrder: json['sort_order'] != null
+          ? (json['sort_order'] is int
+                ? json['sort_order']
+                : int.tryParse(json['sort_order'].toString()))
+          : null,
+      isActive:
+          json['is_active'] == 1 ||
+          json['is_active'] == true ||
+          json['is_active'] == '1',
+      createdBy: json['created_by'] != null
+          ? SupervisorUserListModel.fromJson(json['created_by'])
+          : null,
       createdAt: json['created_at']?.toString(),
     );
   }
@@ -34,7 +49,9 @@ class SupervisorUserListModel extends SupervisorUserListEntity {
 
   factory SupervisorUserListModel.fromJson(Map<String, dynamic> json) {
     return SupervisorUserListModel(
-      id: json['id'] is int ? json['id'] : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
       name: json['name']?.toString(),
       email: json['email']?.toString(),
       phone: json['phone']?.toString(),
@@ -56,7 +73,9 @@ class SupervisorScopeModel extends SupervisorScopeEntity {
       typeLabel: json['type_label']?.toString(),
       condition: json['condition']?.toString(),
       values: json['values'] != null && json['values'] is List
-          ? (json['values'] as List).map((e) => int.tryParse(e.toString()) ?? 0).toList()
+          ? (json['values'] as List)
+                .map((e) => int.tryParse(e.toString()) ?? 0)
+                .toList()
           : null,
     );
   }

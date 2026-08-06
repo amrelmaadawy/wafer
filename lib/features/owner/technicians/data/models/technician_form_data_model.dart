@@ -31,17 +31,23 @@ class TechnicianFormOptionsModel extends TechnicianFormOptionsEntity {
 
   factory TechnicianFormOptionsModel.fromJson(Map<String, dynamic> json) {
     return TechnicianFormOptionsModel(
-      specialties: (json['specialties'] as List<dynamic>?)
+      specialties:
+          (json['specialties'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      companies: (json['companies'] as List<dynamic>?)
+      companies:
+          (json['companies'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],
-      booleanValues: (json['boolean_values'] as List<dynamic>?)
-              ?.map((e) => TechnicianBooleanValueModel.fromJson(
-                  e as Map<String, dynamic>))
+      booleanValues:
+          (json['boolean_values'] as List<dynamic>?)
+              ?.map(
+                (e) => TechnicianBooleanValueModel.fromJson(
+                  e as Map<String, dynamic>,
+                ),
+              )
               .toList() ??
           [],
     );
@@ -87,7 +93,8 @@ class TechnicianFormValidationModel extends TechnicianFormValidationEntity {
 
   factory TechnicianFormValidationModel.fromJson(Map<String, dynamic> json) {
     return TechnicianFormValidationModel(
-      requiredFields: (json['required'] as List<dynamic>?)
+      requiredFields:
+          (json['required'] as List<dynamic>?)
               ?.map((e) => e.toString())
               .toList() ??
           [],

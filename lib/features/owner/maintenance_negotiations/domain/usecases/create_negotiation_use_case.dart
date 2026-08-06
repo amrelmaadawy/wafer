@@ -8,7 +8,9 @@ class CreateNegotiationUseCase {
 
   CreateNegotiationUseCase(this.repository);
 
-  Future<Either<Failure, NegotiationEntity>> call(CreateNegotiationParams params) async {
+  Future<Either<Failure, NegotiationEntity>> call(
+    CreateNegotiationParams params,
+  ) async {
     return await repository.createNegotiation(
       approvalLimit: params.approvalLimit,
       isActive: params.isActive,

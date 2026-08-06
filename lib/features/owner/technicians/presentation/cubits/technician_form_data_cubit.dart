@@ -7,7 +7,7 @@ class TechnicianFormDataCubit extends Cubit<TechnicianFormDataState> {
   final GetTechnicianFormDataUseCase _getTechnicianFormDataUseCase;
 
   TechnicianFormDataCubit(this._getTechnicianFormDataUseCase)
-      : super(TechnicianFormDataInitial());
+    : super(TechnicianFormDataInitial());
 
   Future<void> getFormData() async {
     emit(TechnicianFormDataLoading());

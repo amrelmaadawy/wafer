@@ -111,11 +111,7 @@ class ContractCard extends StatelessWidget {
   Widget _buildTenantRow(BuildContext context) {
     return Row(
       children: [
-        const Icon(
-          Icons.person_outline,
-          size: 16,
-          color: AppColors.textSecondaryLight,
-        ),
+        Icon(Icons.person_outline, size: 16, color: context.primaryColor),
         const SizedBox(width: 6),
         Text(
           '${LocaleKeys.contractsTenantLabel.tr()} ',
@@ -203,10 +199,10 @@ class ContractCard extends StatelessWidget {
         if (contract.startDate.isNotEmpty && contract.endDate.isNotEmpty)
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.calendar_today_outlined,
                 size: 13,
-                color: AppColors.textSecondaryLight,
+                color: context.primaryColor,
               ),
               const SizedBox(width: 4),
               Text(

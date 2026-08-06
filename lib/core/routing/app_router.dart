@@ -18,6 +18,9 @@ import '../../features/owner/properties/presentation/screens/property_edit_scree
 import '../../features/owner/properties/presentation/cubit/edit/property_edit_cubit.dart';
 import '../../features/owner/contracts/presentation/views/owner_leases_view.dart';
 import '../../features/owner/finance/presentation/views/owner_finance_view.dart';
+import '../../features/owner/finance/presentation/cubit/finance_overview_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/accounts/finance_accounts_cubit.dart';
+import '../../features/owner/finance/presentation/views/owner_accounts_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
 import '../../features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
@@ -78,7 +81,18 @@ class AppRouter {
         path: Routes.home,
         builder: (context, state) =>
             const LoginScreen(), // Just placeholder or check auth
-        redirect: (context, state) => Routes.ownerDashboard,
+      ),
+      GoRoute(
+        path: Routes.companyDashboard,
+        builder: (context, state) => const Scaffold(
+          body: Center(child: Text('لوحة تحكم الشركات/النظام (قيد التطوير)')),
+        ),
+      ),
+      GoRoute(
+        path: Routes.tenantDashboard,
+        builder: (context, state) => const Scaffold(
+          body: Center(child: Text('لوحة تحكم المستأجر (قيد التطوير)')),
+        ),
       ),
       GoRoute(
         path: Routes.login,
@@ -87,6 +101,13 @@ class AppRouter {
       GoRoute(
         path: Routes.notifications,
         builder: (context, state) => const NotificationsScreen(),
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceAccounts,
+        builder: (context, state) => BlocProvider<FinanceAccountsCubit>(
+          create: (_) => sl<FinanceAccountsCubit>(),
+          child: const OwnerAccountsView(),
+        ),
       ),
 
       GoRoute(
@@ -173,54 +194,54 @@ class AppRouter {
           );
         },
       ),
-        GoRoute(
-          path: Routes.ownerTechnicianCreate,
-          builder: (context, state) {
-            return const AddTechnicianView();
-          },
-        ),
-        GoRoute(
-          path: Routes.ownerSupervisorsList,
-          builder: (context, state) {
-            return const SupervisorsListView();
-          },
-        ),
-        GoRoute(
-          path: Routes.ownerReportsCenter,
+      GoRoute(
+        path: Routes.ownerTechnicianCreate,
+        builder: (context, state) {
+          return const AddTechnicianView();
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerSupervisorsList,
+        builder: (context, state) {
+          return const SupervisorsListView();
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerReportsCenter,
         builder: (context, state) {
           return const OwnerReportsCenterScreen();
         },
       ),
+      GoRoute(
+        path: Routes.ownerLegalCases,
+        builder: (context, state) {
+          return const LegalCasesListView();
+        },
+        routes: [
           GoRoute(
-            path: Routes.ownerLegalCases,
-            builder: (context, state) {
-              return const LegalCasesListView();
-            },
-            routes: [
-              GoRoute(
-                path: Routes.ownerLegalCaseCreate,
-                builder: (context, state) => const LegalCaseCreateView(),
-              ),
-              GoRoute(
-                path: Routes.ownerLegalCaseEdit,
-                builder: (context, state) {
-                  final extra = state.extra;
-                  if (extra is! LegalCaseItemEntity) {
-                    return const LegalCasesListView();
-                  }
-                  return LegalCaseCreateView(legalCaseToEdit: extra);
-                },
-              ),
-              GoRoute(
-                path: Routes.ownerLegalCaseDetails,
-                builder: (context, state) {
-                  final id = int.tryParse(state.pathParameters['id'] ?? '');
-                  if (id == null) return const LegalCasesListView();
-                  return LegalCaseDetailsView(legalCaseId: id);
-                },
-              ),
-            ],
+            path: Routes.ownerLegalCaseCreate,
+            builder: (context, state) => const LegalCaseCreateView(),
           ),
+          GoRoute(
+            path: Routes.ownerLegalCaseEdit,
+            builder: (context, state) {
+              final extra = state.extra;
+              if (extra is! LegalCaseItemEntity) {
+                return const LegalCasesListView();
+              }
+              return LegalCaseCreateView(legalCaseToEdit: extra);
+            },
+          ),
+          GoRoute(
+            path: Routes.ownerLegalCaseDetails,
+            builder: (context, state) {
+              final id = int.tryParse(state.pathParameters['id'] ?? '');
+              if (id == null) return const LegalCasesListView();
+              return LegalCaseDetailsView(legalCaseId: id);
+            },
+          ),
+        ],
+      ),
       GoRoute(
         path: Routes.ownerRevenueReport,
         builder: (context, state) => BlocProvider<OwnerRevenueCubit>(
@@ -366,7 +387,10 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: Routes.ownerFinance,
-                builder: (context, state) => const OwnerFinanceView(),
+                builder: (context, state) => BlocProvider<FinanceOverviewCubit>(
+                  create: (_) => sl<FinanceOverviewCubit>(),
+                  child: const OwnerFinanceView(),
+                ),
               ),
             ],
           ),

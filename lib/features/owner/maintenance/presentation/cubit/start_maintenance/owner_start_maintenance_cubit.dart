@@ -6,7 +6,7 @@ class OwnerStartMaintenanceCubit extends Cubit<OwnerStartMaintenanceState> {
   final StartOwnerMaintenanceUseCase _startMaintenanceUseCase;
 
   OwnerStartMaintenanceCubit(this._startMaintenanceUseCase)
-      : super(OwnerStartMaintenanceInitial());
+    : super(OwnerStartMaintenanceInitial());
 
   Future<void> startMaintenanceRequest(int id) async {
     emit(OwnerStartMaintenanceLoading());

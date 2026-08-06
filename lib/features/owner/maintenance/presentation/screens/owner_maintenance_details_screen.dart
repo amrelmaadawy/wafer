@@ -118,164 +118,203 @@ class _OwnerMaintenanceDetailsScreenState
                         AppToast.showError(context, state.message);
                       }
                     },
-                    child: BlocBuilder<
-                      OwnerMaintenanceDetailsCubit,
-                      OwnerMaintenanceDetailsState
-                    >(
-                      builder: (context, state) {
-                        MaintenanceItemEntity displayItem = widget.item;
-                        if (state is OwnerMaintenanceDetailsLoaded) {
-                          displayItem = state.item;
-                        }
-                        
-                        return Scaffold(
-                          backgroundColor: AppColors.backgroundLight,
-                          appBar: CustomAppBar(
-                            title: LocaleKeys.maintenanceDetailsTitle.tr(),
-                            onBackPressed: () => context.pop(_isModified),
-                            actions: [
-                              if (['new', 'pending_supervisor', 'approved', 'draft'].contains(displayItem.status))
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.delete_outline,
-                                    color: AppColors.error,
-                                  ),
-                                  onPressed: () => MaintenanceDeleteConfirmationSheet.show(
-                                    context,
-                                    displayItem,
-                                  ),
-                                ),
-                              if (['new', 'pending_supervisor', 'draft'].contains(displayItem.status))
-                                IconButton(
-                                  icon: Icon(Icons.edit, color: context.primaryColor),
-                                  onPressed: () async {
-                                    final result = await context.push(
-                                      Routes.ownerMaintenanceEdit,
-                                      extra: displayItem,
-                                    );
-                                    if (result == true && context.mounted) {
-                                      _isModified = true;
-                                      context
-                                          .read<OwnerMaintenanceDetailsCubit>()
-                                          .getMaintenanceDetails(displayItem.safeId);
-                                    }
-                                  },
-                                ),
-                            ],
-                          ),
-                          body: PopScope(
-                            canPop: false,
-                            onPopInvokedWithResult: (didPop, result) {
-                              if (didPop) return;
-                              context.pop(_isModified);
-                            },
-                            child: Builder(
-                              builder: (context) {
-                                if (state is OwnerMaintenanceDetailsError) {
-                                  return CustomErrorWidget(
-                                    message: state.message,
-                                    onRetry: () => context
-                                        .read<OwnerMaintenanceDetailsCubit>()
-                                        .getMaintenanceDetails(widget.item.safeId),
-                                  );
-                                }
-                              
-                              if (state is OwnerMaintenanceDetailsLoading && displayItem == widget.item) {
-                                return const MaintenanceDetailsSkeleton();
-                              }
+                    child:
+                        BlocBuilder<
+                          OwnerMaintenanceDetailsCubit,
+                          OwnerMaintenanceDetailsState
+                        >(
+                          builder: (context, state) {
+                            MaintenanceItemEntity displayItem = widget.item;
+                            if (state is OwnerMaintenanceDetailsLoaded) {
+                              displayItem = state.item;
+                            }
 
-                            return RefreshIndicator(
-                              color: context.primaryColor,
-                              onRefresh: () => context
-                                  .read<OwnerMaintenanceDetailsCubit>()
-                                  .getMaintenanceDetails(widget.item.safeId),
-                              child: SingleChildScrollView(
-                                physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics(),
-                                ),
-                                padding: const EdgeInsets.all(20),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
+                            return Scaffold(
+                              backgroundColor: AppColors.backgroundLight,
+                              appBar: CustomAppBar(
+                                title: LocaleKeys.maintenanceDetailsTitle.tr(),
+                                onBackPressed: () => context.pop(_isModified),
+                                actions: [
+                                  if ([
+                                    'new',
+                                    'pending_supervisor',
+                                    'approved',
+                                    'draft',
+                                  ].contains(displayItem.status))
+                                    IconButton(
+                                      icon: const Icon(
+                                        Icons.delete_outline,
+                                        color: AppColors.error,
+                                      ),
+                                      onPressed: () =>
+                                          MaintenanceDeleteConfirmationSheet.show(
+                                            context,
+                                            displayItem,
+                                          ),
+                                    ),
+                                  if ([
+                                    'new',
+                                    'pending_supervisor',
+                                    'draft',
+                                  ].contains(displayItem.status))
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: context.primaryColor,
+                                      ),
+                                      onPressed: () async {
+                                        final result = await context.push(
+                                          Routes.ownerMaintenanceEdit,
+                                          extra: displayItem,
+                                        );
+                                        if (result == true && context.mounted) {
+                                          _isModified = true;
+                                          context
+                                              .read<
+                                                OwnerMaintenanceDetailsCubit
+                                              >()
+                                              .getMaintenanceDetails(
+                                                displayItem.safeId,
+                                              );
+                                        }
+                                      },
+                                    ),
+                                ],
+                              ),
+                              body: PopScope(
+                                canPop: false,
+                                onPopInvokedWithResult: (didPop, result) {
+                                  if (didPop) return;
+                                  context.pop(_isModified);
+                                },
+                                child: Builder(
+                                  builder: (context) {
+                                    if (state is OwnerMaintenanceDetailsError) {
+                                      return CustomErrorWidget(
+                                        message: state.message,
+                                        onRetry: () => context
+                                            .read<
+                                              OwnerMaintenanceDetailsCubit
+                                            >()
+                                            .getMaintenanceDetails(
+                                              widget.item.safeId,
+                                            ),
+                                      );
+                                    }
+
                                     if (state
-                                        is OwnerMaintenanceDetailsLoading)
-                                      const Padding(
-                                        padding: EdgeInsets.only(bottom: 12),
-                                        child: LinearProgressIndicator(
-                                          minHeight: 2,
+                                            is OwnerMaintenanceDetailsLoading &&
+                                        displayItem == widget.item) {
+                                      return const MaintenanceDetailsSkeleton();
+                                    }
+
+                                    return RefreshIndicator(
+                                      color: context.primaryColor,
+                                      onRefresh: () => context
+                                          .read<OwnerMaintenanceDetailsCubit>()
+                                          .getMaintenanceDetails(
+                                            widget.item.safeId,
+                                          ),
+                                      child: SingleChildScrollView(
+                                        physics: const BouncingScrollPhysics(
+                                          parent:
+                                              AlwaysScrollableScrollPhysics(),
+                                        ),
+                                        padding: const EdgeInsets.all(20),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (state
+                                                is OwnerMaintenanceDetailsLoading)
+                                              const Padding(
+                                                padding: EdgeInsets.only(
+                                                  bottom: 12,
+                                                ),
+                                                child: LinearProgressIndicator(
+                                                  minHeight: 2,
+                                                ),
+                                              ),
+                                            MaintenanceDetailsHeaderCard(
+                                              item: displayItem,
+                                            ),
+                                            const SizedBox(height: 16),
+                                            MaintenanceClientSection(
+                                              item: displayItem,
+                                            ),
+                                            if (displayItem.financials !=
+                                                    null &&
+                                                (displayItem
+                                                            .financials!
+                                                            .estimatedCost !=
+                                                        null ||
+                                                    displayItem
+                                                            .financials!
+                                                            .actualCost !=
+                                                        null)) ...[
+                                              MaintenanceCostSection(
+                                                item: displayItem,
+                                              ),
+                                              const SizedBox(height: 24),
+                                            ],
+                                            MaintenanceAssignmentsSection(
+                                              item: displayItem,
+                                            ),
+                                            if (displayItem.assignments !=
+                                                    null &&
+                                                displayItem
+                                                    .assignments!
+                                                    .isNotEmpty)
+                                              const SizedBox(height: 16),
+                                            MaintenanceTasksSection(
+                                              item: displayItem,
+                                            ),
+                                            if (displayItem.tasks != null &&
+                                                displayItem.tasks!.isNotEmpty)
+                                              const SizedBox(height: 16),
+                                            MaintenanceTimelineSection(
+                                              item: displayItem,
+                                            ),
+                                            const SizedBox(height: 16),
+                                            MaintenanceActionLogsSection(
+                                              item: displayItem,
+                                            ),
+                                            if (displayItem.actionLogs !=
+                                                    null &&
+                                                displayItem
+                                                    .actionLogs!
+                                                    .isNotEmpty)
+                                              const SizedBox(height: 16),
+                                            MaintenanceImagesSection(
+                                              images: displayItem.images ?? [],
+                                            ),
+                                            if (displayItem.actionLogs !=
+                                                    null &&
+                                                displayItem
+                                                    .actionLogs!
+                                                    .isNotEmpty)
+                                              const SizedBox(
+                                                height: 100,
+                                              ), // spacing for bottom bar
+                                          ],
                                         ),
                                       ),
-                                    MaintenanceDetailsHeaderCard(
-                                      item: displayItem,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    MaintenanceClientSection(
-                                      item: displayItem,
-                                    ),
-                                    if (displayItem.financials != null &&
-                                        (displayItem
-                                                    .financials!
-                                                    .estimatedCost !=
-                                                null ||
-                                            displayItem
-                                                    .financials!
-                                                    .actualCost !=
-                                                null)) ...[
-                                      MaintenanceCostSection(
-                                        item: displayItem,
-                                      ),
-                                      const SizedBox(height: 24),
-                                    ],
-                                    MaintenanceAssignmentsSection(
-                                      item: displayItem,
-                                    ),
-                                    if (displayItem.assignments != null &&
-                                        displayItem.assignments!.isNotEmpty)
-                                      const SizedBox(height: 16),
-                                    MaintenanceTasksSection(
-                                      item: displayItem,
-                                    ),
-                                    if (displayItem.tasks != null &&
-                                        displayItem.tasks!.isNotEmpty)
-                                      const SizedBox(height: 16),
-                                    MaintenanceTimelineSection(
-                                      item: displayItem,
-                                    ),
-                                    const SizedBox(height: 16),
-                                    MaintenanceActionLogsSection(
-                                      item: displayItem,
-                                    ),
-                                    if (displayItem.actionLogs != null &&
-                                        displayItem.actionLogs!.isNotEmpty)
-                                      const SizedBox(height: 16),
-                                    MaintenanceImagesSection(
-                                      images: displayItem.images ?? [],
-                                    ),
-                                    if (displayItem.actionLogs != null &&
-                                        displayItem.actionLogs!.isNotEmpty)
-                                      const SizedBox(
-                                        height: 100,
-                                      ), // spacing for bottom bar
-                                  ],
+                                    );
+                                  },
                                 ),
+                              ),
+                              bottomNavigationBar: MaintenanceDetailsBottomBar(
+                                displayItem: displayItem,
+                                onModified: (modified) {
+                                  if (modified) {
+                                    _isModified = true;
+                                  }
+                                },
                               ),
                             );
                           },
                         ),
-                      ),
-                      bottomNavigationBar: MaintenanceDetailsBottomBar(
-                        displayItem: displayItem,
-                        onModified: (modified) {
-                          if (modified) {
-                            _isModified = true;
-                          }
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
+                  ),
             ),
           );
         },

@@ -35,6 +35,7 @@ class UnitCreateCubit extends Cubit<UnitCreateState> {
             district: property.district,
             streetName: property.streetName,
             buildingNumber: property.buildingNumber,
+            usageType: property.usageType ?? state.usageType,
           ),
         );
       },

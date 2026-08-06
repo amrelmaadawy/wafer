@@ -23,18 +23,10 @@ class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
         final maintResult = await _getMaintenanceUseCase(
           GetOwnerMaintenanceParams(page: 1, forceRefresh: forceRefresh),
         );
-        maintResult.fold(
-          (_) {},
-          (maintData) {
-            recentItems = maintData.items.take(5).toList();
-          },
-        );
-        emit(
-          OwnerDashboardLoaded(
-            data,
-            recentMaintenanceItems: recentItems,
-          ),
-        );
+        maintResult.fold((_) {}, (maintData) {
+          recentItems = maintData.items.take(5).toList();
+        });
+        emit(OwnerDashboardLoaded(data, recentMaintenanceItems: recentItems));
       },
     );
   }

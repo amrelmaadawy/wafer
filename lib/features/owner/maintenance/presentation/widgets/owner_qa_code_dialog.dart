@@ -11,17 +11,12 @@ import '../../../../../core/theme/color_utils.dart';
 class OwnerQaCodeDialog extends StatelessWidget {
   final String qaCode;
 
-  const OwnerQaCodeDialog({
-    super.key,
-    required this.qaCode,
-  });
+  const OwnerQaCodeDialog({super.key, required this.qaCode});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: const RoundedRectangleBorder(
-        borderRadius: AppRadius.circularLg,
-      ),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
       backgroundColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -65,7 +60,9 @@ class OwnerQaCodeDialog extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.backgroundLight,
                 borderRadius: AppRadius.circularMd,
-                border: Border.all(color: context.primaryColor.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: context.primaryColor.withValues(alpha: 0.3),
+                ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +86,10 @@ class OwnerQaCodeDialog extends StatelessWidget {
                   child: OutlinedButton.icon(
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: qaCode));
-                      AppToast.showSuccess(context, LocaleKeys.maintenanceQaCodeCopied.tr());
+                      AppToast.showSuccess(
+                        context,
+                        LocaleKeys.maintenanceQaCodeCopied.tr(),
+                      );
                     },
                     icon: const Icon(Icons.copy, size: 20),
                     label: Text(LocaleKeys.maintenanceCopyQaCode.tr()),

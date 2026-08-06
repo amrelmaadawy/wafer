@@ -140,7 +140,8 @@ class _OwnerUpdateMaintenanceViewState
               if (state.formDataError != null) {
                 return CustomErrorWidget(
                   message: state.formDataError!,
-                  onRetry: () => context.read<OwnerUpdateMaintenanceCubit>().init(),
+                  onRetry: () =>
+                      context.read<OwnerUpdateMaintenanceCubit>().init(),
                 );
               }
 
@@ -198,7 +199,8 @@ class _OwnerUpdateMaintenanceViewState
                         const SizedBox(height: AppSpacing.xl),
                         CustomButton(
                           text: LocaleKeys.maintenanceUpdateRequest.tr(),
-                          isLoading: state.status == UpdateMaintenanceStatus.loading,
+                          isLoading:
+                              state.status == UpdateMaintenanceStatus.loading,
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               if (_selectedMaintenanceTypes.isEmpty) {
@@ -245,7 +247,10 @@ class _OwnerUpdateMaintenanceViewState
     );
   }
 
-  Widget _buildMaintenanceTypesChips(BuildContext context, OwnerUpdateMaintenanceState state) {
+  Widget _buildMaintenanceTypesChips(
+    BuildContext context,
+    OwnerUpdateMaintenanceState state,
+  ) {
     if (state.isFormDataLoading) {
       return const AppShimmer(
         child: SizedBox(
@@ -260,7 +265,7 @@ class _OwnerUpdateMaintenanceViewState
         ),
       );
     }
-    
+
     if (state.availableMaintenanceTypes.isEmpty) {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -279,7 +284,9 @@ class _OwnerUpdateMaintenanceViewState
       runSpacing: AppSpacing.sm,
       children: state.availableMaintenanceTypes.map((typeObj) {
         final typeStr = typeObj.id?.toString() ?? '';
-        final isSelected = _selectedMaintenanceTypes.contains(typeObj.name) || _selectedMaintenanceTypes.contains(typeStr);
+        final isSelected =
+            _selectedMaintenanceTypes.contains(typeObj.name) ||
+            _selectedMaintenanceTypes.contains(typeStr);
         return ChoiceChip(
           label: Text(typeObj.name ?? typeStr),
           selected: isSelected,

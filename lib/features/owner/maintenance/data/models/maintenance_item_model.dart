@@ -2,6 +2,15 @@ import '../../domain/entities/maintenance_item_entity.dart';
 import 'maintenance_complex_sub_models.dart';
 import 'maintenance_sub_models.dart';
 
+int? _parseIntOrMap(dynamic value) {
+  if (value is int) return value;
+  if (value is Map<String, dynamic> && value['id'] is int) {
+    return value['id'] as int;
+  }
+  if (value is String) return int.tryParse(value);
+  return null;
+}
+
 class MaintenanceItemModel extends MaintenanceItemEntity {
   const MaintenanceItemModel({
     super.id,
@@ -32,7 +41,7 @@ class MaintenanceItemModel extends MaintenanceItemEntity {
 
   factory MaintenanceItemModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceItemModel(
-      id: json['id'] as int?,
+      id: _parseIntOrMap(json['id']),
       requestNumber: json['request_number'] as String?,
       title: json['title'] as String?,
       description: json['description'] as String?,

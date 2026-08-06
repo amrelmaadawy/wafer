@@ -28,7 +28,7 @@ class MaintenanceDetailsSkeleton extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.lg),
-          
+
           // Section Title Skeleton
           AppShimmer(
             child: SizedBox(
@@ -43,7 +43,7 @@ class MaintenanceDetailsSkeleton extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          
+
           // Details Card Skeleton
           const AppShimmer(
             child: SizedBox(
@@ -58,7 +58,7 @@ class MaintenanceDetailsSkeleton extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.lg),
-          
+
           // Section Title Skeleton
           AppShimmer(
             child: SizedBox(
@@ -73,7 +73,7 @@ class MaintenanceDetailsSkeleton extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.md),
-          
+
           // List Items Skeleton
           ...List.generate(
             3,

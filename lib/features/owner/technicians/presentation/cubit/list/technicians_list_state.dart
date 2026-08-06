@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:wafer/features/owner/technicians/domain/entities/technician_entity.dart';
 import 'package:wafer/features/owner/technicians/domain/entities/technicians_pagination_entity.dart';
 
-
 enum TechniciansListStatus { initial, loading, success, failure, loadingMore }
 
 class TechniciansListState extends Equatable {
@@ -38,10 +37,10 @@ class TechniciansListState extends Equatable {
 
   @override
   List<Object?> get props => [
-        status,
-        technicians,
-        pagination,
-        errorMessage,
-        hasReachedMax,
-      ];
+    status,
+    technicians,
+    pagination,
+    errorMessage,
+    hasReachedMax,
+  ];
 }

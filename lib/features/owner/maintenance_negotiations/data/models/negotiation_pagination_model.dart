@@ -12,12 +12,24 @@ class NegotiationPaginationModel extends NegotiationPaginationEntity {
 
   factory NegotiationPaginationModel.fromJson(Map<String, dynamic> json) {
     return NegotiationPaginationModel(
-      currentPage: json['current_page'] is int ? json['current_page'] : int.tryParse(json['current_page']?.toString() ?? '1') ?? 1,
-      lastPage: json['last_page'] is int ? json['last_page'] : int.tryParse(json['last_page']?.toString() ?? '1') ?? 1,
-      perPage: json['per_page'] is int ? json['per_page'] : int.tryParse(json['per_page']?.toString() ?? '15') ?? 15,
-      total: json['total'] is int ? json['total'] : int.tryParse(json['total']?.toString() ?? '0') ?? 0,
-      from: json['from'] is int ? json['from'] : int.tryParse(json['from']?.toString() ?? '0') ?? 0,
-      to: json['to'] is int ? json['to'] : int.tryParse(json['to']?.toString() ?? '0') ?? 0,
+      currentPage: json['current_page'] is int
+          ? json['current_page']
+          : int.tryParse(json['current_page']?.toString() ?? '1') ?? 1,
+      lastPage: json['last_page'] is int
+          ? json['last_page']
+          : int.tryParse(json['last_page']?.toString() ?? '1') ?? 1,
+      perPage: json['per_page'] is int
+          ? json['per_page']
+          : int.tryParse(json['per_page']?.toString() ?? '15') ?? 15,
+      total: json['total'] is int
+          ? json['total']
+          : int.tryParse(json['total']?.toString() ?? '0') ?? 0,
+      from: json['from'] is int
+          ? json['from']
+          : int.tryParse(json['from']?.toString() ?? '0') ?? 0,
+      to: json['to'] is int
+          ? json['to']
+          : int.tryParse(json['to']?.toString() ?? '0') ?? 0,
     );
   }
 }

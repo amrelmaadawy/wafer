@@ -81,7 +81,9 @@ class _CustomTextFieldState extends State<CustomTextField> {
             hintText: widget.hintText,
             hintStyle: Theme.of(context).textTheme.bodyMedium?.copyWith(
               color: AppColors.textSecondaryLight.withValues(alpha: 0.45),
+              overflow: TextOverflow.visible,
             ),
+            hintMaxLines: 2,
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.isPassword
                 ? IconButton(

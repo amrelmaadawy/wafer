@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/features/profile/presentation/cubit/profile_cubit.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -80,7 +81,10 @@ class ProfileActionsCard extends StatelessWidget {
                   onTap: () {
                     context.push(
                       Routes.editProfile,
-                      extra: {'profile': profile},
+                      extra: {
+                        'profile': profile,
+                        'cubit': context.read<ProfileCubit>(),
+                      },
                     );
                   },
                 ),

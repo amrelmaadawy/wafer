@@ -23,27 +23,19 @@ void initTechnicians() {
   }
 
   if (!sl.isRegistered<GetTechnicianFormDataUseCase>()) {
-    sl.registerLazySingleton(
-      () => GetTechnicianFormDataUseCase(sl()),
-    );
+    sl.registerLazySingleton(() => GetTechnicianFormDataUseCase(sl()));
   }
 
   if (!sl.isRegistered<GetTechniciansListUseCase>()) {
-    sl.registerLazySingleton(
-      () => GetTechniciansListUseCase(sl()),
-    );
+    sl.registerLazySingleton(() => GetTechniciansListUseCase(sl()));
   }
 
   if (!sl.isRegistered<AddTechnicianUseCase>()) {
-    sl.registerLazySingleton(
-      () => AddTechnicianUseCase(sl()),
-    );
+    sl.registerLazySingleton(() => AddTechnicianUseCase(sl()));
   }
 
   if (!sl.isRegistered<TechnicianFormDataCubit>()) {
-    sl.registerFactory(
-      () => TechnicianFormDataCubit(sl()),
-    );
+    sl.registerFactory(() => TechnicianFormDataCubit(sl()));
   }
 
   if (!sl.isRegistered<TechniciansListCubit>()) {
@@ -53,8 +45,6 @@ void initTechnicians() {
   }
 
   if (!sl.isRegistered<AddTechnicianCubit>()) {
-    sl.registerFactory(
-      () => AddTechnicianCubit(sl()),
-    );
+    sl.registerFactory(() => AddTechnicianCubit(sl()));
   }
 }

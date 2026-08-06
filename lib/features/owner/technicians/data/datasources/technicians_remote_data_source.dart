@@ -25,7 +25,8 @@ class TechniciansRemoteDataSourceImpl implements TechniciansRemoteDataSource {
       ApiConstants.ownerMaintenanceTechniciansFormData,
     );
 
-    final data = response.data['data'] as Map<String, dynamic>? ??
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
         response.data as Map<String, dynamic>;
     return TechnicianFormDataModel.fromJson(data);
   }
@@ -35,17 +36,15 @@ class TechniciansRemoteDataSourceImpl implements TechniciansRemoteDataSource {
     required int page,
     Map<String, dynamic>? filters,
   }) async {
-    final Map<String, dynamic> queryParams = {
-      'page': page,
-      ...?filters,
-    };
+    final Map<String, dynamic> queryParams = {'page': page, ...?filters};
 
     final response = await _dio.get(
       ApiConstants.ownerMaintenanceTechnicians,
       queryParameters: queryParams,
     );
 
-    final data = response.data['data'] as Map<String, dynamic>? ??
+    final data =
+        response.data['data'] as Map<String, dynamic>? ??
         response.data as Map<String, dynamic>;
     return TechniciansListResponseModel.fromJson(data);
   }
@@ -57,7 +56,9 @@ class TechniciansRemoteDataSourceImpl implements TechniciansRemoteDataSource {
       data: params.toJson(),
     );
 
-    final data = response.data['data']?['maintenance_technician'] as Map<String, dynamic>? ??
+    final data =
+        response.data['data']?['maintenance_technician']
+            as Map<String, dynamic>? ??
         response.data as Map<String, dynamic>;
     return TechnicianModel.fromJson(data);
   }

@@ -21,14 +21,14 @@ class SupervisorFormDataEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        users,
-        scopeTypes,
-        scopeValues,
-        scopeConditions,
-        booleanValues,
-        defaults,
-        validation,
-      ];
+    users,
+    scopeTypes,
+    scopeValues,
+    scopeConditions,
+    booleanValues,
+    defaults,
+    validation,
+  ];
 }
 
 class SupervisorUserEntity extends Equatable {
@@ -54,10 +54,7 @@ class SupervisorScopeTypeEntity extends Equatable {
   final String value;
   final String label;
 
-  const SupervisorScopeTypeEntity({
-    required this.value,
-    required this.label,
-  });
+  const SupervisorScopeTypeEntity({required this.value, required this.label});
 
   @override
   List<Object?> get props => [value, label];
@@ -125,12 +122,12 @@ class SupervisorFormDefaultsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        scopeType,
-        scopeCondition,
-        scopeValues,
-        sortOrder,
-        isActive,
-      ];
+    scopeType,
+    scopeCondition,
+    scopeValues,
+    sortOrder,
+    isActive,
+  ];
 }
 
 class SupervisorFormValidationEntity extends Equatable {

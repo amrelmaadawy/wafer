@@ -1,5 +1,14 @@
 import '../../domain/entities/maintenance_sub_entities.dart';
 
+int? _parseIntOrMap(dynamic value) {
+  if (value is int) return value;
+  if (value is Map<String, dynamic> && value['id'] is int) {
+    return value['id'] as int;
+  }
+  if (value is String) return int.tryParse(value);
+  return null;
+}
+
 class MaintenanceClientModel extends MaintenanceClientEntity {
   const MaintenanceClientModel({super.name, super.phone});
 
@@ -38,7 +47,7 @@ class MaintenancePropertyRefModel2 extends MaintenancePropertyRefEntity {
 
   factory MaintenancePropertyRefModel2.fromJson(Map<String, dynamic> json) {
     return MaintenancePropertyRefModel2(
-      id: json['id'] as int?,
+      id: _parseIntOrMap(json['id']),
       name: json['name'] as String?,
       code: json['code'] as String?,
       city: json['city'] as String?,
@@ -57,7 +66,7 @@ class MaintenanceUnitRefModel extends MaintenanceUnitRefEntity {
 
   factory MaintenanceUnitRefModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceUnitRefModel(
-      id: json['id'] as int?,
+      id: _parseIntOrMap(json['id']),
       name: json['name'] as String?,
       unitNumber: json['unit_number'] as String?,
       code: json['code'] as String?,
@@ -75,7 +84,7 @@ class MaintenanceTypeModel extends MaintenanceTypeEntity {
 
   factory MaintenanceTypeModel.fromJson(Map<String, dynamic> json) {
     return MaintenanceTypeModel(
-      id: json['id'] as int?,
+      id: _parseIntOrMap(json['id']),
       name: json['name'] as String?,
       nameAr: json['name_ar'] as String?,
       isActive: json['is_active'] as bool?,
@@ -115,7 +124,7 @@ class MaintenanceStatsModel extends MaintenanceStatsEntity {
     );
 
     return MaintenanceStatsModel(
-      total: json['total'] as int?,
+      total: _parseIntOrMap(json['total']),
       byStatus: mappedByStatus,
     );
   }

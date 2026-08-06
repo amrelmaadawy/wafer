@@ -11,7 +11,7 @@ class TechnicianStatsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        ownerAssignmentsCount,
-        activeOwnerAssignmentsCount,
-      ];
+    ownerAssignmentsCount,
+    activeOwnerAssignmentsCount,
+  ];
 }

@@ -6,14 +6,16 @@ import '../entities/maintenance_item_entity.dart';
 import '../repositories/owner_maintenance_repository.dart';
 
 class VerifyCloseOwnerMaintenanceUseCase
-    implements UseCase<MaintenanceItemEntity, VerifyCloseOwnerMaintenanceParams> {
+    implements
+        UseCase<MaintenanceItemEntity, VerifyCloseOwnerMaintenanceParams> {
   final OwnerMaintenanceRepository repository;
 
   VerifyCloseOwnerMaintenanceUseCase(this.repository);
 
   @override
   Future<Either<Failure, MaintenanceItemEntity>> call(
-      VerifyCloseOwnerMaintenanceParams params) {
+    VerifyCloseOwnerMaintenanceParams params,
+  ) {
     return repository.verifyCloseMaintenanceRequest(params);
   }
 }
@@ -32,10 +34,10 @@ class VerifyCloseOwnerMaintenanceParams extends Equatable {
   });
 
   Map<String, dynamic> toJson() => {
-        'qa_code': qaCode,
-        'actual_cost': actualCost,
-        'notes': notes,
-      };
+    'qa_code': qaCode,
+    'actual_cost': actualCost,
+    'notes': notes,
+  };
 
   @override
   List<Object?> get props => [id, qaCode, actualCost, notes];

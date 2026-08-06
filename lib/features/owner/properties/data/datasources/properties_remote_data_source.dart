@@ -100,9 +100,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
 
   @override
   Future<PropertyFormOptionsModel> getFormOptions() async {
-    final response = await _dio.get(
-      ApiConstants.ownerFormData,
-    );
+    final response = await _dio.get(ApiConstants.ownerFormData);
 
     final data =
         response.data['data'] as Map<String, dynamic>? ??
@@ -113,9 +111,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
 
   @override
   Future<PropertyFormDataModel> getPropertyFormData() async {
-    final response = await _dio.get(
-      ApiConstants.ownerFormData,
-    );
+    final response = await _dio.get(ApiConstants.ownerFormData);
 
     final data =
         response.data['data'] as Map<String, dynamic>? ??
@@ -154,10 +150,7 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
     required String step,
     required Map<String, dynamic> data,
   }) async {
-    await _dio.post(
-      ApiConstants.ownerAutoSaveProperty(propertyId),
-      data: data,
-    );
+    await _dio.post(ApiConstants.ownerAutoSaveProperty(propertyId), data: data);
   }
 
   @override
@@ -301,16 +294,11 @@ class PropertiesRemoteDataSourceImpl implements PropertiesRemoteDataSource {
 
   @override
   Future<void> deleteProperty(int propertyId) async {
-    await _dio.delete(
-      ApiConstants.ownerDeleteProperty(propertyId),
-    );
+    await _dio.delete(ApiConstants.ownerDeleteProperty(propertyId));
   }
 
   @override
   Future<void> patchProperty(int propertyId, Map<String, dynamic> data) async {
-    await _dio.patch(
-      ApiConstants.ownerPatchProperty(propertyId),
-      data: data,
-    );
+    await _dio.patch(ApiConstants.ownerPatchProperty(propertyId), data: data);
   }
 }

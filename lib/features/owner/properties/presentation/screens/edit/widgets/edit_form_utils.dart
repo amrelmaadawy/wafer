@@ -66,11 +66,14 @@ class EditFormField extends StatelessWidget {
               : null,
           style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
+            counterText: "",
             hintText: hint,
             hintStyle: const TextStyle(
               color: AppColors.textSecondaryLight,
               fontSize: 13,
+              overflow: TextOverflow.visible,
             ),
+            hintMaxLines: 2,
             suffixText: suffixText,
             suffixStyle: TextStyle(
               color: context.primaryColor,

@@ -9,12 +9,14 @@ class TechniciansListResponseModel extends TechniciansListResponseEntity {
   });
 
   factory TechniciansListResponseModel.fromJson(Map<String, dynamic> json) {
-    final techniciansList = (json['maintenance_technicians'] as List<dynamic>?)
+    final techniciansList =
+        (json['maintenance_technicians'] as List<dynamic>?)
             ?.map((e) => TechnicianModel.fromJson(e as Map<String, dynamic>))
             .toList() ??
         [];
     final pagination = TechniciansPaginationModel.fromJson(
-        json['pagination'] as Map<String, dynamic>? ?? {});
+      json['pagination'] as Map<String, dynamic>? ?? {},
+    );
 
     return TechniciansListResponseModel(
       technicians: techniciansList,

@@ -44,17 +44,17 @@ class TaskFormOptionsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        properties,
-        deeds,
-        branches,
-        assignees,
-        statuses,
-        kanbanStatuses,
-        priorities,
-        categories,
-        linkedTo,
-        booleanValues,
-      ];
+    properties,
+    deeds,
+    branches,
+    assignees,
+    statuses,
+    kanbanStatuses,
+    priorities,
+    categories,
+    linkedTo,
+    booleanValues,
+  ];
 }
 
 class TaskPropertyOptionEntity extends Equatable {
@@ -78,14 +78,14 @@ class TaskPropertyOptionEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        code,
-        propertyType,
-        status,
-        city,
-        district,
-      ];
+    id,
+    name,
+    code,
+    propertyType,
+    status,
+    city,
+    district,
+  ];
 }
 
 class TaskDeedOptionEntity extends Equatable {
@@ -106,14 +106,7 @@ class TaskDeedOptionEntity extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        id,
-        code,
-        name,
-        documentNumber,
-        city,
-        district,
-      ];
+  List<Object?> get props => [id, code, name, documentNumber, city, district];
 }
 
 class TaskBranchOptionEntity extends Equatable {
@@ -179,10 +172,7 @@ class TaskBooleanValueEntity extends Equatable {
   final bool? value;
   final String? label;
 
-  const TaskBooleanValueEntity({
-    this.value,
-    this.label,
-  });
+  const TaskBooleanValueEntity({this.value, this.label});
 
   @override
   List<Object?> get props => [value, label];
@@ -213,16 +203,16 @@ class TaskFormDefaultsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        code,
-        status,
-        priority,
-        progress,
-        startDate,
-        dueDate,
-        maxImages,
-        allowedImageMimes,
-        maxImageSizeKb,
-      ];
+    code,
+    status,
+    priority,
+    progress,
+    startDate,
+    dueDate,
+    maxImages,
+    allowedImageMimes,
+    maxImageSizeKb,
+  ];
 }
 
 class TaskFormValidationEntity extends Equatable {
@@ -246,24 +236,21 @@ class TaskFormValidationEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        requiredFields,
-        titleMax,
-        progressMin,
-        progressMax,
-        maxImagesCount,
-        imageMimes,
-        imageMaxKb,
-      ];
+    requiredFields,
+    titleMax,
+    progressMin,
+    progressMax,
+    maxImagesCount,
+    imageMimes,
+    imageMaxKb,
+  ];
 }
 
 class TaskFormWorkflowEntity extends Equatable {
   final List<String>? sequence;
   final List<String>? terminal;
 
-  const TaskFormWorkflowEntity({
-    this.sequence,
-    this.terminal,
-  });
+  const TaskFormWorkflowEntity({this.sequence, this.terminal});
 
   @override
   List<Object?> get props => [sequence, terminal];

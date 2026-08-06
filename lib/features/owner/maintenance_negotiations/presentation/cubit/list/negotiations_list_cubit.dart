@@ -9,7 +9,7 @@ class NegotiationsListCubit extends Cubit<NegotiationsListState> {
   bool _isFetching = false;
 
   NegotiationsListCubit(this.getNegotiationsListUseCase)
-      : super(const NegotiationsListState());
+    : super(const NegotiationsListState());
 
   Future<void> fetchNegotiations({bool isRefresh = false}) async {
     if (_isFetching) return;
@@ -17,10 +17,12 @@ class NegotiationsListCubit extends Cubit<NegotiationsListState> {
 
     if (isRefresh) {
       _currentPage = 1;
-      emit(state.copyWith(
-        status: NegotiationsListStatus.loading,
-        hasReachedMax: false,
-      ));
+      emit(
+        state.copyWith(
+          status: NegotiationsListStatus.loading,
+          hasReachedMax: false,
+        ),
+      );
     } else if (state.status == NegotiationsListStatus.initial) {
       emit(state.copyWith(status: NegotiationsListStatus.loading));
     }
@@ -33,27 +35,32 @@ class NegotiationsListCubit extends Cubit<NegotiationsListState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          status: NegotiationsListStatus.failure,
-          errorMessage: failure.message,
-        ));
+        emit(
+          state.copyWith(
+            status: NegotiationsListStatus.failure,
+            errorMessage: failure.message,
+          ),
+        );
       },
       (response) {
         final newNegotiations = isRefresh
             ? response.negotiations
             : [...state.negotiations, ...response.negotiations];
 
-        final hasReachedMax = response.pagination.currentPage >= response.pagination.lastPage;
+        final hasReachedMax =
+            response.pagination.currentPage >= response.pagination.lastPage;
 
         if (!hasReachedMax) {
           _currentPage++;
         }
 
-        emit(state.copyWith(
-          status: NegotiationsListStatus.success,
-          negotiations: newNegotiations,
-          hasReachedMax: hasReachedMax,
-        ));
+        emit(
+          state.copyWith(
+            status: NegotiationsListStatus.success,
+            negotiations: newNegotiations,
+            hasReachedMax: hasReachedMax,
+          ),
+        );
       },
     );
 

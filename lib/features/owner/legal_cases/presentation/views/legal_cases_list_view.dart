@@ -84,18 +84,25 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.error_outline,
-                        size: 48, color: AppColors.error),
+                    const Icon(
+                      Icons.error_outline,
+                      size: 48,
+                      color: AppColors.error,
+                    ),
                     const SizedBox(height: AppSpacing.md),
                     Text(
                       state.message,
-                      style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                      style: AppTextStyles.bodyMedium.copyWith(
+                        color: AppColors.error,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AppSpacing.md),
                     ElevatedButton(
-                      onPressed: () =>
-                          _cubit.fetchLegalCases(status: _selectedStatus, isRefresh: true),
+                      onPressed: () => _cubit.fetchLegalCases(
+                        status: _selectedStatus,
+                        isRefresh: true,
+                      ),
                       child: Text(LocaleKeys.retry.tr()),
                     ),
                   ],
@@ -110,7 +117,9 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                   children: [
                     if (state.stats?.byStatus != null)
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AppSpacing.md,
+                        ),
                         child: LegalCasesFilterChips(
                           statsByStatus: state.stats!.byStatus!,
                           selectedStatus: _selectedStatus,
@@ -118,7 +127,10 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                             setState(() {
                               _selectedStatus = status;
                             });
-                            _cubit.fetchLegalCases(status: status, isRefresh: true);
+                            _cubit.fetchLegalCases(
+                              status: status,
+                              isRefresh: true,
+                            );
                           },
                         ),
                       ),
@@ -130,47 +142,66 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                                 key: const ValueKey('empty_list'),
                                 children: [
                                   SizedBox(
-                                    height: MediaQuery.of(context).size.height * 0.5,
+                                    height:
+                                        MediaQuery.of(context).size.height *
+                                        0.5,
                                     child: Center(
                                       child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
-                                          const Icon(
+                                          Icon(
                                             Icons.gavel,
                                             size: 64,
-                                            color: AppColors.borderLight,
+                                            color: context.primaryColor,
                                           ),
                                           const SizedBox(height: AppSpacing.md),
                                           Text(
-                                            LocaleKeys.no_legal_cases_found.tr(),
-                                            style: AppTextStyles.bodyLarge.copyWith(
-                                              color: AppColors.textSecondaryLight,
-                                            ),
+                                            LocaleKeys.no_legal_cases_found
+                                                .tr(),
+                                            style: AppTextStyles.bodyLarge
+                                                .copyWith(
+                                                  color: AppColors
+                                                      .textSecondaryLight,
+                                                ),
                                           ),
                                           const SizedBox(height: AppSpacing.lg),
                                           ElevatedButton.icon(
                                             onPressed: () async {
-                                              final result = await context.push<bool>(
-                                                '${Routes.ownerLegalCases}/${Routes.ownerLegalCaseCreate}',
-                                              );
+                                              final result = await context
+                                                  .push<bool>(
+                                                    '${Routes.ownerLegalCases}/${Routes.ownerLegalCaseCreate}',
+                                                  );
                                               if (result == true) {
-                                                _cubit.fetchLegalCases(isRefresh: true);
+                                                _cubit.fetchLegalCases(
+                                                  isRefresh: true,
+                                                );
                                               }
                                             },
                                             style: ElevatedButton.styleFrom(
-                                              backgroundColor: context.primaryColor,
-                                              padding: const EdgeInsets.symmetric(
-                                                horizontal: AppSpacing.lg,
-                                                vertical: AppSpacing.md,
-                                              ),
+                                              backgroundColor:
+                                                  context.primaryColor,
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                    horizontal: AppSpacing.lg,
+                                                    vertical: AppSpacing.md,
+                                                  ),
                                               shape: RoundedRectangleBorder(
-                                                borderRadius: AppRadius.circularMd,
+                                                borderRadius:
+                                                    AppRadius.circularMd,
                                               ),
                                             ),
-                                            icon: const Icon(Icons.add, color: Colors.white, size: 18),
+                                            icon: const Icon(
+                                              Icons.add,
+                                              color: Colors.white,
+                                              size: 18,
+                                            ),
                                             label: Text(
                                               LocaleKeys.create_legal_case.tr(),
-                                              style: AppTextStyles.labelLarge.copyWith(color: Colors.white),
+                                              style: AppTextStyles.labelLarge
+                                                  .copyWith(
+                                                    color: Colors.white,
+                                                  ),
                                             ),
                                           ),
                                         ],
@@ -180,10 +211,13 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                                 ],
                               )
                             : ListView.separated(
-                                key: ValueKey('list_${_selectedStatus ?? "all"}'),
+                                key: ValueKey(
+                                  'list_${_selectedStatus ?? "all"}',
+                                ),
                                 controller: _scrollController,
                                 padding: const EdgeInsets.all(AppSpacing.md),
-                                itemCount: state.legalCases.length +
+                                itemCount:
+                                    state.legalCases.length +
                                     (state.hasReachedMax ? 0 : 1),
                                 separatorBuilder: (context, index) =>
                                     const SizedBox(height: AppSpacing.md),
@@ -191,18 +225,30 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                                   if (index >= state.legalCases.length) {
                                     if (state.paginationError != null) {
                                       return Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
+                                        padding: const EdgeInsets.symmetric(
+                                          vertical: AppSpacing.md,
+                                        ),
                                         child: Column(
                                           children: [
                                             Text(
                                               state.paginationError!,
-                                              style: AppTextStyles.bodyMedium.copyWith(color: AppColors.error),
+                                              style: AppTextStyles.bodyMedium
+                                                  .copyWith(
+                                                    color: AppColors.error,
+                                                  ),
                                               textAlign: TextAlign.center,
                                             ),
-                                            const SizedBox(height: AppSpacing.sm),
+                                            const SizedBox(
+                                              height: AppSpacing.sm,
+                                            ),
                                             ElevatedButton(
-                                              onPressed: () => _cubit.fetchLegalCases(status: _selectedStatus),
-                                              child: Text(LocaleKeys.retry.tr()),
+                                              onPressed: () =>
+                                                  _cubit.fetchLegalCases(
+                                                    status: _selectedStatus,
+                                                  ),
+                                              child: Text(
+                                                LocaleKeys.retry.tr(),
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -214,11 +260,19 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                                   return LegalCaseCardWidget(
                                     legalCase: legalCase,
                                     onTap: () {
-                                      context.push('${Routes.ownerLegalCases}/${Routes.ownerLegalCaseDetails.replaceAll(':id', '${legalCase.id}')}').then((deleted) {
-                                        if (deleted == true && context.mounted) {
-                                          _cubit.fetchLegalCases(status: _selectedStatus, isRefresh: true);
-                                        }
-                                      });
+                                      context
+                                          .push(
+                                            '${Routes.ownerLegalCases}/${Routes.ownerLegalCaseDetails.replaceAll(':id', '${legalCase.id}')}',
+                                          )
+                                          .then((deleted) {
+                                            if (deleted == true &&
+                                                context.mounted) {
+                                              _cubit.fetchLegalCases(
+                                                status: _selectedStatus,
+                                                isRefresh: true,
+                                              );
+                                            }
+                                          });
                                     },
                                     onEditTap: () async {
                                       final result = await context.push<bool>(
@@ -232,8 +286,9 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
                                   );
                                 },
                               ),
+                      ),
                     ),
-                  )],
+                  ],
                 ),
               );
             }
@@ -244,7 +299,8 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
             final result = await context.push<bool>(
-                '${Routes.ownerLegalCases}/${Routes.ownerLegalCaseCreate}');
+              '${Routes.ownerLegalCases}/${Routes.ownerLegalCaseCreate}',
+            );
             if (result == true) {
               _cubit.fetchLegalCases(isRefresh: true);
             }

@@ -5,7 +5,10 @@ import '../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../core/utils/widgets/custom_text_field.dart';
 import '../../../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../../../cubit/units/unit_create_cubit.dart';
+
 import '../../../cubit/units/unit_create_state.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../../core/localization/locale_keys.dart';
 
 class Step2SpecsView extends StatelessWidget {
   const Step2SpecsView({super.key});
@@ -19,9 +22,12 @@ class Step2SpecsView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'المواصفات والمساحات',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Text(
+                LocaleKeys.unitsSpecsTitle.tr(),
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 16),
 
@@ -29,13 +35,13 @@ class Step2SpecsView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _buildDropdown(
-                      label: 'الدور',
+                      label: LocaleKeys.unitsFloorTypeLabel.tr(),
                       value: state.floorType,
-                      items: const {
-                        'ground': 'أرضي',
-                        'typical': 'متكرر',
-                        'roof': 'روف',
-                        'basement': 'بدروم',
+                      items: {
+                        'ground': LocaleKeys.unitsFloorTypeGround.tr(),
+                        'typical': LocaleKeys.unitsFloorTypeTypical.tr(),
+                        'roof': LocaleKeys.unitsFloorTypeRoof.tr(),
+                        'basement': LocaleKeys.unitsFloorTypeBasement.tr(),
                       },
                       onChanged: (val) => context
                           .read<UnitCreateCubit>()
@@ -45,8 +51,7 @@ class Step2SpecsView extends StatelessWidget {
                   const SizedBox(width: 16),
                   Expanded(
                     child: CustomTextField(
-                      label: 'رقم الدور',
-                      hintText: 'مثال: 3',
+                      label: LocaleKeys.unitsFloorNumberLabel.tr(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: state.floorNumber?.toString(),
@@ -59,17 +64,16 @@ class Step2SpecsView extends StatelessWidget {
               ),
               const SizedBox(height: 16),
 
-              const Text(
-                'الأبعاد (اختياري)',
-                style: TextStyle(fontWeight: FontWeight.w600),
+              Text(
+                LocaleKeys.unitsDimensionsOptional.tr(),
+                style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
               Row(
                 children: [
                   Expanded(
                     child: CustomTextField(
-                      label: 'الطول (م)',
-                      hintText: 'مثال: 12',
+                      label: LocaleKeys.unitsLengthHint.tr(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
@@ -85,8 +89,7 @@ class Step2SpecsView extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: CustomTextField(
-                      label: 'المساحة (م²)',
-                      hintText: 'مثال: 120',
+                      label: LocaleKeys.unitsAreaLabel.tr(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
@@ -101,8 +104,7 @@ class Step2SpecsView extends StatelessWidget {
                   ),
                   Expanded(
                     child: CustomTextField(
-                      label: 'العرض (م)',
-                      hintText: 'مثال: 10',
+                      label: LocaleKeys.unitsWidthHint.tr(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
@@ -118,8 +120,7 @@ class Step2SpecsView extends StatelessWidget {
                   const SizedBox(width: 8),
                   Expanded(
                     child: CustomTextField(
-                      label: 'الارتفاع (م)',
-                      hintText: 'مثال: 3',
+                      label: LocaleKeys.unitsHeightLabel.tr(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [
                         FilteringTextInputFormatter.allow(
@@ -136,8 +137,7 @@ class Step2SpecsView extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               CustomTextField(
-                label: 'طول الواجهة (م)',
-                hintText: 'مثال: 8',
+                label: LocaleKeys.unitsFacadeLengthLabel.tr(),
                 keyboardType: TextInputType.number,
                 inputFormatters: [
                   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
@@ -149,9 +149,9 @@ class Step2SpecsView extends StatelessWidget {
               ),
               const SizedBox(height: 24),
 
-              const Text(
-                'التقسيم الداخلي',
-                style: TextStyle(fontWeight: FontWeight.w600),
+              Text(
+                LocaleKeys.unitsInternalDivision.tr(),
+                style: const TextStyle(fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
 
@@ -159,8 +159,7 @@ class Step2SpecsView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomTextField(
-                      label: 'الغرف',
-                      hintText: 'مثال: 3',
+                      label: LocaleKeys.unitsRoomsCountLabel.tr(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: state.roomsCount?.toString(),
@@ -172,8 +171,7 @@ class Step2SpecsView extends StatelessWidget {
                   const SizedBox(width: 16),
                   Expanded(
                     child: CustomTextField(
-                      label: 'دورات المياه',
-                      hintText: 'مثال: 2',
+                      label: LocaleKeys.unitsBathroomsCountLabel.tr(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: state.bathroomsCount?.toString(),
@@ -190,8 +188,7 @@ class Step2SpecsView extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomTextField(
-                      label: 'الصالات',
-                      hintText: 'مثال: 1',
+                      label: LocaleKeys.unitsHallsCountLabel.tr(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: state.hallsCount?.toString(),
@@ -203,8 +200,7 @@ class Step2SpecsView extends StatelessWidget {
                   const SizedBox(width: 16),
                   Expanded(
                     child: CustomTextField(
-                      label: 'المطابخ',
-                      hintText: 'مثال: 1',
+                      label: LocaleKeys.unitsKitchensCountLabel.tr(),
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       initialValue: state.kitchensCount?.toString(),
@@ -242,7 +238,7 @@ class Step2SpecsView extends StatelessWidget {
         CustomDropdownMenu<String>(
           items: items.keys.toList(),
           value: items.containsKey(value) ? value : items.keys.first,
-          hint: 'اختر $label',
+          hint: '${LocaleKeys.unitsSelectPrefix.tr()} $label',
           itemLabelBuilder: (key) => items[key] ?? key,
           onSelected: (val) => onChanged(val),
         ),

@@ -12,5 +12,7 @@ abstract class TechniciansRepository {
     required int page,
     Map<String, dynamic>? filters,
   });
-  Future<Either<Failure, TechnicianEntity>> addTechnician(AddTechnicianParams params);
+  Future<Either<Failure, TechnicianEntity>> addTechnician(
+    AddTechnicianParams params,
+  );
 }

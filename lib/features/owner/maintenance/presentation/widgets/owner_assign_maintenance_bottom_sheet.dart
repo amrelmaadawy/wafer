@@ -19,7 +19,6 @@ import '../../../../../../core/routing/routes.dart';
 import '../../../technicians/presentation/cubit/list/technicians_list_cubit.dart';
 import '../../../technicians/presentation/cubit/list/technicians_list_state.dart';
 
-
 class OwnerAssignMaintenanceBottomSheet extends StatefulWidget {
   final MaintenanceItemEntity item;
 
@@ -33,15 +32,11 @@ class OwnerAssignMaintenanceBottomSheet extends StatefulWidget {
       backgroundColor: Colors.transparent,
       builder: (_) => MultiBlocProvider(
         providers: [
-          BlocProvider.value(
-            value: detailsCubit,
-          ),
+          BlocProvider.value(value: detailsCubit),
           BlocProvider(
             create: (_) => di.sl<TechniciansListCubit>()..loadTechnicians(),
           ),
-          BlocProvider(
-            create: (_) => di.sl<OwnerAssignMaintenanceCubit>(),
-          ),
+          BlocProvider(create: (_) => di.sl<OwnerAssignMaintenanceCubit>()),
         ],
         child: OwnerAssignMaintenanceBottomSheet(item: item),
       ),
@@ -123,7 +118,7 @@ class _OwnerAssignMaintenanceBottomSheetState
     setState(() {
       _isSubmitted = true;
     });
-    
+
     if (_formKey.currentState!.validate() && _selectedTechnicianId != null) {
       final tasks = _taskControllers
           .map((c) => c.text.trim())
@@ -144,7 +139,10 @@ class _OwnerAssignMaintenanceBottomSheetState
   Widget build(BuildContext context) {
     final bottomPadding = MediaQuery.of(context).viewInsets.bottom;
 
-    return BlocConsumer<OwnerAssignMaintenanceCubit, OwnerAssignMaintenanceState>(
+    return BlocConsumer<
+      OwnerAssignMaintenanceCubit,
+      OwnerAssignMaintenanceState
+    >(
       listener: (context, state) {
         if (state is OwnerAssignMaintenanceSuccess) {
           AppToast.showSuccess(
@@ -205,13 +203,20 @@ class _OwnerAssignMaintenanceBottomSheetState
                           ),
                           TextButton.icon(
                             onPressed: () {
-                              context.push(Routes.ownerTechnicianCreate).then((_) {
+                              context.push(Routes.ownerTechnicianCreate).then((
+                                _,
+                              ) {
                                 if (context.mounted) {
-                                  context.read<TechniciansListCubit>().loadTechnicians(forceRefresh: true);
+                                  context
+                                      .read<TechniciansListCubit>()
+                                      .loadTechnicians(forceRefresh: true);
                                 }
                               });
                             },
-                            icon: const Icon(Icons.add_circle_outline, size: 18),
+                            icon: const Icon(
+                              Icons.add_circle_outline,
+                              size: 18,
+                            ),
                             label: Text(LocaleKeys.addTechnician.tr()),
                             style: TextButton.styleFrom(
                               foregroundColor: context.primaryColor,
@@ -225,17 +230,24 @@ class _OwnerAssignMaintenanceBottomSheetState
                       const SizedBox(height: 8),
                       BlocBuilder<TechniciansListCubit, TechniciansListState>(
                         builder: (context, techState) {
-                          if (techState.status == TechniciansListStatus.loading || techState.status == TechniciansListStatus.initial) {
-                            return const Center(child: CircularProgressIndicator());
-                          } else if (techState.status == TechniciansListStatus.failure) {
+                          if (techState.status ==
+                                  TechniciansListStatus.loading ||
+                              techState.status ==
+                                  TechniciansListStatus.initial) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (techState.status ==
+                              TechniciansListStatus.failure) {
                             return Center(
                               child: Text(
-                                techState.errorMessage ?? LocaleKeys.commonError.tr(),
+                                techState.errorMessage ??
+                                    LocaleKeys.commonError.tr(),
                                 style: const TextStyle(color: AppColors.error),
                               ),
                             );
                           }
-                          
+
                           final technicians = techState.technicians;
                           if (technicians.isEmpty) {
                             return CustomDropdownMenu<int>(
@@ -248,7 +260,10 @@ class _OwnerAssignMaintenanceBottomSheetState
                           }
 
                           // Ensure selected technician is still in the list, otherwise reset it
-                          if (_selectedTechnicianId != null && !technicians.any((t) => t.id == _selectedTechnicianId)) {
+                          if (_selectedTechnicianId != null &&
+                              !technicians.any(
+                                (t) => t.id == _selectedTechnicianId,
+                              )) {
                             _selectedTechnicianId = null;
                           }
 
@@ -256,122 +271,127 @@ class _OwnerAssignMaintenanceBottomSheetState
                             hint: LocaleKeys.maintenanceSelectTechnician.tr(),
                             items: technicians.map((t) => t.id).toList(),
                             value: _selectedTechnicianId,
-                            itemLabelBuilder: (id) => technicians.firstWhere((t) => t.id == id).name,
+                            itemLabelBuilder: (id) =>
+                                technicians.firstWhere((t) => t.id == id).name,
                             onSelected: (value) {
                               setState(() {
                                 _selectedTechnicianId = value;
                               });
                             },
-                            errorText: _isSubmitted && _selectedTechnicianId == null ? LocaleKeys.maintenanceRequiredField.tr() : null,
+                            errorText:
+                                _isSubmitted && _selectedTechnicianId == null
+                                ? LocaleKeys.maintenanceRequiredField.tr()
+                                : null,
                           );
                         },
                       ),
                     ],
                   ),
                   const SizedBox(height: 16),
-                    GestureDetector(
-                      onTap: () => _selectDueDate(context),
-                      child: AbsorbPointer(
-                        child: CustomTextField(
-                          controller: _dueDateController,
-                          label: LocaleKeys.maintenanceDueDate.tr(),
-                          hintText: 'YYYY-MM-DD',
-                          prefixIcon: const Icon(Icons.calendar_today_outlined),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return LocaleKeys.maintenanceRequiredField.tr();
-                            }
-                            return null;
-                          },
-                        ),
+                  GestureDetector(
+                    onTap: () => _selectDueDate(context),
+                    child: AbsorbPointer(
+                      child: CustomTextField(
+                        controller: _dueDateController,
+                        label: LocaleKeys.maintenanceDueDate.tr(),
+                        hintText: 'YYYY-MM-DD',
+                        prefixIcon: const Icon(Icons.calendar_today_outlined),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return LocaleKeys.maintenanceRequiredField.tr();
+                          }
+                          return null;
+                        },
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    CustomTextField(
-                      controller: _taskDetailsController,
-                      label: LocaleKeys.maintenanceTaskDetails.tr(),
-                      hintText: LocaleKeys.maintenanceTaskDetailsHint.tr(),
-                      maxLines: 3,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return LocaleKeys.maintenanceRequiredField.tr();
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          LocaleKeys.maintenanceSubTasks.tr(),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.textPrimaryLight,
-                          ),
+                  ),
+                  const SizedBox(height: 16),
+                  CustomTextField(
+                    controller: _taskDetailsController,
+                    label: LocaleKeys.maintenanceTaskDetails.tr(),
+                    hintText: LocaleKeys.maintenanceTaskDetailsHint.tr(),
+                    maxLines: 3,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return LocaleKeys.maintenanceRequiredField.tr();
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        LocaleKeys.maintenanceSubTasks.tr(),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimaryLight,
                         ),
-                        TextButton.icon(
-                          onPressed: _addTaskField,
-                          icon: const Icon(Icons.add),
-                          label: Text(LocaleKeys.maintenanceAddSubTask.tr()),
-                          style: TextButton.styleFrom(
-                            foregroundColor: context.primaryColor,
-                          ),
+                      ),
+                      TextButton.icon(
+                        onPressed: _addTaskField,
+                        icon: const Icon(Icons.add),
+                        label: Text(LocaleKeys.maintenanceAddSubTask.tr()),
+                        style: TextButton.styleFrom(
+                          foregroundColor: context.primaryColor,
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    ..._taskControllers.asMap().entries.map((entry) {
-                      int index = entry.key;
-                      TextEditingController controller = entry.value;
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 12),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: CustomTextField(
-                                controller: controller,
-                                label: '${LocaleKeys.maintenanceSubTask.tr()} ${index + 1}',
-                                hintText:
-                                    '${LocaleKeys.maintenanceSubTask.tr()} ${index + 1}',
-                                validator: (value) {
-                                  if (index == 0 &&
-                                      (value == null || value.isEmpty)) {
-                                    return LocaleKeys.maintenanceRequiredField
-                                        .tr();
-                                  }
-                                  return null;
-                                },
-                              ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  ..._taskControllers.asMap().entries.map((entry) {
+                    int index = entry.key;
+                    TextEditingController controller = entry.value;
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 12),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: CustomTextField(
+                              controller: controller,
+                              label:
+                                  '${LocaleKeys.maintenanceSubTask.tr()} ${index + 1}',
+                              hintText:
+                                  '${LocaleKeys.maintenanceSubTask.tr()} ${index + 1}',
+                              validator: (value) {
+                                if (index == 0 &&
+                                    (value == null || value.isEmpty)) {
+                                  return LocaleKeys.maintenanceRequiredField
+                                      .tr();
+                                }
+                                return null;
+                              },
                             ),
-                            if (_taskControllers.length > 1) ...[
-                              const SizedBox(width: 8),
-                              IconButton(
-                                icon: const Icon(Icons.remove_circle_outline),
-                                color: AppColors.error,
-                                onPressed: () => _removeTaskField(index),
-                              ),
-                            ],
+                          ),
+                          if (_taskControllers.length > 1) ...[
+                            const SizedBox(width: 8),
+                            IconButton(
+                              icon: const Icon(Icons.remove_circle_outline),
+                              color: AppColors.error,
+                              onPressed: () => _removeTaskField(index),
+                            ),
                           ],
-                        ),
-                      );
-                    }),
-                    const SizedBox(height: 24),
-                    CustomButton(
-                      text: LocaleKeys.maintenanceAssignSubmit.tr(),
-                      onPressed: state is OwnerAssignMaintenanceLoading
-                          ? () {}
-                          : () => _submit(context),
-                      isLoading: state is OwnerAssignMaintenanceLoading,
-                    ),
-                  ],
-                ),
+                        ],
+                      ),
+                    );
+                  }),
+                  const SizedBox(height: 24),
+                  CustomButton(
+                    text: LocaleKeys.maintenanceAssignSubmit.tr(),
+                    onPressed: state is OwnerAssignMaintenanceLoading
+                        ? () {}
+                        : () => _submit(context),
+                    isLoading: state is OwnerAssignMaintenanceLoading,
+                  ),
+                ],
               ),
             ),
-          );
-        },
-      );
+          ),
+        );
+      },
+    );
   }
 }

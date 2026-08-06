@@ -65,7 +65,8 @@ class _SupervisorsListViewState extends State<SupervisorsListView> {
 
                   if (state.status == SupervisorsListStatus.failure) {
                     return CustomErrorWidget(
-                      message: state.errorMessage ?? LocaleKeys.commonError.tr(),
+                      message:
+                          state.errorMessage ?? LocaleKeys.commonError.tr(),
                       onRetry: () => context
                           .read<SupervisorsListCubit>()
                           .fetchSupervisors(isRefresh: true),
@@ -76,8 +77,9 @@ class _SupervisorsListViewState extends State<SupervisorsListView> {
                     return Center(
                       child: Text(
                         LocaleKeys.noSupervisorsFound.tr(),
-                        style: AppTextStyles.h4
-                            .copyWith(color: AppColors.textSecondaryLight),
+                        style: AppTextStyles.h4.copyWith(
+                          color: AppColors.textSecondaryLight,
+                        ),
                       ),
                     );
                   }
@@ -85,9 +87,9 @@ class _SupervisorsListViewState extends State<SupervisorsListView> {
                   return RefreshIndicator(
                     color: context.primaryColor,
                     onRefresh: () async {
-                      context
-                          .read<SupervisorsListCubit>()
-                          .fetchSupervisors(isRefresh: true);
+                      context.read<SupervisorsListCubit>().fetchSupervisors(
+                        isRefresh: true,
+                      );
                     },
                     child: ListView.builder(
                       controller: _scrollController,
@@ -101,7 +103,8 @@ class _SupervisorsListViewState extends State<SupervisorsListView> {
                             child: Padding(
                               padding: const EdgeInsets.all(AppSpacing.md),
                               child: CircularProgressIndicator(
-                                  color: context.primaryColor),
+                                color: context.primaryColor,
+                              ),
                             ),
                           );
                         }
@@ -119,9 +122,9 @@ class _SupervisorsListViewState extends State<SupervisorsListView> {
               onPressed: () async {
                 final result = await AddSupervisorBottomSheet.show(context);
                 if (result == true && context.mounted) {
-                  context
-                      .read<SupervisorsListCubit>()
-                      .fetchSupervisors(isRefresh: true);
+                  context.read<SupervisorsListCubit>().fetchSupervisors(
+                    isRefresh: true,
+                  );
                 }
               },
               child: const Icon(Icons.add, color: AppColors.surfaceLight),
@@ -170,7 +173,11 @@ class _SupervisorsListSkeleton extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         AppShimmer.box(width: 120, height: 16),
-                        AppShimmer.box(width: 50, height: 24, borderRadius: AppRadius.circularSm),
+                        AppShimmer.box(
+                          width: 50,
+                          height: 24,
+                          borderRadius: AppRadius.circularSm,
+                        ),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.md),

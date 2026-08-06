@@ -7,20 +7,24 @@ class NegotiationFormDataCubit extends Cubit<NegotiationFormDataState> {
   final GetNegotiationFormDataUseCase getFormDataUseCase;
 
   NegotiationFormDataCubit(this.getFormDataUseCase)
-      : super(const NegotiationFormDataState());
+    : super(const NegotiationFormDataState());
 
   Future<void> getFormData() async {
     emit(state.copyWith(status: NegotiationFormDataStatus.loading));
     final result = await getFormDataUseCase(NoParams());
     result.fold(
-      (failure) => emit(state.copyWith(
-        status: NegotiationFormDataStatus.failure,
-        errorMessage: failure.message,
-      )),
-      (formData) => emit(state.copyWith(
-        status: NegotiationFormDataStatus.success,
-        formData: formData,
-      )),
+      (failure) => emit(
+        state.copyWith(
+          status: NegotiationFormDataStatus.failure,
+          errorMessage: failure.message,
+        ),
+      ),
+      (formData) => emit(
+        state.copyWith(
+          status: NegotiationFormDataStatus.success,
+          formData: formData,
+        ),
+      ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.g.dart';
 import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/color_utils.dart';
 import '../../../../../../core/presentation/widgets/animations/staggered_list_item.dart';
 
 class DeedsEmptyState extends StatelessWidget {
@@ -20,13 +21,13 @@ class DeedsEmptyState extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withValues(alpha: 0.05),
+                  color: context.primaryColor.withValues(alpha: 0.05),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.folder_open_rounded,
                   size: 64,
-                  color: AppColors.primary,
+                  color: context.primaryColor,
                 ),
               ),
             ),

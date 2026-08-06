@@ -35,9 +35,7 @@ class SupervisorsRemoteDataSourceImpl implements SupervisorsRemoteDataSource {
     try {
       final response = await client.get(
         'owner/maintenance-supervisors',
-        queryParameters: {
-          'page': page,
-        },
+        queryParameters: {'page': page},
       );
 
       return SupervisorsListResponseModel.fromJson(response.data['data']);
@@ -56,7 +54,9 @@ class SupervisorsRemoteDataSourceImpl implements SupervisorsRemoteDataSource {
         data: body,
       );
 
-      return SupervisorModel.fromJson(response.data['data']['maintenance_supervisor']);
+      return SupervisorModel.fromJson(
+        response.data['data']['maintenance_supervisor'],
+      );
     } on DioException catch (e) {
       throw ServerException(e.message ?? 'Server Error');
     } catch (e, stack) {

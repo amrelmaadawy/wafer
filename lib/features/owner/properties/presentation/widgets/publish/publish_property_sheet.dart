@@ -5,6 +5,7 @@ import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../../core/theme/color_utils.dart';
 import '../../cubit/publish/publish_property_cubit.dart';
 import '../../cubit/publish/publish_property_state.dart';
 
@@ -62,12 +63,12 @@ class PublishPropertySheet extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withValues(alpha: 0.1),
+                    color: context.primaryColor.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.rocket_launch_rounded,
-                    color: AppColors.primary,
+                    color: context.primaryColor,
                     size: 40,
                   ),
                 ),
@@ -102,7 +103,7 @@ class PublishPropertySheet extends StatelessWidget {
                               .read<PublishPropertyCubit>()
                               .publishProperty(propertyId),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
+                      backgroundColor: context.primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: AppRadius.circularMd,
                       ),

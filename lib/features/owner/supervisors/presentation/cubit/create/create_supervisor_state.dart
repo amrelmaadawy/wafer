@@ -14,7 +14,9 @@ class CreateSupervisorLoading extends CreateSupervisorState {}
 class CreateSupervisorSuccess extends CreateSupervisorState {
   final String message;
 
-  const CreateSupervisorSuccess({this.message = 'Supervisor created successfully'});
+  const CreateSupervisorSuccess({
+    this.message = 'Supervisor created successfully',
+  });
 
   @override
   List<Object> get props => [message];

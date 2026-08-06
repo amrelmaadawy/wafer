@@ -8,7 +8,9 @@ class CreateSupervisorUseCase {
 
   CreateSupervisorUseCase(this.repository);
 
-  Future<Either<Failure, SupervisorEntity>> call(Map<String, dynamic> body) async {
+  Future<Either<Failure, SupervisorEntity>> call(
+    Map<String, dynamic> body,
+  ) async {
     return await repository.createSupervisor(body);
   }
 }

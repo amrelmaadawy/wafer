@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/presentation/widgets/custom_empty_widget.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -13,7 +14,11 @@ class PropertyContractsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (contracts.isEmpty) {
-      return Center(child: Text(LocaleKeys.contractsNoContractsTitle.tr()));
+      return CustomEmptyWidget(
+        icon: Icons.assignment_outlined,
+        title: LocaleKeys.contractsNoContractsTitle.tr(),
+        subtitle: LocaleKeys.dashboard_no_data.tr(),
+      );
     }
 
     return ListView.builder(

@@ -105,7 +105,9 @@ class OwnerQuickActions extends StatelessWidget {
                       context,
                       title: LocaleKeys.legal_cases.tr(),
                       icon: Icons.gavel_rounded,
-                      color: const Color(0xFF8B5CF6), // Purple color for legal cases
+                      color: const Color(
+                        0xFF8B5CF6,
+                      ), // Purple color for legal cases
                       onTap: () {
                         context.push(Routes.ownerLegalCases);
                       },

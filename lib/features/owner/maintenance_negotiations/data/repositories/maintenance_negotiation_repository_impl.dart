@@ -7,7 +7,8 @@ import '../../domain/entities/negotiations_list_response_entity.dart';
 import '../../domain/repositories/maintenance_negotiation_repository.dart';
 import '../datasources/maintenance_negotiation_remote_data_source.dart';
 
-class MaintenanceNegotiationRepositoryImpl implements MaintenanceNegotiationRepository {
+class MaintenanceNegotiationRepositoryImpl
+    implements MaintenanceNegotiationRepository {
   final MaintenanceNegotiationRemoteDataSource remoteDataSource;
 
   MaintenanceNegotiationRepositoryImpl({required this.remoteDataSource});
@@ -20,7 +21,11 @@ class MaintenanceNegotiationRepositoryImpl implements MaintenanceNegotiationRepo
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.response?.data?['message'] ?? e.message ?? 'Unknown error occurred'));
+      return Left(
+        ServerFailure(
+          e.response?.data?['message'] ?? e.message ?? 'Unknown error occurred',
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -40,7 +45,11 @@ class MaintenanceNegotiationRepositoryImpl implements MaintenanceNegotiationRepo
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.response?.data?['message'] ?? e.message ?? 'Unknown error occurred'));
+      return Left(
+        ServerFailure(
+          e.response?.data?['message'] ?? e.message ?? 'Unknown error occurred',
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -60,7 +69,11 @@ class MaintenanceNegotiationRepositoryImpl implements MaintenanceNegotiationRepo
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      return Left(ServerFailure(e.response?.data?['message'] ?? e.message ?? 'Unknown error occurred'));
+      return Left(
+        ServerFailure(
+          e.response?.data?['message'] ?? e.message ?? 'Unknown error occurred',
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

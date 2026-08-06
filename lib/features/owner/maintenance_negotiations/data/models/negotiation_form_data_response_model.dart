@@ -30,12 +30,18 @@ class NegotiationFormDataModel extends NegotiationFormDataEntity {
 
   factory NegotiationFormDataModel.fromJson(Map<String, dynamic> json) {
     return NegotiationFormDataModel(
-      owner: json['owner'] != null ? NegotiationUserModel.fromJson(json['owner']) : null,
+      owner: json['owner'] != null
+          ? NegotiationUserModel.fromJson(json['owner'])
+          : null,
       currentNegotiation: json['current_negotiation'] != null
           ? NegotiationModel.fromJson(json['current_negotiation'])
           : null,
-      defaults: json['defaults'] != null ? NegotiationDefaultsModel.fromJson(json['defaults']) : null,
-      validation: json['validation'] != null ? NegotiationValidationModel.fromJson(json['validation']) : null,
+      defaults: json['defaults'] != null
+          ? NegotiationDefaultsModel.fromJson(json['defaults'])
+          : null,
+      validation: json['validation'] != null
+          ? NegotiationValidationModel.fromJson(json['validation'])
+          : null,
     );
   }
 }
@@ -52,7 +58,9 @@ class NegotiationUserModel extends NegotiationUserEntity {
 
   factory NegotiationUserModel.fromJson(Map<String, dynamic> json) {
     return NegotiationUserModel(
-      id: json['id'] is int ? json['id'] : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
       name: json['name']?.toString() ?? '',
       email: json['email']?.toString(),
       phone: json['phone']?.toString(),
@@ -76,14 +84,31 @@ class NegotiationModel extends NegotiationEntity {
 
   factory NegotiationModel.fromJson(Map<String, dynamic> json) {
     return NegotiationModel(
-      id: json['id'] is int ? json['id'] : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
-      owner: json['owner'] != null ? NegotiationUserModel.fromJson(json['owner']) : null,
-      approvalLimit: json['approval_limit'] is num ? json['approval_limit'] : num.tryParse(json['approval_limit']?.toString() ?? '0') ?? 0,
-      isActive: json['is_active'] == true || json['is_active'] == 1 || json['is_active'] == '1',
-      createdBy: json['created_by'] != null ? NegotiationUserModel.fromJson(json['created_by']) : null,
-      updatedBy: json['updated_by'] != null ? NegotiationUserModel.fromJson(json['updated_by']) : null,
-      createdAt: json['created_at'] != null ? DateTime.tryParse(json['created_at']) : null,
-      updatedAt: json['updated_at'] != null ? DateTime.tryParse(json['updated_at']) : null,
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+      owner: json['owner'] != null
+          ? NegotiationUserModel.fromJson(json['owner'])
+          : null,
+      approvalLimit: json['approval_limit'] is num
+          ? json['approval_limit']
+          : num.tryParse(json['approval_limit']?.toString() ?? '0') ?? 0,
+      isActive:
+          json['is_active'] == true ||
+          json['is_active'] == 1 ||
+          json['is_active'] == '1',
+      createdBy: json['created_by'] != null
+          ? NegotiationUserModel.fromJson(json['created_by'])
+          : null,
+      updatedBy: json['updated_by'] != null
+          ? NegotiationUserModel.fromJson(json['updated_by'])
+          : null,
+      createdAt: json['created_at'] != null
+          ? DateTime.tryParse(json['created_at'])
+          : null,
+      updatedAt: json['updated_at'] != null
+          ? DateTime.tryParse(json['updated_at'])
+          : null,
     );
   }
 }
@@ -97,9 +122,16 @@ class NegotiationDefaultsModel extends NegotiationDefaultsEntity {
 
   factory NegotiationDefaultsModel.fromJson(Map<String, dynamic> json) {
     return NegotiationDefaultsModel(
-      ownerId: json['owner_id'] is int ? json['owner_id'] : int.tryParse(json['owner_id']?.toString() ?? '0') ?? 0,
-      approvalLimit: json['approval_limit'] is num ? json['approval_limit'] : num.tryParse(json['approval_limit']?.toString() ?? '0') ?? 0,
-      isActive: json['is_active'] == true || json['is_active'] == 1 || json['is_active'] == '1',
+      ownerId: json['owner_id'] is int
+          ? json['owner_id']
+          : int.tryParse(json['owner_id']?.toString() ?? '0') ?? 0,
+      approvalLimit: json['approval_limit'] is num
+          ? json['approval_limit']
+          : num.tryParse(json['approval_limit']?.toString() ?? '0') ?? 0,
+      isActive:
+          json['is_active'] == true ||
+          json['is_active'] == 1 ||
+          json['is_active'] == '1',
     );
   }
 }
@@ -111,13 +143,19 @@ class NegotiationValidationModel extends NegotiationValidationEntity {
   });
 
   factory NegotiationValidationModel.fromJson(Map<String, dynamic> json) {
-    final requiredList = (json['required'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [];
-    
+    final requiredList =
+        (json['required'] as List<dynamic>?)
+            ?.map((e) => e.toString())
+            .toList() ??
+        [];
+
     num? minVal;
     if (json['approval_limit'] != null && json['approval_limit'] is Map) {
       final approvalLimitMap = json['approval_limit'] as Map;
       if (approvalLimitMap['min'] != null) {
-        minVal = approvalLimitMap['min'] is num ? approvalLimitMap['min'] : num.tryParse(approvalLimitMap['min'].toString());
+        minVal = approvalLimitMap['min'] is num
+            ? approvalLimitMap['min']
+            : num.tryParse(approvalLimitMap['min'].toString());
       }
     }
 
