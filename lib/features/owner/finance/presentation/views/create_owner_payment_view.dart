@@ -11,25 +11,25 @@ import '../../../../../core/utils/widgets/custom_text_field.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../cubit/form_data/finance_form_data_cubit.dart';
 import '../cubit/form_data/finance_form_data_state.dart';
-import '../cubit/receipts/create_finance_receipt_cubit.dart';
-import '../cubit/receipts/create_finance_receipt_state.dart';
-import '../cubit/receipts/finance_receipts_cubit.dart';
+import '../cubit/payments/create_finance_payment_cubit.dart';
+import '../cubit/payments/create_finance_payment_state.dart';
+import '../cubit/payments/finance_payments_cubit.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/theme/color_utils.dart';
 
-class CreateOwnerReceiptView extends StatefulWidget {
-  const CreateOwnerReceiptView({super.key});
+class CreateOwnerPaymentView extends StatefulWidget {
+  const CreateOwnerPaymentView({super.key});
 
   @override
-  State<CreateOwnerReceiptView> createState() => _CreateOwnerReceiptViewState();
+  State<CreateOwnerPaymentView> createState() => _CreateOwnerPaymentViewState();
 }
 
-class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
+class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
   final _formKey = GlobalKey<FormState>();
   final _amountController = TextEditingController();
   final _dateController = TextEditingController();
   final _notesController = TextEditingController();
-  final _ownerIdController = TextEditingController();
+  final _payeeIdController = TextEditingController();
 
   int? _selectedDebitAccountId;
   int? _selectedCreditAccountId;
@@ -49,7 +49,7 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
     _amountController.dispose();
     _dateController.dispose();
     _notesController.dispose();
-    _ownerIdController.dispose();
+    _payeeIdController.dispose();
     super.dispose();
   }
 
@@ -60,10 +60,10 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
       return;
     }
 
-    context.read<CreateFinanceReceiptCubit>().createReceipt(
-          ownerId: int.tryParse(_ownerIdController.text) ?? 0,
+    context.read<CreateFinancePaymentCubit>().createPayment(
+          payeeId: int.tryParse(_payeeIdController.text) ?? 0,
           amount: num.tryParse(_amountController.text) ?? 0,
-          receiptDate: _dateController.text,
+          paymentDate: _dateController.text,
           debitAccountId: _selectedDebitAccountId!,
           creditAccountId: _selectedCreditAccountId!,
           propertyId: _selectedPropertyId,
@@ -74,15 +74,15 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CreateFinanceReceiptCubit, CreateFinanceReceiptState>(
+    return BlocListener<CreateFinancePaymentCubit, CreateFinancePaymentState>(
       listener: (context, state) {
-        if (state is CreateFinanceReceiptLoading) {
+        if (state is CreateFinancePaymentLoading) {
           AppToast.showInfo(context, 'جاري الحفظ...');
-        } else if (state is CreateFinanceReceiptSuccess) {
+        } else if (state is CreateFinancePaymentSuccess) {
           AppToast.showSuccess(context, 'تم حفظ السند المالي بنجاح');
-          context.read<FinanceReceiptsCubit>().fetchReceipts(isRefresh: true);
+          context.read<FinancePaymentsCubit>().fetchPayments(isRefresh: true);
           context.pop();
-        } else if (state is CreateFinanceReceiptError) {
+        } else if (state is CreateFinancePaymentError) {
           AppToast.showError(context, state.message);
         }
       },
@@ -92,7 +92,7 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
           scrolledUnderElevation: 0,
           leadingWidth: 68,
           leading: const CustomBackButton(),
-          title: const Text('إنشاء سند مالي'),
+          title: const Text('إنشاء سند صرف'),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -102,15 +102,15 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomTextField(
-                  controller: _ownerIdController,
-                  label: 'رقم المالك (Owner ID)',
+                  controller: _payeeIdController,
+                  label: 'رقم المستفيد (Payee ID)',
                   keyboardType: TextInputType.number,
                   validator: (val) => val == null || val.isEmpty ? 'مطلوب' : null,
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _amountController,
-                  label: 'المبلغ',
+                  label: 'المبلغ (Amount)',
                   keyboardType: TextInputType.number,
                   validator: (val) => val == null || val.isEmpty ? 'مطلوب' : null,
                 ),
@@ -190,7 +190,7 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
                             onSelected: (val) => setState(() => _selectedCreditAccountId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('العقار - اختياري', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const Text('العقار (Property) - اختياري', style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: properties.map((e) => int.tryParse(e.value) ?? 0).toList(),
@@ -200,7 +200,7 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
                             onSelected: (val) => setState(() => _selectedPropertyId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('العقد - اختياري', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const Text('العقد (Contract) - اختياري', style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: contracts.map((e) => int.tryParse(e.value) ?? 0).toList(),
@@ -227,15 +227,15 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
                 SizedBox(
                   width: double.infinity,
                   height: 48,
-                  child: BlocBuilder<CreateFinanceReceiptCubit, CreateFinanceReceiptState>(
+                  child: BlocBuilder<CreateFinancePaymentCubit, CreateFinancePaymentState>(
                     builder: (context, state) {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: context.primaryColor,
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
-                        onPressed: state is CreateFinanceReceiptLoading ? null : _submit,
-                        child: state is CreateFinanceReceiptLoading
+                        onPressed: state is CreateFinancePaymentLoading ? null : _submit,
+                        child: state is CreateFinancePaymentLoading
                             ? const CircularProgressIndicator(color: Colors.white)
                             : const Text('إنشاء السند', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                       );

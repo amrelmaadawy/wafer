@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wafer/features/owner/finance/presentation/cubit/accounts/finance_accounts_cubit.dart';
 
 import '../../../../../core/presentation/widgets/custom_back_button.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
@@ -62,7 +63,8 @@ class _CreateOwnerAccountViewState extends State<CreateOwnerAccountView> {
       listener: (context, state) {
         if (state is CreateFinanceAccountSuccess) {
           AppToast.showSuccess(context, state.message);
-          context.pop(true); // Return true to indicate success and trigger refresh
+          context.read<FinanceAccountsCubit>().fetchAccounts(isRefresh: true);
+          context.pop();
         } else if (state is CreateFinanceAccountError) {
           AppToast.showError(context, state.message);
         }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/presentation/widgets/custom_empty_widget.dart';
 import '../cubit/payments/finance_payments_cubit.dart';
@@ -135,6 +138,13 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
             );
           },
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: context.primaryColor,
+        onPressed: () {
+          context.push(Routes.ownerFinanceCreatePayment);
+        },
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

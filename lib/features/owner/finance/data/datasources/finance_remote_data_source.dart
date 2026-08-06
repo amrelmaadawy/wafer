@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:wafer/features/owner/finance/data/models/payment_model.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../models/finance_account_model.dart';
 import '../models/finance_accounts_response_model.dart';
@@ -7,9 +8,11 @@ import '../models/finance_overview_model.dart';
 import '../models/payments_response_model.dart';
 import '../models/receipts_response_model.dart';
 import '../models/receipt_model.dart';
+import '../models/finance_form_data_model.dart';
 
 abstract class FinanceRemoteDataSource {
   Future<FinanceOverviewModel> getFinanceOverview();
+  Future<FinanceFormDataModel> getFinanceFormData();
   
   Future<FinanceAccountsResponseModel> getAccounts({
     int page = 1,
@@ -38,6 +41,8 @@ abstract class FinanceRemoteDataSource {
     String? search,
   });
 
+  Future<PaymentModel> createPayment(Map<String, dynamic> body);
+  
   Future<ReceiptModel> createReceipt(Map<String, dynamic> body);
   
   Future<ReceiptModel> updateReceipt(int receiptId, Map<String, dynamic> body);
@@ -60,6 +65,21 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
     } on DioException catch (e) {
       throw ServerException(
         e.response?.data['message'] ?? 'Failed to get finance overview',
+      );
+    } catch (e) {
+      throw const ServerException('Unexpected error occurred');
+    }
+  }
+
+  @override
+  Future<FinanceFormDataModel> getFinanceFormData() async {
+    try {
+      final response = await dio.get('owner/accounting/form-data');
+      final data = response.data['data'] as Map<String, dynamic>;
+      return FinanceFormDataModel.fromJson(data);
+    } on DioException catch (e) {
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to get finance form data',
       );
     } catch (e) {
       throw const ServerException('Unexpected error occurred');
@@ -223,6 +243,28 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   }
 
   @override
+  Future<PaymentModel> createPayment(Map<String, dynamic> body) async {
+    try {
+      final response = await dio.post(
+        'owner/accounting/payments',
+        data: body,
+      );
+      return PaymentModel.fromJson(response.data['data']['payment']);
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 422) {
+         throw ServerException(
+           e.response?.data['message'] ?? 'Validation failed',
+         );
+      }
+      throw ServerException(
+        e.response?.data['message'] ?? 'Failed to create payment',
+      );
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
   Future<ReceiptModel> updateReceipt(int receiptId, Map<String, dynamic> body) async {
     try {
       final response = await dio.patch(
@@ -231,6 +273,22 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       );
       return ReceiptModel.fromJson(response.data['data']['receipt']);
     } on DioException catch (e) {
+      if (e.response?.statusCode == 422) {
+        final data = e.response?.data;
+        if (data != null && data['errors'] is Map) {
+          final errors = data['errors'] as Map;
+          if (errors.isNotEmpty) {
+            final firstErrorKey = errors.keys.first;
+            final firstErrorList = errors[firstErrorKey];
+            if (firstErrorList is List && firstErrorList.isNotEmpty) {
+              throw ServerException(firstErrorList.first.toString());
+            }
+          }
+        }
+        throw ServerException(
+          e.response?.data['message'] ?? 'Validation failed',
+        );
+      }
       throw ServerException(
         e.response?.data['message'] ?? 'Failed to update receipt',
       );

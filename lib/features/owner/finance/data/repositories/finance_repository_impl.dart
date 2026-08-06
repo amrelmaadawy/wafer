@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:wafer/features/owner/finance/domain/entities/payment_entity.dart';
 import '../../../../../core/data/base_repository.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
@@ -6,6 +7,7 @@ import '../../../../../core/error/failures.dart';
 import '../../domain/entities/finance_account_entity.dart';
 import '../../domain/entities/finance_accounts_response_entity.dart';
 import '../../domain/entities/finance_overview_entity.dart';
+import '../../domain/entities/finance_form_data_entity.dart';
 import '../../domain/entities/payments_response_entity.dart';
 import '../../domain/repositories/finance_repository.dart';
 import '../../domain/usecases/create_finance_account_use_case.dart';
@@ -29,6 +31,13 @@ class FinanceRepositoryImpl extends BaseRepository
   Future<Either<Failure, FinanceOverviewEntity>> getFinanceOverview() async {
     return executeApiCall<FinanceOverviewEntity>(
       call: () => remoteDataSource.getFinanceOverview(),
+    );
+  }
+
+  @override
+  Future<Either<Failure, FinanceFormDataEntity>> getFinanceFormData() async {
+    return executeApiCall<FinanceFormDataEntity>(
+      call: () => remoteDataSource.getFinanceFormData(),
     );
   }
 
@@ -162,6 +171,22 @@ class FinanceRepositoryImpl extends BaseRepository
         return Right(receipt);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure('No internet connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PaymentEntity>> createPayment(Map<String, dynamic> params) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await remoteDataSource.createPayment(params);
+        return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      } catch (e) {
+        return const Left(ServerFailure('An unexpected error occurred'));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));

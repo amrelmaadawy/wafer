@@ -28,17 +28,19 @@ import '../../features/owner/finance/presentation/views/owner_accounts_view.dart
 import '../../features/owner/finance/presentation/views/create_owner_account_view.dart';
 import '../../features/owner/finance/presentation/views/create_owner_receipt_view.dart';
 
-import '../../features/owner/contracts/presentation/cubit/list/owner_contracts_cubit.dart';
 import '../../features/owner/finance/presentation/views/update_owner_account_view.dart';
 import '../../features/owner/finance/presentation/views/owner_account_details_view.dart';
 import '../../features/owner/finance/presentation/views/update_owner_receipt_view.dart';
 import '../../features/owner/finance/presentation/views/owner_payments_view.dart';
+import '../../features/owner/finance/presentation/views/create_owner_payment_view.dart';
 import '../../features/owner/finance/presentation/views/owner_receipt_details_view.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/finance_receipts_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/create_finance_receipt_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/payments/finance_payments_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/payments/create_finance_payment_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/finance_receipt_details_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
 import '../../features/owner/finance/presentation/views/owner_receipts_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
@@ -170,15 +172,25 @@ class AppRouter {
         ),
       ),
       GoRoute(
+        path: Routes.ownerFinanceCreatePayment,
+        builder: (context, state) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => sl<CreateFinancePaymentCubit>()),
+              BlocProvider(create: (_) => sl<FinanceFormDataCubit>()),
+            ],
+            child: const CreateOwnerPaymentView(),
+          );
+        },
+      ),
+      GoRoute(
         path: Routes.ownerFinanceReceiptCreate,
         builder: (context, state) {
           final extraCubit = state.extra as FinanceReceiptsCubit?;
           return MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => sl<CreateFinanceReceiptCubit>()),
-              BlocProvider(create: (_) => sl<FinanceAccountsCubit>()),
-              BlocProvider(create: (_) => sl<PropertiesListCubit>()),
-              BlocProvider(create: (_) => sl<OwnerContractsCubit>()),
+              BlocProvider(create: (_) => sl<FinanceFormDataCubit>()),
               if (extraCubit != null)
                 BlocProvider<FinanceReceiptsCubit>.value(
                   value: extraCubit,
