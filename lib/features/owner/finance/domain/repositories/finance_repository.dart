@@ -47,6 +47,8 @@ abstract class FinanceRepository {
 
   Future<Either<Failure, PaymentEntity>> updatePayment(int paymentId, Map<String, dynamic> params);
 
+  Future<Either<Failure, PaymentEntity>> getFinancePaymentDetails(int paymentId);
+
   Future<Either<Failure, FinanceAccountEntity>> updateAccount(
     UpdateFinanceAccountParams params,
   );

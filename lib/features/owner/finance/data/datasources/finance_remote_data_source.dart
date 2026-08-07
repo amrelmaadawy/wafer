@@ -44,6 +44,7 @@ abstract class FinanceRemoteDataSource {
   Future<PaymentModel> createPayment(Map<String, dynamic> body);
   
   Future<PaymentModel> updatePayment(int paymentId, Map<String, dynamic> body);
+  Future<PaymentModel> getFinancePaymentDetails(int paymentId);
   
   Future<ReceiptModel> createReceipt(Map<String, dynamic> body);
   
@@ -117,8 +118,8 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       'per_page': perPage,
       if (search != null && search.isNotEmpty) 'search': search,
       if (accountType != null && accountType.isNotEmpty) 'account_type': accountType,
-      'is_active': ?isActive,
-      'is_postable': ?isPostable,
+      'is_active': isActive,
+      'is_postable': isPostable,
     };
 
     try {
@@ -270,6 +271,18 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       return PaymentModel.fromJson(response.data['data']['payment']);
     } on DioException catch (e) {
       throw _handleDioException(e, 'Validation failed');
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+  
+  @override
+  Future<PaymentModel> getFinancePaymentDetails(int paymentId) async {
+    try {
+      final response = await dio.get('owner/accounting/payments/$paymentId');
+      return PaymentModel.fromJson(response.data['data']['payment']);
+    } on DioException catch (e) {
+      throw _handleDioException(e, 'Failed to get payment details');
     } catch (e) {
       throw ServerException(e.toString());
     }

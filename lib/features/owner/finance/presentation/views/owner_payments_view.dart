@@ -122,7 +122,9 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
                   return FinancePaymentCard(
                     payment: payment,
                     onTap: () {
-                      // TODO: Navigate to payment details if needed
+                      context.push(
+                        Routes.ownerFinancePaymentDetails.replaceFirst(':id', payment.id.toString()),
+                      );
                     },
                     onEditTap: () {
                       context.push(

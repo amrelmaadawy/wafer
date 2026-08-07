@@ -43,6 +43,8 @@ import '../../features/owner/finance/presentation/cubit/payments/create_finance_
 import '../../features/owner/finance/presentation/cubit/payments/update_finance_payment_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/finance_receipt_details_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/payments/finance_payment_details_cubit.dart';
+import '../../features/owner/finance/presentation/views/owner_finance_payment_details_view.dart';
 import '../../features/owner/finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
 import '../../features/owner/finance/presentation/views/owner_receipts_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
@@ -256,6 +258,16 @@ class AppRouter {
                 ),
             ],
             child: UpdateOwnerPaymentView(payment: payment),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerFinancePaymentDetails,
+        builder: (context, state) {
+          final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+          return BlocProvider(
+            create: (_) => sl<FinancePaymentDetailsCubit>(),
+            child: OwnerFinancePaymentDetailsView(paymentId: id),
           );
         },
       ),

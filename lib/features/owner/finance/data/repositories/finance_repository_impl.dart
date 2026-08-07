@@ -194,15 +194,28 @@ class FinanceRepositoryImpl extends BaseRepository
   }
 
   @override
-  Future<Either<Failure, PaymentEntity>> updatePayment(int paymentId, Map<String, dynamic> params) async {
+  Future<Either<Failure, PaymentEntity>> updatePayment(
+      int paymentId, Map<String, dynamic> params) async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await remoteDataSource.updatePayment(paymentId, params);
-        return Right(result);
+        final payment = await remoteDataSource.updatePayment(paymentId, params);
+        return Right(payment);
       } on ServerException catch (e) {
         return Left(ServerFailure(e.message));
-      } catch (e) {
-        return const Left(ServerFailure('An unexpected error occurred'));
+      }
+    } else {
+      return const Left(NetworkFailure('No internet connection'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, PaymentEntity>> getFinancePaymentDetails(int paymentId) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final payment = await remoteDataSource.getFinancePaymentDetails(paymentId);
+        return Right(payment);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
       }
     } else {
       return const Left(NetworkFailure('No internet connection'));

@@ -56,6 +56,7 @@ import '../finance/domain/usecases/get_finance_receipts_use_case.dart';
 import '../finance/domain/usecases/create_finance_receipt_use_case.dart';
 import '../finance/domain/usecases/update_finance_receipt_use_case.dart';
 import '../finance/domain/usecases/get_finance_receipt_details_use_case.dart';
+import '../finance/domain/usecases/get_finance_payment_details_use_case.dart';
 import '../finance/domain/usecases/get_finance_payments_use_case.dart';
 import '../finance/domain/usecases/create_finance_payment_use_case.dart';
 import '../finance/domain/usecases/update_finance_payment_use_case.dart';
@@ -70,6 +71,7 @@ import '../finance/presentation/cubit/receipts/finance_receipts_cubit.dart';
 import '../finance/presentation/cubit/receipts/create_finance_receipt_cubit.dart';
 import '../finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
 import '../finance/presentation/cubit/receipts/finance_receipt_details_cubit.dart';
+import '../finance/presentation/cubit/payments/finance_payment_details_cubit.dart';
 import '../finance/presentation/cubit/receipts/cancel_finance_receipt_cubit.dart';
 import '../finance/presentation/cubit/payments/finance_payments_cubit.dart';
 import '../finance/presentation/cubit/payments/create_finance_payment_cubit.dart';
@@ -236,6 +238,10 @@ void _initFinance() {
   if (!sl.isRegistered<GetFinanceReceiptDetailsUseCase>()) {
     sl.registerLazySingleton(() => GetFinanceReceiptDetailsUseCase(sl()));
   }
+  
+  if (!sl.isRegistered<GetFinancePaymentDetailsUseCase>()) {
+    sl.registerLazySingleton(() => GetFinancePaymentDetailsUseCase(sl()));
+  }
   if (!sl.isRegistered<CancelFinanceReceiptUseCase>()) {
     sl.registerLazySingleton(() => CancelFinanceReceiptUseCase(sl()));
   }
@@ -276,6 +282,10 @@ void _initFinance() {
   }
   if (!sl.isRegistered<FinanceReceiptDetailsCubit>()) {
     sl.registerFactory(() => FinanceReceiptDetailsCubit(getFinanceReceiptDetailsUseCase: sl()));
+  }
+
+  if (!sl.isRegistered<FinancePaymentDetailsCubit>()) {
+    sl.registerFactory(() => FinancePaymentDetailsCubit(getPaymentDetailsUseCase: sl()));
   }
   if (!sl.isRegistered<CancelFinanceReceiptCubit>()) {
     sl.registerFactory(() => CancelFinanceReceiptCubit(cancelFinanceReceiptUseCase: sl()));

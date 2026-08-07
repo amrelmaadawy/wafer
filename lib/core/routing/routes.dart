@@ -21,6 +21,7 @@ class Routes {
   static const String ownerFinancePayments = '/owner-main/finance/payments';
   static const String ownerFinancePaymentUpdate = '/owner-main/finance/payments/update';
   static const String ownerFinanceCreatePayment = '/owner-main/finance/payments/create';
+  static const String ownerFinancePaymentDetails = '/owner-main/finance/payments/details/:id';
   static const String ownerFinanceReceiptDetails = '/owner-main/finance/receipts/details/:id';
   static const String ownerProfile = '/owner-main/profile';
   static const String notifications = '/notifications';
