@@ -223,6 +223,20 @@ class FinanceRepositoryImpl extends BaseRepository
   }
 
   @override
+  Future<Either<Failure, void>> cancelFinancePayment(int paymentId, String reason) async {
+    if (await networkInfo.isConnected) {
+      try {
+        await remoteDataSource.cancelFinancePayment(paymentId, reason);
+        return const Right(null);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      }
+    } else {
+      return const Left(NetworkFailure('No internet connection'));
+    }
+  }
+
+  @override
   Future<Either<Failure, ReceiptEntity>> cancelReceipt(int receiptId, String reason) async {
     if (await networkInfo.isConnected) {
       try {

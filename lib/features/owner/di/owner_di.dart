@@ -60,6 +60,7 @@ import '../finance/domain/usecases/get_finance_payment_details_use_case.dart';
 import '../finance/domain/usecases/get_finance_payments_use_case.dart';
 import '../finance/domain/usecases/create_finance_payment_use_case.dart';
 import '../finance/domain/usecases/update_finance_payment_use_case.dart';
+import '../finance/domain/usecases/cancel_finance_payment_use_case.dart';
 import '../finance/domain/usecases/cancel_finance_receipt_use_case.dart';
 import '../finance/domain/usecases/get_finance_form_data_use_case.dart';
 import '../finance/presentation/cubit/finance_overview_cubit.dart';
@@ -76,6 +77,7 @@ import '../finance/presentation/cubit/receipts/cancel_finance_receipt_cubit.dart
 import '../finance/presentation/cubit/payments/finance_payments_cubit.dart';
 import '../finance/presentation/cubit/payments/create_finance_payment_cubit.dart';
 import '../finance/presentation/cubit/payments/update_finance_payment_cubit.dart';
+import '../finance/presentation/cubit/payments/cancel_finance_payment_cubit.dart';
 import '../finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
 // Reports
 import '../reports/data/datasources/owner_reports_remote_data_source.dart';
@@ -101,6 +103,8 @@ import '../reports/domain/usecases/get_owner_employee_tasks_report_use_case.dart
 import '../reports/presentation/cubit/owner_employee_tasks_cubit.dart';
 import '../reports/domain/usecases/get_owner_activity_logs_report_use_case.dart';
 import '../reports/presentation/cubit/owner_activity_logs_cubit.dart';
+import '../reports/domain/usecases/get_approvals_report_use_case.dart';
+import '../reports/presentation/cubit/owner_approvals_report_cubit.dart';
 
 // Properties
 import '../properties/data/datasources/properties_remote_data_source.dart';
@@ -242,6 +246,9 @@ void _initFinance() {
   if (!sl.isRegistered<GetFinancePaymentDetailsUseCase>()) {
     sl.registerLazySingleton(() => GetFinancePaymentDetailsUseCase(sl()));
   }
+  if (!sl.isRegistered<CancelFinancePaymentUseCase>()) {
+    sl.registerLazySingleton(() => CancelFinancePaymentUseCase(sl()));
+  }
   if (!sl.isRegistered<CancelFinanceReceiptUseCase>()) {
     sl.registerLazySingleton(() => CancelFinanceReceiptUseCase(sl()));
   }
@@ -286,6 +293,9 @@ void _initFinance() {
 
   if (!sl.isRegistered<FinancePaymentDetailsCubit>()) {
     sl.registerFactory(() => FinancePaymentDetailsCubit(getPaymentDetailsUseCase: sl()));
+  }
+  if (!sl.isRegistered<CancelFinancePaymentCubit>()) {
+    sl.registerFactory(() => CancelFinancePaymentCubit(cancelFinancePaymentUseCase: sl()));
   }
   if (!sl.isRegistered<CancelFinanceReceiptCubit>()) {
     sl.registerFactory(() => CancelFinanceReceiptCubit(cancelFinanceReceiptUseCase: sl()));
@@ -722,6 +732,14 @@ void _initReports() {
   );
   sl.registerFactory<OwnerActivityLogsCubit>(
     () => OwnerActivityLogsCubit(sl()),
+  );
+
+  // Owner Approvals Report
+  sl.registerLazySingleton<GetApprovalsReportUseCase>(
+    () => GetApprovalsReportUseCase(sl()),
+  );
+  sl.registerFactory<OwnerApprovalsReportCubit>(
+    () => OwnerApprovalsReportCubit(getApprovalsReportUseCase: sl()),
   );
 }
 

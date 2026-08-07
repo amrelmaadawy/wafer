@@ -11,12 +11,14 @@ class FinancePaymentCard extends StatelessWidget {
   final PaymentEntity payment;
   final VoidCallback? onTap;
   final VoidCallback? onEditTap;
+  final VoidCallback? onCancelTap;
 
   const FinancePaymentCard({
     super.key,
     required this.payment,
     this.onTap,
     this.onEditTap,
+    this.onCancelTap,
   });
 
   @override
@@ -93,6 +95,24 @@ class FinancePaymentCard extends StatelessWidget {
                             Icons.edit_outlined,
                             size: 16,
                             color: AppColors.textSecondaryLight,
+                          ),
+                        ),
+                      ),
+                    ],
+                    if (onCancelTap != null && payment.status != 'cancelled') ...[
+                      const SizedBox(width: 8),
+                      GestureDetector(
+                        onTap: onCancelTap,
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: AppColors.error.withValues(alpha: 0.1),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.cancel_outlined,
+                            size: 16,
+                            color: AppColors.error,
                           ),
                         ),
                       ),

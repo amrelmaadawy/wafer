@@ -11,10 +11,14 @@ import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/payment_entity.dart';
 import '../cubit/payments/finance_payment_details_cubit.dart';
 import '../cubit/payments/finance_payment_details_state.dart';
+import '../cubit/payments/cancel_finance_payment_cubit.dart';
+import '../cubit/payments/cancel_finance_payment_state.dart';
+import '../widgets/cancel_payment_dialog.dart';
 
 class OwnerFinancePaymentDetailsView extends StatefulWidget {
   final int paymentId;
@@ -86,7 +90,25 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
               onRetry: _fetchDetails,
             );
           } else if (state is FinancePaymentDetailsSuccess) {
-            return _buildDetails(context, state.payment);
+            return BlocListener<CancelFinancePaymentCubit, CancelFinancePaymentState>(
+              listener: (context, cancelState) {
+                if (cancelState is CancelFinancePaymentLoading) {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => const Center(child: CircularProgressIndicator()),
+                  );
+                } else if (cancelState is CancelFinancePaymentSuccess) {
+                  Navigator.of(context, rootNavigator: true).pop(); // Close loading
+                  AppToast.showSuccess(context, LocaleKeys.ownerFinanceCancelPaymentSuccess.tr());
+                  _fetchDetails(); // Refresh details
+                } else if (cancelState is CancelFinancePaymentError) {
+                  Navigator.of(context, rootNavigator: true).pop(); // Close loading
+                  AppToast.showError(context, cancelState.message);
+                }
+              },
+              child: _buildDetails(context, state.payment),
+            );
           }
           return const SizedBox.shrink();
         },
@@ -163,6 +185,43 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
                 _buildDetailRow(context, LocaleKeys.ownerFinanceTotalCredit.tr(), '${payment.journalEntry!.totalCredit} ر.س'),
               ],
             ),
+          ],
+          if (payment.status != 'cancelled') ...[
+            const SizedBox(height: 32),
+            SizedBox(
+              width: double.infinity,
+              height: 54,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (dialogContext) => CancelPaymentDialog(
+                      onConfirm: (reason) {
+                        context.read<CancelFinancePaymentCubit>().cancelPayment(payment.id, reason);
+                      },
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.cancel_outlined, color: Colors.white),
+                label: Text(
+                  LocaleKeys.ownerFinanceCancelPayment.tr(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.error,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadius.circularLg,
+                  ),
+                  elevation: 0,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
           ],
         ],
       ),

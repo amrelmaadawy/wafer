@@ -45,6 +45,7 @@ abstract class FinanceRemoteDataSource {
   
   Future<PaymentModel> updatePayment(int paymentId, Map<String, dynamic> body);
   Future<PaymentModel> getFinancePaymentDetails(int paymentId);
+  Future<void> cancelFinancePayment(int paymentId, String reason);
   
   Future<ReceiptModel> createReceipt(Map<String, dynamic> body);
   
@@ -283,6 +284,23 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       return PaymentModel.fromJson(response.data['data']['payment']);
     } on DioException catch (e) {
       throw _handleDioException(e, 'Failed to get payment details');
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<void> cancelFinancePayment(int paymentId, String reason) async {
+    try {
+      await dio.post(
+        'owner/accounting/payments/$paymentId/action',
+        data: {
+          'action': 'cancel',
+          'reason': reason,
+        },
+      );
+    } on DioException catch (e) {
+      throw _handleDioException(e, 'Failed to cancel payment');
     } catch (e) {
       throw ServerException(e.toString());
     }

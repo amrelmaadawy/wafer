@@ -44,6 +44,7 @@ import '../../features/owner/finance/presentation/cubit/payments/update_finance_
 import '../../features/owner/finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/finance_receipt_details_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/payments/finance_payment_details_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/payments/cancel_finance_payment_cubit.dart';
 import '../../features/owner/finance/presentation/views/owner_finance_payment_details_view.dart';
 import '../../features/owner/finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
 import '../../features/owner/finance/presentation/views/owner_receipts_view.dart';
@@ -67,8 +68,10 @@ import '../../features/owner/reports/presentation/views/owner_maintenance_reques
 import '../../features/owner/reports/presentation/views/owner_technician_performance_report_view.dart';
 import '../../features/owner/reports/presentation/views/owner_employee_tasks_report_view.dart';
 import '../../features/owner/reports/presentation/views/owner_activity_logs_report_view.dart';
+import '../../features/owner/reports/presentation/views/owner_approvals_report_view.dart';
 import '../../features/owner/reports/presentation/cubit/owner_defaulters_cubit.dart';
 import '../../features/owner/reports/presentation/cubit/owner_contracts_report_cubit.dart';
+import '../../features/owner/reports/presentation/cubit/owner_approvals_report_cubit.dart';
 import '../../features/owner/reports/presentation/views/owner_contracts_report_view.dart';
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';
 import '../../features/profile/presentation/screens/change_password_screen.dart';
@@ -171,8 +174,11 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.ownerFinancePayments,
-        builder: (context, state) => BlocProvider(
-          create: (_) => sl<FinancePaymentsCubit>(),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => sl<FinancePaymentsCubit>()),
+            BlocProvider(create: (_) => sl<CancelFinancePaymentCubit>()),
+          ],
           child: const OwnerPaymentsView(),
         ),
       ),
@@ -265,8 +271,11 @@ class AppRouter {
         path: Routes.ownerFinancePaymentDetails,
         builder: (context, state) {
           final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
-          return BlocProvider(
-            create: (_) => sl<FinancePaymentDetailsCubit>(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => sl<FinancePaymentDetailsCubit>()),
+              BlocProvider(create: (_) => sl<CancelFinancePaymentCubit>()),
+            ],
             child: OwnerFinancePaymentDetailsView(paymentId: id),
           );
         },
@@ -491,6 +500,13 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerActivityLogsReport,
         builder: (context, state) => const OwnerActivityLogsReportView(),
+      ),
+      GoRoute(
+        path: Routes.ownerReportsApprovals,
+        builder: (context, state) => BlocProvider.value(
+          value: sl<OwnerApprovalsReportCubit>(),
+          child: const OwnerApprovalsReportView(),
+        ),
       ),
       GoRoute(
         path: Routes.ownerNegotiationsList,

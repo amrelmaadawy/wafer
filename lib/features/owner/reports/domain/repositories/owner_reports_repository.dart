@@ -10,6 +10,7 @@ import '../entities/maintenance_requests_report_entity.dart';
 import '../entities/technician_performance_report_entity.dart';
 import '../entities/employee_tasks_report_entity.dart';
 import '../entities/activity_logs_report_entity.dart';
+import '../entities/approvals_report_entity.dart';
 
 abstract class OwnerReportsRepository {
   Future<Either<Failure, RevenueReportEntity>> getRevenueReport({
@@ -61,5 +62,10 @@ abstract class OwnerReportsRepository {
     int page = 1,
     String? type,
     String? action,
+  });
+
+  Future<Either<Failure, ApprovalsReportEntity>> getApprovalsReport({
+    bool forceRefresh = false,
+    int page = 1,
   });
 }

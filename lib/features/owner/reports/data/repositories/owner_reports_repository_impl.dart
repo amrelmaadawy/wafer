@@ -13,6 +13,7 @@ import '../../domain/entities/activity_logs_report_entity.dart';
 import '../../domain/entities/contracts_report_entity.dart';
 import '../../domain/entities/contracts_movement_report_entity.dart';
 import '../../domain/entities/occupancy_report_entity.dart';
+import '../../domain/entities/approvals_report_entity.dart';
 import '../models/revenue_report_model.dart';
 import '../../domain/repositories/owner_reports_repository.dart';
 import '../datasources/owner_reports_remote_data_source.dart';
@@ -243,6 +244,23 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
         page: page,
         type: type,
         action: action,
+      );
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ApprovalsReportEntity>> getApprovalsReport({
+    bool forceRefresh = false,
+    int page = 1,
+  }) async {
+    try {
+      final result = await _remoteDataSource.getApprovalsReport(
+        page: page,
       );
       return Right(result);
     } on ServerException catch (e) {

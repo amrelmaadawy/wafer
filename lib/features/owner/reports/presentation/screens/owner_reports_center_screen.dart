@@ -80,6 +80,12 @@ class OwnerReportsCenterScreen extends StatelessWidget {
                   icon: Icons.history_rounded,
                   route: Routes.ownerActivityLogsReport,
                 ),
+                _ReportItem(
+                  title: LocaleKeys.ownerReportsApprovals.tr(),
+                  subtitle: 'متابعة الموافقات على الإجراءات المختلفة',
+                  icon: Icons.checklist_rtl_rounded,
+                  route: Routes.ownerReportsApprovals,
+                ),
               ],
             ),
           ),
