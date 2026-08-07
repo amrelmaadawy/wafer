@@ -33,6 +33,10 @@ import '../../features/owner/finance/presentation/views/update_owner_account_vie
 import '../../features/owner/finance/presentation/views/owner_account_details_view.dart';
 import '../../features/owner/finance/presentation/views/update_owner_receipt_view.dart';
 import '../../features/owner/finance/presentation/views/owner_payments_view.dart';
+import '../../features/owner/finance/presentation/views/create_owner_journal_entry_view.dart';
+import '../../features/owner/finance/presentation/cubit/journal_entries/create_journal_entry_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/journal_entries/update_journal_entry_cubit.dart';
+import '../../features/owner/finance/domain/entities/journal_entry_entity.dart';
 import '../../features/owner/finance/presentation/views/create_owner_payment_view.dart';
 import '../../features/owner/finance/presentation/views/update_owner_payment_view.dart';
 import '../../features/owner/finance/presentation/views/owner_receipt_details_view.dart';
@@ -48,9 +52,14 @@ import '../../features/owner/finance/presentation/cubit/payments/cancel_finance_
 import '../../features/owner/finance/presentation/views/owner_finance_payment_details_view.dart';
 import '../../features/owner/finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/transfers/create_transfer_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/transfers/update_transfer_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/transfers/approve_transfer_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/transfers/transfers_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/journal_entries/journal_entries_cubit.dart';
+import '../../features/owner/finance/domain/entities/transfer_entity.dart';
 import '../../features/owner/finance/presentation/views/create_owner_transfer_view.dart';
 import '../../features/owner/finance/presentation/views/owner_transfers_view.dart';
+import '../../features/owner/finance/presentation/views/owner_journal_entries_view.dart';
 import '../../features/owner/finance/presentation/views/owner_receipts_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
@@ -202,8 +211,11 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.ownerFinanceTransfers,
-        builder: (context, state) => BlocProvider(
-          create: (_) => sl<TransfersCubit>(),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => sl<TransfersCubit>()),
+            BlocProvider(create: (_) => sl<ApproveTransferCubit>()),
+          ],
           child: const OwnerTransfersView(),
         ),
       ),
@@ -216,6 +228,53 @@ class AppRouter {
               BlocProvider(create: (_) => sl<FinanceFormDataCubit>()),
             ],
             child: const CreateOwnerTransferView(),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceUpdateTransfer,
+        builder: (context, state) {
+          final transfer = state.extra as TransferEntity?;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => sl<UpdateTransferCubit>()),
+              BlocProvider(create: (_) => sl<FinanceFormDataCubit>()),
+            ],
+            child: CreateOwnerTransferView(transfer: transfer),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceJournalEntries,
+        builder: (context, state) => BlocProvider(
+          create: (_) => sl<JournalEntriesCubit>(),
+          child: const OwnerJournalEntriesView(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceCreateJournalEntry,
+        builder: (context, state) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => sl<CreateJournalEntryCubit>()),
+              BlocProvider(create: (_) => sl<UpdateJournalEntryCubit>()),
+              BlocProvider(create: (_) => sl<FinanceFormDataCubit>()),
+            ],
+            child: const CreateOwnerJournalEntryView(),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceUpdateJournalEntry,
+        builder: (context, state) {
+          final entry = state.extra as JournalEntryEntity;
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => sl<CreateJournalEntryCubit>()),
+              BlocProvider(create: (_) => sl<UpdateJournalEntryCubit>()),
+              BlocProvider(create: (_) => sl<FinanceFormDataCubit>()),
+            ],
+            child: CreateOwnerJournalEntryView(journalEntry: entry),
           );
         },
       ),

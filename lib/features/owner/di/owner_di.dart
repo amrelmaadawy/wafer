@@ -46,7 +46,12 @@ import '../maintenance/presentation/cubit/verify_close_maintenance/owner_verify_
 // Finance
 import '../finance/data/datasources/finance_remote_data_source.dart';
 import '../finance/data/repositories/finance_repository_impl.dart';
+import '../finance/data/repositories/transfers_repository_impl.dart';
+import '../finance/data/repositories/journal_entries_repository_impl.dart';
+import '../finance/data/datasources/journal_entries_remote_data_source.dart';
 import '../finance/domain/repositories/finance_repository.dart';
+import '../finance/domain/repositories/transfers_repository.dart';
+import '../finance/domain/repositories/journal_entries_repository.dart';
 import '../finance/domain/usecases/get_finance_overview_usecase.dart';
 import '../finance/domain/usecases/get_finance_accounts_use_case.dart';
 import '../finance/domain/usecases/create_finance_account_use_case.dart';
@@ -63,16 +68,23 @@ import '../finance/domain/usecases/update_finance_payment_use_case.dart';
 import '../finance/domain/usecases/cancel_finance_payment_use_case.dart';
 import '../finance/domain/usecases/cancel_finance_receipt_use_case.dart';
 import '../finance/domain/usecases/get_finance_form_data_use_case.dart';
+import '../finance/domain/usecases/create_journal_entry_use_case.dart';
+import '../finance/domain/usecases/update_journal_entry_use_case.dart';
+import '../finance/domain/usecases/get_journal_entries_use_case.dart';
 import '../finance/presentation/cubit/finance_overview_cubit.dart';
-import '../finance/domain/usecases/cancel_finance_receipt_use_case.dart';
 import '../finance/presentation/cubit/accounts/finance_accounts_cubit.dart';
 import '../finance/data/datasources/transfers_remote_data_source.dart';
-import '../finance/data/repositories/transfers_repository_impl.dart';
-import '../finance/domain/repositories/transfers_repository.dart';
 import '../finance/domain/usecases/create_transfer_use_case.dart';
 import '../finance/domain/usecases/get_transfers_use_case.dart';
+import '../finance/domain/usecases/update_transfer_use_case.dart';
+import '../finance/domain/usecases/approve_transfer_use_case.dart';
 import '../finance/presentation/cubit/transfers/create_transfer_cubit.dart';
+import '../finance/presentation/cubit/transfers/update_transfer_cubit.dart';
+import '../finance/presentation/cubit/transfers/approve_transfer_cubit.dart';
 import '../finance/presentation/cubit/transfers/transfers_cubit.dart';
+import '../finance/presentation/cubit/journal_entries/journal_entries_cubit.dart';
+import '../finance/presentation/cubit/journal_entries/create_journal_entry_cubit.dart';
+import '../finance/presentation/cubit/journal_entries/update_journal_entry_cubit.dart';
 import '../finance/presentation/cubit/accounts/create_finance_account_cubit.dart';
 import '../finance/presentation/cubit/accounts/update_finance_account_cubit.dart';
 import '../finance/presentation/cubit/accounts/finance_account_details_cubit.dart';
@@ -323,6 +335,17 @@ void _initFinance() {
       () => TransfersRemoteDataSourceImpl(sl()),
     );
   }
+  if (!sl.isRegistered<JournalEntriesRemoteDataSource>()) {
+    sl.registerLazySingleton<JournalEntriesRemoteDataSource>(
+        () => JournalEntriesRemoteDataSourceImpl(sl()));
+  }
+  if (!sl.isRegistered<JournalEntriesRepository>()) {
+    sl.registerLazySingleton<JournalEntriesRepository>(
+        () => JournalEntriesRepositoryImpl(
+              remoteDataSource: sl(),
+              networkInfo: sl(),
+            ));
+  }
   if (!sl.isRegistered<TransfersRepository>()) {
     sl.registerLazySingleton<TransfersRepository>(
       () => TransfersRepositoryImpl(
@@ -337,11 +360,33 @@ void _initFinance() {
   if (!sl.isRegistered<CreateTransferUseCase>()) {
     sl.registerLazySingleton(() => CreateTransferUseCase(sl()));
   }
+  if (!sl.isRegistered<UpdateTransferUseCase>()) {
+    sl.registerLazySingleton(() => UpdateTransferUseCase(sl()));
+  }
+  if (!sl.isRegistered<ApproveTransferUseCase>()) {
+    sl.registerLazySingleton(() => ApproveTransferUseCase(sl()));
+  }
   if (!sl.isRegistered<TransfersCubit>()) {
     sl.registerFactory(() => TransfersCubit(sl()));
   }
   if (!sl.isRegistered<CreateTransferCubit>()) {
     sl.registerFactory(() => CreateTransferCubit(sl()));
+  }
+  if (!sl.isRegistered<UpdateTransferCubit>()) {
+    sl.registerFactory(() => UpdateTransferCubit(updateTransferUseCase: sl()));
+  }
+  if (!sl.isRegistered<ApproveTransferCubit>()) {
+    sl.registerFactory(() => ApproveTransferCubit(approveTransferUseCase: sl()));
+  }
+  if (!sl.isRegistered<GetJournalEntriesUseCase>()) {
+    sl.registerLazySingleton(() => GetJournalEntriesUseCase(sl()));
+    sl.registerLazySingleton(() => CreateJournalEntryUseCase(sl()));
+    sl.registerLazySingleton(() => UpdateJournalEntryUseCase(sl()));
+  }
+  if (!sl.isRegistered<JournalEntriesCubit>()) {
+    sl.registerFactory(() => JournalEntriesCubit(sl()));
+    sl.registerFactory(() => CreateJournalEntryCubit(createJournalEntryUseCase: sl()));
+    sl.registerFactory(() => UpdateJournalEntryCubit(updateJournalEntryUseCase: sl()));
   }
 }
 

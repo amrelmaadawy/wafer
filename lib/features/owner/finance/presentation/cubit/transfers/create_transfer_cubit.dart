@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../../../../../core/error/failures.dart';
 import '../../../domain/entities/create_transfer_request_entity.dart';
 import '../../../domain/usecases/create_transfer_use_case.dart';
 

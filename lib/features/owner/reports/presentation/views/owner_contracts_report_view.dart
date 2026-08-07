@@ -18,7 +18,6 @@ import '../../../../../core/services/pdf/builders/contracts_pdf_builder.dart';
 import '../../../../../core/services/excel/excel_export_service.dart';
 import '../../../../../core/services/excel/builders/contracts_excel_builder.dart';
 import '../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
-import '../../domain/entities/contracts_report_entity.dart';
 
 class OwnerContractsReportView extends StatefulWidget {
   const OwnerContractsReportView({super.key});

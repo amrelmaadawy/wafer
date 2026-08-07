@@ -2141,4 +2141,39 @@ abstract class LocaleKeys {
   static const unitsWizardSubmit = 'units.wizard_submit';
   static const unitsWizardSuccess = 'units.wizard_success';
   static const unitsYes = 'units.yes';
+  
+  // Appended missing keys manually
+  static const common_approve = 'common_approve';
+  static const common_edit = 'common_edit';
+  static const common_save = 'common_save';
+  static const owner_finance_transfer_success = 'owner_finance_transfer_success';
+  static const journal_entries_line = 'journal_entries_line';
+  static const owner_finance_account = 'owner_finance_account';
+  static const owner_finance_account_required = 'owner_finance_account_required';
+  static const journal_entries_debit = 'journal_entries_debit';
+  static const journal_entries_credit = 'journal_entries_credit';
+  static const owner_finance_description = 'owner_finance_description';
+  static const owner_finance_property = 'owner_finance_property';
+  static const owner_finance_contract = 'owner_finance_contract';
+  static const journal_entries_status_posted = 'journal_entries_status_posted';
+  static const journal_entries_status_reversed = 'journal_entries_status_reversed';
+  static const currency_sar = 'currency_sar';
+  static const journal_entries_min_lines_error = 'journal_entries_min_lines_error';
+  static const owner_finance_date_required = 'owner_finance_date_required';
+  static const journal_entries_total_zero_error = 'journal_entries_total_zero_error';
+  static const journal_entries_balance_error = 'journal_entries_balance_error';
+  static const journal_entries_line_zero_error = 'journal_entries_line_zero_error';
+  static const journal_entries_line_both_error = 'journal_entries_line_both_error';
+  static const owner_finance_update_journal_entry = 'owner_finance_update_journal_entry';
+  static const owner_finance_create_journal_entry = 'owner_finance_create_journal_entry';
+  static const owner_finance_journal_entry_success = 'owner_finance_journal_entry_success';
+  static const owner_finance_update = 'owner_finance_update';
+  static const owner_finance_retry = 'owner_finance_retry';
+  static const owner_finance_date = 'owner_finance_date';
+  static const owner_finance_description_required = 'owner_finance_description_required';
+  static const owner_finance_add_line = 'owner_finance_add_line';
+  static const journal_entries_total_debit = 'journal_entries_total_debit';
+  static const journal_entries_total_credit = 'journal_entries_total_credit';
+  static const journal_entries_not_balanced = 'journal_entries_not_balanced';
+  static const owner_finance_create = 'owner_finance_create';
 }

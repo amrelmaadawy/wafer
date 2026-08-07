@@ -122,8 +122,9 @@ class _ResourceCard extends StatelessWidget {
             context.push(Routes.ownerFinancePayments);
           } else if (resource.key == 'transfers') {
             context.push(Routes.ownerFinanceTransfers);
+          } else if (resource.key == 'journal-entries') {
+            context.push(Routes.ownerFinanceJournalEntries);
           }
-          // TODO: Navigate to other resource lists
         },
         borderRadius: AppRadius.circularXxl,
         child: Container(

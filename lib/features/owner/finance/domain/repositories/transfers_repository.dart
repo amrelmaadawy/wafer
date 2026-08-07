@@ -11,4 +11,11 @@ abstract class TransfersRepository {
   Future<Either<Failure, TransferEntity>> createTransfer(
     CreateTransferRequestEntity request,
   );
+
+  Future<Either<Failure, TransferEntity>> updateTransfer(
+    int transferId,
+    Map<String, dynamic> data,
+  );
+
+  Future<Either<Failure, TransferEntity>> approveTransfer(int transferId);
 }

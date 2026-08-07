@@ -7,6 +7,8 @@ import '../models/transfer_model.dart';
 abstract class TransfersRemoteDataSource {
   Future<List<TransferModel>> getTransfers({required int page});
   Future<TransferModel> createTransfer(CreateTransferRequestEntity request);
+  Future<TransferModel> updateTransfer(int transferId, Map<String, dynamic> data);
+  Future<TransferModel> approveTransfer(int transferId);
 }
 
 class TransfersRemoteDataSourceImpl implements TransfersRemoteDataSource {
@@ -31,16 +33,56 @@ class TransfersRemoteDataSourceImpl implements TransfersRemoteDataSource {
 
   @override
   Future<TransferModel> createTransfer(CreateTransferRequestEntity request) async {
-    final response = await _dio.post(
-      ApiConstants.ownerTransfers,
-      data: request.toJson(),
-    );
+    try {
+      final response = await _dio.post(
+        ApiConstants.ownerTransfers,
+        data: request.toJson(),
+      );
 
-    final data = response.data as Map<String, dynamic>? ?? {};
-    if (data['success'] == true && data['data'] != null) {
-      return TransferModel.fromJson(data['data']['transfer']);
+      final data = response.data as Map<String, dynamic>? ?? {};
+      if (data['success'] == true && data['data'] != null) {
+        return TransferModel.fromJson(response.data['data']['transfer']);
+      }
+      throw ServerException(data['message'] ?? 'Validation failed');
+    } on DioException {
+      rethrow;
     }
-    
-    throw ServerException(data['message'] ?? 'Validation failed');
+  }
+
+  @override
+  Future<TransferModel> updateTransfer(
+      int transferId, Map<String, dynamic> data) async {
+    try {
+      final response = await _dio.patch(
+        '${ApiConstants.baseUrl}owner/accounting/transfers/$transferId',
+        data: data,
+      );
+      
+      final responseData = response.data as Map<String, dynamic>? ?? {};
+      if (responseData['success'] == true && responseData['data'] != null) {
+        return TransferModel.fromJson(responseData['data']['transfer']);
+      }
+      throw ServerException(responseData['message'] ?? 'Validation failed');
+    } on DioException {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<TransferModel> approveTransfer(int transferId) async {
+    try {
+      final response = await _dio.post(
+        '${ApiConstants.baseUrl}owner/accounting/transfers/$transferId/action',
+        data: {'action': 'approve'},
+      );
+      
+      final responseData = response.data as Map<String, dynamic>? ?? {};
+      if (responseData['success'] == true && responseData['data'] != null) {
+        return TransferModel.fromJson(responseData['data']['transfer']);
+      }
+      throw ServerException(responseData['message'] ?? 'Approval failed');
+    } on DioException {
+      rethrow;
+    }
   }
 }

@@ -4,16 +4,19 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../domain/entities/transfer_entity.dart';
-import 'package:intl/intl.dart';
 
 class FinanceTransferCard extends StatelessWidget {
   final TransferEntity transfer;
   final VoidCallback? onTap;
+  final VoidCallback? onApprove;
+  final bool isApproving;
 
   const FinanceTransferCard({
     super.key,
     required this.transfer,
     this.onTap,
+    this.onApprove,
+    this.isApproving = false,
   });
 
   Color _getStatusColor(String status) {
@@ -216,6 +219,34 @@ class FinanceTransferCard extends StatelessWidget {
                     ),
                 ],
               ),
+              if (transfer.status.toLowerCase() == 'draft') ...[
+                const SizedBox(height: 12),
+                const Divider(color: AppColors.borderLight, height: 1),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  height: 40,
+                  child: ElevatedButton(
+                    onPressed: isApproving ? null : onApprove,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.success,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: AppRadius.circularSm,
+                      ),
+                    ),
+                    child: isApproving
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                          )
+                        : Text(
+                            LocaleKeys.common_approve.tr(),
+                            style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                          ),
+                  ),
+                ),
+              ],
             ],
           ),
         ),
