@@ -43,6 +43,8 @@ abstract class FinanceRemoteDataSource {
 
   Future<PaymentModel> createPayment(Map<String, dynamic> body);
   
+  Future<PaymentModel> updatePayment(int paymentId, Map<String, dynamic> body);
+  
   Future<ReceiptModel> createReceipt(Map<String, dynamic> body);
   
   Future<ReceiptModel> updateReceipt(int receiptId, Map<String, dynamic> body);
@@ -248,6 +250,21 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
     try {
       final response = await dio.post(
         'owner/accounting/payments',
+        data: body,
+      );
+      return PaymentModel.fromJson(response.data['data']['payment']);
+    } on DioException catch (e) {
+      throw _handleDioException(e, 'Validation failed');
+    } catch (e) {
+      throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<PaymentModel> updatePayment(int paymentId, Map<String, dynamic> body) async {
+    try {
+      final response = await dio.patch(
+        'owner/accounting/payments/$paymentId',
         data: body,
       );
       return PaymentModel.fromJson(response.data['data']['payment']);

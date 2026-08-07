@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wafer/features/owner/finance/domain/entities/payment_entity.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
@@ -33,11 +34,13 @@ import '../../features/owner/finance/presentation/views/owner_account_details_vi
 import '../../features/owner/finance/presentation/views/update_owner_receipt_view.dart';
 import '../../features/owner/finance/presentation/views/owner_payments_view.dart';
 import '../../features/owner/finance/presentation/views/create_owner_payment_view.dart';
+import '../../features/owner/finance/presentation/views/update_owner_payment_view.dart';
 import '../../features/owner/finance/presentation/views/owner_receipt_details_view.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/finance_receipts_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/create_finance_receipt_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/payments/finance_payments_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/payments/create_finance_payment_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/payments/update_finance_payment_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/receipts/finance_receipt_details_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
@@ -228,6 +231,31 @@ class AppRouter {
                 ),
             ],
             child: UpdateOwnerReceiptView(receipt: receipt),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerFinancePaymentUpdate,
+        builder: (context, state) {
+          final extraMap = state.extra as Map<String, dynamic>? ?? {};
+          final extraCubit = extraMap['cubit'] as FinancePaymentsCubit?;
+          final payment = extraMap['payment'] as PaymentEntity?;
+          
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => sl<UpdateFinancePaymentCubit>()),
+              if (extraCubit != null)
+                BlocProvider<FinancePaymentsCubit>.value(
+                  value: extraCubit,
+                  key: const ValueKey('finance_payments_cubit_value'),
+                )
+              else
+                BlocProvider<FinancePaymentsCubit>(
+                  create: (_) => sl<FinancePaymentsCubit>(),
+                  key: const ValueKey('finance_payments_cubit_create'),
+                ),
+            ],
+            child: UpdateOwnerPaymentView(payment: payment),
           );
         },
       ),

@@ -229,7 +229,7 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
               ),
               const SizedBox(height: 20),
               Text(
-                "تأكيد الخروج",
+                LocaleKeys.propertyCreateExitConfirmation.tr(),
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w800,

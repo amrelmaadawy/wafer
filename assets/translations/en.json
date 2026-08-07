@@ -273,6 +273,8 @@
     "finance_postable": "Postable",
     "finance_create_account": "Create Finance Account",
     "finance_update_account": "Update Finance Account",
+    "finance_update_payment": "Update Payment",
+    "finance_update_payment_success": "Payment updated successfully",
     "finance_account_name_ar": "Name in Arabic",
     "finance_account_name_en": "Name (English)",
     "finance_account_code": "Code",
@@ -462,7 +464,8 @@
     "exit_cancel": "Continue Editing",
     "exit_confirm": "Exit",
     "propertyCreateExitCancel": "Cancel Creation",
-    "propertyCreateExitMessage": "Are you sure you want to cancel creation? No data will be saved as draft."
+    "propertyCreateExitConfirmation": "Confirm Exit",
+    "propertyCreateExitMessage": "Are you sure you want to cancel? No data will be saved as draft."
   },
   "property_review": {
     "title": "Review & Publish",

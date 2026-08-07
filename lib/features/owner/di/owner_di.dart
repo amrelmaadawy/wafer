@@ -58,6 +58,7 @@ import '../finance/domain/usecases/update_finance_receipt_use_case.dart';
 import '../finance/domain/usecases/get_finance_receipt_details_use_case.dart';
 import '../finance/domain/usecases/get_finance_payments_use_case.dart';
 import '../finance/domain/usecases/create_finance_payment_use_case.dart';
+import '../finance/domain/usecases/update_finance_payment_use_case.dart';
 import '../finance/domain/usecases/cancel_finance_receipt_use_case.dart';
 import '../finance/domain/usecases/get_finance_form_data_use_case.dart';
 import '../finance/presentation/cubit/finance_overview_cubit.dart';
@@ -72,6 +73,7 @@ import '../finance/presentation/cubit/receipts/finance_receipt_details_cubit.dar
 import '../finance/presentation/cubit/receipts/cancel_finance_receipt_cubit.dart';
 import '../finance/presentation/cubit/payments/finance_payments_cubit.dart';
 import '../finance/presentation/cubit/payments/create_finance_payment_cubit.dart';
+import '../finance/presentation/cubit/payments/update_finance_payment_cubit.dart';
 import '../finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
 // Reports
 import '../reports/data/datasources/owner_reports_remote_data_source.dart';
@@ -228,6 +230,9 @@ void _initFinance() {
   if (!sl.isRegistered<UpdateFinanceReceiptUseCase>()) {
     sl.registerLazySingleton(() => UpdateFinanceReceiptUseCase(sl()));
   }
+  if (!sl.isRegistered<UpdateFinancePaymentUseCase>()) {
+    sl.registerLazySingleton(() => UpdateFinancePaymentUseCase(sl()));
+  }
   if (!sl.isRegistered<GetFinanceReceiptDetailsUseCase>()) {
     sl.registerLazySingleton(() => GetFinanceReceiptDetailsUseCase(sl()));
   }
@@ -265,6 +270,9 @@ void _initFinance() {
   }
   if (!sl.isRegistered<UpdateFinanceReceiptCubit>()) {
     sl.registerFactory(() => UpdateFinanceReceiptCubit(updateFinanceReceiptUseCase: sl()));
+  }
+  if (!sl.isRegistered<UpdateFinancePaymentCubit>()) {
+    sl.registerFactory(() => UpdateFinancePaymentCubit(updateFinancePaymentUseCase: sl()));
   }
   if (!sl.isRegistered<FinanceReceiptDetailsCubit>()) {
     sl.registerFactory(() => FinanceReceiptDetailsCubit(getFinanceReceiptDetailsUseCase: sl()));

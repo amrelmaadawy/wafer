@@ -228,6 +228,8 @@ abstract class LocaleKeys {
   static const owner_finance_payment_vouchers = 'owner.finance_payment_vouchers';
   static const owner_finance_internal_transfers = 'owner.finance_internal_transfers';
   static const owner_finance_journal_entries = 'owner.finance_journal_entries';
+  static const owner_finance_update_payment = 'owner.finance_update_payment';
+  static const owner_finance_update_payment_success = 'owner.finance_update_payment_success';
   static const owner = 'owner';
   static const properties_title = 'properties.title';
   static const properties_subtitle = 'properties.subtitle';
@@ -426,6 +428,7 @@ abstract class LocaleKeys {
   static const property_create_owner_search_hint =
       'property_create.owner_search_hint';
   static const property_create_exit_title = 'property_create.exit_title';
+  static const property_create_propertyCreateExitConfirmation = 'property_create.propertyCreateExitConfirmation';
   static const property_create_exit_message = 'property_create.exit_message';
   static const property_create_exit_cancel = 'property_create.exit_cancel';
   static const property_create_exit_confirm = 'property_create.exit_confirm';
@@ -968,6 +971,8 @@ abstract class LocaleKeys {
   static const ownerFinancePaymentVouchers = owner_finance_payment_vouchers;
   static const ownerFinanceInternalTransfers = owner_finance_internal_transfers;
   static const ownerFinanceJournalEntries = owner_finance_journal_entries;
+  static const ownerFinanceUpdatePayment = owner_finance_update_payment;
+  static const ownerFinanceUpdatePaymentSuccess = owner_finance_update_payment_success;
   static const propertiesTitle = properties_title;
   static const propertiesSubtitle = properties_subtitle;
   static const propertiesTotalCount = properties_total_count;
@@ -1145,6 +1150,7 @@ abstract class LocaleKeys {
   static const propertyCreateOwnerSearchHint =
       property_create_owner_search_hint;
   static const propertyCreateExitTitle = property_create_exit_title;
+  static const propertyCreateExitConfirmation = property_create_propertyCreateExitConfirmation;
   static const propertyCreateExitMessage = property_create_exit_message;
   static const propertyCreateExitCancel = property_create_exit_cancel;
   static const propertyCreateExitConfirm = property_create_exit_confirm;

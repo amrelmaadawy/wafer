@@ -273,6 +273,8 @@
     "finance_postable": "قابل للترحيل",
     "finance_create_account": "إضافة حساب مالي",
     "finance_update_account": "تعديل الحساب المالي",
+    "finance_update_payment": "تعديل الدفعة",
+    "finance_update_payment_success": "تم تعديل الدفعة بنجاح",
     "finance_account_name_ar": "الاسم بالعربي",
     "finance_account_name_en": "الاسم بالإنجليزي",
     "finance_account_code": "الرمز",
@@ -462,6 +464,7 @@
     "exit_cancel": "استمرار في الإضافة",
     "exit_confirm": "خروج",
     "propertyCreateExitCancel": "إلغاء الإضافة",
+    "propertyCreateExitConfirmation": "تأكيد الخروج",
     "propertyCreateExitMessage": "هل أنت متأكد من رغبتك في إلغاء الإضافة؟ لن يتم حفظ أي بيانات كمسودة."
   },
   "property_review": {

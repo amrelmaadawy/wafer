@@ -118,10 +118,20 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
               itemCount: payments.length + (hasReachedMax ? 0 : 1),
               itemBuilder: (context, index) {
                 if (index < payments.length) {
+                  final payment = payments[index];
                   return FinancePaymentCard(
-                    payment: payments[index],
+                    payment: payment,
                     onTap: () {
                       // TODO: Navigate to payment details if needed
+                    },
+                    onEditTap: () {
+                      context.push(
+                        Routes.ownerFinancePaymentUpdate,
+                        extra: {
+                          'cubit': context.read<FinancePaymentsCubit>(),
+                          'payment': payment,
+                        },
+                      );
                     },
                   );
                 } else {
