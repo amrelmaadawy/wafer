@@ -76,4 +76,40 @@ class JournalEntriesRepositoryImpl implements JournalEntriesRepository {
       return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
     }
   }
+
+  @override
+  Future<Either<Failure, JournalEntryEntity>> postJournalEntry(int id) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await remoteDataSource.postJournalEntry(id);
+        return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      } on DioException catch (e) {
+        return Left(ServerFailure.fromDioException(e));
+      } catch (e) {
+        return Left(ServerFailure(e.toString()));
+      }
+    } else {
+      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, JournalEntryEntity>> reverseJournalEntry(int id, String reason) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await remoteDataSource.reverseJournalEntry(id, reason);
+        return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(e.message));
+      } on DioException catch (e) {
+        return Left(ServerFailure.fromDioException(e));
+      } catch (e) {
+        return Left(ServerFailure(e.toString()));
+      }
+    } else {
+      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
+    }
+  }
 }

@@ -15,4 +15,8 @@ abstract class JournalEntriesRepository {
 
   Future<Either<Failure, JournalEntryEntity>> updateJournalEntry(
       UpdateJournalEntryRequestEntity request);
+
+  Future<Either<Failure, JournalEntryEntity>> postJournalEntry(int id);
+
+  Future<Either<Failure, JournalEntryEntity>> reverseJournalEntry(int id, String reason);
 }

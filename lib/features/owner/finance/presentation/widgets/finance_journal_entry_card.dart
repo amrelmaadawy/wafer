@@ -5,6 +5,13 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../cubit/journal_entries/post_journal_entry_cubit.dart';
+import '../cubit/journal_entries/post_journal_entry_state.dart';
+import '../cubit/journal_entries/reverse_journal_entry_cubit.dart';
+import '../cubit/journal_entries/reverse_journal_entry_state.dart';
+import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../domain/entities/journal_entry_entity.dart';
 
 class FinanceJournalEntryCard extends StatefulWidget {
@@ -31,7 +38,6 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
     return Container(
       margin: EdgeInsets.zero,
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: AppRadius.circularMd,
         border: Border.all(color: AppColors.borderLight, width: 1),
         boxShadow: [
@@ -42,7 +48,11 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
           ),
         ],
       ),
-      child: Theme(
+      child: Material(
+        color: Colors.white,
+        borderRadius: AppRadius.circularMd,
+        clipBehavior: Clip.antiAlias,
+        child: Theme(
         data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
         child: ExpansionTile(
           tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -81,15 +91,7 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
                   ],
                 ),
               ),
-              if (widget.entry.status.toLowerCase() == 'draft')
-                IconButton(
-                  icon: const Icon(Icons.edit_rounded, size: 20, color: AppColors.primary),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  onPressed: () {
-                    context.push(Routes.ownerFinanceUpdateJournalEntry, extra: widget.entry);
-                  },
-                ),
+
               const SizedBox(width: 8),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -173,6 +175,80 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
                     ),
                   ],
                 ),
+                if (widget.entry.status.toLowerCase() == 'draft') ...[
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          context.push(Routes.ownerFinanceUpdateJournalEntry, extra: widget.entry);
+                        },
+                        borderRadius: AppRadius.circularSm,
+                        child: Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary.withValues(alpha: 0.1),
+                            borderRadius: AppRadius.circularSm,
+                          ),
+                          child: const Icon(Icons.edit_rounded, size: 18, color: AppColors.primary),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      BlocBuilder<PostJournalEntryCubit, PostJournalEntryState>(
+                        builder: (context, state) {
+                          final isLoading = state is PostJournalEntryLoading && state.entryId == widget.entry.id;
+                          return InkWell(
+                            onTap: isLoading ? null : () => context.read<PostJournalEntryCubit>().postEntry(widget.entry.id),
+                            borderRadius: AppRadius.circularSm,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                borderRadius: AppRadius.circularSm,
+                              ),
+                              child: isLoading
+                                  ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                                  : Text(
+                                      LocaleKeys.ownerFinancePostJournalEntry.tr(),
+                                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                                    ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ] else if (widget.entry.status.toLowerCase() == 'posted') ...[
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      BlocBuilder<ReverseJournalEntryCubit, ReverseJournalEntryState>(
+                        builder: (context, state) {
+                          final isLoading = state is ReverseJournalEntryLoading && state.journalEntryId == widget.entry.id;
+                          return InkWell(
+                            onTap: isLoading ? null : () => _showReverseDialog(context),
+                            borderRadius: AppRadius.circularSm,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                              decoration: BoxDecoration(
+                                color: AppColors.error,
+                                borderRadius: AppRadius.circularSm,
+                              ),
+                              child: isLoading
+                                  ? const SizedBox(width: 14, height: 14, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                                  : Text(
+                                      LocaleKeys.ownerFinanceReverseJournalEntry.tr(),
+                                      style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: Colors.white),
+                                    ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
               ],
             ),
           ),
@@ -183,7 +259,7 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
           ],
         ),
       ),
-    );
+    ));
   }
 
   Widget _buildLineItem(JournalEntryLineEntity line) {
@@ -275,6 +351,86 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
                 ),
               ),
             ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showReverseDialog(BuildContext context) {
+    final TextEditingController reasonController = TextEditingController(text: 'Reversed from owner accounting mobile API');
+    
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: AppColors.surfaceLight,
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.circularMd),
+        title: Text(
+          LocaleKeys.ownerFinanceReverseConfirmTitle.tr(),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(LocaleKeys.ownerFinanceReverseConfirmMessage.tr()),
+            const SizedBox(height: 16),
+            Text(
+              LocaleKeys.ownerFinanceReverseReason.tr(),
+              style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: reasonController,
+              decoration: InputDecoration(
+                hintText: LocaleKeys.ownerFinanceReverseReasonHint.tr(),
+                hintStyle: const TextStyle(fontSize: 12, color: AppColors.textSecondaryLight),
+                border: OutlineInputBorder(
+                  borderRadius: AppRadius.circularSm,
+                  borderSide: const BorderSide(color: AppColors.borderLight),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: AppRadius.circularSm,
+                  borderSide: const BorderSide(color: AppColors.borderLight),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: AppRadius.circularSm,
+                  borderSide: BorderSide(color: context.primaryColor),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              ),
+              maxLines: 2,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: Text(
+              LocaleKeys.commonCancel.tr(),
+              style: const TextStyle(color: AppColors.textSecondaryLight),
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              if (reasonController.text.trim().isEmpty) {
+                AppToast.showError(context, LocaleKeys.ownerFinanceReverseReasonRequired.tr());
+                return;
+              }
+              Navigator.of(dialogContext).pop();
+              context.read<ReverseJournalEntryCubit>().reverseJournalEntry(
+                    widget.entry.id,
+                    reasonController.text.trim(),
+                  );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.error,
+              shape: RoundedRectangleBorder(borderRadius: AppRadius.circularSm),
+            ),
+            child: Text(
+              LocaleKeys.ownerFinanceReverseJournalEntry.tr(),
+              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),

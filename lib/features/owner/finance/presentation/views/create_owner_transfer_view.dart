@@ -9,12 +9,15 @@ import '../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../../domain/entities/create_transfer_request_entity.dart';
 import '../../domain/entities/transfer_entity.dart';
 import '../../domain/usecases/update_transfer_use_case.dart';
 import '../cubit/transfers/create_transfer_cubit.dart';
 import '../cubit/transfers/update_transfer_cubit.dart';
 import '../cubit/transfers/update_transfer_state.dart';
+import '../cubit/form_data/finance_form_data_cubit.dart';
+import '../cubit/form_data/finance_form_data_state.dart';
 
 class CreateOwnerTransferView extends StatefulWidget {
   final TransferEntity? transfer;
@@ -38,6 +41,7 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
   @override
   void initState() {
     super.initState();
+    context.read<FinanceFormDataCubit>().fetchFormData();
     if (widget.transfer != null) {
       final t = widget.transfer!;
       _amountController.text = t.amount.toString();
@@ -61,7 +65,7 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
     if (!_formKey.currentState!.validate()) return;
     
     if (_selectedDate == null) {
-      AppToast.showError(context, 'Please select a transfer date');
+      AppToast.showError(context, LocaleKeys.ownerFinanceTransferDateRequired.tr());
       return;
     }
     if (_fromAccountId == null) {
@@ -207,12 +211,28 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
                   style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 8),
-                CustomDropdownMenu<int>(
-                  value: _fromAccountId,
-                  items: const [1, 2, 3, 4, 179], // Mock IDs
-                  itemLabelBuilder: (val) => 'Account #$val',
-                  hint: LocaleKeys.transfer_from.tr(),
-                  onSelected: (val) => setState(() => _fromAccountId = val),
+                BlocBuilder<FinanceFormDataCubit, FinanceFormDataState>(
+                  builder: (context, state) {
+                    if (state is FinanceFormDataLoading) {
+                      return AppShimmer.box(height: 48, borderRadius: BorderRadius.circular(8));
+                    }
+                    if (state is FinanceFormDataSuccess) {
+                      final accounts = state.formData.accounts.where((a) => a.isPostable).toList();
+                      return CustomDropdownMenu<int>(
+                        value: _fromAccountId,
+                        items: accounts.map((e) => e.id).toList(),
+                        itemLabelBuilder: (val) {
+                          final index = accounts.indexWhere((e) => e.id == val);
+                          if (index == -1) return '';
+                          final acc = accounts[index];
+                          return context.locale.languageCode == 'ar' ? acc.nameAr : acc.nameEn;
+                        },
+                        hint: LocaleKeys.transfer_from.tr(),
+                        onSelected: (val) => setState(() => _fromAccountId = val),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
                 ),
                 const SizedBox(height: 16),
 
@@ -222,12 +242,28 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
                   style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 8),
-                CustomDropdownMenu<int>(
-                  value: _toAccountId,
-                  items: const [1, 2, 3, 4, 179], // Mock IDs
-                  itemLabelBuilder: (val) => 'Account #$val',
-                  hint: LocaleKeys.transfer_to.tr(),
-                  onSelected: (val) => setState(() => _toAccountId = val),
+                BlocBuilder<FinanceFormDataCubit, FinanceFormDataState>(
+                  builder: (context, state) {
+                    if (state is FinanceFormDataLoading) {
+                      return AppShimmer.box(height: 48, borderRadius: BorderRadius.circular(8));
+                    }
+                    if (state is FinanceFormDataSuccess) {
+                      final accounts = state.formData.accounts.where((a) => a.isPostable).toList();
+                      return CustomDropdownMenu<int>(
+                        value: _toAccountId,
+                        items: accounts.map((e) => e.id).toList(),
+                        itemLabelBuilder: (val) {
+                          final index = accounts.indexWhere((e) => e.id == val);
+                          if (index == -1) return '';
+                          final acc = accounts[index];
+                          return context.locale.languageCode == 'ar' ? acc.nameAr : acc.nameEn;
+                        },
+                        hint: LocaleKeys.transfer_to.tr(),
+                        onSelected: (val) => setState(() => _toAccountId = val),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  },
                 ),
                 const SizedBox(height: 16),
 

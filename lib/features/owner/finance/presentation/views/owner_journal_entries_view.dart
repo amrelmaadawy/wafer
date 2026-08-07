@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wafer/core/utils/widgets/app_toast.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
@@ -10,9 +11,12 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../cubit/journal_entries/journal_entries_cubit.dart';
 import '../cubit/journal_entries/journal_entries_state.dart';
+import '../cubit/journal_entries/post_journal_entry_cubit.dart';
+import '../cubit/journal_entries/post_journal_entry_state.dart';
+import '../cubit/journal_entries/reverse_journal_entry_cubit.dart';
+import '../cubit/journal_entries/reverse_journal_entry_state.dart';
 import '../widgets/finance_journal_entry_card.dart';
-import '../widgets/finance_payments_skeleton.dart'; // Reusing skeleton
-
+import '../widgets/finance_payments_skeleton.dart'; 
 class OwnerJournalEntriesView extends StatefulWidget {
   const OwnerJournalEntriesView({super.key});
 
@@ -49,7 +53,30 @@ class _OwnerJournalEntriesViewState extends State<OwnerJournalEntriesView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PostJournalEntryCubit, PostJournalEntryState>(
+          listener: (context, state) {
+            if (state is PostJournalEntrySuccess) {
+              AppToast.showSuccess(context, LocaleKeys.ownerFinancePostSuccess.tr());
+              _onRefresh();
+            } else if (state is PostJournalEntryError) {
+              AppToast.showError(context, state.message);
+            }
+          },
+        ),
+        BlocListener<ReverseJournalEntryCubit, ReverseJournalEntryState>(
+          listener: (context, state) {
+            if (state is ReverseJournalEntrySuccess) {
+              AppToast.showSuccess(context, LocaleKeys.ownerFinanceReverseSuccess.tr());
+              _onRefresh();
+            } else if (state is ReverseJournalEntryError) {
+              AppToast.showError(context, state.message);
+            }
+          },
+        ),
+      ],
+      child: Scaffold(
       backgroundColor: AppColors.backgroundLight,
       appBar: CustomAppBar(
         title: LocaleKeys.owner_finance_journal_entries.tr(),
@@ -140,6 +167,6 @@ class _OwnerJournalEntriesViewState extends State<OwnerJournalEntriesView> {
           },
         ),
       ),
-    );
+    ));
   }
 }

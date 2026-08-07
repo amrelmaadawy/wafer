@@ -85,6 +85,8 @@ import '../finance/presentation/cubit/transfers/transfers_cubit.dart';
 import '../finance/presentation/cubit/journal_entries/journal_entries_cubit.dart';
 import '../finance/presentation/cubit/journal_entries/create_journal_entry_cubit.dart';
 import '../finance/presentation/cubit/journal_entries/update_journal_entry_cubit.dart';
+import '../finance/presentation/cubit/journal_entries/post_journal_entry_cubit.dart';
+import '../finance/presentation/cubit/journal_entries/reverse_journal_entry_cubit.dart';
 import '../finance/presentation/cubit/accounts/create_finance_account_cubit.dart';
 import '../finance/presentation/cubit/accounts/update_finance_account_cubit.dart';
 import '../finance/presentation/cubit/accounts/finance_account_details_cubit.dart';
@@ -97,6 +99,8 @@ import '../finance/presentation/cubit/receipts/cancel_finance_receipt_cubit.dart
 import '../finance/presentation/cubit/payments/finance_payments_cubit.dart';
 import '../finance/presentation/cubit/payments/create_finance_payment_cubit.dart';
 import '../finance/presentation/cubit/payments/update_finance_payment_cubit.dart';
+import '../finance/domain/usecases/post_journal_entry_use_case.dart';
+import '../finance/domain/usecases/reverse_journal_entry_use_case.dart';
 import '../finance/presentation/cubit/payments/cancel_finance_payment_cubit.dart';
 import '../finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
 // Reports
@@ -382,11 +386,15 @@ void _initFinance() {
     sl.registerLazySingleton(() => GetJournalEntriesUseCase(sl()));
     sl.registerLazySingleton(() => CreateJournalEntryUseCase(sl()));
     sl.registerLazySingleton(() => UpdateJournalEntryUseCase(sl()));
-  }
-  if (!sl.isRegistered<JournalEntriesCubit>()) {
+    sl.registerLazySingleton(() => PostJournalEntryUseCase(sl()));
+    sl.registerLazySingleton(() => ReverseJournalEntryUseCase(sl()));
+
+    // Cubits
     sl.registerFactory(() => JournalEntriesCubit(sl()));
     sl.registerFactory(() => CreateJournalEntryCubit(createJournalEntryUseCase: sl()));
     sl.registerFactory(() => UpdateJournalEntryCubit(updateJournalEntryUseCase: sl()));
+    sl.registerFactory(() => PostJournalEntryCubit(postJournalEntryUseCase: sl()));
+    sl.registerFactory(() => ReverseJournalEntryCubit(reverseJournalEntryUseCase: sl()));
   }
 }
 

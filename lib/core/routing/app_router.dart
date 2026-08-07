@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wafer/features/owner/finance/domain/entities/payment_entity.dart';
+import 'package:wafer/features/owner/finance/presentation/cubit/journal_entries/create_journal_entry_cubit.dart';
+import 'package:wafer/features/owner/finance/presentation/cubit/journal_entries/post_journal_entry_cubit.dart';
+import 'package:wafer/features/owner/finance/presentation/cubit/journal_entries/reverse_journal_entry_cubit.dart';
+import 'package:wafer/features/owner/finance/presentation/cubit/journal_entries/update_journal_entry_cubit.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
@@ -34,8 +38,6 @@ import '../../features/owner/finance/presentation/views/owner_account_details_vi
 import '../../features/owner/finance/presentation/views/update_owner_receipt_view.dart';
 import '../../features/owner/finance/presentation/views/owner_payments_view.dart';
 import '../../features/owner/finance/presentation/views/create_owner_journal_entry_view.dart';
-import '../../features/owner/finance/presentation/cubit/journal_entries/create_journal_entry_cubit.dart';
-import '../../features/owner/finance/presentation/cubit/journal_entries/update_journal_entry_cubit.dart';
 import '../../features/owner/finance/domain/entities/journal_entry_entity.dart';
 import '../../features/owner/finance/presentation/views/create_owner_payment_view.dart';
 import '../../features/owner/finance/presentation/views/update_owner_payment_view.dart';
@@ -54,8 +56,8 @@ import '../../features/owner/finance/presentation/cubit/form_data/finance_form_d
 import '../../features/owner/finance/presentation/cubit/transfers/create_transfer_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/transfers/update_transfer_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/transfers/approve_transfer_cubit.dart';
-import '../../features/owner/finance/presentation/cubit/transfers/transfers_cubit.dart';
 import '../../features/owner/finance/presentation/cubit/journal_entries/journal_entries_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/transfers/transfers_cubit.dart';
 import '../../features/owner/finance/domain/entities/transfer_entity.dart';
 import '../../features/owner/finance/presentation/views/create_owner_transfer_view.dart';
 import '../../features/owner/finance/presentation/views/owner_transfers_view.dart';
@@ -246,8 +248,12 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.ownerFinanceJournalEntries,
-        builder: (context, state) => BlocProvider(
-          create: (_) => sl<JournalEntriesCubit>(),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (_) => sl<JournalEntriesCubit>()),
+            BlocProvider(create: (_) => sl<PostJournalEntryCubit>()),
+            BlocProvider(create: (_) => sl<ReverseJournalEntryCubit>()),
+          ],
           child: const OwnerJournalEntriesView(),
         ),
       ),
