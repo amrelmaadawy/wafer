@@ -1,41 +1,44 @@
 import 'package:equatable/equatable.dart';
 
 class ContractsReportItemEntity extends Equatable {
-  final int contractId;
+  final int id;
   final String contractNumber;
+  final String contractType;
   final String propertyName;
   final String unitName;
   final String renterName;
-  final double rentValue;
   final String startDate;
   final String endDate;
-  final int daysRemaining;
+  final double totalRentValue;
   final String status;
+  final String statusLabel;
 
   const ContractsReportItemEntity({
-    required this.contractId,
+    required this.id,
     required this.contractNumber,
+    required this.contractType,
     required this.propertyName,
     required this.unitName,
     required this.renterName,
-    required this.rentValue,
     required this.startDate,
     required this.endDate,
-    required this.daysRemaining,
+    required this.totalRentValue,
     required this.status,
+    required this.statusLabel,
   });
 
   @override
   List<Object?> get props => [
-    contractId,
+    id,
     contractNumber,
+    contractType,
     propertyName,
     unitName,
     renterName,
-    rentValue,
     startDate,
     endDate,
-    daysRemaining,
+    totalRentValue,
     status,
+    statusLabel,
   ];
 }

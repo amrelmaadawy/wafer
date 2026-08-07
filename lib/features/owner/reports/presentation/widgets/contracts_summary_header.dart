@@ -5,15 +5,19 @@ import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 
 class ContractsSummaryHeader extends StatelessWidget {
-  final int totalExpiring;
+  final int total;
+  final int active;
+  final int expired;
+  final int expiringNext30Days;
   final double totalRentValue;
-  final int days;
 
   const ContractsSummaryHeader({
     super.key,
-    required this.totalExpiring,
+    required this.total,
+    required this.active,
+    required this.expired,
+    required this.expiringNext30Days,
     required this.totalRentValue,
-    required this.days,
   });
 
   @override
@@ -48,13 +52,13 @@ class ContractsSummaryHeader extends StatelessWidget {
               Row(
                 children: [
                   const Icon(
-                    Icons.timer_outlined,
+                    Icons.description_outlined,
                     color: Colors.white70,
                     size: 18,
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    'Contracts Expiring in $days Days',
+                    LocaleKeys.reports_total.tr(),
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 13.5,
@@ -65,13 +69,22 @@ class ContractsSummaryHeader extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '$totalExpiring',
+                '$total',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 32,
                   fontWeight: FontWeight.w800,
                   letterSpacing: -0.5,
                 ),
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _buildStatItem(LocaleKeys.reports_active.tr(), active.toString(), Colors.greenAccent),
+                  _buildStatItem(LocaleKeys.reports_expired.tr(), expired.toString(), Colors.redAccent),
+                  _buildStatItem(LocaleKeys.reports_expiringSoon.tr(), expiringNext30Days.toString(), Colors.orangeAccent),
+                ],
               ),
               const SizedBox(height: 12),
               Container(height: 1, color: Colors.white.withValues(alpha: 0.15)),
@@ -88,9 +101,9 @@ class ContractsSummaryHeader extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Total Rent Value',
-                        style: TextStyle(
+                      Text(
+                        LocaleKeys.reports_totalRentValue.tr(),
+                        style: const TextStyle(
                           color: Colors.white70,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,
@@ -149,6 +162,31 @@ class ContractsSummaryHeader extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildStatItem(String label, String value, Color color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.white.withValues(alpha: 0.8),
+            fontSize: 11,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          value,
+          style: TextStyle(
+            color: color,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

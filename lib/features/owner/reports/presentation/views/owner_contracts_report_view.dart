@@ -17,6 +17,8 @@ import '../../../../../core/services/pdf/pdf_generator_service.dart';
 import '../../../../../core/services/pdf/builders/contracts_pdf_builder.dart';
 import '../../../../../core/services/excel/excel_export_service.dart';
 import '../../../../../core/services/excel/builders/contracts_excel_builder.dart';
+import '../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
+import '../../domain/entities/contracts_report_entity.dart';
 
 class OwnerContractsReportView extends StatefulWidget {
   const OwnerContractsReportView({super.key});
@@ -28,6 +30,9 @@ class OwnerContractsReportView extends StatefulWidget {
 
 class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
   final ScrollController _scrollController = ScrollController();
+
+  int? _selectedPropertyId;
+  String? _selectedStatus;
 
   @override
   void initState() {
@@ -63,9 +68,9 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                   onPdfPressed: () async {
                     final pdf = await ContractsPdfBuilder.build(
                       state.report.items,
-                      state.report.summary.totalExpiring,
+                      state.report.summary.total,
                       state.report.summary.totalRentValue,
-                      state.report.summary.days,
+                      state.report.summary.expiringNext30Days,
                     );
                     if (context.mounted) {
                       await PdfGeneratorService.exportAndPrint(
@@ -78,9 +83,9 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                   onExcelPressed: () async {
                     final bytes = await ContractsExcelBuilder.build(
                       state.report.items,
-                      state.report.summary.totalExpiring,
+                      state.report.summary.total,
                       state.report.summary.totalRentValue,
-                      state.report.summary.days,
+                      state.report.summary.expiringNext30Days,
                     );
                     if (context.mounted) {
                       await ExcelExportService.saveAndShare(
@@ -129,9 +134,75 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     ContractsSummaryHeader(
-                      totalExpiring: state.report.summary.totalExpiring,
+                      total: state.report.summary.total,
+                      active: state.report.summary.active,
+                      expired: state.report.summary.expired,
+                      expiringNext30Days: state.report.summary.expiringNext30Days,
                       totalRentValue: state.report.summary.totalRentValue,
-                      days: state.report.summary.days,
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomDropdownMenu<String>(
+                            value: _selectedStatus,
+                            items: [
+                              'all',
+                              ...state.report.filterOptions.statuses.map((e) => e.value),
+                            ],
+                            itemLabelBuilder: (val) {
+                              if (val == 'all') return LocaleKeys.reports_all.tr();
+                              final match = state.report.filterOptions.statuses
+                                  .where((e) => e.value == val).toList();
+                              return match.isNotEmpty ? match.first.label : val;
+                            },
+                            hint: LocaleKeys.reports_status.tr(),
+                            onSelected: (val) {
+                              final newStatus = val == 'all' ? null : val;
+                              if (_selectedStatus != newStatus) {
+                                setState(() {
+                                  _selectedStatus = newStatus;
+                                });
+                                context.read<OwnerContractsReportCubit>().loadContractsReport(
+                                  forceRefresh: true,
+                                  status: newStatus,
+                                  propertyId: _selectedPropertyId,
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: CustomDropdownMenu<int>(
+                            value: _selectedPropertyId,
+                            items: [
+                              -1,
+                              ...state.report.filterOptions.properties.map((e) => e.id),
+                            ],
+                            itemLabelBuilder: (val) {
+                              if (val == -1) return LocaleKeys.reports_allProperties.tr();
+                              final match = state.report.filterOptions.properties
+                                  .where((e) => e.id == val).toList();
+                              return match.isNotEmpty ? (match.first.name ?? match.first.code) : val.toString();
+                            },
+                            hint: LocaleKeys.property.tr(),
+                            onSelected: (val) {
+                              final newProp = val == -1 ? null : val;
+                              if (_selectedPropertyId != newProp) {
+                                setState(() {
+                                  _selectedPropertyId = newProp;
+                                });
+                                context.read<OwnerContractsReportCubit>().loadContractsReport(
+                                  forceRefresh: true,
+                                  propertyId: newProp,
+                                  status: _selectedStatus,
+                                );
+                              }
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 22),
                     ContractsReportList(contracts: state.report.items),

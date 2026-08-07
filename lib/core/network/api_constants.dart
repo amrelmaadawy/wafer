@@ -25,6 +25,7 @@ class ApiConstants {
   static const String sharedLogout = 'shared/logout';
 
   /// Owner Endpoints
+  static const String ownerTransfers = 'owner/accounting/transfers';
   static const String ownerContracts = 'owner/contracts';
   static const String ownerMaintenance = 'owner/maintenance-requests';
   static String ownerMaintenanceDetails(int id) =>
@@ -46,6 +47,7 @@ class ApiConstants {
       'owner/reports/technician-performance';
   static const String ownerEmployeeTasksReport = 'owner/reports/employee-tasks';
   static const String ownerActivityLogsReport = 'owner/reports/activity-logs';
+  static const String ownerReportsLegalCases = 'owner/reports/legal-cases';
   static const String ownerMaintenanceTechniciansFormData =
       'owner/maintenance-technicians/form-data';
   static const String ownerMaintenanceTechnicians =

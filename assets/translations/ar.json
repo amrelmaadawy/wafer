@@ -886,7 +886,20 @@
     "operational": "التشغيل والعقارات",
     "contracts": "تقارير العقود",
     "system": "نشاط النظام",
-    "empty_state": "لا توجد بيانات متاحة لعرضها في هذا التقرير حالياً."
+    "empty_state": "لا توجد بيانات متاحة لعرضها في هذا التقرير حالياً.",
+    "contractsExpiring": "عقود تنتهي خلال {} أيام",
+    "totalRentValue": "إجمالي القيمة الإيجارية",
+    "unnamedProperty": "عقار غير مسمى",
+    "rentValue": "القيمة الإيجارية",
+    "daysLeft": "متبقي {} أيام",
+    "expiresOn": "ينتهي في: {}",
+    "total": "الإجمالي",
+    "active": "نشطة",
+    "resolved": "محلولة",
+    "noData": "لا توجد بيانات متاحة",
+    "notAvailable": "غير متوفر",
+    "renter": "المستأجر",
+    "unit": "الوحدة"
   },
   "maintenanceVerifyCloseTitle": "إغلاق وتأكيد الصيانة",
   "maintenanceVerifyCloseNotes": "ملاحظات الإغلاق",
@@ -908,8 +921,18 @@
   "activeAssignments": "مهام نشطة",
   "totalAssignments": "إجمالي المهام",
   "active": "نشط",
-  "inactive": "غير نشط",
-  "retry": "إعادة المحاولة",
+  "permissions": {
+    "no_data": "لا توجد صلاحيات لعرضها",
+    "retry": "إعادة المحاولة"
+  },
+  "legalCases": {
+    "caseNumber": "رقم القضية",
+    "plaintiff": "المدعي",
+    "defendant": "المدعى عليه",
+    "court": "المحكمة",
+    "hearingDate": "تاريخ الجلسة",
+    "nextHearingDate": "الجلسة القادمة"
+  },
   "addSupervisor": "إضافة مشرف",
   "supervisorSelectUser": "اختر المستخدم",
   "supervisorScopeType": "نطاق الصلاحية",
@@ -935,6 +958,11 @@
     "reports_rejected": "مرفوض",
     "reports_approval_type": "نوع الموافقة",
     "reports_approval_date": "تاريخ الموافقة",
+    "reports_all": "الكل",
+    "reports_allProperties": "كل العقارات",
+    "reports_contractStart": "بداية العقد",
+    "reports_expired": "منتهي",
+    "reports_expiringSoon": "ينتهي قريباً",
   "parties_and_lawyer": "الأطراف والمحامي",
   "plaintiff": "المدعي",
   "defendant": "المدعى عليه",
@@ -1138,5 +1166,9 @@
     "none": "لا يوجد",
     "attached_images_count": "عدد الصور المرفقة",
     "images_count": "صور"
+  },
+  "transfer": {
+    "from": "من حساب",
+    "to": "إلى حساب"
   }
 }

@@ -6,6 +6,7 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
   final GetContractsReportUseCase getContractsReportUseCase;
   int _currentPage = 1;
   int? _selectedPropertyId;
+  String? _selectedStatus;
   bool _isFetching = false;
 
   OwnerContractsReportCubit({required this.getContractsReportUseCase})
@@ -14,12 +15,14 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
   Future<void> loadContractsReport({
     bool forceRefresh = false,
     int? propertyId,
+    String? status,
   }) async {
     if (_isFetching) return;
 
-    if (forceRefresh || propertyId != _selectedPropertyId) {
+    if (forceRefresh || propertyId != _selectedPropertyId || status != _selectedStatus) {
       _currentPage = 1;
       _selectedPropertyId = propertyId ?? _selectedPropertyId;
+      _selectedStatus = status ?? _selectedStatus;
       emit(OwnerContractsReportLoading());
     } else {
       if (state is OwnerContractsReportLoaded &&
@@ -34,6 +37,7 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
       forceRefresh: forceRefresh,
       page: _currentPage,
       propertyId: _selectedPropertyId,
+      status: _selectedStatus,
     );
 
     result.fold(

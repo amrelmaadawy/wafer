@@ -1,16 +1,26 @@
 import 'package:equatable/equatable.dart';
 
 class ContractsReportSummaryEntity extends Equatable {
-  final int totalExpiring;
+  final int total;
+  final int active;
+  final int expired;
+  final int expiringNext30Days;
   final double totalRentValue;
-  final int days;
 
   const ContractsReportSummaryEntity({
-    required this.totalExpiring,
+    required this.total,
+    required this.active,
+    required this.expired,
+    required this.expiringNext30Days,
     required this.totalRentValue,
-    required this.days,
   });
 
   @override
-  List<Object?> get props => [totalExpiring, totalRentValue, days];
+  List<Object?> get props => [
+    total,
+    active,
+    expired,
+    expiringNext30Days,
+    totalRentValue,
+  ];
 }

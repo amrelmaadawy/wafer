@@ -144,8 +144,8 @@ class ContractsPdfBuilder {
           c.unitName.isNotEmpty ? c.unitName : 'غير محدد',
           c.renterName.isNotEmpty ? c.renterName : 'غير محدد',
           c.endDate,
-          c.rentValue.toStringAsFixed(2),
-          c.daysRemaining.toString(),
+          c.totalRentValue.toStringAsFixed(2),
+          c.statusLabel,
           c.status,
         ];
       }).toList(),

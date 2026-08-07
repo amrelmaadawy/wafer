@@ -14,6 +14,7 @@ import '../../domain/entities/contracts_report_entity.dart';
 import '../../domain/entities/contracts_movement_report_entity.dart';
 import '../../domain/entities/occupancy_report_entity.dart';
 import '../../domain/entities/approvals_report_entity.dart';
+import '../../domain/entities/legal_cases_report_entity.dart';
 import '../models/revenue_report_model.dart';
 import '../../domain/repositories/owner_reports_repository.dart';
 import '../datasources/owner_reports_remote_data_source.dart';
@@ -152,11 +153,13 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
     bool forceRefresh = false,
     int page = 1,
     int? propertyId,
+    String? status,
   }) async {
     try {
       final model = await _remoteDataSource.getContractsReport(
         page: page,
         propertyId: propertyId,
+        status: status,
       );
       return Right(model);
     } on ServerException catch (e) {
@@ -261,6 +264,24 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
     try {
       final result = await _remoteDataSource.getApprovalsReport(
         page: page,
+      );
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, LegalCasesReportEntity>> getLegalCasesReport({
+    int page = 1,
+    String? status,
+  }) async {
+    try {
+      final result = await _remoteDataSource.getLegalCasesReport(
+        page: page,
+        status: status,
       );
       return Right(result);
     } on ServerException catch (e) {

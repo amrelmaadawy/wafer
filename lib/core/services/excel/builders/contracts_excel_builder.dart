@@ -90,8 +90,8 @@ class ContractsExcelBuilder {
           : 'غير محدد';
       sheet.getRangeByIndex(row, 4).text = c.startDate;
       sheet.getRangeByIndex(row, 5).text = c.endDate;
-      sheet.getRangeByIndex(row, 6).number = c.rentValue;
-      sheet.getRangeByIndex(row, 7).number = c.daysRemaining.toDouble();
+      sheet.getRangeByIndex(row, 6).number = c.totalRentValue;
+      sheet.getRangeByIndex(row, 7).text = c.statusLabel;
       sheet.getRangeByIndex(row, 8).text = c.status;
 
       sheet.getRangeByIndex(row, 1, row, headers.length).cellStyle =

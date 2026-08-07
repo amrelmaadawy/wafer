@@ -120,6 +120,8 @@ class _ResourceCard extends StatelessWidget {
             context.push(Routes.ownerFinanceReceipts);
           } else if (resource.key == 'payments') {
             context.push(Routes.ownerFinancePayments);
+          } else if (resource.key == 'transfers') {
+            context.push(Routes.ownerFinanceTransfers);
           }
           // TODO: Navigate to other resource lists
         },
@@ -130,6 +132,7 @@ class _ResourceCard extends StatelessWidget {
             borderRadius: AppRadius.circularXxl,
           ),
           child: Stack(
+            clipBehavior: Clip.none,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
@@ -164,8 +167,8 @@ class _ResourceCard extends StatelessWidget {
               ),
               if (pendingCount > 0)
                 PositionedDirectional(
-                  top: -6,
-                  end: -6,
+                  top: -8,
+                  end: -8,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 6,

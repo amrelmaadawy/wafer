@@ -248,6 +248,8 @@ abstract class LocaleKeys {
   static const owner_finance_basic_info = 'owner.finance_basic_info';
   static const owner_finance_payment_number = 'owner.finance_payment_number';
   static const owner_finance_payment_date = 'owner.finance_payment_date';
+  static const transfer_from = 'transfer.from';
+  static const transfer_to = 'transfer.to';
   static const owner_finance_payment_method = 'owner.finance_payment_method';
   static const owner_finance_notes = 'owner.finance_notes';
   static const owner_finance_accounts_title = 'owner.finance_accounts_title';
@@ -1589,7 +1591,23 @@ abstract class LocaleKeys {
   static const reports_contracts = 'reports.contracts';
   static const reports_system = 'reports.system';
   static const reports_empty_state = 'reports.empty_state';
-
+  static const reports_contractsExpiring = 'reports.contractsExpiring';
+  static const reports_totalRentValue = 'reports.totalRentValue';
+  static const reports_unnamedProperty = 'reports.unnamedProperty';
+  static const reports_rentValue = 'reports.rentValue';
+  static const reports_daysLeft = 'reports.daysLeft';
+  static const reports_expiresOn = 'reports.expiresOn';
+  static const reports_total = 'reports.total';
+  static const reports_active = 'reports.active';
+  static const reports_resolved = 'reports.resolved';
+  static const reports_noData = 'reports.noData';
+  static const reports_notAvailable = 'reports.notAvailable';
+  static const reports_renter = 'reports.renter';
+  static const reports_unit = 'reports.unit';
+  static const reports_legalCases = 'reports.legalCases';
+  static const reports_revenueReport = 'reports.revenueReport';
+  static const reports_occupancyReportTitle = 'reports.occupancyReportTitle';
+  static const reports_defaultersReportTitle = 'reports.defaultersReportTitle';
   static const reports_unitsStatusReportTitle =
       'reports.unitsStatusReportTitle';
   static const reports_unitsStatusTotal = 'reports.unitsStatusTotal';
@@ -1601,6 +1619,21 @@ abstract class LocaleKeys {
   static const reports_all_statuses = 'reports.all_statuses';
   static const reports_property = 'reports.property';
   static const reports_status = 'reports.status';
+  static const reports_summary = 'reports_summary';
+  static const reports_all = 'reports_all';
+  static const reports_allProperties = 'reports_allProperties';
+  static const reports_contractStart = 'reports_contractStart';
+  static const reports_expired = 'reports_expired';
+  static const reports_expiringSoon = 'reports_expiringSoon';
+
+  // Legal Cases Keys
+  static const legalCases_caseNumber = 'legalCases.caseNumber';
+  static const legalCases_plaintiff = 'legalCases.plaintiff';
+  static const legalCases_defendant = 'legalCases.defendant';
+  static const legalCases_court = 'legalCases.court';
+  static const legalCases_hearingDate = 'legalCases.hearingDate';
+  static const legalCases_nextHearingDate = 'legalCases.nextHearingDate';
+
   // Owner Defaulters Report
   static const String defaultersList = 'dashboard.defaultersList';
   static const String defaultersTotalRemaining =

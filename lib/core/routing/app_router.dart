@@ -47,6 +47,10 @@ import '../../features/owner/finance/presentation/cubit/payments/finance_payment
 import '../../features/owner/finance/presentation/cubit/payments/cancel_finance_payment_cubit.dart';
 import '../../features/owner/finance/presentation/views/owner_finance_payment_details_view.dart';
 import '../../features/owner/finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/transfers/create_transfer_cubit.dart';
+import '../../features/owner/finance/presentation/cubit/transfers/transfers_cubit.dart';
+import '../../features/owner/finance/presentation/views/create_owner_transfer_view.dart';
+import '../../features/owner/finance/presentation/views/owner_transfers_view.dart';
 import '../../features/owner/finance/presentation/views/owner_receipts_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
@@ -69,9 +73,11 @@ import '../../features/owner/reports/presentation/views/owner_technician_perform
 import '../../features/owner/reports/presentation/views/owner_employee_tasks_report_view.dart';
 import '../../features/owner/reports/presentation/views/owner_activity_logs_report_view.dart';
 import '../../features/owner/reports/presentation/views/owner_approvals_report_view.dart';
+import '../../features/owner/reports/presentation/views/owner_legal_cases_report_view.dart';
 import '../../features/owner/reports/presentation/cubit/owner_defaulters_cubit.dart';
 import '../../features/owner/reports/presentation/cubit/owner_contracts_report_cubit.dart';
 import '../../features/owner/reports/presentation/cubit/owner_approvals_report_cubit.dart';
+import '../../features/owner/reports/presentation/cubit/legal_cases/owner_legal_cases_report_cubit.dart';
 import '../../features/owner/reports/presentation/views/owner_contracts_report_view.dart';
 import '../../features/profile/presentation/screens/edit_profile_screen.dart';
 import '../../features/profile/presentation/screens/change_password_screen.dart';
@@ -191,6 +197,25 @@ class AppRouter {
               BlocProvider(create: (_) => sl<FinanceFormDataCubit>()),
             ],
             child: const CreateOwnerPaymentView(),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceTransfers,
+        builder: (context, state) => BlocProvider(
+          create: (_) => sl<TransfersCubit>(),
+          child: const OwnerTransfersView(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerFinanceCreateTransfer,
+        builder: (context, state) {
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => sl<CreateTransferCubit>()),
+              BlocProvider(create: (_) => sl<FinanceFormDataCubit>()),
+            ],
+            child: const CreateOwnerTransferView(),
           );
         },
       ),
@@ -506,6 +531,13 @@ class AppRouter {
         builder: (context, state) => BlocProvider.value(
           value: sl<OwnerApprovalsReportCubit>(),
           child: const OwnerApprovalsReportView(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerReportsLegalCases,
+        builder: (context, state) => BlocProvider(
+          create: (context) => sl<OwnerLegalCasesReportCubit>(),
+          child: const OwnerLegalCasesReportView(),
         ),
       ),
       GoRoute(

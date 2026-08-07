@@ -86,6 +86,12 @@ class OwnerReportsCenterScreen extends StatelessWidget {
                   icon: Icons.checklist_rtl_rounded,
                   route: Routes.ownerReportsApprovals,
                 ),
+                _ReportItem(
+                  title: LocaleKeys.reports_legalCases.tr(),
+                  subtitle: 'متابعة سير القضايا القانونية ونزاعات الإيجار',
+                  icon: Icons.gavel_rounded,
+                  route: Routes.ownerReportsLegalCases,
+                ),
               ],
             ),
           ),

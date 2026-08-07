@@ -22,6 +22,8 @@ class Routes {
   static const String ownerFinancePaymentUpdate = '/owner-main/finance/payments/update';
   static const String ownerFinanceCreatePayment = '/owner-main/finance/payments/create';
   static const String ownerFinancePaymentDetails = '/owner-main/finance/payments/details/:id';
+  static const String ownerFinanceTransfers = '/owner-main/finance/transfers';
+  static const String ownerFinanceCreateTransfer = '/owner-main/finance/transfers/create';
   static const String ownerFinanceReceiptDetails = '/owner-main/finance/receipts/details/:id';
   static const String ownerProfile = '/owner-main/profile';
   static const String notifications = '/notifications';
@@ -61,6 +63,7 @@ class Routes {
   static const String ownerContractsReport = '/owner/reports/contracts';
   static const String ownerContractsMovementReport = '/owner/reports/contracts-movement';
   static const String ownerReportsApprovals = '/owner/reports/approvals';
+  static const String ownerReportsLegalCases = '/owner/reports/legal-cases';
   static const String ownerMaintenanceRequestsReport =
       '/owner/reports/maintenance-requests';
   static const String ownerTechnicianPerformanceReport =

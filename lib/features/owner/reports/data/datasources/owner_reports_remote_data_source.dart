@@ -12,6 +12,7 @@ import '../models/technician_performance_report_model.dart';
 import '../models/employee_tasks_report_model.dart';
 import '../models/activity_logs_report_model.dart';
 import '../models/approvals_report_model.dart';
+import '../models/legal_cases_report_model.dart';
 
 abstract class OwnerReportsRemoteDataSource {
   Future<RevenueReportModel> getRevenueReport({
@@ -29,6 +30,7 @@ abstract class OwnerReportsRemoteDataSource {
   Future<ContractsReportModel> getContractsReport({
     int page = 1,
     int? propertyId,
+    String? status,
   });
   Future<ContractsMovementReportModel> getContractsMovementReport({
     int page = 1,
@@ -52,6 +54,11 @@ abstract class OwnerReportsRemoteDataSource {
 
   Future<ApprovalsReportModel> getApprovalsReport({
     int page = 1,
+  });
+
+  Future<LegalCasesReportModel> getLegalCasesReport({
+    int page = 1,
+    String? status,
   });
 }
 
@@ -136,20 +143,26 @@ class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
   Future<ContractsReportModel> getContractsReport({
     int page = 1,
     int? propertyId,
+    String? status,
   }) async {
-    final queryParams = <String, dynamic>{'page': page};
-    if (propertyId != null) queryParams['property_id'] = propertyId;
+    try {
+      final response = await _dio.get(
+        ApiConstants.ownerContractsReport,
+        queryParameters: {
+          'page': page,
+          'property_id': ?propertyId,
+          'status': ?status,
+        },
+      );
 
-    final response = await _dio.get(
-      ApiConstants.ownerContractsReport,
-      queryParameters: queryParams,
-    );
-
-    final data = response.data as Map<String, dynamic>? ?? {};
-    if (data['success'] == true && data['data'] != null) {
-      return ContractsReportModel.fromJson(data['data']);
+      final data = response.data as Map<String, dynamic>? ?? {};
+      if (data['success'] == true && data['data'] != null) {
+        return ContractsReportModel.fromJson(data['data']);
+      }
+      throw ServerException(data['message'] ?? 'Invalid response format');
+    } on DioException catch (e) {
+      throw ServerException(e.message ?? 'Network error');
     }
-    throw ServerException(data['message'] ?? 'Invalid response format');
   }
 
   @override
@@ -273,6 +286,31 @@ class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
       );
       if (response.data['success'] == true) {
         return ApprovalsReportModel.fromJson(response.data['data']);
+      } else {
+        throw ServerException(response.data['message']);
+      }
+    } catch (e) {
+      if (e is ServerException) rethrow;
+      throw ServerException('حدث خطأ غير متوقع');
+    }
+  }
+
+  @override
+  Future<LegalCasesReportModel> getLegalCasesReport({
+    int page = 1,
+    String? status,
+  }) async {
+    try {
+      final queryParams = <String, dynamic>{'page': page};
+      if (status != null && status.isNotEmpty) {
+        queryParams['status'] = status;
+      }
+      final response = await _dio.get(
+        ApiConstants.ownerReportsLegalCases,
+        queryParameters: queryParams,
+      );
+      if (response.data['success'] == true) {
+        return LegalCasesReportModel.fromJson(response.data['data']);
       } else {
         throw ServerException(response.data['message']);
       }

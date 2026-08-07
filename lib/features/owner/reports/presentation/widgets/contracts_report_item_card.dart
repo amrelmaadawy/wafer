@@ -61,7 +61,7 @@ class ContractsReportItemCard extends StatelessWidget {
                           Text(
                             contract.propertyName.isNotEmpty
                                 ? contract.propertyName
-                                : 'Unnamed Property',
+                                : LocaleKeys.reports_unnamedProperty.tr(),
                             style: const TextStyle(
                               color: AppColors.textPrimaryLight,
                               fontSize: 15.5,
@@ -72,7 +72,7 @@ class ContractsReportItemCard extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Unit: ${contract.unitName.isNotEmpty ? contract.unitName : 'N/A'}',
+                            '${LocaleKeys.reports_unit.tr()}: ${contract.unitName.isNotEmpty ? contract.unitName : LocaleKeys.reports_notAvailable.tr()}',
                             style: const TextStyle(
                               color: AppColors.textSecondaryLight,
                               fontSize: 12,
@@ -96,7 +96,7 @@ class ContractsReportItemCard extends StatelessWidget {
                   borderRadius: AppRadius.circularFull,
                 ),
                 child: Text(
-                  contract.status.toUpperCase(),
+                  contract.statusLabel,
                   style: TextStyle(
                     color: statusColor,
                     fontSize: 12,
@@ -122,9 +122,9 @@ class ContractsReportItemCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Renter',
-                        style: TextStyle(
+                      Text(
+                        LocaleKeys.reports_renter.tr(),
+                        style: const TextStyle(
                           color: AppColors.textSecondaryLight,
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
@@ -134,7 +134,7 @@ class ContractsReportItemCard extends StatelessWidget {
                       Text(
                         contract.renterName.isNotEmpty
                             ? contract.renterName
-                            : 'N/A',
+                            : LocaleKeys.reports_notAvailable.tr(),
                         style: const TextStyle(
                           color: AppColors.textPrimaryLight,
                           fontSize: 13,
@@ -150,9 +150,9 @@ class ContractsReportItemCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Rent Value',
-                        style: TextStyle(
+                      Text(
+                        LocaleKeys.reports_rentValue.tr(),
+                        style: const TextStyle(
                           color: AppColors.textSecondaryLight,
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
@@ -160,7 +160,7 @@ class ContractsReportItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        '${contract.rentValue.toStringAsFixed(0)} ${LocaleKeys.contractsCurrency.tr()}',
+                        '${contract.totalRentValue.toStringAsFixed(0)} ${LocaleKeys.contractsCurrency.tr()}',
                         style: const TextStyle(
                           color: AppColors.textPrimaryLight,
                           fontSize: 13,
@@ -178,26 +178,20 @@ class ContractsReportItemCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Expires: ${contract.endDate}',
+                '${LocaleKeys.reports_contractStart.tr()}: ${contract.startDate}',
                 style: const TextStyle(
                   color: AppColors.textSecondaryLight,
                   fontSize: 12,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              Row(
-                children: [
-                  Icon(Icons.schedule, color: statusColor, size: 14),
-                  const SizedBox(width: 4),
-                  Text(
-                    '${contract.daysRemaining} days left',
-                    style: TextStyle(
-                      color: statusColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
+              Text(
+                LocaleKeys.reports_expiresOn.tr(args: [contract.endDate]),
+                style: const TextStyle(
+                  color: AppColors.textSecondaryLight,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ],
           ),

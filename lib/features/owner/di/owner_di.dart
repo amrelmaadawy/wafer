@@ -64,7 +64,15 @@ import '../finance/domain/usecases/cancel_finance_payment_use_case.dart';
 import '../finance/domain/usecases/cancel_finance_receipt_use_case.dart';
 import '../finance/domain/usecases/get_finance_form_data_use_case.dart';
 import '../finance/presentation/cubit/finance_overview_cubit.dart';
+import '../finance/domain/usecases/cancel_finance_receipt_use_case.dart';
 import '../finance/presentation/cubit/accounts/finance_accounts_cubit.dart';
+import '../finance/data/datasources/transfers_remote_data_source.dart';
+import '../finance/data/repositories/transfers_repository_impl.dart';
+import '../finance/domain/repositories/transfers_repository.dart';
+import '../finance/domain/usecases/create_transfer_use_case.dart';
+import '../finance/domain/usecases/get_transfers_use_case.dart';
+import '../finance/presentation/cubit/transfers/create_transfer_cubit.dart';
+import '../finance/presentation/cubit/transfers/transfers_cubit.dart';
 import '../finance/presentation/cubit/accounts/create_finance_account_cubit.dart';
 import '../finance/presentation/cubit/accounts/update_finance_account_cubit.dart';
 import '../finance/presentation/cubit/accounts/finance_account_details_cubit.dart';
@@ -83,6 +91,7 @@ import '../finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
 import '../reports/data/datasources/owner_reports_remote_data_source.dart';
 import '../reports/data/repositories/owner_reports_repository_impl.dart';
 import '../reports/domain/repositories/owner_reports_repository.dart';
+import '../reports/domain/usecases/get_legal_cases_report_use_case.dart';
 import '../reports/domain/usecases/get_owner_defaulters_report_use_case.dart';
 import '../reports/domain/usecases/get_owner_occupancy_report_use_case.dart';
 import '../reports/domain/usecases/get_owner_revenue_report_use_case.dart';
@@ -105,6 +114,7 @@ import '../reports/domain/usecases/get_owner_activity_logs_report_use_case.dart'
 import '../reports/presentation/cubit/owner_activity_logs_cubit.dart';
 import '../reports/domain/usecases/get_approvals_report_use_case.dart';
 import '../reports/presentation/cubit/owner_approvals_report_cubit.dart';
+import '../reports/presentation/cubit/legal_cases/owner_legal_cases_report_cubit.dart';
 
 // Properties
 import '../properties/data/datasources/properties_remote_data_source.dart';
@@ -305,6 +315,33 @@ void _initFinance() {
   }
   if (!sl.isRegistered<CreateFinancePaymentCubit>()) {
     sl.registerFactory(() => CreateFinancePaymentCubit(sl()));
+  }
+
+  // Transfers
+  if (!sl.isRegistered<TransfersRemoteDataSource>()) {
+    sl.registerLazySingleton<TransfersRemoteDataSource>(
+      () => TransfersRemoteDataSourceImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<TransfersRepository>()) {
+    sl.registerLazySingleton<TransfersRepository>(
+      () => TransfersRepositoryImpl(
+        remoteDataSource: sl(),
+        networkInfo: sl(),
+      ),
+    );
+  }
+  if (!sl.isRegistered<GetTransfersUseCase>()) {
+    sl.registerLazySingleton(() => GetTransfersUseCase(sl()));
+  }
+  if (!sl.isRegistered<CreateTransferUseCase>()) {
+    sl.registerLazySingleton(() => CreateTransferUseCase(sl()));
+  }
+  if (!sl.isRegistered<TransfersCubit>()) {
+    sl.registerFactory(() => TransfersCubit(sl()));
+  }
+  if (!sl.isRegistered<CreateTransferCubit>()) {
+    sl.registerFactory(() => CreateTransferCubit(sl()));
   }
 }
 
@@ -740,6 +777,13 @@ void _initReports() {
   );
   sl.registerFactory<OwnerApprovalsReportCubit>(
     () => OwnerApprovalsReportCubit(getApprovalsReportUseCase: sl()),
+  );
+
+  sl.registerLazySingleton<GetLegalCasesReportUseCase>(
+    () => GetLegalCasesReportUseCase(sl()),
+  );
+  sl.registerFactory<OwnerLegalCasesReportCubit>(
+    () => OwnerLegalCasesReportCubit(getLegalCasesReportUseCase: sl()),
   );
 }
 
