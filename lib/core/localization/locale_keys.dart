@@ -1851,6 +1851,10 @@ abstract class LocaleKeys {
   static const String maintenanceDeleteCancelBtn =
       'maintenance.delete_cancel_btn';
   static const String maintenanceDeleteSuccess = 'maintenance.delete_success';
+  static const String maintenanceForwardBtn = 'maintenanceForwardBtn';
+  static const String maintenanceForwardTitle = 'maintenanceForwardTitle';
+  static const String maintenanceForwardNotes = 'maintenanceForwardNotes';
+  static const String maintenanceForwardSuccess = 'maintenanceForwardSuccess';
   static const String maintenanceAssignTechnician =
       'maintenance.assign_technician';
   static const String maintenanceTechnician = 'maintenance.technician';
@@ -1893,6 +1897,8 @@ abstract class LocaleKeys {
   static const maintenanceVerifyCloseNotes = 'maintenanceVerifyCloseNotes';
   static const maintenanceVerifyCloseSubmit = 'maintenanceVerifyCloseSubmit';
   static const maintenanceVerifyCloseSuccess = 'maintenanceVerifyCloseSuccess';
+
+  
   static const maintenanceQaCode = 'maintenanceQaCode';
   static const maintenanceQaCodeHint = 'maintenanceQaCodeHint';
   

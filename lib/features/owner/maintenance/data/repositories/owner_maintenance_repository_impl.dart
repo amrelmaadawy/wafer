@@ -13,6 +13,7 @@ import '../../domain/usecases/assign_owner_maintenance_use_case.dart';
 import '../../domain/usecases/complete_owner_maintenance_task_use_case.dart';
 import '../../domain/usecases/execute_owner_maintenance_use_case.dart';
 import '../../domain/usecases/verify_close_owner_maintenance_use_case.dart';
+import '../../domain/usecases/forward_owner_maintenance_use_case.dart';
 import '../../domain/entities/execute_owner_maintenance_response_entity.dart';
 import '../../domain/entities/maintenance_form_data_entity.dart';
 import '../datasources/owner_maintenance_remote_data_source.dart';
@@ -214,6 +215,20 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
         params,
       );
       return Right(result);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> forwardMaintenanceRequest(
+    ForwardOwnerMaintenanceParams params,
+  ) async {
+    try {
+      await _remoteDataSource.forwardMaintenanceRequest(params);
+      return const Right(null);
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioException(e));
     } catch (e) {

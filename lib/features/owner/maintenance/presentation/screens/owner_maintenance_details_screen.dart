@@ -23,6 +23,7 @@ import '../cubit/reject_maintenance/owner_reject_maintenance_state.dart';
 
 import '../cubit/start_maintenance/owner_start_maintenance_cubit.dart';
 import '../cubit/complete_task/owner_complete_task_cubit.dart';
+import '../cubit/forward_maintenance/owner_forward_maintenance_cubit.dart';
 import '../widgets/maintenance_cost_section.dart';
 import '../widgets/maintenance_details_header_card.dart';
 import '../widgets/maintenance_images_section.dart';
@@ -63,6 +64,7 @@ class _OwnerMaintenanceDetailsScreenState
         BlocProvider(create: (_) => di.sl<OwnerRejectMaintenanceCubit>()),
         BlocProvider(create: (_) => di.sl<OwnerStartMaintenanceCubit>()),
         BlocProvider(create: (_) => di.sl<OwnerCompleteTaskCubit>()),
+        BlocProvider(create: (_) => di.sl<OwnerForwardMaintenanceCubit>()),
       ],
       child: Builder(
         builder: (context) {

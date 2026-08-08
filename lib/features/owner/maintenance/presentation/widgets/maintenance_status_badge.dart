@@ -23,37 +23,61 @@ class MaintenanceStatusBadge extends StatelessWidget {
     String labelKey = '';
 
     switch (lower) {
-      case 'pending':
       case 'new':
+      case 'pending':
         bg = AppColors.warning.withValues(alpha: 0.12);
         fg = AppColors.warning;
         labelKey = LocaleKeys.maintenanceStatusPending;
         break;
+      case 'pending_supervisor':
+        bg = const Color(0xFFD97706).withValues(alpha: 0.12); // Amber
+        fg = const Color(0xFFD97706);
+        labelKey = LocaleKeys.maintenanceStatusPendingSupervisor;
+        break;
       case 'approved':
-        bg = AppColors.info.withValues(alpha: 0.12);
+        bg = AppColors.info.withValues(alpha: 0.12); // Blue
         fg = AppColors.info;
         labelKey = LocaleKeys.maintenanceStatusApproved;
         break;
-      case 'in_progress':
       case 'assigned':
-        bg = const Color(0xFF8B5CF6).withValues(alpha: 0.12);
+        bg = const Color(0xFF6366F1).withValues(alpha: 0.12); // Indigo
+        fg = const Color(0xFF6366F1);
+        labelKey = LocaleKeys.maintenanceStatusAssigned;
+        break;
+      case 'in_progress':
+        bg = const Color(0xFF8B5CF6).withValues(alpha: 0.12); // Purple
         fg = const Color(0xFF8B5CF6);
         labelKey = LocaleKeys.maintenanceStatusInProgress;
         break;
       case 'executed':
       case 'completed':
-        bg = AppColors.success.withValues(alpha: 0.12);
+        bg = AppColors.success.withValues(alpha: 0.12); // Green
         fg = AppColors.success;
         labelKey = LocaleKeys.maintenanceStatusExecuted;
         break;
+      case 'pending_closure':
+        bg = const Color(0xFF14B8A6).withValues(alpha: 0.12); // Teal
+        fg = const Color(0xFF14B8A6);
+        labelKey = LocaleKeys.maintenanceStatusPendingClosure;
+        break;
+      case 'closed':
+        bg = const Color(0xFF64748B).withValues(alpha: 0.12); // Slate
+        fg = const Color(0xFF64748B);
+        labelKey = LocaleKeys.maintenanceStatusClosed;
+        break;
+      case 'forwarded':
+        bg = const Color(0xFF06B6D4).withValues(alpha: 0.12); // Cyan
+        fg = const Color(0xFF06B6D4);
+        labelKey = LocaleKeys.maintenanceStatusForwarded;
+        break;
       case 'rejected':
-        bg = AppColors.error.withValues(alpha: 0.12);
+        bg = AppColors.error.withValues(alpha: 0.12); // Red
         fg = AppColors.error;
         labelKey = LocaleKeys.maintenanceStatusRejected;
         break;
       case 'cancelled':
-        bg = AppColors.error.withValues(alpha: 0.12);
-        fg = AppColors.error;
+        bg = const Color(0xFFF97316).withValues(alpha: 0.12); // Orange-Red
+        fg = const Color(0xFFF97316);
         labelKey = LocaleKeys.maintenanceStatusCancelled;
         break;
       default:

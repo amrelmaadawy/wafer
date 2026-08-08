@@ -173,6 +173,25 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
           },
         ),
       );
+    } else if (displayItem.status == 'closed') {
+      return _ActionBarContainer(
+        child: _buildButton(
+          context,
+          title: LocaleKeys.maintenanceForwardBtn.tr(),
+          onPressed: () async {
+            final result = await MaintenanceActionSheetsHelper.showForwardBottomSheet(
+              context,
+              displayItem.safeId,
+            );
+            if (result == true && context.mounted) {
+              onModified(true);
+              context
+                  .read<OwnerMaintenanceDetailsCubit>()
+                  .getMaintenanceDetails(displayItem.safeId);
+            }
+          },
+        ),
+      );
     }
     return const SizedBox.shrink();
   }

@@ -11,6 +11,7 @@ import '../../domain/usecases/assign_owner_maintenance_use_case.dart';
 import '../../domain/usecases/complete_owner_maintenance_task_use_case.dart';
 import '../../domain/usecases/execute_owner_maintenance_use_case.dart';
 import '../../domain/usecases/verify_close_owner_maintenance_use_case.dart';
+import '../../domain/usecases/forward_owner_maintenance_use_case.dart';
 import '../models/execute_owner_maintenance_response_model.dart';
 import '../models/maintenance_form_data_model.dart';
 
@@ -38,6 +39,7 @@ abstract class OwnerMaintenanceRemoteDataSource {
   Future<MaintenanceItemModel> verifyCloseMaintenanceRequest(
     VerifyCloseOwnerMaintenanceParams params,
   );
+  Future<void> forwardMaintenanceRequest(ForwardOwnerMaintenanceParams params);
   Future<void> deleteMaintenanceRequest(int id);
 }
 
@@ -213,11 +215,21 @@ class OwnerMaintenanceRemoteDataSourceImpl
     VerifyCloseOwnerMaintenanceParams params,
   ) async {
     final response = await _dio.post(
-      'owner/maintenance-requests/${params.id}/verify-close',
+      'owner/maintenance-requests/${params.id}/verify-and-close',
       data: params.toJson(),
     );
     final data = response.data['data'] as Map<String, dynamic>;
     final itemMap = data['maintenance_request'] as Map<String, dynamic>;
     return MaintenanceItemModel.fromJson(itemMap);
+  }
+
+  @override
+  Future<void> forwardMaintenanceRequest(
+    ForwardOwnerMaintenanceParams params,
+  ) async {
+    await _dio.post(
+      'owner/maintenance-requests/${params.id}/forward',
+      data: params.toJson(),
+    );
   }
 }

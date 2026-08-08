@@ -10,6 +10,7 @@ import '../usecases/assign_owner_maintenance_use_case.dart';
 import '../usecases/complete_owner_maintenance_task_use_case.dart';
 import '../usecases/execute_owner_maintenance_use_case.dart';
 import '../usecases/verify_close_owner_maintenance_use_case.dart';
+import '../usecases/forward_owner_maintenance_use_case.dart';
 import '../entities/maintenance_form_data_entity.dart';
 import '../entities/execute_owner_maintenance_response_entity.dart';
 
@@ -47,5 +48,8 @@ abstract class OwnerMaintenanceRepository {
   executeMaintenanceRequest(ExecuteOwnerMaintenanceParams params);
   Future<Either<Failure, MaintenanceItemEntity>> verifyCloseMaintenanceRequest(
     VerifyCloseOwnerMaintenanceParams params,
+  );
+  Future<Either<Failure, void>> forwardMaintenanceRequest(
+    ForwardOwnerMaintenanceParams params,
   );
 }

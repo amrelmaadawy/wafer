@@ -42,7 +42,9 @@ import '../maintenance/presentation/cubit/complete_task/owner_complete_task_cubi
 import '../maintenance/domain/usecases/execute_owner_maintenance_use_case.dart';
 import '../maintenance/presentation/cubit/execute_maintenance/owner_execute_maintenance_cubit.dart';
 import '../maintenance/domain/usecases/verify_close_owner_maintenance_use_case.dart';
+import '../maintenance/domain/usecases/forward_owner_maintenance_use_case.dart';
 import '../maintenance/presentation/cubit/verify_close_maintenance/owner_verify_close_maintenance_cubit.dart';
+import '../maintenance/presentation/cubit/forward_maintenance/owner_forward_maintenance_cubit.dart';
 // Finance
 import '../finance/data/datasources/finance_remote_data_source.dart';
 import '../finance/data/repositories/finance_repository_impl.dart';
@@ -722,6 +724,9 @@ void _initMaintenance() {
   if (!sl.isRegistered<VerifyCloseOwnerMaintenanceUseCase>()) {
     sl.registerLazySingleton(() => VerifyCloseOwnerMaintenanceUseCase(sl()));
   }
+  if (!sl.isRegistered<ForwardOwnerMaintenanceUseCase>()) {
+    sl.registerLazySingleton(() => ForwardOwnerMaintenanceUseCase(sl()));
+  }
 
   if (!sl.isRegistered<OwnerCompleteTaskCubit>()) {
     sl.registerFactory(() => OwnerCompleteTaskCubit(sl()));
@@ -737,6 +742,9 @@ void _initMaintenance() {
     sl.registerFactory(
       () => OwnerVerifyCloseMaintenanceCubit(verifyCloseUseCase: sl()),
     );
+  }
+  if (!sl.isRegistered<OwnerForwardMaintenanceCubit>()) {
+    sl.registerFactory(() => OwnerForwardMaintenanceCubit(sl()));
   }
 }
 
