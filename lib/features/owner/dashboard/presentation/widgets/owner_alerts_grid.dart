@@ -44,12 +44,12 @@ class OwnerAlertsGrid extends StatelessWidget {
                   color: const Color(0xFF10B981),
                   icon: Icons.description_rounded,
                   subtitle: LocaleKeys.ownerActiveContractsSub.tr(),
-                  onTap: () {
-                    context.go(Routes.ownerContracts);
-                    context.read<OwnerContractsCubit>().changeStatusFilter(
-                      'active',
-                    );
-                  },
+                  // onTap: () {
+                  //   context.go(Routes.ownerContracts);
+                  //   context.read<OwnerContractsCubit>().changeStatusFilter(
+                  //     'active',
+                  //   );
+                  // },
                 ),
               ),
               const SizedBox(width: 10),
@@ -63,12 +63,12 @@ class OwnerAlertsGrid extends StatelessWidget {
                   icon: Icons.update_rounded,
                   subtitle: LocaleKeys.ownerExpiringSub.tr(),
                   highlight: data.expiringContracts > 0,
-                  onTap: () {
-                    context.go(Routes.ownerContracts);
-                    context.read<OwnerContractsCubit>().changeStatusFilter(
-                      'expiring',
-                    );
-                  },
+                  // onTap: () {
+                  //   context.go(Routes.ownerContracts);
+                  //   context.read<OwnerContractsCubit>().changeStatusFilter(
+                  //     'expiring',
+                  //   );
+                  // },
                 ),
               ),
               const SizedBox(width: 10),

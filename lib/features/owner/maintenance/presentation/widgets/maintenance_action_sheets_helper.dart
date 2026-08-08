@@ -15,7 +15,7 @@ class MaintenanceActionSheetsHelper {
     showModalBottomSheet(
       context: parentContext,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(parentContext).scaffoldBackgroundColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -33,7 +33,7 @@ class MaintenanceActionSheetsHelper {
     showModalBottomSheet(
       context: parentContext,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(parentContext).scaffoldBackgroundColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -51,7 +51,10 @@ class MaintenanceActionSheetsHelper {
     return showModalBottomSheet<bool>(
       context: parentContext,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Theme.of(parentContext).scaffoldBackgroundColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
       builder: (context) {
         return BlocProvider.value(
           value: parentContext.read<OwnerForwardMaintenanceCubit>(),

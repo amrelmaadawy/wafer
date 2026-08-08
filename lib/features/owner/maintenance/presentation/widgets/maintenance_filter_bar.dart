@@ -77,25 +77,52 @@ class MaintenanceFilterBar extends StatelessWidget {
     final isSelected = status == active;
     return Padding(
       padding: const EdgeInsets.only(left: 8),
-      child: FilterChip(
-        label: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : AppColors.textPrimaryLight,
-            fontSize: 12.5,
-            fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-          ),
-        ),
-        selected: isSelected,
-        onSelected: (_) =>
-            context.read<OwnerMaintenanceCubit>().changeStatusFilter(status),
-        backgroundColor: AppColors.surfaceLight,
-        selectedColor: context.primaryColor,
-        showCheckmark: false,
-        shape: RoundedRectangleBorder(
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 350),
+        curve: Curves.easeOutCubic,
+        decoration: BoxDecoration(
+          color: isSelected ? context.primaryColor : AppColors.surfaceLight,
           borderRadius: AppRadius.circularFull,
-          side: BorderSide(
+          border: Border.all(
             color: isSelected ? context.primaryColor : AppColors.borderLight,
+            width: 1,
+          ),
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: context.primaryShadow.withValues(alpha: 0.25),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  )
+                ]
+              : [],
+        ),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: AppRadius.circularFull,
+          child: InkWell(
+            borderRadius: AppRadius.circularFull,
+            onTap: () {
+              // Only trigger if not already selected to avoid unnecessary rebuilds
+              if (!isSelected) {
+                context.read<OwnerMaintenanceCubit>().changeStatusFilter(status);
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+              child: AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 350),
+                curve: Curves.easeOutCubic,
+                style: TextStyle(
+                  fontFamily: Theme.of(context).textTheme.bodyMedium?.fontFamily, // Inherit font
+                  color: isSelected ? Colors.white : AppColors.textPrimaryLight,
+                  fontSize: 13,
+                  fontWeight: isSelected ? FontWeight.w800 : FontWeight.w600,
+                  letterSpacing: 0.3,
+                ),
+                child: Text(label),
+              ),
+            ),
           ),
         ),
       ),

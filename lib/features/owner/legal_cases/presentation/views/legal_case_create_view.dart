@@ -25,6 +25,7 @@ import '../widgets/create_wizard/legal_case_links_card.dart';
 import '../widgets/create_wizard/legal_case_court_parties_card.dart';
 import '../widgets/create_wizard/legal_case_financials_card.dart';
 import '../widgets/create_wizard/legal_case_notes_card.dart';
+import '../widgets/legal_case_create_skeleton.dart';
 
 class LegalCaseCreateView extends StatefulWidget {
   final LegalCaseItemEntity? legalCaseToEdit;
@@ -347,7 +348,7 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
               builder: (context, formDataState) {
                 if (formDataState is LegalCaseFormDataLoading ||
                     formDataState is LegalCaseFormDataInitial) {
-                  return const Center(child: CircularProgressIndicator());
+                  return const LegalCaseCreateSkeleton();
                 }
 
                 if (formDataState is LegalCaseFormDataError) {

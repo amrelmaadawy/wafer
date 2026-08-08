@@ -26,78 +26,188 @@ class PropertyMaintenanceTab extends StatelessWidget {
       itemCount: maintenanceRequests.length,
       itemBuilder: (context, index) {
         final request = maintenanceRequests[index];
-        return Card(
-          elevation: 0,
-          margin: const EdgeInsets.only(bottom: 12),
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
+        return Container(
+          margin: const EdgeInsets.only(bottom: 16),
+          decoration: BoxDecoration(
+            color: Colors.white,
             borderRadius: BorderRadius.circular(16),
-            side: BorderSide(color: Colors.grey.withValues(alpha: 0.2)),
+            border: Border.all(color: const Color(0xFFF1F5F9)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.03),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Header Row
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                decoration: const BoxDecoration(
+                  color: Color(0xFFF8FAFC),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+                ),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      request.requestNumber,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: const Color(0xFFE2E8F0)),
+                          ),
+                          child: const Icon(Icons.handyman_rounded, size: 16, color: AppColors.textSecondaryLight),
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          request.requestNumber,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            color: AppColors.textPrimaryLight,
+                          ),
+                        ),
+                      ],
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
+                        horizontal: 10,
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
                         color: AppColors.info.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
                         request.statusLabel,
                         style: const TextStyle(
                           color: AppColors.info,
                           fontSize: 12,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
-                Text(
-                  '${LocaleKeys.unitDetailsDescription.tr()}: ${request.description}',
-                  style: const TextStyle(color: Colors.black87),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '${LocaleKeys.maintenanceUnitLabel.tr()}: ${request.unitName}',
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              ),
+              // Body
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${LocaleKeys.maintenanceEstimatedCost.tr()}: ${request.estimatedCost} ${LocaleKeys.commonCurrencySar.tr()}',
-                      style: TextStyle(
-                        color: context.primaryColor,
-                        fontWeight: FontWeight.bold,
+                    if (request.description.isNotEmpty) ...[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Icon(Icons.description_outlined, size: 16, color: AppColors.textSecondaryLight),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: Text(
+                              request.description,
+                              style: const TextStyle(
+                                color: AppColors.textPrimaryLight,
+                                fontSize: 13,
+                                height: 1.4,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 12),
+                    ],
+                    Row(
+                      children: [
+                        const Icon(Icons.meeting_room_outlined, size: 16, color: AppColors.textSecondaryLight),
+                        const SizedBox(width: 8),
+                        Text(
+                          '${LocaleKeys.maintenanceUnitLabel.tr()}: ',
+                          style: const TextStyle(
+                            color: AppColors.textSecondaryLight,
+                            fontSize: 13,
+                          ),
+                        ),
+                        Expanded(
+                          child: Text(
+                            request.unitName,
+                            style: const TextStyle(
+                              color: AppColors.textPrimaryLight,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w600,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      request.requestedDate ?? '',
-                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 12),
+                      child: Divider(color: Color(0xFFF1F5F9), height: 1),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(6),
+                              decoration: BoxDecoration(
+                                color: context.primaryColor.withValues(alpha: 0.1),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(Icons.payments_outlined, size: 16, color: context.primaryColor),
+                            ),
+                            const SizedBox(width: 8),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  LocaleKeys.maintenanceEstimatedCost.tr(),
+                                  style: const TextStyle(
+                                    color: AppColors.textSecondaryLight,
+                                    fontSize: 11,
+                                  ),
+                                ),
+                                Text(
+                                  '${request.estimatedCost} ر.س',
+                                  style: TextStyle(
+                                    color: context.primaryColor,
+                                    fontWeight: FontWeight.w800,
+                                    fontSize: 14,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        if (request.requestedDate != null)
+                          Row(
+                            children: [
+                              const Icon(Icons.calendar_today_outlined, size: 14, color: AppColors.textSecondaryLight),
+                              const SizedBox(width: 4),
+                              Text(
+                                request.requestedDate!,
+                                style: const TextStyle(
+                                  color: AppColors.textSecondaryLight,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

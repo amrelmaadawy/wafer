@@ -24,6 +24,7 @@ import '../widgets/legal_case_details_skeleton.dart';
 import '../widgets/case_stages_timeline_widget.dart';
 import '../widgets/add_legal_case_stage_bottom_sheet.dart';
 import '../../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
 
 class LegalCaseDetailsView extends StatefulWidget {
   final int legalCaseId;
@@ -136,39 +137,61 @@ class _LegalCaseDetailsViewState extends State<LegalCaseDetailsView> {
         child: BlocBuilder<LegalCaseDetailsCubit, LegalCaseDetailsState>(
           builder: (context, state) {
             return Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  LocaleKeys.case_details.tr(),
-                  style: AppTextStyles.h4,
-                ),
-                centerTitle: true,
-                backgroundColor: Colors.white,
-                scrolledUnderElevation: 0,
+              appBar: CustomAppBar(
+                title: LocaleKeys.case_details.tr(),
                 actions: [
-                  if (state is LegalCaseDetailsLoaded)
-                    IconButton(
-                      icon: const Icon(
-                        Icons.edit_outlined,
-                        color: AppColors.primary,
-                      ),
-                      onPressed: () {
-                        final String path =
-                            '${Routes.ownerLegalCases}/${Routes.ownerLegalCaseEdit}';
-                        context.push(path, extra: state.legalCase).then((
-                          updated,
-                        ) {
-                          if (updated == true && context.mounted) {
-                            _cubit.fetchLegalCaseDetails(widget.legalCaseId);
-                          }
-                        });
-                      },
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (state is LegalCaseDetailsLoaded) ...[
+                          Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.edit_outlined,
+                                color: AppColors.primary,
+                                size: 22,
+                              ),
+                              constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                final String path =
+                                    '${Routes.ownerLegalCases}/${Routes.ownerLegalCaseEdit}';
+                                context.push(path, extra: state.legalCase).then((
+                                  updated,
+                                ) {
+                                  if (updated == true && context.mounted) {
+                                    _cubit.fetchLegalCaseDetails(widget.legalCaseId);
+                                  }
+                                });
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                        ],
+                        Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.error.withValues(alpha: 0.1),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.delete_outline,
+                              color: AppColors.error,
+                              size: 22,
+                            ),
+                            constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                            padding: EdgeInsets.zero,
+                            onPressed: () => _showDeleteDialog(context),
+                          ),
+                        ),
+                      ],
                     ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.delete_outline,
-                      color: AppColors.error,
-                    ),
-                    onPressed: () => _showDeleteDialog(context),
                   ),
                 ],
               ),

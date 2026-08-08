@@ -55,7 +55,7 @@ class CustomDropdownMenu<T> extends StatelessWidget {
             width: double.infinity,
             height: height,
             decoration: BoxDecoration(
-              color: AppColors.backgroundLight,
+              color: items.isEmpty ? const Color(0xFFF1F5F9) : AppColors.backgroundLight,
               borderRadius: AppRadius.circularLg,
               border: Border.all(
                 color: errorText != null ? Colors.red : const Color(0xFFE2E8F0),
@@ -74,15 +74,19 @@ class CustomDropdownMenu<T> extends StatelessWidget {
                       fontSize: 14,
                       fontWeight:
                           value != null ? FontWeight.w600 : FontWeight.w500,
-                      color: value != null
-                          ? AppColors.textPrimaryLight
-                          : AppColors.textSecondaryLight,
+                      color: items.isEmpty
+                          ? AppColors.textSecondaryLight.withValues(alpha: 0.5)
+                          : (value != null
+                              ? AppColors.textPrimaryLight
+                              : AppColors.textSecondaryLight),
                     ),
                   ),
                 ),
-                const Icon(
+                Icon(
                   Icons.keyboard_arrow_down_rounded,
-                  color: AppColors.textSecondaryLight,
+                  color: items.isEmpty 
+                      ? AppColors.textSecondaryLight.withValues(alpha: 0.3)
+                      : AppColors.textSecondaryLight,
                   size: 20,
                 ),
               ],

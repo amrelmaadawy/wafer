@@ -114,11 +114,6 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                   .read<OwnerContractsReportCubit>()
                   .loadContractsReport(forceRefresh: true),
             );
-          } else if (state is OwnerContractsReportEmpty) {
-            return ReportEmptyWidget(
-              message: LocaleKeys.reports_empty_state.tr(),
-              icon: Icons.description_outlined,
-            );
           } else if (state is OwnerContractsReportLoaded) {
             return RefreshIndicator(
               color: context.primaryColor,
@@ -204,12 +199,22 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                       ],
                     ),
                     const SizedBox(height: 22),
-                    ContractsReportList(contracts: state.report.items),
-                    if (!state.hasReachedMax)
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 20),
-                        child: Center(child: CircularProgressIndicator()),
-                      ),
+                    if (state.report.items.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40),
+                        child: ReportEmptyWidget(
+                          message: LocaleKeys.reports_empty_state.tr(),
+                          icon: Icons.description_outlined,
+                        ),
+                      )
+                    else ...[
+                      ContractsReportList(contracts: state.report.items),
+                      if (!state.hasReachedMax)
+                        const Padding(
+                          padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Center(child: CircularProgressIndicator()),
+                        ),
+                    ],
                   ],
                 ),
               ),

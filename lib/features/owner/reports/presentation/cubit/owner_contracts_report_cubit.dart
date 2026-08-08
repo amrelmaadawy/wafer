@@ -59,17 +59,13 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
       },
       (report) {
         if (_currentPage == 1) {
-          if (report.items.isEmpty) {
-            emit(OwnerContractsReportEmpty());
-          } else {
-            emit(
-              OwnerContractsReportLoaded(
-                report: report,
-                hasReachedMax:
-                    report.pagination.currentPage >= report.pagination.lastPage,
-              ),
-            );
-          }
+          emit(
+            OwnerContractsReportLoaded(
+              report: report,
+              hasReachedMax:
+                  report.pagination.currentPage >= report.pagination.lastPage,
+            ),
+          );
         } else {
           final currentState = state;
           if (currentState is OwnerContractsReportLoaded) {

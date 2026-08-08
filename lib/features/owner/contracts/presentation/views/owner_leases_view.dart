@@ -28,9 +28,9 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
   void initState() {
     super.initState();
     _scrollController.addListener(_onScroll);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<OwnerContractsCubit>().getContracts();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   context.read<OwnerContractsCubit>().getContracts();
+    // });
   }
 
   void _onScroll() {
@@ -51,12 +51,26 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(context),
-            const ContractsFilterBar(),
-            Expanded(child: _buildBody(context)),
-          ],
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.construction_rounded,
+                size: 80,
+                color: AppColors.textSecondaryLight.withValues(alpha: 0.5),
+              ),
+              const SizedBox(height: 24),
+              Text(
+                'feature_coming_soon'.tr(),
+                style: const TextStyle(
+                  color: AppColors.textSecondaryLight,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -106,6 +120,8 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
   }
 
   Widget _buildBody(BuildContext context) {
+    return const SizedBox.shrink(); // Page is under construction, data hidden
+/*
     return BlocBuilder<OwnerContractsCubit, OwnerContractsState>(
       builder: (context, state) {
         if (state is OwnerContractsLoading || state is OwnerContractsInitial) {
@@ -162,5 +178,6 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
         return const SizedBox.shrink();
       },
     );
+*/
   }
 }

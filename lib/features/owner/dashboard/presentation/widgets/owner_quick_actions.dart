@@ -43,16 +43,6 @@ class OwnerQuickActions extends StatelessWidget {
                   Expanded(
                     child: _buildActionCard(
                       context,
-                      title: LocaleKeys.dashboard_lease_contract.tr(),
-                      icon: Icons.description_outlined,
-                      color: AppColors.success,
-                      onTap: () => context.go(Routes.ownerContracts),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
                       title: LocaleKeys.maintenance_title.tr(),
                       icon: Icons.build_circle_outlined,
                       color: AppColors.error,
@@ -61,14 +51,7 @@ class OwnerQuickActions extends StatelessWidget {
                       },
                     ),
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
+                  const SizedBox(width: 10),
                   Expanded(
                     child: _buildActionCard(
                       context,
@@ -77,18 +60,6 @@ class OwnerQuickActions extends StatelessWidget {
                       color: AppColors.warning,
                       onTap: () {
                         context.push('${Routes.ownerReportsCenter}?tab=0');
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      title: LocaleKeys.deeds_title.tr(),
-                      icon: Icons.file_present_rounded,
-                      color: AppColors.info,
-                      onTap: () {
-                        context.push(Routes.ownerDeeds);
                       },
                     ),
                   ),
@@ -114,8 +85,9 @@ class OwnerQuickActions extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  Expanded(
-                    child: const SizedBox(), // Placeholder for next item
+                  // Placeholder for the empty spot on the bottom left
+                  const Expanded(
+                    child: SizedBox.shrink(),
                   ),
                 ],
               ),
