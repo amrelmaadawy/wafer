@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/di/service_locator.dart';
 import '../cubit/unit_details/unit_details_cubit.dart';
+import '../cubit/delete_unit/unit_delete_cubit.dart';
 import '../views/unit_details_view.dart';
 
 class UnitDetailsScreen extends StatelessWidget {
@@ -16,9 +17,16 @@ class UnitDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          sl<UnitDetailsCubit>()..fetchUnitDetails(propertyId, unitId),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) =>
+              sl<UnitDetailsCubit>()..fetchUnitDetails(propertyId, unitId),
+        ),
+        BlocProvider(
+          create: (context) => sl<UnitDeleteCubit>(),
+        ),
+      ],
       child: const UnitDetailsView(),
     );
   }

@@ -14,11 +14,12 @@ class UnitDetailsLoading extends UnitDetailsState {}
 
 class UnitDetailsLoaded extends UnitDetailsState {
   final UnitFullDetailsEntity unit;
+  final int propertyId;
 
-  const UnitDetailsLoaded(this.unit);
+  const UnitDetailsLoaded(this.unit, this.propertyId);
 
   @override
-  List<Object> get props => [unit];
+  List<Object> get props => [unit, propertyId];
 }
 
 class UnitDetailsError extends UnitDetailsState {

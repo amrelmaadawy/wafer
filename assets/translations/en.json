@@ -775,7 +775,6 @@
     "area": "Area",
     "city": "City",
     "district": "District",
-    "region": "Region",
     "street_name": "Street Name",
     "building_number": "Building Number",
     "postal_code": "Postal Code",
@@ -1065,6 +1064,7 @@
   "edit_case": "Edit Case",
   "units": {
     "add_new_unit": "Add New Unit",
+    "edit_unit": "Edit Unit",
     "basic_info_title": "Unit Basic Information",
     "unit_name_label": "Unit Name",
     "unit_name_hint": "e.g., Apartment 101",

@@ -1060,6 +1060,7 @@
   "edit_case": "تعديل القضية",
   "units": {
     "add_new_unit": "إضافة وحدة جديدة",
+    "edit_unit": "تعديل بيانات الوحدة",
     "basic_info_title": "البيانات الأساسية للوحدة",
     "unit_name_label": "اسم الوحدة",
     "unit_name_hint": "مثال: شقة 101",

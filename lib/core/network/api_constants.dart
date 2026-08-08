@@ -100,4 +100,8 @@ class ApiConstants {
       'owner/properties/$propertyId/units/$unitId';
   static String ownerPublishUnit(int propertyId, int unitId) =>
       'owner/properties/$propertyId/units/$unitId/publish';
+
+  static const String ownerUnitsFormData = 'owner/units/form-data';
+  static String ownerUpdateUnit(int unitId) => 'owner/units/$unitId';
+  static String ownerDeleteUnit(int unitId) => 'owner/units/$unitId';
 }

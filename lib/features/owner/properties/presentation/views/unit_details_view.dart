@@ -34,6 +34,7 @@ class UnitDetailsView extends StatelessWidget {
           }
           if (state is UnitDetailsLoaded) {
             final unit = state.unit;
+            final propertyId = state.propertyId;
 
             final hasMeters =
                 unit.meters.electricity != null ||
@@ -42,7 +43,7 @@ class UnitDetailsView extends StatelessWidget {
 
             return CustomScrollView(
               slivers: [
-                UnitHeaderSection(unit: unit),
+                UnitHeaderSection(unit: unit, propertyId: propertyId),
                 SliverPadding(
                   padding: const EdgeInsets.fromLTRB(16, 20, 16, 40),
                   sliver: SliverList(

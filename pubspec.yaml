@@ -54,6 +54,7 @@ dependencies:
   syncfusion_flutter_xlsio: ^34.1.32
   share_plus: ^13.3.0
   open_filex: ^4.7.0
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

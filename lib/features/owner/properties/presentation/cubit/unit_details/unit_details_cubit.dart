@@ -16,7 +16,7 @@ class UnitDetailsCubit extends Cubit<UnitDetailsState> {
     final result = await _getUnitDetailsUseCase(propertyId, unitId);
     result.fold(
       (failure) => emit(UnitDetailsError(failure.message)),
-      (unit) => emit(UnitDetailsLoaded(unit)),
+      (unit) => emit(UnitDetailsLoaded(unit, propertyId)),
     );
   }
 

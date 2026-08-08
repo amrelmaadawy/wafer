@@ -153,10 +153,12 @@ import '../properties/domain/usecases/sync_owners_use_case.dart';
 import '../properties/domain/usecases/upload_temp_file_use_case.dart';
 import '../properties/domain/usecases/publish_property_use_case.dart';
 import '../properties/domain/usecases/get_unit_details_use_case.dart';
+import '../properties/domain/usecases/delete_unit_use_case.dart';
 import '../properties/presentation/cubit/list/properties_list_cubit.dart';
 import '../properties/presentation/cubit/details/property_details_cubit.dart';
 import '../properties/presentation/cubit/create/property_create_cubit.dart';
 import '../properties/presentation/cubit/publish/publish_property_cubit.dart';
+import '../properties/presentation/cubit/delete_unit/unit_delete_cubit.dart';
 import '../properties/presentation/cubit/unit_details/unit_details_cubit.dart';
 
 // Units
@@ -168,8 +170,11 @@ import '../properties/domain/usecases/create_draft_unit_use_case.dart';
 import '../properties/domain/usecases/auto_save_unit_use_case.dart';
 import '../properties/domain/usecases/publish_unit_use_case.dart';
 import '../properties/domain/usecases/create_unit_usecase.dart';
+import '../properties/domain/usecases/get_units_form_data_use_case.dart';
+import '../properties/domain/usecases/update_unit_use_case.dart';
 import '../properties/presentation/cubit/units/units_list_cubit.dart';
 import '../properties/presentation/cubit/units/unit_create_cubit.dart';
+import '../properties/presentation/cubit/edit_unit/unit_edit_cubit.dart';
 
 import '../properties/domain/usecases/clone_property_use_case.dart';
 import '../properties/domain/usecases/auto_save_type_step_use_case.dart';
@@ -468,8 +473,23 @@ void _initUnits() {
   if (!sl.isRegistered<UnitDetailsCubit>()) {
     sl.registerFactory(() => UnitDetailsCubit(sl()));
   }
+  if (!sl.isRegistered<UnitDeleteCubit>()) {
+    sl.registerFactory(() => UnitDeleteCubit(sl()));
+  }
+  if (!sl.isRegistered<DeleteUnitUseCase>()) {
+    sl.registerLazySingleton(() => DeleteUnitUseCase(sl()));
+  }
   if (!sl.isRegistered<UnitCreateCubit>()) {
     sl.registerFactory(() => UnitCreateCubit(sl(), sl()));
+  }
+  if (!sl.isRegistered<GetUnitsFormDataUseCase>()) {
+    sl.registerLazySingleton(() => GetUnitsFormDataUseCase(sl()));
+  }
+  if (!sl.isRegistered<UpdateUnitUseCase>()) {
+    sl.registerLazySingleton(() => UpdateUnitUseCase(sl()));
+  }
+  if (!sl.isRegistered<UnitEditCubit>()) {
+    sl.registerFactory(() => UnitEditCubit(sl(), sl(), sl()));
   }
 }
 

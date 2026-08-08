@@ -4,6 +4,7 @@ import '../../domain/entities/properties_pagination_meta_entity.dart';
 import '../models/unit_model.dart';
 import '../models/unit_full_details_model.dart';
 import '../models/unit_create_model.dart';
+import '../models/units_form_data_model.dart';
 
 abstract class UnitsRemoteDataSource {
   Future<({List<UnitModel> items, PropertiesPaginationMetaEntity meta})>
@@ -23,6 +24,10 @@ abstract class UnitsRemoteDataSource {
   );
   Future<UnitFullDetailsModel> getUnitDetails(int propertyId, int unitId);
   Future<void> publishUnit(int propertyId, int unitId);
+  
+  Future<UnitsFormDataModel> getUnitsFormData();
+  Future<UnitFullDetailsModel> updateUnit(int unitId, FormData data);
+  Future<void> deleteUnit(int unitId);
 }
 
 class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
@@ -124,5 +129,29 @@ class UnitsRemoteDataSourceImpl implements UnitsRemoteDataSource {
   @override
   Future<void> publishUnit(int propertyId, int unitId) async {
     await _dio.post(ApiConstants.ownerPublishUnit(propertyId, unitId));
+  }
+
+  @override
+  Future<UnitsFormDataModel> getUnitsFormData() async {
+    final response = await _dio.get(ApiConstants.ownerUnitsFormData);
+    return UnitsFormDataModel.fromJson(
+      response.data['data'] as Map<String, dynamic>,
+    );
+  }
+
+  @override
+  Future<UnitFullDetailsModel> updateUnit(int unitId, FormData data) async {
+    final response = await _dio.post(
+      ApiConstants.ownerUpdateUnit(unitId),
+      data: data,
+    );
+    return UnitFullDetailsModel.fromJson(
+      response.data['data']['unit'] as Map<String, dynamic>,
+    );
+  }
+
+  @override
+  Future<void> deleteUnit(int unitId) async {
+    await _dio.delete(ApiConstants.ownerDeleteUnit(unitId));
   }
 }

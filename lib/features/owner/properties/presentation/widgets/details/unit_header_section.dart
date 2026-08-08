@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/unit_full_details_entity.dart';
+import '../../cubit/delete_unit/unit_delete_cubit.dart';
+import 'unit_delete_confirmation_sheet.dart';
 
 class UnitHeaderSection extends StatelessWidget {
   final UnitFullDetailsEntity unit;
+  final int propertyId;
 
-  const UnitHeaderSection({super.key, required this.unit});
+  const UnitHeaderSection({super.key, required this.unit, required this.propertyId});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +23,26 @@ class UnitHeaderSection extends StatelessWidget {
       expandedHeight: hasImages ? 280.0 : 220.0,
       pinned: true,
       backgroundColor: context.primaryColor,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.edit, color: Colors.white),
+          onPressed: () {
+            context.push(
+              '/owner-unit-edit?propertyId=$propertyId&unitId=${unit.id}',
+            );
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.delete_outline, color: Colors.white),
+          onPressed: () {
+            UnitDeleteConfirmationSheet.show(
+              context,
+              unit.id,
+              context.read<UnitDeleteCubit>(),
+            );
+          },
+        ),
+      ],
       flexibleSpace: FlexibleSpaceBar(background: _buildBackground(context)),
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(20),

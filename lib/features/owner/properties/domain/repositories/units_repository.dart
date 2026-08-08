@@ -4,6 +4,8 @@ import '../entities/properties_pagination_meta_entity.dart';
 import '../entities/unit_full_details_entity.dart';
 import '../entities/unit_entity.dart';
 import '../entities/unit_create_entity.dart';
+import '../entities/unit_update_entity.dart';
+import '../entities/units_form_data_entity.dart';
 
 abstract class UnitsRepository {
   Future<
@@ -34,4 +36,11 @@ abstract class UnitsRepository {
     int propertyId,
     UnitCreateEntity unit,
   );
+  
+  Future<Either<Failure, UnitsFormDataEntity>> getUnitsFormData();
+  Future<Either<Failure, UnitFullDetailsEntity>> updateUnit(
+    int unitId,
+    UnitUpdateEntity unit,
+  );
+  Future<Either<Failure, void>> deleteUnit(int unitId);
 }
