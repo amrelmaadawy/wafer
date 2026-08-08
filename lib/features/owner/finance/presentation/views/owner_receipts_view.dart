@@ -1,3 +1,4 @@
+import '../../../../../core/utils/widgets/app_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -10,7 +11,7 @@ import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../../core/presentation/widgets/custom_empty_widget.dart';
-import '../../../../../../generated/locale_keys.dart';
+import '../../../../../../core/localization/locale_keys.dart';
 import '../cubit/receipts/finance_receipts_cubit.dart';
 import '../cubit/receipts/finance_receipts_state.dart';
 import '../widgets/finance_receipt_card.dart';
@@ -112,7 +113,12 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
             ),
           ),
           Expanded(
-            child: BlocBuilder<FinanceReceiptsCubit, FinanceReceiptsState>(
+            child: BlocConsumer<FinanceReceiptsCubit, FinanceReceiptsState>(
+              listener: (context, state) {
+                if (state is FinanceReceiptsError && state.oldReceipts.isNotEmpty) {
+                  AppToast.showError(context, state.message);
+                }
+              },
               builder: (context, state) {
                 if (state is FinanceReceiptsInitial ||
                     (state is FinanceReceiptsLoading &&
@@ -120,7 +126,7 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
                   return const FinanceReceiptsSkeleton();
                 }
 
-                if (state is FinanceReceiptsError) {
+                if (state is FinanceReceiptsError && state.oldReceipts.isEmpty) {
                   return CustomErrorWidget(
                     message: state.message,
                     onRetry: () => context
@@ -139,6 +145,8 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
                 } else if (state is FinanceReceiptsPaginationLoading) {
                   receipts = state.oldReceipts;
                   isLoadingMore = true;
+                } else if (state is FinanceReceiptsError) {
+                  receipts = state.oldReceipts;
                 }
 
                 if (receipts.isEmpty && !isLoadingMore) {

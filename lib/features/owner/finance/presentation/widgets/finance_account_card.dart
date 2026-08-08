@@ -5,7 +5,7 @@ import 'package:wafer/core/theme/color_utils.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
-import '../../../../../generated/locale_keys.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/finance_account_entity.dart';
 
 class FinanceAccountCard extends StatelessWidget {
@@ -147,30 +147,41 @@ class FinanceAccountCard extends StatelessWidget {
 
   Widget _buildTypeTag(BuildContext context) {
     Color color;
+    String label;
     switch (account.type.toLowerCase()) {
       case 'asset':
       case 'أصول':
         color = AppColors.success;
+        label = LocaleKeys.owner_finance_assets.tr();
         break;
       case 'liability':
       case 'خصوم':
+        color = AppColors.error;
+        label = LocaleKeys.owner_finance_liabilities.tr();
+        break;
+      case 'discount / credit':
       case 'خصم / دائن':
         color = AppColors.error;
+        label = LocaleKeys.owner_finance_discount_credit.tr();
         break;
       case 'expense':
       case 'مصروفات':
         color = AppColors.warning;
+        label = LocaleKeys.owner_finance_expenses.tr();
         break;
       case 'revenue':
       case 'إيرادات':
         color = AppColors.info;
+        label = LocaleKeys.owner_finance_revenues.tr();
         break;
       case 'equity':
       case 'حقوق ملكية':
         color = Colors.purple;
+        label = LocaleKeys.owner_finance_equity.tr();
         break;
       default:
         color = AppColors.textSecondaryLight;
+        label = account.type;
     }
 
     return Container(
@@ -180,7 +191,7 @@ class FinanceAccountCard extends StatelessWidget {
         borderRadius: AppRadius.circularLg,
       ),
       child: Text(
-        account.type,
+        label,
         style: Theme.of(context).textTheme.labelSmall?.copyWith(
               color: color,
               fontWeight: FontWeight.w600,

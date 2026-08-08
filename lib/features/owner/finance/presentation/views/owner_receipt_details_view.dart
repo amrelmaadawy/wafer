@@ -188,8 +188,8 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
                 _buildDetailRow(context, LocaleKeys.owner_receipt_entry_number.tr(), receipt.journalEntry!.entryNumber),
                 _buildDetailRow(context, LocaleKeys.owner_receipt_entry_date.tr(), receipt.journalEntry!.entryDate),
                 _buildDetailRow(context, LocaleKeys.owner_receipt_status.tr(), receipt.journalEntry!.status),
-                _buildDetailRow(context, LocaleKeys.owner_receipt_total_debit.tr(), '${receipt.journalEntry!.totalDebit} ر.س'),
-                _buildDetailRow(context, LocaleKeys.owner_receipt_total_credit.tr(), '${receipt.journalEntry!.totalCredit} ر.س'),
+                _buildDetailRow(context, LocaleKeys.owner_receipt_total_debit.tr(), '${receipt.journalEntry!.totalDebit} ${LocaleKeys.owner_finance_currency_sar.tr()}'),
+                _buildDetailRow(context, LocaleKeys.owner_receipt_total_credit.tr(), '${receipt.journalEntry!.totalCredit} ${LocaleKeys.owner_finance_currency_sar.tr()}'),
               ],
             ),
           ],
@@ -303,7 +303,7 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
           const SizedBox(height: 24),
           Center(
             child: Text(
-              '${receipt.amount} ر.س',
+              '${receipt.amount} ${LocaleKeys.owner_finance_currency_sar.tr()}',
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                     color: context.primaryColor,
                     fontWeight: FontWeight.bold,

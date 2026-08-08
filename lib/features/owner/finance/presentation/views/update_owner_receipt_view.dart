@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
 import '../../../../../core/presentation/widgets/custom_back_button.dart';
 import '../../../../../core/utils/widgets/custom_text_field.dart';
@@ -62,10 +63,10 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
         appBar: AppBar(
           leadingWidth: 68,
           leading: const CustomBackButton(),
-          title: const Text('تعديل السند', style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(LocaleKeys.owner_finance_update_receipt.tr(), style: const TextStyle(fontWeight: FontWeight.bold)),
           centerTitle: true,
         ),
-        body: const Center(child: Text('السند غير موجود')),
+        body: Center(child: Text(LocaleKeys.owner_finance_receipt_not_found.tr())),
       );
     }
 
@@ -84,7 +85,7 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
         appBar: AppBar(
           leadingWidth: 68,
           leading: const CustomBackButton(),
-          title: const Text('تعديل السند', style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(LocaleKeys.owner_finance_update_receipt.tr(), style: const TextStyle(fontWeight: FontWeight.bold)),
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 0,
@@ -98,11 +99,11 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
               children: [
                 CustomTextField(
                   controller: _amountController,
-                  label: 'المبلغ',
+                  label: LocaleKeys.owner_finance_amount_label.tr(),
                   keyboardType: TextInputType.number,
                   validator: (val) {
-                    if (val == null || val.isEmpty) return 'مطلوب';
-                    if (num.tryParse(val) == null) return 'قيمة غير صالحة';
+                    if (val == null || val.isEmpty) return 'مطلوب'; // Will fix required translation soon
+                    if (num.tryParse(val) == null) return LocaleKeys.owner_finance_invalid_value.tr();
                     return null;
                   },
                 ),
@@ -134,7 +135,7 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
                   child: AbsorbPointer(
                     child: CustomTextField(
                       controller: _dateController,
-                      label: 'تاريخ السند',
+                      label: LocaleKeys.owner_finance_receipt_date.tr(),
                       readOnly: true,
                       validator: (val) => val == null || val.isEmpty ? 'مطلوب' : null,
                     ),
@@ -143,7 +144,7 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _notesController,
-                  label: 'ملاحظات',
+                  label: LocaleKeys.owner_finance_notes_label.tr(),
                   maxLines: 3,
                 ),
                 const SizedBox(height: 32),
@@ -160,7 +161,7 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
                         onPressed: state is UpdateFinanceReceiptLoading ? null : _submit,
                         child: state is UpdateFinanceReceiptLoading
                             ? const CircularProgressIndicator(color: Colors.white)
-                            : const Text('حفظ التعديلات', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                            : Text(LocaleKeys.owner_finance_save_changes.tr(), style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                       );
                     },
                   ),

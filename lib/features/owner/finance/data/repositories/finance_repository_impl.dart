@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:wafer/features/owner/finance/domain/entities/payment_entity.dart';
 import '../../../../../core/data/base_repository.dart';
-import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 
 import '../../domain/entities/finance_account_entity.dart';
@@ -75,46 +74,25 @@ class FinanceRepositoryImpl extends BaseRepository
   Future<Either<Failure, FinanceAccountEntity>> createAccount(
     CreateFinanceAccountParams params,
   ) async {
-    if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-
-    try {
-      final accountModel = await remoteDataSource.createAccount(params.toJson());
-      return Right(accountModel);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    }
+    return executeApiCall<FinanceAccountEntity>(
+      call: () => remoteDataSource.createAccount(params.toJson()),
+    );
   }
 
   @override
   Future<Either<Failure, FinanceAccountEntity>> updateAccount(
     UpdateFinanceAccountParams params,
   ) async {
-    if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-
-    try {
-      final accountModel = await remoteDataSource.updateAccount(params.id, params.toJson());
-      return Right(accountModel);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    }
+    return executeApiCall<FinanceAccountEntity>(
+      call: () => remoteDataSource.updateAccount(params.id, params.toJson()),
+    );
   }
 
   @override
   Future<Either<Failure, FinanceAccountEntity>> getAccountDetails(int id) async {
-    if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-
-    try {
-      final accountModel = await remoteDataSource.getAccountDetails(id);
-      return Right(accountModel);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    }
+    return executeApiCall<FinanceAccountEntity>(
+      call: () => remoteDataSource.getAccountDetails(id),
+    );
   }
 
   @override
@@ -123,131 +101,68 @@ class FinanceRepositoryImpl extends BaseRepository
     int perPage = 15,
     String? search,
   }) async {
-    if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-
-    try {
-      final response = await remoteDataSource.getReceipts(
+    return executeApiCall<ReceiptsResponseEntity>(
+      call: () => remoteDataSource.getReceipts(
         page: page,
         perPage: perPage,
         search: search,
-      );
-      return Right(response);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+      ),
+    );
   }
 
   @override
   Future<Either<Failure, ReceiptEntity>> updateReceipt(UpdateFinanceReceiptParams params) async {
-    if (!await networkInfo.isConnected) {
-      return const Left(NetworkFailure('No internet connection'));
-    }
-
-    try {
-      final body = {
-        'amount': params.amount,
-        'receipt_date': params.receiptDate,
-        if (params.notes != null && params.notes!.isNotEmpty) 'notes': params.notes,
-      };
-
-      final receiptModel = await remoteDataSource.updateReceipt(params.receiptId, body);
-      return Right(receiptModel);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    final body = {
+      'amount': params.amount,
+      'receipt_date': params.receiptDate,
+      if (params.notes != null && params.notes!.isNotEmpty) 'notes': params.notes,
+    };
+    return executeApiCall<ReceiptEntity>(
+      call: () => remoteDataSource.updateReceipt(params.receiptId, body),
+    );
   }
 
   @override
   Future<Either<Failure, ReceiptEntity>> getReceiptDetails(int receiptId) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final receipt = await remoteDataSource.getReceiptDetails(receiptId);
-        return Right(receipt);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
+    return executeApiCall<ReceiptEntity>(
+      call: () => remoteDataSource.getReceiptDetails(receiptId),
+    );
   }
 
   @override
   Future<Either<Failure, PaymentEntity>> createPayment(Map<String, dynamic> params) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.createPayment(params);
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } catch (e) {
-        return const Left(ServerFailure('An unexpected error occurred'));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
+    return executeApiCall<PaymentEntity>(
+      call: () => remoteDataSource.createPayment(params),
+    );
   }
 
   @override
   Future<Either<Failure, PaymentEntity>> updatePayment(
       int paymentId, Map<String, dynamic> params) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final payment = await remoteDataSource.updatePayment(paymentId, params);
-        return Right(payment);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
+    return executeApiCall<PaymentEntity>(
+      call: () => remoteDataSource.updatePayment(paymentId, params),
+    );
   }
 
   @override
   Future<Either<Failure, PaymentEntity>> getFinancePaymentDetails(int paymentId) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final payment = await remoteDataSource.getFinancePaymentDetails(paymentId);
-        return Right(payment);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
+    return executeApiCall<PaymentEntity>(
+      call: () => remoteDataSource.getFinancePaymentDetails(paymentId),
+    );
   }
 
   @override
   Future<Either<Failure, void>> cancelFinancePayment(int paymentId, String reason) async {
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDataSource.cancelFinancePayment(paymentId, reason);
-        return const Right(null);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
+    return executeApiCall<void>(
+      call: () => remoteDataSource.cancelFinancePayment(paymentId, reason),
+    );
   }
 
   @override
   Future<Either<Failure, ReceiptEntity>> cancelReceipt(int receiptId, String reason) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final receipt = await remoteDataSource.cancelReceipt(receiptId, reason);
-        return Right(receipt);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      }
-    } else {
-      return const Left(NetworkFailure('No internet connection'));
-    }
+    return executeApiCall<ReceiptEntity>(
+      call: () => remoteDataSource.cancelReceipt(receiptId, reason),
+    );
   }
 
   @override
@@ -256,19 +171,12 @@ class FinanceRepositoryImpl extends BaseRepository
     int perPage = 15,
     String? search,
   }) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remotePayments = await remoteDataSource.getPayments(
-          page: page,
-          perPage: perPage,
-          search: search,
-        );
-        return Right(remotePayments);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      }
-    } else {
-      return const Left(NetworkFailure('لا يوجد اتصال بالإنترنت'));
-    }
+    return executeApiCall<PaymentsResponseEntity>(
+      call: () => remoteDataSource.getPayments(
+        page: page,
+        perPage: perPage,
+        search: search,
+      ),
+    );
   }
 }

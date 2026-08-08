@@ -1,4 +1,6 @@
+import '../../../../../core/localization/locale_keys.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
@@ -39,8 +41,8 @@ class _CancelReceiptDialogState extends State<CancelReceiptDialog> {
             children: [
               const Icon(Icons.cancel_outlined, color: AppColors.error, size: 48),
               const SizedBox(height: 16),
-              const Text(
-                'إلغاء السند المالي',
+              Text(
+                LocaleKeys.owner_finance_cancel_receipt_title.tr(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
@@ -49,20 +51,20 @@ class _CancelReceiptDialogState extends State<CancelReceiptDialog> {
                 ),
               ),
               const SizedBox(height: 12),
-              const Text(
-                'هل أنت متأكد من رغبتك في إلغاء هذا السند؟ برجاء كتابة سبب الإلغاء.',
+              Text(
+                LocaleKeys.owner_finance_cancel_receipt_desc.tr(),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.textSecondaryLight, fontSize: 14),
+                style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 14),
               ),
               const SizedBox(height: 24),
               CustomTextField(
                 controller: _reasonController,
-                label: 'سبب الإلغاء',
-                hintText: 'اكتب سبب الإلغاء هنا',
+                label: LocaleKeys.owner_finance_cancel_reason_label.tr(),
+                hintText: LocaleKeys.owner_finance_cancel_reason_hint.tr(),
                 maxLines: 3,
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'الرجاء إدخال سبب الإلغاء';
+                    return LocaleKeys.owner_finance_cancel_reason_required.tr();
                   }
                   return null;
                 },
@@ -72,7 +74,7 @@ class _CancelReceiptDialogState extends State<CancelReceiptDialog> {
                 children: [
                   Expanded(
                     child: CustomButton(
-                      text: 'إلغاء السند',
+                      text: LocaleKeys.owner_finance_cancel_receipt_btn.tr(),
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           Navigator.of(context).pop();
@@ -84,7 +86,7 @@ class _CancelReceiptDialogState extends State<CancelReceiptDialog> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: CustomButton(
-                      text: 'تراجع',
+                      text: LocaleKeys.owner_finance_cancel_back_btn.tr(),
                       type: ButtonType.secondary,
                       onPressed: () => Navigator.of(context).pop(),
                     ),

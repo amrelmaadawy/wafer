@@ -9,7 +9,7 @@ import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/routing/routes.dart';
-import '../../../../../generated/locale_keys.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/finance_account_entity.dart';
 import '../cubit/accounts/finance_account_details_cubit.dart';
 import '../cubit/accounts/finance_account_details_state.dart';
@@ -264,29 +264,36 @@ class _OwnerAccountDetailsViewState extends State<OwnerAccountDetailsView> {
 
   Widget _buildTypeTag(BuildContext context, String type) {
     Color color;
+    String label;
     switch (type.toLowerCase()) {
       case 'asset':
       case 'أصول':
+        label = LocaleKeys.owner_finance_assets.tr();
         color = AppColors.success;
         break;
       case 'liability':
       case 'خصوم':
       case 'خصم / دائن':
+        label = LocaleKeys.owner_finance_liabilities.tr();
         color = AppColors.error;
         break;
       case 'expense':
       case 'مصروفات':
+        label = LocaleKeys.owner_finance_expenses.tr();
         color = AppColors.warning;
         break;
       case 'revenue':
       case 'إيرادات':
+        label = LocaleKeys.owner_finance_revenues.tr();
         color = AppColors.info;
         break;
       case 'equity':
       case 'حقوق ملكية':
+        label = LocaleKeys.owner_finance_equity.tr();
         color = Colors.purple;
         break;
       default:
+        label = type;
         color = AppColors.textSecondaryLight;
     }
 
@@ -297,7 +304,7 @@ class _OwnerAccountDetailsViewState extends State<OwnerAccountDetailsView> {
         borderRadius: AppRadius.circularLg,
       ),
       child: Text(
-        type,
+        label,
         style: Theme.of(context).textTheme.labelMedium?.copyWith(
               color: color,
               fontWeight: FontWeight.w600,

@@ -1,115 +1,55 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
-import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
-import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/network/connectivity/network_info.dart';
 import '../../domain/entities/journal_entries_response_entity.dart';
 import '../../domain/entities/journal_entry_entity.dart';
 import '../../domain/entities/create_journal_entry_request_entity.dart';
 import '../../domain/entities/update_journal_entry_request_entity.dart';
 import '../../domain/repositories/journal_entries_repository.dart';
 import '../datasources/journal_entries_remote_data_source.dart';
+import '../../../../../core/data/base_repository.dart';
 
-class JournalEntriesRepositoryImpl implements JournalEntriesRepository {
+class JournalEntriesRepositoryImpl extends BaseRepository implements JournalEntriesRepository {
   final JournalEntriesRemoteDataSource remoteDataSource;
-  final NetworkInfo networkInfo;
 
   JournalEntriesRepositoryImpl({
     required this.remoteDataSource,
-    required this.networkInfo,
+    required super.networkInfo,
   });
 
   @override
   Future<Either<Failure, JournalEntriesResponseEntity>> getJournalEntries({
     required int page,
   }) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.getJournalEntries(page: page);
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } on DioException catch (e) {
-        return Left(ServerFailure.fromDioException(e));
-      } catch (e) {
-        return Left(ServerFailure(e.toString()));
-      }
-    } else {
-      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
-    }
+    return executeApiCall<JournalEntriesResponseEntity>(
+      call: () => remoteDataSource.getJournalEntries(page: page),
+    );
   }
 
   @override
   Future<Either<Failure, JournalEntryEntity>> createJournalEntry(CreateJournalEntryRequestEntity request) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.createJournalEntry(request);
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } on DioException catch (e) {
-        return Left(ServerFailure.fromDioException(e));
-      } catch (e) {
-        return Left(ServerFailure(e.toString()));
-      }
-    } else {
-      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
-    }
+    return executeApiCall<JournalEntryEntity>(
+      call: () => remoteDataSource.createJournalEntry(request),
+    );
   }
 
   @override
   Future<Either<Failure, JournalEntryEntity>> updateJournalEntry(UpdateJournalEntryRequestEntity request) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.updateJournalEntry(request);
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } on DioException catch (e) {
-        return Left(ServerFailure.fromDioException(e));
-      } catch (e) {
-        return Left(ServerFailure(e.toString()));
-      }
-    } else {
-      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
-    }
+    return executeApiCall<JournalEntryEntity>(
+      call: () => remoteDataSource.updateJournalEntry(request),
+    );
   }
 
   @override
   Future<Either<Failure, JournalEntryEntity>> postJournalEntry(int id) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.postJournalEntry(id);
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } on DioException catch (e) {
-        return Left(ServerFailure.fromDioException(e));
-      } catch (e) {
-        return Left(ServerFailure(e.toString()));
-      }
-    } else {
-      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
-    }
+    return executeApiCall<JournalEntryEntity>(
+      call: () => remoteDataSource.postJournalEntry(id),
+    );
   }
 
   @override
   Future<Either<Failure, JournalEntryEntity>> reverseJournalEntry(int id, String reason) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.reverseJournalEntry(id, reason);
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } on DioException catch (e) {
-        return Left(ServerFailure.fromDioException(e));
-      } catch (e) {
-        return Left(ServerFailure(e.toString()));
-      }
-    } else {
-      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
-    }
+    return executeApiCall<JournalEntryEntity>(
+      call: () => remoteDataSource.reverseJournalEntry(id, reason),
+    );
   }
 }

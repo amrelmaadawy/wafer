@@ -48,11 +48,11 @@ class FinancePaymentsLoaded extends FinancePaymentsState {
 
 class FinancePaymentsError extends FinancePaymentsState {
   final String message;
-
-  const FinancePaymentsError(this.message);
+  final List<PaymentEntity> oldPayments;
+  const FinancePaymentsError(this.message, {this.oldPayments = const []});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message, oldPayments];
 }
 
 class FinancePaymentsEmpty extends FinancePaymentsState {}

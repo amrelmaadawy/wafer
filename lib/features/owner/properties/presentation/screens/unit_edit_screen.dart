@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/color_utils.dart';
-import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
@@ -70,7 +69,7 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
 
   // Bools
   bool _isFurnished = false;
-  bool _isCompleted = true;
+  final bool _isCompleted = false;
 
   @override
   void initState() {
@@ -316,7 +315,7 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
           title: Text('units.is_furnished_label'.tr()),
           value: _isFurnished,
           onChanged: (v) => setState(() => _isFurnished = v),
-          activeColor: context.primaryColor,
+          activeThumbColor: context.primaryColor,
         ),
       ],
     );

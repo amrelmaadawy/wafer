@@ -92,8 +92,13 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
         ],
         child: RefreshIndicator(
           onRefresh: _onRefresh,
-          color: AppColors.primary,
-          child: BlocBuilder<FinancePaymentsCubit, FinancePaymentsState>(
+          color: context.primaryColor,
+          child: BlocConsumer<FinancePaymentsCubit, FinancePaymentsState>(
+            listener: (context, state) {
+              if (state is FinancePaymentsError && state.oldPayments.isNotEmpty) {
+                AppToast.showError(context, state.message);
+              }
+            },
             builder: (context, state) {
               if (state is FinancePaymentsInitial ||
                   (state is FinancePaymentsLoading && state.isFirstFetch)) {
@@ -110,7 +115,7 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
                     ),
                   ),
                 );
-              } else if (state is FinancePaymentsError) {
+              } else if (state is FinancePaymentsError && state.oldPayments.isEmpty) {
                 return SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: SizedBox(
@@ -125,10 +130,12 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
 
               final payments = state is FinancePaymentsLoaded
                   ? state.payments
-                  : (context.read<FinancePaymentsCubit>().state
-                          as FinancePaymentsLoaded?)
-                      ?.payments ??
-                      [];
+                  : state is FinancePaymentsError 
+                      ? state.oldPayments
+                      : (context.read<FinancePaymentsCubit>().state
+                              as FinancePaymentsLoaded?)
+                          ?.payments ??
+                          [];
 
               final hasReachedMax = state is FinancePaymentsLoaded
                   ? state.hasReachedMax

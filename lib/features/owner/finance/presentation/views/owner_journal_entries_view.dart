@@ -75,6 +75,13 @@ class _OwnerJournalEntriesViewState extends State<OwnerJournalEntriesView> {
             }
           },
         ),
+        BlocListener<JournalEntriesCubit, JournalEntriesState>(
+          listener: (context, state) {
+            if (state is JournalEntriesError && state.entries.isNotEmpty) {
+              AppToast.showError(context, state.message);
+            }
+          },
+        ),
       ],
       child: Scaffold(
       backgroundColor: AppColors.backgroundLight,

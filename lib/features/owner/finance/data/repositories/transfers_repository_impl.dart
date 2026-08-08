@@ -1,94 +1,45 @@
-import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
-import 'package:easy_localization/easy_localization.dart';
-import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
-import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/network/connectivity/network_info.dart';
 import '../../domain/entities/create_transfer_request_entity.dart';
 import '../../domain/entities/transfer_entity.dart';
 import '../../domain/repositories/transfers_repository.dart';
 import '../datasources/transfers_remote_data_source.dart';
+import '../../../../../core/data/base_repository.dart';
 
-class TransfersRepositoryImpl implements TransfersRepository {
+class TransfersRepositoryImpl extends BaseRepository implements TransfersRepository {
   final TransfersRemoteDataSource remoteDataSource;
-  final NetworkInfo networkInfo;
 
   TransfersRepositoryImpl({
     required this.remoteDataSource,
-    required this.networkInfo,
+    required super.networkInfo,
   });
 
   @override
   Future<Either<Failure, List<TransferEntity>>> getTransfers({required int page}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final models = await remoteDataSource.getTransfers(page: page);
-        return Right(models);
-      } on DioException catch (e) {
-        return Left(ServerFailure.fromDioException(e));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } catch (e) {
-        return Left(ServerFailure(e.toString()));
-      }
-    } else {
-      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
-    }
+    return executeApiCall<List<TransferEntity>>(
+      call: () => remoteDataSource.getTransfers(page: page),
+    );
   }
 
   @override
   Future<Either<Failure, TransferEntity>> createTransfer(CreateTransferRequestEntity request) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final model = await remoteDataSource.createTransfer(request);
-        return Right(model);
-      } on DioException catch (e) {
-        return Left(ServerFailure.fromDioException(e));
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } catch (e) {
-        return Left(ServerFailure(e.toString()));
-      }
-    } else {
-      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
-    }
+    return executeApiCall<TransferEntity>(
+      call: () => remoteDataSource.createTransfer(request),
+    );
   }
 
   @override
   Future<Either<Failure, TransferEntity>> updateTransfer(
       int transferId, Map<String, dynamic> data) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.updateTransfer(transferId, data);
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } on DioException catch (e) {
-        return Left(ServerFailure.fromDioException(e));
-      } catch (e) {
-        return Left(ServerFailure(e.toString()));
-      }
-    } else {
-      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
-    }
+    return executeApiCall<TransferEntity>(
+      call: () => remoteDataSource.updateTransfer(transferId, data),
+    );
   }
 
   @override
   Future<Either<Failure, TransferEntity>> approveTransfer(int transferId) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final result = await remoteDataSource.approveTransfer(transferId);
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(e.message));
-      } on DioException catch (e) {
-        return Left(ServerFailure.fromDioException(e));
-      } catch (e) {
-        return Left(ServerFailure(e.toString()));
-      }
-    } else {
-      return Left(NetworkFailure(LocaleKeys.errors_no_internet_title.tr()));
-    }
+    return executeApiCall<TransferEntity>(
+      call: () => remoteDataSource.approveTransfer(transferId),
+    );
   }
 }

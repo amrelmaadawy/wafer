@@ -82,7 +82,12 @@ class _OwnerTransfersViewState extends State<OwnerTransfersView> {
         child: RefreshIndicator(
           onRefresh: _onRefresh,
           color: context.primaryColor,
-          child: BlocBuilder<TransfersCubit, TransfersState>(
+          child: BlocConsumer<TransfersCubit, TransfersState>(
+            listener: (context, state) {
+              if (state is TransfersError && state.transfers.isNotEmpty) {
+                AppToast.showError(context, state.message);
+              }
+            },
             builder: (context, state) {
               if (state is TransfersLoading) {
                 return const FinancePaymentsSkeleton();

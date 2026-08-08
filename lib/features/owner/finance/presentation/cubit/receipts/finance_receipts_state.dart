@@ -35,8 +35,9 @@ class FinanceReceiptsSuccess extends FinanceReceiptsState {
 
 class FinanceReceiptsError extends FinanceReceiptsState {
   final String message;
-  const FinanceReceiptsError(this.message);
+  final List<ReceiptEntity> oldReceipts;
+  const FinanceReceiptsError(this.message, {this.oldReceipts = const []});
 
   @override
-  List<Object> get props => [message];
+  List<Object> get props => [message, oldReceipts];
 }

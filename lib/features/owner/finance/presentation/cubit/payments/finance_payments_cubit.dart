@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../domain/entities/payment_entity.dart';
 import '../../../domain/usecases/get_finance_payments_use_case.dart';
 import 'finance_payments_state.dart';
 
@@ -10,6 +11,7 @@ class FinancePaymentsCubit extends Cubit<FinancePaymentsState> {
 
   int _currentPage = 1;
   static const int _perPage = 15;
+  List<PaymentEntity> _payments = [];
 
   Future<void> fetchPayments({bool isRefresh = false}) async {
     if (isRefresh) {
@@ -29,7 +31,7 @@ class FinancePaymentsCubit extends Cubit<FinancePaymentsState> {
     );
 
     result.fold(
-      (failure) => emit(FinancePaymentsError(failure.message)),
+      (failure) => emit(FinancePaymentsError(failure.message, oldPayments: _payments)),
       (response) {
         if (response.payments.isEmpty && _currentPage == 1) {
           emit(FinancePaymentsEmpty());
@@ -37,16 +39,18 @@ class FinancePaymentsCubit extends Cubit<FinancePaymentsState> {
           final hasReachedMax = response.pagination.currentPage >= response.pagination.lastPage;
 
           if (isRefresh || _currentPage == 1) {
+            _payments = response.payments;
             emit(FinancePaymentsLoaded(
-              payments: response.payments,
+              payments: _payments,
               hasReachedMax: hasReachedMax,
               currentPage: _currentPage,
             ));
           } else {
             final currentState = state;
             if (currentState is FinancePaymentsLoaded) {
+              _payments = currentState.payments + response.payments;
               emit(FinancePaymentsLoaded(
-                payments: currentState.payments + response.payments,
+                payments: _payments,
                 hasReachedMax: hasReachedMax,
                 currentPage: _currentPage,
               ));

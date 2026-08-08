@@ -191,8 +191,8 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
                 _buildDetailRow(context, LocaleKeys.ownerFinanceJournalEntryNumber.tr(), payment.journalEntry!.entryNumber),
                 _buildDetailRow(context, LocaleKeys.ownerFinanceJournalEntryDate.tr(), payment.journalEntry!.entryDate),
                 _buildDetailRow(context, LocaleKeys.ownerFinanceJournalEntryStatus.tr(), payment.journalEntry!.status),
-                _buildDetailRow(context, LocaleKeys.ownerFinanceTotalDebit.tr(), '${payment.journalEntry!.totalDebit} ر.س'),
-                _buildDetailRow(context, LocaleKeys.ownerFinanceTotalCredit.tr(), '${payment.journalEntry!.totalCredit} ر.س'),
+                _buildDetailRow(context, LocaleKeys.ownerFinanceTotalDebit.tr(), '${payment.journalEntry!.totalDebit} ${LocaleKeys.owner_finance_currency_sar.tr()}'),
+                _buildDetailRow(context, LocaleKeys.ownerFinanceTotalCredit.tr(), '${payment.journalEntry!.totalCredit} ${LocaleKeys.owner_finance_currency_sar.tr()}'),
               ],
             ),
           ],
@@ -309,7 +309,7 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
           const SizedBox(height: 24),
           Center(
             child: Text(
-              '${payment.amount} ر.س',
+              '${payment.amount} ${LocaleKeys.owner_finance_currency_sar.tr()}',
               style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                     color: context.primaryColor,
                     fontWeight: FontWeight.bold,

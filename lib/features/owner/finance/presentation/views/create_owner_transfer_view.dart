@@ -113,7 +113,7 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
       backgroundColor: AppColors.backgroundLight,
       appBar: CustomAppBar(
         title: widget.transfer != null 
-            ? 'تعديل التحويل المالي' // Can be localized later
+            ? LocaleKeys.owner_finance_update_transfer.tr()
             : LocaleKeys.owner_finance_internal_transfers.tr(),
       ),
       body: MultiBlocListener(
@@ -270,7 +270,7 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
                 // Reference Number
                 CustomTextField(
                   controller: _referenceController,
-                  label: 'الرقم المرجعي (Reference) - اختياري',
+                  label: LocaleKeys.owner_finance_reference_optional.tr(),
                 ),
                 const SizedBox(height: 16),
 

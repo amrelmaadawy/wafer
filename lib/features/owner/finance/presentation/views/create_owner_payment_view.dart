@@ -1,3 +1,4 @@
+import '../../../../../core/localization/locale_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -54,7 +55,7 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedDebitAccountId == null || _selectedCreditAccountId == null) {
-      AppToast.showError(context, 'الرجاء اختيار الحساب الدائن والمدين');
+      AppToast.showError(context, LocaleKeys.owner_finance_select_accounts_error.tr());
       return;
     }
 
@@ -75,9 +76,9 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
     return BlocListener<CreateFinancePaymentCubit, CreateFinancePaymentState>(
       listener: (context, state) {
         if (state is CreateFinancePaymentLoading) {
-          AppToast.showInfo(context, 'جاري الحفظ...');
+          AppToast.showInfo(context, LocaleKeys.owner_finance_saving.tr());
         } else if (state is CreateFinancePaymentSuccess) {
-          AppToast.showSuccess(context, 'تم حفظ السند المالي بنجاح');
+          AppToast.showSuccess(context, LocaleKeys.owner_finance_save_success.tr());
           context.pop(true);
         } else if (state is CreateFinancePaymentError) {
           AppToast.showError(context, state.message);
@@ -89,7 +90,7 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
           scrolledUnderElevation: 0,
           leadingWidth: 68,
           leading: const CustomBackButton(),
-          title: const Text('إنشاء سند صرف'),
+          title: Text(LocaleKeys.owner_finance_create_payment.tr()),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -100,7 +101,7 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
               children: [
                 CustomTextField(
                   controller: _payeeIdController,
-                  label: 'رقم المستفيد (Payee ID)',
+                  label: LocaleKeys.owner_finance_payee_id.tr(),
                   keyboardType: TextInputType.number,
                   validator: (val) => val == null || val.isEmpty ? 'مطلوب' : null,
                 ),

@@ -5,7 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
-import '../../../../../../generated/locale_keys.dart';
+import '../../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/payment_entity.dart';
 
 class FinancePaymentCard extends StatelessWidget {
@@ -180,7 +180,7 @@ class FinancePaymentCard extends StatelessWidget {
                                   Padding(
                                     padding: const EdgeInsets.only(bottom: 4),
                                     child: Text(
-                                      'ر.س',
+                                      LocaleKeys.owner_finance_currency_sar.tr(),
                                       style: Theme.of(context).textTheme.labelLarge?.copyWith(
                                             color: context.primaryColor,
                                             fontWeight: FontWeight.bold,

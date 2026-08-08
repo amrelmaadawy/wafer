@@ -11,7 +11,7 @@ import '../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/utils/widgets/custom_text_field.dart';
 import '../../../../../core/theme/color_utils.dart';
-import '../../../../../generated/locale_keys.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/finance_account_entity.dart';
 import '../cubit/accounts/update_finance_account_cubit.dart';
 import '../cubit/accounts/update_finance_account_state.dart';

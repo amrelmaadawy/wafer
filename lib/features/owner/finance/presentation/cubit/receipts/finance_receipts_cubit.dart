@@ -49,7 +49,7 @@ class FinanceReceiptsCubit extends Cubit<FinanceReceiptsState> {
         } else if (failure is NetworkFailure) {
           message = failure.message;
         }
-        emit(FinanceReceiptsError(message));
+        emit(FinanceReceiptsError(message, oldReceipts: _receipts));
       },
       (response) {
         if (isRefresh) {

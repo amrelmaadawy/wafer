@@ -1,4 +1,6 @@
+import '../../../../../core/localization/locale_keys.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
 import 'package:go_router/go_router.dart';
@@ -73,9 +75,9 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
                   fontSize: 16,
                   color: AppColors.textPrimaryLight,
                 ),
-                decoration: const InputDecoration(
-                  hintText: 'بحث...',
-                  hintStyle: TextStyle(
+                decoration: InputDecoration(
+                  hintText: LocaleKeys.owner_finance_search_hint.tr(),
+                  hintStyle: const TextStyle(
                     color: AppColors.textSecondaryLight,
                     fontSize: 16,
                   ),
@@ -85,7 +87,7 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
                 ),
                 onChanged: _onSearchChanged,
               )
-            : const Text('الحسابات المالية'),
+            : Text(LocaleKeys.owner_finance_financial_accounts.tr()),
         actions: [
 
           IconButton(
@@ -120,8 +122,8 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
 
           if (state is FinanceAccountsEmpty) {
             return CustomEmptyWidget(
-              title: 'لا توجد بيانات',
-              subtitle: 'لا توجد سجلات حاليا',
+              title: LocaleKeys.owner_finance_no_data.tr(),
+              subtitle: LocaleKeys.owner_finance_no_records_currently.tr(),
               icon: Icons.account_balance_wallet_outlined,
             );
           }
