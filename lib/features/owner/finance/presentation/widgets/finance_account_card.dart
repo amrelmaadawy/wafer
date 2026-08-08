@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:wafer/core/theme/color_utils.dart';
 
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
@@ -34,7 +35,7 @@ class FinanceAccountCard extends StatelessWidget {
           border: Border.all(color: AppColors.borderLight),
           boxShadow: [
             BoxShadow(
-              color: AppColors.textPrimaryLight.withValues(alpha: 0.02),
+              color: context.primaryLight.withValues(alpha: 0.02),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -72,13 +73,13 @@ class FinanceAccountCard extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
-                            color: AppColors.primary.withValues(alpha: 0.1),
+                            color: context.primaryColor.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.edit_outlined,
                             size: 16,
-                            color: AppColors.primary,
+                            color: context.primaryColor,
                           ),
                         ),
                       ),

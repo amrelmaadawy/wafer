@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wafer/core/theme/color_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
@@ -9,7 +10,6 @@ import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
-import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/localization/locale_keys.dart';
@@ -59,19 +59,29 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
           BlocBuilder<FinancePaymentDetailsCubit, FinancePaymentDetailsState>(
             builder: (context, state) {
               if (state is FinancePaymentDetailsSuccess) {
-                return IconButton(
-                  onPressed: () {
-                    context.push(
-                      Routes.ownerFinancePaymentUpdate,
-                      extra: {
-                        'payment': state.payment,
-                      },
-                    ).then((_) {
-                      _fetchDetails(); // Refresh after edit
-                    });
-                  },
-                  icon: const Icon(Icons.edit_outlined, color: AppColors.textPrimaryLight),
-                  tooltip: LocaleKeys.ownerFinanceUpdatePayment.tr(),
+                if (state.payment.status.toLowerCase() == 'cancelled') {
+                  return const SizedBox.shrink();
+                }
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: context.primaryColor.withValues(alpha: 0.05),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      context.push(
+                        Routes.ownerFinancePaymentUpdate,
+                        extra: {
+                          'payment': state.payment,
+                        },
+                      ).then((_) {
+                        _fetchDetails(); // Refresh after edit
+                      });
+                    },
+                    icon: const Icon(Icons.edit_rounded, color: context.primaryColor, size: 20),
+                    tooltip: LocaleKeys.ownerFinanceUpdatePayment.tr(),
+                  ),
                 );
               }
               return const SizedBox.shrink();

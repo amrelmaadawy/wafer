@@ -41,7 +41,7 @@ class JournalEntriesRemoteDataSourceImpl implements JournalEntriesRemoteDataSour
   Future<JournalEntriesResponseModel> getJournalEntries({required int page}) async {
     try {
       final response = await _dio.get(
-        '${ApiConstants.baseUrl}owner/accounting/journal-entries',
+        ApiConstants.ownerAccountingJournalEntries,
         queryParameters: {'page': page},
       );
       

@@ -12,6 +12,8 @@ class FinanceFormDataCubit extends Cubit<FinanceFormDataState> {
 
     final result = await getFinanceFormDataUseCase();
 
+    if (isClosed) return;
+
     result.fold(
       (failure) => emit(FinanceFormDataError(failure.message)),
       (formData) => emit(FinanceFormDataSuccess(formData)),

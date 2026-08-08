@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
@@ -86,7 +85,7 @@ class _CancelPaymentDialogState extends State<CancelPaymentDialog> {
                   const SizedBox(width: 12),
                   Expanded(
                     child: CustomButton(
-                      text: LocaleKeys.propertyCreateExitTitle.tr(), // 'تراجع' or similar standard cancel key
+                      text: LocaleKeys.commonCancel.tr(),
                       type: ButtonType.secondary,
                       onPressed: () => Navigator.of(context).pop(),
                     ),

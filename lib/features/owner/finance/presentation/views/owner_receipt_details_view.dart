@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:wafer/core/theme/color_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
+import 'package:wafer/core/routing/routes.dart';
 
 import '../../../../../core/presentation/widgets/custom_back_button.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
-import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../../../../../generated/locale_keys.dart';
 import '../../domain/entities/receipt_entity.dart';
@@ -48,19 +50,22 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
         scrolledUnderElevation: 0,
         leadingWidth: 68,
         leading: const CustomBackButton(),
-        title: const Text('تفاصيل السند', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(LocaleKeys.owner_receipt_details.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
+        actions: [
+          const SizedBox(width: 8),
+        ],
       ),
       body: BlocProvider(
         create: (_) => sl<CancelFinanceReceiptCubit>(),
         child: BlocConsumer<CancelFinanceReceiptCubit, CancelFinanceReceiptState>(
           listener: (context, cancelState) {
             if (cancelState is CancelFinanceReceiptLoading) {
-              AppToast.showInfo(context, 'جاري الإلغاء...');
+              AppToast.showInfo(context, LocaleKeys.owner_receipt_canceling.tr());
             } else if (cancelState is CancelFinanceReceiptSuccess) {
-              AppToast.showSuccess(context, 'تم إلغاء السند المالي بنجاح');
+              AppToast.showSuccess(context, LocaleKeys.owner_receipt_cancel_success.tr());
               _fetchDetails();
               context.read<FinanceReceiptsCubit>().fetchReceipts(isRefresh: true);
             } else if (cancelState is CancelFinanceReceiptError) {
@@ -112,58 +117,85 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
           const SizedBox(height: 16),
           _buildInfoCard(
             context,
-            title: 'البيانات الأساسية',
+            title: LocaleKeys.owner_receipt_basic_info.tr(),
             children: [
-              _buildDetailRow(context, 'رقم السند', receipt.receiptNumber),
-              _buildDetailRow(context, 'تاريخ السند', receipt.receiptDate),
-              _buildDetailRow(context, 'طريقة الدفع', receipt.paymentMethod.label),
+              _buildDetailRow(context, LocaleKeys.owner_receipt_number.tr(), receipt.receiptNumber),
+              _buildDetailRow(context, LocaleKeys.owner_receipt_date.tr(), receipt.receiptDate),
+              _buildDetailRow(context, LocaleKeys.owner_receipt_payment_method.tr(), receipt.paymentMethod.label),
               if (receipt.notes != null && receipt.notes!.isNotEmpty)
-                _buildDetailRow(context, 'الملاحظات', receipt.notes!),
+                _buildDetailRow(context, LocaleKeys.owner_receipt_notes.tr(), receipt.notes!),
             ],
           ),
           const SizedBox(height: 16),
           if (receipt.debitAccount != null || receipt.creditAccount != null)
             _buildInfoCard(
               context,
-              title: 'الحسابات المالية',
+              title: LocaleKeys.owner_receipt_financial_accounts.tr(),
               children: [
                 if (receipt.debitAccount != null)
-                  _buildDetailRow(context, 'الحساب المدين', receipt.debitAccount!.nameAr),
+                  _buildDetailRow(context, LocaleKeys.owner_receipt_debit_account.tr(), receipt.debitAccount!.nameAr),
                 if (receipt.creditAccount != null)
-                  _buildDetailRow(context, 'الحساب الدائن', receipt.creditAccount!.nameAr),
+                  _buildDetailRow(context, LocaleKeys.owner_receipt_credit_account.tr(), receipt.creditAccount!.nameAr),
               ],
             ),
           const SizedBox(height: 16),
           _buildInfoCard(
             context,
-            title: 'الارتباطات',
+            title: LocaleKeys.owner_receipt_connections.tr(),
             children: [
-              _buildDetailRow(context, 'صاحب الحساب', receipt.owner.name),
+              _buildDetailRow(context, LocaleKeys.owner_receipt_account_owner.tr(), receipt.owner.name),
               if (receipt.propertyId != null)
-                _buildDetailRow(context, 'رقم العقار', receipt.propertyId.toString()),
+                _buildDetailRow(context, LocaleKeys.owner_receipt_property_number.tr(), receipt.propertyId.toString()),
               if (receipt.contractId != null)
-                _buildDetailRow(context, 'رقم العقد', receipt.contractId.toString()),
+                _buildDetailRow(context, LocaleKeys.owner_receipt_contract_number.tr(), receipt.contractId.toString()),
             ],
           ),
           if (receipt.journalEntry != null) ...[
             const SizedBox(height: 16),
             _buildInfoCard(
               context,
-              title: 'القيد اليومي',
+              title: LocaleKeys.owner_receipt_journal_entry.tr(),
               children: [
-                _buildDetailRow(context, 'رقم القيد', receipt.journalEntry!.entryNumber),
-                _buildDetailRow(context, 'تاريخ القيد', receipt.journalEntry!.entryDate),
-                _buildDetailRow(context, 'الحالة', receipt.journalEntry!.status),
-                _buildDetailRow(context, 'إجمالي المدين', '${receipt.journalEntry!.totalDebit} ر.س'),
-                _buildDetailRow(context, 'إجمالي الدائن', '${receipt.journalEntry!.totalCredit} ر.س'),
+                _buildDetailRow(context, LocaleKeys.owner_receipt_entry_number.tr(), receipt.journalEntry!.entryNumber),
+                _buildDetailRow(context, LocaleKeys.owner_receipt_entry_date.tr(), receipt.journalEntry!.entryDate),
+                _buildDetailRow(context, LocaleKeys.owner_receipt_status.tr(), receipt.journalEntry!.status),
+                _buildDetailRow(context, LocaleKeys.owner_receipt_total_debit.tr(), '${receipt.journalEntry!.totalDebit} ر.س'),
+                _buildDetailRow(context, LocaleKeys.owner_receipt_total_credit.tr(), '${receipt.journalEntry!.totalCredit} ر.س'),
               ],
             ),
           ],
           if (receipt.status != 'cancelled') ...[
-            const SizedBox(height: 32),
+            const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
-              height: 54,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  context.push(
+                    Routes.ownerFinanceReceiptUpdate,
+                    extra: {'receipt': receipt},
+                  ).then((_) {
+                    _fetchDetails(); // Refresh after edit
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: context.primaryColor.withValues(alpha: 0.1),
+                  foregroundColor: context.primaryColor,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  elevation: 0,
+                  shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularMd),
+                ),
+                icon: const Icon(Icons.edit_rounded, size: 20),
+                label: Text(
+                  LocaleKeys.owner_receipt_edit.tr(),
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+              ),
+            ),
+          ],
+          if (receipt.status != 'cancelled') ...[
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: () {
                   showDialog(
@@ -177,9 +209,9 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
                   );
                 },
                 icon: const Icon(Icons.cancel_outlined, color: Colors.white),
-                label: const Text(
-                  'إلغاء السند المالي',
-                  style: TextStyle(
+                label: Text(
+                  LocaleKeys.owner_receipt_cancel_action.tr(),
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -187,15 +219,13 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
                 ),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.error,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: AppRadius.circularLg,
-                  ),
-                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularMd),
                 ),
               ),
             ),
-            const SizedBox(height: 16),
           ],
+          const SizedBox(height: 100),
         ],
       ),
     );
@@ -214,7 +244,7 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
         border: Border.all(color: AppColors.borderLight),
         boxShadow: [
           BoxShadow(
-            color: AppColors.textPrimaryLight.withValues(alpha: 0.02),
+            color: context.primaryLight.withValues(alpha: 0.02),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -242,7 +272,7 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
                   ),
                   const SizedBox(width: 12),
                   Text(
-                    'المبلغ الإجمالي',
+                    LocaleKeys.owner_receipt_total_amount.tr(),
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                           color: AppColors.textSecondaryLight,
                           fontWeight: FontWeight.bold,

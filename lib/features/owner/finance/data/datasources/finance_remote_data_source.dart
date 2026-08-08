@@ -1,4 +1,5 @@
 import 'dart:convert';
+import '../../../../../core/network/api_constants.dart';
 import 'package:dio/dio.dart';
 import 'package:wafer/features/owner/finance/data/models/payment_model.dart';
 import '../../../../../core/error/exceptions.dart';
@@ -82,7 +83,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   @override
   Future<FinanceOverviewModel> getFinanceOverview() async {
     try {
-      final response = await dio.get('owner/accounting');
+      final response = await dio.get(ApiConstants.ownerAccounting);
       final data = response.data['data'] as Map<String, dynamic>;
       return FinanceOverviewModel.fromJson(data);
     } on DioException catch (e) {
@@ -95,7 +96,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   @override
   Future<FinanceFormDataModel> getFinanceFormData() async {
     try {
-      final response = await dio.get('owner/accounting/form-data');
+      final response = await dio.get(ApiConstants.ownerAccountingFormData);
       final data = response.data['data'] as Map<String, dynamic>;
       return FinanceFormDataModel.fromJson(data);
     } on DioException catch (e) {
@@ -125,7 +126,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
 
     try {
       final response = await dio.get(
-        'owner/accounting/accounts',
+        ApiConstants.ownerAccountingAccounts,
         queryParameters: queryParameters,
       );
       return FinanceAccountsResponseModel.fromJson(response.data);
@@ -140,7 +141,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   Future<FinanceAccountModel> createAccount(Map<String, dynamic> body) async {
     try {
       final response = await dio.post(
-        'owner/accounting/accounts',
+        ApiConstants.ownerAccountingAccounts,
         data: body,
       );
       return FinanceAccountModel.fromJson(response.data['data']['account']);
@@ -155,7 +156,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   Future<FinanceAccountModel> updateAccount(int id, Map<String, dynamic> body) async {
     try {
       final response = await dio.patch(
-        'owner/accounting/accounts/$id',
+        '${ApiConstants.ownerAccountingAccounts}/$id',
         data: body,
       );
       return FinanceAccountModel.fromJson(response.data['data']['account']);
@@ -169,7 +170,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   @override
   Future<FinanceAccountModel> getAccountDetails(int id) async {
     try {
-      final response = await dio.get('owner/accounting/accounts/$id');
+      final response = await dio.get('${ApiConstants.ownerAccountingAccounts}/$id');
       return FinanceAccountModel.fromJson(response.data['data']['account']);
     } on DioException catch (e) {
       throw _handleDioException(e, 'Failed to get account details');
@@ -192,7 +193,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       };
 
       final response = await dio.get(
-        'owner/accounting/receipts',
+        ApiConstants.ownerAccountingReceipts,
         queryParameters: queryParameters,
       );
 
@@ -211,7 +212,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   Future<ReceiptModel> createReceipt(Map<String, dynamic> body) async {
     try {
       final response = await dio.post(
-        'owner/accounting/receipts',
+        ApiConstants.ownerAccountingReceipts,
         data: body,
       );
       return ReceiptModel.fromJson(response.data['data']['receipt']);
@@ -236,7 +237,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       };
 
       final response = await dio.get(
-        'owner/accounting/payments',
+        ApiConstants.ownerAccountingPayments,
         queryParameters: queryParameters,
       );
       return PaymentsResponseModel.fromJson(response.data['data']);
@@ -251,7 +252,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   Future<PaymentModel> createPayment(Map<String, dynamic> body) async {
     try {
       final response = await dio.post(
-        'owner/accounting/payments',
+        ApiConstants.ownerAccountingPayments,
         data: body,
       );
       return PaymentModel.fromJson(response.data['data']['payment']);
@@ -266,7 +267,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   Future<PaymentModel> updatePayment(int paymentId, Map<String, dynamic> body) async {
     try {
       final response = await dio.patch(
-        'owner/accounting/payments/$paymentId',
+        '${ApiConstants.ownerAccountingPayments}/$paymentId',
         data: body,
       );
       return PaymentModel.fromJson(response.data['data']['payment']);
@@ -280,7 +281,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   @override
   Future<PaymentModel> getFinancePaymentDetails(int paymentId) async {
     try {
-      final response = await dio.get('owner/accounting/payments/$paymentId');
+      final response = await dio.get('${ApiConstants.ownerAccountingPayments}/$paymentId');
       return PaymentModel.fromJson(response.data['data']['payment']);
     } on DioException catch (e) {
       throw _handleDioException(e, 'Failed to get payment details');
@@ -293,7 +294,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   Future<void> cancelFinancePayment(int paymentId, String reason) async {
     try {
       await dio.post(
-        'owner/accounting/payments/$paymentId/action',
+        '${ApiConstants.ownerAccountingPayments}/$paymentId/action',
         data: {
           'action': 'cancel',
           'reason': reason,
@@ -310,7 +311,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   Future<ReceiptModel> updateReceipt(int receiptId, Map<String, dynamic> body) async {
     try {
       final response = await dio.patch(
-        'owner/accounting/receipts/$receiptId',
+        '${ApiConstants.ownerAccountingReceipts}/$receiptId',
         data: body,
       );
       return ReceiptModel.fromJson(response.data['data']['receipt']);
@@ -324,7 +325,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   @override
   Future<ReceiptModel> getReceiptDetails(int receiptId) async {
     try {
-      final response = await dio.get('owner/accounting/receipts/$receiptId');
+      final response = await dio.get('${ApiConstants.ownerAccountingReceipts}/$receiptId');
       return ReceiptModel.fromJson(response.data['data']['receipt']);
     } on DioException catch (e) {
       throw _handleDioException(e, 'Failed to get receipt details');
@@ -337,7 +338,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   Future<ReceiptModel> cancelReceipt(int receiptId, String reason) async {
     try {
       final response = await dio.post(
-        'owner/accounting/receipts/$receiptId/action',
+        '${ApiConstants.ownerAccountingReceipts}/$receiptId/action',
         data: {
           "action": "cancel",
           "reason": reason,

@@ -54,7 +54,7 @@ class TransfersRemoteDataSourceImpl implements TransfersRemoteDataSource {
       int transferId, Map<String, dynamic> data) async {
     try {
       final response = await _dio.patch(
-        '${ApiConstants.baseUrl}owner/accounting/transfers/$transferId',
+        '${ApiConstants.ownerTransfers}/$transferId',
         data: data,
       );
       
@@ -72,7 +72,7 @@ class TransfersRemoteDataSourceImpl implements TransfersRemoteDataSource {
   Future<TransferModel> approveTransfer(int transferId) async {
     try {
       final response = await _dio.post(
-        '${ApiConstants.baseUrl}owner/accounting/transfers/$transferId/action',
+        '${ApiConstants.ownerTransfers}/$transferId/action',
         data: {'action': 'approve'},
       );
       
