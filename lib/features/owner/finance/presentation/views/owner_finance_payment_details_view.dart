@@ -79,7 +79,7 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
                         _fetchDetails(); // Refresh after edit
                       });
                     },
-                    icon: const Icon(Icons.edit_rounded, color: context.primaryColor, size: 20),
+                    icon: Icon(Icons.edit_rounded, color: context.primaryColor, size: 20),
                     tooltip: LocaleKeys.ownerFinanceUpdatePayment.tr(),
                   ),
                 );
@@ -328,19 +328,40 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: AppColors.borderLight),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 24,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w800,
-              color: AppColors.textPrimaryLight,
-            ),
+          Row(
+            children: [
+              Container(
+                width: 4,
+                height: 18,
+                decoration: BoxDecoration(
+                  color: context.primaryColor,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.textPrimaryLight,
+                ),
+              ),
+            ],
           ),
+          const SizedBox(height: 16),
+          const Divider(height: 1, color: AppColors.borderLight),
           const SizedBox(height: 16),
           ...children,
         ],
@@ -350,7 +371,7 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
 
   Widget _buildDetailRow(BuildContext context, String label, String value) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.only(bottom: 16),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -359,7 +380,7 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
             child: Text(
               label,
               style: const TextStyle(
-                fontSize: 14,
+                fontSize: 13,
                 fontWeight: FontWeight.w500,
                 color: AppColors.textSecondaryLight,
               ),
@@ -373,8 +394,9 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
                 color: AppColors.textPrimaryLight,
+                height: 1.3,
               ),
-              textAlign: TextAlign.start,
+              textAlign: TextAlign.end,
             ),
           ),
         ],

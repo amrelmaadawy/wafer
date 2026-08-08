@@ -28,6 +28,15 @@ class ApiConstants {
   static const String ownerTransfers = 'owner/accounting/transfers';
   static const String ownerAccountingJournalEntries = 'owner/accounting/journal-entries';
   static const String ownerContracts = 'owner/contracts';
+  static const String cancelOwnerContract = 'contract/owner/cancel';
+
+  // Owner Finance/Accounting
+  static const String ownerAccounting = 'owner/accounting';
+  static const String ownerAccountingFormData = 'owner/accounting/form-data';
+  static const String ownerAccountingAccounts = 'owner/accounting/accounts';
+  static const String ownerAccountingReceipts = 'owner/accounting/receipts';
+  static const String ownerAccountingPayments = 'owner/accounting/payments';
+
   static const String ownerMaintenance = 'owner/maintenance-requests';
   static String ownerMaintenanceDetails(int id) =>
       'owner/maintenance-requests/$id';

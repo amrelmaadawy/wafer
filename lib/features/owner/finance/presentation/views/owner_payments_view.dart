@@ -173,7 +173,7 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
                       },
                     );
                   } else {
-                    return const Padding(
+                    return Padding(
                       padding: EdgeInsets.symmetric(vertical: 16),
                       child: Center(
                         child: CircularProgressIndicator(

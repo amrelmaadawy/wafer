@@ -11,7 +11,7 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
-import '../../../../../generated/locale_keys.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/receipt_entity.dart';
 import '../cubit/receipts/finance_receipt_details_cubit.dart';
 import '../cubit/receipts/finance_receipt_details_state.dart';
@@ -50,11 +50,40 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
         scrolledUnderElevation: 0,
         leadingWidth: 68,
         leading: const CustomBackButton(),
-        title: const Text(LocaleKeys.owner_receipt_details.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(LocaleKeys.owner_receipt_details.tr(), style: const TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
+          BlocBuilder<FinanceReceiptDetailsCubit, FinanceReceiptDetailsState>(
+            builder: (context, state) {
+              if (state is FinanceReceiptDetailsSuccess) {
+                if (state.receipt.status.toLowerCase() == 'cancelled') {
+                  return const SizedBox.shrink();
+                }
+                return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: context.primaryColor.withValues(alpha: 0.05),
+                    shape: BoxShape.circle,
+                  ),
+                  child: IconButton(
+                    onPressed: () {
+                      context.push(
+                        Routes.ownerFinanceReceiptUpdate,
+                        extra: {'receipt': state.receipt},
+                      ).then((_) {
+                        _fetchDetails(); // Refresh after edit
+                      });
+                    },
+                    icon: Icon(Icons.edit_rounded, color: context.primaryColor, size: 20),
+                    tooltip: LocaleKeys.owner_receipt_edit.tr(),
+                  ),
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
           const SizedBox(width: 8),
         ],
       ),
@@ -162,34 +191,6 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
                 _buildDetailRow(context, LocaleKeys.owner_receipt_total_debit.tr(), '${receipt.journalEntry!.totalDebit} ر.س'),
                 _buildDetailRow(context, LocaleKeys.owner_receipt_total_credit.tr(), '${receipt.journalEntry!.totalCredit} ر.س'),
               ],
-            ),
-          ],
-          if (receipt.status != 'cancelled') ...[
-            const SizedBox(height: 16),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  context.push(
-                    Routes.ownerFinanceReceiptUpdate,
-                    extra: {'receipt': receipt},
-                  ).then((_) {
-                    _fetchDetails(); // Refresh after edit
-                  });
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: context.primaryColor.withValues(alpha: 0.1),
-                  foregroundColor: context.primaryColor,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  elevation: 0,
-                  shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularMd),
-                ),
-                icon: const Icon(Icons.edit_rounded, size: 20),
-                label: Text(
-                  LocaleKeys.owner_receipt_edit.tr(),
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-                ),
-              ),
             ),
           ],
           if (receipt.status != 'cancelled') ...[
