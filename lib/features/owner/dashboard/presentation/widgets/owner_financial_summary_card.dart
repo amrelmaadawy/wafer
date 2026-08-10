@@ -16,14 +16,11 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasOverdue = data.overdueInstallmentsCount > 0;
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: () {
-          context.push('${Routes.ownerReportsCenter}?tab=0');
-        },
-        borderRadius: AppRadius.circularXxl,
-        child: Container(
+    return GestureDetector(
+      onTap: () {
+        context.push(Routes.ownerRevenueReport);
+      },
+      child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -52,27 +49,26 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
           child: Stack(
             children: [
               _buildCircles(),
-              Padding(
-                padding: const EdgeInsets.all(18),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildHeader(hasOverdue),
-                    const SizedBox(height: 14),
-                    _buildHeroNumber(),
-                    const SizedBox(height: 16),
-                    Container(
-                      height: 1,
-                      color: Colors.white.withValues(alpha: 0.1),
-                    ),
-                    const SizedBox(height: 14),
-                    _buildMetricsRow(),
-                  ],
+              Positioned.fill(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      _buildHeader(hasOverdue),
+                      _buildHeroNumber(),
+                      Container(
+                        height: 1,
+                        color: Colors.white.withValues(alpha: 0.1),
+                      ),
+                      _buildMetricsRow(),
+                    ],
+                  ),
                 ),
               ),
             ],
           ),
-        ),
       ),
     );
   }
@@ -173,7 +169,7 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
           LocaleKeys.commonCurrencySar.tr(args: [_fmt(data.pendingAmount)]),
           style: const TextStyle(
             color: Colors.white,
-            fontSize: 34,
+            fontSize: 28,
             fontWeight: FontWeight.w800,
             letterSpacing: -0.5,
             height: 1.1,

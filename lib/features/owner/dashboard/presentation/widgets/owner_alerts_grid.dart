@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/routing/routes.dart';
-import '../../../contracts/presentation/cubit/list/owner_contracts_cubit.dart';
 
 class OwnerAlertsGrid extends StatelessWidget {
   final OwnerDashboardEntity data;
@@ -33,27 +31,25 @@ class OwnerAlertsGrid extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+        SizedBox(
+          height: 125,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.none,
             children: [
-              Expanded(
+              SizedBox(
+                width: 140,
                 child: _buildCard(
                   title: LocaleKeys.ownerActiveContractsTitle.tr(),
                   count: data.activeContracts,
                   color: const Color(0xFF10B981),
                   icon: Icons.description_rounded,
                   subtitle: LocaleKeys.ownerActiveContractsSub.tr(),
-                  // onTap: () {
-                  //   context.go(Routes.ownerContracts);
-                  //   context.read<OwnerContractsCubit>().changeStatusFilter(
-                  //     'active',
-                  //   );
-                  // },
                 ),
               ),
-              const SizedBox(width: 10),
-              Expanded(
+              const SizedBox(width: 12),
+              SizedBox(
+                width: 140,
                 child: _buildCard(
                   title: LocaleKeys.ownerExpiringTitle.tr(),
                   count: data.expiringContracts,
@@ -63,16 +59,11 @@ class OwnerAlertsGrid extends StatelessWidget {
                   icon: Icons.update_rounded,
                   subtitle: LocaleKeys.ownerExpiringSub.tr(),
                   highlight: data.expiringContracts > 0,
-                  // onTap: () {
-                  //   context.go(Routes.ownerContracts);
-                  //   context.read<OwnerContractsCubit>().changeStatusFilter(
-                  //     'expiring',
-                  //   );
-                  // },
                 ),
               ),
-              const SizedBox(width: 10),
-              Expanded(
+              const SizedBox(width: 12),
+              SizedBox(
+                width: 140,
                 child: _buildCard(
                   title: LocaleKeys.ownerPendingMaintTitle.tr(),
                   count: data.pendingMaintenance,
@@ -128,25 +119,26 @@ class OwnerAlertsGrid extends StatelessWidget {
           onTap: onTap,
           borderRadius: AppRadius.circularXl,
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 14, 10, 14),
+            padding: const EdgeInsets.all(12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(7),
+                      padding: const EdgeInsets.all(6),
                       decoration: BoxDecoration(
                         color: color.withValues(alpha: 0.12),
                         borderRadius: AppRadius.circularMd,
                       ),
-                      child: Icon(icon, color: color, size: 16),
+                      child: Icon(icon, color: color, size: 14),
                     ),
                     if (highlight)
                       Container(
-                        width: 7,
-                        height: 7,
+                        width: 6,
+                        height: 6,
                         decoration: BoxDecoration(
                           color: color,
                           shape: BoxShape.circle,
@@ -154,16 +146,16 @@ class OwnerAlertsGrid extends StatelessWidget {
                       ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 8),
                 Text(
                   '$count',
                   style: TextStyle(
                     color: highlight ? color : const Color(0xFF0F172A),
-                    fontSize: 20,
+                    fontSize: 18,
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                const SizedBox(height: 3),
+                const SizedBox(height: 2),
                 FittedBox(
                   fit: BoxFit.scaleDown,
                   alignment: Alignment.centerRight,

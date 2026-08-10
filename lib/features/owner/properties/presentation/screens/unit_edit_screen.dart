@@ -93,7 +93,6 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
   final List<int> _deleteVideos = [];
   final List<int> _deleteFiles = [];
 
-  bool _mediaPopulated = false;
 
   @override
   void initState() {

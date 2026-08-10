@@ -8,11 +8,13 @@ import '../cubit/owner_dashboard_state.dart';
 import '../widgets/owner_alerts_grid.dart';
 import '../widgets/owner_financial_summary_card.dart';
 import '../widgets/owner_occupancy_card.dart';
-import '../widgets/owner_recent_receipts_section.dart';
 import '../widgets/owner_dashboard_header.dart';
 import '../widgets/owner_dashboard_skeleton_widget.dart';
 import '../widgets/owner_quick_actions.dart';
 import '../widgets/owner_maintenance_hub_section.dart';
+import '../widgets/owner_finance_carousel_widget.dart';
+import '../widgets/owner_latest_overdue_section.dart';
+import '../widgets/owner_tasks_legal_card.dart';
 
 class OwnerDashboardView extends StatefulWidget {
   const OwnerDashboardView({super.key});
@@ -22,6 +24,7 @@ class OwnerDashboardView extends StatefulWidget {
 }
 
 class _OwnerDashboardViewState extends State<OwnerDashboardView> {
+  bool _isRetrying = false;
   @override
   void initState() {
     super.initState();
@@ -73,7 +76,7 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
       child: ListView(
         padding: const EdgeInsets.fromLTRB(16, 20, 16, 120),
         children: [
-          OwnerFinancialSummaryCard(data: state.data),
+          OwnerFinanceCarouselWidget(data: state.data),
           const SizedBox(height: 16),
           OwnerOccupancyCard(data: state.data),
           const SizedBox(height: 16),
@@ -84,9 +87,19 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
           OwnerMaintenanceHubSection(
             pendingCount: state.data.pendingMaintenance,
             recentItems: state.recentMaintenanceItems,
+            breakdown: state.data.maintenanceBreakdown,
           ),
-          const SizedBox(height: 16),
-          OwnerRecentReceiptsSection(receipts: state.data.recentReceipts),
+          if (state.data.latestOverdueInstallments.isNotEmpty) ...[
+            const SizedBox(height: 16),
+            OwnerLatestOverdueSection(installments: state.data.latestOverdueInstallments),
+          ],
+          if (state.data.tasksBreakdown != null || state.data.legalCasesBreakdown != null) ...[
+            const SizedBox(height: 16),
+            OwnerTasksLegalCard(
+              tasks: state.data.tasksBreakdown,
+              legalCases: state.data.legalCasesBreakdown,
+            ),
+          ],
         ],
       ),
     );
@@ -99,9 +112,17 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
   Widget _buildError(BuildContext context, String message) {
     return CustomErrorWidget(
       message: message,
-      onRetry: () => context.read<OwnerDashboardCubit>().loadDashboardStats(
-        forceRefresh: true,
-      ),
+      isLoading: _isRetrying,
+      onRetry: () async {
+        setState(() => _isRetrying = true);
+        await context.read<OwnerDashboardCubit>().loadDashboardStats(
+          forceRefresh: true,
+          showLoadingState: false,
+        );
+        if (mounted) {
+          setState(() => _isRetrying = false);
+        }
+      },
     );
   }
 }

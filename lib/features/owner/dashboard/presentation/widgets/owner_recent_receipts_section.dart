@@ -44,7 +44,19 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
         if (receipts.isEmpty)
           _buildEmptyState(context)
         else
-          ...receipts.map((r) => _buildReceiptCard(context, r)),
+          SizedBox(
+            height: 100,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              clipBehavior: Clip.none,
+              itemCount: receipts.length,
+              separatorBuilder: (_, __) => const SizedBox(width: 12),
+              itemBuilder: (context, index) => SizedBox(
+                width: 280,
+                child: _buildReceiptCard(context, receipts[index]),
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -95,7 +107,6 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
 
   Widget _buildReceiptCard(BuildContext context, ReceiptEntity receipt) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: Colors.white,

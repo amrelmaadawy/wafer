@@ -7,6 +7,7 @@ import 'package:wafer/features/owner/finance/presentation/cubit/journal_entries/
 import 'package:wafer/features/owner/finance/presentation/cubit/journal_entries/update_journal_entry_cubit.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
+import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
 import '../../features/owner/shell/presentation/screens/owner_main_screen.dart';
 import '../../features/owner/dashboard/presentation/views/owner_dashboard_view.dart';
@@ -131,14 +132,58 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.companyDashboard,
-        builder: (context, state) => const Scaffold(
-          body: Center(child: Text('لوحة تحكم الشركات/النظام (قيد التطوير)')),
+        builder: (context, state) => BlocProvider<AuthCubit>(
+          create: (_) => sl<AuthCubit>(),
+          child: Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('لوحة تحكم الشركات/النظام (قيد التطوير)'),
+                  const SizedBox(height: 20),
+                  Builder(
+                    builder: (ctx) => ElevatedButton.icon(
+                      onPressed: () => ctx.read<AuthCubit>().logout(),
+                      icon: const Icon(Icons.logout_rounded),
+                      label: const Text('تسجيل الخروج'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
       GoRoute(
         path: Routes.tenantDashboard,
-        builder: (context, state) => const Scaffold(
-          body: Center(child: Text('لوحة تحكم المستأجر (قيد التطوير)')),
+        builder: (context, state) => BlocProvider<AuthCubit>(
+          create: (_) => sl<AuthCubit>(),
+          child: Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('لوحة تحكم المستأجر (قيد التطوير)'),
+                  const SizedBox(height: 20),
+                  Builder(
+                    builder: (ctx) => ElevatedButton.icon(
+                      onPressed: () => ctx.read<AuthCubit>().logout(),
+                      icon: const Icon(Icons.logout_rounded),
+                      label: const Text('تسجيل الخروج'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
       GoRoute(

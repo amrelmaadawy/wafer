@@ -7,7 +7,6 @@ import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/unit_full_details_entity.dart';
-import '../../../domain/entities/media_item_entity.dart';
 
 class UnitMediaSection extends StatelessWidget {
   final UnitFullDetailsEntity unit;

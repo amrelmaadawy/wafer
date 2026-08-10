@@ -23,7 +23,7 @@ class OwnerOccupancyCard extends StatelessWidget {
 
     return _card(
       onTap: () {
-        context.push('${Routes.ownerReportsCenter}?tab=1');
+        context.push(Routes.ownerOccupancyReport);
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

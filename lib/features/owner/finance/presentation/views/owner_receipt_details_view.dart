@@ -257,29 +257,35 @@ class _OwnerReceiptDetailsViewState extends State<OwnerReceiptDetailsView> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: context.primaryColor.withValues(alpha: 0.1),
-                      borderRadius: AppRadius.circularLg,
+              Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: context.primaryColor.withValues(alpha: 0.1),
+                        borderRadius: AppRadius.circularLg,
+                      ),
+                      child: Icon(
+                        Icons.account_balance_wallet_outlined,
+                        color: context.primaryColor,
+                        size: 24,
+                      ),
                     ),
-                    child: Icon(
-                      Icons.account_balance_wallet_outlined,
-                      color: context.primaryColor,
-                      size: 24,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        LocaleKeys.owner_receipt_total_amount.tr(),
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: AppColors.textSecondaryLight,
+                              fontWeight: FontWeight.bold,
+                            ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    LocaleKeys.owner_receipt_total_amount.tr(),
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          color: AppColors.textSecondaryLight,
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

@@ -7,16 +7,19 @@ import '../../../../../core/theme/color_utils.dart';
 import '../../../../owner/maintenance/domain/entities/maintenance_item_entity.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/routing/routes.dart';
+import '../../domain/entities/owner_dashboard_entity.dart';
 import 'owner_maintenance_mini_card.dart';
 
 class OwnerMaintenanceHubSection extends StatelessWidget {
   final int pendingCount;
   final List<MaintenanceItemEntity> recentItems;
+  final MaintenanceBreakdownEntity? breakdown;
 
   const OwnerMaintenanceHubSection({
     super.key,
     required this.pendingCount,
     required this.recentItems,
+    this.breakdown,
   });
 
   @override
@@ -39,6 +42,10 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildHeader(),
+          if (breakdown != null) ...[
+            const SizedBox(height: 16),
+            _buildBreakdownRow(),
+          ],
           const SizedBox(height: 16),
           if (recentItems.isEmpty)
             _buildEmptyState(context)
@@ -98,12 +105,75 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
             ? LocaleKeys.dashboardMaintenancePending.tr(
                 args: [pendingCount.toString()],
               )
-            : '0',
+            : LocaleKeys.dashboardMaintenanceNoRequests.tr(),
         style: TextStyle(
           color: color,
-          fontSize: 11,
+          fontSize: 10,
           fontWeight: FontWeight.w700,
         ),
+      ),
+    );
+  }
+
+  Widget _buildBreakdownRow() {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildBreakdownItem(
+            LocaleKeys.dashboard_maint_new.tr(),
+            breakdown!.newRequests,
+            AppColors.primary,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: _buildBreakdownItem(
+            LocaleKeys.dashboard_maint_in_progress.tr(),
+            breakdown!.inProgress,
+            AppColors.warning,
+          ),
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: _buildBreakdownItem(
+            LocaleKeys.dashboard_maint_urgent.tr(),
+            breakdown!.urgent,
+            AppColors.error,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildBreakdownItem(String label, int count, Color color) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.05),
+        borderRadius: AppRadius.circularMd,
+        border: Border.all(color: color.withValues(alpha: 0.1)),
+      ),
+      child: Column(
+        children: [
+          Text(
+            count.toString(),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w800,
+              color: color,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: AppColors.textSecondaryLight,
+            ),
+          ),
+        ],
       ),
     );
   }

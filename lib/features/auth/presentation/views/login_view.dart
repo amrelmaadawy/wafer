@@ -42,8 +42,12 @@ class LoginView extends StatelessWidget {
   }
 
   Widget _buildBackground(BuildContext context) {
-    return Column(
-      children: [
+    final size = MediaQuery.sizeOf(context);
+    return SizedBox(
+      width: size.width,
+      height: size.height,
+      child: Column(
+        children: [
         Expanded(
           flex: 38,
           child: Container(
@@ -62,6 +66,7 @@ class LoginView extends StatelessWidget {
         ),
         Expanded(flex: 62, child: Container(color: const Color(0xFFF4F6FB))),
       ],
+      ),
     );
   }
 

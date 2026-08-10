@@ -9,12 +9,14 @@ class CustomErrorWidget extends StatelessWidget {
   final String message;
   final VoidCallback onRetry;
   final String? title;
+  final bool isLoading;
 
   const CustomErrorWidget({
     super.key,
     required this.message,
     required this.onRetry,
     this.title,
+    this.isLoading = false,
   });
 
   @override
@@ -81,6 +83,7 @@ class CustomErrorWidget extends StatelessWidget {
                 child: CustomButton(
                   text: LocaleKeys.commonRetry.tr(),
                   onPressed: onRetry,
+                  isLoading: isLoading,
                 ),
               ),
             ],

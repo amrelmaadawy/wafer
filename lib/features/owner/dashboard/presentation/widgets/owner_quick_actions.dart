@@ -34,65 +34,52 @@ class OwnerQuickActions extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 12),
-        Column(
-          children: [
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      title: LocaleKeys.maintenance_title.tr(),
-                      icon: Icons.build_circle_outlined,
-                      color: AppColors.error,
-                      onTap: () {
-                        context.push(Routes.ownerMaintenance);
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      title: LocaleKeys.dashboard_reports.tr(),
-                      icon: Icons.bar_chart_rounded,
-                      color: AppColors.warning,
-                      onTap: () {
-                        context.push('${Routes.ownerReportsCenter}?tab=0');
-                      },
-                    ),
-                  ),
-                ],
+        SizedBox(
+          height: 125,
+          child: ListView(
+            scrollDirection: Axis.horizontal,
+            clipBehavior: Clip.none,
+            children: [
+              SizedBox(
+                width: 130,
+                child: _buildActionCard(
+                  context,
+                  title: LocaleKeys.maintenance_title.tr(),
+                  icon: Icons.build_circle_outlined,
+                  color: AppColors.error,
+                  onTap: () {
+                    context.push(Routes.ownerMaintenance);
+                  },
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            IntrinsicHeight(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Expanded(
-                    child: _buildActionCard(
-                      context,
-                      title: LocaleKeys.legal_cases.tr(),
-                      icon: Icons.gavel_rounded,
-                      color: const Color(
-                        0xFF8B5CF6,
-                      ), // Purple color for legal cases
-                      onTap: () {
-                        context.push(Routes.ownerLegalCases);
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  // Placeholder for the empty spot on the bottom left
-                  const Expanded(
-                    child: SizedBox.shrink(),
-                  ),
-                ],
+              const SizedBox(width: 12),
+              SizedBox(
+                width: 130,
+                child: _buildActionCard(
+                  context,
+                  title: LocaleKeys.dashboard_reports.tr(),
+                  icon: Icons.bar_chart_rounded,
+                  color: AppColors.warning,
+                  onTap: () {
+                    context.push('${Routes.ownerReportsCenter}?tab=0');
+                  },
+                ),
               ),
-            ),
-          ],
+              const SizedBox(width: 12),
+              SizedBox(
+                width: 130,
+                child: _buildActionCard(
+                  context,
+                  title: LocaleKeys.legal_cases.tr(),
+                  icon: Icons.gavel_rounded,
+                  color: const Color(0xFF8B5CF6),
+                  onTap: () {
+                    context.push(Routes.ownerLegalCases);
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );
