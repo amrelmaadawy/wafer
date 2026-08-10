@@ -35,7 +35,7 @@ class OwnerQuickActions extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 110,
+          height: 120,
           child: ListView(
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
