@@ -4,7 +4,10 @@ import '../../../../../core/network/interceptors/cache_interceptor_config.dart';
 import '../models/owner_dashboard_model.dart';
 
 abstract class OwnerDashboardRemoteDataSource {
-  Future<OwnerDashboardModel> getDashboardStats({bool forceRefresh = false});
+  Future<OwnerDashboardModel> getDashboardStats({
+    bool forceRefresh = false,
+    CancelToken? cancelToken,
+  });
 }
 
 class OwnerDashboardRemoteDataSourceImpl
@@ -14,7 +17,10 @@ class OwnerDashboardRemoteDataSourceImpl
   OwnerDashboardRemoteDataSourceImpl(this._dio);
 
   @override
-  Future<OwnerDashboardModel> getDashboardStats({bool forceRefresh = false}) async {
+  Future<OwnerDashboardModel> getDashboardStats({
+    bool forceRefresh = false,
+    CancelToken? cancelToken,
+  }) async {
     final cacheOptions = CacheInterceptorConfig.cacheOptions.copyWith(
       policy: forceRefresh ? CachePolicy.refreshForceCache : CachePolicy.request,
     );
@@ -22,6 +28,7 @@ class OwnerDashboardRemoteDataSourceImpl
     final response = await _dio.get(
       'owner/dashboard',
       options: cacheOptions.toOptions(),
+      cancelToken: cancelToken,
     );
     final data = response.data['data'] as Map<String, dynamic>;
     return OwnerDashboardModel.fromJson(data);

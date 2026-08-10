@@ -14,19 +14,23 @@ class OwnerDashboardRepositoryImpl implements OwnerDashboardRepository {
   @override
   Future<Either<Failure, OwnerDashboardEntity>> getDashboardStats({
     bool forceRefresh = false,
+    CancelToken? cancelToken,
   }) async {
     try {
-      final result = await _remoteDataSource.getDashboardStats(forceRefresh: forceRefresh);
+      final result = await _remoteDataSource.getDashboardStats(
+        forceRefresh: forceRefresh,
+        cancelToken: cancelToken,
+      );
       return Right(result);
     } on TypeError catch (_) {
       // If cache deserialization fails due to schema change, retry from network
       if (!forceRefresh) {
-        return getDashboardStats(forceRefresh: true);
+        return getDashboardStats(forceRefresh: true, cancelToken: cancelToken);
       }
       return const Left(ServerFailure("Data format error"));
     } on FormatException catch (_) {
       if (!forceRefresh) {
-        return getDashboardStats(forceRefresh: true);
+        return getDashboardStats(forceRefresh: true, cancelToken: cancelToken);
       }
       return const Left(ServerFailure("Data format error"));
     } on ServerException catch (e) {

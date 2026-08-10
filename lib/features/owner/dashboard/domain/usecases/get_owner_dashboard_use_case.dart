@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import '../../../../../core/error/failures.dart';
 import '../entities/owner_dashboard_entity.dart';
 import '../repositories/owner_dashboard_repository.dart';
@@ -10,7 +11,11 @@ class GetOwnerDashboardUseCase {
 
   Future<Either<Failure, OwnerDashboardEntity>> call({
     bool forceRefresh = false,
+    CancelToken? cancelToken,
   }) {
-    return _repository.getDashboardStats(forceRefresh: forceRefresh);
+    return _repository.getDashboardStats(
+      forceRefresh: forceRefresh,
+      cancelToken: cancelToken,
+    );
   }
 }
