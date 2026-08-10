@@ -8,6 +8,7 @@ import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../../core/utils/widgets/custom_button.dart';
 import '../../../../../../core/utils/widgets/app_toast.dart';
 import '../../domain/usecases/create_legal_case_use_case.dart';
@@ -334,15 +335,10 @@ class _LegalCaseCreateViewState extends State<LegalCaseCreateView> {
           },
           child: Scaffold(
             backgroundColor: AppColors.backgroundLight,
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              title: Text(
-                isEditMode
-                    ? LocaleKeys.edit_case.tr()
-                    : LocaleKeys.add_case.tr(),
-                style: AppTextStyles.h4,
-              ),
-              centerTitle: true,
+            appBar: CustomAppBar(
+              title: isEditMode
+                  ? LocaleKeys.edit_case.tr()
+                  : LocaleKeys.add_case.tr(),
             ),
             body: BlocBuilder<LegalCaseFormDataCubit, LegalCaseFormDataState>(
               builder: (context, formDataState) {

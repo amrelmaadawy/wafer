@@ -32,7 +32,7 @@ class OwnerAlertsGrid extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 125,
+          height: 110,
           child: ListView(
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
@@ -98,12 +98,6 @@ class OwnerAlertsGrid extends StatelessWidget {
       decoration: BoxDecoration(
         color: highlight ? color.withValues(alpha: 0.06) : Colors.white,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(
-          color: highlight
-              ? color.withValues(alpha: 0.35)
-              : const Color(0xFFEDF0F7),
-          width: highlight ? 1.5 : 1.0,
-        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.04),

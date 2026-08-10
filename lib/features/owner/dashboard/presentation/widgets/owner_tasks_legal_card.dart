@@ -45,7 +45,7 @@ class OwnerTasksLegalCard extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                context.push(Routes.ownerReportsLegalCases);
+                context.push(Routes.ownerLegalCases);
               },
               child: _buildCard(
                 icon: Icons.gavel_rounded,
@@ -73,7 +73,6 @@ class OwnerTasksLegalCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: AppRadius.circularXxl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -82,7 +81,7 @@ class OwnerTasksLegalCard extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -109,8 +108,8 @@ class OwnerTasksLegalCard extends StatelessWidget {
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  overflow: TextOverflow.visible,
                 ),
               ),
             ],

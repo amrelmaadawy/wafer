@@ -35,7 +35,7 @@ class OwnerQuickActions extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 125,
+          height: 110,
           child: ListView(
             scrollDirection: Axis.horizontal,
             clipBehavior: Clip.none,
@@ -96,7 +96,6 @@ class OwnerQuickActions extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: AppColors.borderLight),
         boxShadow: [
           BoxShadow(
             color: context.primaryShadow.withValues(alpha: 0.03),

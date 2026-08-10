@@ -175,11 +175,10 @@ class OwnerOccupancyCard extends StatelessWidget {
         onTap: onTap,
         borderRadius: AppRadius.circularXxl,
         child: Container(
-          padding: const EdgeInsets.all(18),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: AppRadius.circularXxl,
-            border: Border.all(color: const Color(0xFFEDF0F7)),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.04),
