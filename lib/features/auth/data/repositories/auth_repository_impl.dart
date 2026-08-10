@@ -8,6 +8,7 @@ import '../../../../core/storage/secure_storage_service.dart';
 import '../../domain/entities/user_entity.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_data_source.dart';
+import '../../../../core/network/interceptors/cache_interceptor_config.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource _remoteDataSource;
@@ -62,6 +63,8 @@ class AuthRepositoryImpl implements AuthRepository {
     try {
       await _remoteDataSource.logout();
       await _secureStorageService.deleteToken();
+      await _cacheHelper.clearAuthData();
+      await CacheInterceptorConfig.clearCache();
       return const Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

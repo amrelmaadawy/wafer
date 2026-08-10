@@ -45,6 +45,7 @@ class ApprovalItemModel extends ApprovalItemEntity {
   const ApprovalItemModel({
     required super.id,
     required super.status,
+    super.statusLabel,
     super.typeValue,
     super.typeLabel,
     super.typeIcon,
@@ -56,17 +57,36 @@ class ApprovalItemModel extends ApprovalItemEntity {
   });
 
   factory ApprovalItemModel.fromJson(Map<String, dynamic> json) {
+    final approvable = json['approvable'] as Map<String, dynamic>? ?? {};
+    final workflow = json['workflow'] as Map<String, dynamic>? ?? {};
+    final initiator = json['initiator'] as Map<String, dynamic>? ?? {};
+
+    // Try to extract a title from common approvable fields
+    final title = approvable['contract_number']?.toString() ??
+        approvable['receipt_number']?.toString() ??
+        approvable['reference_number']?.toString() ??
+        approvable['name']?.toString() ??
+        workflow['name']?.toString() ??
+        '';
+
+    // Try to extract an amount from common approvable fields
+    final amount = approvable['total_rent_value']?.toString() ??
+        approvable['amount']?.toString() ??
+        approvable['total_amount']?.toString() ??
+        approvable['value']?.toString();
+
     return ApprovalItemModel(
       id: (json['id'] as num?)?.toInt() ?? 0,
       status: json['status']?.toString() ?? 'pending',
-      typeValue: json['type']?.toString() ?? json['approvable_type']?.toString(),
-      typeLabel: json['type_label']?.toString(),
-      typeIcon: json['type_icon']?.toString(),
-      typeColor: json['type_color']?.toString(),
-      title: json['title']?.toString(),
-      date: json['date']?.toString() ?? json['created_at']?.toString(),
-      amount: json['amount']?.toString(),
-      userName: json['user_name']?.toString() ?? json['user']?['name']?.toString(),
+      statusLabel: json['status_label']?.toString(),
+      typeValue: json['approvable_type']?.toString(),
+      typeLabel: workflow['name']?.toString(),
+      typeIcon: null, // Removed from JSON
+      typeColor: null, // Removed from JSON
+      title: title,
+      date: json['created_at']?.toString(),
+      amount: amount,
+      userName: initiator['name']?.toString(),
     );
   }
 }

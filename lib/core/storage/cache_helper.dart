@@ -79,6 +79,12 @@ class CacheHelper {
     return _prefs.getString(_cachedProfileKey);
   }
 
+  Future<void> clearAuthData() async {
+    await _prefs.remove(_accountTypeKey);
+    await _prefs.remove(_tenantIdKey);
+    await _prefs.remove(_cachedProfileKey);
+  }
+
   Future<void> clearAll() async {
     await _prefs.clear();
   }

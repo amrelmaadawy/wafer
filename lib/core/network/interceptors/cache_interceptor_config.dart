@@ -11,8 +11,8 @@ class CacheInterceptorConfig {
   static late HiveCacheStore cacheStore;
   static late CacheOptions cacheOptions;
 
-  static Future<void> init() async {
-    final dir = await getApplicationDocumentsDirectory();
+  static Future<void> init({String? customPath}) async {
+    final path = customPath ?? (await getApplicationDocumentsDirectory()).path;
     final secureStorage = sl<SecureStorageService>();
     String? base64Key = await secureStorage.getHiveKey();
     List<int> encryptionKey;
@@ -25,7 +25,7 @@ class CacheInterceptorConfig {
     }
 
     cacheStore = HiveCacheStore(
-      dir.path,
+      path,
       hiveBoxName: 'codra_cache_v1',
       encryptionCipher: HiveAesCipher(encryptionKey),
     );

@@ -39,6 +39,7 @@ class ApprovalsSummaryEntity extends Equatable {
 class ApprovalItemEntity extends Equatable {
   final int id;
   final String status;
+  final String? statusLabel;
   final String? typeValue;
   final String? typeLabel;
   final String? typeIcon;
@@ -51,6 +52,7 @@ class ApprovalItemEntity extends Equatable {
   const ApprovalItemEntity({
     required this.id,
     required this.status,
+    this.statusLabel,
     this.typeValue,
     this.typeLabel,
     this.typeIcon,
@@ -65,6 +67,7 @@ class ApprovalItemEntity extends Equatable {
   List<Object?> get props => [
         id,
         status,
+        statusLabel,
         typeValue,
         typeLabel,
         typeIcon,

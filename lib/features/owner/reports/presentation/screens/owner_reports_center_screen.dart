@@ -341,24 +341,12 @@ class _ReportCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      report.name,
+                      _getLocalizedReportName(report.key, report.name),
                       style: const TextStyle(
                         fontSize: 14.5,
                         fontWeight: FontWeight.w800,
                         color: AppColors.textPrimaryLight,
                         height: 1.2,
-                      ),
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      report.filters.isNotEmpty
-                          ? 'الفلاتر المتاحة: ${report.filters.map((f) => _translateFilter(f)).join("، ")}'
-                          : 'لا توجد فلاتر متقدمة',
-                      style: const TextStyle(
-                        fontSize: 11.5,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.textSecondaryLight,
-                        height: 1.3,
                       ),
                     ),
                   ],
@@ -377,21 +365,34 @@ class _ReportCard extends StatelessWidget {
     );
   }
 
-  String _translateFilter(String filter) {
-    // Basic translation for filter keys.
-    switch (filter) {
-      case 'property_id':
-        return LocaleKeys.reports_property.tr();
-      case 'date_range':
-      case 'start_date':
-      case 'end_date':
-        return LocaleKeys.reports_dateRange.tr();
-      case 'status':
-        return LocaleKeys.reports_status.tr();
-      case 'priority':
-        return LocaleKeys.reports_priority.tr();
+  String _getLocalizedReportName(String key, String fallbackName) {
+    switch (key) {
+      case 'revenue':
+        return 'الإيرادات';
+      case 'defaulters':
+        return 'المتعثرين';
+      case 'occupancy':
+        return 'نسب الإشغال';
+      case 'units_status':
+        return 'حالة الوحدات';
+      case 'maintenance_requests':
+        return 'طلبات الصيانة';
+      case 'technician_performance':
+        return 'أداء الفنيين';
+      case 'employee_tasks':
+        return 'مهام الموظفين';
+      case 'activity_logs':
+        return 'سجل النشاط';
+      case 'approvals':
+        return 'الاعتمادات';
+      case 'legal_cases':
+        return 'القضايا القانونية';
+      case 'contracts':
+        return 'العقود';
+      case 'contracts_movement':
+        return 'حركة العقود';
       default:
-        return filter;
+        return fallbackName;
     }
   }
 }
