@@ -106,6 +106,8 @@ import '../finance/domain/usecases/reverse_journal_entry_use_case.dart';
 import '../finance/presentation/cubit/payments/cancel_finance_payment_cubit.dart';
 import '../finance/presentation/cubit/form_data/finance_form_data_cubit.dart';
 // Reports
+import '../reports/domain/usecases/get_owner_reports_index_usecase.dart';
+import '../reports/presentation/cubit/owner_reports_index_cubit.dart';
 import '../reports/data/datasources/owner_reports_remote_data_source.dart';
 import '../reports/data/repositories/owner_reports_repository_impl.dart';
 import '../reports/domain/repositories/owner_reports_repository.dart';
@@ -781,6 +783,13 @@ void _initReports() {
   }
   if (!sl.isRegistered<GetOwnerRevenueReportUseCase>()) {
     sl.registerLazySingleton(() => GetOwnerRevenueReportUseCase(sl()));
+  }
+  if (!sl.isRegistered<GetOwnerReportsIndexUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerReportsIndexUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerReportsIndexCubit>()) {
+    sl.registerFactory(
+        () => OwnerReportsIndexCubit(getReportsIndexUseCase: sl()));
   }
   if (!sl.isRegistered<GetOwnerOccupancyReportUseCase>()) {
     sl.registerLazySingleton(() => GetOwnerOccupancyReportUseCase(sl()));

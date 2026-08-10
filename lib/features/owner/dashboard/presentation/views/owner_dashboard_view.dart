@@ -11,7 +11,6 @@ import '../widgets/owner_occupancy_card.dart';
 import '../widgets/owner_dashboard_header.dart';
 import '../widgets/owner_dashboard_skeleton_widget.dart';
 import '../widgets/owner_quick_actions.dart';
-import '../widgets/owner_maintenance_hub_section.dart';
 import '../widgets/owner_finance_carousel_widget.dart';
 import '../widgets/owner_latest_overdue_section.dart';
 import '../widgets/owner_tasks_legal_card.dart';
@@ -83,12 +82,6 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
           const OwnerQuickActions(),
           const SizedBox(height: 16),
           OwnerAlertsGrid(data: state.data),
-          const SizedBox(height: 16),
-          OwnerMaintenanceHubSection(
-            pendingCount: state.data.pendingMaintenance,
-            recentItems: state.recentMaintenanceItems,
-            breakdown: state.data.maintenanceBreakdown,
-          ),
           if (state.data.latestOverdueInstallments.isNotEmpty) ...[
             const SizedBox(height: 16),
             OwnerLatestOverdueSection(installments: state.data.latestOverdueInstallments),

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import '../../domain/entities/owner_reports_index_entity.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:wafer/features/owner/reports/domain/entities/units_status_report_entity.dart';
 import '../../../../../core/error/exceptions.dart';
@@ -23,6 +24,18 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
   final OwnerReportsRemoteDataSource _remoteDataSource;
 
   OwnerReportsRepositoryImpl(this._remoteDataSource);
+
+  @override
+  Future<Either<Failure, OwnerReportsIndexEntity>> getReportsIndex() async {
+    try {
+      final result = await _remoteDataSource.getReportsIndex();
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(LocaleKeys.reports_notAvailable.tr()));
+    }
+  }
 
   @override
   Future<Either<Failure, RevenueReportModel>> getRevenueReport({

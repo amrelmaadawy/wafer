@@ -2,7 +2,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:bloc_test/bloc_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:wafer/features/owner/dashboard/presentation/cubit/owner_dashboard_cubit.dart';
 import 'package:wafer/features/owner/dashboard/presentation/cubit/owner_dashboard_state.dart';
 import 'package:wafer/features/owner/dashboard/domain/usecases/get_owner_dashboard_use_case.dart';

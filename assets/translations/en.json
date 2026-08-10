@@ -919,7 +919,15 @@
     "noData": "No data available",
     "notAvailable": "N/A",
     "renter": "Renter",
-    "unit": "Unit"
+    "unit": "Unit",
+    "overview": "Overview",
+    "totalProperties": "Total Properties",
+    "totalUnits": "Total Units",
+    "activeContracts": "Active Contracts",
+    "openMaintenance": "Open Maintenance",
+    "available": "Available Reports",
+    "dateRange": "Date Range",
+    "priority": "Priority"
   },
   "legalCases": {
     "caseNumber": "Case Number",
@@ -1212,7 +1220,6 @@
   "journal_entries_status_posted": "Posted",
   "journal_entries_status_reversed": "Reversed",
   "currency_sar": "SAR",
-  
   "owner_finance_date_required": "Date is required",
   "journal_entries_total_zero_error": "Total debit and credit must be greater than zero",
   "journal_entries_balance_error": "Total debit and credit must be equal",

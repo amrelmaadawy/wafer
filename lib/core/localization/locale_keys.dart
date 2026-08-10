@@ -883,6 +883,14 @@ abstract class  LocaleKeys {
   static const reports_notAvailable = 'reports.notAvailable';
   static const reports_renter = 'reports.renter';
   static const reports_unit = 'reports.unit';
+  static const reports_overview = 'reports.overview';
+  static const reports_totalProperties = 'reports.totalProperties';
+  static const reports_totalUnits = 'reports.totalUnits';
+  static const reports_activeContracts = 'reports.activeContracts';
+  static const reports_openMaintenance = 'reports.openMaintenance';
+  static const reports_available = 'reports.available';
+  static const reports_dateRange = 'reports.dateRange';
+  static const reports_priority = 'reports.priority';
   static const reports = 'reports';
   static const permissions_no_data = 'permissions.no_data';
   static const permissions_retry = 'permissions.retry';

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import '../entities/owner_reports_index_entity.dart';
 import '../../../../../core/error/failures.dart';
 import '../entities/defaulters_report_entity.dart';
 import '../entities/occupancy_report_entity.dart';
@@ -14,6 +15,8 @@ import '../entities/approvals_report_entity.dart';
 import '../entities/legal_cases_report_entity.dart';
 
 abstract class OwnerReportsRepository {
+  Future<Either<Failure, OwnerReportsIndexEntity>> getReportsIndex();
+
   Future<Either<Failure, RevenueReportEntity>> getRevenueReport({
     bool forceRefresh = false,
     int? propertyId,

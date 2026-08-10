@@ -903,7 +903,15 @@
     "noData": "لا توجد بيانات متاحة",
     "notAvailable": "غير متوفر",
     "renter": "المستأجر",
-    "unit": "الوحدة"
+    "unit": "الوحدة",
+    "overview": "نظرة عامة",
+    "totalProperties": "إجمالي العقارات",
+    "totalUnits": "إجمالي الوحدات",
+    "activeContracts": "العقود النشطة",
+    "openMaintenance": "صيانة مفتوحة",
+    "available": "التقارير المتاحة",
+    "dateRange": "الفترة الزمنية",
+    "priority": "الأولوية"
   },
   "permissions": {
     "no_data": "لا توجد صلاحيات لعرضها",
@@ -1159,8 +1167,6 @@
   "owner_finance_cancel_receipt_title": "إلغاء السند المالي",
   "owner_finance_cancel_receipt_btn": "إلغاء السند",
   "owner_finance_cancel_receipt_desc": "هل أنت متأكد من رغبتك في إلغاء هذا السند؟ برجاء كتابة سبب الإلغاء.",
-  
-  
   "owner_finance_cancel_reason_required": "الرجاء إدخال سبب الإلغاء",
   "owner_finance_cancel_back_btn": "تراجع",
   "owner_finance_update_receipt": "تعديل السند",
@@ -1241,7 +1247,6 @@
   "journal_entries_status_posted": "مُرحّل",
   "journal_entries_status_reversed": "معكوس",
   "currency_sar": "ر.س",
-  
   "owner_finance_date_required": "التاريخ مطلوب",
   "journal_entries_total_zero_error": "إجمالي المدين والدائن يجب أن يكون أكبر من صفر",
   "journal_entries_balance_error": "يجب أن يتساوى إجمالي المدين والدائن",

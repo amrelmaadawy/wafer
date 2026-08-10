@@ -42,6 +42,7 @@ class ApiConstants {
       'owner/maintenance-requests/$id';
   static String ownerMaintenanceApprove(int id) =>
       'owner/maintenance-requests/$id/approve';
+  static const String ownerReportsIndex = 'owner/reports';
   static const String ownerRevenueReport = 'owner/reports/revenue';
   static const String ownerOccupancyReport = 'owner/reports/occupancy';
   static const String ownerOccupancyRatesReport =

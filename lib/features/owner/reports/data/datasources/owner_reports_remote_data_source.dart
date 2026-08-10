@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../models/owner_reports_index_model.dart';
 import 'package:wafer/features/owner/reports/data/models/occupancy_report_model.dart';
 import '../../../../../core/network/api_constants.dart';
 import '../../../../../core/error/exceptions.dart';
@@ -15,6 +16,7 @@ import '../models/approvals_report_model.dart';
 import '../models/legal_cases_report_model.dart';
 
 abstract class OwnerReportsRemoteDataSource {
+  Future<OwnerReportsIndexModel> getReportsIndex();
   Future<RevenueReportModel> getRevenueReport({
     int? propertyId,
     String? startDate,
@@ -66,6 +68,21 @@ class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
   final Dio _dio;
 
   OwnerReportsRemoteDataSourceImpl(this._dio);
+
+  @override
+  Future<OwnerReportsIndexModel> getReportsIndex() async {
+    try {
+      final response = await _dio.get(ApiConstants.ownerReportsIndex);
+      if (response.data != null && response.data['success'] == true) {
+        return OwnerReportsIndexModel.fromJson(response.data['data']);
+      } else {
+        throw ServerException(response.data?['message'] ?? 'Unknown Error');
+      }
+    } on DioException catch (e) {
+      throw ServerException(
+          e.response?.data?['message'] ?? 'Network Error');
+    }
+  }
 
   @override
   Future<RevenueReportModel> getRevenueReport({
