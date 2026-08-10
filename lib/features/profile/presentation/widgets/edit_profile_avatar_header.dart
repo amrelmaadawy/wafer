@@ -8,6 +8,7 @@ import '../../domain/entities/profile_entity.dart';
 import '../cubit/profile_cubit.dart';
 import '../cubit/profile_state.dart';
 import 'avatar_picker_bottom_sheet.dart';
+import '../../../../core/presentation/widgets/custom_cached_image.dart';
 
 class EditProfileAvatarHeader extends StatelessWidget {
   final ProfileEntity profile;
@@ -114,12 +115,14 @@ class EditProfileAvatarHeader extends StatelessWidget {
           children: [
             if (currentProfile.avatar != null &&
                 currentProfile.avatar!.isNotEmpty)
-              Image.network(
-                currentProfile.avatar!,
+              CustomCachedImage(
+                imageUrl: currentProfile.avatar!,
                 width: 86,
                 height: 86,
+                memCacheWidth: 200,
+                memCacheHeight: 200,
                 fit: BoxFit.cover,
-                errorBuilder: (ctx, err, stack) => _buildInitialText(initial),
+                errorWidget: _buildInitialText(initial),
               )
             else
               _buildInitialText(initial),

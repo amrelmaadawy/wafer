@@ -5,6 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../domain/entities/profile_entity.dart';
+import '../../../../core/presentation/widgets/custom_cached_image.dart';
 
 class ProfileHeaderCard extends StatelessWidget {
   final ProfileEntity profile;
@@ -127,11 +128,14 @@ class ProfileHeaderCard extends StatelessWidget {
       ),
       child: ClipOval(
         child: (profile.avatar != null && profile.avatar!.isNotEmpty)
-            ? Image.network(
-                profile.avatar!,
+            ? CustomCachedImage(
+                imageUrl: profile.avatar!,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    _initialsWidget(context, initials),
+                width: 92,
+                height: 92,
+                memCacheWidth: 200,
+                memCacheHeight: 200,
+                errorWidget: _initialsWidget(context, initials),
               )
             : _initialsWidget(context, initials),
       ),

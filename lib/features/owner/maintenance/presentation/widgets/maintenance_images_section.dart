@@ -4,6 +4,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/custom_cached_image.dart';
 
 class MaintenanceImagesSection extends StatelessWidget {
   final List<String> images;
@@ -72,14 +73,13 @@ class MaintenanceImagesSection extends StatelessWidget {
                       width: 110,
                       height: 110,
                       color: AppColors.backgroundLight,
-                      child: Image.network(
-                        images[index],
+                      child: CustomCachedImage(
+                        imageUrl: images[index],
                         fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(
-                              Icons.broken_image_outlined,
-                              color: AppColors.textSecondaryLight,
-                            ),
+                        width: 110,
+                        height: 110,
+                        memCacheWidth: 250,
+                        memCacheHeight: 250,
                       ),
                     ),
                   );
