@@ -1,4 +1,6 @@
 import '../../domain/entities/unit_full_details_entity.dart';
+import '../../../maintenance/data/models/maintenance_item_model.dart';
+import 'media_item_model.dart';
 
 class UnitFullDetailsModel extends UnitFullDetailsEntity {
   const UnitFullDetailsModel({
@@ -12,6 +14,9 @@ class UnitFullDetailsModel extends UnitFullDetailsEntity {
     required super.status,
     super.statusLabel,
     super.usageType,
+    super.purpose,
+    super.purposeLabel,
+    super.floorType,
     super.floor,
     super.area,
     super.length,
@@ -25,6 +30,10 @@ class UnitFullDetailsModel extends UnitFullDetailsEntity {
     super.meters = const UnitMetersEntity(),
     super.amenities = const [],
     super.images = const [],
+    super.videos = const [],
+    super.attachments = const [],
+    super.media = const MediaDetailsModel(),
+    super.maintenanceRequests = const [],
     super.roomsCount,
     super.bathroomsCount,
     super.hallsCount,
@@ -50,6 +59,9 @@ class UnitFullDetailsModel extends UnitFullDetailsEntity {
       status: json['unit_status'] as String? ?? '',
       statusLabel: json['unit_status_label'] as String?,
       usageType: json['usage_type'] as String?,
+      purpose: json['purpose'] as String? ?? json['unit_purpose'] as String?,
+      purposeLabel: json['purpose_label'] as String? ?? json['unit_purpose_label'] as String?,
+      floorType: json['floor_type'] as String? ?? json['unit_floor_type'] as String? ?? json['floor'] as String?,
       floor: json['floor_number']?.toString() ?? json['floor']?.toString(),
       area: json['area'] as num?,
       length: json['length'] as num?,
@@ -72,24 +84,43 @@ class UnitFullDetailsModel extends UnitFullDetailsEntity {
               ?.map((e) => e.toString())
               .toList() ??
           const [],
-      images:
-          (json['images'] as List<dynamic>?)
-              ?.map((e) => e.toString())
+      images: (json['images'] as List?)
+              ?.map((e) => e is Map ? (e['url'] as String) : e.toString())
+              .where((url) {
+                final l = url.toLowerCase();
+                return !l.endsWith('.mp4') && !l.endsWith('.mov') && !l.endsWith('.avi') && !l.endsWith('.mkv');
+              })
+              .toList() ??
+          [],
+      videos: (json['videos'] as List?)
+              ?.map((e) => e is Map ? (e['url'] as String) : e.toString())
+              .toList() ??
+          [],
+      attachments: (json['attachments'] as List?)
+              ?.map((e) => e is Map ? (e['url'] as String) : e.toString())
+              .toList() ??
+          [],
+      media: json['media'] != null 
+          ? MediaDetailsModel.fromJson(json['media'] as Map<String, dynamic>) 
+          : const MediaDetailsModel(),
+      maintenanceRequests: (json['maintenance_requests'] as List<dynamic>?)
+              ?.map((e) => MaintenanceItemModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      roomsCount: json['details']?['rooms_count'] as int? ?? 0,
-      bathroomsCount: json['details']?['bathrooms_count'] as int? ?? 0,
-      hallsCount: json['details']?['halls_count'] as int? ?? 0,
-      kitchensCount: json['details']?['kitchens_count'] as int? ?? 0,
-      entrancesCount: json['details']?['entrances_count'] as int? ?? 0,
+      roomsCount: json['rooms']?['rooms_count'] as int? ?? json['details']?['rooms_count'] as int? ?? 0,
+      bathroomsCount: json['rooms']?['bathrooms_count'] as int? ?? json['details']?['bathrooms_count'] as int? ?? 0,
+      hallsCount: json['rooms']?['halls_count'] as int? ?? json['details']?['halls_count'] as int? ?? 0,
+      kitchensCount: json['rooms']?['kitchens_count'] as int? ?? json['details']?['kitchens_count'] as int? ?? 0,
+      entrancesCount: json['rooms']?['entrances_count'] as int? ?? json['details']?['entrances_count'] as int? ?? 0,
       rentPrice:
-          json['prices']?['monthly'] as num? ?? json['rent_price'] as num? ?? 0,
-      monthlyPrice: json['prices']?['monthly'] as num? ?? 0,
+          json['prices']?['annual_rent_monthly'] as num? ?? json['prices']?['monthly'] as num? ?? json['rent_price'] as num? ?? 0,
+      monthlyPrice: json['prices']?['annual_rent_monthly'] as num? ?? json['prices']?['monthly'] as num? ?? 0,
       perTwoPaymentsPrice:
+          json['prices']?['annual_rent_2_payments'] as num? ??
           json['prices']?['per_two_payments'] as num? ??
           json['prices']?['per_two_months'] as num? ??
           0,
-      quarterlyPrice: json['prices']?['quarterly'] as num? ?? 0,
+      quarterlyPrice: json['prices']?['annual_rent_4_payments'] as num? ?? json['prices']?['quarterly'] as num? ?? 0,
       currentContract: json['current_contract'],
       contractsHistory: json['contracts_history'] as List<dynamic>? ?? const [],
     );

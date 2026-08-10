@@ -86,22 +86,7 @@ class Step2SpecsView extends StatelessWidget {
                           .updateSpecs(length: double.tryParse(val)),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: CustomTextField(
-                      label: LocaleKeys.unitsAreaLabel.tr(),
-                      keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'^\d*\.?\d*'),
-                        ),
-                      ],
-                      initialValue: state.area?.toString(),
-                      onChanged: (val) => context
-                          .read<UnitCreateCubit>()
-                          .updateSpecs(area: double.tryParse(val)),
-                    ),
-                  ),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: CustomTextField(
                       label: LocaleKeys.unitsWidthHint.tr(),
@@ -117,7 +102,27 @@ class Step2SpecsView extends StatelessWidget {
                           .updateSpecs(width: double.tryParse(val)),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextField(
+                      label: LocaleKeys.unitsAreaLabel.tr(),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
+                      ],
+                      initialValue: state.area?.toString(),
+                      onChanged: (val) => context
+                          .read<UnitCreateCubit>()
+                          .updateSpecs(area: double.tryParse(val)),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: CustomTextField(
                       label: LocaleKeys.unitsHeightLabel.tr(),

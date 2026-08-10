@@ -8,8 +8,8 @@ class UnitCreateEntity extends Equatable {
   final String unitType;
   final String unitStatus;
   final String purpose;
-  final String usageType;
-  final String finishingType;
+  final String? usageType;
+  final String? finishingType;
   final bool isFurnished;
   final String? description;
   final bool isCompleted;
@@ -17,8 +17,8 @@ class UnitCreateEntity extends Equatable {
   final int? maxOccupancy;
 
   // Step 2: Dimensions & Specs
-  final String floorType;
-  final int floorNumber;
+  final String? floorType;
+  final int? floorNumber;
   final double area;
   final double? length;
   final double? width;
@@ -48,8 +48,10 @@ class UnitCreateEntity extends Equatable {
   final String? gasMeterNumber;
   final List<String> amenities;
 
-  // Step 4: Images
+  // Step 4: Media
   final List<File> images;
+  final List<File> videos;
+  final List<File> files;
 
   // Step 5: Financials
   final double? annualRent2Payments;
@@ -63,15 +65,15 @@ class UnitCreateEntity extends Equatable {
     required this.unitType,
     required this.unitStatus,
     required this.purpose,
-    required this.usageType,
-    required this.finishingType,
+    this.usageType,
+    this.finishingType,
     required this.isFurnished,
     this.description,
     this.isCompleted = true,
     this.constructionDate,
     this.maxOccupancy,
-    required this.floorType,
-    required this.floorNumber,
+    this.floorType,
+    this.floorNumber,
     required this.area,
     this.length,
     this.width,
@@ -98,6 +100,8 @@ class UnitCreateEntity extends Equatable {
     this.gasMeterNumber,
     this.amenities = const [],
     this.images = const [],
+    this.videos = const [],
+    this.files = const [],
     this.annualRent2Payments,
     this.annualRent4Payments,
     this.annualRentMonthly,
@@ -146,6 +150,8 @@ class UnitCreateEntity extends Equatable {
     gasMeterNumber,
     amenities,
     images,
+    videos,
+    files,
     annualRent2Payments,
     annualRent4Payments,
     annualRentMonthly,

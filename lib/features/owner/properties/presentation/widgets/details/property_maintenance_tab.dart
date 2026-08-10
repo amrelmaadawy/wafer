@@ -5,6 +5,10 @@ import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/maintenance_entity.dart';
 import '../../../../../../core/presentation/widgets/custom_empty_widget.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../../core/routing/routes.dart';
+import 'package:wafer/features/owner/maintenance/domain/entities/maintenance_item_entity.dart';
+import 'package:wafer/features/owner/maintenance/presentation/widgets/maintenance_status_badge.dart';
 
 class PropertyMaintenanceTab extends StatelessWidget {
   final List<MaintenanceEntity> maintenanceRequests;
@@ -40,9 +44,26 @@ class PropertyMaintenanceTab extends StatelessWidget {
               ),
             ],
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+          child: Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(16),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16),
+              onTap: () {
+                context.push(
+                  Routes.ownerMaintenanceDetails,
+                  extra: MaintenanceItemEntity(
+                    id: request.id,
+                    requestNumber: request.requestNumber,
+                    description: request.description,
+                    status: request.status,
+                    statusLabel: request.statusLabel,
+                  ),
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
               // Header Row
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
@@ -75,23 +96,9 @@ class PropertyMaintenanceTab extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 10,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: AppColors.info.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        request.statusLabel,
-                        style: const TextStyle(
-                          color: AppColors.info,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
+                    MaintenanceStatusBadge(
+                      status: request.status,
+                      statusLabel: request.statusLabel,
                     ),
                   ],
                 ),
@@ -208,6 +215,8 @@ class PropertyMaintenanceTab extends StatelessWidget {
                 ),
               ),
             ],
+              ),
+            ),
           ),
         );
       },

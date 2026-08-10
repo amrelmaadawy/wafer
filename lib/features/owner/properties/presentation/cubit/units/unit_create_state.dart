@@ -55,8 +55,10 @@ class UnitCreateState extends Equatable {
   final String? gasMeterNumber;
   final List<String> amenities;
 
-  // Step 4: Images
+  // Step 4: Media
   final List<File> images;
+  final List<File> videos;
+  final List<File> files;
 
   // Step 5: Financials
   final double? annualRent2Payments;
@@ -113,6 +115,8 @@ class UnitCreateState extends Equatable {
     this.amenities = const [],
     // Step 4
     this.images = const [],
+    this.videos = const [],
+    this.files = const [],
     // Step 5
     this.annualRent2Payments,
     this.annualRent4Payments,
@@ -165,6 +169,8 @@ class UnitCreateState extends Equatable {
     String? gasMeterNumber,
     List<String>? amenities,
     List<File>? images,
+    List<File>? videos,
+    List<File>? files,
     double? annualRent2Payments,
     double? annualRent4Payments,
     double? annualRentMonthly,
@@ -216,6 +222,8 @@ class UnitCreateState extends Equatable {
       gasMeterNumber: gasMeterNumber ?? this.gasMeterNumber,
       amenities: amenities ?? this.amenities,
       images: images ?? this.images,
+      videos: videos ?? this.videos,
+      files: files ?? this.files,
       annualRent2Payments: annualRent2Payments ?? this.annualRent2Payments,
       annualRent4Payments: annualRent4Payments ?? this.annualRent4Payments,
       annualRentMonthly: annualRentMonthly ?? this.annualRentMonthly,
@@ -269,6 +277,8 @@ class UnitCreateState extends Equatable {
     gasMeterNumber,
     amenities,
     images,
+    videos,
+    files,
     annualRent2Payments,
     annualRent4Payments,
     annualRentMonthly,

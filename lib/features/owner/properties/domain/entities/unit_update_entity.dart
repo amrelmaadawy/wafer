@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'unit_create_entity.dart';
 
 class UnitUpdateEntity extends UnitCreateEntity {
   final List<int> deleteImages;
-  final List<File> attachments;
+  final List<int> deleteVideos;
+  final List<int> deleteFiles;
 
   const UnitUpdateEntity({
     required super.name,
@@ -11,15 +11,15 @@ class UnitUpdateEntity extends UnitCreateEntity {
     required super.unitType,
     required super.unitStatus,
     required super.purpose,
-    required super.usageType,
-    required super.finishingType,
+    super.usageType,
+    super.finishingType,
     required super.isFurnished,
     super.description,
     super.isCompleted,
     super.constructionDate,
     super.maxOccupancy,
-    required super.floorType,
-    required super.floorNumber,
+    super.floorType,
+    super.floorNumber,
     required super.area,
     super.length,
     super.width,
@@ -46,8 +46,11 @@ class UnitUpdateEntity extends UnitCreateEntity {
     super.gasMeterNumber,
     super.amenities = const [],
     super.images = const [],
+    super.videos = const [],
+    super.files = const [],
     this.deleteImages = const [],
-    this.attachments = const [],
+    this.deleteVideos = const [],
+    this.deleteFiles = const [],
     super.annualRent2Payments,
     super.annualRent4Payments,
     super.annualRentMonthly,
@@ -58,6 +61,7 @@ class UnitUpdateEntity extends UnitCreateEntity {
   List<Object?> get props => [
         ...super.props,
         deleteImages,
-        attachments,
+        deleteVideos,
+        deleteFiles,
       ];
 }

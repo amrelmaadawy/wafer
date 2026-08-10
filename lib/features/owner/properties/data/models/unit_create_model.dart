@@ -43,6 +43,8 @@ class UnitCreateModel extends UnitCreateEntity {
     super.gasMeterNumber,
     super.amenities,
     super.images,
+    super.videos,
+    super.files,
     super.annualRent2Payments,
     super.annualRent4Payments,
     super.annualRentMonthly,
@@ -91,6 +93,8 @@ class UnitCreateModel extends UnitCreateEntity {
       gasMeterNumber: entity.gasMeterNumber,
       amenities: entity.amenities,
       images: entity.images,
+      videos: entity.videos,
+      files: entity.files,
       annualRent2Payments: entity.annualRent2Payments,
       annualRent4Payments: entity.annualRent4Payments,
       annualRentMonthly: entity.annualRentMonthly,
@@ -105,15 +109,18 @@ class UnitCreateModel extends UnitCreateEntity {
       'unit_type': unitType,
       'unit_status': unitStatus,
       'purpose': purpose,
-      'usage_type': usageType,
-      'floor_type': floorType,
-      'floor_number': floorNumber,
       'area': area,
       'is_completed': isCompleted ? 1 : 0,
       'is_furnished': isFurnished ? 1 : 0,
       'use_price_for_mortgage': usePriceForMortgage ? 1 : 0,
-      'finishing_type': finishingType,
     };
+
+    if (floorType != null) {
+      data['floor_type'] = floorType;
+    }
+    if (usageType != null) data['usage_type'] = usageType;
+    if (finishingType != null) data['finishing_type'] = finishingType;
+    if (floorNumber != null) data['floor_number'] = floorNumber;
 
     if (description != null && description!.isNotEmpty) {
       data['description'] = description;
@@ -164,6 +171,18 @@ class UnitCreateModel extends UnitCreateEntity {
     for (var i = 0; i < images.length; i++) {
       formData.files.add(
         MapEntry('images[$i]', await MultipartFile.fromFile(images[i].path)),
+      );
+    }
+
+    for (var i = 0; i < videos.length; i++) {
+      formData.files.add(
+        MapEntry('videos[$i]', await MultipartFile.fromFile(videos[i].path)),
+      );
+    }
+
+    for (var i = 0; i < files.length; i++) {
+      formData.files.add(
+        MapEntry('files[$i]', await MultipartFile.fromFile(files[i].path)),
       );
     }
 

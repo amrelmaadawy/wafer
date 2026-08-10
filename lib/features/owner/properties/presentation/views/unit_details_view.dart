@@ -12,6 +12,8 @@ import '../widgets/details/unit_specs_grid.dart';
 import '../widgets/details/unit_dimensions_card.dart';
 import '../widgets/details/unit_meters_section.dart';
 import '../widgets/details/unit_amenities_section.dart';
+import '../widgets/details/unit_media_section.dart';
+import '../widgets/details/unit_maintenance_section.dart';
 import '../widgets/details/unit_details_skeleton.dart';
 
 class UnitDetailsView extends StatelessWidget {
@@ -79,6 +81,18 @@ class UnitDetailsView extends StatelessWidget {
                       if (unit.amenities.isNotEmpty) ...[
                         const SizedBox(height: 28),
                         UnitAmenitiesSection(unit: unit),
+                      ],
+                      
+                      // ── Media ────────────────────────────────────────
+                      if (unit.videos.isNotEmpty || unit.attachments.isNotEmpty) ...[
+                        const SizedBox(height: 28),
+                        UnitMediaSection(unit: unit),
+                      ],
+
+                      // ── Maintenance Requests ─────────────────────────
+                      if (unit.maintenanceRequests.isNotEmpty) ...[
+                        const SizedBox(height: 28),
+                        UnitMaintenanceSection(unit: unit),
                       ],
                     ]),
                   ),

@@ -1,4 +1,6 @@
 import 'package:equatable/equatable.dart';
+import '../../../maintenance/domain/entities/maintenance_item_entity.dart';
+import 'media_item_entity.dart';
 
 class UnitMetersEntity extends Equatable {
   final String? electricity;
@@ -22,6 +24,9 @@ class UnitFullDetailsEntity extends Equatable {
   final String status;
   final String? statusLabel;
   final String? usageType;
+  final String? purpose;
+  final String? purposeLabel;
+  final String? floorType;
   final String? floor;
   final num? area;
   final num? length;
@@ -35,6 +40,10 @@ class UnitFullDetailsEntity extends Equatable {
   final UnitMetersEntity meters;
   final List<String> amenities;
   final List<String> images;
+  final List<String> videos;
+  final List<String> attachments;
+  final MediaDetailsEntity media;
+  final List<MaintenanceItemEntity> maintenanceRequests;
 
   // Details counts
   final int roomsCount;
@@ -64,6 +73,9 @@ class UnitFullDetailsEntity extends Equatable {
     required this.status,
     this.statusLabel,
     this.usageType,
+    this.purpose,
+    this.purposeLabel,
+    this.floorType,
     this.floor,
     this.area,
     this.length,
@@ -77,6 +89,10 @@ class UnitFullDetailsEntity extends Equatable {
     this.meters = const UnitMetersEntity(),
     this.amenities = const [],
     this.images = const [],
+    this.videos = const [],
+    this.attachments = const [],
+    this.media = const MediaDetailsEntity(),
+    this.maintenanceRequests = const [],
     this.roomsCount = 0,
     this.bathroomsCount = 0,
     this.hallsCount = 0,
@@ -110,6 +126,9 @@ class UnitFullDetailsEntity extends Equatable {
     status,
     statusLabel,
     usageType,
+    purpose,
+    purposeLabel,
+    floorType,
     floor,
     area,
     length,
@@ -123,6 +142,10 @@ class UnitFullDetailsEntity extends Equatable {
     meters,
     amenities,
     images,
+    videos,
+    attachments,
+    media,
+    maintenanceRequests,
     roomsCount,
     bathroomsCount,
     hallsCount,

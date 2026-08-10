@@ -43,8 +43,11 @@ class UnitUpdateModel extends UnitUpdateEntity {
     super.gasMeterNumber,
     super.amenities,
     super.images,
+    super.videos,
+    super.files,
     super.deleteImages,
-    super.attachments,
+    super.deleteVideos,
+    super.deleteFiles,
     super.annualRent2Payments,
     super.annualRent4Payments,
     super.annualRentMonthly,
@@ -60,14 +63,18 @@ class UnitUpdateModel extends UnitUpdateEntity {
       'unit_status': unitStatus,
       'purpose': purpose,
       'usage_type': usageType,
-      'floor_type': floorType,
-      'floor_number': floorNumber,
       'area': area,
       'is_completed': isCompleted ? 1 : 0,
       'is_furnished': isFurnished ? 1 : 0,
       'use_price_for_mortgage': usePriceForMortgage ? 1 : 0,
-      'finishing_type': finishingType,
     };
+
+    if (floorType != null) {
+      data['floor_type'] = floorType;
+    }
+    if (usageType != null) data['usage_type'] = usageType;
+    if (finishingType != null) data['finishing_type'] = finishingType;
+    if (floorNumber != null) data['floor_number'] = floorNumber;
 
     if (description != null && description!.isNotEmpty) {
       data['description'] = description;
@@ -116,6 +123,14 @@ class UnitUpdateModel extends UnitUpdateEntity {
     for (var i = 0; i < deleteImages.length; i++) {
       data['delete_images[$i]'] = deleteImages[i];
     }
+    
+    for (var i = 0; i < deleteVideos.length; i++) {
+      data['delete_videos[$i]'] = deleteVideos[i];
+    }
+    
+    for (var i = 0; i < deleteFiles.length; i++) {
+      data['delete_attachments[$i]'] = deleteFiles[i];
+    }
 
     final formData = FormData.fromMap(data);
 
@@ -125,9 +140,17 @@ class UnitUpdateModel extends UnitUpdateEntity {
       );
     }
     
-    for (var i = 0; i < attachments.length; i++) {
+
+    
+    for (var i = 0; i < videos.length; i++) {
       formData.files.add(
-        MapEntry('attachments[$i]', await MultipartFile.fromFile(attachments[i].path)),
+        MapEntry('videos[$i]', await MultipartFile.fromFile(videos[i].path)),
+      );
+    }
+
+    for (var i = 0; i < files.length; i++) {
+      formData.files.add(
+        MapEntry('attachments[$i]', await MultipartFile.fromFile(files[i].path)),
       );
     }
 

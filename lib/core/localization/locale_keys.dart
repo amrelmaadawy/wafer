@@ -1945,6 +1945,15 @@ abstract class  LocaleKeys {
   static const unitsWizardSubmit = 'unitsWizardSubmit';
   static const unitsWizardSuccess = 'unitsWizardSuccess';
   static const unitsYes = 'unitsYes';
+  static const unitsStatusLabel = 'unitsStatusLabel';
+  static const unitsMediaTitle = 'unitsMediaTitle';
+  static const unitsMediaSubtitle = 'unitsMediaSubtitle';
+  static const unitsVideosCount = 'unitsVideosCount';
+  static const unitsFilesCount = 'unitsFilesCount';
+  static const unitsMaintenanceRequests = 'unitsMaintenanceRequests';
+  static const unitsMediaSectionTitle = 'unitsMediaSectionTitle';
+  static const unitsNoMedia = 'unitsNoMedia';
+  static const unitsNoMaintenance = 'unitsNoMaintenance';
 
 
   // --- AUTO GENERATED CAMEL CASE KEYS TO FIX COMPILATION ---

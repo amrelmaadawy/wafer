@@ -79,6 +79,7 @@ class UnitCreateCubit extends Cubit<UnitCreateState> {
 
   // --- Step 2 ---
   void updateSpecs({
+    int? maxOccupancy,
     String? floorType,
     int? floorNumber,
     double? area,
@@ -170,6 +171,30 @@ class UnitCreateCubit extends Cubit<UnitCreateState> {
     current.removeAt(index);
     emit(state.copyWith(images: current));
   }
+  
+  void addVideo(File video) {
+    final current = List<File>.from(state.videos);
+    current.add(video);
+    emit(state.copyWith(videos: current));
+  }
+
+  void removeVideo(int index) {
+    final current = List<File>.from(state.videos);
+    current.removeAt(index);
+    emit(state.copyWith(videos: current));
+  }
+
+  void addFile(File file) {
+    final current = List<File>.from(state.files);
+    current.add(file);
+    emit(state.copyWith(files: current));
+  }
+
+  void removeFile(int index) {
+    final current = List<File>.from(state.files);
+    current.removeAt(index);
+    emit(state.copyWith(files: current));
+  }
 
   // --- Step 5 ---
   void updateFinancials({
@@ -234,6 +259,8 @@ class UnitCreateCubit extends Cubit<UnitCreateState> {
       gasMeterNumber: state.gasMeterNumber,
       amenities: state.amenities,
       images: state.images,
+      videos: state.videos,
+      files: state.files,
       annualRent2Payments: state.annualRent2Payments,
       annualRent4Payments: state.annualRent4Payments,
       annualRentMonthly: state.annualRentMonthly,

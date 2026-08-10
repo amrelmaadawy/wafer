@@ -17,7 +17,7 @@ class UnitSpecsGrid extends StatelessWidget {
       if (unit.area != null && unit.area! > 0)
         _SpecItem(
           Icons.square_foot_rounded,
-          '${unit.area!.toStringAsFixed(0)} ${LocaleKeys.commonAreaM2.tr(args: [''])}',
+          LocaleKeys.commonAreaM2.tr(args: [unit.area!.toStringAsFixed(0)]),
           LocaleKeys.propertyDetailsArea.tr(),
         ),
       if (unit.roomsCount > 0)
