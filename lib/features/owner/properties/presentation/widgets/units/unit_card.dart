@@ -5,6 +5,7 @@ import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/theme/state_color_utils.dart';
 import '../../../domain/entities/unit_entity.dart';
 
 class UnitCard extends StatelessWidget {
@@ -82,7 +83,8 @@ class UnitCard extends StatelessWidget {
                             Text(
                               unit.typeLabel ?? unit.type ?? '',
                               style: AppTextStyles.labelMedium.copyWith(
-                                color: AppColors.textSecondaryLight,
+                                color: StateColorUtils.getUnitTypeColor(unit.type),
+                                fontWeight: AppFonts.semiBold,
                               ),
                             ),
                         ],
@@ -225,22 +227,10 @@ class UnitCard extends StatelessWidget {
   }
 
   Widget _buildStatusBadge(BuildContext context) {
-    Color color;
-    String label;
-
-    if (unit.isOccupied) {
-      color = AppColors.success;
-      label = LocaleKeys.dashboardOccupied.tr();
-    } else if (unit.isReserved) {
-      color = AppColors.info;
-      label = LocaleKeys.dashboardReserved.tr();
-    } else if (unit.isMaintenance) {
-      color = AppColors.warning;
-      label = LocaleKeys.dashboardUnderMaint.tr();
-    } else {
-      color = AppColors.success;
-      label = LocaleKeys.dashboardVacant.tr();
-    }
+    Color color = StateColorUtils.getStatusColor(unit.status);
+    String label = unit.statusLabel?.isNotEmpty == true
+        ? unit.statusLabel!
+        : (unit.status);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

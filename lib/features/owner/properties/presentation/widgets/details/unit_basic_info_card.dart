@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/theme/state_color_utils.dart';
 import '../../../domain/entities/unit_full_details_entity.dart';
 
 /// A clean info card showing code, type, usage, floor and description.
@@ -26,12 +27,14 @@ class UnitBasicInfoCard extends StatelessWidget {
           icon: Icons.category_outlined,
           label: LocaleKeys.unitDetailsUnitType.tr(),
           value: unit.typeLabel ?? unit.type ?? '-',
+          color: StateColorUtils.getUnitTypeColor(unit.type),
         ),
       if (unit.usageType != null)
         _InfoItem(
           icon: Icons.business_center_outlined,
           label: LocaleKeys.unitDetailsUsageType.tr(),
           value: _usageLabel(unit.usageType),
+          color: StateColorUtils.getUsageTypeColor(unit.usageType),
         ),
       if (unit.floor != null && unit.floor!.isNotEmpty)
         _InfoItem(
@@ -156,7 +159,7 @@ class UnitBasicInfoCard extends StatelessWidget {
                 Text(
                   item.value,
                   style: AppTextStyles.labelLarge.copyWith(
-                    color: const Color(0xFF1E293B),
+                    color: item.color ?? const Color(0xFF1E293B),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -187,9 +190,11 @@ class _InfoItem {
   final IconData icon;
   final String label;
   final String value;
+  final Color? color;
   const _InfoItem({
     required this.icon,
     required this.label,
     required this.value,
+    this.color,
   });
 }

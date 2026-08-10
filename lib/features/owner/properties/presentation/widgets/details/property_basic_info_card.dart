@@ -4,6 +4,7 @@ import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/theme/state_color_utils.dart';
 import '../../../domain/entities/property_details_entity.dart';
 
 class PropertyBasicInfoCard extends StatelessWidget {
@@ -61,12 +62,14 @@ class PropertyBasicInfoCard extends StatelessWidget {
             LocaleKeys.propertyDetailsPropertyTypeLabel.tr(),
             property.propertyType,
             Icons.apartment_rounded,
+            color: StateColorUtils.getUnitTypeColor(property.propertyType),
           ),
           if (property.usageType != null)
             _buildInfoRow(
               LocaleKeys.propertyDetailsUsageTypeLabel.tr(),
               property.usageType!,
               Icons.category_outlined,
+              color: StateColorUtils.getUsageTypeColor(property.usageType),
             ),
           if (property.branchName != null)
             _buildInfoRow(
@@ -96,10 +99,11 @@ class PropertyBasicInfoCard extends StatelessWidget {
     );
   }
 
-  Widget _buildInfoRow(String label, String value, IconData icon) {
+  Widget _buildInfoRow(String label, String value, IconData icon, {Color? color}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, size: 16, color: AppColors.textSecondaryLight),
           const SizedBox(width: 8),
@@ -115,8 +119,8 @@ class PropertyBasicInfoCard extends StatelessWidget {
             flex: 2,
             child: Text(
               value,
-              style: const TextStyle(
-                color: AppColors.textPrimaryLight,
+              style: TextStyle(
+                color: color ?? AppColors.textPrimaryLight,
                 fontSize: 13,
                 fontWeight: FontWeight.w600,
               ),

@@ -4,6 +4,7 @@ import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/theme/state_color_utils.dart';
 import '../../../../../../core/presentation/widgets/animations/animated_press_card.dart';
 import '../../../domain/entities/property_list_item_entity.dart';
 
@@ -29,7 +30,7 @@ class PropertyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDraft = property.isDraft;
-    final statusColor = isDraft ? AppColors.warning : AppColors.success;
+    final statusColor = StateColorUtils.getStatusColor(property.status);
 
     return AnimatedPressCard(
       onTap: onTap ?? () {},

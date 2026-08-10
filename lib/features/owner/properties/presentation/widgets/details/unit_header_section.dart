@@ -8,6 +8,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/theme/state_color_utils.dart';
 import '../../../domain/entities/unit_full_details_entity.dart';
 import '../../cubit/delete_unit/unit_delete_cubit.dart';
 import 'unit_delete_confirmation_sheet.dart';
@@ -441,33 +442,10 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
   }
 
   Widget _buildStatusBadge(BuildContext context) {
-    Color badgeColor;
-    String statusText;
-
-    switch (widget.unit.status.toLowerCase()) {
-      case 'available':
-      case 'vacant':
-        badgeColor = const Color(0xFF10B981);
-        statusText = LocaleKeys.unitDetailsStatusAvailable.tr();
-        break;
-      case 'rented':
-      case 'occupied':
-        badgeColor = const Color(0xFF3B82F6);
-        statusText = LocaleKeys.unitDetailsStatusRented.tr();
-        break;
-      case 'reserved':
-        badgeColor = const Color(0xFFF59E0B);
-        statusText = LocaleKeys.unitDetailsStatusReserved.tr();
-        break;
-      case 'under_maintenance':
-      case 'maintenance':
-        badgeColor = const Color(0xFFEF4444);
-        statusText = LocaleKeys.unitDetailsStatusMaintenance.tr();
-        break;
-      default:
-        badgeColor = Colors.grey;
-        statusText = widget.unit.statusLabel ?? widget.unit.status;
-    }
+    Color badgeColor = StateColorUtils.getStatusColor(widget.unit.status);
+    String statusText = widget.unit.statusLabel?.isNotEmpty == true
+        ? widget.unit.statusLabel!
+        : (widget.unit.status.isNotEmpty ? widget.unit.status : LocaleKeys.dashboardVacant.tr());
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
