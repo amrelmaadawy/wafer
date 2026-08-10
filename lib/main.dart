@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/di/service_locator.dart';
+import 'core/network/interceptors/cache_interceptor_config.dart';
 import 'core/network/connectivity/auth_event_bus.dart';
 import 'core/presentation/widgets/no_internet_banner.dart';
 import 'core/routing/app_router.dart';
@@ -20,6 +21,9 @@ void main() async {
 
   // Initialize Dependency Injection
   await setupServiceLocator();
+
+  // Initialize API Cache Store
+  await CacheInterceptorConfig.init();
 
   // Load saved primary color and apply it before first frame
   final savedColor = sl<CacheHelper>().getPrimaryColor();
@@ -58,6 +62,7 @@ class _RealEstateAppState extends State<RealEstateApp> {
         // Clear stored credentials
         await sl<SecureStorageService>().clearAll();
         await sl<CacheHelper>().clearAll();
+        await CacheInterceptorConfig.clearCache();
 
         // Navigate to login screen
         if (mounted) {

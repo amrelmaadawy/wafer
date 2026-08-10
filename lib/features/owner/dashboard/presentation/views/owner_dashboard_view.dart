@@ -6,7 +6,7 @@ import '../../../../../core/theme/color_utils.dart';
 import '../cubit/owner_dashboard_cubit.dart';
 import '../cubit/owner_dashboard_state.dart';
 import '../widgets/owner_alerts_grid.dart';
-import '../widgets/owner_financial_summary_card.dart';
+
 import '../widgets/owner_occupancy_card.dart';
 import '../widgets/owner_dashboard_header.dart';
 import '../widgets/owner_dashboard_skeleton_widget.dart';

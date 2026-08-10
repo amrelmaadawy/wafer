@@ -16,8 +16,19 @@ class OwnerDashboardRepositoryImpl implements OwnerDashboardRepository {
     bool forceRefresh = false,
   }) async {
     try {
-      final result = await _remoteDataSource.getDashboardStats();
+      final result = await _remoteDataSource.getDashboardStats(forceRefresh: forceRefresh);
       return Right(result);
+    } on TypeError catch (_) {
+      // If cache deserialization fails due to schema change, retry from network
+      if (!forceRefresh) {
+        return getDashboardStats(forceRefresh: true);
+      }
+      return const Left(ServerFailure("Data format error"));
+    } on FormatException catch (_) {
+      if (!forceRefresh) {
+        return getDashboardStats(forceRefresh: true);
+      }
+      return const Left(ServerFailure("Data format error"));
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {

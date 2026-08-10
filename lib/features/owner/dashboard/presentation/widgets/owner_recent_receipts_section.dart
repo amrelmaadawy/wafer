@@ -50,7 +50,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               clipBehavior: Clip.none,
               itemCount: receipts.length,
-              separatorBuilder: (_, __) => const SizedBox(width: 12),
+              separatorBuilder: (context, index) => const SizedBox(width: 12),
               itemBuilder: (context, index) => SizedBox(
                 width: 280,
                 child: _buildReceiptCard(context, receipts[index]),
