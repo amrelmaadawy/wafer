@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../core/routing/routes.dart';
 import '../../../../../../core/localization/locale_keys.dart';
+import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_fonts.dart';
@@ -65,11 +66,8 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
     return BlocProvider.value(
       value: _cubit,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(LocaleKeys.legal_cases.tr(), style: AppTextStyles.h4),
-          centerTitle: true,
-          backgroundColor: Colors.white,
-          scrolledUnderElevation: 0,
+        appBar: CustomAppBar(
+          title: LocaleKeys.legal_cases.tr(),
         ),
         backgroundColor: AppColors.backgroundLight,
         body: BlocBuilder<LegalCasesListCubit, LegalCasesListState>(
