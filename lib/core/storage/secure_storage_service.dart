@@ -22,4 +22,14 @@ class SecureStorageService {
   Future<void> clearAll() async {
     await _storage.deleteAll();
   }
+
+  static const String _hiveKey = 'hive_encryption_key';
+
+  Future<void> saveHiveKey(String key) async {
+    await _storage.write(key: _hiveKey, value: key);
+  }
+
+  Future<String?> getHiveKey() async {
+    return await _storage.read(key: _hiveKey);
+  }
 }
