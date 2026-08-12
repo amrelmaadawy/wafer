@@ -88,6 +88,7 @@ class _AddTechnicianViewBodyState extends State<_AddTechnicianViewBody> {
         ),
         backgroundColor: AppColors.backgroundLight,
         elevation: 0,
+        scrolledUnderElevation: 0,
         centerTitle: true,
         iconTheme: const IconThemeData(color: AppColors.textPrimaryLight),
       ),

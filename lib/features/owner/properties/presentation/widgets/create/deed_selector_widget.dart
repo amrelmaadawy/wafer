@@ -143,12 +143,25 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
               ),
             ),
             child: filteredDeeds.isEmpty
-                ? Center(
-                    child: Text(
-                      'لا توجد نتائج',
-                      style: const TextStyle(
-                        color: AppColors.textSecondaryLight,
-                      ),
+                ? const Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.search_off_rounded,
+                          size: 40,
+                          color: AppColors.textSecondaryLight,
+                        ),
+                        SizedBox(height: 12),
+                        Text(
+                          'لا توجد نتائج مطابقة لبحثك',
+                          style: TextStyle(
+                            color: AppColors.textSecondaryLight,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 : ListView.separated(

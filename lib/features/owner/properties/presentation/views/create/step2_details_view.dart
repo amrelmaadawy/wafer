@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/utils/widgets/custom_text_field.dart';
+import '../../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../../../../../../core/theme/app_colors.dart';
+import '../../../domain/entities/option_value_label_entity.dart';
 import '../../cubit/create/property_create_cubit.dart';
 import '../../cubit/create/property_create_state.dart';
 
@@ -114,6 +116,26 @@ class _Step2DetailsViewState extends State<Step2DetailsView> {
                     FocusScope.of(context).requestFocus(_areaNode),
                 onChanged: (val) =>
                     context.read<PropertyCreateCubit>().updateAddress(val),
+              ),
+              const SizedBox(height: 16),
+              Text(
+                LocaleKeys.units_usage_type_label.tr(),
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 8),
+              CustomDropdownMenu<OptionValueLabelEntity>(
+                items: state.formData?.options.usageTypes ?? [],
+                value: state.formData?.options.usageTypes
+                    .where((t) => t.value == state.usageType)
+                    .firstOrNull,
+                hint: LocaleKeys.units_usage_type_label.tr(),
+                itemLabelBuilder: (t) => t.label,
+                onSelected: (t) {
+                  context.read<PropertyCreateCubit>().updateUsageType(t.value);
+                },
               ),
               const SizedBox(height: 16),
               Row(

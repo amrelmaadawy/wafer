@@ -163,15 +163,6 @@ class _OwnerCompleteTaskBottomSheetState
                 ),
               ),
               const SizedBox(height: 24),
-              Text(
-                LocaleKeys.maintenanceTaskCompleteNotes.tr(),
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimaryLight,
-                ),
-              ),
-              const SizedBox(height: 8),
               CustomTextField(
                 controller: _notesController,
                 label: LocaleKeys.maintenanceTaskCompleteNotes.tr(),

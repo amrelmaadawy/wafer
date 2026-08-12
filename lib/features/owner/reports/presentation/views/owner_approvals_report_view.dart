@@ -145,18 +145,7 @@ class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
     );
   }
 
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'approved':
-        return Colors.green;
-      case 'pending':
-        return Colors.orange;
-      case 'rejected':
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
-  }
+
 
   Widget _buildSummaryCards(dynamic summary) {
     return Column(

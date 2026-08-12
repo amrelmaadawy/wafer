@@ -238,8 +238,8 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 12),
-              Text(
-                LocaleKeys.propertyCreateExitMessage.tr(),
+              const Text(
+                "هل أنت متأكد من رغبتك في إلغاء الإضافة؟ لن يتم حفظ أي بيانات كمسودة.",
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,

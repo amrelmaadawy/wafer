@@ -40,7 +40,7 @@ class EditSpecsSection extends StatelessWidget {
         ),
         const SizedBox(height: 8),
         CustomDropdownMenu<String>(
-          items: const ['residential', 'commercial', 'administrative', 'mixed'],
+          items: const ['residential', 'commercial', 'industrial', 'mixed'],
           value: state.selectedUsageType,
           hint: 'اختر نوع الاستخدام',
           itemLabelBuilder: (val) {
@@ -49,8 +49,8 @@ class EditSpecsSection extends StatelessWidget {
                 return 'سكني';
               case 'commercial':
                 return 'تجاري';
-              case 'administrative':
-                return 'إداري';
+              case 'industrial':
+                return 'صناعي';
               case 'mixed':
                 return 'مختلط';
               default:

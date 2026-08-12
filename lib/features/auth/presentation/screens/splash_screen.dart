@@ -8,6 +8,7 @@ import '../../../../core/di/service_locator.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/color_utils.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_state.dart';
 
@@ -155,7 +156,7 @@ class _SplashBodyState extends State<_SplashBody> with TickerProviderStateMixin 
     // Light mode: Clean white background, Dark Blue text/icons
     // Dark mode: Dark background, White text/icons
     final backgroundColor = isDark ? AppColors.backgroundDark : AppColors.surfaceLight;
-    final mainElementsColor = isDark ? Colors.white : AppColors.primary;
+    final mainElementsColor = isDark ? Colors.white : context.primaryColor;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark.copyWith(

@@ -16,6 +16,7 @@ import '../views/create/step2_details_view.dart';
 import '../views/create/step3_images_view.dart';
 import '../views/create/step4_owners_view.dart';
 import '../views/create/step5_review_view.dart';
+import '../widgets/create/property_create_skeleton.dart';
 
 class PropertyCreateScreen extends StatefulWidget {
   const PropertyCreateScreen({super.key});
@@ -26,18 +27,21 @@ class PropertyCreateScreen extends StatefulWidget {
 
 class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
   late PageController _pageController;
+  late PropertyCreateCubit _cubit;
 
   @override
   void initState() {
     super.initState();
-    final cubit = context.read<PropertyCreateCubit>();
-    _pageController = PageController(initialPage: cubit.state.currentStep);
-    cubit.loadFormOptions();
+    _cubit = context.read<PropertyCreateCubit>();
+    _cubit.reset(); // Clear any previous draft data
+    _pageController = PageController(initialPage: _cubit.state.currentStep);
+    _cubit.loadFormOptions();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    _cubit.reset(); // Ensure data is cleared when leaving the screen
     super.dispose();
   }
 
@@ -64,6 +68,15 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
           AppToast.showError(
             context,
             LocaleKeys.propertyCreateNameRequired.tr(),
+          );
+        }
+        return;
+      }
+      if (state.usageType == null || state.usageType!.trim().isEmpty) {
+        if (mounted) {
+          AppToast.showError(
+            context,
+            "نوع الاستخدام مطلوب",
           );
         }
         return;
@@ -149,7 +162,7 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
         },
         builder: (context, state) {
           if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const PropertyCreateSkeleton();
           }
 
           final cubit = context.read<PropertyCreateCubit>();

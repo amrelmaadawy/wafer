@@ -206,6 +206,26 @@ class OwnerMaintenanceRemoteDataSourceImpl
       'owner/maintenance-requests/${params.id}/execute',
       data: params.toJson(),
     );
+    
+    if (response.data['success'] == false) {
+      String errorMessage = response.data['message'] ?? 'Validation failed';
+      if (response.data['errors'] is Map) {
+        final errors = response.data['errors'] as Map;
+        final sb = StringBuffer();
+        errors.forEach((key, value) {
+          if (value is List) {
+            sb.writeln(value.join('\n'));
+          } else {
+            sb.writeln(value.toString());
+          }
+        });
+        if (sb.isNotEmpty) {
+          errorMessage = sb.toString().trim();
+        }
+      }
+      throw Exception(errorMessage);
+    }
+    
     final data = response.data['data'] as Map<String, dynamic>;
     return ExecuteOwnerMaintenanceResponseModel.fromJson(data);
   }
@@ -214,10 +234,33 @@ class OwnerMaintenanceRemoteDataSourceImpl
   Future<MaintenanceItemModel> verifyCloseMaintenanceRequest(
     VerifyCloseOwnerMaintenanceParams params,
   ) async {
+    final payload = params.toJson();
+    payload['qa_code'] = params.qaCode.toString(); // Ensure it's treated as string
+
     final response = await _dio.post(
       'owner/maintenance-requests/${params.id}/verify-and-close',
-      data: params.toJson(),
+      data: payload,
     );
+    
+    if (response.data['success'] == false) {
+      String errorMessage = response.data['message'] ?? 'Validation failed';
+      if (response.data['errors'] is Map) {
+        final errors = response.data['errors'] as Map;
+        final sb = StringBuffer();
+        errors.forEach((key, value) {
+          if (value is List) {
+            sb.writeln(value.join('\n'));
+          } else {
+            sb.writeln(value.toString());
+          }
+        });
+        if (sb.isNotEmpty) {
+          errorMessage = sb.toString().trim();
+        }
+      }
+      throw Exception(errorMessage);
+    }
+    
     final data = response.data['data'] as Map<String, dynamic>;
     final itemMap = data['maintenance_request'] as Map<String, dynamic>;
     return MaintenanceItemModel.fromJson(itemMap);

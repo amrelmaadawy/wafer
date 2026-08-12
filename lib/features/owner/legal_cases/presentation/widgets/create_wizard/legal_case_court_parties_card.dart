@@ -60,12 +60,16 @@ class LegalCaseCourtAndPartiesCard extends StatelessWidget {
                 controller: plaintiffController,
                 label: LocaleKeys.plaintiff.tr(),
                 hintText: LocaleKeys.enter_plaintiff.tr(),
+                validator: (v) =>
+                    v == null || v.trim().isEmpty ? LocaleKeys.required_field.tr() : null,
               ),
               const SizedBox(height: AppSpacing.md),
               CustomTextField(
                 controller: defendantController,
                 label: LocaleKeys.defendant.tr(),
                 hintText: LocaleKeys.enter_defendant.tr(),
+                validator: (v) =>
+                    v == null || v.trim().isEmpty ? LocaleKeys.required_field.tr() : null,
               ),
             ],
           ),
