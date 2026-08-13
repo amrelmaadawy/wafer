@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/theme_context.dart';
 
 class ContractsEmptyWidget extends StatelessWidget {
   final VoidCallback? onRefresh;
@@ -35,7 +35,7 @@ class ContractsEmptyWidget extends StatelessWidget {
             Text(
               LocaleKeys.contractsNoTitle.tr(),
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                color: AppColors.textPrimaryLight,
+                color: context.appOnSurfaceColor,
                 fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
@@ -44,7 +44,7 @@ class ContractsEmptyWidget extends StatelessWidget {
             Text(
               LocaleKeys.contractsNoSubtitle.tr(),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: AppColors.textSecondaryLight,
+                color: context.appSecondaryTextColor,
                 height: 1.4,
               ),
               textAlign: TextAlign.center,
@@ -54,7 +54,7 @@ class ContractsEmptyWidget extends StatelessWidget {
               ElevatedButton.icon(
                 onPressed: onRefresh,
                 icon: const Icon(Icons.refresh, size: 18),
-                label: Text(LocaleKeys.contractsFilterAll.tr()),
+                label: Text(LocaleKeys.commonRetry.tr()),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: context.primaryColor,
                   foregroundColor: Colors.white,

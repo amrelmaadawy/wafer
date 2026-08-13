@@ -30,7 +30,8 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
   final _amountController = TextEditingController();
   final _dateController = TextEditingController();
   final _notesController = TextEditingController();
-  final _ownerIdController = TextEditingController();
+
+  int? _selectedOwnerId;
 
   int? _selectedDebitAccountId;
   int? _selectedCreditAccountId;
@@ -50,19 +51,18 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
     _amountController.dispose();
     _dateController.dispose();
     _notesController.dispose();
-    _ownerIdController.dispose();
     super.dispose();
   }
 
   void _submit() {
     if (!_formKey.currentState!.validate()) return;
     if (_selectedDebitAccountId == null || _selectedCreditAccountId == null) {
-      AppToast.showError(context, 'Ø§Ù„Ø±Ø¬Ø§Ø¡ Ø§Ø®ØªÙŠØ§Ø± Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ø¯Ø§Ø¦Ù† ÙˆØ§Ù„Ù…Ø¯ÙŠÙ†');
+      AppToast.showError(context, LocaleKeys.owner_finance_select_accounts_error.tr());
       return;
     }
 
     context.read<CreateFinanceReceiptCubit>().createReceipt(
-          ownerId: int.tryParse(_ownerIdController.text) ?? 0,
+          ownerId: _selectedOwnerId ?? 0,
           amount: num.tryParse(_amountController.text) ?? 0,
           receiptDate: _dateController.text,
           debitAccountId: _selectedDebitAccountId!,
@@ -78,9 +78,9 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
     return BlocListener<CreateFinanceReceiptCubit, CreateFinanceReceiptState>(
       listener: (context, state) {
         if (state is CreateFinanceReceiptLoading) {
-          AppToast.showInfo(context, 'Ø¬Ø§Ø±ÙŠ Ø§Ù„Ø­ÙØ¸...');
+          AppToast.showInfo(context, LocaleKeys.financeSaving.tr());
         } else if (state is CreateFinanceReceiptSuccess) {
-          AppToast.showSuccess(context, 'ØªÙ… Ø­ÙØ¸ Ø§Ù„Ø³Ù†Ø¯ Ø§Ù„Ù…Ø§Ù„ÙŠ Ø¨Ù†Ø¬Ø§Ø­');
+          AppToast.showSuccess(context, LocaleKeys.financeReceiptSaved.tr());
           context.read<FinanceReceiptsCubit>().fetchReceipts(isRefresh: true);
           context.pop();
         } else if (state is CreateFinanceReceiptError) {
@@ -102,11 +102,27 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomTextField(
-                  controller: _ownerIdController,
-                  label: LocaleKeys.financeOwnerId.tr(),
-                  keyboardType: TextInputType.number,
-                  validator: (val) => val == null || val.isEmpty ? LocaleKeys.financeRequired.tr() : null,
+                BlocBuilder<FinanceFormDataCubit, FinanceFormDataState>(
+                  builder: (context, state) {
+                    if (state is FinanceFormDataSuccess) {
+                      final users = state.formData.users;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(LocaleKeys.financeOwnerId.tr(), style: const TextStyle(fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 8),
+                          CustomDropdownMenu<int>(
+                            items: users.map((e) => int.tryParse(e.value) ?? 0).toList(),
+                            value: _selectedOwnerId,
+                            hint: LocaleKeys.financeOwnerId.tr(),
+                            itemLabelBuilder: (id) => users.firstWhere((e) => e.value == id.toString()).label,
+                            onSelected: (val) => setState(() => _selectedOwnerId = val),
+                          ),
+                        ],
+                      );
+                    }
+                    return const SizedBox();
+                  },
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(

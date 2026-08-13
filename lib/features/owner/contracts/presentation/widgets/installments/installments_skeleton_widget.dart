@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
+import '../../../../../../core/theme/theme_context.dart';
 import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/utils/widgets/app_shimmer.dart';
 
@@ -14,32 +14,30 @@ class InstallmentsSkeletonWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       child: Column(
         children: [
-          _buildBoxSkeleton(160),
+          _buildBoxSkeleton(context, 160),
           const SizedBox(height: 16),
-          _buildBoxSkeleton(75),
+          _buildBoxSkeleton(context, 75),
           const SizedBox(height: 16),
-          _buildBoxSkeleton(140),
+          _buildBoxSkeleton(context, 140),
           const SizedBox(height: 14),
-          _buildBoxSkeleton(140),
+          _buildBoxSkeleton(context, 140),
           const SizedBox(height: 14),
-          _buildBoxSkeleton(140),
+          _buildBoxSkeleton(context, 140),
         ],
       ),
     );
   }
 
-  Widget _buildBoxSkeleton(double height) {
+  Widget _buildBoxSkeleton(BuildContext context, double height) {
     return AppShimmer(
       child: Container(
         width: double.infinity,
         height: height,
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
-          color: AppColors.surfaceLight,
+          color: context.appSurfaceColor,
           borderRadius: AppRadius.circularXxl,
-          border: Border.all(
-            color: AppColors.borderLight.withValues(alpha: 0.5),
-          ),
+          border: Border.all(color: context.appBorderColor),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

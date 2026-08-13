@@ -15,104 +15,67 @@ class ContractItemModel extends ContractItemEntity {
   });
 
   factory ContractItemModel.fromJson(Map<String, dynamic> json) {
-    // ID parsing
-    final id = json['id'] != null ? json['id'].toString() : '';
-
-    // Contract number/code
-    final contractNumber =
-        (json['contract_number'] ?? json['code'] ?? json['number'] ?? 'CNT-$id')
-            .toString();
-
-    // Property name parsing (nested or flat)
-    String propertyName = 'عقار عام';
-    if (json['property_name'] != null) {
-      propertyName = json['property_name'].toString();
-    } else if (json['property'] is Map<String, dynamic>) {
-      final propMap = json['property'] as Map<String, dynamic>;
-      propertyName = (propMap['name'] ?? propMap['title'] ?? 'عقار غير محدد')
-          .toString();
-    } else if (json['title'] != null) {
-      propertyName = json['title'].toString();
-    }
-
-    // Unit name parsing (nested or flat)
-    String unitName = '';
-    if (json['unit_name'] != null) {
-      unitName = json['unit_name'].toString();
-    } else if (json['unit'] is Map<String, dynamic>) {
-      final unitMap = json['unit'] as Map<String, dynamic>;
-      unitName =
-          (unitMap['name'] ??
-                  unitMap['unit_number'] ??
-                  unitMap['number'] ??
-                  'وحدة')
-              .toString();
-    }
-
-    // Tenant name parsing
-    String tenantName = 'مستأجر غير محدد';
-    if (json['tenant_name'] != null) {
-      tenantName = json['tenant_name'].toString();
-    } else if (json['tenant'] is Map<String, dynamic>) {
-      final tenantMap = json['tenant'] as Map<String, dynamic>;
-      tenantName = (tenantMap['name'] ?? tenantMap['full_name'] ?? 'مستأجر')
-          .toString();
-    } else if (json['party_name'] != null) {
-      tenantName = json['party_name'].toString();
-    }
-
-    // Dates
-    final startDate = (json['start_date'] ?? json['from_date'] ?? '')
-        .toString();
-    final endDate = (json['end_date'] ?? json['to_date'] ?? '').toString();
-
-    // Rent amount
-    double rentAmount = 0.0;
-    if (json['rent_amount'] != null) {
-      rentAmount = double.tryParse(json['rent_amount'].toString()) ?? 0.0;
-    } else if (json['total_amount'] != null) {
-      rentAmount = double.tryParse(json['total_amount'].toString()) ?? 0.0;
-    } else if (json['price'] != null) {
-      rentAmount = double.tryParse(json['price'].toString()) ?? 0.0;
-    }
-
-    // Payment cycle
-    final paymentCycle =
-        (json['payment_cycle'] ??
-                json['cycle'] ??
-                json['frequency'] ??
-                'monthly')
-            .toString();
-
-    // Status
-    final status = (json['status'] ?? 'active').toString();
-
+    final property = _asMap(json['property']);
+    final unit = _asMap(json['unit']);
+    final tenant = _asMap(json['tenant']) ?? _asMap(json['renter']);
     return ContractItemModel(
-      id: id,
-      contractNumber: contractNumber,
-      propertyName: propertyName,
-      unitName: unitName,
-      tenantName: tenantName,
-      startDate: startDate,
-      endDate: endDate,
-      rentAmount: rentAmount,
-      paymentCycle: paymentCycle,
-      status: status,
+      id: json['id']?.toString() ?? '',
+      contractNumber:
+          (json['contract_number'] ?? json['code'] ?? json['number'] ?? '')
+              .toString(),
+      propertyName:
+          (json['property_name'] ??
+                  property?['name'] ??
+                  property?['title'] ??
+                  json['title'] ??
+                  '')
+              .toString(),
+      unitName:
+          (json['unit_name'] ??
+                  unit?['name'] ??
+                  unit?['unit_number'] ??
+                  unit?['number'] ??
+                  '')
+              .toString(),
+      tenantName:
+          (json['tenant_name'] ??
+                  tenant?['name'] ??
+                  tenant?['full_name'] ??
+                  json['party_name'] ??
+                  '')
+              .toString(),
+      startDate: (json['start_date'] ?? json['from_date'] ?? '').toString(),
+      endDate: (json['end_date'] ?? json['to_date'] ?? '').toString(),
+      rentAmount: _asDouble(
+        json['rent_amount'] ?? json['total_amount'] ?? json['price'],
+      ),
+      paymentCycle:
+          (json['payment_cycle'] ?? json['cycle'] ?? json['frequency'] ?? '')
+              .toString(),
+      status: json['status']?.toString() ?? '',
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'contract_number': contractNumber,
-      'property_name': propertyName,
-      'unit_name': unitName,
-      'tenant_name': tenantName,
-      'start_date': startDate,
-      'end_date': endDate,
-      'rent_amount': rentAmount,
-      'payment_cycle': paymentCycle,
-      'status': status,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'contract_number': contractNumber,
+    'property_name': propertyName,
+    'unit_name': unitName,
+    'tenant_name': tenantName,
+    'start_date': startDate,
+    'end_date': endDate,
+    'rent_amount': rentAmount,
+    'payment_cycle': paymentCycle,
+    'status': status,
+  };
+}
+
+Map<String, dynamic>? _asMap(Object? value) {
+  if (value is! Map) return null;
+  return Map<String, dynamic>.from(value);
+}
+
+double _asDouble(Object? value) {
+  if (value is num) return value.toDouble();
+  return double.tryParse(value?.toString() ?? '') ?? 0;
 }

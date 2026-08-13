@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import '../../../../../core/network/interceptors/cache_interceptor_config.dart';
+import '../../../../../core/network/api_constants.dart';
 import '../models/owner_dashboard_model.dart';
 
 abstract class OwnerDashboardRemoteDataSource {
@@ -22,15 +23,21 @@ class OwnerDashboardRemoteDataSourceImpl
     CancelToken? cancelToken,
   }) async {
     final cacheOptions = CacheInterceptorConfig.cacheOptions.copyWith(
-      policy: forceRefresh ? CachePolicy.refreshForceCache : CachePolicy.request,
+      policy: forceRefresh
+          ? CachePolicy.refreshForceCache
+          : CachePolicy.request,
     );
 
     final response = await _dio.get(
-      'owner/dashboard',
+      ApiConstants.ownerDashboard,
       options: cacheOptions.toOptions(),
       cancelToken: cancelToken,
     );
-    final data = response.data['data'] as Map<String, dynamic>;
+    final responseBody = response.data;
+    final rawData = responseBody is Map ? responseBody['data'] : null;
+    final data = rawData is Map
+        ? Map<String, dynamic>.from(rawData)
+        : <String, dynamic>{};
     return OwnerDashboardModel.fromJson(data);
   }
 }

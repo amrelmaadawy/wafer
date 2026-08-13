@@ -163,13 +163,17 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
       return;
     }
 
+    String p = _selectedPurpose!;
+    if (p == 'for_rent') p = 'rent';
+    if (p == 'for_sale') p = 'sale';
+
     context.read<UnitEditCubit>().submit(
       unitId: widget.unitId,
       name: _nameController.text,
       unitNumber: _unitNumberController.text,
       unitType: _selectedUnitType!,
       unitStatus: _selectedUnitStatus!,
-      purpose: _selectedPurpose!,
+      purpose: p,
       usageType: _selectedUsageType,
       finishingType: _selectedFinishingType,
       isFurnished: _isFurnished,

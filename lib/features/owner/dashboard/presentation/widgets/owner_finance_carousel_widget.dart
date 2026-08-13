@@ -1,4 +1,4 @@
-﻿import 'dart:async';
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:wafer/core/theme/app_radius.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
@@ -86,9 +86,8 @@ class _OwnerFinanceCarouselWidgetState
               ),
             ),
           ),
-        ]
+        ],
       ],
     );
   }
 }
-

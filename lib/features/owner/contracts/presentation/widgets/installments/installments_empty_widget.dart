@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
-import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/theme_context.dart';
 import '../../../../../../core/theme/color_utils.dart';
 
 class InstallmentsEmptyWidget extends StatelessWidget {
@@ -32,19 +32,19 @@ class InstallmentsEmptyWidget extends StatelessWidget {
             const SizedBox(height: 20),
             Text(
               LocaleKeys.installmentsEmptyTitle.tr(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w700,
-                color: AppColors.textPrimaryLight,
+                color: context.appOnSurfaceColor,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 8),
             Text(
               LocaleKeys.installmentsEmptySubtitle.tr(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13.5,
-                color: AppColors.textSecondaryLight,
+                color: context.appSecondaryTextColor,
               ),
               textAlign: TextAlign.center,
             ),

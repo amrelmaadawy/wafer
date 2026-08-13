@@ -6,7 +6,7 @@ import 'package:wafer/features/owner/contracts/presentation/cubit/list/owner_con
 import 'package:wafer/features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
 import 'package:wafer/features/owner/dashboard/presentation/cubit/owner_dashboard_cubit.dart';
 import 'package:wafer/features/profile/presentation/cubit/profile_cubit.dart';
-import 'package:wafer/features/owner/shell/presentation/widgets/owner_bottom_nav_widget.dart';
+import 'package:wafer/features/owner/shell/presentation/widgets/owner_adaptive_shell.dart';
 
 class OwnerMainScreen extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -32,18 +32,15 @@ class OwnerMainScreen extends StatelessWidget {
             create: (_) => sl<ProfileCubit>()..fetchProfile(),
           ),
         ],
-        child: Scaffold(
-          extendBody: true,
-          body: navigationShell,
-          bottomNavigationBar: OwnerBottomNavWidget(
-            currentIndex: navigationShell.currentIndex,
-            onTabChanged: (i) {
-              navigationShell.goBranch(
-                i,
-                initialLocation: i == navigationShell.currentIndex,
-              );
-            },
-          ),
+        child: OwnerAdaptiveShell(
+          currentIndex: navigationShell.currentIndex,
+          onTabChanged: (i) {
+            navigationShell.goBranch(
+              i,
+              initialLocation: i == navigationShell.currentIndex,
+            );
+          },
+          child: navigationShell,
         ),
       ),
     );

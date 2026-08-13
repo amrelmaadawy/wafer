@@ -1,20 +1,15 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wafer/core/theme/app_colors.dart';
+import '../../../../../core/presentation/widgets/app_responsive_content.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../cubit/owner_dashboard_cubit.dart';
 import '../cubit/owner_dashboard_state.dart';
-import '../widgets/owner_alerts_grid.dart';
-
-import '../widgets/owner_occupancy_card.dart';
+import '../widgets/owner_dashboard_content.dart';
 import '../widgets/owner_dashboard_header.dart';
 import '../widgets/owner_dashboard_skeleton_widget.dart';
-import '../widgets/owner_quick_actions.dart';
-import '../widgets/owner_finance_carousel_widget.dart';
-import '../widgets/owner_latest_overdue_section.dart';
-import '../widgets/owner_tasks_legal_card.dart';
 
 class OwnerDashboardView extends StatefulWidget {
   const OwnerDashboardView({super.key});
@@ -25,36 +20,29 @@ class OwnerDashboardView extends StatefulWidget {
 
 class _OwnerDashboardViewState extends State<OwnerDashboardView> {
   bool _isRetrying = false;
+
   @override
   void initState() {
     super.initState();
     final cubit = context.read<OwnerDashboardCubit>();
-    if (cubit.state is OwnerDashboardInitial) {
-      cubit.loadDashboardStats();
-    }
+    if (cubit.state is OwnerDashboardInitial) cubit.loadDashboardStats();
   }
 
   @override
   Widget build(BuildContext context) {
+    final overlayStyle = Theme.of(context).brightness == Brightness.dark
+        ? SystemUiOverlayStyle.light
+        : SystemUiOverlayStyle.dark;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: overlayStyle,
       child: ColoredBox(
-        color: AppColors.surfaceSubtleLight,
+        color: context.appSubtleSurfaceColor,
         child: Column(
           children: [
-            _buildHeader(context),
+            const OwnerDashboardHeader(),
             Expanded(
               child: BlocBuilder<OwnerDashboardCubit, OwnerDashboardState>(
-                builder: (context, state) {
-                  if (state is OwnerDashboardLoading) return _buildLoading();
-                  if (state is OwnerDashboardError) {
-                    return _buildError(context, state.message);
-                  }
-                  if (state is OwnerDashboardLoaded) {
-                    return _buildContent(context, state);
-                  }
-                  return const SizedBox.shrink();
-                },
+                builder: (context, state) => _content(context, state),
               ),
             ),
           ],
@@ -63,61 +51,37 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return const OwnerDashboardHeader();
-  }
-
-  Widget _buildContent(BuildContext context, OwnerDashboardLoaded state) {
+  Widget _content(BuildContext context, OwnerDashboardState state) {
+    if (state is OwnerDashboardLoading) {
+      return const OwnerDashboardSkeletonWidget();
+    }
+    if (state is OwnerDashboardError) {
+      return CustomErrorWidget(
+        message: state.message,
+        isLoading: _isRetrying,
+        onRetry: () => _retry(context),
+      );
+    }
+    if (state is! OwnerDashboardLoaded) return const SizedBox.shrink();
     return RefreshIndicator(
+      color: context.primaryColor,
       onRefresh: () => context.read<OwnerDashboardCubit>().loadDashboardStats(
         forceRefresh: true,
       ),
-      color: context.primaryColor,
-      child: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 20, 16, 120),
-        children: [
-          OwnerFinanceCarouselWidget(data: state.data),
-          const SizedBox(height: 16),
-          OwnerOccupancyCard(data: state.data),
-          const SizedBox(height: 16),
-          const OwnerQuickActions(),
-          const SizedBox(height: 16),
-          OwnerAlertsGrid(data: state.data),
-          if (state.data.latestOverdueInstallments.isNotEmpty) ...[
-            const SizedBox(height: 16),
-            OwnerLatestOverdueSection(installments: state.data.latestOverdueInstallments),
-          ],
-          if (state.data.tasksBreakdown != null || state.data.legalCasesBreakdown != null) ...[
-            const SizedBox(height: 16),
-            OwnerTasksLegalCard(
-              tasks: state.data.tasksBreakdown,
-              legalCases: state.data.legalCasesBreakdown,
-            ),
-          ],
-        ],
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.only(top: 20, bottom: 120),
+        child: AppResponsiveContent(child: OwnerDashboardContent(state: state)),
       ),
     );
   }
 
-  Widget _buildLoading() {
-    return const OwnerDashboardSkeletonWidget();
-  }
-
-  Widget _buildError(BuildContext context, String message) {
-    return CustomErrorWidget(
-      message: message,
-      isLoading: _isRetrying,
-      onRetry: () async {
-        setState(() => _isRetrying = true);
-        await context.read<OwnerDashboardCubit>().loadDashboardStats(
-          forceRefresh: true,
-          showLoadingState: false,
-        );
-        if (mounted) {
-          setState(() => _isRetrying = false);
-        }
-      },
+  Future<void> _retry(BuildContext context) async {
+    setState(() => _isRetrying = true);
+    await context.read<OwnerDashboardCubit>().loadDashboardStats(
+      forceRefresh: true,
+      showLoadingState: false,
     );
+    if (mounted) setState(() => _isRetrying = false);
   }
 }
-

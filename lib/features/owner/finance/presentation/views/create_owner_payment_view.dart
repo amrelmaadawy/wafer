@@ -30,7 +30,8 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
   final _amountController = TextEditingController();
   final _dateController = TextEditingController();
   final _notesController = TextEditingController();
-  final _payeeIdController = TextEditingController();
+
+  int? _selectedPayeeId;
 
   int? _selectedDebitAccountId;
   int? _selectedCreditAccountId;
@@ -50,7 +51,6 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
     _amountController.dispose();
     _dateController.dispose();
     _notesController.dispose();
-    _payeeIdController.dispose();
     super.dispose();
   }
 
@@ -62,7 +62,7 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
     }
 
     context.read<CreateFinancePaymentCubit>().createPayment(
-          payeeId: int.tryParse(_payeeIdController.text) ?? 0,
+          payeeId: _selectedPayeeId ?? 0,
           amount: num.tryParse(_amountController.text) ?? 0,
           paymentDate: _dateController.text,
           debitAccountId: _selectedDebitAccountId!,
@@ -101,11 +101,27 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomTextField(
-                  controller: _payeeIdController,
-                  label: LocaleKeys.financePayeeId.tr(),
-                  keyboardType: TextInputType.number,
-                  validator: (val) => val == null || val.isEmpty ? LocaleKeys.financeRequired.tr() : null,
+                BlocBuilder<FinanceFormDataCubit, FinanceFormDataState>(
+                  builder: (context, state) {
+                    if (state is FinanceFormDataSuccess) {
+                      final users = state.formData.users;
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(LocaleKeys.financePayeeId.tr(), style: const TextStyle(fontWeight: FontWeight.bold)),
+                          const SizedBox(height: 8),
+                          CustomDropdownMenu<int>(
+                            items: users.map((e) => int.tryParse(e.value) ?? 0).toList(),
+                            value: _selectedPayeeId,
+                            hint: LocaleKeys.financePayeeId.tr(),
+                            itemLabelBuilder: (id) => users.firstWhere((e) => e.value == id.toString()).label,
+                            onSelected: (val) => setState(() => _selectedPayeeId = val),
+                          ),
+                        ],
+                      );
+                    }
+                    return const SizedBox();
+                  },
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(

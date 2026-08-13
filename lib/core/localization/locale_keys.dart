@@ -1696,6 +1696,9 @@ abstract class  LocaleKeys {
   static const propertiesSubtitle = 'propertiesSubtitle';
   static const propertiesTitle = 'propertiesTitle';
   static const propertiesTotalCount = 'propertiesTotalCount';
+  static const propertiesDisplayOptions = 'propertiesDisplayOptions';
+  static const propertiesViewComfortable = 'propertiesViewComfortable';
+  static const propertiesViewCompact = 'propertiesViewCompact';
   static const propertyCreateAddress = 'propertyCreateAddress';
   static const propertyCreateArea = 'propertyCreateArea';
   static const propertyCreateDescription = 'propertyCreateDescription';

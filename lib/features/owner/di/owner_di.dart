@@ -139,11 +139,16 @@ import '../reports/presentation/cubit/legal_cases/owner_legal_cases_report_cubit
 // Properties
 import '../properties/data/datasources/properties_remote_data_source.dart';
 import '../properties/data/datasources/deeds_remote_data_source.dart';
+import '../properties/data/datasources/property_display_preferences_local_data_source.dart';
 import '../properties/data/repositories/properties_repository_impl.dart';
 import '../properties/data/repositories/deeds_repository_impl.dart';
+import '../properties/data/repositories/property_display_preferences_repository_impl.dart';
 import '../properties/domain/repositories/properties_repository.dart';
 import '../properties/domain/repositories/deeds_repository.dart';
+import '../properties/domain/repositories/property_display_preferences_repository.dart';
 import '../properties/domain/usecases/get_properties_list_use_case.dart';
+import '../properties/domain/usecases/get_property_display_mode_use_case.dart';
+import '../properties/domain/usecases/save_property_display_mode_use_case.dart';
 import '../properties/domain/usecases/get_property_form_options_use_case.dart';
 import '../properties/domain/usecases/get_property_details_use_case.dart';
 import '../properties/domain/usecases/get_deeds_list_use_case.dart';
@@ -157,6 +162,8 @@ import '../properties/domain/usecases/publish_property_use_case.dart';
 import '../properties/domain/usecases/get_unit_details_use_case.dart';
 import '../properties/domain/usecases/delete_unit_use_case.dart';
 import '../properties/presentation/cubit/list/properties_list_cubit.dart';
+import '../properties/presentation/cubit/display/property_display_cubit.dart';
+import '../properties/presentation/cubit/filter_options/property_filter_options_cubit.dart';
 import '../properties/presentation/cubit/details/property_details_cubit.dart';
 import '../properties/presentation/cubit/create/property_create_cubit.dart';
 import '../properties/presentation/cubit/publish/publish_property_cubit.dart';
@@ -277,7 +284,7 @@ void _initFinance() {
   if (!sl.isRegistered<GetFinanceReceiptDetailsUseCase>()) {
     sl.registerLazySingleton(() => GetFinanceReceiptDetailsUseCase(sl()));
   }
-  
+
   if (!sl.isRegistered<GetFinancePaymentDetailsUseCase>()) {
     sl.registerLazySingleton(() => GetFinancePaymentDetailsUseCase(sl()));
   }
@@ -305,10 +312,14 @@ void _initFinance() {
     sl.registerFactory(() => CreateFinanceAccountCubit(sl()));
   }
   if (!sl.isRegistered<UpdateFinanceAccountCubit>()) {
-    sl.registerFactory(() => UpdateFinanceAccountCubit(updateAccountUseCase: sl()));
+    sl.registerFactory(
+      () => UpdateFinanceAccountCubit(updateAccountUseCase: sl()),
+    );
   }
   if (!sl.isRegistered<FinanceAccountDetailsCubit>()) {
-    sl.registerFactory(() => FinanceAccountDetailsCubit(getAccountDetailsUseCase: sl()));
+    sl.registerFactory(
+      () => FinanceAccountDetailsCubit(getAccountDetailsUseCase: sl()),
+    );
   }
   if (!sl.isRegistered<FinanceReceiptsCubit>()) {
     sl.registerFactory(() => FinanceReceiptsCubit(sl()));
@@ -317,23 +328,35 @@ void _initFinance() {
     sl.registerFactory(() => CreateFinanceReceiptCubit(sl()));
   }
   if (!sl.isRegistered<UpdateFinanceReceiptCubit>()) {
-    sl.registerFactory(() => UpdateFinanceReceiptCubit(updateFinanceReceiptUseCase: sl()));
+    sl.registerFactory(
+      () => UpdateFinanceReceiptCubit(updateFinanceReceiptUseCase: sl()),
+    );
   }
   if (!sl.isRegistered<UpdateFinancePaymentCubit>()) {
-    sl.registerFactory(() => UpdateFinancePaymentCubit(updateFinancePaymentUseCase: sl()));
+    sl.registerFactory(
+      () => UpdateFinancePaymentCubit(updateFinancePaymentUseCase: sl()),
+    );
   }
   if (!sl.isRegistered<FinanceReceiptDetailsCubit>()) {
-    sl.registerFactory(() => FinanceReceiptDetailsCubit(getFinanceReceiptDetailsUseCase: sl()));
+    sl.registerFactory(
+      () => FinanceReceiptDetailsCubit(getFinanceReceiptDetailsUseCase: sl()),
+    );
   }
 
   if (!sl.isRegistered<FinancePaymentDetailsCubit>()) {
-    sl.registerFactory(() => FinancePaymentDetailsCubit(getPaymentDetailsUseCase: sl()));
+    sl.registerFactory(
+      () => FinancePaymentDetailsCubit(getPaymentDetailsUseCase: sl()),
+    );
   }
   if (!sl.isRegistered<CancelFinancePaymentCubit>()) {
-    sl.registerFactory(() => CancelFinancePaymentCubit(cancelFinancePaymentUseCase: sl()));
+    sl.registerFactory(
+      () => CancelFinancePaymentCubit(cancelFinancePaymentUseCase: sl()),
+    );
   }
   if (!sl.isRegistered<CancelFinanceReceiptCubit>()) {
-    sl.registerFactory(() => CancelFinanceReceiptCubit(cancelFinanceReceiptUseCase: sl()));
+    sl.registerFactory(
+      () => CancelFinanceReceiptCubit(cancelFinanceReceiptUseCase: sl()),
+    );
   }
   if (!sl.isRegistered<FinancePaymentsCubit>()) {
     sl.registerFactory(() => FinancePaymentsCubit(sl()));
@@ -350,21 +373,20 @@ void _initFinance() {
   }
   if (!sl.isRegistered<JournalEntriesRemoteDataSource>()) {
     sl.registerLazySingleton<JournalEntriesRemoteDataSource>(
-        () => JournalEntriesRemoteDataSourceImpl(sl()));
+      () => JournalEntriesRemoteDataSourceImpl(sl()),
+    );
   }
   if (!sl.isRegistered<JournalEntriesRepository>()) {
     sl.registerLazySingleton<JournalEntriesRepository>(
-        () => JournalEntriesRepositoryImpl(
-              remoteDataSource: sl(),
-              networkInfo: sl(),
-            ));
-  }
-  if (!sl.isRegistered<TransfersRepository>()) {
-    sl.registerLazySingleton<TransfersRepository>(
-      () => TransfersRepositoryImpl(
+      () => JournalEntriesRepositoryImpl(
         remoteDataSource: sl(),
         networkInfo: sl(),
       ),
+    );
+  }
+  if (!sl.isRegistered<TransfersRepository>()) {
+    sl.registerLazySingleton<TransfersRepository>(
+      () => TransfersRepositoryImpl(remoteDataSource: sl(), networkInfo: sl()),
     );
   }
   if (!sl.isRegistered<GetTransfersUseCase>()) {
@@ -389,7 +411,9 @@ void _initFinance() {
     sl.registerFactory(() => UpdateTransferCubit(updateTransferUseCase: sl()));
   }
   if (!sl.isRegistered<ApproveTransferCubit>()) {
-    sl.registerFactory(() => ApproveTransferCubit(approveTransferUseCase: sl()));
+    sl.registerFactory(
+      () => ApproveTransferCubit(approveTransferUseCase: sl()),
+    );
   }
   if (!sl.isRegistered<GetJournalEntriesUseCase>()) {
     sl.registerLazySingleton(() => GetJournalEntriesUseCase(sl()));
@@ -400,10 +424,18 @@ void _initFinance() {
 
     // Cubits
     sl.registerFactory(() => JournalEntriesCubit(sl()));
-    sl.registerFactory(() => CreateJournalEntryCubit(createJournalEntryUseCase: sl()));
-    sl.registerFactory(() => UpdateJournalEntryCubit(updateJournalEntryUseCase: sl()));
-    sl.registerFactory(() => PostJournalEntryCubit(postJournalEntryUseCase: sl()));
-    sl.registerFactory(() => ReverseJournalEntryCubit(reverseJournalEntryUseCase: sl()));
+    sl.registerFactory(
+      () => CreateJournalEntryCubit(createJournalEntryUseCase: sl()),
+    );
+    sl.registerFactory(
+      () => UpdateJournalEntryCubit(updateJournalEntryUseCase: sl()),
+    );
+    sl.registerFactory(
+      () => PostJournalEntryCubit(postJournalEntryUseCase: sl()),
+    );
+    sl.registerFactory(
+      () => ReverseJournalEntryCubit(reverseJournalEntryUseCase: sl()),
+    );
   }
 }
 
@@ -496,6 +528,28 @@ void _initUnits() {
 }
 
 void _initProperties() {
+  if (!sl.isRegistered<PropertyDisplayPreferencesLocalDataSource>()) {
+    sl.registerLazySingleton<PropertyDisplayPreferencesLocalDataSource>(
+      () => PropertyDisplayPreferencesLocalDataSourceImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<PropertyDisplayPreferencesRepository>()) {
+    sl.registerLazySingleton<PropertyDisplayPreferencesRepository>(
+      () => PropertyDisplayPreferencesRepositoryImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<GetPropertyDisplayModeUseCase>()) {
+    sl.registerLazySingleton(() => GetPropertyDisplayModeUseCase(sl()));
+  }
+  if (!sl.isRegistered<SavePropertyDisplayModeUseCase>()) {
+    sl.registerLazySingleton(() => SavePropertyDisplayModeUseCase(sl()));
+  }
+  if (!sl.isRegistered<PropertyDisplayCubit>()) {
+    sl.registerFactory(() => PropertyDisplayCubit(sl(), sl()));
+  }
+  if (!sl.isRegistered<PropertyFilterOptionsCubit>()) {
+    sl.registerFactory(() => PropertyFilterOptionsCubit(sl()));
+  }
   if (!sl.isRegistered<PropertiesRemoteDataSource>()) {
     sl.registerLazySingleton<PropertiesRemoteDataSource>(
       () => PropertiesRemoteDataSourceImpl(sl()),
@@ -789,7 +843,8 @@ void _initReports() {
   }
   if (!sl.isRegistered<OwnerReportsIndexCubit>()) {
     sl.registerFactory(
-        () => OwnerReportsIndexCubit(getReportsIndexUseCase: sl()));
+      () => OwnerReportsIndexCubit(getReportsIndexUseCase: sl()),
+    );
   }
   if (!sl.isRegistered<GetOwnerOccupancyReportUseCase>()) {
     sl.registerLazySingleton(() => GetOwnerOccupancyReportUseCase(sl()));

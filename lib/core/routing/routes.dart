@@ -10,25 +10,42 @@ class Routes {
   static const String tenantDashboard = '/tenant-main/dashboard';
   static const String ownerProperties = '/owner-main/properties';
   static const String ownerContracts = '/owner-main/contracts';
+  static const String ownerContractDetails = '/owner-contracts/:id';
+  static const String ownerContractInstallments =
+      '/owner-contracts/:id/installments';
   static const String ownerFinance = '/owner-main/finance';
   static const String ownerFinanceAccounts = '/owner-main/finance/accounts';
-  static const String ownerFinanceAccountCreate = '/owner-main/finance/accounts/create';
-  static const String ownerFinanceAccountUpdate = '/owner-main/finance/accounts/update';
-  static const String ownerFinanceAccountDetails = '/owner-main/finance/accounts/details/:id';
+  static const String ownerFinanceAccountCreate =
+      '/owner-main/finance/accounts/create';
+  static const String ownerFinanceAccountUpdate =
+      '/owner-main/finance/accounts/update';
+  static const String ownerFinanceAccountDetails =
+      '/owner-main/finance/accounts/details/:id';
   static const String ownerFinanceReceipts = '/owner-main/finance/receipts';
-  static const String ownerFinanceReceiptCreate = '/owner-main/finance/receipts/create';
-  static const String ownerFinanceReceiptUpdate = '/owner-main/finance/receipts/update';
+  static const String ownerFinanceReceiptCreate =
+      '/owner-main/finance/receipts/create';
+  static const String ownerFinanceReceiptUpdate =
+      '/owner-main/finance/receipts/update';
   static const String ownerFinancePayments = '/owner-main/finance/payments';
-  static const String ownerFinancePaymentUpdate = '/owner-main/finance/payments/update';
-  static const String ownerFinanceCreatePayment = '/owner-main/finance/payments/create';
-  static const String ownerFinancePaymentDetails = '/owner-main/finance/payments/details/:id';
+  static const String ownerFinancePaymentUpdate =
+      '/owner-main/finance/payments/update';
+  static const String ownerFinanceCreatePayment =
+      '/owner-main/finance/payments/create';
+  static const String ownerFinancePaymentDetails =
+      '/owner-main/finance/payments/details/:id';
   static const String ownerFinanceTransfers = '/owner-main/finance/transfers';
-  static const String ownerFinanceCreateTransfer = '/owner-main/finance/transfers/create';
-  static const String ownerFinanceUpdateTransfer = '/owner-main/finance/transfers/update';
-  static const String ownerFinanceJournalEntries = '/owner-main/finance/journal-entries';
-  static const String ownerFinanceCreateJournalEntry = '/owner-main/finance/journal-entries/create';
-  static const String ownerFinanceUpdateJournalEntry = '/owner-main/finance/journal-entries/update';
-  static const String ownerFinanceReceiptDetails = '/owner-main/finance/receipts/details/:id';
+  static const String ownerFinanceCreateTransfer =
+      '/owner-main/finance/transfers/create';
+  static const String ownerFinanceUpdateTransfer =
+      '/owner-main/finance/transfers/update';
+  static const String ownerFinanceJournalEntries =
+      '/owner-main/finance/journal-entries';
+  static const String ownerFinanceCreateJournalEntry =
+      '/owner-main/finance/journal-entries/create';
+  static const String ownerFinanceUpdateJournalEntry =
+      '/owner-main/finance/journal-entries/update';
+  static const String ownerFinanceReceiptDetails =
+      '/owner-main/finance/receipts/details/:id';
   static const String ownerProfile = '/owner-main/profile';
   static const String notifications = '/notifications';
   static const String ownerMaintenance = '/owner-maintenance';
@@ -60,13 +77,19 @@ class Routes {
   static const String ownerDeedsCreate = '/owner-deeds-create';
   static const String ownerDeedDetails = '/owner-deed-details';
 
+  static String ownerContractDetailsPath(String id) => '/owner-contracts/$id';
+
+  static String ownerContractInstallmentsPath(String id) =>
+      '/owner-contracts/$id/installments';
+
   // Reports sub-routes
   static const String ownerRevenueReport = '/owner-revenue-report';
   static const String ownerOccupancyReport = '/owner-occupancy-report';
   static const String ownerDefaultersReport = '/owner-defaulters-report';
   static const String ownerUnitsStatusReport = '/owner/reports/units-status';
   static const String ownerContractsReport = '/owner/reports/contracts';
-  static const String ownerContractsMovementReport = '/owner/reports/contracts-movement';
+  static const String ownerContractsMovementReport =
+      '/owner/reports/contracts-movement';
   static const String ownerReportsApprovals = '/owner/reports/approvals';
   static const String ownerReportsLegalCases = '/owner/reports/legal-cases';
   static const String ownerMaintenanceRequestsReport =

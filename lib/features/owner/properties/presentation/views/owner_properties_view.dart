@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/routing/routes.dart';
+import '../../../../../core/theme/app_breakpoints.dart';
 import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../domain/entities/property_display_mode.dart';
+import '../../domain/entities/property_list_item_entity.dart';
+import '../cubit/display/property_display_cubit.dart';
 import '../cubit/list/properties_list_cubit.dart';
 import '../cubit/list/properties_list_state.dart';
 import '../widgets/list/properties_empty_widget.dart';
 import '../widgets/list/properties_filter_bar.dart';
+import '../widgets/list/properties_loaded_list.dart';
+import '../widgets/list/properties_page_header.dart';
 import '../widgets/list/properties_stats_header_widget.dart';
-import '../widgets/list/property_card.dart';
+import '../widgets/list/property_display_toolbar.dart';
 import '../widgets/list/property_skeleton_card.dart';
-import '../../../../../core/presentation/widgets/animations/staggered_list_item.dart';
 
 class OwnerPropertiesView extends StatefulWidget {
   const OwnerPropertiesView({super.key});
@@ -59,10 +61,15 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
 
   @override
   Widget build(BuildContext context) {
+    final displayMode = context
+        .select<PropertyDisplayCubit, PropertyDisplayMode>(
+          (cubit) => cubit.state.mode,
+        );
+
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 110.0),
+        padding: EdgeInsets.only(bottom: context.isCompact ? 110 : 16),
         child: FloatingActionButton(
           onPressed: _onAddNewProperty,
           backgroundColor: context.primaryColor,
@@ -73,7 +80,7 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
       body: SafeArea(
         child: Column(
           children: [
-            _buildHeader(context),
+            const PropertiesPageHeader(),
             BlocBuilder<PropertiesListCubit, PropertiesListState>(
               builder: (context, state) {
                 if (state is PropertiesListLoaded && state.stats != null) {
@@ -83,71 +90,26 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
               },
             ),
             const PropertiesFilterBar(),
-            const SizedBox(height: 8),
-            Expanded(child: _buildBody(context)),
+            BlocBuilder<PropertiesListCubit, PropertiesListState>(
+              builder: (context, state) {
+                if (state is! PropertiesListLoaded) {
+                  return const SizedBox.shrink();
+                }
+                return PropertyDisplayToolbar(
+                  total: state.meta.total,
+                  mode: displayMode,
+                  onChanged: context.read<PropertyDisplayCubit>().changeMode,
+                );
+              },
+            ),
+            Expanded(child: _buildBody(context, displayMode)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                LocaleKeys.propertiesTitle.tr(),
-                style: const TextStyle(
-                  color: AppColors.textPrimaryLight,
-                  fontSize: 22,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-              const SizedBox(height: 2),
-              Text(
-                LocaleKeys.propertiesSubtitle.tr(),
-                style: const TextStyle(
-                  color: AppColors.textSecondaryLight,
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
-          BlocBuilder<PropertiesListCubit, PropertiesListState>(
-            builder: (context, state) {
-              int total = 0;
-              if (state is PropertiesListLoaded) total = state.meta.total;
-              return Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
-                decoration: BoxDecoration(
-                  color: context.primarySubtle,
-                  borderRadius: AppRadius.circularFull,
-                ),
-                child: Text(
-                  '${LocaleKeys.propertiesTotalCount.tr()}: $total',
-                  style: TextStyle(
-                    color: context.primaryColor,
-                    fontSize: 11.5,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context, PropertyDisplayMode displayMode) {
     return BlocBuilder<PropertiesListCubit, PropertiesListState>(
       builder: (context, state) {
         if (state is PropertiesListLoading || state is PropertiesListInitial) {
@@ -163,49 +125,30 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
           return PropertiesEmptyWidget(
             reason: state.reason,
             onAddProperty: _onAddNewProperty,
-            onResetSearch: () => context.read<PropertiesListCubit>().searchProperties(''),
-            onResetFilter: () => context.read<PropertiesListCubit>().changeStatusFilter('all'),
+            onResetSearch: () =>
+                context.read<PropertiesListCubit>().searchProperties(''),
+            onResetFilter: () =>
+                context.read<PropertiesListCubit>().changeStatusFilter('all'),
           );
         } else if (state is PropertiesListLoaded) {
-          return RefreshIndicator(
-            color: context.primaryColor,
+          return PropertiesLoadedList(
+            state: state,
+            mode: displayMode,
+            controller: _scrollController,
             onRefresh: () => context.read<PropertiesListCubit>().getProperties(
               forceRefresh: true,
             ),
-            child: ListView.builder(
-              controller: _scrollController,
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 80),
-              itemCount:
-                  state.properties.length + (state.isFetchingMore ? 1 : 0),
-              itemBuilder: (context, index) {
-                if (index == state.properties.length) {
-                  return const Padding(
-                    padding: EdgeInsets.only(top: 8, bottom: 16),
-                    child: PropertySkeletonItem(),
-                  );
-                }
-                final property = state.properties[index];
-                return StaggeredListItem(
-                  index: index,
-                  child: PropertyCard(
-                    property: property,
-                    onTap: () async {
-                      final cubit = context.read<PropertiesListCubit>();
-                      await context.push(
-                        '${Routes.ownerPropertyDetails}?id=${property.id}',
-                      );
-                      if (mounted) {
-                        cubit.getProperties(forceRefresh: true);
-                      }
-                    },
-                  ),
-                );
-              },
-            ),
+            onPropertyTap: _openProperty,
           );
         }
         return const SizedBox.shrink();
       },
     );
+  }
+
+  Future<void> _openProperty(PropertyListItemEntity property) async {
+    final cubit = context.read<PropertiesListCubit>();
+    await context.push('${Routes.ownerPropertyDetails}?id=${property.id}');
+    if (mounted) cubit.getProperties(forceRefresh: true);
   }
 }

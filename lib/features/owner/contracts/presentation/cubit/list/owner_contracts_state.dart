@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import '../../../domain/entities/contract_item_entity.dart';
 import '../../../domain/entities/contracts_pagination_meta_entity.dart';
+import '../../../domain/entities/contract_status_filter.dart';
 
 abstract class OwnerContractsState extends Equatable {
   const OwnerContractsState();
@@ -14,9 +15,9 @@ class OwnerContractsInitial extends OwnerContractsState {
 }
 
 class OwnerContractsLoading extends OwnerContractsState {
-  final String activeStatus;
+  final ContractStatusFilter activeStatus;
 
-  const OwnerContractsLoading({this.activeStatus = 'all'});
+  const OwnerContractsLoading({this.activeStatus = ContractStatusFilter.all});
 
   @override
   List<Object?> get props => [activeStatus];
@@ -25,20 +26,20 @@ class OwnerContractsLoading extends OwnerContractsState {
 class OwnerContractsLoaded extends OwnerContractsState {
   final List<ContractItemEntity> contracts;
   final ContractsPaginationMetaEntity meta;
-  final String activeStatus;
+  final ContractStatusFilter activeStatus;
   final bool isFetchingMore;
 
   const OwnerContractsLoaded({
     required this.contracts,
     required this.meta,
-    this.activeStatus = 'all',
+    this.activeStatus = ContractStatusFilter.all,
     this.isFetchingMore = false,
   });
 
   OwnerContractsLoaded copyWith({
     List<ContractItemEntity>? contracts,
     ContractsPaginationMetaEntity? meta,
-    String? activeStatus,
+    ContractStatusFilter? activeStatus,
     bool? isFetchingMore,
   }) {
     return OwnerContractsLoaded(
@@ -54,9 +55,9 @@ class OwnerContractsLoaded extends OwnerContractsState {
 }
 
 class OwnerContractsEmpty extends OwnerContractsState {
-  final String activeStatus;
+  final ContractStatusFilter activeStatus;
 
-  const OwnerContractsEmpty({this.activeStatus = 'all'});
+  const OwnerContractsEmpty({this.activeStatus = ContractStatusFilter.all});
 
   @override
   List<Object?> get props => [activeStatus];
@@ -64,9 +65,12 @@ class OwnerContractsEmpty extends OwnerContractsState {
 
 class OwnerContractsError extends OwnerContractsState {
   final String message;
-  final String activeStatus;
+  final ContractStatusFilter activeStatus;
 
-  const OwnerContractsError(this.message, {this.activeStatus = 'all'});
+  const OwnerContractsError(
+    this.message, {
+    this.activeStatus = ContractStatusFilter.all,
+  });
 
   @override
   List<Object?> get props => [message, activeStatus];

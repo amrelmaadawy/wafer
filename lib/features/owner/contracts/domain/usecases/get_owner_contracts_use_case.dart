@@ -3,16 +3,17 @@ import 'package:equatable/equatable.dart';
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/usecase.dart';
 import '../entities/contracts_response_entity.dart';
+import '../entities/contract_status_filter.dart';
 import '../repositories/owner_contracts_repository.dart';
 
 class GetOwnerContractsParams extends Equatable {
   final int page;
-  final String? status;
+  final ContractStatusFilter status;
   final bool forceRefresh;
 
   const GetOwnerContractsParams({
     this.page = 1,
-    this.status,
+    this.status = ContractStatusFilter.all,
     this.forceRefresh = false,
   });
 

@@ -13,6 +13,8 @@ import '../../features/owner/shell/presentation/screens/owner_main_screen.dart';
 import '../../features/owner/dashboard/presentation/views/owner_dashboard_view.dart';
 import '../../features/owner/properties/presentation/views/owner_properties_view.dart';
 import '../../features/owner/properties/presentation/cubit/list/properties_list_cubit.dart';
+import '../../features/owner/properties/presentation/cubit/display/property_display_cubit.dart';
+import '../../features/owner/properties/presentation/cubit/filter_options/property_filter_options_cubit.dart';
 import '../../features/owner/properties/presentation/screens/property_details_screen.dart';
 import '../../features/owner/properties/presentation/cubit/details/property_details_cubit.dart';
 import '../../features/owner/properties/domain/entities/property_details_entity.dart';
@@ -24,6 +26,9 @@ import '../../features/owner/properties/presentation/screens/unit_edit_screen.da
 import '../../features/owner/properties/presentation/screens/property_edit_screen.dart';
 import '../../features/owner/properties/presentation/cubit/edit/property_edit_cubit.dart';
 import '../../features/owner/contracts/presentation/views/owner_leases_view.dart';
+import '../../features/owner/contracts/presentation/cubit/list/owner_contracts_cubit.dart';
+import '../../features/owner/contracts/presentation/screens/owner_contract_details_screen.dart';
+import '../../features/owner/contracts/presentation/screens/owner_contract_installments_screen.dart';
 import '../../features/owner/finance/presentation/views/owner_finance_view.dart';
 import '../../features/owner/finance/presentation/cubit/finance_overview_cubit.dart';
 import '../../features/owner/finance/domain/entities/finance_account_entity.dart';
@@ -359,7 +364,7 @@ class AppRouter {
           final extraMap = state.extra as Map<String, dynamic>? ?? {};
           final extraCubit = extraMap['cubit'] as FinanceReceiptsCubit?;
           final receipt = extraMap['receipt']; // ReceiptEntity
-          
+
           return MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => sl<UpdateFinanceReceiptCubit>()),
@@ -384,7 +389,7 @@ class AppRouter {
           final extraMap = state.extra as Map<String, dynamic>? ?? {};
           final extraCubit = extraMap['cubit'] as FinancePaymentsCubit?;
           final payment = extraMap['payment'] as PaymentEntity?;
-          
+
           return MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => sl<UpdateFinancePaymentCubit>()),
@@ -704,6 +709,19 @@ class AppRouter {
           );
         },
       ),
+      GoRoute(
+        path: Routes.ownerContractDetails,
+        builder: (context, state) => OwnerContractDetailsScreen(
+          contractId: state.pathParameters['id'] ?? '',
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerContractInstallments,
+        builder: (context, state) => OwnerContractInstallmentsScreen(
+          contractId: state.pathParameters['id'] ?? '',
+          contractNumber: state.extra as String? ?? '',
+        ),
+      ),
 
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
@@ -722,8 +740,18 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: Routes.ownerProperties,
-                builder: (context, state) => BlocProvider<PropertiesListCubit>(
-                  create: (_) => sl<PropertiesListCubit>(),
+                builder: (context, state) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<PropertiesListCubit>(
+                      create: (_) => sl<PropertiesListCubit>(),
+                    ),
+                    BlocProvider<PropertyDisplayCubit>(
+                      create: (_) => sl<PropertyDisplayCubit>(),
+                    ),
+                    BlocProvider<PropertyFilterOptionsCubit>(
+                      create: (_) => sl<PropertyFilterOptionsCubit>()..load(),
+                    ),
+                  ],
                   child: const OwnerPropertiesView(),
                 ),
               ),
@@ -733,7 +761,10 @@ class AppRouter {
             routes: [
               GoRoute(
                 path: Routes.ownerContracts,
-                builder: (context, state) => const OwnerLeasesView(),
+                builder: (context, state) => BlocProvider<OwnerContractsCubit>(
+                  create: (_) => sl<OwnerContractsCubit>()..getContracts(),
+                  child: const OwnerLeasesView(),
+                ),
               ),
             ],
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
 
 class ContractsSkeletonWidget extends StatelessWidget {
@@ -12,19 +12,19 @@ class ContractsSkeletonWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       itemCount: 4,
       physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) => _buildSkeletonCard(),
+      itemBuilder: (context, index) => _buildSkeletonCard(context),
     );
   }
 
-  Widget _buildSkeletonCard() {
+  Widget _buildSkeletonCard(BuildContext context) {
     return AppShimmer(
       child: Container(
         margin: const EdgeInsets.only(bottom: 14),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.surfaceLight,
+          color: context.appSurfaceColor,
           borderRadius: AppRadius.circularXxl,
-          border: Border.all(color: AppColors.borderLight),
+          border: Border.all(color: context.appBorderColor),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,7 @@ class ContractsSkeletonWidget extends StatelessWidget {
             AppShimmer.box(width: 130, height: 13),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 12),
-              child: Divider(color: AppColors.borderLight, height: 1),
+              child: Divider(height: 1),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

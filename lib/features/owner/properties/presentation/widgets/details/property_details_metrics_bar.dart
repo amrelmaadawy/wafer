@@ -1,10 +1,13 @@
-﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import '../../../../../../core/localization/locale_keys.dart';
+import '../../../../../../core/presentation/widgets/app_responsive_content.dart';
+import '../../../../../../core/theme/app_breakpoints.dart';
 import '../../../../../../core/theme/app_colors.dart';
-import '../../../../../../core/theme/app_radius.dart';
+import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/property_details_entity.dart';
+import 'property_metric_card.dart';
 
 class PropertyDetailsMetricsBar extends StatelessWidget {
   final PropertyDetailsEntity property;
@@ -13,149 +16,78 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-      child: Row(
-        children: [
-          _buildMetricCard(
-            context,
-            label: LocaleKeys.propertyDetailsTotalUnits.tr(),
-            value: '${property.unitsCount}',
-            subtext:
-                '${property.rentedUnits} ${LocaleKeys.propertyDetailsRentedUnits.tr()} | ${property.availableUnits} ${LocaleKeys.propertyDetailsAvailableUnitsLabel.tr()}',
-            icon: Icons.meeting_room_rounded,
-            color: context.primaryColor,
-            bgColor: context.primarySubtle,
-          ),
-          const SizedBox(width: 10),
-          _buildMetricCard(
-            context,
-            label: LocaleKeys.propertyDetailsOccupancyRate.tr(),
-            value: '${property.occupancyRate.toStringAsFixed(0)}%',
-            subtext: LocaleKeys.propertyDetailsOccupancyRateSub.tr(),
-            icon: Icons.pie_chart_rounded,
-            color: AppColors.success,
-            bgColor: AppColors.success.withValues(alpha: 0.1),
-          ),
-          if (property.area != null) ...[
-            const SizedBox(width: 10),
-            _buildMetricCard(
-              context,
-              label: LocaleKeys.propertyDetailsTotalArea.tr(),
-              value:
-                  '${property.area} ${LocaleKeys.propertyDetailsAreaUnit.tr()}',
-              subtext: property.length != null && property.width != null
-                  ? '${property.length}m Ã— ${property.width}m'
-                  : LocaleKeys.propertyDetailsTotalArea.tr(),
-              icon: Icons.square_foot_rounded,
-              color: AppColors.accent,
-              bgColor: const Color(0xFFF3E8FF),
-            ),
-          ],
-          if (property.valuationAmount != null) ...[
-            const SizedBox(width: 10),
-            _buildMetricCard(
-              context,
-              label: LocaleKeys.propertyDetailsValuationAmount.tr(),
-              value:
-                  '${property.valuationAmount} ${LocaleKeys.propertyDetailsValuationCurrency.tr()}',
-              subtext:
-                  property.valuationEntity ??
-                  LocaleKeys.propertyDetailsValuationApproved.tr(),
-              icon: Icons.account_balance_wallet_rounded,
-              color: AppColors.warning,
-              bgColor: const Color(0xFFFEF3C7),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMetricCard(
-    BuildContext context, {
-    required String label,
-    required String value,
-    required String subtext,
-    required IconData icon,
-    required Color color,
-    required Color bgColor,
-  }) {
-    return Container(
-      width: 175,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularXl,
-        boxShadow: [
-          BoxShadow(
-            color: color.withValues(alpha: 0.06),
-            blurRadius: 15,
-            spreadRadius: 2,
-            offset: const Offset(0, 4),
-          ),
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 12.5,
-                  color: AppColors.textSecondaryLight,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: bgColor,
-                  borderRadius: AppRadius.circularMd,
-                ),
-                child: Icon(icon, color: color, size: 20),
-              ),
+    final cards = _cards(context);
+    if (context.isCompact) {
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.fromLTRB(
+          context.pagePadding,
+          AppSpacing.sm,
+          context.pagePadding,
+          AppSpacing.sm,
+        ),
+        child: Row(
+          children: [
+            for (final card in cards) ...[
+              card,
+              const SizedBox(width: AppSpacing.sm),
             ],
-          ),
-          const SizedBox(height: 12),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.w800,
-              color: AppColors.textPrimaryLight,
-              letterSpacing: -0.5,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: color.withValues(alpha: 0.1),
-              borderRadius: AppRadius.circularFull,
-            ),
-            child: Text(
-              subtext,
-              style: TextStyle(
-                fontSize: 10.5,
-                color: color,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ],
+          ],
+        ),
+      );
+    }
+    return AppResponsiveContent(
+      child: SizedBox(
+        width: double.infinity,
+        child: Wrap(
+          spacing: AppSpacing.sm,
+          runSpacing: AppSpacing.sm,
+          children: cards,
+        ),
       ),
     );
   }
-}
 
+  List<Widget> _cards(BuildContext context) => [
+    PropertyMetricCard(
+      label: LocaleKeys.propertyDetailsTotalUnits.tr(),
+      value: '${property.unitsCount}',
+      subtext:
+          '${property.rentedUnits} ${LocaleKeys.propertyDetailsRentedUnits.tr()} · ${property.availableUnits} ${LocaleKeys.propertyDetailsAvailableUnitsLabel.tr()}',
+      icon: Icons.meeting_room_rounded,
+      color: context.primaryColor,
+      backgroundColor: context.primarySubtle,
+    ),
+    PropertyMetricCard(
+      label: LocaleKeys.propertyDetailsOccupancyRate.tr(),
+      value: '${property.occupancyRate.toStringAsFixed(0)}%',
+      subtext: LocaleKeys.propertyDetailsOccupancyRateSub.tr(),
+      icon: Icons.pie_chart_rounded,
+      color: AppColors.success,
+      backgroundColor: AppColors.success.withValues(alpha: 0.1),
+    ),
+    if (property.area != null)
+      PropertyMetricCard(
+        label: LocaleKeys.propertyDetailsTotalArea.tr(),
+        value: '${property.area} ${LocaleKeys.propertyDetailsAreaUnit.tr()}',
+        subtext: property.length != null && property.width != null
+            ? '${property.length}m × ${property.width}m'
+            : LocaleKeys.propertyDetailsTotalArea.tr(),
+        icon: Icons.square_foot_rounded,
+        color: AppColors.accent,
+        backgroundColor: AppColors.accent.withValues(alpha: 0.1),
+      ),
+    if (property.valuationAmount != null)
+      PropertyMetricCard(
+        label: LocaleKeys.propertyDetailsValuationAmount.tr(),
+        value:
+            '${property.valuationAmount} ${LocaleKeys.propertyDetailsValuationCurrency.tr()}',
+        subtext:
+            property.valuationEntity ??
+            LocaleKeys.propertyDetailsValuationApproved.tr(),
+        icon: Icons.account_balance_wallet_rounded,
+        color: AppColors.warning,
+        backgroundColor: AppColors.warning.withValues(alpha: 0.1),
+      ),
+  ];
+}

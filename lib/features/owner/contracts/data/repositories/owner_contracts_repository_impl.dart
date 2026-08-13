@@ -7,6 +7,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/contract_details_entity.dart';
 import '../../domain/entities/contract_installment_entity.dart';
 import '../../domain/entities/contracts_response_entity.dart';
+import '../../domain/entities/contract_status_filter.dart';
 import '../../domain/repositories/owner_contracts_repository.dart';
 import '../datasources/owner_contracts_remote_data_source.dart';
 
@@ -18,7 +19,7 @@ class OwnerContractsRepositoryImpl implements OwnerContractsRepository {
   @override
   Future<Either<Failure, ContractsResponseEntity>> getContracts({
     int page = 1,
-    String? status,
+    ContractStatusFilter status = ContractStatusFilter.all,
     bool forceRefresh = false,
   }) async {
     try {

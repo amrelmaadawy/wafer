@@ -13,7 +13,10 @@ class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
   OwnerDashboardCubit(this._getDashboardUseCase, this._getMaintenanceUseCase)
     : super(const OwnerDashboardInitial());
 
-  Future<void> loadDashboardStats({bool forceRefresh = false, bool showLoadingState = true}) async {
+  Future<void> loadDashboardStats({
+    bool forceRefresh = false,
+    bool showLoadingState = true,
+  }) async {
     if (showLoadingState && state is! OwnerDashboardLoaded) {
       emit(const OwnerDashboardLoading());
     }

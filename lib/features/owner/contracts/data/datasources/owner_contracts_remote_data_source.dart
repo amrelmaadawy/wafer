@@ -3,9 +3,13 @@ import '../../../../../core/network/api_constants.dart';
 import '../models/contract_details_model.dart';
 import '../models/contract_installment_model.dart';
 import '../models/contracts_response_model.dart';
+import '../../domain/entities/contract_status_filter.dart';
 
 abstract class OwnerContractsRemoteDataSource {
-  Future<ContractsResponseModel> getContracts({int page = 1, String? status});
+  Future<ContractsResponseModel> getContracts({
+    int page = 1,
+    ContractStatusFilter status = ContractStatusFilter.all,
+  });
   Future<ContractDetailsModel> getContractDetails(String id);
   Future<List<ContractInstallmentModel>> getContractInstallments(
     String contractId,
@@ -21,11 +25,11 @@ class OwnerContractsRemoteDataSourceImpl
   @override
   Future<ContractsResponseModel> getContracts({
     int page = 1,
-    String? status,
+    ContractStatusFilter status = ContractStatusFilter.all,
   }) async {
     final queryParams = <String, dynamic>{'page': page};
-    if (status != null && status != 'all' && status.isNotEmpty) {
-      queryParams['status'] = status;
+    if (status.apiValue case final value?) {
+      queryParams['status'] = value;
     }
 
     final response = await _dio.get(

@@ -22,6 +22,8 @@ class ContractModel extends ContractEntity {
         : null;
     final renterMap = json['renter'] is Map<String, dynamic>
         ? json['renter'] as Map<String, dynamic>
+        : json['tenant'] is Map<String, dynamic>
+        ? json['tenant'] as Map<String, dynamic>
         : null;
 
     return ContractModel(
@@ -31,7 +33,8 @@ class ContractModel extends ContractEntity {
           json['number']?.toString() ??
           '',
       status: json['status']?.toString() ?? 'draft',
-      statusLabel: json['status_label']!.toString(),
+      statusLabel:
+          json['status_label']?.toString() ?? json['status']?.toString() ?? '',
       contractType: json['contract_type']?.toString() ?? '',
       startDate: json['start_date']?.toString(),
       endDate: json['end_date']?.toString(),

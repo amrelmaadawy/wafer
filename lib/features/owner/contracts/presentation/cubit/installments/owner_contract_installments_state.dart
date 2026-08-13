@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import '../../../domain/entities/contract_installment_entity.dart';
+import '../../../domain/entities/installment_status_filter.dart';
+import '../../../domain/entities/contract_installments_summary_entity.dart';
 
 abstract class OwnerContractInstallmentsState extends Equatable {
   const OwnerContractInstallmentsState();
@@ -19,12 +21,14 @@ class OwnerContractInstallmentsLoading extends OwnerContractInstallmentsState {
 class OwnerContractInstallmentsLoaded extends OwnerContractInstallmentsState {
   final List<ContractInstallmentEntity> allInstallments;
   final List<ContractInstallmentEntity> filteredInstallments;
-  final String activeFilter; // 'all', 'paid', 'unpaid'
+  final InstallmentStatusFilter activeFilter;
+  final ContractInstallmentsSummaryEntity summary;
 
   const OwnerContractInstallmentsLoaded({
     required this.allInstallments,
     required this.filteredInstallments,
-    this.activeFilter = 'all',
+    required this.summary,
+    this.activeFilter = InstallmentStatusFilter.all,
   });
 
   @override
@@ -32,6 +36,7 @@ class OwnerContractInstallmentsLoaded extends OwnerContractInstallmentsState {
     allInstallments,
     filteredInstallments,
     activeFilter,
+    summary,
   ];
 }
 

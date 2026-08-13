@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 
+enum PropertySortField { name, area, occupancy, units }
+
 class PropertiesQueryFilterEntity extends Equatable {
   final String? search;
   final String? status;
@@ -10,9 +12,9 @@ class PropertiesQueryFilterEntity extends Equatable {
   final int page;
   final int perPage;
   final bool includeTree;
-  
+
   // Client-side sort fields (not sent to API)
-  final String? sortBy;
+  final PropertySortField? sortBy;
   final bool sortAscending;
 
   const PropertiesQueryFilterEntity({
@@ -39,7 +41,7 @@ class PropertiesQueryFilterEntity extends Equatable {
     int? page,
     int? perPage,
     bool? includeTree,
-    String? Function()? sortBy,
+    PropertySortField? Function()? sortBy,
     bool? sortAscending,
   }) {
     return PropertiesQueryFilterEntity(
@@ -91,4 +93,3 @@ class PropertiesQueryFilterEntity extends Equatable {
     sortAscending,
   ];
 }
-

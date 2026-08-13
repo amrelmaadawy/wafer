@@ -1,159 +1,116 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/app_radius.dart';
-import '../../domain/entities/owner_dashboard_entity.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/presentation/widgets/app_surface_card.dart';
 import '../../../../../core/routing/routes.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/app_fonts.dart';
+import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/theme_context.dart';
+import '../../domain/entities/owner_dashboard_entity.dart';
 
 class OwnerTasksLegalCard extends StatelessWidget {
   final TasksBreakdownEntity? tasks;
   final LegalCasesBreakdownEntity? legalCases;
 
-  const OwnerTasksLegalCard({
-    super.key,
-    this.tasks,
-    this.legalCases,
-  });
-
-  String _formatCurrency(num amount) {
-    return LocaleKeys.commonCurrencySar.tr(args: [amount.toStringAsFixed(0)]);
-  }
+  const OwnerTasksLegalCard({super.key, this.tasks, this.legalCases});
 
   @override
   Widget build(BuildContext context) {
-    if (tasks == null && legalCases == null) {
-      return const SizedBox.shrink();
-    }
-
+    if (tasks == null && legalCases == null) return const SizedBox.shrink();
     return Row(
       children: [
         if (tasks != null)
           Expanded(
-            child: _buildCard(
+            child: _BreakdownCard(
               icon: Icons.task_alt_rounded,
               title: LocaleKeys.dashboard_tasks_active.tr(),
-              value: tasks!.active.toString(),
+              value: '${tasks!.active}',
               subtitle: LocaleKeys.dashboard_tasks_overdue.tr(),
-              subtitleValue: tasks!.overdue.toString(),
+              subtitleValue: '${tasks!.overdue}',
               color: AppColors.info,
             ),
           ),
-        if (tasks != null && legalCases != null) const SizedBox(width: 16),
+        if (tasks != null && legalCases != null)
+          const SizedBox(width: AppSpacing.md),
         if (legalCases != null)
           Expanded(
-            child: GestureDetector(
-              onTap: () {
-                context.push(Routes.ownerLegalCases);
-              },
-              child: _buildCard(
-                icon: Icons.gavel_rounded,
-                title: LocaleKeys.dashboard_legal_open.tr(),
-                value: legalCases!.openCases.toString(),
-                subtitle: LocaleKeys.dashboard_legal_amount.tr(),
-                subtitleValue: _formatCurrency(legalCases!.totalAmount),
-                color: AppColors.warning,
+            child: _BreakdownCard(
+              icon: Icons.gavel_rounded,
+              title: LocaleKeys.dashboard_legal_open.tr(),
+              value: '${legalCases!.openCases}',
+              subtitle: LocaleKeys.dashboard_legal_amount.tr(),
+              subtitleValue: LocaleKeys.commonCurrencySar.tr(
+                args: [legalCases!.totalAmount.toStringAsFixed(0)],
               ),
+              color: AppColors.warning,
+              onTap: () => context.push(Routes.ownerLegalCases),
             ),
           ),
       ],
     );
   }
+}
 
-  Widget _buildCard({
-    required IconData icon,
-    required String title,
-    required String value,
-    required String subtitle,
-    required String subtitleValue,
-    required Color color,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: AppRadius.circularXxl,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 14,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(12),
+class _BreakdownCard extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String value;
+  final String subtitle;
+  final String subtitleValue;
+  final Color color;
+  final VoidCallback? onTap;
+
+  const _BreakdownCard({
+    required this.icon,
+    required this.title,
+    required this.value,
+    required this.subtitle,
+    required this.subtitleValue,
+    required this.color,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppSurfaceCard(
+      onTap: onTap,
+      padding: const EdgeInsets.all(AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: color.withValues(alpha: 0.1),
-                  borderRadius: AppRadius.circularMd,
-                ),
-                child: Icon(
-                  icon,
-                  color: color,
-                  size: 18,
-                ),
-              ),
-              const SizedBox(width: 8),
+              Icon(icon, color: color, size: 20),
+              const SizedBox(width: AppSpacing.xs),
               Expanded(
                 child: Text(
                   title,
-                  style: const TextStyle(
-                    color: AppColors.textSecondaryLight,
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
+                  style: AppTextStyles.labelMedium.copyWith(
+                    color: context.appSecondaryTextColor,
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.visible,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          const SizedBox(height: AppSpacing.sm),
           Text(
             value,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w800,
-              color: AppColors.textPrimaryLight,
-            ),
+            style: AppTextStyles.h3.copyWith(color: context.appOnSurfaceColor),
           ),
-          const SizedBox(height: 8),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: AppColors.backgroundLight,
-              borderRadius: AppRadius.circularMd,
+          Text.rich(
+            TextSpan(
+              text: '$subtitle ',
+              children: [
+                TextSpan(
+                  text: subtitleValue,
+                  style: TextStyle(color: color, fontWeight: FontWeight.w700),
+                ),
+              ],
             ),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: AlignmentDirectional.centerStart,
-              child: Row(
-                children: [
-                  Text(
-                    subtitle,
-                    style: const TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.textSecondaryLight,
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    subtitleValue,
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                      color: color,
-                    ),
-                  ),
-                ],
-              ),
+            style: AppTextStyles.labelSmall.copyWith(
+              color: context.appSecondaryTextColor,
             ),
           ),
         ],
@@ -161,4 +118,3 @@ class OwnerTasksLegalCard extends StatelessWidget {
     );
   }
 }
-

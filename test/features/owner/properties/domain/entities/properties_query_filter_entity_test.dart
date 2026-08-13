@@ -5,7 +5,7 @@ void main() {
   group('PropertiesQueryFilterEntity', () {
     test('toQueryParams should not include sortBy and sortAscending', () {
       const filter = PropertiesQueryFilterEntity(
-        sortBy: 'name',
+        sortBy: PropertySortField.name,
         sortAscending: true,
         status: 'published',
         propertyType: 'villa',
@@ -20,9 +20,7 @@ void main() {
     });
 
     test('toQueryParams should only include non-null fields', () {
-      const filter = PropertiesQueryFilterEntity(
-        status: 'published',
-      );
+      const filter = PropertiesQueryFilterEntity(status: 'published');
 
       final params = filter.toQueryParams();
 

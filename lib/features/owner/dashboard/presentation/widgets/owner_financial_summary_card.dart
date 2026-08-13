@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
+import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
-import 'package:go_router/go_router.dart';
-import '../../../../../core/routing/routes.dart';
+import 'owner_financial_metric.dart';
 
 class OwnerFinancialSummaryCard extends StatelessWidget {
   final OwnerDashboardEntity data;
@@ -15,259 +18,106 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasOverdue = data.overdueInstallmentsCount > 0;
     return GestureDetector(
-      onTap: () {
-        context.push(Routes.ownerRevenueReport);
-      },
+      onTap: () => context.push(Routes.ownerRevenueReport),
       child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                context.primaryDark,
-                context.primaryColor,
-                context.primaryLight,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: AppRadius.circularXxl,
-            boxShadow: [
-              BoxShadow(
-                color: context.primaryShadow,
-                blurRadius: 28,
-                offset: const Offset(0, 12),
-              ),
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.06),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
-              ),
+        padding: const EdgeInsets.all(AppSpacing.lg),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              context.primaryDark,
+              context.primaryColor,
+              context.primaryLight,
             ],
           ),
-          child: Stack(
-            children: [
-              _buildCircles(),
-              Positioned.fill(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      _buildHeader(hasOverdue),
-                      _buildHeroNumber(),
-                      Container(
-                        height: 1,
-                        color: Colors.white.withValues(alpha: 0.1),
-                      ),
-                      _buildMetricsRow(),
-                    ],
+          borderRadius: AppRadius.circularXxl,
+          boxShadow: [
+            BoxShadow(
+              color: context.primaryShadow,
+              blurRadius: 28,
+              offset: const Offset(0, 12),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                const Icon(
+                  Icons.account_balance_wallet_rounded,
+                  color: Colors.white70,
+                  size: 17,
+                ),
+                const SizedBox(width: AppSpacing.xs),
+                Expanded(
+                  child: Text(
+                    LocaleKeys.dashboardFinancialPosition.tr(),
+                    style: AppTextStyles.labelMedium.copyWith(
+                      color: Colors.white70,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ),
+                if (data.overdueInstallmentsCount > 0)
+                  _OverdueBadge(count: data.overdueInstallmentsCount),
+              ],
+            ),
+            Text(
+              _currency(data.pendingAmount),
+              style: AppTextStyles.h2.copyWith(color: Colors.white),
+            ),
+            Text(
+              LocaleKeys.dashboardTotalDuePending.tr(),
+              style: AppTextStyles.labelSmall.copyWith(color: Colors.white60),
+            ),
+            Divider(color: Colors.white.withValues(alpha: 0.15)),
+            Row(
+              children: [
+                OwnerFinancialMetric(
+                  label: LocaleKeys.ownerCollected.tr(),
+                  amount: data.collectedAmount,
+                  color: AppColors.success,
+                  icon: Icons.check_circle_outline_rounded,
+                ),
+                OwnerFinancialMetric(
+                  label: LocaleKeys.ownerPending.tr(),
+                  amount: data.pendingAmount,
+                  color: AppColors.warning,
+                  icon: Icons.pending_actions_rounded,
+                ),
+                OwnerFinancialMetric(
+                  label: LocaleKeys.ownerTotal.tr(),
+                  amount: data.totalRevenue,
+                  color: Colors.white,
+                  icon: Icons.bar_chart_rounded,
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildCircles() => Positioned.fill(
-    child: ClipRRect(
-      borderRadius: AppRadius.circularXxl,
-      child: Stack(
-        children: [
-          Positioned(
-            top: -40,
-            left: -40,
-            child: Container(
-              width: 140,
-              height: 140,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white.withValues(alpha: 0.04),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -30,
-            right: -20,
-            child: Container(
-              width: 110,
-              height: 110,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.white.withValues(alpha: 0.05),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
+  String _currency(num value) => LocaleKeys.commonCurrencySar.tr(
+    args: [value.toStringAsFixed(value == value.toInt() ? 0 : 2)],
   );
+}
 
-  Widget _buildHeader(bool hasOverdue) => Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Row(
-        children: [
-          const Icon(
-            Icons.account_balance_wallet_rounded,
-            color: Colors.white60,
-            size: 15,
-          ),
-          const SizedBox(width: 6),
-          Text(
-            LocaleKeys.dashboardFinancialPosition.tr(),
-            style: const TextStyle(
-              color: Colors.white60,
-              fontSize: 12.5,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      ),
-      if (hasOverdue)
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 4),
-          decoration: BoxDecoration(
-            color: AppColors.error.withValues(alpha: 0.18),
-            borderRadius: AppRadius.circularFull,
-            border: Border.all(color: AppColors.error.withValues(alpha: 0.55)),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.warning_amber_rounded,
-                color: AppColors.error,
-                size: 12,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                '${data.overdueInstallmentsCount} ${LocaleKeys.dashboardOverdue.tr()}',
-                style: const TextStyle(
-                  color: AppColors.error,
-                  fontSize: 10.5,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
-          ),
-        ),
-    ],
-  );
+class _OverdueBadge extends StatelessWidget {
+  final int count;
 
-  Widget _buildHeroNumber() => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      FittedBox(
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.centerRight,
-        child: Text(
-          LocaleKeys.commonCurrencySar.tr(args: [_fmt(data.pendingAmount)]),
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 28,
-            fontWeight: FontWeight.w800,
-            letterSpacing: -0.5,
-            height: 1.1,
-          ),
-        ),
-      ),
-      const SizedBox(height: 4),
-      Row(
-        children: [
-          Container(
-            width: 5,
-            height: 5,
-            decoration: const BoxDecoration(
-              color: Color(0xFFFBBF24),
-              shape: BoxShape.circle,
-            ),
-          ),
-          const SizedBox(width: 6),
-          Text(
-            LocaleKeys.dashboardTotalDuePending.tr(),
-            style: const TextStyle(color: Colors.white54, fontSize: 11.5),
-          ),
-        ],
-      ),
-    ],
-  );
+  const _OverdueBadge({required this.count});
 
-  Widget _buildMetricsRow() => Row(
-    children: [
-      Expanded(
-        child: _miniMetric(
-          LocaleKeys.ownerCollected.tr(),
-          data.collectedAmount,
-          const Color(0xFF34D399),
-          Icons.check_circle_outline_rounded,
-        ),
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '$count ${LocaleKeys.dashboardOverdue.tr()}',
+      style: AppTextStyles.labelSmall.copyWith(
+        color: AppColors.error,
+        fontWeight: FontWeight.w700,
       ),
-      Container(
-        width: 1,
-        height: 36,
-        color: Colors.white.withValues(alpha: 0.1),
-      ),
-      Expanded(
-        child: _miniMetric(
-          LocaleKeys.ownerPending.tr(),
-          data.pendingAmount,
-          const Color(0xFFFBBF24),
-          Icons.pending_actions_rounded,
-        ),
-      ),
-      Container(
-        width: 1,
-        height: 36,
-        color: Colors.white.withValues(alpha: 0.1),
-      ),
-      Expanded(
-        child: _miniMetric(
-          LocaleKeys.ownerTotal.tr(),
-          data.totalRevenue,
-          Colors.white70,
-          Icons.bar_chart_rounded,
-        ),
-      ),
-    ],
-  );
-
-  Widget _miniMetric(String label, num amount, Color color, IconData icon) =>
-      Column(
-        children: [
-          Icon(icon, color: color.withValues(alpha: 0.8), size: 14),
-          const SizedBox(height: 4),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              LocaleKeys.commonCurrencySar.tr(args: [_fmt(amount)]),
-              style: TextStyle(
-                color: color,
-                fontSize: 12.5,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          const SizedBox(height: 2),
-          Text(
-            label,
-            style: const TextStyle(
-              color: Colors.white38,
-              fontSize: 10,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ],
-      );
-
-  String _fmt(num n) => n == n.toInt()
-      ? n.toInt().toString().replaceAllMapped(
-          RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'),
-          (m) => '${m[1]},',
-        )
-      : n.toStringAsFixed(2);
+    );
+  }
 }

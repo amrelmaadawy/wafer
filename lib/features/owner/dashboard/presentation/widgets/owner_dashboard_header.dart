@@ -1,9 +1,9 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:wafer/core/theme/app_colors.dart';
 import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../../../../notifications/presentation/cubit/unread_count_cubit.dart';
 import '../../../../notifications/presentation/widgets/notification_bell_badge_widget.dart';
 import '../../../../profile/presentation/cubit/profile_cubit.dart';
@@ -31,10 +31,10 @@ class OwnerDashboardHeader extends StatelessWidget {
             left: 20,
             right: 20,
           ),
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: context.appSurfaceColor,
             border: Border(
-              bottom: BorderSide(color: AppColors.dividerSubtleLight, width: 1),
+              bottom: BorderSide(color: context.appBorderColor, width: 1),
             ),
           ),
           child: Row(
@@ -48,8 +48,8 @@ class OwnerDashboardHeader extends StatelessWidget {
                   children: [
                     Text(
                       '${LocaleKeys.dashboardWelcome.tr()} $name',
-                      style: const TextStyle(
-                        color: AppColors.textPrimaryLight,
+                      style: TextStyle(
+                        color: context.appOnSurfaceColor,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -59,8 +59,8 @@ class OwnerDashboardHeader extends StatelessWidget {
                     const SizedBox(height: 3),
                     Text(
                       LocaleKeys.ownerHeaderSubtitle.tr(),
-                      style: const TextStyle(
-                        color: AppColors.textSecondaryLight,
+                      style: TextStyle(
+                        color: context.appSecondaryTextColor,
                         fontSize: 12.5,
                         fontWeight: FontWeight.w400,
                       ),
@@ -82,4 +82,3 @@ class OwnerDashboardHeader extends StatelessWidget {
     );
   }
 }
-

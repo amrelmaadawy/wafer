@@ -25,8 +25,10 @@ class ApiConstants {
   static const String sharedLogout = 'shared/logout';
 
   /// Owner Endpoints
+  static const String ownerDashboard = 'owner/dashboard';
   static const String ownerTransfers = 'owner/accounting/transfers';
-  static const String ownerAccountingJournalEntries = 'owner/accounting/journal-entries';
+  static const String ownerAccountingJournalEntries =
+      'owner/accounting/journal-entries';
   static const String ownerContracts = 'owner/contracts';
   static const String cancelOwnerContract = 'contract/owner/cancel';
 

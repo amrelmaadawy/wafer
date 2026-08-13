@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
+import '../../../../../../core/presentation/widgets/app_surface_card.dart';
 import '../../../../../../core/theme/app_colors.dart';
-import '../../../../../../core/theme/app_radius.dart';
+import '../../../../../../core/theme/app_fonts.dart';
+import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/theme/theme_context.dart';
 import '../../../domain/entities/contract_details_entity.dart';
 import '../contract_status_badge.dart';
 
@@ -14,122 +17,67 @@ class ContractDetailsHeaderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = context.primaryColor;
-
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            primaryColor.withValues(alpha: 0.08),
-            primaryColor.withValues(alpha: 0.03),
-          ],
-          begin: Alignment.topRight,
-          end: Alignment.bottomLeft,
-        ),
-        borderRadius: AppRadius.circularXxl,
-        border: Border.all(color: primaryColor.withValues(alpha: 0.18)),
-      ),
+    final ejarColor = contract.isEjarLinked
+        ? AppColors.success
+        : context.appSecondaryTextColor;
+    return AppSurfaceCard(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(18, 18, 18, 18),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: context.primaryColor.withValues(alpha: 0.12),
+                child: Icon(
+                  Icons.description_rounded,
+                  color: context.primaryColor,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: primaryColor.withValues(alpha: 0.12),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.description_rounded,
-                        color: primaryColor,
-                        size: 22,
+                    Text(
+                      LocaleKeys.contractsContractNumberLabel.tr(),
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: context.appSecondaryTextColor,
                       ),
                     ),
-                    const SizedBox(width: 14),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            LocaleKeys.contractsContractNumberLabel.tr(),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: AppColors.textSecondaryLight,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const SizedBox(height: 3),
-                          Text(
-                            contract.contractNumber,
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w800,
-                              color: primaryColor,
-                              letterSpacing: 0.3,
-                            ),
-                          ),
-                        ],
+                    Text(
+                      contract.contractNumber.isEmpty
+                          ? '-'
+                          : contract.contractNumber,
+                      style: AppTextStyles.h4.copyWith(
+                        color: context.primaryColor,
                       ),
                     ),
-                    ContractStatusBadge(status: contract.status),
                   ],
                 ),
-                if (contract.isEjarLinked || true) ...[
-                  const SizedBox(height: 14),
-                  const Divider(height: 1, color: AppColors.borderLight),
-                  const SizedBox(height: 14),
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: contract.isEjarLinked
-                              ? AppColors.success.withValues(alpha: 0.1)
-                              : AppColors.borderLight.withValues(alpha: 0.5),
-                          borderRadius: AppRadius.circularMd,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              contract.isEjarLinked
-                                  ? Icons.verified_rounded
-                                  : Icons.info_outline_rounded,
-                              size: 15,
-                              color: contract.isEjarLinked
-                                  ? AppColors.success
-                                  : AppColors.textSecondaryLight,
-                            ),
-                            const SizedBox(width: 6),
-                            Text(
-                              contract.isEjarLinked
-                                  ? LocaleKeys.contractsEjarLinked.tr()
-                                  : LocaleKeys.contractsEjarNotLinked.tr(),
-                              style: TextStyle(
-                                fontSize: 12.5,
-                                fontWeight: FontWeight.w600,
-                                color: contract.isEjarLinked
-                                    ? AppColors.success
-                                    : AppColors.textSecondaryLight,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ],
-            ),
+              ),
+              ContractStatusBadge(status: contract.status),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Divider(color: context.appBorderColor, height: 1),
+          const SizedBox(height: AppSpacing.sm),
+          Row(
+            children: [
+              Icon(
+                contract.isEjarLinked
+                    ? Icons.verified_rounded
+                    : Icons.info_outline_rounded,
+                color: ejarColor,
+                size: 17,
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Text(
+                contract.isEjarLinked
+                    ? LocaleKeys.contractsEjarLinked.tr()
+                    : LocaleKeys.contractsEjarNotLinked.tr(),
+                style: AppTextStyles.labelMedium.copyWith(color: ejarColor),
+              ),
+            ],
           ),
         ],
       ),

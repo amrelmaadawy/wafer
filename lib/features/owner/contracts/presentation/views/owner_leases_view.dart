@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
-import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/presentation/widgets/app_responsive_content.dart';
+import '../../../../../core/theme/app_spacing.dart';
 import '../cubit/list/owner_contracts_cubit.dart';
+import '../cubit/list/owner_contracts_state.dart';
+import '../widgets/contracts_page_header.dart';
+import '../widgets/contracts_state_content.dart';
 
 class OwnerLeasesView extends StatefulWidget {
   const OwnerLeasesView({super.key});
@@ -12,20 +15,16 @@ class OwnerLeasesView extends StatefulWidget {
 }
 
 class _OwnerLeasesViewState extends State<OwnerLeasesView> {
-  final ScrollController _scrollController = ScrollController();
+  final _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   context.read<OwnerContractsCubit>().getContracts();
-    // });
+    _scrollController.addListener(_loadNextPage);
   }
 
-  void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200) {
+  void _loadNextPage() {
+    if (_scrollController.position.extentAfter < 240) {
       context.read<OwnerContractsCubit>().loadNextPage();
     }
   }
@@ -39,32 +38,36 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
       body: SafeArea(
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.construction_rounded,
-                size: 80,
-                color: AppColors.textSecondaryLight.withValues(alpha: 0.5),
-              ),
-              const SizedBox(height: 24),
-              Text(
-                'feature_coming_soon'.tr(),
-                style: const TextStyle(
-                  color: AppColors.textSecondaryLight,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+        child: BlocBuilder<OwnerContractsCubit, OwnerContractsState>(
+          builder: (context, state) {
+            final totalCount = state is OwnerContractsLoaded
+                ? state.meta.total
+                : null;
+            return Column(
+              children: [
+                AppResponsiveContent(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: AppSpacing.md),
+                    child: ContractsPageHeader(totalCount: totalCount),
+                  ),
                 ),
-              ),
-            ],
-          ),
+                Expanded(
+                  child: AppResponsiveContent(
+                    padding: EdgeInsets.zero,
+                    child: SizedBox.expand(
+                      child: ContractsStateContent(
+                        state: state,
+                        scrollController: _scrollController,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
   }
-
-
 }

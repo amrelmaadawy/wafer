@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
-import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/presentation/widgets/app_surface_card.dart';
+import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/theme/theme_context.dart';
 import '../../../domain/entities/contract_details_entity.dart';
+import 'contract_section_header.dart';
 
 class ContractDetailsPropertyCard extends StatelessWidget {
   final ContractDetailsEntity contract;
@@ -14,112 +17,61 @@ class ContractDetailsPropertyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = context.primaryColor;
-
-    String typeLabel = LocaleKeys.contractsTypeResidential.tr();
-    final typeLower = contract.contractType.toLowerCase();
-    if (typeLower.contains('commercial')) {
-      typeLabel = LocaleKeys.contractsTypeCommercial.tr();
-    } else if (typeLower.contains('land')) {
-      typeLabel = LocaleKeys.contractsTypeLand.tr();
-    } else if (typeLower.contains('admin')) {
-      typeLabel = LocaleKeys.contractsTypeAdmin.tr();
-    }
-
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularXxl,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+    return AppSurfaceCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              Icon(Icons.business_outlined, color: primaryColor, size: 20),
-              const SizedBox(width: 8),
-              Text(
-                LocaleKeys.contractsSectionPropertyUnit.tr(),
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.textPrimaryLight,
-                ),
-              ),
-            ],
+          ContractSectionHeader(
+            icon: Icons.business_outlined,
+            title: LocaleKeys.contractsSectionPropertyUnit.tr(),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: AppSpacing.md),
           Container(
+            width: double.infinity,
             padding: const EdgeInsets.all(AppSpacing.sm),
             decoration: BoxDecoration(
-              color: primaryColor.withValues(alpha: 0.05),
+              color: context.primaryColor.withValues(alpha: 0.06),
               borderRadius: AppRadius.circularLg,
-              border: Border.all(color: primaryColor.withValues(alpha: 0.15)),
+              border: Border.all(
+                color: context.primaryColor.withValues(alpha: 0.16),
+              ),
             ),
             child: Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    color: primaryColor.withValues(alpha: 0.1),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.apartment_rounded,
-                    color: primaryColor,
-                    size: 22,
-                  ),
+                Icon(
+                  Icons.apartment_rounded,
+                  color: context.primaryColor,
+                  size: 28,
                 ),
-                const SizedBox(width: 14),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        contract.propertyName,
-                        style: const TextStyle(
-                          fontSize: 15,
+                        contract.propertyName.isEmpty
+                            ? '-'
+                            : contract.propertyName,
+                        style: AppTextStyles.bodyMedium.copyWith(
+                          color: context.appOnSurfaceColor,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimaryLight,
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        contract.unitName,
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.textSecondaryLight,
+                      if (contract.unitName.isNotEmpty)
+                        Text(
+                          contract.unitName,
+                          style: AppTextStyles.bodySmall.copyWith(
+                            color: context.appSecondaryTextColor,
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 4,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: AppRadius.circularMd,
-                    border: Border.all(color: AppColors.borderLight),
-                  ),
-                  child: Text(
-                    typeLabel,
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: primaryColor,
-                    ),
+                Text(
+                  _typeLabel,
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: context.primaryColor,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
               ],
@@ -128,5 +80,15 @@ class ContractDetailsPropertyCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String get _typeLabel {
+    final type = contract.contractType.toLowerCase();
+    if (type.contains('commercial')) {
+      return LocaleKeys.contractsTypeCommercial.tr();
+    }
+    if (type.contains('land')) return LocaleKeys.contractsTypeLand.tr();
+    if (type.contains('admin')) return LocaleKeys.contractsTypeAdmin.tr();
+    return LocaleKeys.contractsTypeResidential.tr();
   }
 }

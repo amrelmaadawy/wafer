@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/app_radius.dart';
+import '../../../../../core/presentation/widgets/app_surface_card.dart';
+import '../../../../../core/theme/app_fonts.dart';
+import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../../domain/entities/contract_item_entity.dart';
 import 'contract_status_badge.dart';
 
@@ -15,221 +17,116 @@ class ContractCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = contract.unitName.isNotEmpty
-        ? '${contract.propertyName} • ${contract.unitName}'
-        : contract.propertyName;
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 14),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularXxl,
-        border: Border.all(color: AppColors.borderLight, width: 1),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: AppRadius.circularXxl,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: AppRadius.circularXxl,
-          child: Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildTopHeader(context),
-                const SizedBox(height: 12),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    color: AppColors.textPrimaryLight,
-                    fontSize: 15.5,
-                    fontWeight: FontWeight.w700,
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 8),
-                _buildTenantRow(context),
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 12),
-                  child: Divider(color: AppColors.borderLight, height: 1),
-                ),
-                _buildFinancialAndTimelineRow(context),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTopHeader(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Icon(
-              Icons.description_outlined,
-              size: 18,
-              color: context.primaryColor,
-            ),
-            const SizedBox(width: 6),
-            Text(
-              contract.contractNumber,
-              style: TextStyle(
-                color: context.primaryColor,
-                fontSize: 13,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            ContractStatusBadge(status: contract.status),
-            const SizedBox(width: 8),
-            Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 14,
-              color: AppColors.textSecondaryLight.withValues(alpha: 0.6),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTenantRow(BuildContext context) {
-    return Row(
-      children: [
-        Icon(Icons.person_outline, size: 16, color: context.primaryColor),
-        const SizedBox(width: 6),
-        Text(
-          '${LocaleKeys.contractsTenantLabel.tr()} ',
-          style: const TextStyle(
-            color: AppColors.textSecondaryLight,
-            fontSize: 13,
-          ),
-        ),
-        Expanded(
-          child: Text(
-            contract.tenantName,
-            style: const TextStyle(
-              color: AppColors.textPrimaryLight,
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-            ),
-            maxLines: 1,
+    return AppSurfaceCard(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _ContractHeader(contract: contract),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            _locationLabel,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.bodyMedium.copyWith(
+              color: context.appOnSurfaceColor,
+              fontWeight: FontWeight.w700,
+            ),
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildFinancialAndTimelineRow(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              LocaleKeys.contractsRentAmountLabel.tr(),
-              style: const TextStyle(
-                color: AppColors.textSecondaryLight,
-                fontSize: 11.5,
-              ),
-            ),
-            const SizedBox(height: 4),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Text(
-                  contract.rentAmount.toStringAsFixed(0),
-                  style: TextStyle(
-                    color: context.primaryColor,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(width: 4),
-                Text(
-                  LocaleKeys.contractsCurrency.tr(),
-                  style: TextStyle(
-                    color: context.primaryColor.withValues(alpha: 0.7),
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(width: 6),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 7,
-                    vertical: 2,
-                  ),
-                  decoration: BoxDecoration(
-                    color: context.primaryColor.withValues(alpha: 0.1),
-                    borderRadius: AppRadius.circularSm,
-                  ),
-                  child: Text(
-                    _getCycleLabel(),
-                    style: TextStyle(
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
-                      color: context.primaryColor,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        if (contract.startDate.isNotEmpty && contract.endDate.isNotEmpty)
+          const SizedBox(height: AppSpacing.xs),
           Row(
             children: [
-              Icon(
-                Icons.calendar_today_outlined,
-                size: 13,
-                color: context.primaryColor,
-              ),
-              const SizedBox(width: 4),
-              Text(
-                '${contract.startDate} › ${contract.endDate}',
-                style: const TextStyle(
-                  color: AppColors.textSecondaryLight,
-                  fontSize: 11.5,
-                  fontWeight: FontWeight.w500,
+              Icon(Icons.person_outline, size: 17, color: context.primaryColor),
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: Text(
+                  contract.tenantName.isEmpty ? '-' : contract.tenantName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: context.appSecondaryTextColor,
+                  ),
                 ),
               ),
             ],
           ),
-      ],
+          const SizedBox(height: AppSpacing.md),
+          Divider(color: context.appBorderColor, height: 1),
+          const SizedBox(height: AppSpacing.sm),
+          _ContractFooter(contract: contract),
+        ],
+      ),
     );
   }
 
-  String _getCycleLabel() {
-    switch (contract.paymentCycle.toLowerCase()) {
-      case 'monthly':
-        return LocaleKeys.contractsCycleMonthly.tr();
-      case 'annual':
-      case 'yearly':
-        return LocaleKeys.contractsCycleAnnual.tr();
-      case 'quarterly':
-        return LocaleKeys.contractsCycleQuarterly.tr();
-      default:
-        return LocaleKeys.contractsCycleCustom.tr();
-    }
+  String get _locationLabel {
+    final parts = [
+      contract.propertyName,
+      contract.unitName,
+    ].where((value) => value.isNotEmpty).toList(growable: false);
+    return parts.isEmpty ? '-' : parts.join(' · ');
+  }
+}
+
+class _ContractHeader extends StatelessWidget {
+  final ContractItemEntity contract;
+
+  const _ContractHeader({required this.contract});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(Icons.description_outlined, size: 18, color: context.primaryColor),
+        const SizedBox(width: AppSpacing.xs),
+        Expanded(
+          child: Text(
+            contract.contractNumber,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: AppTextStyles.labelLarge.copyWith(
+              color: context.primaryColor,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
+        ContractStatusBadge(status: contract.status),
+        const SizedBox(width: AppSpacing.xs),
+        Icon(
+          Icons.arrow_forward_ios_rounded,
+          size: 14,
+          color: context.appSecondaryTextColor,
+        ),
+      ],
+    );
+  }
+}
+
+class _ContractFooter extends StatelessWidget {
+  final ContractItemEntity contract;
+
+  const _ContractFooter({required this.contract});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Expanded(
+          child: Text(
+            '${contract.rentAmount.toStringAsFixed(0)} '
+            '${LocaleKeys.contractsCurrency.tr()}',
+            style: AppTextStyles.h4.copyWith(color: context.primaryColor),
+          ),
+        ),
+        if (contract.startDate.isNotEmpty && contract.endDate.isNotEmpty)
+          Text(
+            '${contract.startDate} – ${contract.endDate}',
+            style: AppTextStyles.labelSmall.copyWith(
+              color: context.appSecondaryTextColor,
+            ),
+          ),
+      ],
+    );
   }
 }

@@ -1,4 +1,4 @@
-﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +103,7 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
                   label: LocaleKeys.owner_finance_amount_label.tr(),
                   keyboardType: TextInputType.number,
                   validator: (val) {
-                    if (val == null || val.isEmpty) return 'Ù…Ø·Ù„ÙˆØ¨'; // Will fix required translation soon
+                    if (val == null || val.isEmpty) return 'required_field'.tr();
                     if (num.tryParse(val) == null) return LocaleKeys.owner_finance_invalid_value.tr();
                     return null;
                   },
@@ -138,7 +138,7 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
                       controller: _dateController,
                       label: LocaleKeys.owner_finance_receipt_date.tr(),
                       readOnly: true,
-                      validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
+                      validator: (val) => val == null || val.isEmpty ? 'required_field'.tr() : null,
                     ),
                   ),
                 ),

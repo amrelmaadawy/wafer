@@ -3,11 +3,12 @@ import '../../../../../core/error/failures.dart';
 import '../entities/contract_details_entity.dart';
 import '../entities/contract_installment_entity.dart';
 import '../entities/contracts_response_entity.dart';
+import '../entities/contract_status_filter.dart';
 
 abstract class OwnerContractsRepository {
   Future<Either<Failure, ContractsResponseEntity>> getContracts({
     int page = 1,
-    String? status,
+    ContractStatusFilter status = ContractStatusFilter.all,
     bool forceRefresh = false,
   });
 

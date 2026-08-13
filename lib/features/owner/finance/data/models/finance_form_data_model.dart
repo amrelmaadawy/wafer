@@ -7,6 +7,7 @@ class FinanceFormDataModel extends FinanceFormDataEntity {
     required super.paymentMethods,
     required super.properties,
     required super.contracts,
+    required super.users,
   });
 
   factory FinanceFormDataModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +27,10 @@ class FinanceFormDataModel extends FinanceFormDataEntity {
               .toList() ??
           [],
       contracts: (options['contracts'] as List<dynamic>?)
+              ?.map((e) => DropdownOptionModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          [],
+      users: (options['users'] as List<dynamic>?)
               ?.map((e) => DropdownOptionModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],

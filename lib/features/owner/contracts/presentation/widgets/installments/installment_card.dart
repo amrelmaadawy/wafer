@@ -1,11 +1,14 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
+import '../../../../../../core/presentation/widgets/app_surface_card.dart';
 import '../../../../../../core/theme/app_colors.dart';
-import '../../../../../../core/theme/app_radius.dart';
+import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/theme/theme_context.dart';
 import '../../../domain/entities/contract_installment_entity.dart';
+import 'installment_status_style.dart';
 
 class InstallmentCard extends StatelessWidget {
   final ContractInstallmentEntity installment;
@@ -14,139 +17,72 @@ class InstallmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusConfig = _getStatusConfig(installment.status);
-    final primaryColor = context.primaryColor;
-    final isOverdue = installment.status == 'overdue';
-
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularXxl,
-        border: isOverdue
-            ? Border.all(
-                color: AppColors.error.withValues(alpha: 0.3),
-                width: 1.5,
-              )
-            : Border.all(color: AppColors.borderLight.withValues(alpha: 0.5)),
-        boxShadow: [
-          BoxShadow(
-            color: isOverdue
-                ? AppColors.error.withValues(alpha: 0.06)
-                : Colors.black.withValues(alpha: 0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+    final status = installmentStatusStyle(installment.status);
+    return AppSurfaceCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 6,
-                ),
-                decoration: BoxDecoration(
-                  color: primaryColor.withValues(alpha: 0.1),
-                  borderRadius: AppRadius.circularMd,
-                ),
+              Expanded(
                 child: Text(
                   LocaleKeys.installmentsInstallmentNum.tr(
                     namedArgs: {'num': '${installment.installmentNumber}'},
                   ),
-                  style: TextStyle(
-                    fontSize: 14,
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: context.primaryColor,
                     fontWeight: FontWeight.w700,
-                    color: primaryColor,
                   ),
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 10,
-                  vertical: 5,
-                ),
-                decoration: BoxDecoration(
-                  color: statusConfig.color.withValues(alpha: 0.12),
-                  borderRadius: AppRadius.circularMd,
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      statusConfig.icon,
-                      size: 14,
-                      color: statusConfig.color,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      installment.statusLabel.isNotEmpty
-                          ? installment.statusLabel
-                          : statusConfig.label,
-                      style: TextStyle(
-                        fontSize: 12.5,
-                        fontWeight: FontWeight.w700,
-                        color: statusConfig.color,
-                      ),
-                    ),
-                  ],
-                ),
+              Icon(status.icon, color: status.color, size: 17),
+              const SizedBox(width: AppSpacing.xxs),
+              Text(
+                installment.statusLabel.isEmpty
+                    ? status.label
+                    : installment.statusLabel,
+                style: AppTextStyles.labelMedium.copyWith(color: status.color),
               ),
             ],
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.calendar_today_rounded,
                 size: 16,
-                color: AppColors.textSecondaryLight,
+                color: context.appSecondaryTextColor,
               ),
-              const SizedBox(width: 6),
+              const SizedBox(width: AppSpacing.xs),
               Text(
-                '${LocaleKeys.installmentsDueDate.tr()}: ',
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.textSecondaryLight,
-                ),
-              ),
-              Text(
-                _formatDate(installment.dueDate),
-                style: TextStyle(
-                  fontSize: 13.5,
-                  fontWeight: FontWeight.w700,
-                  color: isOverdue
-                      ? AppColors.error
-                      : AppColors.textPrimaryLight,
+                _formattedDate(context),
+                style: AppTextStyles.bodySmall.copyWith(
+                  color: context.appSecondaryTextColor,
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 14),
-          const Divider(height: 1, color: AppColors.borderLight),
-          const SizedBox(height: 14),
+          const SizedBox(height: AppSpacing.sm),
+          Divider(color: context.appBorderColor, height: 1),
+          const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
-              _buildValueColumn(
+              _Amount(
                 label: LocaleKeys.installmentsAmount.tr(),
                 value: installment.amount,
-                color: AppColors.textPrimaryLight,
+                color: context.appOnSurfaceColor,
               ),
-              _buildValueColumn(
+              _Amount(
                 label: LocaleKeys.installmentsPaid.tr(),
                 value: installment.paidAmount,
                 color: AppColors.success,
               ),
-              _buildValueColumn(
+              _Amount(
                 label: LocaleKeys.installmentsRemaining.tr(),
                 value: installment.remaining,
                 color: installment.remaining > 0
                     ? AppColors.warning
-                    : AppColors.textSecondaryLight,
+                    : context.appSecondaryTextColor,
               ),
             ],
           ),
@@ -155,90 +91,47 @@ class InstallmentCard extends StatelessWidget {
     );
   }
 
-  Widget _buildValueColumn({
-    required String label,
-    required double value,
-    required Color color,
-  }) {
+  String _formattedDate(BuildContext context) {
+    final date = DateTime.tryParse(installment.dueDate);
+    if (date == null) {
+      return installment.dueDate.isEmpty ? '-' : installment.dueDate;
+    }
+    return DateFormat.yMMMd(context.locale.toString()).format(date);
+  }
+}
+
+class _Amount extends StatelessWidget {
+  final String label;
+  final double value;
+  final Color color;
+
+  const _Amount({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return Expanded(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.textSecondaryLight,
+            style: AppTextStyles.labelSmall.copyWith(
+              color: context.appSecondaryTextColor,
             ),
           ),
-          const SizedBox(height: 4),
           Text(
-            '${value.toStringAsFixed(2)} ${LocaleKeys.contractsCurrency.tr()}',
-            style: TextStyle(
-              fontSize: 13.5,
-              fontWeight: FontWeight.w700,
+            value.toStringAsFixed(2),
+            style: AppTextStyles.labelLarge.copyWith(
               color: color,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ],
       ),
     );
   }
-
-  String _formatDate(String isoDate) {
-    if (isoDate.isEmpty) return '-';
-    try {
-      final parts = isoDate.split('-');
-      if (parts.length != 3) return isoDate;
-      final months = [
-        'ÙŠÙ†Ø§ÙŠØ±',
-        'ÙØ¨Ø±Ø§ÙŠØ±',
-        'Ù…Ø§Ø±Ø³',
-        'Ø£Ø¨Ø±ÙŠÙ„',
-        'Ù…Ø§ÙŠÙˆ',
-        'ÙŠÙˆÙ†ÙŠÙˆ',
-        'ÙŠÙˆÙ„ÙŠÙˆ',
-        'Ø£ØºØ³Ø·Ø³',
-        'Ø³Ø¨ØªÙ…Ø¨Ø±',
-        'Ø£ÙƒØªÙˆØ¨Ø±',
-        'Ù†ÙˆÙÙ…Ø¨Ø±',
-        'Ø¯ÙŠØ³Ù…Ø¨Ø±',
-      ];
-      final month = int.tryParse(parts[1]) ?? 1;
-      return '${parts[2]} ${months[month - 1]} ${parts[0]}';
-    } catch (_) {
-      return isoDate;
-    }
-  }
-
-  ({Color color, IconData icon, String label}) _getStatusConfig(String status) {
-    switch (status.toLowerCase()) {
-      case 'paid':
-        return (
-          color: AppColors.success,
-          icon: Icons.check_circle_rounded,
-          label: LocaleKeys.installmentsStatusPaid.tr(),
-        );
-      case 'overdue':
-        return (
-          color: AppColors.error,
-          icon: Icons.error_rounded,
-          label: LocaleKeys.installmentsStatusOverdue.tr(),
-        );
-      case 'partially_paid':
-        return (
-          color: AppColors.info,
-          icon: Icons.timelapse_rounded,
-          label: LocaleKeys.installmentsStatusPartial.tr(),
-        );
-      case 'unpaid':
-      default:
-        return (
-          color: AppColors.warning,
-          icon: Icons.schedule_rounded,
-          label: LocaleKeys.installmentsStatusUnpaid.tr(),
-        );
-    }
-  }
 }
-

@@ -69,22 +69,24 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
 
     // Apply sorting locally if specified
     if (_currentFilter.sortBy != null) {
-      // NOTE: Sort is page-level only. If items are across multiple pages, 
+      // NOTE: Sort is page-level only. If items are across multiple pages,
       // the backend should eventually handle this for a full sort.
       filtered.sort((a, b) {
         int cmp = 0;
         switch (_currentFilter.sortBy) {
-          case 'name':
+          case PropertySortField.name:
             cmp = a.name.compareTo(b.name);
             break;
-          case 'area':
+          case PropertySortField.area:
             cmp = (a.area ?? 0).compareTo(b.area ?? 0);
             break;
-          case 'occupancy':
+          case PropertySortField.occupancy:
             cmp = a.occupancyRate.compareTo(b.occupancyRate);
             break;
-          case 'units':
+          case PropertySortField.units:
             cmp = a.unitsCount.compareTo(b.unitsCount);
+            break;
+          case null:
             break;
         }
         return _currentFilter.sortAscending ? cmp : -cmp;
@@ -94,7 +96,8 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
     if (filtered.isEmpty) {
       EmptyReason reason = EmptyReason.noData;
       if (_allFetchedProperties.isNotEmpty) {
-        if (_currentFilter.search != null && _currentFilter.search!.trim().isNotEmpty) {
+        if (_currentFilter.search != null &&
+            _currentFilter.search!.trim().isNotEmpty) {
           reason = EmptyReason.noSearchResults;
         } else {
           reason = EmptyReason.noFilterResults;
@@ -153,11 +156,7 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
       status: () => statusFilter == 'all' ? null : statusFilter,
     );
 
-    if (_allFetchedProperties.isNotEmpty && _lastMeta != null) {
-      _applyLocalFilterAndEmit(_lastMeta, _lastStats);
-    } else {
-      getProperties(filter: _currentFilter, forceRefresh: false);
-    }
+    getProperties(filter: _currentFilter, forceRefresh: true);
   }
 
   void searchProperties(String query) {
@@ -172,23 +171,14 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
       status: () => isSearching ? null : _currentFilter.status,
     );
 
-    if (_allFetchedProperties.isNotEmpty && _lastMeta != null) {
-      _applyLocalFilterAndEmit(_lastMeta, _lastStats);
-    } else {
-      _debounceTimer = Timer(const Duration(milliseconds: 300), () {
-        getProperties(filter: _currentFilter, forceRefresh: false);
-      });
-    }
+    _debounceTimer = Timer(const Duration(milliseconds: 300), () {
+      getProperties(filter: _currentFilter, forceRefresh: true);
+    });
   }
 
-  void applyAdvancedFilter(PropertiesQueryFilterEntity filter) {
+  Future<void> applyAdvancedFilter(PropertiesQueryFilterEntity filter) {
     _currentFilter = filter;
-    
-    if (_allFetchedProperties.isNotEmpty && _lastMeta != null) {
-      _applyLocalFilterAndEmit(_lastMeta, _lastStats);
-    } else {
-      getProperties(filter: _currentFilter, forceRefresh: false);
-    }
+    return getProperties(filter: _currentFilter, forceRefresh: true);
   }
 
   @override

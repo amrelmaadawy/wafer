@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/entities/contract_item_entity.dart';
+import '../../../domain/entities/contract_status_filter.dart';
 import '../../../domain/usecases/get_owner_contracts_use_case.dart';
 import 'owner_contracts_state.dart';
 
@@ -11,9 +12,9 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
 
   int _currentPage = 1;
   bool _isFetchingNext = false;
-  String _currentStatus = 'all';
+  ContractStatusFilter _currentStatus = ContractStatusFilter.all;
 
-  String get currentStatus => _currentStatus;
+  ContractStatusFilter get currentStatus => _currentStatus;
 
   Future<void> getContracts({bool forceRefresh = false}) async {
     if (forceRefresh || state is! OwnerContractsLoaded) {
@@ -24,7 +25,7 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
     final result = await _getContractsUseCase(
       GetOwnerContractsParams(
         page: _currentPage,
-        status: _currentStatus == 'all' ? null : _currentStatus,
+        status: _currentStatus,
         forceRefresh: forceRefresh,
       ),
     );
@@ -64,7 +65,7 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
     final result = await _getContractsUseCase(
       GetOwnerContractsParams(
         page: _currentPage,
-        status: _currentStatus == 'all' ? null : _currentStatus,
+        status: _currentStatus,
         forceRefresh: false,
       ),
     );
@@ -91,7 +92,10 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
     );
   }
 
-  void changeStatusFilter(String newStatus, {bool force = false}) {
+  void changeStatusFilter(
+    ContractStatusFilter newStatus, {
+    bool force = false,
+  }) {
     if (!force && _currentStatus == newStatus) return;
     _currentStatus = newStatus;
     getContracts(forceRefresh: true);

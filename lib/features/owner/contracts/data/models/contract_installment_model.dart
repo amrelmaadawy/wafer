@@ -46,7 +46,7 @@ class ContractInstallmentModel extends ContractInstallmentEntity {
     };
   }
 
-  static List<ContractInstallmentModel> fromJsonList(dynamic json) {
+  static List<ContractInstallmentModel> fromJsonList(Object? json) {
     if (json is List) {
       return json
           .whereType<Map<String, dynamic>>()

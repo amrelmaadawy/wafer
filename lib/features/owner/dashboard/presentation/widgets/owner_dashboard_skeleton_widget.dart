@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/presentation/widgets/app_responsive_content.dart';
 import '../../../../../core/theme/app_radius.dart';
+import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
 
 class OwnerDashboardSkeletonWidget extends StatelessWidget {
@@ -8,266 +10,86 @@ class OwnerDashboardSkeletonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(16, 20, 16, 120),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.only(top: AppSpacing.md, bottom: 120),
       physics: const NeverScrollableScrollPhysics(),
-      children: [
-        _buildFinancialSummarySkeleton(),
-        const SizedBox(height: 16),
-        _buildInstallmentStatsSkeleton(),
-        const SizedBox(height: 16),
-        _buildOccupancyCardSkeleton(),
-        const SizedBox(height: 16),
-        _buildQuickActionsSkeleton(),
-        const SizedBox(height: 16),
-        _buildAlertsGridSkeleton(),
-        const SizedBox(height: 16),
-        _buildOverdueSkeleton(),
-        const SizedBox(height: 16),
-        _buildTasksLegalSkeleton(),
-        const SizedBox(height: 16),
-        _buildRecentReceiptsSkeleton(),
-      ],
+      child: AppResponsiveContent(
+        child: Column(
+          children: [
+            _card(context, 220),
+            const SizedBox(height: AppSpacing.md),
+            _card(context, 150),
+            const SizedBox(height: AppSpacing.md),
+            _actions(context),
+            const SizedBox(height: AppSpacing.md),
+            _alerts,
+            const SizedBox(height: AppSpacing.md),
+            _card(context, 130),
+          ],
+        ),
+      ),
     );
   }
 
-  Widget _buildFinancialSummarySkeleton() {
+  Widget _card(BuildContext context, double height) {
     return AppShimmer(
       child: Container(
-        height: 175,
-        padding: const EdgeInsets.all(20),
+        height: height,
+        width: double.infinity,
+        padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
-          color: AppColors.surfaceLight,
+          color: context.appSurfaceColor,
           borderRadius: AppRadius.circularXxl,
-          border: Border.all(color: AppColors.borderLight),
+          border: Border.all(color: context.appBorderColor),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppShimmer.box(width: 140, height: 16),
-                AppShimmer.box(
-                  width: 60,
-                  height: 24,
-                  borderRadius: AppRadius.circularFull,
-                ),
-              ],
-            ),
-            AppShimmer.box(width: 180, height: 32),
-            Row(
-              children: [
-                Expanded(child: AppShimmer.box(height: 38)),
-                const SizedBox(width: 12),
-                Expanded(child: AppShimmer.box(height: 38)),
-              ],
-            ),
+            AppShimmer.box(width: 150, height: 16),
+            AppShimmer.box(width: 220, height: 30),
+            AppShimmer.box(height: 42),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildOccupancyCardSkeleton() {
-    return AppShimmer(
-      child: Container(
-        height: 155,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceLight,
-          borderRadius: AppRadius.circularXxl,
-          border: Border.all(color: AppColors.borderLight),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppShimmer.box(width: 130, height: 16),
-                AppShimmer.box(
-                  width: 50,
-                  height: 22,
-                  borderRadius: AppRadius.circularFull,
-                ),
-              ],
-            ),
-            AppShimmer.box(height: 12, borderRadius: AppRadius.circularFull),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                AppShimmer.box(width: 90, height: 14),
-                AppShimmer.box(width: 90, height: 14),
-                AppShimmer.box(width: 90, height: 14),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildQuickActionsSkeleton() {
-    return AppShimmer(
-      child: Container(
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceLight,
-          borderRadius: AppRadius.circularXxl,
-          border: Border.all(color: AppColors.borderLight),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppShimmer.box(width: 120, height: 16),
-            const SizedBox(height: 14),
-            Row(
-              children: List.generate(
-                3,
-                (i) => Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: i < 2 ? 12 : 0),
-                    child: AppShimmer.box(
-                      height: 80,
-                      borderRadius: AppRadius.circularLg,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAlertsGridSkeleton() {
-    return AppShimmer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppShimmer.box(width: 110, height: 16),
-          const SizedBox(height: 12),
-          Row(
-            children: [
-              Expanded(
-                child: AppShimmer.box(
-                  height: 95,
-                  borderRadius: AppRadius.circularXxl,
-                ),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: AppShimmer.box(
-                  height: 95,
-                  borderRadius: AppRadius.circularXxl,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildRecentReceiptsSkeleton() {
-    return AppShimmer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppShimmer.box(width: 130, height: 16),
-          const SizedBox(height: 12),
-          AppShimmer.box(height: 75, borderRadius: AppRadius.circularXxl),
-          const SizedBox(height: 10),
-          AppShimmer.box(height: 75, borderRadius: AppRadius.circularXxl),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInstallmentStatsSkeleton() {
-    return AppShimmer(
-      child: Container(
-        height: 120,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: AppColors.surfaceLight,
-          borderRadius: AppRadius.circularXxl,
-          border: Border.all(color: AppColors.borderLight),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppShimmer.box(width: 140, height: 16),
-            const SizedBox(height: 16),
-            Row(
-              children: List.generate(
-                4,
-                (i) => Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: i < 3 ? 8 : 0),
-                    child: AppShimmer.box(
-                      height: 40,
-                      borderRadius: AppRadius.circularMd,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildOverdueSkeleton() {
-    return AppShimmer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppShimmer.box(width: 180, height: 16),
-          const SizedBox(height: 12),
-          SizedBox(
-            height: 140,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: 2,
-              separatorBuilder: (context, index) => const SizedBox(width: 12),
-              itemBuilder: (context, index) {
-                return AppShimmer.box(
-                  width: 260,
-                  height: 140,
-                  borderRadius: AppRadius.circularXl,
-                );
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTasksLegalSkeleton() {
+  Widget _actions(BuildContext context) {
     return AppShimmer(
       child: Row(
         children: [
-          Expanded(
-            child: AppShimmer.box(
-              height: 120,
-              borderRadius: AppRadius.circularXxl,
+          for (var index = 0; index < 3; index++) ...[
+            if (index > 0) const SizedBox(width: AppSpacing.sm),
+            Expanded(
+              child: AppShimmer.box(
+                height: 80,
+                borderRadius: AppRadius.circularLg,
+              ),
             ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: AppShimmer.box(
-              height: 120,
-              borderRadius: AppRadius.circularXxl,
-            ),
-          ),
+          ],
         ],
       ),
     );
   }
+
+  Widget get _alerts => AppShimmer(
+    child: Row(
+      children: [
+        Expanded(
+          child: AppShimmer.box(
+            height: 110,
+            borderRadius: AppRadius.circularXl,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: AppShimmer.box(
+            height: 110,
+            borderRadius: AppRadius.circularXl,
+          ),
+        ),
+      ],
+    ),
+  );
 }

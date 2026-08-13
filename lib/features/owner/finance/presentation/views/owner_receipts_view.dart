@@ -1,4 +1,4 @@
-﻿import 'package:wafer/core/theme/app_radius.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 
 import '../../../../../core/utils/widgets/app_toast.dart';
 import 'package:flutter/material.dart';
@@ -152,8 +152,8 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
                 }
 
                 if (receipts.isEmpty && !isLoadingMore) {
-                  return const CustomEmptyWidget(
-                    title: 'Ù„Ø§ ØªÙˆØ¬Ø¯ Ø³Ù†Ø¯Ø§Øª Ù…Ø§Ù„ÙŠØ© Ù…ØªØ§Ø­Ø©',
+                  return CustomEmptyWidget(
+                    title: 'empty_state'.tr(),
                     icon: Icons.receipt_long,
                   );
                 }

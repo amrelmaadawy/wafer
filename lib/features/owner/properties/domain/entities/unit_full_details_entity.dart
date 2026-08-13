@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import '../../../maintenance/domain/entities/maintenance_item_entity.dart';
+import 'contract_entity.dart';
 import 'media_item_entity.dart';
 
 class UnitMetersEntity extends Equatable {
@@ -58,9 +59,8 @@ class UnitFullDetailsEntity extends Equatable {
   final num perTwoPaymentsPrice;
   final num quarterlyPrice;
 
-  // Contracts (we keep them as dynamic/Map for now unless we have a specific entity)
-  final dynamic currentContract;
-  final List<dynamic> contractsHistory;
+  final ContractEntity? currentContract;
+  final List<ContractEntity> contractsHistory;
 
   const UnitFullDetailsEntity({
     required this.id,

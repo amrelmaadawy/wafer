@@ -1,5 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../domain/entities/contract_installment_entity.dart';
+import '../../../domain/entities/installment_status_filter.dart';
+import '../../../domain/entities/contract_installments_summary_entity.dart';
 import '../../../domain/usecases/get_owner_contract_installments_use_case.dart';
 import 'owner_contract_installments_state.dart';
 
@@ -19,22 +21,25 @@ class OwnerContractInstallmentsCubit
         OwnerContractInstallmentsLoaded(
           allInstallments: installments,
           filteredInstallments: installments,
-          activeFilter: 'all',
+          summary: ContractInstallmentsSummaryEntity.fromInstallments(
+            installments,
+          ),
+          activeFilter: InstallmentStatusFilter.all,
         ),
       ),
     );
   }
 
-  void filterInstallments(String filter) {
+  void filterInstallments(InstallmentStatusFilter filter) {
     if (state is! OwnerContractInstallmentsLoaded) return;
     final currentState = state as OwnerContractInstallmentsLoaded;
 
     List<ContractInstallmentEntity> filtered;
-    if (filter == 'paid') {
+    if (filter == InstallmentStatusFilter.paid) {
       filtered = currentState.allInstallments
           .where((e) => e.status == 'paid' || e.paidAmount >= e.amount)
           .toList();
-    } else if (filter == 'unpaid') {
+    } else if (filter == InstallmentStatusFilter.unpaid) {
       filtered = currentState.allInstallments
           .where((e) => e.status != 'paid' && e.paidAmount < e.amount)
           .toList();
@@ -46,6 +51,7 @@ class OwnerContractInstallmentsCubit
       OwnerContractInstallmentsLoaded(
         allInstallments: currentState.allInstallments,
         filteredInstallments: filtered,
+        summary: currentState.summary,
         activeFilter: filter,
       ),
     );
