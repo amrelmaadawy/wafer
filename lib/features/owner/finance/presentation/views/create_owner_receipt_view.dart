@@ -1,6 +1,7 @@
-﻿import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/localization/locale_keys.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wafer/core/theme/app_radius.dart';
 import 'package:wafer/core/utils/widgets/app_toast.dart';
@@ -92,7 +93,7 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
           scrolledUnderElevation: 0,
           leadingWidth: 68,
           leading: const CustomBackButton(),
-          title: const Text('Ø¥Ù†Ø´Ø§Ø¡ Ø³Ù†Ø¯ Ù…Ø§Ù„ÙŠ'),
+          title: Text(LocaleKeys.financeCreateReceipt.tr()),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -103,16 +104,16 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
               children: [
                 CustomTextField(
                   controller: _ownerIdController,
-                  label: 'Ø±Ù‚Ù… Ø§Ù„Ù…Ø§Ù„Ùƒ (Owner ID)',
+                  label: LocaleKeys.financeOwnerId.tr(),
                   keyboardType: TextInputType.number,
-                  validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
+                  validator: (val) => val == null || val.isEmpty ? LocaleKeys.financeRequired.tr() : null,
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _amountController,
-                  label: 'Ø§Ù„Ù…Ø¨Ù„Øº',
+                  label: LocaleKeys.financeAmount.tr(),
                   keyboardType: TextInputType.number,
-                  validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
+                  validator: (val) => val == null || val.isEmpty ? LocaleKeys.financeRequired.tr() : null,
                 ),
                 const SizedBox(height: 16),
                 GestureDetector(
@@ -142,9 +143,9 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
                   child: AbsorbPointer(
                     child: CustomTextField(
                       controller: _dateController,
-                      label: 'ØªØ§Ø±ÙŠØ® Ø§Ù„Ø³Ù†Ø¯',
+                      label: LocaleKeys.financeDate.tr(),
                       readOnly: true,
-                      validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
+                      validator: (val) => val == null || val.isEmpty ? LocaleKeys.financeRequired.tr() : null,
                     ),
                   ),
                 ),
@@ -160,52 +161,52 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Ø·Ø±ÙŠÙ‚Ø© Ø§Ù„Ø¯ÙØ¹', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(LocaleKeys.financePaymentMethod.tr(), style: const TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<String>(
                             items: paymentMethods.map((e) => e.value).toList(),
                             value: _selectedPaymentMethod,
-                            hint: 'Ø§Ø®ØªØ± Ø·Ø±ÙŠÙ‚Ø© Ø§Ù„Ø¯ÙØ¹',
+                            hint: LocaleKeys.financeSelectPaymentMethod.tr(),
                             itemLabelBuilder: (val) => paymentMethods.firstWhere((e) => e.value == val).label,
                             onSelected: (val) => setState(() => _selectedPaymentMethod = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ù…Ø¯ÙŠÙ† (Debit Account)', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(LocaleKeys.financeDebitAccount.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: accounts.map((e) => e.id).toList(),
                             value: _selectedDebitAccountId,
-                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ù…Ø¯ÙŠÙ†',
+                            hint: LocaleKeys.financeSelectDebit.tr(),
                             itemLabelBuilder: (id) => accounts.firstWhere((e) => e.id == id).nameAr,
                             onSelected: (val) => setState(() => _selectedDebitAccountId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ø¯Ø§Ø¦Ù† (Credit Account)', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(LocaleKeys.financeCreditAccount.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: accounts.map((e) => e.id).toList(),
                             value: _selectedCreditAccountId,
-                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ø¯Ø§Ø¦Ù†',
+                            hint: LocaleKeys.financeSelectCredit.tr(),
                             itemLabelBuilder: (id) => accounts.firstWhere((e) => e.id == id).nameAr,
                             onSelected: (val) => setState(() => _selectedCreditAccountId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('Ø§Ù„Ø¹Ù‚Ø§Ø± - Ø§Ø®ØªÙŠØ§Ø±ÙŠ', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(LocaleKeys.financePropertyOptional.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: properties.map((e) => int.tryParse(e.value) ?? 0).toList(),
                             value: _selectedPropertyId,
-                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø¹Ù‚Ø§Ø±',
+                            hint: LocaleKeys.financeSelectProperty.tr(),
                             itemLabelBuilder: (id) => properties.firstWhere((e) => e.value == id.toString()).label,
                             onSelected: (val) => setState(() => _selectedPropertyId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('Ø§Ù„Ø¹Ù‚Ø¯ - Ø§Ø®ØªÙŠØ§Ø±ÙŠ', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(LocaleKeys.financeContractOptional.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: contracts.map((e) => int.tryParse(e.value) ?? 0).toList(),
                             value: _selectedContractId,
-                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø¹Ù‚Ø¯',
+                            hint: LocaleKeys.financeSelectContract.tr(),
                             itemLabelBuilder: (id) => contracts.firstWhere((e) => e.value == id.toString()).label,
                             onSelected: (val) => setState(() => _selectedContractId = val),
                           ),
@@ -220,7 +221,7 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _notesController,
-                  label: 'Ù…Ù„Ø§Ø­Ø¸Ø§Øª',
+                  label: LocaleKeys.financeNotes.tr(),
                   maxLines: 3,
                 ),
                 const SizedBox(height: 32),
@@ -237,7 +238,7 @@ class _CreateOwnerReceiptViewState extends State<CreateOwnerReceiptView> {
                         onPressed: state is CreateFinanceReceiptLoading ? null : _submit,
                         child: state is CreateFinanceReceiptLoading
                             ? const CircularProgressIndicator(color: Colors.white)
-                            : const Text('Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø³Ù†Ø¯', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                            : Text(LocaleKeys.financeCreateAction.tr(), style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                       );
                     },
                   ),

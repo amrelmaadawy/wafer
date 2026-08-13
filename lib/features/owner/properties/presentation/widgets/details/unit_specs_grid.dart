@@ -77,18 +77,22 @@ class UnitSpecsGrid extends StatelessWidget {
               (constraints.maxWidth - spacing * (colCount - 1)) / colCount;
           if (itemWidth < 0) itemWidth = 0;
 
-          return Wrap(
-            spacing: spacing,
-            runSpacing: spacing,
-            children: specs
-                .map(
-                  (s) => _SpecTile(
-                    item: s,
-                    width: itemWidth,
-                    primaryColor: context.primaryColor,
-                  ),
-                )
-                .toList(),
+          return SizedBox(
+            width: double.infinity,
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: spacing,
+              runSpacing: spacing,
+              children: specs
+                  .map(
+                    (s) => _SpecTile(
+                      item: s,
+                      width: itemWidth,
+                      primaryColor: context.primaryColor,
+                    ),
+                  )
+                  .toList(),
+            ),
           );
         },
       ),

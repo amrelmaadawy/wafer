@@ -2080,4 +2080,34 @@ abstract class  LocaleKeys {
   static const amenityCentralAc = 'amenityCentralAc';
   static const amenityInternet = 'amenityInternet';
 
+  static const unitEditSuccess = 'unitEditSuccess';
+
+  static const unitsVideosTitle = 'unitsVideosTitle';
+  static const unitsVideosSubtitle = 'unitsVideosSubtitle';
+  static const unitsFilesTitle = 'unitsFilesTitle';
+  static const unitsFilesSubtitle = 'unitsFilesSubtitle';
+
+  static const financeCreateReceipt = 'financeCreateReceipt';
+  static const financeCreatePayment = 'financeCreatePayment';
+  static const financeSaving = 'financeSaving';
+  static const financeReceiptSaved = 'financeReceiptSaved';
+  static const financePaymentSaved = 'financePaymentSaved';
+  static const financeOwnerId = 'financeOwnerId';
+  static const financePayeeId = 'financePayeeId';
+  static const financeRequired = 'financeRequired';
+  static const financeAmount = 'financeAmount';
+  static const financeDate = 'financeDate';
+  static const financePaymentMethod = 'financePaymentMethod';
+  static const financeSelectPaymentMethod = 'financeSelectPaymentMethod';
+  static const financeDebitAccount = 'financeDebitAccount';
+  static const financeSelectDebit = 'financeSelectDebit';
+  static const financeCreditAccount = 'financeCreditAccount';
+  static const financeSelectCredit = 'financeSelectCredit';
+  static const financePropertyOptional = 'financePropertyOptional';
+  static const financeSelectProperty = 'financeSelectProperty';
+  static const financeContractOptional = 'financeContractOptional';
+  static const financeSelectContract = 'financeSelectContract';
+  static const financeNotes = 'financeNotes';
+  static const financeCreateAction = 'financeCreateAction';
+
 }

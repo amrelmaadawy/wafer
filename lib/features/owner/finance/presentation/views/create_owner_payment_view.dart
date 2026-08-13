@@ -1,4 +1,4 @@
-﻿import 'package:wafer/core/theme/app_radius.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 
 import '../../../../../core/localization/locale_keys.dart';
 import 'package:flutter/material.dart';
@@ -78,9 +78,9 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
     return BlocListener<CreateFinancePaymentCubit, CreateFinancePaymentState>(
       listener: (context, state) {
         if (state is CreateFinancePaymentLoading) {
-          AppToast.showInfo(context, LocaleKeys.owner_finance_saving.tr());
+          AppToast.showInfo(context, LocaleKeys.financeSaving.tr());
         } else if (state is CreateFinancePaymentSuccess) {
-          AppToast.showSuccess(context, LocaleKeys.owner_finance_save_success.tr());
+          AppToast.showSuccess(context, LocaleKeys.financePaymentSaved.tr());
           context.pop(true);
         } else if (state is CreateFinancePaymentError) {
           AppToast.showError(context, state.message);
@@ -92,7 +92,7 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
           scrolledUnderElevation: 0,
           leadingWidth: 68,
           leading: const CustomBackButton(),
-          title: Text(LocaleKeys.owner_finance_create_payment.tr()),
+          title: Text(LocaleKeys.financeCreatePayment.tr()),
         ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(24),
@@ -103,16 +103,16 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
               children: [
                 CustomTextField(
                   controller: _payeeIdController,
-                  label: LocaleKeys.owner_finance_payee_id.tr(),
+                  label: LocaleKeys.financePayeeId.tr(),
                   keyboardType: TextInputType.number,
-                  validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
+                  validator: (val) => val == null || val.isEmpty ? LocaleKeys.financeRequired.tr() : null,
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _amountController,
-                  label: 'Ø§Ù„Ù…Ø¨Ù„Øº (Amount)',
+                  label: LocaleKeys.financeAmount.tr(),
                   keyboardType: TextInputType.number,
-                  validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
+                  validator: (val) => val == null || val.isEmpty ? LocaleKeys.financeRequired.tr() : null,
                 ),
                 const SizedBox(height: 16),
                 GestureDetector(
@@ -142,9 +142,9 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
                   child: AbsorbPointer(
                     child: CustomTextField(
                       controller: _dateController,
-                      label: 'ØªØ§Ø±ÙŠØ® Ø§Ù„Ø³Ù†Ø¯',
+                      label: LocaleKeys.financeDate.tr(),
                       readOnly: true,
-                      validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
+                      validator: (val) => val == null || val.isEmpty ? LocaleKeys.financeRequired.tr() : null,
                     ),
                   ),
                 ),
@@ -160,52 +160,52 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('Ø·Ø±ÙŠÙ‚Ø© Ø§Ù„Ø¯ÙØ¹', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(LocaleKeys.financePaymentMethod.tr(), style: const TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<String>(
                             items: paymentMethods.map((e) => e.value).toList(),
                             value: _selectedPaymentMethod,
-                            hint: 'Ø§Ø®ØªØ± Ø·Ø±ÙŠÙ‚Ø© Ø§Ù„Ø¯ÙØ¹',
+                            hint: LocaleKeys.financeSelectPaymentMethod.tr(),
                             itemLabelBuilder: (val) => paymentMethods.firstWhere((e) => e.value == val).label,
                             onSelected: (val) => setState(() => _selectedPaymentMethod = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ù…Ø¯ÙŠÙ† (Debit Account)', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(LocaleKeys.financeDebitAccount.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: accounts.map((e) => e.id).toList(),
                             value: _selectedDebitAccountId,
-                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ù…Ø¯ÙŠÙ†',
+                            hint: LocaleKeys.financeSelectDebit.tr(),
                             itemLabelBuilder: (id) => accounts.firstWhere((e) => e.id == id).nameAr,
                             onSelected: (val) => setState(() => _selectedDebitAccountId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ø¯Ø§Ø¦Ù† (Credit Account)', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(LocaleKeys.financeCreditAccount.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: accounts.map((e) => e.id).toList(),
                             value: _selectedCreditAccountId,
-                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ø¯Ø§Ø¦Ù†',
+                            hint: LocaleKeys.financeSelectCredit.tr(),
                             itemLabelBuilder: (id) => accounts.firstWhere((e) => e.id == id).nameAr,
                             onSelected: (val) => setState(() => _selectedCreditAccountId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('Ø§Ù„Ø¹Ù‚Ø§Ø± (Property) - Ø§Ø®ØªÙŠØ§Ø±ÙŠ', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(LocaleKeys.financePropertyOptional.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: properties.map((e) => int.tryParse(e.value) ?? 0).toList(),
                             value: _selectedPropertyId,
-                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø¹Ù‚Ø§Ø±',
+                            hint: LocaleKeys.financeSelectProperty.tr(),
                             itemLabelBuilder: (id) => properties.firstWhere((e) => e.value == id.toString()).label,
                             onSelected: (val) => setState(() => _selectedPropertyId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('Ø§Ù„Ø¹Ù‚Ø¯ (Contract) - Ø§Ø®ØªÙŠØ§Ø±ÙŠ', style: TextStyle(fontWeight: FontWeight.bold)),
+                          Text(LocaleKeys.financeContractOptional.tr(), style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: contracts.map((e) => int.tryParse(e.value) ?? 0).toList(),
                             value: _selectedContractId,
-                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø¹Ù‚Ø¯',
+                            hint: LocaleKeys.financeSelectContract.tr(),
                             itemLabelBuilder: (id) => contracts.firstWhere((e) => e.value == id.toString()).label,
                             onSelected: (val) => setState(() => _selectedContractId = val),
                           ),
@@ -220,7 +220,7 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _notesController,
-                  label: 'Ù…Ù„Ø§Ø­Ø¸Ø§Øª',
+                  label: LocaleKeys.financeNotes.tr(),
                   maxLines: 3,
                 ),
                 const SizedBox(height: 32),
@@ -237,7 +237,7 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
                         onPressed: state is CreateFinancePaymentLoading ? null : _submit,
                         child: state is CreateFinancePaymentLoading
                             ? const CircularProgressIndicator(color: Colors.white)
-                            : const Text('Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø³Ù†Ø¯', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                            : Text(LocaleKeys.financeCreateAction.tr(), style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                       );
                     },
                   ),

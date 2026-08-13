@@ -1,4 +1,4 @@
-﻿import 'dart:io';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -122,9 +122,14 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
       _selectedUnitType = unit.type;
       _selectedUnitStatus = unit.status;
       _selectedUsageType = unit.usageType;
-      _selectedPurpose = unit.purpose;
-      _selectedFloorType = unit.floorType;
-      _selectedFinishingType = unit.finishingType;
+      
+      String? p = unit.purpose?.toLowerCase();
+      if (p == 'rent') p = 'for_rent';
+      if (p == 'sale') p = 'for_sale';
+      _selectedPurpose = p;
+      
+      _selectedFloorType = unit.floorType?.toLowerCase();
+      _selectedFinishingType = unit.finishingType?.toLowerCase();
       _isFurnished = unit.isFurnished;
       
       _existingImages = List.from(unit.images);
@@ -196,7 +201,7 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
           AppToast.showError(context, state.submitError!.message);
         } else if (!state.isSubmitting && state.error == null) {
           AppToast.showSuccess(
-              context, "ØªÙ… Ø§Ù„ØªØ¹Ø¯ÙŠÙ„ Ø¨Ù†Ø¬Ø§Ø­");
+              context, LocaleKeys.unitEditSuccess.tr());
           context.pop(true);
         }
       },
@@ -491,8 +496,8 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
         ),
         const SizedBox(height: 32),
         _buildMediaCategory(
-          title: 'Ø§Ù„ÙÙŠØ¯ÙŠÙˆÙ‡Ø§Øª',
-          subtitle: 'Ø£Ø¶Ù ÙÙŠØ¯ÙŠÙˆÙ‡Ø§Øª ØªÙˆØ¶ÙŠØ­ÙŠØ© Ù„Ù„ÙˆØ­Ø¯Ø©',
+          title: LocaleKeys.unitsVideosTitle.tr(),
+          subtitle: LocaleKeys.unitsVideosSubtitle.tr(),
           existing: _existingVideos,
           newItems: _newVideos,
           onAdd: () async {
@@ -520,8 +525,8 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
         ),
         const SizedBox(height: 32),
         _buildMediaCategory(
-          title: 'Ø§Ù„Ù…Ù„ÙØ§Øª ÙˆØ§Ù„Ù…Ø±ÙÙ‚Ø§Øª',
-          subtitle: 'Ø£Ø¶Ù Ø£ÙŠ Ù…Ù„ÙØ§Øª Ø£Ùˆ Ù…Ø³ØªÙ†Ø¯Ø§Øª (PDF, Word, etc)',
+          title: LocaleKeys.unitsFilesTitle.tr(),
+          subtitle: LocaleKeys.unitsFilesSubtitle.tr(),
           existing: _existingFiles,
           newItems: _newFiles,
           onAdd: () async {
