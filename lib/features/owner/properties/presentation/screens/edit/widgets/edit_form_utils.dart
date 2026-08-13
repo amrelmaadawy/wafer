@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../core/theme/app_radius.dart';
@@ -37,12 +37,14 @@ class EditFormField extends StatelessWidget {
       children: [
         Row(
           children: [
-            Text(
-              label,
-              style: const TextStyle(
-                fontSize: 13.5,
-                fontWeight: FontWeight.w600,
-                color: AppColors.textPrimaryLight,
+            Flexible(
+              child: Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 13.5,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textPrimaryLight,
+                ),
               ),
             ),
             if (isRequired)

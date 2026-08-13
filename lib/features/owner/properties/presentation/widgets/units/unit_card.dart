@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -129,7 +129,9 @@ class UnitCard extends StatelessWidget {
                       _buildStat(
                         context,
                         Icons.layers_outlined,
-                        'Ø§Ù„Ø·Ø§Ø¨Ù‚ ${unit.floor}',
+                        LocaleKeys.unit_details_floor_prefix.tr(
+                          args: [unit.floor!],
+                        ),
                       ),
                   ],
                 ),

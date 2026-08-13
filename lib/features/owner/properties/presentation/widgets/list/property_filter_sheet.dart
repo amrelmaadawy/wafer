@@ -19,6 +19,7 @@ class PropertyFilterSheet extends StatefulWidget {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
+      useRootNavigator: true,
       backgroundColor: Colors.transparent,
       builder: (ctx) => BlocProvider.value(
         value: context.read<PropertiesListCubit>(),

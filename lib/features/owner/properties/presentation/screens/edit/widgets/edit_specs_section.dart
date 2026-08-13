@@ -1,9 +1,11 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../core/theme/app_radius.dart';
 import '../../../../../../../core/theme/color_utils.dart';
 import '../../../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
+import '../../../../../../../core/localization/locale_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../cubit/edit/property_edit_cubit.dart';
 import '../../../cubit/edit/property_edit_state.dart';
 import 'edit_form_utils.dart';
@@ -26,12 +28,12 @@ class EditSpecsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         EditSectionHeader(
-          title: 'Ø§Ù„Ù…ÙˆØ§ØµÙØ§Øª ÙˆØ§Ù„Ø£Ø¨Ø¹Ø§Ø¯',
+          title: LocaleKeys.propertyDetailsSpecsTitle.tr(),
           icon: Icons.straighten_rounded,
         ),
         const SizedBox(height: 16),
         Text(
-          'Ù†ÙˆØ¹ Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù…',
+          LocaleKeys.propertiesUsageTitle.tr(),
           style: const TextStyle(
             fontSize: 13.5,
             fontWeight: FontWeight.w600,
@@ -42,17 +44,17 @@ class EditSpecsSection extends StatelessWidget {
         CustomDropdownMenu<String>(
           items: const ['residential', 'commercial', 'industrial', 'mixed'],
           value: state.selectedUsageType,
-          hint: 'Ø§Ø®ØªØ± Ù†ÙˆØ¹ Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù…',
+          hint: LocaleKeys.propertyDetailsUsageHint.tr(),
           itemLabelBuilder: (val) {
             switch (val) {
               case 'residential':
-                return 'Ø³ÙƒÙ†ÙŠ';
+                return LocaleKeys.propertiesUsageResidential.tr();
               case 'commercial':
-                return 'ØªØ¬Ø§Ø±ÙŠ';
+                return LocaleKeys.propertiesUsageCommercial.tr();
               case 'industrial':
-                return 'ØµÙ†Ø§Ø¹ÙŠ';
+                return LocaleKeys.propertiesUsageIndustrial.tr();
               case 'mixed':
-                return 'Ù…Ø®ØªÙ„Ø·';
+                return LocaleKeys.propertiesUsageMixed.tr();
               default:
                 return val;
             }
@@ -66,7 +68,7 @@ class EditSpecsSection extends StatelessWidget {
             Expanded(
               child: EditFormField(
                 controller: lengthController,
-                label: 'Ø§Ù„Ø·ÙˆÙ„ (Ù…)',
+                label: LocaleKeys.propertyDetailsLength.tr(),
                 icon: Icons.height_rounded,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
@@ -78,7 +80,7 @@ class EditSpecsSection extends StatelessWidget {
             Expanded(
               child: EditFormField(
                 controller: widthController,
-                label: 'Ø§Ù„Ø¹Ø±Ø¶ (Ù…)',
+                label: LocaleKeys.propertyDetailsWidth.tr(),
                 icon: Icons.swap_horiz_rounded,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
@@ -92,7 +94,7 @@ class EditSpecsSection extends StatelessWidget {
 
         // Section 4: Amenities
         EditSectionHeader(
-          title: 'Ø§Ù„Ù…Ù…ÙŠØ²Ø§Øª ÙˆØ§Ù„Ø¥Ø¶Ø§ÙØ§Øª',
+          title: LocaleKeys.propertyDetailsAmenitiesTitle.tr(),
           icon: Icons.star_outline_rounded,
         ),
         const SizedBox(height: 16),
@@ -100,15 +102,15 @@ class EditSpecsSection extends StatelessWidget {
           spacing: 8,
           runSpacing: 10,
           children:
-              const [
-                ('elevator', 'Ù…ØµØ¹Ø¯'),
-                ('parking', 'Ù…ÙˆÙ‚Ù Ø³ÙŠØ§Ø±Ø§Øª'),
-                ('security', 'Ø­Ø±Ø§Ø³Ø© 24/7'),
-                ('pool', 'Ù…Ø³Ø¨Ø­'),
-                ('gym', 'ØµØ§Ù„Ø© Ø±ÙŠØ§Ø¶ÙŠØ©'),
-                ('generator', 'Ù…ÙˆÙ„Ø¯ ÙƒÙ‡Ø±Ø¨Ø§Ø¡'),
-                ('central_ac', 'ØªÙƒÙŠÙŠÙ Ù…Ø±ÙƒØ²ÙŠ'),
-                ('internet', 'Ø£Ù„ÙŠØ§Ù Ø¨ØµØ±ÙŠØ© (Ø¥Ù†ØªØ±Ù†Øª)'),
+              [
+                ('elevator', LocaleKeys.amenityElevator.tr()),
+                ('parking', LocaleKeys.amenityParking.tr()),
+                ('security', LocaleKeys.amenitySecurity.tr()),
+                ('pool', LocaleKeys.amenityPool.tr()),
+                ('gym', LocaleKeys.amenityGym.tr()),
+                ('generator', LocaleKeys.amenityGenerator.tr()),
+                ('central_ac', LocaleKeys.amenityCentralAc.tr()),
+                ('internet', LocaleKeys.amenityInternet.tr()),
               ].map((amenity) {
                 final isSelected = state.selectedAmenities.contains(amenity.$1);
                 return FilterChip(

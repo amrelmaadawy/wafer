@@ -73,8 +73,9 @@ class UnitSpecsGrid extends StatelessWidget {
         builder: (context, constraints) {
           final colCount = constraints.maxWidth > 320 ? 3 : 2;
           final spacing = 10.0;
-          final itemWidth =
+          var itemWidth =
               (constraints.maxWidth - spacing * (colCount - 1)) / colCount;
+          if (itemWidth < 0) itemWidth = 0;
 
           return Wrap(
             spacing: spacing,

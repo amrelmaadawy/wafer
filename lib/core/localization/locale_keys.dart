@@ -2064,4 +2064,20 @@ abstract class  LocaleKeys {
   static const propertyDetailsRegionHint = 'propertyDetailsRegionHint';
   static const propertyDetailsStreet = 'propertyDetailsStreet';
   static const propertyDetailsStreetHint = 'propertyDetailsStreetHint';
+  static const propertyDetailsSpecsTitle = 'propertyDetailsSpecsTitle';
+  static const propertyDetailsUsageHint = 'propertyDetailsUsageHint';
+  static const propertyDetailsLength = 'propertyDetailsLength';
+  static const propertyDetailsWidth = 'propertyDetailsWidth';
+  static const propertyDetailsAmenitiesTitle = 'propertyDetailsAmenitiesTitle';
+  static const propertiesUsageIndustrial = 'propertiesUsageIndustrial';
+  static const propertiesUsageMixed = 'propertiesUsageMixed';
+  static const amenityElevator = 'amenityElevator';
+  static const amenityParking = 'amenityParking';
+  static const amenitySecurity = 'amenitySecurity';
+  static const amenityPool = 'amenityPool';
+  static const amenityGym = 'amenityGym';
+  static const amenityGenerator = 'amenityGenerator';
+  static const amenityCentralAc = 'amenityCentralAc';
+  static const amenityInternet = 'amenityInternet';
+
 }

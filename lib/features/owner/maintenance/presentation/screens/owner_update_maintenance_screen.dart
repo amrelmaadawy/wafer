@@ -279,10 +279,18 @@ class _OwnerUpdateMaintenanceViewState
       );
     }
 
+    final uniqueTypesMap = <String, dynamic>{};
+    for (var typeObj in state.availableMaintenanceTypes) {
+      final key = typeObj.name ?? typeObj.id?.toString() ?? '';
+      if (key.isNotEmpty) {
+        uniqueTypesMap[key] = typeObj;
+      }
+    }
+
     return Wrap(
       spacing: AppSpacing.sm,
       runSpacing: AppSpacing.sm,
-      children: state.availableMaintenanceTypes.map((typeObj) {
+      children: uniqueTypesMap.values.map((typeObj) {
         final typeStr = typeObj.id?.toString() ?? '';
         final isSelected =
             _selectedMaintenanceTypes.contains(typeObj.name) ||
