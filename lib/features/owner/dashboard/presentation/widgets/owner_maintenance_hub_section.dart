@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -28,7 +28,7 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: AppRadius.circularXxl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
+        border: Border.all(color: AppColors.borderLight),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -66,12 +66,12 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: const Color(0xFF8B5CF6).withValues(alpha: 0.1),
+            color: AppColors.accent.withValues(alpha: 0.1),
             borderRadius: AppRadius.circularMd,
           ),
           child: const Icon(
             Icons.build_circle_outlined,
-            color: Color(0xFF8B5CF6),
+            color: AppColors.accent,
             size: 18,
           ),
         ),
@@ -79,7 +79,7 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
         Text(
           LocaleKeys.dashboardMaintenanceHub.tr(),
           style: const TextStyle(
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimaryLight,
             fontSize: 14,
             fontWeight: FontWeight.w800,
           ),
@@ -92,7 +92,7 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
 
   Widget _buildBadge() {
     final hasPending = pendingCount > 0;
-    final color = hasPending ? AppColors.error : const Color(0xFF94A3B8);
+    final color = hasPending ? AppColors.error : AppColors.textTertiaryLight;
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
@@ -184,16 +184,16 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FAFC),
+        color: AppColors.surfaceSubtleLight,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
+        border: Border.all(color: AppColors.borderLight),
       ),
       child: Column(
         children: [
           Icon(
             hasPending ? Icons.build_circle_outlined : Icons.handyman_rounded,
             size: 32,
-            color: hasPending ? context.primaryColor : const Color(0xFFCBD5E1),
+            color: hasPending ? context.primaryColor : AppColors.textTertiaryLight,
           ),
           const SizedBox(height: 12),
           Text(
@@ -203,7 +203,7 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
                   )
                 : LocaleKeys.dashboardMaintenanceNoRequests.tr(),
             style: const TextStyle(
-              color: Color(0xFF475569),
+              color: AppColors.textSecondaryLight,
               fontSize: 13,
               fontWeight: FontWeight.w700,
             ),
@@ -213,7 +213,7 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
             hasPending
                 ? LocaleKeys.maintenanceRequestsList.tr()
                 : LocaleKeys.dashboardMaintenanceNoRequestsSub.tr(),
-            style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 11.5),
+            style: const TextStyle(color: AppColors.textTertiaryLight, fontSize: 11.5),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16),
@@ -264,3 +264,4 @@ class OwnerMaintenanceHubSection extends StatelessWidget {
     );
   }
 }
+

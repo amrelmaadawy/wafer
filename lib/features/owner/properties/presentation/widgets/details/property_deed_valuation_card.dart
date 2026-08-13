@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -54,7 +54,7 @@ class PropertyDeedValuationCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          const Divider(height: 1, color: Color(0xFFF1F5F9)),
+          const Divider(height: 1, color: AppColors.dividerSubtleLight),
           const SizedBox(height: 12),
           if (property.deedNumber != null) ...[
             _buildRow(
@@ -128,3 +128,4 @@ class PropertyDeedValuationCard extends StatelessWidget {
     );
   }
 }
+

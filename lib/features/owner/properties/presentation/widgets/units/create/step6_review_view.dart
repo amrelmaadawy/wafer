@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../core/theme/color_utils.dart';
 import '../../../cubit/units/unit_create_cubit.dart';
@@ -75,7 +76,7 @@ class Step6ReviewView extends StatelessWidget {
                 children: [
                   _buildReviewItem(
                     LocaleKeys.unitsAreaLabel.tr(),
-                    '${state.area ?? 0} م²',
+                    '${state.area ?? 0} Ù…Â²',
                   ),
                   _buildReviewItem(
                     LocaleKeys.unitsFloorTypeLabel.tr(),
@@ -110,7 +111,7 @@ class Step6ReviewView extends StatelessWidget {
                     LocaleKeys.unitsFeatures.tr(),
                     state.amenities.isEmpty
                         ? LocaleKeys.unitsNone.tr()
-                        : state.amenities.join('، '),
+                        : state.amenities.join('ØŒ '),
                   ),
                 ],
               ),
@@ -165,7 +166,7 @@ class Step6ReviewView extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.circularLg,
         border: Border.all(color: AppColors.borderLight),
       ),
       child: Column(
@@ -233,3 +234,4 @@ class Step6ReviewView extends StatelessWidget {
     );
   }
 }
+

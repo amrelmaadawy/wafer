@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
@@ -79,7 +79,7 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
         border: Border.all(
           color: isRep
               ? primary.withValues(alpha: 0.5)
-              : const Color(0xFFF1F5F9),
+              : AppColors.dividerSubtleLight,
           width: isRep ? 1.5 : 1.0,
         ),
         boxShadow: [
@@ -173,7 +173,7 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                           child: Text(
                             widget.owner.name.isNotEmpty
                                 ? widget.owner.name[0]
-                                : 'م',
+                                : 'Ù…',
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -211,7 +211,7 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                                     ? const Color(
                                         0xFFF59E0B,
                                       ).withValues(alpha: 0.15)
-                                    : const Color(0xFFF1F5F9),
+                                    : AppColors.dividerSubtleLight,
                                 borderRadius: AppRadius.circularMd,
                                 border: Border.all(
                                   color: isRep
@@ -226,7 +226,7 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                                     ? Icons.star_rounded
                                     : Icons.star_outline_rounded,
                                 color: isRep
-                                    ? const Color(0xFFF59E0B)
+                                    ? AppColors.warning
                                     : AppColors.textSecondaryLight,
                                 size: 20,
                               ),
@@ -252,7 +252,7 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                                 ),
                                 child: const Icon(
                                   Icons.delete_outline_rounded,
-                                  color: Color(0xFFEF4444),
+                                  color: AppColors.error,
                                   size: 20,
                                 ),
                               ),
@@ -271,7 +271,7 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
                             data: SliderTheme.of(context).copyWith(
                               trackHeight: 6,
                               activeTrackColor: primary,
-                              inactiveTrackColor: const Color(0xFFE2E8F0),
+                              inactiveTrackColor: AppColors.borderLight,
                               thumbColor: Colors.white,
                               overlayColor: primary.withValues(alpha: 0.2),
                               thumbShape: const RoundSliderThumbShape(
@@ -362,3 +362,4 @@ class _OwnerEntryCardState extends State<OwnerEntryCard> {
     );
   }
 }
+

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/unit_full_details_entity.dart';
+import '../../../../../../core/presentation/widgets/collapsible_section.dart';
 
 /// Specs grid: area, rooms, baths, halls, kitchens, entrances, furnished.
 class UnitSpecsGrid extends StatelessWidget {
@@ -62,8 +65,10 @@ class UnitSpecsGrid extends StatelessWidget {
 
     if (specs.isEmpty) return const SizedBox.shrink();
 
-    return _SectionCard(
+    return CollapsibleSection(
       title: LocaleKeys.unit_details_specs.tr(),
+      icon: Icons.list_alt_rounded,
+      initiallyExpanded: true,
       child: LayoutBuilder(
         builder: (context, constraints) {
           final colCount = constraints.maxWidth > 320 ? 3 : 2;
@@ -115,7 +120,7 @@ class _SpecTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 8),
       decoration: BoxDecoration(
         color: primaryColor.withValues(alpha: 0.04),
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: AppRadius.circularXl,
         border: Border.all(color: primaryColor.withValues(alpha: 0.10)),
       ),
       child: Column(
@@ -139,7 +144,7 @@ class _SpecTile extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             item.value,
-            style: AppTextStyles.h4.copyWith(color: const Color(0xFF1E293B)),
+            style: AppTextStyles.h4.copyWith(color: AppColors.textPrimaryLight),
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -148,7 +153,7 @@ class _SpecTile extends StatelessWidget {
           Text(
             item.label,
             style: AppTextStyles.labelSmall.copyWith(
-              color: const Color(0xFF64748B),
+              color: AppColors.textSecondaryLight,
             ),
             textAlign: TextAlign.center,
             maxLines: 1,
@@ -156,27 +161,6 @@ class _SpecTile extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-}
-
-// ── Shared Section Card ──────────────────────────────────────────────────────
-
-class _SectionCard extends StatelessWidget {
-  final String title;
-  final Widget child;
-
-  const _SectionCard({required this.title, required this.child});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: AppTextStyles.h3),
-        const SizedBox(height: 14),
-        child,
-      ],
     );
   }
 }

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
@@ -22,16 +23,16 @@ class NotificationCard extends StatelessWidget {
 
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: AppRadius.circularXl,
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: unread ? primary.withValues(alpha: 0.04) : Colors.white,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: AppRadius.circularXl,
           border: Border.all(
             color: unread
                 ? primary.withValues(alpha: 0.25)
-                : const Color(0xFFF1F5F9),
+                : AppColors.dividerSubtleLight,
             width: unread ? 1.5 : 1,
           ),
         ),
@@ -55,7 +56,7 @@ class NotificationCard extends StatelessWidget {
                             fontWeight: unread
                                 ? FontWeight.w700
                                 : FontWeight.w600,
-                            color: const Color(0xFF0F172A),
+                            color: AppColors.textPrimaryLight,
                           ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -81,8 +82,8 @@ class NotificationCard extends StatelessWidget {
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
                       color: unread
-                          ? const Color(0xFF334155)
-                          : const Color(0xFF64748B),
+                          ? AppColors.textSecondaryLight
+                          : AppColors.textSecondaryLight,
                       height: 1.45,
                     ),
                     maxLines: 2,
@@ -94,14 +95,14 @@ class NotificationCard extends StatelessWidget {
                       const Icon(
                         Icons.access_time_rounded,
                         size: 13,
-                        color: Color(0xFF94A3B8),
+                        color: AppColors.textTertiaryLight,
                       ),
                       const SizedBox(width: 4),
                       Text(
                         _formatTimeAgo(notification.createdAt),
                         style: const TextStyle(
                           fontSize: 11.5,
-                          color: Color(0xFF94A3B8),
+                          color: AppColors.textTertiaryLight,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -139,8 +140,8 @@ class NotificationCard extends StatelessWidget {
         break;
       default:
         icon = Icons.notifications_outlined;
-        bg = const Color(0xFFF1F5F9);
-        fg = const Color(0xFF475569);
+        bg = AppColors.dividerSubtleLight;
+        fg = AppColors.textSecondaryLight;
     }
 
     return Container(
@@ -148,7 +149,7 @@ class NotificationCard extends StatelessWidget {
       height: 44,
       decoration: BoxDecoration(
         color: bg,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.circularLg,
       ),
       child: Icon(icon, color: fg, size: 22),
     );
@@ -177,3 +178,4 @@ class NotificationCard extends StatelessWidget {
     }
   }
 }
+

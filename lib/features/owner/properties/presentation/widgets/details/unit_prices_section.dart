@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -56,8 +58,8 @@ class UnitPricesSection extends StatelessWidget {
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: const Color(0xFFEDF0F7)),
+            borderRadius: AppRadius.circularXxl,
+            border: Border.all(color: AppColors.borderLight),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.03),
@@ -68,7 +70,7 @@ class UnitPricesSection extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // ── Primary Price ────────────────────────────────────
+              // â”€â”€ Primary Price â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Row(
@@ -93,7 +95,7 @@ class UnitPricesSection extends StatelessWidget {
                           Text(
                             primary.label,
                             style: AppTextStyles.labelMedium.copyWith(
-                              color: const Color(0xFF64748B),
+                              color: AppColors.textSecondaryLight,
                             ),
                           ),
                           const SizedBox(height: 4),
@@ -103,7 +105,7 @@ class UnitPricesSection extends StatelessWidget {
                               Text(
                                 _fmt(primary.value),
                                 style: AppTextStyles.h2.copyWith(
-                                  color: const Color(0xFF1E293B),
+                                  color: AppColors.textPrimaryLight,
                                 ),
                               ),
                               const SizedBox(width: 6),
@@ -112,7 +114,7 @@ class UnitPricesSection extends StatelessWidget {
                                 child: Text(
                                   LocaleKeys.commonCurrencySar.tr(),
                                   style: AppTextStyles.labelLarge.copyWith(
-                                    color: const Color(0xFF64748B),
+                                    color: AppColors.textSecondaryLight,
                                   ),
                                 ),
                               ),
@@ -125,9 +127,9 @@ class UnitPricesSection extends StatelessWidget {
                 ),
               ),
 
-              // ── Secondary Prices ─────────────────────────────────
+              // â”€â”€ Secondary Prices â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
               if (prices.length > 1) ...[
-                const Divider(height: 1, color: Color(0xFFF1F5F9)),
+                const Divider(height: 1, color: AppColors.dividerSubtleLight),
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
@@ -140,7 +142,7 @@ class UnitPricesSection extends StatelessWidget {
                           Container(
                             width: 1,
                             height: 36,
-                            color: const Color(0xFFF1F5F9),
+                            color: AppColors.dividerSubtleLight,
                           ),
                         Expanded(child: _buildSecondary(prices[i])),
                       ],
@@ -161,7 +163,7 @@ class UnitPricesSection extends StatelessWidget {
         Text(
           p.label,
           style: AppTextStyles.labelSmall.copyWith(
-            color: const Color(0xFF94A3B8),
+            color: AppColors.textTertiaryLight,
           ),
         ),
         const SizedBox(height: 4),
@@ -171,7 +173,7 @@ class UnitPricesSection extends StatelessWidget {
           children: [
             Text(
               _fmt(p.value),
-              style: AppTextStyles.h4.copyWith(color: const Color(0xFF334155)),
+              style: AppTextStyles.h4.copyWith(color: AppColors.textSecondaryLight),
             ),
             const SizedBox(width: 3),
             Padding(
@@ -179,7 +181,7 @@ class UnitPricesSection extends StatelessWidget {
               child: Text(
                 LocaleKeys.commonCurrencySar.tr(),
                 style: AppTextStyles.labelSmall.copyWith(
-                  color: const Color(0xFF94A3B8),
+                  color: AppColors.textTertiaryLight,
                 ),
               ),
             ),
@@ -199,3 +201,5 @@ class _Price {
   final bool isPrimary;
   const _Price(this.label, this.value, this.isPrimary);
 }
+
+

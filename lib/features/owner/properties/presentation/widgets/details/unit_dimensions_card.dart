@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/unit_full_details_entity.dart';
+import '../../../../../../core/presentation/widgets/collapsible_section.dart';
 
 /// Dimensions + technical details (direction, finishing) in a single tile list.
 class UnitDimensionsCard extends StatelessWidget {
@@ -71,24 +74,13 @@ class UnitDimensionsCard extends StatelessWidget {
 
     if (rows.isEmpty) return const SizedBox.shrink();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(LocaleKeys.unit_details_dimensions.tr(), style: AppTextStyles.h3),
-        const SizedBox(height: 14),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: const Color(0xFFEDF0F7)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.02),
-                blurRadius: 8,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
+    return CollapsibleSection(
+      title: LocaleKeys.unit_details_dimensions.tr(),
+      icon: Icons.square_foot_rounded,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
+        ),
           child: ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -97,12 +89,11 @@ class UnitDimensionsCard extends StatelessWidget {
               height: 1,
               indent: 20,
               endIndent: 20,
-              color: Color(0xFFF8FAFC),
+              color: AppColors.surfaceSubtleLight,
             ),
             itemBuilder: (context, i) => _buildRow(context, rows[i]),
           ),
         ),
-      ],
     );
   }
 
@@ -115,7 +106,7 @@ class UnitDimensionsCard extends StatelessWidget {
             padding: const EdgeInsets.all(7),
             decoration: BoxDecoration(
               color: context.primaryColor.withValues(alpha: 0.07),
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: AppRadius.circularMd,
             ),
             child: Icon(row.icon, size: 16, color: context.primaryColor),
           ),
@@ -124,14 +115,14 @@ class UnitDimensionsCard extends StatelessWidget {
             child: Text(
               row.label,
               style: AppTextStyles.bodyMedium.copyWith(
-                color: const Color(0xFF64748B),
+                color: AppColors.textSecondaryLight,
               ),
             ),
           ),
           Text(
             row.value,
             style: AppTextStyles.labelLarge.copyWith(
-              color: const Color(0xFF1E293B),
+              color: AppColors.textPrimaryLight,
             ),
           ),
         ],
@@ -146,3 +137,5 @@ class _DetailRow {
   final String value;
   const _DetailRow(this.icon, this.label, this.value);
 }
+
+

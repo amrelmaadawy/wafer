@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../../core/localization/locale_keys.dart';
 import 'edit_form_utils.dart';
 
 class EditLocationSection extends StatelessWidget {
@@ -22,25 +24,25 @@ class EditLocationSection extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        EditSectionHeader(title: 'تفاصيل الموقع', icon: Icons.map_outlined),
+        EditSectionHeader(title: LocaleKeys.propertyDetailsLocation.tr(), icon: Icons.map_outlined),
         const SizedBox(height: 16),
         Row(
           children: [
             Expanded(
               child: EditFormField(
                 controller: cityController,
-                label: 'المدينة',
+                label: LocaleKeys.propertyDetailsCity.tr(),
                 icon: Icons.location_city_outlined,
-                hint: 'مثال: الرياض',
+                hint: LocaleKeys.propertyDetailsCityHint.tr(),
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: EditFormField(
                 controller: districtController,
-                label: 'الحي',
+                label: LocaleKeys.propertyDetailsDistrict.tr(),
                 icon: Icons.holiday_village_outlined,
-                hint: 'مثال: النرجس',
+                hint: LocaleKeys.propertyDetailsDistrictHint.tr(),
               ),
             ),
           ],
@@ -51,19 +53,19 @@ class EditLocationSection extends StatelessWidget {
             Expanded(
               child: EditFormField(
                 controller: regionController,
-                label: 'المنطقة',
+                label: LocaleKeys.propertyDetailsRegion.tr(),
                 icon: Icons.explore_outlined,
-                hint: 'مثال: الوسطى',
+                hint: LocaleKeys.propertyDetailsRegionHint.tr(),
               ),
             ),
             const SizedBox(width: 16),
             Expanded(
               child: EditFormField(
                 controller: buildingController,
-                label: 'رقم المبنى',
+                label: LocaleKeys.propertyDetailsBuildingNumber.tr(),
                 icon: Icons.tag_rounded,
                 isNumber: true,
-                hint: 'مثال: 12',
+                hint: LocaleKeys.propertyDetailsBuildingNumberHint.tr(),
               ),
             ),
           ],
@@ -71,9 +73,9 @@ class EditLocationSection extends StatelessWidget {
         const SizedBox(height: 16),
         EditFormField(
           controller: streetController,
-          label: 'اسم الشارع',
+          label: LocaleKeys.propertyDetailsStreet.tr(),
           icon: Icons.add_road_rounded,
-          hint: 'مثال: شارع الملك فهد',
+          hint: LocaleKeys.propertyDetailsStreetHint.tr(),
         ),
       ],
     );

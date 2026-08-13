@@ -160,7 +160,12 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
             ),
           );
         } else if (state is PropertiesListEmpty) {
-          return PropertiesEmptyWidget(onAddProperty: _onAddNewProperty);
+          return PropertiesEmptyWidget(
+            reason: state.reason,
+            onAddProperty: _onAddNewProperty,
+            onResetSearch: () => context.read<PropertiesListCubit>().searchProperties(''),
+            onResetFilter: () => context.read<PropertiesListCubit>().changeStatusFilter('all'),
+          );
         } else if (state is PropertiesListLoaded) {
           return RefreshIndicator(
             color: context.primaryColor,

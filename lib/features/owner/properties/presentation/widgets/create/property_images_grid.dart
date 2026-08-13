@@ -1,4 +1,4 @@
-import 'dart:io';
+﻿import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:image_picker/image_picker.dart';
@@ -87,7 +87,7 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
           color: AppColors.surfaceLight,
           borderRadius: AppRadius.circularXl,
           border: Border.all(
-            color: const Color(0xFFE2E8F0),
+            color: AppColors.borderLight,
             style: BorderStyle.solid,
           ),
         ),
@@ -357,11 +357,11 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
                     hintText: LocaleKeys.propertyImagesDescriptionHint.tr(),
                     border: OutlineInputBorder(
                       borderRadius: AppRadius.circularMd,
-                      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                      borderSide: const BorderSide(color: AppColors.borderLight),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: AppRadius.circularMd,
-                      borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                      borderSide: const BorderSide(color: AppColors.borderLight),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: AppRadius.circularMd,
@@ -413,3 +413,4 @@ class _PropertyImagesGridState extends State<PropertyImagesGrid> {
     );
   }
 }
+

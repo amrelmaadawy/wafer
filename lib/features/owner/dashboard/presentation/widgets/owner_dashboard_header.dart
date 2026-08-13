@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
 import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../notifications/presentation/cubit/unread_count_cubit.dart';
@@ -33,7 +34,7 @@ class OwnerDashboardHeader extends StatelessWidget {
           decoration: const BoxDecoration(
             color: Colors.white,
             border: Border(
-              bottom: BorderSide(color: Color(0xFFF1F5F9), width: 1),
+              bottom: BorderSide(color: AppColors.dividerSubtleLight, width: 1),
             ),
           ),
           child: Row(
@@ -48,7 +49,7 @@ class OwnerDashboardHeader extends StatelessWidget {
                     Text(
                       '${LocaleKeys.dashboardWelcome.tr()} $name',
                       style: const TextStyle(
-                        color: Color(0xFF0F172A),
+                        color: AppColors.textPrimaryLight,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -59,7 +60,7 @@ class OwnerDashboardHeader extends StatelessWidget {
                     Text(
                       LocaleKeys.ownerHeaderSubtitle.tr(),
                       style: const TextStyle(
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondaryLight,
                         fontSize: 12.5,
                         fontWeight: FontWeight.w400,
                       ),
@@ -81,3 +82,4 @@ class OwnerDashboardHeader extends StatelessWidget {
     );
   }
 }
+

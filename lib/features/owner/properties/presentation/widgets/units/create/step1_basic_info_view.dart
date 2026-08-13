@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../core/theme/color_utils.dart';
 import '../../../../../../../core/utils/widgets/custom_text_field.dart';
@@ -128,7 +129,7 @@ class Step1BasicInfoView extends StatelessWidget {
                 ),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: AppRadius.circularMd,
                   border: Border.all(color: AppColors.borderLight),
                 ),
                 child: Row(
@@ -187,3 +188,4 @@ class Step1BasicInfoView extends StatelessWidget {
     );
   }
 }
+

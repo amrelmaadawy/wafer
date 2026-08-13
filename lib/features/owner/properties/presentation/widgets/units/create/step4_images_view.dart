@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -122,7 +122,7 @@ class Step4ImagesView extends StatelessWidget {
             if (index == items.length) {
               return InkWell(
                 onTap: onAdd,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: AppRadius.circularMd,
                 child: Container(
                   decoration: BoxDecoration(
                     color: context.primaryColor.withValues(alpha: 0.05),
@@ -153,7 +153,7 @@ class Step4ImagesView extends StatelessWidget {
           height: double.infinity,
           decoration: BoxDecoration(
             color: Colors.grey.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadius.circularMd,
             image: isImage ? DecorationImage(image: FileImage(file), fit: BoxFit.cover) : null,
           ),
           child: !isImage
@@ -201,3 +201,4 @@ class Step4ImagesView extends StatelessWidget {
     );
   }
 }
+

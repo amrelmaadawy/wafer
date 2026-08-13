@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../core/theme/app_radius.dart';
@@ -93,7 +93,7 @@ class EditFormField extends StatelessWidget {
             fillColor: Colors.white,
             enabledBorder: const OutlineInputBorder(
               borderRadius: AppRadius.circularLg,
-              borderSide: BorderSide(color: Color(0xFFE2E8F0)),
+              borderSide: BorderSide(color: AppColors.borderLight),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: AppRadius.circularLg,
@@ -134,8 +134,9 @@ class EditSectionHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        const Expanded(child: Divider(color: Color(0xFFE2E8F0), height: 1)),
+        const Expanded(child: Divider(color: AppColors.borderLight, height: 1)),
       ],
     );
   }
 }
+

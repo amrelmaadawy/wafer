@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -50,7 +50,7 @@ class _OwnerSelectionSheetState extends State<OwnerSelectionSheet> {
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: const Color(0xFFCBD5E1),
+                color: AppColors.textTertiaryLight,
                 borderRadius: AppRadius.circularFull,
               ),
             ),
@@ -95,7 +95,7 @@ class _OwnerSelectionSheetState extends State<OwnerSelectionSheet> {
                 ),
               ),
             ),
-            const Divider(height: 1, color: Color(0xFFE2E8F0)),
+            const Divider(height: 1, color: AppColors.borderLight),
             Expanded(
               child: filtered.isEmpty
                   ? Center(
@@ -124,7 +124,7 @@ class _OwnerSelectionSheetState extends State<OwnerSelectionSheet> {
                             decoration: BoxDecoration(
                               color: AppColors.surfaceLight,
                               border: Border.all(
-                                color: const Color(0xFFE2E8F0),
+                                color: AppColors.borderLight,
                               ),
                               borderRadius: AppRadius.circularLg,
                             ),
@@ -168,3 +168,4 @@ class _OwnerSelectionSheetState extends State<OwnerSelectionSheet> {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -25,7 +25,7 @@ class OwnerInstallmentStatsCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: AppRadius.circularXxl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
+        border: Border.all(color: AppColors.borderLight),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -53,12 +53,12 @@ class OwnerInstallmentStatsCard extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(6),
           decoration: BoxDecoration(
-            color: const Color(0xFF3B82F6).withValues(alpha: 0.1),
+            color: AppColors.info.withValues(alpha: 0.1),
             borderRadius: AppRadius.circularMd,
           ),
           child: const Icon(
             Icons.pie_chart_outline,
-            color: Color(0xFF3B82F6),
+            color: AppColors.info,
             size: 18,
           ),
         ),
@@ -66,7 +66,7 @@ class OwnerInstallmentStatsCard extends StatelessWidget {
         Text(
           LocaleKeys.dashboard_installment_stats.tr(),
           style: const TextStyle(
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimaryLight,
             fontSize: 14,
             fontWeight: FontWeight.w800,
           ),
@@ -93,7 +93,7 @@ class OwnerInstallmentStatsCard extends StatelessWidget {
               child: _buildStatItem(
                 LocaleKeys.dashboard_unpaid.tr(),
                 stats.unpaid,
-                const Color(0xFF64748B),
+                AppColors.textSecondaryLight,
                 Icons.hourglass_empty_rounded,
               ),
             ),
@@ -171,3 +171,4 @@ class OwnerInstallmentStatsCard extends StatelessWidget {
     );
   }
 }
+

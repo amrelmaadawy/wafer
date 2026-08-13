@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../owner/maintenance/domain/entities/maintenance_item_entity.dart';
@@ -23,7 +23,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
         ? '$propertyName - $unitName'
         : propertyName.isNotEmpty
         ? propertyName
-        : 'غير محدد';
+        : 'ØºÙŠØ± Ù…Ø­Ø¯Ø¯';
     final requestedDate = item.dates?.requestedDate ?? '';
 
     return Material(
@@ -48,7 +48,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: AppRadius.circularXl,
-            border: Border.all(color: const Color(0xFFEDF0F7)),
+            border: Border.all(color: AppColors.borderLight),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.02),
@@ -67,7 +67,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  color: Color(0xFF0F172A),
+                  color: AppColors.textPrimaryLight,
                   fontSize: 13.5,
                   fontWeight: FontWeight.w700,
                 ),
@@ -78,7 +78,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
                   const Icon(
                     Icons.domain_rounded,
                     size: 12,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondaryLight,
                   ),
                   const SizedBox(width: 4),
                   Expanded(
@@ -87,7 +87,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondaryLight,
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
                       ),
@@ -99,7 +99,7 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
               Text(
                 requestedDate,
                 style: const TextStyle(
-                  color: Color(0xFF94A3B8),
+                  color: AppColors.textTertiaryLight,
                   fontSize: 10.5,
                   fontWeight: FontWeight.w500,
                 ),
@@ -116,22 +116,22 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
     switch (item.status) {
       case 'pending':
       case 'new':
-        color = const Color(0xFFF59E0B);
+        color = AppColors.warning;
         break;
       case 'approved':
       case 'in_progress':
-        color = const Color(0xFF3B82F6);
+        color = AppColors.info;
         break;
       case 'executed':
       case 'completed':
-        color = const Color(0xFF10B981);
+        color = AppColors.success;
         break;
       case 'rejected':
       case 'cancelled':
         color = AppColors.error;
         break;
       default:
-        color = const Color(0xFF64748B);
+        color = AppColors.textSecondaryLight;
     }
 
     return Container(
@@ -162,3 +162,4 @@ class OwnerMaintenanceMiniCard extends StatelessWidget {
     );
   }
 }
+

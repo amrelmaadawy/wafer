@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/utils/widgets/custom_text_field.dart';
@@ -181,7 +182,7 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       border: Border.all(color: AppColors.borderLight),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: AppRadius.circularMd,
                       color: Colors.white,
                     ),
                     child: Text(
@@ -214,7 +215,7 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
                 BlocBuilder<FinanceFormDataCubit, FinanceFormDataState>(
                   builder: (context, state) {
                     if (state is FinanceFormDataLoading) {
-                      return AppShimmer.box(height: 48, borderRadius: BorderRadius.circular(8));
+                      return AppShimmer.box(height: 48, borderRadius: AppRadius.circularMd);
                     }
                     if (state is FinanceFormDataSuccess) {
                       final accounts = state.formData.accounts.where((a) => a.isPostable).toList();
@@ -245,7 +246,7 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
                 BlocBuilder<FinanceFormDataCubit, FinanceFormDataState>(
                   builder: (context, state) {
                     if (state is FinanceFormDataLoading) {
-                      return AppShimmer.box(height: 48, borderRadius: BorderRadius.circular(8));
+                      return AppShimmer.box(height: 48, borderRadius: AppRadius.circularMd);
                     }
                     if (state is FinanceFormDataSuccess) {
                       final accounts = state.formData.accounts.where((a) => a.isPostable).toList();
@@ -312,7 +313,7 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         backgroundColor: context.primaryColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
       ),
       onPressed: isLoading ? null : _submit,
       child: isLoading
@@ -324,3 +325,4 @@ class _CreateOwnerTransferViewState extends State<CreateOwnerTransferView> {
     );
   }
 }
+

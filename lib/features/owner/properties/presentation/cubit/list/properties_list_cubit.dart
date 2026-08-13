@@ -63,12 +63,44 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
       filtered = filtered.where((p) {
         return p.name.toLowerCase().contains(query) ||
             p.code.toLowerCase().contains(query) ||
-            p.displayAddress.toLowerCase().contains(query);
+            (p.displayAddress?.toLowerCase().contains(query) ?? false);
       }).toList();
     }
 
+    // Apply sorting locally if specified
+    if (_currentFilter.sortBy != null) {
+      // NOTE: Sort is page-level only. If items are across multiple pages, 
+      // the backend should eventually handle this for a full sort.
+      filtered.sort((a, b) {
+        int cmp = 0;
+        switch (_currentFilter.sortBy) {
+          case 'name':
+            cmp = a.name.compareTo(b.name);
+            break;
+          case 'area':
+            cmp = (a.area ?? 0).compareTo(b.area ?? 0);
+            break;
+          case 'occupancy':
+            cmp = a.occupancyRate.compareTo(b.occupancyRate);
+            break;
+          case 'units':
+            cmp = a.unitsCount.compareTo(b.unitsCount);
+            break;
+        }
+        return _currentFilter.sortAscending ? cmp : -cmp;
+      });
+    }
+
     if (filtered.isEmpty) {
-      emit(PropertiesListEmpty(filter: _currentFilter));
+      EmptyReason reason = EmptyReason.noData;
+      if (_allFetchedProperties.isNotEmpty) {
+        if (_currentFilter.search != null && _currentFilter.search!.trim().isNotEmpty) {
+          reason = EmptyReason.noSearchResults;
+        } else {
+          reason = EmptyReason.noFilterResults;
+        }
+      }
+      emit(PropertiesListEmpty(filter: _currentFilter, reason: reason));
     } else {
       emit(
         PropertiesListLoaded(
@@ -146,6 +178,16 @@ class PropertiesListCubit extends Cubit<PropertiesListState> {
       _debounceTimer = Timer(const Duration(milliseconds: 300), () {
         getProperties(filter: _currentFilter, forceRefresh: false);
       });
+    }
+  }
+
+  void applyAdvancedFilter(PropertiesQueryFilterEntity filter) {
+    _currentFilter = filter;
+    
+    if (_allFetchedProperties.isNotEmpty && _lastMeta != null) {
+      _applyLocalFilterAndEmit(_lastMeta, _lastStats);
+    } else {
+      getProperties(filter: _currentFilter, forceRefresh: false);
     }
   }
 

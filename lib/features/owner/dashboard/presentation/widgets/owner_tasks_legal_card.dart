@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -37,7 +37,7 @@ class OwnerTasksLegalCard extends StatelessWidget {
               value: tasks!.active.toString(),
               subtitle: LocaleKeys.dashboard_tasks_overdue.tr(),
               subtitleValue: tasks!.overdue.toString(),
-              color: const Color(0xFF0EA5E9),
+              color: AppColors.info,
             ),
           ),
         if (tasks != null && legalCases != null) const SizedBox(width: 16),
@@ -53,7 +53,7 @@ class OwnerTasksLegalCard extends StatelessWidget {
                 value: legalCases!.openCases.toString(),
                 subtitle: LocaleKeys.dashboard_legal_amount.tr(),
                 subtitleValue: _formatCurrency(legalCases!.totalAmount),
-                color: const Color(0xFFF59E0B),
+                color: AppColors.warning,
               ),
             ),
           ),
@@ -161,3 +161,4 @@ class OwnerTasksLegalCard extends StatelessWidget {
     );
   }
 }
+

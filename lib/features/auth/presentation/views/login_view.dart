@@ -1,6 +1,8 @@
-import 'dart:ui' as ui;
+﻿import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../widgets/login_form_widget.dart';
@@ -78,7 +80,7 @@ class LoginView extends StatelessWidget {
           height: 68,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: AppRadius.circularXxl,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.18),
@@ -126,7 +128,7 @@ class LoginView extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(24, 28, 24, 28),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: AppRadius.circularXxl,
             boxShadow: [
               BoxShadow(
                 color: context.primaryShadow.withValues(alpha: 0.08),
@@ -156,7 +158,7 @@ class LoginView extends StatelessWidget {
               Text(
                 LocaleKeys.authLoginSubtitle.tr(),
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Color(0xFF64748B), fontSize: 13),
+                style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 13),
               ),
               const SizedBox(height: 24),
               const LoginFormWidget(),
@@ -188,3 +190,4 @@ class LoginView extends StatelessWidget {
     );
   }
 }
+

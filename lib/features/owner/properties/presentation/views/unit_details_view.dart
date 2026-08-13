@@ -1,5 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wafer/core/localization/locale_keys.dart';
+import 'package:wafer/core/theme/app_colors.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -22,8 +26,12 @@ class UnitDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: AppColors.surfaceSubtleLight,
       body: BlocBuilder<UnitDetailsCubit, UnitDetailsState>(
+        buildWhen: (previous, current) {
+          if (previous is! UnitDetailsLoaded || current is! UnitDetailsLoaded) return true;
+          return previous.unit != current.unit;
+        },
         builder: (context, state) {
           if (state is UnitDetailsLoading || state is UnitDetailsInitial) {
             return const UnitDetailsSkeleton();
@@ -50,46 +58,46 @@ class UnitDetailsView extends StatelessWidget {
                   padding: const EdgeInsets.fromLTRB(16, 20, 16, 40),
                   sliver: SliverList(
                     delegate: SliverChildListDelegate([
-                      // ── Basic info (code, type, usage, floor, desc) ──
+                      // â”€â”€ Basic info (code, type, usage, floor, desc) â”€â”€
                       UnitBasicInfoCard(unit: unit),
 
-                      // ── Active contract banner ────────────────────────
+                      // â”€â”€ Active contract banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                       if (unit.currentContract != null) ...[
                         const SizedBox(height: 20),
                         _ContractBanner(contract: unit.currentContract),
                       ],
 
-                      // ── Prices ───────────────────────────────────────
+                      // â”€â”€ Prices â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                       const SizedBox(height: 28),
                       UnitPricesSection(unit: unit),
 
-                      // ── Specs ────────────────────────────────────────
+                      // â”€â”€ Specs â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                       const SizedBox(height: 28),
                       UnitSpecsGrid(unit: unit),
 
-                      // ── Dimensions ───────────────────────────────────
+                      // â”€â”€ Dimensions â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                       const SizedBox(height: 28),
                       UnitDimensionsCard(unit: unit),
 
-                      // ── Meters ───────────────────────────────────────
+                      // â”€â”€ Meters â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                       if (hasMeters) ...[
                         const SizedBox(height: 28),
                         UnitMetersSection(unit: unit),
                       ],
 
-                      // ── Amenities ────────────────────────────────────
+                      // â”€â”€ Amenities â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                       if (unit.amenities.isNotEmpty) ...[
                         const SizedBox(height: 28),
                         UnitAmenitiesSection(unit: unit),
                       ],
                       
-                      // ── Media ────────────────────────────────────────
+                      // â”€â”€ Media â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                       if (unit.videos.isNotEmpty || unit.attachments.isNotEmpty) ...[
                         const SizedBox(height: 28),
                         UnitMediaSection(unit: unit),
                       ],
 
-                      // ── Maintenance Requests ─────────────────────────
+                      // â”€â”€ Maintenance Requests â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                       if (unit.maintenanceRequests.isNotEmpty) ...[
                         const SizedBox(height: 28),
                         UnitMaintenanceSection(unit: unit),
@@ -107,7 +115,7 @@ class UnitDetailsView extends StatelessWidget {
   }
 }
 
-// ── Active Contract Banner ───────────────────────────────────────────────────
+// â”€â”€ Active Contract Banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _ContractBanner extends StatelessWidget {
   final dynamic contract;
@@ -133,7 +141,7 @@ class _ContractBanner extends StatelessWidget {
           begin: Alignment.centerRight,
           end: Alignment.centerLeft,
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadius.circularXxl,
         boxShadow: [
           BoxShadow(
             color: context.primaryShadow.withValues(alpha: 0.30),
@@ -154,7 +162,7 @@ class _ContractBanner extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                'العقد النشط',
+                LocaleKeys.owner_active_contracts_sub.tr(),
                 style: AppTextStyles.labelMedium.copyWith(
                   color: Colors.white70,
                 ),
@@ -168,7 +176,7 @@ class _ContractBanner extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.20),
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: AppRadius.circularXxl,
                   ),
                   child: Text(
                     statusLabel,
@@ -195,7 +203,7 @@ class _ContractBanner extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  '$startDate  →  $endDate',
+                  '$startDate  â†’  $endDate',
                   style: AppTextStyles.labelSmall.copyWith(
                     color: Colors.white70,
                   ),
@@ -208,3 +216,5 @@ class _ContractBanner extends StatelessWidget {
     );
   }
 }
+
+

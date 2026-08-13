@@ -20,8 +20,7 @@ class PropertyOwnerModel extends PropertyOwnerEntity {
 
     return PropertyOwnerModel(
       id: json['id'] as int? ?? 0,
-      name:
-          json['name']?.toString() ?? json['owner_name']?.toString() ?? 'مالك',
+      name: json['name']?.toString() ?? json['owner_name']?.toString() ?? '',
       percentage: perc.toDouble(),
       phone: json['phone']?.toString(),
       email: json['email']?.toString(),

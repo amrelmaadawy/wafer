@@ -5,6 +5,7 @@ import '../../../domain/entities/property_details_entity.dart';
 import 'draft_completion_banner.dart';
 import 'property_basic_info_card.dart';
 import 'property_deed_card.dart';
+import 'property_location_card.dart';
 import 'property_details_metrics_bar.dart';
 
 class PropertyOverviewTab extends StatelessWidget {
@@ -32,6 +33,8 @@ class PropertyOverviewTab extends StatelessWidget {
             child: Column(
               children: [
                 PropertyBasicInfoCard(property: property),
+                const SizedBox(height: 16),
+                PropertyLocationCard(property: property),
                 const SizedBox(height: 16),
                 PropertyDeedCard(property: property),
                 const SizedBox(height: 16),

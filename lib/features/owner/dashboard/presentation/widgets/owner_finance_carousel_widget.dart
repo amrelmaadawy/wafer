@@ -1,5 +1,6 @@
-import 'dart:async';
+﻿import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
 import 'owner_financial_summary_card.dart';
 import 'owner_installment_stats_card.dart';
@@ -80,7 +81,7 @@ class _OwnerFinanceCarouselWidgetState
                   color: _currentIndex == index
                       ? context.primaryColor
                       : Colors.grey.shade300,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: AppRadius.circularSm,
                 ),
               ),
             ),
@@ -90,3 +91,4 @@ class _OwnerFinanceCarouselWidgetState
     );
   }
 }
+

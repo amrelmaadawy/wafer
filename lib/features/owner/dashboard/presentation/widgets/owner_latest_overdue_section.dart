@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -70,7 +70,7 @@ class OwnerLatestOverdueSection extends StatelessWidget {
         Text(
           LocaleKeys.dashboard_latest_overdue.tr(),
           style: const TextStyle(
-            color: Color(0xFF0F172A),
+            color: AppColors.textPrimaryLight,
             fontSize: 16,
             fontWeight: FontWeight.w800,
           ),
@@ -174,3 +174,4 @@ class OwnerLatestOverdueSection extends StatelessWidget {
     );
   }
 }
+

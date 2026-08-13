@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
@@ -21,7 +22,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
             Text(
               LocaleKeys.dashboardRecentReceipts.tr(),
               style: const TextStyle(
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimaryLight,
                 fontSize: 16,
                 fontWeight: FontWeight.w800,
               ),
@@ -68,7 +69,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: AppRadius.circularXxl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
+        border: Border.all(color: AppColors.borderLight),
       ),
       child: Column(
         children: [
@@ -89,7 +90,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
           Text(
             LocaleKeys.dashboardNoRecentReceipts.tr(),
             style: const TextStyle(
-              color: Color(0xFF1E293B),
+              color: AppColors.textPrimaryLight,
               fontSize: 14,
               fontWeight: FontWeight.w700,
             ),
@@ -97,7 +98,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             LocaleKeys.dashboardReceiptsSubtitle.tr(),
-            style: const TextStyle(color: Color(0xFF64748B), fontSize: 12.5),
+            style: const TextStyle(color: AppColors.textSecondaryLight, fontSize: 12.5),
             textAlign: TextAlign.center,
           ),
         ],
@@ -111,7 +112,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
+        border: Border.all(color: AppColors.borderLight),
       ),
       child: Row(
         children: [
@@ -119,12 +120,12 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: const Color(0xFF10B981).withValues(alpha: 0.1),
+              color: AppColors.success.withValues(alpha: 0.1),
               borderRadius: AppRadius.circularLg,
             ),
             child: const Icon(
               Icons.arrow_downward_rounded,
-              color: Color(0xFF10B981),
+              color: AppColors.success,
               size: 22,
             ),
           ),
@@ -136,7 +137,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
                 Text(
                   receipt.tenantName,
                   style: const TextStyle(
-                    color: Color(0xFF0F172A),
+                    color: AppColors.textPrimaryLight,
                     fontSize: 13.5,
                     fontWeight: FontWeight.w700,
                   ),
@@ -147,13 +148,13 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
                     const Icon(
                       Icons.domain_rounded,
                       size: 13,
-                      color: Color(0xFF64748B),
+                      color: AppColors.textSecondaryLight,
                     ),
                     const SizedBox(width: 4),
                     Text(
                       '${receipt.propertyName} - ${LocaleKeys.dashboardUnitPrefix.tr(args: [receipt.unitNumber])}',
                       style: const TextStyle(
-                        color: Color(0xFF64748B),
+                        color: AppColors.textSecondaryLight,
                         fontSize: 11.5,
                       ),
                     ),
@@ -168,7 +169,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
               Text(
                 '+${LocaleKeys.commonCurrencySar.tr(args: [_fmt(receipt.amount)])}',
                 style: const TextStyle(
-                  color: Color(0xFF10B981),
+                  color: AppColors.success,
                   fontSize: 14,
                   fontWeight: FontWeight.w800,
                 ),
@@ -176,7 +177,7 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
               const SizedBox(height: 3),
               Text(
                 receipt.date,
-                style: const TextStyle(color: Color(0xFF94A3B8), fontSize: 11),
+                style: const TextStyle(color: AppColors.textTertiaryLight, fontSize: 11),
               ),
             ],
           ),
@@ -192,3 +193,4 @@ class OwnerRecentReceiptsSection extends StatelessWidget {
         )
       : n.toStringAsFixed(2);
 }
+

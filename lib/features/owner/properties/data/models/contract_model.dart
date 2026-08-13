@@ -31,7 +31,7 @@ class ContractModel extends ContractEntity {
           json['number']?.toString() ??
           '',
       status: json['status']?.toString() ?? 'draft',
-      statusLabel: json['status_label']?.toString() ?? 'مسودة',
+      statusLabel: json['status_label']!.toString(),
       contractType: json['contract_type']?.toString() ?? '',
       startDate: json['start_date']?.toString(),
       endDate: json['end_date']?.toString(),

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -35,8 +35,8 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
             value: '${property.occupancyRate.toStringAsFixed(0)}%',
             subtext: LocaleKeys.propertyDetailsOccupancyRateSub.tr(),
             icon: Icons.pie_chart_rounded,
-            color: const Color(0xFF10B981),
-            bgColor: const Color(0xFFD1FAE5),
+            color: AppColors.success,
+            bgColor: AppColors.success.withValues(alpha: 0.1),
           ),
           if (property.area != null) ...[
             const SizedBox(width: 10),
@@ -46,10 +46,10 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
               value:
                   '${property.area} ${LocaleKeys.propertyDetailsAreaUnit.tr()}',
               subtext: property.length != null && property.width != null
-                  ? '${property.length}m × ${property.width}m'
+                  ? '${property.length}m Ã— ${property.width}m'
                   : LocaleKeys.propertyDetailsTotalArea.tr(),
               icon: Icons.square_foot_rounded,
-              color: const Color(0xFF8B5CF6),
+              color: AppColors.accent,
               bgColor: const Color(0xFFF3E8FF),
             ),
           ],
@@ -64,7 +64,7 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
                   property.valuationEntity ??
                   LocaleKeys.propertyDetailsValuationApproved.tr(),
               icon: Icons.account_balance_wallet_rounded,
-              color: const Color(0xFFF59E0B),
+              color: AppColors.warning,
               bgColor: const Color(0xFFFEF3C7),
             ),
           ],
@@ -158,3 +158,4 @@ class PropertyDetailsMetricsBar extends StatelessWidget {
     );
   }
 }
+

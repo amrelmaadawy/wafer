@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -83,7 +83,7 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
             decoration: BoxDecoration(
               color: AppColors.backgroundLight,
               borderRadius: AppRadius.circularLg,
-              border: Border.all(color: const Color(0xFFE2E8F0)),
+              border: Border.all(color: AppColors.borderLight),
             ),
             child: Column(
               children: [
@@ -116,11 +116,11 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
               fillColor: AppColors.backgroundLight,
               border: OutlineInputBorder(
                 borderRadius: AppRadius.circularLg,
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: const BorderSide(color: AppColors.borderLight),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: AppRadius.circularLg,
-                borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
+                borderSide: const BorderSide(color: AppColors.borderLight),
               ),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
@@ -139,7 +139,7 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
               border: Border.all(
                 color: widget.errorText != null
                     ? Colors.red
-                    : const Color(0xFFE2E8F0),
+                    : AppColors.borderLight,
               ),
             ),
             child: filteredDeeds.isEmpty
@@ -154,7 +154,7 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
                         ),
                         SizedBox(height: 12),
                         Text(
-                          'لا توجد نتائج مطابقة لبحثك',
+                          'Ù„Ø§ ØªÙˆØ¬Ø¯ Ù†ØªØ§Ø¦Ø¬ Ù…Ø·Ø§Ø¨Ù‚Ø© Ù„Ø¨Ø­Ø«Ùƒ',
                           style: TextStyle(
                             color: AppColors.textSecondaryLight,
                             fontWeight: FontWeight.w600,
@@ -186,7 +186,7 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
                             border: Border.all(
                               color: isSelected
                                   ? context.primaryColor
-                                  : const Color(0xFFE2E8F0),
+                                  : AppColors.borderLight,
                               width: isSelected ? 1.5 : 1,
                             ),
                           ),
@@ -295,3 +295,4 @@ class _DeedSelectorWidgetState extends State<DeedSelectorWidget> {
     );
   }
 }
+

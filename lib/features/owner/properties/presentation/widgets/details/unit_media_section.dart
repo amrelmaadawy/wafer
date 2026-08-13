@@ -7,6 +7,7 @@ import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/unit_full_details_entity.dart';
+import '../../../../../../core/presentation/widgets/collapsible_section.dart';
 
 class UnitMediaSection extends StatelessWidget {
   final UnitFullDetailsEntity unit;
@@ -20,46 +21,15 @@ class UnitMediaSection extends StatelessWidget {
 
     if (videos.isEmpty && files.isEmpty) return const SizedBox.shrink();
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: context.primaryColor.withValues(alpha: 0.1),
-                borderRadius: AppRadius.circularMd,
-              ),
-              child: Icon(
-                Icons.perm_media_outlined,
-                color: context.primaryColor,
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            Text(
-              LocaleKeys.unitsMediaSectionTitle.tr(),
-              style: AppTextStyles.h4,
-            ),
-          ],
+    return CollapsibleSection(
+      title: LocaleKeys.unitsMediaSectionTitle.tr(),
+      icon: Icons.perm_media_outlined,
+      child: Container(
+        width: double.infinity,
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
         ),
-        const SizedBox(height: 16),
-        Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: AppRadius.circularLg,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.03),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: Column(
+        child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (videos.isNotEmpty) ...[
@@ -104,7 +74,6 @@ class UnitMediaSection extends StatelessWidget {
             ],
           ),
         ),
-      ],
     );
   }
 

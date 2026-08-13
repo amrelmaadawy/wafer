@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -95,7 +95,7 @@ class PropertyActionsSheet extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: AppColors.surfaceLight,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: AppRadius.circularXl,
                 border: Border.all(color: AppColors.borderLight),
                 boxShadow: [
                   BoxShadow(
@@ -143,7 +143,7 @@ class PropertyActionsSheet extends StatelessWidget {
             Container(
               decoration: BoxDecoration(
                 color: AppColors.surfaceLight,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: AppRadius.circularXl,
                 border: Border.all(
                   color: AppColors.error.withValues(alpha: 0.3),
                 ),
@@ -226,3 +226,4 @@ class PropertyActionsSheet extends StatelessWidget {
     );
   }
 }
+

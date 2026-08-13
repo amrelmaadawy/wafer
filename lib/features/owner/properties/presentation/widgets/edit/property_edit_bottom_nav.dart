@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -22,7 +22,7 @@ class PropertyEditBottomNav extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
-        border: const Border(top: BorderSide(color: Color(0xFFE2E8F0))),
+        border: const Border(top: BorderSide(color: AppColors.borderLight)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -65,3 +65,4 @@ class PropertyEditBottomNav extends StatelessWidget {
     );
   }
 }
+

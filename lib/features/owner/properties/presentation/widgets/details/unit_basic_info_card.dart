@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -14,7 +16,7 @@ class UnitBasicInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Build the quick-info items list – only non-null / non-zero values
+    // Build the quick-info items list â€“ only non-null / non-zero values
     final items = <_InfoItem>[
       if (unit.code != null && unit.code!.isNotEmpty)
         _InfoItem(
@@ -52,8 +54,8 @@ class UnitBasicInfoCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: const Color(0xFFEDF0F7)),
+        borderRadius: AppRadius.circularXxl,
+        border: Border.all(color: AppColors.borderLight),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -72,7 +74,7 @@ class UnitBasicInfoCard extends StatelessWidget {
           if (unit.description != null && unit.description!.isNotEmpty) ...[
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              child: Divider(height: 1, color: Color(0xFFF1F5F9)),
+              child: Divider(height: 1, color: AppColors.dividerSubtleLight),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -99,7 +101,7 @@ class UnitBasicInfoCard extends StatelessWidget {
                   Text(
                     unit.description!,
                     style: AppTextStyles.bodyMedium.copyWith(
-                      color: const Color(0xFF334155),
+                      color: AppColors.textSecondaryLight,
                       height: 1.6,
                     ),
                   ),
@@ -124,7 +126,7 @@ class UnitBasicInfoCard extends StatelessWidget {
           children: [
             Expanded(child: _buildInfoCell(context, left)),
             if (right != null) ...[
-              Container(width: 1, height: 52, color: const Color(0xFFF1F5F9)),
+              Container(width: 1, height: 52, color: AppColors.dividerSubtleLight),
               Expanded(child: _buildInfoCell(context, right)),
             ] else
               const Expanded(child: SizedBox()),
@@ -132,7 +134,7 @@ class UnitBasicInfoCard extends StatelessWidget {
         ),
       );
       if (i + 2 < items.length) {
-        rows.add(const Divider(height: 1, color: Color(0xFFF1F5F9)));
+        rows.add(const Divider(height: 1, color: AppColors.dividerSubtleLight));
       }
     }
     return Column(children: rows);
@@ -159,7 +161,7 @@ class UnitBasicInfoCard extends StatelessWidget {
                 Text(
                   item.value,
                   style: AppTextStyles.labelLarge.copyWith(
-                    color: item.color ?? const Color(0xFF1E293B),
+                    color: item.color ?? AppColors.textPrimaryLight,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -198,3 +200,5 @@ class _InfoItem {
     this.color,
   });
 }
+
+

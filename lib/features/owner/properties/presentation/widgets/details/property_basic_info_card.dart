@@ -51,7 +51,7 @@ class PropertyBasicInfoCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          const Divider(height: 1, color: Color(0xFFF1F5F9)),
+          const Divider(height: 1, color: AppColors.dividerSubtleLight),
           const SizedBox(height: 12),
           _buildInfoRow(
             LocaleKeys.propertyDetailsPropertyCode.tr(),
@@ -60,7 +60,7 @@ class PropertyBasicInfoCard extends StatelessWidget {
           ),
           _buildInfoRow(
             LocaleKeys.propertyDetailsPropertyTypeLabel.tr(),
-            property.propertyType,
+            property.propertyType ?? '',
             Icons.apartment_rounded,
             color: StateColorUtils.getUnitTypeColor(property.propertyType),
           ),
@@ -83,11 +83,12 @@ class PropertyBasicInfoCard extends StatelessWidget {
               '${property.constructionYear}',
               Icons.calendar_today_rounded,
             ),
-          _buildInfoRow(
-            LocaleKeys.propertyDetailsAddressLabel.tr(),
-            property.formattedAddress,
-            Icons.location_on_outlined,
-          ),
+          if (property.formattedAddress != null)
+            _buildInfoRow(
+              LocaleKeys.propertyDetailsAddressLabel.tr(),
+              property.formattedAddress!,
+              Icons.location_on_outlined,
+            ),
           if (property.description != null && property.description!.isNotEmpty)
             _buildInfoRow(
               LocaleKeys.propertyDetailsNotesLabel.tr(),
@@ -132,3 +133,4 @@ class PropertyBasicInfoCard extends StatelessWidget {
     );
   }
 }
+

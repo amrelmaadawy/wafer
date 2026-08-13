@@ -78,7 +78,7 @@ class PropertyDetailsSliverAppBar extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Text(
-                property.statusLabel,
+                property.statusLabel ?? '',
                 style: TextStyle(
                   color: statusColor,
                   fontSize: 13,
@@ -108,7 +108,7 @@ class PropertyDetailsSliverAppBar extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [context.primaryColor, const Color(0xFF0F172A)],
+            colors: [context.primaryColor, AppColors.textPrimaryLight],
           ),
         ),
         child: FlexibleSpaceBar(
@@ -171,3 +171,4 @@ class PropertyDetailsSliverAppBar extends StatelessWidget {
     );
   }
 }
+

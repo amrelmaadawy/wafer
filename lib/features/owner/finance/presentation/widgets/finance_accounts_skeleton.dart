@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
@@ -26,18 +26,18 @@ class FinanceAccountsSkeleton extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AppShimmer.box(width: 80, height: 16, borderRadius: BorderRadius.circular(4)),
-                  AppShimmer.box(width: 60, height: 24, borderRadius: BorderRadius.circular(12)),
+                  AppShimmer.box(width: 80, height: 16, borderRadius: AppRadius.circularSm),
+                  AppShimmer.box(width: 60, height: 24, borderRadius: AppRadius.circularLg),
                 ],
               ),
               const SizedBox(height: 12),
-              AppShimmer.box(width: 150, height: 20, borderRadius: BorderRadius.circular(4)),
+              AppShimmer.box(width: 150, height: 20, borderRadius: AppRadius.circularSm),
               const SizedBox(height: 16),
               Row(
                 children: [
-                  AppShimmer.box(width: 60, height: 20, borderRadius: BorderRadius.circular(10)),
+                  AppShimmer.box(width: 60, height: 20, borderRadius: AppRadius.circularLg),
                   const SizedBox(width: 8),
-                  AppShimmer.box(width: 80, height: 20, borderRadius: BorderRadius.circular(10)),
+                  AppShimmer.box(width: 80, height: 20, borderRadius: AppRadius.circularLg),
                 ],
               ),
             ],
@@ -47,3 +47,4 @@ class FinanceAccountsSkeleton extends StatelessWidget {
     );
   }
 }
+

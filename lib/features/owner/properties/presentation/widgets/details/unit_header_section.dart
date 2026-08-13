@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:wafer/core/theme/app_colors.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -113,7 +115,7 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 4),
           decoration: BoxDecoration(
-            color: Colors.red.withValues(alpha: 0.8),
+            color: AppColors.error.withValues(alpha: 0.8),
             shape: BoxShape.circle,
             border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
           ),
@@ -138,7 +140,7 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
         child: Container(
           height: 20,
           decoration: const BoxDecoration(
-            color: Color(0xFFF8FAFC),
+            color: AppColors.surfaceSubtleLight,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(30),
               topRight: Radius.circular(30),
@@ -216,7 +218,7 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
                       color: _currentIndex == index
                           ? context.primaryColor
                           : Colors.white.withValues(alpha: 0.5),
-                      borderRadius: BorderRadius.circular(4),
+                      borderRadius: AppRadius.circularSm,
                     ),
                   ),
                 ),
@@ -305,7 +307,7 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
                       padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.15),
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: AppRadius.circularXl,
                         border: Border.all(
                           color: Colors.white.withValues(alpha: 0.20),
                         ),
@@ -408,7 +410,7 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
           parts.add(widget.unit.usageType!);
       }
     }
-    return parts.join(' • ');
+    return parts.join(' â€¢ ');
   }
 
   Widget _buildGlassChip({
@@ -421,7 +423,7 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: Colors.white.withValues(alpha: 0.15),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.circularLg,
         border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
       ),
       child: Row(
@@ -451,7 +453,7 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: AppRadius.circularLg,
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.10),
@@ -484,3 +486,5 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
     );
   }
 }
+
+

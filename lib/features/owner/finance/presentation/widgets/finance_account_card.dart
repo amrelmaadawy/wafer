@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+﻿import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:wafer/core/theme/color_utils.dart';
 
@@ -69,7 +69,7 @@ class FinanceAccountCard extends StatelessWidget {
                       const SizedBox(width: 8),
                       InkWell(
                         onTap: onEdit,
-                        borderRadius: BorderRadius.circular(20),
+                        borderRadius: AppRadius.circularXxl,
                         child: Container(
                           padding: const EdgeInsets.all(6),
                           decoration: BoxDecoration(
@@ -150,32 +150,32 @@ class FinanceAccountCard extends StatelessWidget {
     String label;
     switch (account.type.toLowerCase()) {
       case 'asset':
-      case 'أصول':
+      case 'Ø£ØµÙˆÙ„':
         color = AppColors.success;
         label = LocaleKeys.owner_finance_assets.tr();
         break;
       case 'liability':
-      case 'خصوم':
+      case 'Ø®ØµÙˆÙ…':
         color = AppColors.error;
         label = LocaleKeys.owner_finance_liabilities.tr();
         break;
       case 'discount / credit':
-      case 'خصم / دائن':
+      case 'Ø®ØµÙ… / Ø¯Ø§Ø¦Ù†':
         color = AppColors.error;
         label = LocaleKeys.owner_finance_discount_credit.tr();
         break;
       case 'expense':
-      case 'مصروفات':
+      case 'Ù…ØµØ±ÙˆÙØ§Øª':
         color = AppColors.warning;
         label = LocaleKeys.owner_finance_expenses.tr();
         break;
       case 'revenue':
-      case 'إيرادات':
+      case 'Ø¥ÙŠØ±Ø§Ø¯Ø§Øª':
         color = AppColors.info;
         label = LocaleKeys.owner_finance_revenues.tr();
         break;
       case 'equity':
-      case 'حقوق ملكية':
+      case 'Ø­Ù‚ÙˆÙ‚ Ù…Ù„ÙƒÙŠØ©':
         color = Colors.purple;
         label = LocaleKeys.owner_finance_equity.tr();
         break;

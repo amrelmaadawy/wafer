@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
@@ -76,7 +77,7 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
         if (mounted) {
           AppToast.showError(
             context,
-            "نوع الاستخدام مطلوب",
+            "Ù†ÙˆØ¹ Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù… Ù…Ø·Ù„ÙˆØ¨",
           );
         }
         return;
@@ -88,7 +89,7 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
         if (mounted) {
           AppToast.showError(
             context,
-            "سنة البناء غير صالحة. يجب أن تكون بين 1900 و $currentYear",
+            "Ø³Ù†Ø© Ø§Ù„Ø¨Ù†Ø§Ø¡ ØºÙŠØ± ØµØ§Ù„Ø­Ø©. ÙŠØ¬Ø¨ Ø£Ù† ØªÙƒÙˆÙ† Ø¨ÙŠÙ† 1900 Ùˆ $currentYear",
           );
         }
         return;
@@ -176,7 +177,7 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                   context: context,
                   builder: (ctx) => Dialog(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+                      borderRadius: AppRadius.circularXxl,
                     ),
                     elevation: 0,
                     backgroundColor: Colors.transparent,
@@ -184,7 +185,7 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(24),
+                        borderRadius: AppRadius.circularXxl,
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black.withValues(alpha: 0.1),
@@ -212,11 +213,11 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                           Text(
                             state.draftPropertyId != null
                                 ? LocaleKeys.propertyCreateExitTitle.tr()
-                                : "إلغاء الإضافة",
+                                : "Ø¥Ù„ØºØ§Ø¡ Ø§Ù„Ø¥Ø¶Ø§ÙØ©",
                             style: const TextStyle(
                               fontSize: 18,
                               fontWeight: FontWeight.w800,
-                              color: Color(0xFF0F172A),
+                              color: AppColors.textPrimaryLight,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -224,11 +225,11 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                           Text(
                             state.draftPropertyId != null
                                 ? LocaleKeys.propertyCreateExitMessage.tr()
-                                : "هل أنت متأكد من رغبتك في إلغاء الإضافة؟ لن يتم حفظ أي بيانات كمسودة.",
+                                : "Ù‡Ù„ Ø£Ù†Øª Ù…ØªØ£ÙƒØ¯ Ù…Ù† Ø±ØºØ¨ØªÙƒ ÙÙŠ Ø¥Ù„ØºØ§Ø¡ Ø§Ù„Ø¥Ø¶Ø§ÙØ©ØŸ Ù„Ù† ÙŠØªÙ… Ø­ÙØ¸ Ø£ÙŠ Ø¨ÙŠØ§Ù†Ø§Øª ÙƒÙ…Ø³ÙˆØ¯Ø©.",
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: Color(0xFF64748B),
+                              color: AppColors.textSecondaryLight,
                               height: 1.5,
                             ),
                             textAlign: TextAlign.center,
@@ -244,9 +245,9 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                                       vertical: 14,
                                     ),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
+                                      borderRadius: AppRadius.circularXl,
                                     ),
-                                    foregroundColor: const Color(0xFF64748B),
+                                    foregroundColor: AppColors.textSecondaryLight,
                                   ),
                                   child: Text(
                                     LocaleKeys.propertyCreateExitCancel.tr(),
@@ -269,7 +270,7 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
                                       vertical: 14,
                                     ),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(16),
+                                      borderRadius: AppRadius.circularXl,
                                     ),
                                   ),
                                   child: Text(
@@ -332,3 +333,5 @@ class _PropertyCreateScreenState extends State<PropertyCreateScreen> {
     );
   }
 }
+
+

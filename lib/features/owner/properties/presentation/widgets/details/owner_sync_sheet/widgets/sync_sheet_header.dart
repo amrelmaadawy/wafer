@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../../../core/theme/app_colors.dart';
@@ -19,7 +19,7 @@ class SyncSheetHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(24, 12, 24, 24),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.white, const Color(0xFFF8FAFC)],
+          colors: [Colors.white, AppColors.surfaceSubtleLight],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
@@ -40,7 +40,7 @@ class SyncSheetHeader extends StatelessWidget {
               width: 48,
               height: 5,
               decoration: BoxDecoration(
-                color: const Color(0xFFE2E8F0),
+                color: AppColors.borderLight,
                 borderRadius: AppRadius.circularFull,
               ),
             ),
@@ -81,7 +81,7 @@ class SyncSheetHeader extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      "قم بتوزيع الحصص وتحديد الممثل القانوني",
+                      "Ù‚Ù… Ø¨ØªÙˆØ²ÙŠØ¹ Ø§Ù„Ø­ØµØµ ÙˆØªØ­Ø¯ÙŠØ¯ Ø§Ù„Ù…Ù…Ø«Ù„ Ø§Ù„Ù‚Ø§Ù†ÙˆÙ†ÙŠ",
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
@@ -133,11 +133,11 @@ class _PercentageBar extends StatelessWidget {
     final primary = context.primaryColor;
 
     final barColor = isValid
-        ? const Color(0xFF10B981) // Vibrant Emerald
+        ? AppColors.success // Vibrant Emerald
         : total > 100
-        ? const Color(0xFFEF4444) // Vibrant Red
+        ? AppColors.error // Vibrant Red
         : total >= 50
-        ? const Color(0xFFF59E0B) // Vibrant Amber
+        ? AppColors.warning // Vibrant Amber
         : primary;
 
     return Container(
@@ -146,7 +146,7 @@ class _PercentageBar extends StatelessWidget {
         color: Colors.white,
         borderRadius: AppRadius.circularXl,
         border: Border.all(
-          color: const Color(0xFFE2E8F0).withValues(alpha: 0.5),
+          color: AppColors.borderLight.withValues(alpha: 0.5),
         ),
         boxShadow: [
           BoxShadow(
@@ -197,10 +197,10 @@ class _PercentageBar extends StatelessWidget {
               Container(
                 height: 10,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
+                  color: AppColors.dividerSubtleLight,
                   borderRadius: AppRadius.circularFull,
                   boxShadow: const [
-                    BoxShadow(color: Color(0xFFE2E8F0), blurRadius: 2),
+                    BoxShadow(color: AppColors.borderLight, blurRadius: 2),
                   ],
                 ),
               ),
@@ -252,3 +252,4 @@ class _PercentageBar extends StatelessWidget {
     );
   }
 }
+

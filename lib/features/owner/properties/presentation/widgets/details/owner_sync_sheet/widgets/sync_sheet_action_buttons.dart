@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../../../core/theme/app_colors.dart';
@@ -173,7 +173,7 @@ class EmptyOwners extends StatelessWidget {
               child: Icon(
                 Icons.people_outline_rounded,
                 size: 56,
-                color: const Color(0xFFCBD5E1),
+                color: AppColors.textTertiaryLight,
               ),
             ),
             const SizedBox(height: 20),
@@ -235,7 +235,7 @@ class SaveButton extends StatelessWidget {
                     end: Alignment.bottomRight,
                   )
                 : null,
-            color: canSave && !state.isSyncing ? null : const Color(0xFFE2E8F0),
+            color: canSave && !state.isSyncing ? null : AppColors.borderLight,
             boxShadow: canSave && !state.isSyncing
                 ? [
                     BoxShadow(
@@ -299,3 +299,4 @@ class SaveButton extends StatelessWidget {
     );
   }
 }
+

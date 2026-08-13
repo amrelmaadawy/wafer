@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -16,9 +16,9 @@ class OwnerOccupancyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final rate = (data.occupancyRate.toDouble() / 100).clamp(0.0, 1.0);
     final rateColor = data.occupancyRate >= 70
-        ? const Color(0xFF10B981)
+        ? AppColors.success
         : data.occupancyRate >= 40
-        ? const Color(0xFFF59E0B)
+        ? AppColors.warning
         : AppColors.error;
 
     return _card(
@@ -36,13 +36,13 @@ class OwnerOccupancyCard extends StatelessWidget {
                   const Icon(
                     Icons.pie_chart_outline_rounded,
                     size: 16,
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondaryLight,
                   ),
                   const SizedBox(width: 7),
                   Text(
                     LocaleKeys.dashboardOccupancyEfficiency.tr(),
                     style: const TextStyle(
-                      color: Color(0xFF0F172A),
+                      color: AppColors.textPrimaryLight,
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
                     ),
@@ -91,7 +91,7 @@ class OwnerOccupancyCard extends StatelessWidget {
                 child: _pill(
                   label: LocaleKeys.ownerPillRented.tr(),
                   count: data.rentedUnits,
-                  color: const Color(0xFF10B981),
+                  color: AppColors.success,
                   icon: Icons.check_circle_rounded,
                 ),
               ),
@@ -100,7 +100,7 @@ class OwnerOccupancyCard extends StatelessWidget {
                 child: _pill(
                   label: LocaleKeys.ownerPillVacant.tr(),
                   count: data.vacantUnits,
-                  color: const Color(0xFF64748B),
+                  color: AppColors.textSecondaryLight,
                   icon: Icons.roofing_rounded,
                 ),
               ),
@@ -109,7 +109,7 @@ class OwnerOccupancyCard extends StatelessWidget {
                 child: _pill(
                   label: LocaleKeys.ownerPillProperties.tr(),
                   count: data.totalProperties,
-                  color: const Color(0xFF6366F1),
+                  color: AppColors.accent,
                   icon: Icons.domain_rounded,
                 ),
               ),
@@ -156,7 +156,7 @@ class OwnerOccupancyCard extends StatelessWidget {
             child: Text(
               label,
               style: const TextStyle(
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondaryLight,
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
               ),
@@ -198,3 +198,4 @@ class OwnerOccupancyCard extends StatelessWidget {
     );
   }
 }
+

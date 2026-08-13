@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../core/presentation/widgets/custom_error_widget.dart';
@@ -46,7 +48,7 @@ class _NotificationsViewState extends State<NotificationsView> {
     final cubit = context.read<NotificationsCubit>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8FAFC),
+      backgroundColor: AppColors.surfaceSubtleLight,
       appBar: _buildAppBar(context, cubit),
       body: Column(
         children: [
@@ -195,15 +197,15 @@ class _NotificationsViewState extends State<NotificationsView> {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
         decoration: BoxDecoration(
-          color: isSelected ? primary : const Color(0xFFF1F5F9),
-          borderRadius: BorderRadius.circular(20),
+          color: isSelected ? primary : AppColors.dividerSubtleLight,
+          borderRadius: AppRadius.circularXxl,
         ),
         child: Text(
           label,
           style: TextStyle(
             fontSize: 13,
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-            color: isSelected ? Colors.white : const Color(0xFF475569),
+            color: isSelected ? Colors.white : AppColors.textSecondaryLight,
           ),
         ),
       ),
@@ -214,3 +216,4 @@ class _NotificationsViewState extends State<NotificationsView> {
     // Proactive deep linking handling or mark single as read can be added here
   }
 }
+

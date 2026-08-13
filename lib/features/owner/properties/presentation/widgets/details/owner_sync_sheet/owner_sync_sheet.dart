@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
 import '../../../../../../../core/localization/locale_keys.dart';
 
 import '../../../../../../../core/theme/app_radius.dart';
@@ -62,7 +63,7 @@ class _SheetBody extends StatelessWidget {
         maxHeight: MediaQuery.of(context).size.height * 0.9,
       ),
       decoration: const BoxDecoration(
-        color: Color(0xFFF8FAFC),
+        color: AppColors.surfaceSubtleLight,
         borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
       ),
       child: Column(
@@ -111,7 +112,7 @@ class _SheetBody extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: AppRadius.circularXl,
-            border: Border.all(color: const Color(0xFFF1F5F9)),
+            border: Border.all(color: AppColors.dividerSubtleLight),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.02),
@@ -174,3 +175,4 @@ class _SheetBody extends StatelessWidget {
     );
   }
 }
+

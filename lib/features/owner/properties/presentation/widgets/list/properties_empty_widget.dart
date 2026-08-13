@@ -1,76 +1,48 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
-import '../../../../../../core/theme/app_colors.dart';
-import '../../../../../../core/theme/app_radius.dart';
-import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/presentation/widgets/custom_empty_widget.dart';
+import '../../cubit/list/properties_list_state.dart';
 
 class PropertiesEmptyWidget extends StatelessWidget {
   final VoidCallback onAddProperty;
+  final VoidCallback onResetSearch;
+  final VoidCallback onResetFilter;
+  final EmptyReason reason;
 
-  const PropertiesEmptyWidget({super.key, required this.onAddProperty});
+  const PropertiesEmptyWidget({
+    super.key, 
+    required this.onAddProperty,
+    required this.onResetSearch,
+    required this.onResetFilter,
+    required this.reason,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(32),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const SizedBox(height: 32),
-          Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: context.primarySubtle,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              Icons.apartment_rounded,
-              size: 56,
-              color: context.primaryColor,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Text(
-            LocaleKeys.propertiesEmptyTitle.tr(),
-            style: const TextStyle(
-              color: AppColors.textPrimaryLight,
-              fontSize: 18,
-              fontWeight: FontWeight.w700,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            LocaleKeys.propertiesEmptySubtitle.tr(),
-            style: const TextStyle(
-              color: AppColors.textSecondaryLight,
-              fontSize: 13.5,
-              height: 1.5,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          ElevatedButton.icon(
-            onPressed: onAddProperty,
-            icon: const Icon(Icons.add_rounded, size: 20),
-            label: Text(LocaleKeys.propertiesEmptyAction.tr()),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: context.primaryColor,
-              foregroundColor: Colors.white,
-              elevation: 0,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: AppRadius.circularFull,
-              ),
-              textStyle: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+    switch (reason) {
+      case EmptyReason.noData:
+        return CustomEmptyWidget(
+          icon: Icons.home_work_outlined,
+          title: LocaleKeys.propertiesEmptyTitle.tr(),
+          subtitle: LocaleKeys.propertiesEmptySubtitle.tr(),
+          actionLabel: LocaleKeys.propertiesEmptyAction.tr(),
+          onAction: onAddProperty,
+        );
+      case EmptyReason.noSearchResults:
+        return CustomEmptyWidget(
+          icon: Icons.search_off,
+          title: LocaleKeys.propertiesEmptySearch.tr(),
+          actionLabel: LocaleKeys.propertiesResetSearch.tr(),
+          onAction: onResetSearch,
+        );
+      case EmptyReason.noFilterResults:
+        return CustomEmptyWidget(
+          icon: Icons.filter_list_off,
+          title: LocaleKeys.propertiesEmptyFilter.tr(),
+          actionLabel: LocaleKeys.propertiesResetFilter.tr(),
+          onAction: onResetFilter,
+        );
+    }
   }
 }

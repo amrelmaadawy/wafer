@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
@@ -20,13 +20,13 @@ class OwnerQuickActions extends StatelessWidget {
             const Icon(
               Icons.grid_view_rounded,
               size: 17,
-              color: Color(0xFF64748B),
+              color: AppColors.textSecondaryLight,
             ),
             const SizedBox(width: 6),
             Text(
               LocaleKeys.dashboard_quick_actions.tr(),
               style: const TextStyle(
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimaryLight,
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
               ),
@@ -72,7 +72,7 @@ class OwnerQuickActions extends StatelessWidget {
                   context,
                   title: LocaleKeys.legal_cases.tr(),
                   icon: Icons.gavel_rounded,
-                  color: const Color(0xFF8B5CF6),
+                  color: AppColors.accent,
                   onTap: () {
                     context.push(Routes.ownerLegalCases);
                   },
@@ -148,3 +148,4 @@ class OwnerQuickActions extends StatelessWidget {
     );
   }
 }
+

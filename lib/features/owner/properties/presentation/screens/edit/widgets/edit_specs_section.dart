@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../core/theme/app_radius.dart';
@@ -26,12 +26,12 @@ class EditSpecsSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         EditSectionHeader(
-          title: 'المواصفات والأبعاد',
+          title: 'Ø§Ù„Ù…ÙˆØ§ØµÙØ§Øª ÙˆØ§Ù„Ø£Ø¨Ø¹Ø§Ø¯',
           icon: Icons.straighten_rounded,
         ),
         const SizedBox(height: 16),
         Text(
-          'نوع الاستخدام',
+          'Ù†ÙˆØ¹ Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù…',
           style: const TextStyle(
             fontSize: 13.5,
             fontWeight: FontWeight.w600,
@@ -42,17 +42,17 @@ class EditSpecsSection extends StatelessWidget {
         CustomDropdownMenu<String>(
           items: const ['residential', 'commercial', 'industrial', 'mixed'],
           value: state.selectedUsageType,
-          hint: 'اختر نوع الاستخدام',
+          hint: 'Ø§Ø®ØªØ± Ù†ÙˆØ¹ Ø§Ù„Ø§Ø³ØªØ®Ø¯Ø§Ù…',
           itemLabelBuilder: (val) {
             switch (val) {
               case 'residential':
-                return 'سكني';
+                return 'Ø³ÙƒÙ†ÙŠ';
               case 'commercial':
-                return 'تجاري';
+                return 'ØªØ¬Ø§Ø±ÙŠ';
               case 'industrial':
-                return 'صناعي';
+                return 'ØµÙ†Ø§Ø¹ÙŠ';
               case 'mixed':
-                return 'مختلط';
+                return 'Ù…Ø®ØªÙ„Ø·';
               default:
                 return val;
             }
@@ -66,7 +66,7 @@ class EditSpecsSection extends StatelessWidget {
             Expanded(
               child: EditFormField(
                 controller: lengthController,
-                label: 'الطول (م)',
+                label: 'Ø§Ù„Ø·ÙˆÙ„ (Ù…)',
                 icon: Icons.height_rounded,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
@@ -78,7 +78,7 @@ class EditSpecsSection extends StatelessWidget {
             Expanded(
               child: EditFormField(
                 controller: widthController,
-                label: 'العرض (م)',
+                label: 'Ø§Ù„Ø¹Ø±Ø¶ (Ù…)',
                 icon: Icons.swap_horiz_rounded,
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
@@ -92,7 +92,7 @@ class EditSpecsSection extends StatelessWidget {
 
         // Section 4: Amenities
         EditSectionHeader(
-          title: 'المميزات والإضافات',
+          title: 'Ø§Ù„Ù…Ù…ÙŠØ²Ø§Øª ÙˆØ§Ù„Ø¥Ø¶Ø§ÙØ§Øª',
           icon: Icons.star_outline_rounded,
         ),
         const SizedBox(height: 16),
@@ -101,14 +101,14 @@ class EditSpecsSection extends StatelessWidget {
           runSpacing: 10,
           children:
               const [
-                ('elevator', 'مصعد'),
-                ('parking', 'موقف سيارات'),
-                ('security', 'حراسة 24/7'),
-                ('pool', 'مسبح'),
-                ('gym', 'صالة رياضية'),
-                ('generator', 'مولد كهرباء'),
-                ('central_ac', 'تكييف مركزي'),
-                ('internet', 'ألياف بصرية (إنترنت)'),
+                ('elevator', 'Ù…ØµØ¹Ø¯'),
+                ('parking', 'Ù…ÙˆÙ‚Ù Ø³ÙŠØ§Ø±Ø§Øª'),
+                ('security', 'Ø­Ø±Ø§Ø³Ø© 24/7'),
+                ('pool', 'Ù…Ø³Ø¨Ø­'),
+                ('gym', 'ØµØ§Ù„Ø© Ø±ÙŠØ§Ø¶ÙŠØ©'),
+                ('generator', 'Ù…ÙˆÙ„Ø¯ ÙƒÙ‡Ø±Ø¨Ø§Ø¡'),
+                ('central_ac', 'ØªÙƒÙŠÙŠÙ Ù…Ø±ÙƒØ²ÙŠ'),
+                ('internet', 'Ø£Ù„ÙŠØ§Ù Ø¨ØµØ±ÙŠØ© (Ø¥Ù†ØªØ±Ù†Øª)'),
               ].map((amenity) {
                 final isSelected = state.selectedAmenities.contains(amenity.$1);
                 return FilterChip(
@@ -123,7 +123,7 @@ class EditSpecsSection extends StatelessWidget {
                   side: BorderSide(
                     color: isSelected
                         ? context.primaryColor
-                        : const Color(0xFFE2E8F0),
+                        : AppColors.borderLight,
                     width: isSelected ? 1.5 : 1,
                   ),
                   labelStyle: TextStyle(
@@ -144,3 +144,4 @@ class EditSpecsSection extends StatelessWidget {
     );
   }
 }
+

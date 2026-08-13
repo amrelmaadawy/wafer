@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 
@@ -28,7 +28,7 @@ class PropertySkeletonItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
+        border: Border.all(color: AppColors.borderLight),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,7 +39,7 @@ class PropertySkeletonItem extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
+                  color: AppColors.dividerSubtleLight,
                   borderRadius: AppRadius.circularLg,
                 ),
               ),
@@ -52,7 +52,7 @@ class PropertySkeletonItem extends StatelessWidget {
                       width: 140,
                       height: 14,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF1F5F9),
+                        color: AppColors.dividerSubtleLight,
                         borderRadius: AppRadius.circularSm,
                       ),
                     ),
@@ -61,7 +61,7 @@ class PropertySkeletonItem extends StatelessWidget {
                       width: 90,
                       height: 10,
                       decoration: BoxDecoration(
-                        color: const Color(0xFFF1F5F9),
+                        color: AppColors.dividerSubtleLight,
                         borderRadius: AppRadius.circularSm,
                       ),
                     ),
@@ -71,7 +71,7 @@ class PropertySkeletonItem extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          Container(height: 1, color: const Color(0xFFF1F5F9)),
+          Container(height: 1, color: AppColors.dividerSubtleLight),
           const SizedBox(height: 12),
           Row(
             children: [
@@ -79,7 +79,7 @@ class PropertySkeletonItem extends StatelessWidget {
                 width: 80,
                 height: 12,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
+                  color: AppColors.dividerSubtleLight,
                   borderRadius: AppRadius.circularSm,
                 ),
               ),
@@ -88,7 +88,7 @@ class PropertySkeletonItem extends StatelessWidget {
                 width: 60,
                 height: 12,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
+                  color: AppColors.dividerSubtleLight,
                   borderRadius: AppRadius.circularSm,
                 ),
               ),
@@ -99,3 +99,4 @@ class PropertySkeletonItem extends StatelessWidget {
     );
   }
 }
+

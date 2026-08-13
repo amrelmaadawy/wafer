@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -37,7 +37,7 @@ class WizardProgressBar extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     color: index < currentStep
                         ? context.primaryColor
-                        : const Color(0xFFE2E8F0),
+                        : AppColors.borderLight,
                   ),
                 );
               }
@@ -78,10 +78,10 @@ class WizardProgressBar extends StatelessWidget {
       width: 28,
       height: 28,
       decoration: BoxDecoration(
-        color: isActive ? context.primaryColor : const Color(0xFFF1F5F9),
+        color: isActive ? context.primaryColor : AppColors.dividerSubtleLight,
         shape: BoxShape.circle,
         border: Border.all(
-          color: isActive ? context.primaryColor : const Color(0xFFCBD5E1),
+          color: isActive ? context.primaryColor : AppColors.textTertiaryLight,
           width: 2,
         ),
       ),
@@ -91,7 +91,7 @@ class WizardProgressBar extends StatelessWidget {
             : Text(
                 '${index + 1}',
                 style: TextStyle(
-                  color: isActive ? Colors.white : const Color(0xFF94A3B8),
+                  color: isActive ? Colors.white : AppColors.textTertiaryLight,
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
                 ),
@@ -100,3 +100,4 @@ class WizardProgressBar extends StatelessWidget {
     );
   }
 }
+

@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
@@ -103,7 +104,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               ? Icons.visibility_off_outlined
               : Icons.visibility_outlined,
           size: 20,
-          color: const Color(0xFF94A3B8),
+          color: AppColors.textTertiaryLight,
         ),
         onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
       ),
@@ -124,23 +125,23 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
     fillColor: const Color(0xFFF7F8FC),
     contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
     border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadius.circularLg,
       borderSide: const BorderSide(color: Color(0xFFE4E9F2)),
     ),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadius.circularLg,
       borderSide: const BorderSide(color: Color(0xFFE4E9F2)),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadius.circularLg,
       borderSide: BorderSide(color: context.primaryColor, width: 1.5),
     ),
     errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadius.circularLg,
       borderSide: const BorderSide(color: AppColors.error),
     ),
     focusedErrorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: AppRadius.circularLg,
       borderSide: const BorderSide(color: AppColors.error, width: 1.5),
     ),
   );
@@ -159,7 +160,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                 value: _rememberMe,
                 activeColor: context.primaryColor,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: AppRadius.circularSm,
                 ),
                 side: const BorderSide(color: Color(0xFFCCD3E0)),
                 onChanged: (val) => setState(() => _rememberMe = val ?? true),
@@ -169,7 +170,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             Text(
               LocaleKeys.authRememberMe.tr(),
               style: const TextStyle(
-                color: Color(0xFF4B5563),
+                color: AppColors.textSecondaryLight,
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),
@@ -199,7 +200,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
   Widget _buildSubmitButton(BuildContext context, bool isLoading) =>
       DecoratedBox(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: AppRadius.circularLg,
           gradient: isLoading
               ? null
               : LinearGradient(
@@ -224,7 +225,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
             shadowColor: Colors.transparent,
             disabledBackgroundColor: const Color(0xFFE4E9F2),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: AppRadius.circularLg,
             ),
             minimumSize: const Size(double.infinity, 52),
           ),
@@ -248,3 +249,4 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
         ),
       );
 }
+

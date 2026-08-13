@@ -23,7 +23,7 @@ class MaintenanceModel extends MaintenanceEntity {
       requestNumber: json['request_number']?.toString() ?? '',
       description: json['description']?.toString() ?? '',
       status: json['status']?.toString() ?? 'pending',
-      statusLabel: json['status_label']?.toString() ?? 'قيد الانتظار',
+      statusLabel: json['status_label']!.toString(),
       estimatedCost: json['estimated_cost'] as num? ?? 0,
       actualCost: json['actual_cost'] as num? ?? 0,
       requestedDate: json['requested_date']?.toString(),

@@ -11,8 +11,8 @@ class PropertyDetailsEntity extends Equatable {
   final String name;
   final String code;
   final String status;
-  final String statusLabel;
-  final String propertyType;
+  final String? statusLabel;
+  final String? propertyType;
   final String? usageType;
   final int? constructionYear;
   final num? area;
@@ -56,8 +56,8 @@ class PropertyDetailsEntity extends Equatable {
     required this.name,
     required this.code,
     required this.status,
-    required this.statusLabel,
-    required this.propertyType,
+    this.statusLabel,
+    this.propertyType,
     this.usageType,
     this.constructionYear,
     this.area,
@@ -97,20 +97,19 @@ class PropertyDetailsEntity extends Equatable {
 
   bool get isDraft => status.toLowerCase() == 'draft';
   bool get isPublished => status.toLowerCase() == 'published';
-  bool get isLand => propertyType.toLowerCase() == 'land';
+  bool get isLand => propertyType?.toLowerCase() == 'land';
 
-  String get type => propertyType;
+  String? get type => propertyType;
   String? get address => formattedAddress;
 
-  String get formattedAddress {
+  String? get formattedAddress {
     final parts = [
       if (city != null && city!.isNotEmpty) city,
       if (district != null && district!.isNotEmpty) district,
       if (streetName != null && streetName!.isNotEmpty) streetName,
-      if (buildingNumber != null && buildingNumber!.isNotEmpty)
-        'مبنى $buildingNumber',
+      if (buildingNumber != null && buildingNumber!.isNotEmpty) buildingNumber,
     ];
-    return parts.isEmpty ? 'غير محدد' : parts.join('، ');
+    return parts.isEmpty ? null : parts.join('، ');
   }
 
   @override

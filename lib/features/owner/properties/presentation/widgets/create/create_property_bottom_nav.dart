@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -33,7 +33,7 @@ class CreatePropertyBottomNav extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
       decoration: const BoxDecoration(
         color: AppColors.surfaceLight,
-        border: Border(top: BorderSide(color: Color(0xFFE2E8F0))),
+        border: Border(top: BorderSide(color: AppColors.borderLight)),
       ),
       child: SafeArea(
         child: Row(
@@ -48,7 +48,7 @@ class CreatePropertyBottomNav extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: AppRadius.circularLg,
                     ),
-                    side: const BorderSide(color: Color(0xFFE2E8F0)),
+                    side: const BorderSide(color: AppColors.borderLight),
                   ),
                   child: Text(
                     LocaleKeys.propertyWizardPrevious.tr(),
@@ -97,3 +97,4 @@ class CreatePropertyBottomNav extends StatelessWidget {
     );
   }
 }
+

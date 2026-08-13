@@ -1,4 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/usecases/usecase.dart';
 import '../../../domain/usecases/create_draft_property_use_case.dart';
 import '../../../domain/usecases/get_property_form_data_use_case.dart';
@@ -253,7 +255,7 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
   // --- Step 4: Owners ---
   void addOwner(PropertyOwnerEntity owner) {
     if (state.owners.any((o) => o.id == owner.id)) {
-      emit(state.copyWith(errorMessage: 'هذا المالك مضاف بالفعل'));
+      emit(state.copyWith(errorMessage: LocaleKeys.propertyDetailsOwnerAlreadyAdded.tr()));
       return;
     }
 
@@ -315,7 +317,7 @@ class PropertyCreateCubit extends Cubit<PropertyCreateState> {
     double total = state.owners.fold(0.0, (sum, o) => sum + o.percentage);
     if ((total - 100.0).abs() > 0.01) {
       // Floating point comparison
-      emit(state.copyWith(errorMessage: 'يجب أن يكون مجموع النسب 100% بالضبط'));
+      emit(state.copyWith(errorMessage: LocaleKeys.propertyDetailsOwnerPercentageError.tr()));
       return false;
     }
 

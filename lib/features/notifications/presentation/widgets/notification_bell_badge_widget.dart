@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../cubit/unread_count_cubit.dart';
@@ -13,14 +14,14 @@ class NotificationBellBadgeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => _handleTap(context),
-      borderRadius: BorderRadius.circular(22),
+      borderRadius: AppRadius.circularXxl,
       child: Container(
         width: 44,
         height: 44,
         decoration: const BoxDecoration(
-          color: Color(0xFFF8FAFC),
+          color: AppColors.surfaceSubtleLight,
           shape: BoxShape.circle,
-          border: Border.fromBorderSide(BorderSide(color: Color(0xFFE2E8F0))),
+          border: Border.fromBorderSide(BorderSide(color: AppColors.borderLight)),
         ),
         child: Stack(
           alignment: Alignment.center,
@@ -28,7 +29,7 @@ class NotificationBellBadgeWidget extends StatelessWidget {
           children: [
             const Icon(
               Icons.notifications_outlined,
-              color: Color(0xFF334155),
+              color: AppColors.textSecondaryLight,
               size: 22,
             ),
             BlocBuilder<UnreadCountCubit, UnreadCountState>(
@@ -59,7 +60,7 @@ class NotificationBellBadgeWidget extends StatelessWidget {
                             ),
                             decoration: BoxDecoration(
                               color: AppColors.error,
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: AppRadius.circularLg,
                               border: Border.all(
                                 color: Colors.white,
                                 width: 1.5,
@@ -96,3 +97,4 @@ class NotificationBellBadgeWidget extends StatelessWidget {
     }
   }
 }
+

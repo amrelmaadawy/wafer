@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:wafer/core/presentation/widgets/custom_empty_widget.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -31,7 +32,7 @@ class PropertyContractsTab extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 12),
           color: Colors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: AppRadius.circularXl,
             side: BorderSide(color: Colors.grey.withValues(alpha: 0.2)),
           ),
           child: Padding(
@@ -58,7 +59,7 @@ class PropertyContractsTab extends StatelessWidget {
                         color: contract.status == 'draft'
                             ? AppColors.warning.withValues(alpha: 0.1)
                             : AppColors.success.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: AppRadius.circularMd,
                       ),
                       child: Text(
                         contract.statusLabel,
@@ -107,3 +108,4 @@ class PropertyContractsTab extends StatelessWidget {
     );
   }
 }
+

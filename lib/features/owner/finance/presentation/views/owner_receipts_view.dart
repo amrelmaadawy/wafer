@@ -1,3 +1,5 @@
+﻿import 'package:wafer/core/theme/app_radius.dart';
+
 import '../../../../../core/utils/widgets/app_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -101,11 +103,11 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
                 filled: true,
                 fillColor: AppColors.surfaceLight,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadius.circularXl,
                   borderSide: const BorderSide(color: AppColors.borderLight),
                 ),
                 enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: AppRadius.circularXl,
                   borderSide: const BorderSide(color: AppColors.borderLight),
                 ),
                 contentPadding: const EdgeInsets.symmetric(vertical: 0),
@@ -151,7 +153,7 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
 
                 if (receipts.isEmpty && !isLoadingMore) {
                   return const CustomEmptyWidget(
-                    title: 'لا توجد سندات مالية متاحة',
+                    title: 'Ù„Ø§ ØªÙˆØ¬Ø¯ Ø³Ù†Ø¯Ø§Øª Ù…Ø§Ù„ÙŠØ© Ù…ØªØ§Ø­Ø©',
                     icon: Icons.receipt_long,
                   );
                 }

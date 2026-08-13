@@ -1,4 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
+﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -102,7 +103,7 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
                   label: LocaleKeys.owner_finance_amount_label.tr(),
                   keyboardType: TextInputType.number,
                   validator: (val) {
-                    if (val == null || val.isEmpty) return 'مطلوب'; // Will fix required translation soon
+                    if (val == null || val.isEmpty) return 'Ù…Ø·Ù„ÙˆØ¨'; // Will fix required translation soon
                     if (num.tryParse(val) == null) return LocaleKeys.owner_finance_invalid_value.tr();
                     return null;
                   },
@@ -137,7 +138,7 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
                       controller: _dateController,
                       label: LocaleKeys.owner_finance_receipt_date.tr(),
                       readOnly: true,
-                      validator: (val) => val == null || val.isEmpty ? 'مطلوب' : null,
+                      validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
                     ),
                   ),
                 ),
@@ -156,7 +157,7 @@ class _UpdateOwnerReceiptViewState extends State<UpdateOwnerReceiptView> {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: context.primaryColor,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
                         ),
                         onPressed: state is UpdateFinanceReceiptLoading ? null : _submit,
                         child: state is UpdateFinanceReceiptLoading

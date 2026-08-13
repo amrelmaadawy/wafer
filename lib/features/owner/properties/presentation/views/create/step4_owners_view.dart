@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
@@ -100,7 +100,7 @@ class Step4OwnersView extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.borderLight),
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -195,7 +195,7 @@ class Step4OwnersView extends StatelessWidget {
           borderRadius: AppRadius.circularFull,
           child: LinearProgressIndicator(
             value: (totalPercentage / 100).clamp(0.0, 1.0),
-            backgroundColor: const Color(0xFFE2E8F0),
+            backgroundColor: AppColors.borderLight,
             color: progressColor,
             minHeight: 8,
           ),
@@ -221,3 +221,4 @@ class Step4OwnersView extends StatelessWidget {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -37,8 +37,8 @@ class PropertiesStatsHeaderWidget extends StatelessWidget {
               args: ['${stats.totalDeeds}'],
             ),
             icon: Icons.grid_view_rounded,
-            color: const Color(0xFF0EA5E9),
-            bgColor: const Color(0xFFE0F2FE),
+            color: AppColors.info,
+            bgColor: AppColors.info.withValues(alpha: 0.1),
           ),
           const SizedBox(width: 10),
           _buildStatCard(
@@ -49,8 +49,8 @@ class PropertiesStatsHeaderWidget extends StatelessWidget {
             subtitle:
                 '${LocaleKeys.propertiesStatsResidential.tr(args: ['${stats.residentialCount}'])} | ${LocaleKeys.propertiesStatsMixed.tr(args: ['${stats.mixedCount}'])}',
             icon: Icons.pie_chart_rounded,
-            color: const Color(0xFF10B981),
-            bgColor: const Color(0xFFD1FAE5),
+            color: AppColors.success,
+            bgColor: AppColors.success.withValues(alpha: 0.1),
           ),
         ],
       ),
@@ -71,7 +71,7 @@ class PropertiesStatsHeaderWidget extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
         borderRadius: AppRadius.circularLg,
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        border: Border.all(color: AppColors.borderLight),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -131,3 +131,4 @@ class PropertiesStatsHeaderWidget extends StatelessWidget {
     );
   }
 }
+

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -139,7 +139,7 @@ class InstallmentCard extends StatelessWidget {
               _buildValueColumn(
                 label: LocaleKeys.installmentsPaid.tr(),
                 value: installment.paidAmount,
-                color: const Color(0xFF1EBE5D),
+                color: AppColors.success,
               ),
               _buildValueColumn(
                 label: LocaleKeys.installmentsRemaining.tr(),
@@ -191,18 +191,18 @@ class InstallmentCard extends StatelessWidget {
       final parts = isoDate.split('-');
       if (parts.length != 3) return isoDate;
       final months = [
-        'يناير',
-        'فبراير',
-        'مارس',
-        'أبريل',
-        'مايو',
-        'يونيو',
-        'يوليو',
-        'أغسطس',
-        'سبتمبر',
-        'أكتوبر',
-        'نوفمبر',
-        'ديسمبر',
+        'ÙŠÙ†Ø§ÙŠØ±',
+        'ÙØ¨Ø±Ø§ÙŠØ±',
+        'Ù…Ø§Ø±Ø³',
+        'Ø£Ø¨Ø±ÙŠÙ„',
+        'Ù…Ø§ÙŠÙˆ',
+        'ÙŠÙˆÙ†ÙŠÙˆ',
+        'ÙŠÙˆÙ„ÙŠÙˆ',
+        'Ø£ØºØ³Ø·Ø³',
+        'Ø³Ø¨ØªÙ…Ø¨Ø±',
+        'Ø£ÙƒØªÙˆØ¨Ø±',
+        'Ù†ÙˆÙÙ…Ø¨Ø±',
+        'Ø¯ÙŠØ³Ù…Ø¨Ø±',
       ];
       final month = int.tryParse(parts[1]) ?? 1;
       return '${parts[2]} ${months[month - 1]} ${parts[0]}';
@@ -215,7 +215,7 @@ class InstallmentCard extends StatelessWidget {
     switch (status.toLowerCase()) {
       case 'paid':
         return (
-          color: const Color(0xFF1EBE5D),
+          color: AppColors.success,
           icon: Icons.check_circle_rounded,
           label: LocaleKeys.installmentsStatusPaid.tr(),
         );
@@ -241,3 +241,4 @@ class InstallmentCard extends StatelessWidget {
     }
   }
 }
+

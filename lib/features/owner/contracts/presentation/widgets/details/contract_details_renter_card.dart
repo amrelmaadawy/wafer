@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -122,7 +122,7 @@ class ContractDetailsRenterCard extends StatelessWidget {
                     context: context,
                     title: LocaleKeys.contractsActionWhatsapp.tr(),
                     icon: Icons.chat_rounded,
-                    color: const Color(0xFF1EBE5D),
+                    color: AppColors.success,
                     onTap: () async {
                       final success = await LauncherUtils.openWhatsApp(
                         contract.renterPhone,
@@ -197,3 +197,4 @@ class ContractDetailsRenterCard extends StatelessWidget {
     );
   }
 }
+

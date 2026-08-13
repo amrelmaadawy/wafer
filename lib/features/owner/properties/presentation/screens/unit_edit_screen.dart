@@ -1,4 +1,4 @@
-import 'dart:io';
+﻿import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -196,7 +196,7 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
           AppToast.showError(context, state.submitError!.message);
         } else if (!state.isSubmitting && state.error == null) {
           AppToast.showSuccess(
-              context, "تم التعديل بنجاح");
+              context, "ØªÙ… Ø§Ù„ØªØ¹Ø¯ÙŠÙ„ Ø¨Ù†Ø¬Ø§Ø­");
           context.pop(true);
         }
       },
@@ -491,8 +491,8 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
         ),
         const SizedBox(height: 32),
         _buildMediaCategory(
-          title: 'الفيديوهات',
-          subtitle: 'أضف فيديوهات توضيحية للوحدة',
+          title: 'Ø§Ù„ÙÙŠØ¯ÙŠÙˆÙ‡Ø§Øª',
+          subtitle: 'Ø£Ø¶Ù ÙÙŠØ¯ÙŠÙˆÙ‡Ø§Øª ØªÙˆØ¶ÙŠØ­ÙŠØ© Ù„Ù„ÙˆØ­Ø¯Ø©',
           existing: _existingVideos,
           newItems: _newVideos,
           onAdd: () async {
@@ -520,8 +520,8 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
         ),
         const SizedBox(height: 32),
         _buildMediaCategory(
-          title: 'الملفات والمرفقات',
-          subtitle: 'أضف أي ملفات أو مستندات (PDF, Word, etc)',
+          title: 'Ø§Ù„Ù…Ù„ÙØ§Øª ÙˆØ§Ù„Ù…Ø±ÙÙ‚Ø§Øª',
+          subtitle: 'Ø£Ø¶Ù Ø£ÙŠ Ù…Ù„ÙØ§Øª Ø£Ùˆ Ù…Ø³ØªÙ†Ø¯Ø§Øª (PDF, Word, etc)',
           existing: _existingFiles,
           newItems: _newFiles,
           onAdd: () async {
@@ -583,7 +583,7 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
             if (index == totalCount) {
               return InkWell(
                 onTap: onAdd,
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: AppRadius.circularMd,
                 child: Container(
                   decoration: BoxDecoration(
                     color: context.primaryColor.withValues(alpha: 0.05),
@@ -648,7 +648,7 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
           height: double.infinity,
           decoration: BoxDecoration(
             color: Colors.grey.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: AppRadius.circularMd,
             image: imageProvider != null ? DecorationImage(image: imageProvider, fit: BoxFit.cover) : null,
           ),
           child: !isImage

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -91,7 +91,7 @@ class PropertyOwnersCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 12),
-          const Divider(height: 1, color: Color(0xFFF1F5F9)),
+          const Divider(height: 1, color: AppColors.dividerSubtleLight),
           const SizedBox(height: 12),
           property.owners.isEmpty
               ? Padding(
@@ -126,7 +126,7 @@ class PropertyOwnersCard extends StatelessWidget {
                 radius: 16,
                 backgroundColor: context.primarySubtle,
                 child: Text(
-                  owner.name.isNotEmpty ? owner.name[0] : 'م',
+                  owner.name.isNotEmpty ? owner.name[0] : 'Ù…',
                   style: TextStyle(
                     color: context.primaryColor,
                     fontSize: 13,
@@ -213,7 +213,7 @@ class PropertyOwnersCard extends StatelessWidget {
             borderRadius: AppRadius.circularFull,
             child: LinearProgressIndicator(
               value: (owner.percentage / 100).clamp(0.0, 1.0),
-              backgroundColor: const Color(0xFFF1F5F9),
+              backgroundColor: AppColors.dividerSubtleLight,
               color: context.primaryColor,
               minHeight: 7,
             ),
@@ -223,3 +223,4 @@ class PropertyOwnersCard extends StatelessWidget {
     );
   }
 }
+

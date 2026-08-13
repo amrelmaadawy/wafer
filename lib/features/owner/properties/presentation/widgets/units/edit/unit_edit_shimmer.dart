@@ -1,5 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:wafer/core/theme/app_colors.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 
 class UnitEditShimmer extends StatelessWidget {
   const UnitEditShimmer({super.key});
@@ -30,8 +32,8 @@ class UnitEditShimmer extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE2E8F0)),
+        borderRadius: AppRadius.circularXl,
+        border: Border.all(color: AppColors.borderLight),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +43,7 @@ class UnitEditShimmer extends StatelessWidget {
             height: 24,
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: AppRadius.circularMd,
             ),
           ),
           const SizedBox(height: 16),
@@ -78,7 +80,7 @@ class UnitEditShimmer extends StatelessWidget {
           height: 14,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(4),
+            borderRadius: AppRadius.circularSm,
           ),
         ),
         const SizedBox(height: 8),
@@ -87,10 +89,12 @@ class UnitEditShimmer extends StatelessWidget {
           height: height,
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: AppRadius.circularLg,
           ),
         ),
       ],
     );
   }
 }
+
+

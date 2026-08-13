@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -38,8 +38,8 @@ class PropertyDetailsSkeleton extends StatelessWidget {
   }
 
   Widget _buildHeaderSkeleton(BuildContext context) {
-    const darkBase = Color(0xFF1E293B);
-    const darkHighlight = Color(0xFF475569);
+    const darkBase = AppColors.textPrimaryLight;
+    const darkHighlight = AppColors.textSecondaryLight;
 
     return Container(
       width: double.infinity,
@@ -47,7 +47,7 @@ class PropertyDetailsSkeleton extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topRight,
           end: Alignment.bottomLeft,
-          colors: [context.primaryColor, const Color(0xFF0F172A)],
+          colors: [context.primaryColor, AppColors.textPrimaryLight],
         ),
       ),
       child: SafeArea(
@@ -323,3 +323,4 @@ class PropertyDetailsSkeleton extends StatelessWidget {
     );
   }
 }
+

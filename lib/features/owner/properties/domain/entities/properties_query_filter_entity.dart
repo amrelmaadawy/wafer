@@ -10,6 +10,10 @@ class PropertiesQueryFilterEntity extends Equatable {
   final int page;
   final int perPage;
   final bool includeTree;
+  
+  // Client-side sort fields (not sent to API)
+  final String? sortBy;
+  final bool sortAscending;
 
   const PropertiesQueryFilterEntity({
     this.search,
@@ -21,6 +25,8 @@ class PropertiesQueryFilterEntity extends Equatable {
     this.page = 1,
     this.perPage = 15,
     this.includeTree = true,
+    this.sortBy,
+    this.sortAscending = true,
   });
 
   PropertiesQueryFilterEntity copyWith({
@@ -33,6 +39,8 @@ class PropertiesQueryFilterEntity extends Equatable {
     int? page,
     int? perPage,
     bool? includeTree,
+    String? Function()? sortBy,
+    bool? sortAscending,
   }) {
     return PropertiesQueryFilterEntity(
       search: search != null ? search() : this.search,
@@ -44,6 +52,8 @@ class PropertiesQueryFilterEntity extends Equatable {
       page: page ?? this.page,
       perPage: perPage ?? this.perPage,
       includeTree: includeTree ?? this.includeTree,
+      sortBy: sortBy != null ? sortBy() : this.sortBy,
+      sortAscending: sortAscending ?? this.sortAscending,
     );
   }
 
@@ -77,5 +87,8 @@ class PropertiesQueryFilterEntity extends Equatable {
     page,
     perPage,
     includeTree,
+    sortBy,
+    sortAscending,
   ];
 }
+

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wafer/core/theme/app_colors.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
@@ -203,7 +204,7 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
           padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(24),
+            borderRadius: AppRadius.circularXxl,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.1),
@@ -233,17 +234,17 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w800,
-                  color: Color(0xFF0F172A),
+                  color: AppColors.textPrimaryLight,
                 ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 12),
-              const Text(
-                "هل أنت متأكد من رغبتك في إلغاء الإضافة؟ لن يتم حفظ أي بيانات كمسودة.",
+              Text(
+                LocaleKeys.propertyCreateExitMessage.tr(),
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF64748B),
+                  color: AppColors.textSecondaryLight,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
@@ -259,9 +260,9 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
                           vertical: 14,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: AppRadius.circularXl,
                         ),
-                        foregroundColor: const Color(0xFF64748B),
+                        foregroundColor: AppColors.textSecondaryLight,
                       ),
                       child: Text(
                         LocaleKeys.propertyCreateExitCancel.tr(),
@@ -284,7 +285,7 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
                           vertical: 14,
                         ),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: AppRadius.circularXl,
                         ),
                       ),
                       child: Text(
@@ -309,3 +310,5 @@ class _UnitCreateScreenContentState extends State<_UnitCreateScreenContent> {
     }
   }
 }
+
+

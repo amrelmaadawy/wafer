@@ -12,8 +12,8 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
     required super.name,
     required super.code,
     required super.status,
-    required super.statusLabel,
-    required super.propertyType,
+    super.statusLabel,
+    super.propertyType,
     super.usageType,
     super.constructionYear,
     super.area,
@@ -116,13 +116,8 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       name: nameStr,
       code: codeStr,
       status: json['status']?.toString() ?? 'draft',
-      statusLabel:
-          json['status_label']?.toString() ??
-          (json['status'] == 'published' ? 'منشور' : 'مسودة'),
-      propertyType:
-          json['property_type']?.toString() ??
-          json['type']?.toString() ??
-          'عقار',
+      statusLabel: json['status_label']?.toString(),
+      propertyType: json['property_type']?.toString() ?? json['type']?.toString(),
       usageType: json['usage_type']?.toString(),
       constructionYear: json['construction_year'] as int?,
       area: (json['area'] as num?) ?? (dimMap?['area'] as num?),

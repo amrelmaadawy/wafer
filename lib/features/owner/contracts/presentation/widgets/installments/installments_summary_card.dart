@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -150,17 +151,17 @@ class InstallmentsSummaryCard extends StatelessWidget {
                       _buildMetric(
                         label: LocaleKeys.installmentsPaidAmount.tr(),
                         value: totalPaid,
-                        valueColor: const Color(0xFF86EFAC),
+                        valueColor: AppColors.success.withValues(alpha: 0.3),
                         icon: Icons.check_circle_rounded,
-                        iconColor: const Color(0xFF86EFAC),
+                        iconColor: AppColors.success.withValues(alpha: 0.3),
                       ),
                       _buildVerticalDivider(),
                       _buildMetric(
                         label: LocaleKeys.installmentsRemainingAmount.tr(),
                         value: totalRemaining,
-                        valueColor: const Color(0xFFFDE047),
+                        valueColor: AppColors.warning.withValues(alpha: 0.3),
                         icon: Icons.pending_rounded,
-                        iconColor: const Color(0xFFFDE047),
+                        iconColor: AppColors.warning.withValues(alpha: 0.3),
                       ),
                     ],
                   ),
@@ -205,8 +206,8 @@ class InstallmentsSummaryCard extends StatelessWidget {
                             backgroundColor: Colors.white.withValues(
                               alpha: 0.2,
                             ),
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                              Color(0xFF86EFAC),
+                            valueColor:  AlwaysStoppedAnimation<Color>(
+                              AppColors.success.withValues(alpha: 0.3),
                             ),
                           ),
                           Text(
@@ -232,8 +233,8 @@ class InstallmentsSummaryCard extends StatelessWidget {
                     value: progress,
                     minHeight: 7,
                     backgroundColor: Colors.white.withValues(alpha: 0.18),
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                      Color(0xFF86EFAC),
+                    valueColor:  AlwaysStoppedAnimation<Color>(
+                      AppColors.success.withValues(alpha: 0.3),
                     ),
                   ),
                 ),
@@ -291,3 +292,4 @@ class InstallmentsSummaryCard extends StatelessWidget {
     );
   }
 }
+

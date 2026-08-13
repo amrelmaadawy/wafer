@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -67,7 +67,7 @@ class PropertyTypeSelectorWidget extends StatelessWidget {
                   border: Border.all(
                     color: isSelected
                         ? context.primaryColor
-                        : const Color(0xFFE2E8F0),
+                        : AppColors.borderLight,
                     width: isSelected ? 1.5 : 1,
                   ),
                 ),
@@ -118,3 +118,4 @@ class PropertyTypeSelectorWidget extends StatelessWidget {
     );
   }
 }
+

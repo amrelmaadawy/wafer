@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 
 import '../../../../../core/presentation/widgets/custom_back_button.dart';
 import '../../../../../core/utils/widgets/custom_text_field.dart';
@@ -157,7 +158,7 @@ class _UpdateOwnerPaymentViewState extends State<UpdateOwnerPaymentView> {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: context.primaryColor,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
                         ),
                         onPressed: state is UpdateFinancePaymentLoading ? null : _submit,
                         child: state is UpdateFinancePaymentLoading
@@ -179,3 +180,4 @@ class _UpdateOwnerPaymentViewState extends State<UpdateOwnerPaymentView> {
     );
   }
 }
+

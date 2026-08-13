@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../core/utils/widgets/app_shimmer.dart';
 
 class PropertyCreateSkeleton extends StatelessWidget {
@@ -8,7 +9,7 @@ class PropertyCreateSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // ── Wizard Progress Bar Skeleton ──────────────────
+        // â”€â”€ Wizard Progress Bar Skeleton â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
           child: Row(
@@ -32,7 +33,7 @@ class PropertyCreateSkeleton extends StatelessWidget {
           ),
         ),
         
-        // ── Step Content Skeleton ─────────────────────────
+        // â”€â”€ Step Content Skeleton â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         Expanded(
           child: ListView(
             padding: const EdgeInsets.all(24),
@@ -55,13 +56,13 @@ class PropertyCreateSkeleton extends StatelessWidget {
               AppShimmer.box(
                 width: double.infinity,
                 height: 150,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: AppRadius.circularXl,
               ),
             ],
           ),
         ),
         
-        // ── Bottom Nav Skeleton ───────────────────────────
+        // â”€â”€ Bottom Nav Skeleton â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -81,7 +82,7 @@ class PropertyCreateSkeleton extends StatelessWidget {
                   child: AppShimmer.box(
                     width: double.infinity,
                     height: 48,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.circularLg,
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -90,7 +91,7 @@ class PropertyCreateSkeleton extends StatelessWidget {
                   child: AppShimmer.box(
                     width: double.infinity,
                     height: 48,
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: AppRadius.circularLg,
                   ),
                 ),
               ],
@@ -101,3 +102,4 @@ class PropertyCreateSkeleton extends StatelessWidget {
     );
   }
 }
+

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/color_utils.dart';
 
@@ -36,7 +37,7 @@ class NotificationsEmptyWidget extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimaryLight,
               ),
               textAlign: TextAlign.center,
             ),
@@ -46,7 +47,7 @@ class NotificationsEmptyWidget extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 13.5,
                 fontWeight: FontWeight.w400,
-                color: Color(0xFF64748B),
+                color: AppColors.textSecondaryLight,
                 height: 1.5,
               ),
               textAlign: TextAlign.center,
@@ -57,3 +58,4 @@ class NotificationsEmptyWidget extends StatelessWidget {
     );
   }
 }
+

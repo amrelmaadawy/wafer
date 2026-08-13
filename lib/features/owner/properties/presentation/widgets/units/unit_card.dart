@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -29,7 +29,7 @@ class UnitCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.surfaceLight,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: const Color(0xFFEDF0F7)),
+        border: Border.all(color: AppColors.borderLight),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -49,7 +49,7 @@ class UnitCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // ── Header Row ──────────────────────────────────────
+                // â”€â”€ Header Row â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                 Row(
                   children: [
                     // Unit icon with primary color bg
@@ -96,7 +96,7 @@ class UnitCard extends StatelessWidget {
 
                 const SizedBox(height: 14),
 
-                // ── Quick Stats ─────────────────────────────────────
+                // â”€â”€ Quick Stats â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                 Wrap(
                   spacing: 16,
                   runSpacing: 6,
@@ -129,17 +129,17 @@ class UnitCard extends StatelessWidget {
                       _buildStat(
                         context,
                         Icons.layers_outlined,
-                        'الطابق ${unit.floor}',
+                        'Ø§Ù„Ø·Ø§Ø¨Ù‚ ${unit.floor}',
                       ),
                   ],
                 ),
 
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 12),
-                  child: Divider(color: Color(0xFFF1F5F9), height: 1),
+                  child: Divider(color: AppColors.dividerSubtleLight, height: 1),
                 ),
 
-                // ── Bottom Row: furnished + code + price ────────────
+                // â”€â”€ Bottom Row: furnished + code + price â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
                 Row(
                   children: [
                     // Furnished chip
@@ -248,3 +248,4 @@ class UnitCard extends StatelessWidget {
     );
   }
 }
+

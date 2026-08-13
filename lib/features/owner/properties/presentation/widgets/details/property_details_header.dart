@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:wafer/core/theme/app_colors.dart';
 
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../domain/entities/property_details_entity.dart';
@@ -45,7 +46,7 @@ class PropertyDetailsHeader extends StatelessWidget {
                   Text(
                     property.code,
                     style: const TextStyle(
-                      color: Color(0xFF94A3B8),
+                      color: AppColors.textTertiaryLight,
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
@@ -70,3 +71,4 @@ class PropertyDetailsHeader extends StatelessWidget {
     );
   }
 }
+

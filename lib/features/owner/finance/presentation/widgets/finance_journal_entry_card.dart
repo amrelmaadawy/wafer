@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:wafer/core/theme/color_utils.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
@@ -101,7 +101,7 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
                       : widget.entry.status.toLowerCase() == 'reversed'
                           ? AppColors.error.withValues(alpha: 0.1)
                           : context.primaryColor.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: AppRadius.circularXxl,
                 ),
                 child: Text(
                   _getLocalizedStatus(widget.entry.status),
@@ -389,7 +389,7 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF0F172A),
+                    color: AppColors.textPrimaryLight,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -397,7 +397,7 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
                   LocaleKeys.ownerFinanceReverseConfirmMessage.tr(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                    color: Color(0xFF64748B),
+                    color: AppColors.textSecondaryLight,
                     fontSize: 14,
                     height: 1.5,
                     fontWeight: FontWeight.w500,
@@ -427,7 +427,7 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
                           shape: RoundedRectangleBorder(
                             borderRadius: AppRadius.circularLg,
                           ),
-                          foregroundColor: const Color(0xFF64748B),
+                          foregroundColor: AppColors.textSecondaryLight,
                         ),
                         child: Text(
                           LocaleKeys.commonCancel.tr(),
@@ -480,3 +480,4 @@ class _FinanceJournalEntryCardState extends State<FinanceJournalEntryCard> {
     );
   }
 }
+

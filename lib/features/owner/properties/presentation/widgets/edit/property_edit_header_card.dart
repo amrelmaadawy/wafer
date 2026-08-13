@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
@@ -182,7 +184,7 @@ class PropertyEditHeaderCard extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          property.statusLabel,
+                          property.statusLabel ?? '',
                           style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.bold,
@@ -234,7 +236,7 @@ class PropertyEditHeaderCard extends StatelessWidget {
                                 child: Text(
                                   (property.address == null ||
                                           property.address!.isEmpty)
-                                      ? 'غير محدد'
+                                      ? LocaleKeys.commonNotSpecified.tr()
                                       : property.address!,
                                   style: const TextStyle(
                                     fontSize: 13,
@@ -263,7 +265,7 @@ class PropertyEditHeaderCard extends StatelessWidget {
                         ),
                       ),
                       child: Text(
-                        property.propertyType,
+                        property.propertyType ?? '',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w700,
@@ -278,7 +280,7 @@ class PropertyEditHeaderCard extends StatelessWidget {
                   Row(
                     children: [
                       Text(
-                        'نسبة إكمال البيانات',
+                        LocaleKeys.propertyDetailsCompletionPercentage.tr(),
                         style: TextStyle(
                           fontSize: 13,
                           color: AppColors.textSecondaryLight,

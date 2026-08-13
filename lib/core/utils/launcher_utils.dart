@@ -74,4 +74,24 @@ class LauncherUtils {
 
     return false;
   }
+
+  static Future<bool> openMap(String query) async {
+    final encodedQuery = Uri.encodeComponent(query);
+    final url = Uri.parse('https://www.google.com/maps/search/?api=1&query=$encodedQuery');
+    
+    try {
+      final launched = await launchUrl(
+        url,
+        mode: LaunchMode.externalApplication,
+      );
+      if (launched) return true;
+    } catch (_) {}
+
+    try {
+      if (await canLaunchUrl(url)) {
+        return await launchUrl(url, mode: LaunchMode.externalApplication);
+      }
+    } catch (_) {}
+    return false;
+  }
 }

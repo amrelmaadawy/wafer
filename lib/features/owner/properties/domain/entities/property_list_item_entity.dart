@@ -42,12 +42,12 @@ class PropertyListItemEntity extends Equatable {
   bool get isDraft => status.toLowerCase() == 'draft';
   bool get isPublished => status.toLowerCase() == 'published';
 
-  String get displayAddress {
+  String? get displayAddress {
     final parts = [
-      if (city != null && city!.isNotEmpty) city,
       if (district != null && district!.isNotEmpty) district,
+      if (city != null && city!.isNotEmpty) city,
     ];
-    return parts.isEmpty ? 'غير محدد' : parts.join(' - ');
+    return parts.isEmpty ? null : parts.join(' ، ');
   }
 
   @override

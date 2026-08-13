@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:wafer/core/theme/app_colors.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
@@ -18,12 +19,12 @@ class OwnerAlertsGrid extends StatelessWidget {
       children: [
         Row(
           children: [
-            const Icon(Icons.bolt_rounded, size: 17, color: Color(0xFF64748B)),
+            const Icon(Icons.bolt_rounded, size: 17, color: AppColors.textSecondaryLight),
             const SizedBox(width: 6),
             Text(
               LocaleKeys.ownerQuickAlerts.tr(),
               style: const TextStyle(
-                color: Color(0xFF0F172A),
+                color: AppColors.textPrimaryLight,
                 fontSize: 14,
                 fontWeight: FontWeight.w700,
               ),
@@ -42,7 +43,7 @@ class OwnerAlertsGrid extends StatelessWidget {
                 child: _buildCard(
                   title: LocaleKeys.ownerActiveContractsTitle.tr(),
                   count: data.activeContracts,
-                  color: const Color(0xFF10B981),
+                  color: AppColors.success,
                   icon: Icons.description_rounded,
                   subtitle: LocaleKeys.ownerActiveContractsSub.tr(),
                 ),
@@ -54,8 +55,8 @@ class OwnerAlertsGrid extends StatelessWidget {
                   title: LocaleKeys.ownerExpiringTitle.tr(),
                   count: data.expiringContracts,
                   color: data.expiringContracts > 0
-                      ? const Color(0xFFF59E0B)
-                      : const Color(0xFF94A3B8),
+                      ? AppColors.warning
+                      : AppColors.textTertiaryLight,
                   icon: Icons.update_rounded,
                   subtitle: LocaleKeys.ownerExpiringSub.tr(),
                   highlight: data.expiringContracts > 0,
@@ -68,8 +69,8 @@ class OwnerAlertsGrid extends StatelessWidget {
                   title: LocaleKeys.ownerPendingMaintTitle.tr(),
                   count: data.pendingMaintenance,
                   color: data.pendingMaintenance > 0
-                      ? const Color(0xFFEF4444)
-                      : const Color(0xFF94A3B8),
+                      ? AppColors.error
+                      : AppColors.textTertiaryLight,
                   icon: Icons.handyman_rounded,
                   subtitle: LocaleKeys.ownerPendingMaintSub.tr(),
                   highlight: data.pendingMaintenance > 0,
@@ -144,7 +145,7 @@ class OwnerAlertsGrid extends StatelessWidget {
                 Text(
                   '$count',
                   style: TextStyle(
-                    color: highlight ? color : const Color(0xFF0F172A),
+                    color: highlight ? color : AppColors.textPrimaryLight,
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
                   ),
@@ -158,7 +159,7 @@ class OwnerAlertsGrid extends StatelessWidget {
                     style: TextStyle(
                       color: highlight
                           ? color.withValues(alpha: 0.85)
-                          : const Color(0xFF334155),
+                          : AppColors.textSecondaryLight,
                       fontSize: 11,
                       fontWeight: FontWeight.w700,
                     ),
@@ -171,7 +172,7 @@ class OwnerAlertsGrid extends StatelessWidget {
                   child: Text(
                     subtitle,
                     style: const TextStyle(
-                      color: Color(0xFF94A3B8),
+                      color: AppColors.textTertiaryLight,
                       fontSize: 10,
                     ),
                   ),
@@ -184,3 +185,4 @@ class OwnerAlertsGrid extends StatelessWidget {
     );
   }
 }
+

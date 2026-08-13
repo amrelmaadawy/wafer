@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../../core/theme/app_colors.dart';
 import '../../../../../../../core/theme/color_utils.dart';
 import '../../../../../../../core/utils/widgets/custom_text_field.dart';
@@ -150,12 +151,14 @@ class Step3LocationUtilitiesView extends StatelessWidget {
         fontSize: 13,
       ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: AppRadius.circularXxl,
         side: BorderSide(
-          color: isSelected ? context.primaryColor : const Color(0xFFE2E8F0),
+          color: isSelected ? context.primaryColor : AppColors.borderLight,
           width: isSelected ? 1.5 : 1,
         ),
       ),
     );
   }
 }
+
+

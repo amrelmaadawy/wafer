@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wafer/core/theme/app_colors.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../cubit/owner_dashboard_cubit.dart';
@@ -38,7 +39,7 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.dark,
       child: ColoredBox(
-        color: const Color(0xFFF8FAFC),
+        color: AppColors.surfaceSubtleLight,
         child: Column(
           children: [
             _buildHeader(context),
@@ -119,3 +120,4 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
     );
   }
 }
+

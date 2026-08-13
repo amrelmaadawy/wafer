@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
@@ -72,7 +72,7 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
                     width: 48,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFE2E8F0),
+                      color: AppColors.borderLight,
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -197,13 +197,13 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
     required bool isSelected,
     required VoidCallback? onTap,
   }) {
-    final color = isSelected ? context.primaryColor : const Color(0xFF94A3B8);
+    final color = isSelected ? context.primaryColor : AppColors.textTertiaryLight;
     final bgColor = isSelected
         ? context.primaryColor.withValues(alpha: 0.05)
         : Colors.transparent;
     final borderColor = isSelected
         ? context.primaryColor
-        : const Color(0xFFE2E8F0);
+        : AppColors.borderLight;
 
     return InkWell(
       onTap: onTap,
@@ -222,7 +222,7 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
               decoration: BoxDecoration(
                 color: isSelected
                     ? context.primaryColor.withValues(alpha: 0.1)
-                    : const Color(0xFFF1F5F9),
+                    : AppColors.dividerSubtleLight,
                 shape: BoxShape.circle,
               ),
               child: Icon(icon, color: color, size: 22),
@@ -262,7 +262,7 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
             else
               const Icon(
                 Icons.circle_outlined,
-                color: Color(0xFFCBD5E1),
+                color: AppColors.textTertiaryLight,
                 size: 24,
               ),
           ],
@@ -271,3 +271,4 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
     );
   }
 }
+

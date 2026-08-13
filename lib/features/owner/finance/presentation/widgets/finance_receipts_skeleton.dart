@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import '../../../../../../core/utils/widgets/app_shimmer.dart';
 import '../../../../../../core/theme/app_colors.dart';
@@ -31,12 +31,12 @@ class FinanceReceiptsSkeleton extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      AppShimmer.box(width: 36, height: 36, borderRadius: BorderRadius.circular(12)),
+                      AppShimmer.box(width: 36, height: 36, borderRadius: AppRadius.circularLg),
                       const SizedBox(width: 12),
-                      AppShimmer.box(width: 120, height: 20, borderRadius: BorderRadius.circular(4)),
+                      AppShimmer.box(width: 120, height: 20, borderRadius: AppRadius.circularSm),
                     ],
                   ),
-                  AppShimmer.box(width: 60, height: 24, borderRadius: BorderRadius.circular(12)),
+                  AppShimmer.box(width: 60, height: 24, borderRadius: AppRadius.circularLg),
                 ],
               ),
               const SizedBox(height: 16),
@@ -48,17 +48,17 @@ class FinanceReceiptsSkeleton extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AppShimmer.box(width: 80, height: 12, borderRadius: BorderRadius.circular(4)),
+                      AppShimmer.box(width: 80, height: 12, borderRadius: AppRadius.circularSm),
                       const SizedBox(height: 8),
-                      AppShimmer.box(width: 100, height: 24, borderRadius: BorderRadius.circular(4)),
+                      AppShimmer.box(width: 100, height: 24, borderRadius: AppRadius.circularSm),
                     ],
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      AppShimmer.box(width: 60, height: 12, borderRadius: BorderRadius.circular(4)),
+                      AppShimmer.box(width: 60, height: 12, borderRadius: AppRadius.circularSm),
                       const SizedBox(height: 8),
-                      AppShimmer.box(width: 80, height: 16, borderRadius: BorderRadius.circular(4)),
+                      AppShimmer.box(width: 80, height: 16, borderRadius: AppRadius.circularSm),
                     ],
                   ),
                 ],
@@ -67,8 +67,8 @@ class FinanceReceiptsSkeleton extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  AppShimmer.box(width: 140, height: 16, borderRadius: BorderRadius.circular(4)),
-                  AppShimmer.box(width: 80, height: 20, borderRadius: BorderRadius.circular(8)),
+                  AppShimmer.box(width: 140, height: 16, borderRadius: AppRadius.circularSm),
+                  AppShimmer.box(width: 80, height: 20, borderRadius: AppRadius.circularMd),
                 ],
               ),
             ],
@@ -78,3 +78,4 @@ class FinanceReceiptsSkeleton extends StatelessWidget {
     );
   }
 }
+

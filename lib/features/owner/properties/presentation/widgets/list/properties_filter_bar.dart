@@ -7,6 +7,9 @@ import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../cubit/list/properties_list_cubit.dart';
 import '../../cubit/list/properties_list_state.dart';
+import '../../../domain/entities/properties_query_filter_entity.dart';
+import 'property_filter_sheet.dart';
+import 'active_filter_bar.dart';
 
 class PropertiesFilterBar extends StatefulWidget {
   const PropertiesFilterBar({super.key});
@@ -44,45 +47,90 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-              child: TextField(
-                controller: _searchController,
-                onChanged: (val) => cubit.searchProperties(val),
-                style: const TextStyle(fontSize: 13),
-                decoration: InputDecoration(
-                  hintText: LocaleKeys.propertiesSearchHint.tr(),
-                  prefixIcon: const Icon(
-                    Icons.search_rounded,
-                    size: 20,
-                    color: AppColors.textSecondaryLight,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: (val) => cubit.searchProperties(val),
+                      style: const TextStyle(fontSize: 13),
+                      decoration: InputDecoration(
+                        hintText: LocaleKeys.propertiesSearchHint.tr(),
+                        prefixIcon: const Icon(
+                          Icons.search_rounded,
+                          size: 20,
+                          color: AppColors.textSecondaryLight,
+                        ),
+                        suffixIcon: _searchController.text.isNotEmpty
+                            ? IconButton(
+                                icon: const Icon(Icons.close_rounded, size: 18),
+                                onPressed: () {
+                                  _searchController.clear();
+                                  cubit.searchProperties('');
+                                },
+                              )
+                            : null,
+                        filled: true,
+                        fillColor: AppColors.surfaceLight,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 10,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: AppRadius.circularXl,
+                          borderSide: const BorderSide(color: AppColors.borderLight),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: AppRadius.circularXl,
+                          borderSide: const BorderSide(color: AppColors.borderLight),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: AppRadius.circularXl,
+                          borderSide: BorderSide(color: context.primaryColor),
+                        ),
+                      ),
+                    ),
                   ),
-                  suffixIcon: _searchController.text.isNotEmpty
-                      ? IconButton(
-                          icon: const Icon(Icons.close_rounded, size: 18),
-                          onPressed: () {
-                            _searchController.clear();
-                            cubit.searchProperties('');
-                          },
-                        )
-                      : null,
-                  filled: true,
-                  fillColor: AppColors.surfaceLight,
-                  contentPadding: const EdgeInsets.symmetric(
-                    horizontal: 14,
-                    vertical: 10,
+                  const SizedBox(width: 12),
+                  InkWell(
+                    onTap: () {
+                      PropertyFilterSheet.show(context, cubit.currentFilter);
+                    },
+                    borderRadius: AppRadius.circularLg,
+                    child: Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: AppColors.surfaceLight,
+                        borderRadius: AppRadius.circularLg,
+                        border: Border.all(color: AppColors.borderLight),
+                      ),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          const Icon(
+                            Icons.tune_rounded,
+                            color: AppColors.textPrimaryLight,
+                            size: 22,
+                          ),
+                          if (_hasAdvancedFilters(cubit.currentFilter))
+                            Positioned(
+                              right: -4,
+                              top: -4,
+                              child: Container(
+                                width: 10,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                  color: AppColors.error,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: Colors.white, width: 2),
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: AppRadius.circularXl,
-                    borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: AppRadius.circularXl,
-                    borderSide: const BorderSide(color: Color(0xFFE2E8F0)),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: AppRadius.circularXl,
-                    borderSide: BorderSide(color: context.primaryColor),
-                  ),
-                ),
+                ],
               ),
             ),
             const SizedBox(height: 10),
@@ -92,7 +140,7 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
                 height: 42,
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFF1F5F9),
+                  color: AppColors.dividerSubtleLight,
                   borderRadius: AppRadius.circularFull,
                 ),
                 child: LayoutBuilder(
@@ -149,7 +197,7 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
                                     style: TextStyle(
                                       color: isSelected
                                           ? Colors.white
-                                          : const Color(0xFF64748B),
+                                          : AppColors.textSecondaryLight,
                                       fontSize: 13,
                                       fontWeight: isSelected
                                           ? FontWeight.w700
@@ -174,9 +222,17 @@ class _PropertiesFilterBarState extends State<PropertiesFilterBar> {
                 ),
               ),
             ),
+            const ActiveFilterBar(),
           ],
         );
       },
     );
   }
+
+  bool _hasAdvancedFilters(PropertiesQueryFilterEntity filter) {
+    return (filter.propertyType != null && filter.propertyType != 'all') ||
+        (filter.usageType != null && filter.usageType != 'all') ||
+        filter.sortBy != null;
+  }
 }
+

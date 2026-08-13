@@ -54,14 +54,19 @@ class PropertiesListLoaded extends PropertiesListState {
   List<Object?> get props => [properties, meta, stats, filter, isFetchingMore];
 }
 
+enum EmptyReason { noData, noSearchResults, noFilterResults }
+
 class PropertiesListEmpty extends PropertiesListState {
   final PropertiesQueryFilterEntity filter;
+  final EmptyReason reason;
+  
   const PropertiesListEmpty({
     this.filter = const PropertiesQueryFilterEntity(),
+    this.reason = EmptyReason.noData,
   });
 
   @override
-  List<Object?> get props => [filter];
+  List<Object?> get props => [filter, reason];
 }
 
 class PropertiesListError extends PropertiesListState {

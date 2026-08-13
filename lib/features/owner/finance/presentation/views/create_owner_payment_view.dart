@@ -1,3 +1,5 @@
+﻿import 'package:wafer/core/theme/app_radius.dart';
+
 import '../../../../../core/localization/locale_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -103,14 +105,14 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
                   controller: _payeeIdController,
                   label: LocaleKeys.owner_finance_payee_id.tr(),
                   keyboardType: TextInputType.number,
-                  validator: (val) => val == null || val.isEmpty ? 'مطلوب' : null,
+                  validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _amountController,
-                  label: 'المبلغ (Amount)',
+                  label: 'Ø§Ù„Ù…Ø¨Ù„Øº (Amount)',
                   keyboardType: TextInputType.number,
-                  validator: (val) => val == null || val.isEmpty ? 'مطلوب' : null,
+                  validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
                 ),
                 const SizedBox(height: 16),
                 GestureDetector(
@@ -140,9 +142,9 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
                   child: AbsorbPointer(
                     child: CustomTextField(
                       controller: _dateController,
-                      label: 'تاريخ السند',
+                      label: 'ØªØ§Ø±ÙŠØ® Ø§Ù„Ø³Ù†Ø¯',
                       readOnly: true,
-                      validator: (val) => val == null || val.isEmpty ? 'مطلوب' : null,
+                      validator: (val) => val == null || val.isEmpty ? 'Ù…Ø·Ù„ÙˆØ¨' : null,
                     ),
                   ),
                 ),
@@ -158,52 +160,52 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text('طريقة الدفع', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const Text('Ø·Ø±ÙŠÙ‚Ø© Ø§Ù„Ø¯ÙØ¹', style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<String>(
                             items: paymentMethods.map((e) => e.value).toList(),
                             value: _selectedPaymentMethod,
-                            hint: 'اختر طريقة الدفع',
+                            hint: 'Ø§Ø®ØªØ± Ø·Ø±ÙŠÙ‚Ø© Ø§Ù„Ø¯ÙØ¹',
                             itemLabelBuilder: (val) => paymentMethods.firstWhere((e) => e.value == val).label,
                             onSelected: (val) => setState(() => _selectedPaymentMethod = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('الحساب المدين (Debit Account)', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const Text('Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ù…Ø¯ÙŠÙ† (Debit Account)', style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: accounts.map((e) => e.id).toList(),
                             value: _selectedDebitAccountId,
-                            hint: 'اختر الحساب المدين',
+                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ù…Ø¯ÙŠÙ†',
                             itemLabelBuilder: (id) => accounts.firstWhere((e) => e.id == id).nameAr,
                             onSelected: (val) => setState(() => _selectedDebitAccountId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('الحساب الدائن (Credit Account)', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const Text('Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ø¯Ø§Ø¦Ù† (Credit Account)', style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: accounts.map((e) => e.id).toList(),
                             value: _selectedCreditAccountId,
-                            hint: 'اختر الحساب الدائن',
+                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø­Ø³Ø§Ø¨ Ø§Ù„Ø¯Ø§Ø¦Ù†',
                             itemLabelBuilder: (id) => accounts.firstWhere((e) => e.id == id).nameAr,
                             onSelected: (val) => setState(() => _selectedCreditAccountId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('العقار (Property) - اختياري', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const Text('Ø§Ù„Ø¹Ù‚Ø§Ø± (Property) - Ø§Ø®ØªÙŠØ§Ø±ÙŠ', style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: properties.map((e) => int.tryParse(e.value) ?? 0).toList(),
                             value: _selectedPropertyId,
-                            hint: 'اختر العقار',
+                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø¹Ù‚Ø§Ø±',
                             itemLabelBuilder: (id) => properties.firstWhere((e) => e.value == id.toString()).label,
                             onSelected: (val) => setState(() => _selectedPropertyId = val),
                           ),
                           const SizedBox(height: 16),
-                          const Text('العقد (Contract) - اختياري', style: TextStyle(fontWeight: FontWeight.bold)),
+                          const Text('Ø§Ù„Ø¹Ù‚Ø¯ (Contract) - Ø§Ø®ØªÙŠØ§Ø±ÙŠ', style: TextStyle(fontWeight: FontWeight.bold)),
                           const SizedBox(height: 8),
                           CustomDropdownMenu<int>(
                             items: contracts.map((e) => int.tryParse(e.value) ?? 0).toList(),
                             value: _selectedContractId,
-                            hint: 'اختر العقد',
+                            hint: 'Ø§Ø®ØªØ± Ø§Ù„Ø¹Ù‚Ø¯',
                             itemLabelBuilder: (id) => contracts.firstWhere((e) => e.value == id.toString()).label,
                             onSelected: (val) => setState(() => _selectedContractId = val),
                           ),
@@ -212,13 +214,13 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
                     } else if (state is FinanceFormDataError) {
                       return Center(child: Text(state.message, style: const TextStyle(color: Colors.red)));
                     }
-                    return AppShimmer.box(height: 250, borderRadius: BorderRadius.circular(12));
+                    return AppShimmer.box(height: 250, borderRadius: AppRadius.circularLg);
                   },
                 ),
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: _notesController,
-                  label: 'ملاحظات',
+                  label: 'Ù…Ù„Ø§Ø­Ø¸Ø§Øª',
                   maxLines: 3,
                 ),
                 const SizedBox(height: 32),
@@ -230,12 +232,12 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
                       return ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: context.primaryColor,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                          shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
                         ),
                         onPressed: state is CreateFinancePaymentLoading ? null : _submit,
                         child: state is CreateFinancePaymentLoading
                             ? const CircularProgressIndicator(color: Colors.white)
-                            : const Text('إنشاء السند', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+                            : const Text('Ø¥Ù†Ø´Ø§Ø¡ Ø§Ù„Ø³Ù†Ø¯', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
                       );
                     },
                   ),
@@ -249,3 +251,4 @@ class _CreateOwnerPaymentViewState extends State<CreateOwnerPaymentView> {
     );
   }
 }
+

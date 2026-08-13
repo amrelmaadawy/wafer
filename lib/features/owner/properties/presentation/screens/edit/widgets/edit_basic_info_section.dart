@@ -25,23 +25,23 @@ class EditBasicInfoSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         EditSectionHeader(
-          title: 'المعلومات الأساسية',
+          title: LocaleKeys.propertyDetailsBasicInfo.tr(),
           icon: Icons.info_outline_rounded,
         ),
         const SizedBox(height: 16),
         EditFormField(
           controller: nameController,
-          label: LocaleKeys.propertyCreatePropertyName.tr(),
+          label: LocaleKeys.commonPropertyName.tr(),
           icon: Icons.apartment_rounded,
           isRequired: true,
-          hint: 'أدخل اسم العقار (مثال: عمارة الياسمين)',
+          hint: LocaleKeys.propertyDetailsNameHint.tr(),
         ),
         const SizedBox(height: 16),
         EditFormField(
           controller: addressController,
-          label: LocaleKeys.propertyCreateAddress.tr(),
+          label: LocaleKeys.commonAddress.tr(),
           icon: Icons.location_on_outlined,
-          hint: 'أدخل العنوان بالتفصيل...',
+          hint: LocaleKeys.propertyDetailsAddressHint.tr(),
         ),
         const SizedBox(height: 16),
         Row(
@@ -73,12 +73,47 @@ class EditBasicInfoSection extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 16),
-        EditFormField(
-          controller: descriptionController,
-          label: LocaleKeys.propertyCreateDescription.tr(),
-          icon: Icons.notes_rounded,
-          maxLines: 4,
-          hint: 'أضف وصفاً مفصلاً للعقار ومميزاته...',
+        // Description field (multi-line)
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(Icons.description_outlined, size: 18, color: Colors.grey.shade600),
+                const SizedBox(width: 8),
+                Text(
+                  LocaleKeys.commonDescription.tr(),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF1E293B),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            TextFormField(
+              controller: descriptionController,
+              maxLines: 4,
+              decoration: InputDecoration(
+                hintText: LocaleKeys.propertyDetailsDescriptionHint.tr(),
+                hintStyle: TextStyle(
+                  fontSize: 13,
+                  color: Colors.grey.shade400,
+                ),
+                filled: true,
+                fillColor: const Color(0xFFF8FAFC),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey.shade200),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
