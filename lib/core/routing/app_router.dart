@@ -8,7 +8,6 @@ import 'package:wafer/features/owner/finance/presentation/cubit/journal_entries/
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/unsupported_account_screen.dart';
-import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/auth/presentation/cubit/auth_state.dart';
 import '../../features/auth/domain/entities/user_entity.dart';
 import '../presentation/screens/route_error_screen.dart';

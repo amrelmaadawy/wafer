@@ -6,7 +6,6 @@ import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_fonts.dart';
-import '../../../../core/theme/color_utils.dart';
 import '../cubit/auth_cubit.dart';
 
 class UnsupportedAccountScreen extends StatelessWidget {
