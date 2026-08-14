@@ -78,8 +78,17 @@ class UnitAmenitiesSection extends StatelessWidget {
         return _AmenityMeta(Icons.wifi_outlined, LocaleKeys.properties_amenity_internet.tr());
       case 'ac':
         return _AmenityMeta(Icons.ac_unit_outlined, LocaleKeys.properties_amenity_ac.tr());
+      case 'smart_lock':
+        return _AmenityMeta(Icons.lock_outline_rounded, LocaleKeys.properties_amenity_smart_lock.tr());
+      case 'central_ac':
+        return _AmenityMeta(Icons.ac_unit_rounded, LocaleKeys.properties_amenity_central_ac.tr());
       default:
-        return _AmenityMeta(Icons.check_circle_outline, key);
+        final formattedKey = key
+            .replaceAll('_', ' ')
+            .split(' ')
+            .map((e) => e.isNotEmpty ? '${e[0].toUpperCase()}${e.substring(1).toLowerCase()}' : '')
+            .join(' ');
+        return _AmenityMeta(Icons.check_circle_outline, formattedKey);
     }
   }
 }

@@ -410,7 +410,7 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
           parts.add(widget.unit.usageType!);
       }
     }
-    return parts.join(' â€¢ ');
+    return parts.join(' • ');
   }
 
   Widget _buildGlassChip({

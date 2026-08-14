@@ -1182,9 +1182,10 @@
   "activityLogsAllTypes": "All Types",
   "activityLogsAllActions": "All Actions",
   "activityLogsSubtitle": "System Activity Logs",
-  "activityLogsReadOnlyNotice": "Read-only view",
+  "activityLogsReadOnlyNotice": "Read Only",
   "activityLogsUnknownActivity": "Unknown Activity",
   "activityLogsUnknownUser": "Unknown User",
+  "account_balance": "Account Balance",
   "reports_expired": "Expired",
   "reports_expiringSoon": "Expiring Soon",
   "property_filters": "Property Filters",
@@ -1771,7 +1772,6 @@
   "propertiesSubtitle": "Manage your real estate portfolio",
   "propertiesTitle": "Properties",
   "propertiesTotalCount": "Total",
- 
   "propertyCreateAddress": "Address",
   "propertyCreateArea": "Area",
   "propertyCreateDescription": "Description",
@@ -2128,5 +2128,7 @@
   "financeContractOptional": "Contract (Optional)",
   "financeSelectContract": "Select Contract",
   "financeNotes": "Notes",
-  "financeCreateAction": "Create"
+  "financeCreateAction": "Create",
+  "properties_amenity_smart_lock": "Smart Lock",
+  "properties_amenity_central_ac": "Central AC"
 }

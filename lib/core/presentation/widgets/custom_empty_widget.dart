@@ -29,7 +29,7 @@ class CustomEmptyWidget extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 40.0),
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 24.0),
           decoration: BoxDecoration(
             color: isDark ? AppColors.surfaceDark : AppColors.surfaceLight,
             borderRadius: AppRadius.circularXxl,
@@ -40,10 +40,11 @@ class CustomEmptyWidget extends StatelessWidget {
             ),
             boxShadow: isDark ? AppShadows.cardDark : AppShadows.cardLight,
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
               // Beautiful Icon Stack
               Stack(
                 alignment: Alignment.center,
@@ -128,7 +129,8 @@ class CustomEmptyWidget extends StatelessWidget {
                   ),
                 ),
               ],
-            ],
+              ],
+            ),
           ),
         ),
       ),
