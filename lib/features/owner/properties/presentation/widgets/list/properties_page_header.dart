@@ -2,11 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_breakpoints.dart';
-import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_spacing.dart';
 
 class PropertiesPageHeader extends StatelessWidget {
-  const PropertiesPageHeader({super.key});
+  final VoidCallback onOpenUnits;
+
+  const PropertiesPageHeader({super.key, required this.onOpenUnits});
 
   @override
   Widget build(BuildContext context) {
@@ -17,24 +18,37 @@ class PropertiesPageHeader extends StatelessWidget {
         context.pagePadding,
         AppSpacing.xs,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
-            LocaleKeys.propertiesTitle.tr(),
-            style: const TextStyle(
-              color: AppColors.textPrimaryLight,
-              fontSize: 22,
-              fontWeight: FontWeight.w800,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  LocaleKeys.propertiesTitle.tr(),
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                    fontSize: 22,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.xxs),
+                Text(
+                  LocaleKeys.propertiesSubtitle.tr(),
+                  style: TextStyle(
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
+                    fontSize: 12,
+                  ),
+                ),
+              ],
             ),
           ),
-          const SizedBox(height: AppSpacing.xxs),
-          Text(
-            LocaleKeys.propertiesSubtitle.tr(),
-            style: const TextStyle(
-              color: AppColors.textSecondaryLight,
-              fontSize: 12,
-            ),
+          const SizedBox(width: AppSpacing.sm),
+          OutlinedButton.icon(
+            onPressed: onOpenUnits,
+            icon: const Icon(Icons.door_front_door_outlined, size: 18),
+            label: Text(LocaleKeys.reports_unitsShortcut.tr()),
           ),
         ],
       ),

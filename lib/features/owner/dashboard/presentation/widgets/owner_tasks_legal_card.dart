@@ -30,6 +30,7 @@ class OwnerTasksLegalCard extends StatelessWidget {
               subtitle: LocaleKeys.dashboard_tasks_overdue.tr(),
               subtitleValue: '${tasks!.overdue}',
               color: AppColors.info,
+              onTap: () => context.push(Routes.ownerTasks),
             ),
           ),
         if (tasks != null && legalCases != null)

@@ -4,7 +4,8 @@ import '../../../../../core/usecases/usecase.dart';
 import '../entities/owner_reports_index_entity.dart';
 import '../repositories/owner_reports_repository.dart';
 
-class GetOwnerReportsIndexUseCase implements UseCase<OwnerReportsIndexEntity, NoParams> {
+class GetOwnerReportsIndexUseCase
+    implements UseCase<OwnerReportsIndexEntity, NoParams> {
   final OwnerReportsRepository repository;
 
   GetOwnerReportsIndexUseCase(this.repository);

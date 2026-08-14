@@ -51,10 +51,7 @@ class ContractsStatusFilterEntity extends Equatable {
   final String value;
   final String label;
 
-  const ContractsStatusFilterEntity({
-    required this.value,
-    required this.label,
-  });
+  const ContractsStatusFilterEntity({required this.value, required this.label});
 
   @override
   List<Object?> get props => [value, label];

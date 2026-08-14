@@ -1,4 +1,5 @@
 import '../../domain/entities/report_pagination_entity.dart';
+import 'report_model_parsing.dart';
 
 class ReportPaginationModel extends ReportPaginationEntity {
   const ReportPaginationModel({
@@ -12,12 +13,12 @@ class ReportPaginationModel extends ReportPaginationEntity {
 
   factory ReportPaginationModel.fromJson(Map<String, dynamic> json) {
     return ReportPaginationModel(
-      currentPage: json['current_page'] ?? 1,
-      lastPage: json['last_page'] ?? 1,
-      perPage: json['per_page'] ?? 15,
-      total: json['total'] ?? 0,
-      from: json['from'] ?? 0,
-      to: json['to'] ?? 0,
+      currentPage: reportNullableInt(json['current_page']) ?? 1,
+      lastPage: reportNullableInt(json['last_page']) ?? 1,
+      perPage: reportNullableInt(json['per_page']) ?? 15,
+      total: reportInt(json['total']),
+      from: reportInt(json['from']),
+      to: reportInt(json['to']),
     );
   }
 }

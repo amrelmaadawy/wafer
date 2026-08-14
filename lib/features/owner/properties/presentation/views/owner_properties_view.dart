@@ -80,7 +80,9 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
       body: SafeArea(
         child: Column(
           children: [
-            const PropertiesPageHeader(),
+            PropertiesPageHeader(
+              onOpenUnits: () => context.push(Routes.ownerUnitsStatusReport),
+            ),
             BlocBuilder<PropertiesListCubit, PropertiesListState>(
               builder: (context, state) {
                 if (state is PropertiesListLoaded && state.stats != null) {

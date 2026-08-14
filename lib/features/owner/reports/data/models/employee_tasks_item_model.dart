@@ -1,4 +1,5 @@
 import '../../domain/entities/employee_tasks_item_entity.dart';
+import 'report_model_parsing.dart';
 
 class EmployeeTasksItemModel extends EmployeeTasksItemEntity {
   const EmployeeTasksItemModel({
@@ -13,13 +14,13 @@ class EmployeeTasksItemModel extends EmployeeTasksItemEntity {
 
   factory EmployeeTasksItemModel.fromJson(Map<String, dynamic> json) {
     return EmployeeTasksItemModel(
-      id: json['id'] ?? 0,
-      name: json['name'] ?? '',
-      email: json['email'] ?? '',
-      phone: json['phone'] ?? '',
-      completedTasks: json['completed_tasks'] ?? 0,
-      pendingTasks: json['pending_tasks'] ?? 0,
-      overdueTasks: json['overdue_tasks'] ?? 0,
+      id: reportInt(json['id']),
+      name: json['name']?.toString() ?? '',
+      email: json['email']?.toString() ?? '',
+      phone: json['phone']?.toString() ?? '',
+      completedTasks: reportInt(json['completed_tasks']),
+      pendingTasks: reportInt(json['pending_tasks']),
+      overdueTasks: reportInt(json['overdue_tasks']),
     );
   }
 }

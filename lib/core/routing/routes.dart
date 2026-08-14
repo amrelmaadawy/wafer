@@ -98,5 +98,6 @@ class Routes {
       '/owner/reports/technician-performance';
   static const String ownerEmployeeTasksReport =
       '/owner/reports/employee-tasks';
+  static const String ownerTasks = '/owner/tasks';
   static const String ownerActivityLogsReport = '/owner/reports/activity-logs';
 }

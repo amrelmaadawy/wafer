@@ -10,11 +10,14 @@ class OwnerReportsIndexModel extends OwnerReportsIndexEntity {
   factory OwnerReportsIndexModel.fromJson(Map<String, dynamic> json) {
     return OwnerReportsIndexModel(
       stats: ReportStatsModel.fromJson(json['stats'] ?? {}),
-      reports: (json['reports'] as List<dynamic>?)
+      reports:
+          (json['reports'] as List<dynamic>?)
               ?.map((e) => ReportMetaModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           [],
-      filterOptions: ReportFilterOptionsModel.fromJson(json['filter_options'] ?? {}),
+      filterOptions: ReportFilterOptionsModel.fromJson(
+        json['filter_options'] ?? {},
+      ),
     );
   }
 }
@@ -58,7 +61,11 @@ class ReportMetaModel extends ReportMetaEntity {
       method: json['method'] ?? '',
       path: json['path'] ?? '',
       v1MobilePath: json['v1_mobile_path'] ?? '',
-      filters: (json['filters'] as List<dynamic>?)?.map((e) => e.toString()).toList() ?? [],
+      filters:
+          (json['filters'] as List<dynamic>?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          [],
     );
   }
 }
@@ -74,24 +81,45 @@ class ReportFilterOptionsModel extends ReportFilterOptionsEntity {
 
   factory ReportFilterOptionsModel.fromJson(Map<String, dynamic> json) {
     return ReportFilterOptionsModel(
-      properties: (json['properties'] as List<dynamic>?)
-              ?.map((e) => ReportFilterPropertyModel.fromJson(e as Map<String, dynamic>))
+      properties:
+          (json['properties'] as List<dynamic>?)
+              ?.map(
+                (e) => ReportFilterPropertyModel.fromJson(
+                  e as Map<String, dynamic>,
+                ),
+              )
               .toList() ??
           [],
-      unitStatuses: (json['unit_statuses'] as List<dynamic>?)
-              ?.map((e) => ReportFilterOptionModel.fromJson(e as Map<String, dynamic>))
+      unitStatuses:
+          (json['unit_statuses'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    ReportFilterOptionModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           [],
-      contractStatuses: (json['contract_statuses'] as List<dynamic>?)
-              ?.map((e) => ReportFilterOptionModel.fromJson(e as Map<String, dynamic>))
+      contractStatuses:
+          (json['contract_statuses'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    ReportFilterOptionModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           [],
-      maintenanceStatuses: (json['maintenance_statuses'] as List<dynamic>?)
-              ?.map((e) => ReportFilterOptionModel.fromJson(e as Map<String, dynamic>))
+      maintenanceStatuses:
+          (json['maintenance_statuses'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    ReportFilterOptionModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           [],
-      maintenancePriorities: (json['maintenance_priorities'] as List<dynamic>?)
-              ?.map((e) => ReportFilterOptionModel.fromJson(e as Map<String, dynamic>))
+      maintenancePriorities:
+          (json['maintenance_priorities'] as List<dynamic>?)
+              ?.map(
+                (e) =>
+                    ReportFilterOptionModel.fromJson(e as Map<String, dynamic>),
+              )
               .toList() ??
           [],
     );
@@ -115,10 +143,7 @@ class ReportFilterPropertyModel extends ReportFilterPropertyEntity {
 }
 
 class ReportFilterOptionModel extends ReportFilterOptionEntity {
-  const ReportFilterOptionModel({
-    required super.value,
-    required super.label,
-  });
+  const ReportFilterOptionModel({required super.value, required super.label});
 
   factory ReportFilterOptionModel.fromJson(Map<String, dynamic> json) {
     return ReportFilterOptionModel(

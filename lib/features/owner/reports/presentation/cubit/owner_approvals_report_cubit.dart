@@ -10,17 +10,18 @@ class OwnerApprovalsReportCubit extends Cubit<OwnerApprovalsReportState> {
   ApprovalsReportEntity? _currentReport;
 
   OwnerApprovalsReportCubit({required this.getApprovalsReportUseCase})
-      : super(OwnerApprovalsReportInitial());
+    : super(OwnerApprovalsReportInitial());
 
   Future<void> fetchReport({bool isRefresh = false}) async {
     if (_isFetching) return;
-    
+
     if (isRefresh) {
       _currentPage = 1;
       _currentReport = null;
     }
 
-    if (_currentReport != null && _currentPage > _currentReport!.pagination.lastPage) {
+    if (_currentReport != null &&
+        _currentPage > _currentReport!.pagination.lastPage) {
       return; // Reached max
     }
 
@@ -50,9 +51,11 @@ class OwnerApprovalsReportCubit extends Cubit<OwnerApprovalsReportState> {
           emit(OwnerApprovalsReportEmpty());
         } else {
           _currentPage++;
-          
+
           if (_currentReport != null) {
-            final allItems = List<ApprovalItemEntity>.from(_currentReport!.items)..addAll(report.items);
+            final allItems = List<ApprovalItemEntity>.from(
+              _currentReport!.items,
+            )..addAll(report.items);
             _currentReport = ApprovalsReportEntity(
               summary: report.summary,
               items: allItems,
@@ -65,10 +68,12 @@ class OwnerApprovalsReportCubit extends Cubit<OwnerApprovalsReportState> {
 
           final hasReachedMax = _currentPage > report.pagination.lastPage;
 
-          emit(OwnerApprovalsReportLoaded(
-            report: _currentReport!,
-            hasReachedMax: hasReachedMax,
-          ));
+          emit(
+            OwnerApprovalsReportLoaded(
+              report: _currentReport!,
+              hasReachedMax: hasReachedMax,
+            ),
+          );
         }
       },
     );

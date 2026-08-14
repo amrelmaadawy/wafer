@@ -21,10 +21,10 @@ class OwnerUnitsStatusCubit extends Cubit<OwnerUnitsStatusState> {
   }) async {
     if (_isFetching) return;
 
-    if (propertyId != null || propertyId == -1) {
+    if (propertyId != null) {
       selectedPropertyId = propertyId == -1 ? null : propertyId;
     }
-    if (status != null || status == 'ALL') {
+    if (status != null) {
       selectedStatus = status == 'ALL' ? null : status;
     }
 
@@ -49,6 +49,7 @@ class OwnerUnitsStatusCubit extends Cubit<OwnerUnitsStatusState> {
 
     result.fold(
       (failure) {
+        if (_currentPage > 1) _currentPage--;
         if (_currentPage == 1) {
           emit(OwnerUnitsStatusError(failure.message));
         }

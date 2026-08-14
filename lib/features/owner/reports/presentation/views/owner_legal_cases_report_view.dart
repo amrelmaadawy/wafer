@@ -18,7 +18,8 @@ class OwnerLegalCasesReportView extends StatefulWidget {
   const OwnerLegalCasesReportView({super.key});
 
   @override
-  State<OwnerLegalCasesReportView> createState() => _OwnerLegalCasesReportViewState();
+  State<OwnerLegalCasesReportView> createState() =>
+      _OwnerLegalCasesReportViewState();
 }
 
 class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
@@ -40,13 +41,19 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
-      context.read<OwnerLegalCasesReportCubit>().fetchReport(status: _selectedStatus);
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      context.read<OwnerLegalCasesReportCubit>().fetchReport(
+        status: _selectedStatus,
+      );
     }
   }
 
   Future<void> _onRefresh() async {
-    await context.read<OwnerLegalCasesReportCubit>().fetchReport(isRefresh: true, status: _selectedStatus);
+    await context.read<OwnerLegalCasesReportCubit>().fetchReport(
+      isRefresh: true,
+      status: _selectedStatus,
+    );
   }
 
   @override
@@ -61,10 +68,16 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
               if (state is OwnerLegalCasesReportLoaded) {
                 return ReportExportButton(
                   onPdfPressed: () async {
-                    AppToast.showError(context, "PDF Export will be implemented soon");
+                    AppToast.showError(
+                      context,
+                      "PDF Export will be implemented soon",
+                    );
                   },
                   onExcelPressed: () async {
-                    AppToast.showError(context, "Excel Export will be implemented soon");
+                    AppToast.showError(
+                      context,
+                      "Excel Export will be implemented soon",
+                    );
                   },
                 );
               }
@@ -75,7 +88,8 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
       ),
       body: BlocBuilder<OwnerLegalCasesReportCubit, OwnerLegalCasesReportState>(
         builder: (context, state) {
-          if (state is OwnerLegalCasesReportInitial || (state is OwnerLegalCasesReportLoading && state.isFirstFetch)) {
+          if (state is OwnerLegalCasesReportInitial ||
+              (state is OwnerLegalCasesReportLoading && state.isFirstFetch)) {
             return const _LegalCasesReportSkeleton();
           }
 
@@ -89,7 +103,13 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
           if (state is OwnerLegalCasesReportEmpty) {
             return Column(
               children: [
-                _buildFilterDropdown((context.read<OwnerLegalCasesReportCubit>().state as dynamic).report?.filterOptions.statuses ?? []),
+                _buildFilterDropdown(
+                  (context.read<OwnerLegalCasesReportCubit>().state as dynamic)
+                          .report
+                          ?.filterOptions
+                          .statuses ??
+                      [],
+                ),
                 Expanded(
                   child: ReportEmptyWidget(
                     message: LocaleKeys.reports_noData.tr(),
@@ -100,12 +120,17 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
             );
           }
 
-          if (state is OwnerLegalCasesReportLoaded || (state is OwnerLegalCasesReportLoading && !state.isFirstFetch)) {
+          if (state is OwnerLegalCasesReportLoaded ||
+              (state is OwnerLegalCasesReportLoading && !state.isFirstFetch)) {
             final report = (state is OwnerLegalCasesReportLoaded)
                 ? state.report
-                : (context.read<OwnerLegalCasesReportCubit>().state as dynamic).report;
-            
-            final reportData = (context.read<OwnerLegalCasesReportCubit>().state as dynamic).report ?? report;
+                : (context.read<OwnerLegalCasesReportCubit>().state as dynamic)
+                      .report;
+
+            final reportData =
+                (context.read<OwnerLegalCasesReportCubit>().state as dynamic)
+                    .report ??
+                report;
 
             return RefreshIndicator(
               onRefresh: _onRefresh,
@@ -118,7 +143,9 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
                     padding: const EdgeInsets.all(16),
                     sliver: SliverList(
                       delegate: SliverChildListDelegate([
-                        _buildFilterDropdown(reportData.filterOptions.statuses ?? []),
+                        _buildFilterDropdown(
+                          reportData.filterOptions.statuses ?? [],
+                        ),
                         const SizedBox(height: 16),
                         _buildSummaryCards(reportData.summary),
                         const SizedBox(height: 24),
@@ -134,7 +161,9 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
                             return const Padding(
                               padding: EdgeInsets.symmetric(vertical: 16),
                               child: Center(
-                                child: CircularProgressIndicator(color: AppColors.primaryLight),
+                                child: CircularProgressIndicator(
+                                  color: AppColors.primaryLight,
+                                ),
                               ),
                             );
                           }
@@ -168,10 +197,10 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
 
     // Combine "All" with the rest of the statuses
     final allStatuses = [allOption, ...statuses];
-    
+
     // Find the currently selected entity, default to "All" if none selected
-    final selectedEntity = _selectedStatus == null 
-        ? allOption 
+    final selectedEntity = _selectedStatus == null
+        ? allOption
         : allStatuses.firstWhere(
             (s) => s.value == _selectedStatus,
             orElse: () => allOption,
@@ -190,7 +219,10 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
             setState(() {
               _selectedStatus = newStatus;
             });
-            context.read<OwnerLegalCasesReportCubit>().fetchReport(isRefresh: true, status: newStatus);
+            context.read<OwnerLegalCasesReportCubit>().fetchReport(
+              isRefresh: true,
+              status: newStatus,
+            );
           }
         },
       ),
@@ -260,7 +292,9 @@ class _LegalCaseCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
             decoration: BoxDecoration(
               color: Colors.grey.shade50,
-              borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -294,7 +328,10 @@ class _LegalCaseCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 8),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: _getStatusColor(item.status).withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
@@ -376,7 +413,7 @@ class _LegalCaseCard extends StatelessWidget {
                           item.nextHearingDate!,
                         ),
                       ),
-                    ]
+                    ],
                   ],
                 ),
               ],
@@ -503,10 +540,13 @@ class _LegalCasesReportSkeleton extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 24),
-        ...List.generate(5, (index) => Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: _buildSkeletonBox(150),
-        )),
+        ...List.generate(
+          5,
+          (index) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: _buildSkeletonBox(150),
+          ),
+        ),
       ],
     );
   }

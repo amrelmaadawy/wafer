@@ -87,7 +87,10 @@ class ContractsSummaryHeader extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.1),
                       borderRadius: AppRadius.circularMd,
@@ -121,9 +124,21 @@ class ContractsSummaryHeader extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  _buildStatItem(LocaleKeys.reports_active.tr(), active.toString(), Colors.greenAccent),
-                  _buildStatItem(LocaleKeys.reports_expired.tr(), expired.toString(), Colors.redAccent),
-                  _buildStatItem(LocaleKeys.reports_expiringSoon.tr(), expiringNext30Days.toString(), Colors.orangeAccent),
+                  _buildStatItem(
+                    LocaleKeys.reports_active.tr(),
+                    active.toString(),
+                    Colors.greenAccent,
+                  ),
+                  _buildStatItem(
+                    LocaleKeys.reports_expired.tr(),
+                    expired.toString(),
+                    Colors.redAccent,
+                  ),
+                  _buildStatItem(
+                    LocaleKeys.reports_expiringSoon.tr(),
+                    expiringNext30Days.toString(),
+                    Colors.orangeAccent,
+                  ),
                 ],
               ),
             ],

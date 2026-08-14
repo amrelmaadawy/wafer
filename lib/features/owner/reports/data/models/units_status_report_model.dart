@@ -1,9 +1,10 @@
-import '../../domain/entities/units_status_filter_options_entity.dart';
 import '../../domain/entities/units_status_item_entity.dart';
 import '../../domain/entities/units_status_property_entity.dart';
 import '../../domain/entities/units_status_report_entity.dart';
 import '../../domain/entities/units_status_summary_entity.dart';
+import 'report_model_parsing.dart';
 import 'report_pagination_model.dart';
+import 'units_status_filter_options_model.dart';
 
 class UnitsStatusReportModel extends UnitsStatusReportEntity {
   const UnitsStatusReportModel({
@@ -14,16 +15,24 @@ class UnitsStatusReportModel extends UnitsStatusReportEntity {
   });
 
   factory UnitsStatusReportModel.fromJson(Map<String, dynamic> json) {
+    final summary = json['summary'];
+    final pagination = json['pagination'];
+    final filters = json['filter_options'];
     return UnitsStatusReportModel(
-      summary: UnitsStatusSummaryModel.fromJson(json['summary'] ?? {}),
+      summary: UnitsStatusSummaryModel.fromJson(
+        summary is Map<String, dynamic> ? summary : const {},
+      ),
       items:
           (json['items'] as List<dynamic>?)
-              ?.map((e) => UnitsStatusItemModel.fromJson(e))
+              ?.whereType<Map<String, dynamic>>()
+              .map(UnitsStatusItemModel.fromJson)
               .toList() ??
           [],
-      pagination: ReportPaginationModel.fromJson(json['pagination'] ?? {}),
+      pagination: ReportPaginationModel.fromJson(
+        pagination is Map<String, dynamic> ? pagination : const {},
+      ),
       filterOptions: UnitsStatusFilterOptionsModel.fromJson(
-        json['filter_options'] ?? {},
+        filters is Map<String, dynamic> ? filters : const {},
       ),
     );
   }
@@ -39,10 +48,10 @@ class UnitsStatusSummaryModel extends UnitsStatusSummaryEntity {
 
   factory UnitsStatusSummaryModel.fromJson(Map<String, dynamic> json) {
     return UnitsStatusSummaryModel(
-      total: (json['total'] as num?)?.toInt() ?? 0,
-      vacant: (json['vacant'] as num?)?.toInt() ?? 0,
-      rented: (json['rented'] as num?)?.toInt() ?? 0,
-      maintenance: (json['maintenance'] as num?)?.toInt() ?? 0,
+      total: reportInt(json['total']),
+      vacant: reportInt(json['vacant']),
+      rented: reportInt(json['rented']),
+      maintenance: reportInt(json['maintenance']),
     );
   }
 }
@@ -57,21 +66,22 @@ class UnitsStatusItemModel extends UnitsStatusItemEntity {
     super.floorNumber,
     required super.status,
     required super.statusLabel,
-    super.activeContract,
     required super.createdAt,
   });
 
   factory UnitsStatusItemModel.fromJson(Map<String, dynamic> json) {
+    final property = json['property'];
     return UnitsStatusItemModel(
-      id: (json['id'] as num?)?.toInt() ?? 0,
+      id: reportInt(json['id']),
       unitNumber: json['unit_number']?.toString() ?? '',
       name: json['name']?.toString() ?? '',
       code: json['code']?.toString() ?? '',
-      property: UnitsStatusPropertyModel.fromJson(json['property'] ?? {}),
-      floorNumber: (json['floor_number'] as num?)?.toInt(),
+      property: UnitsStatusPropertyModel.fromJson(
+        property is Map<String, dynamic> ? property : const {},
+      ),
+      floorNumber: reportNullableInt(json['floor_number']),
       status: json['status']?.toString() ?? '',
       statusLabel: json['status_label']?.toString() ?? '',
-      activeContract: json['active_contract'],
       createdAt: json['created_at']?.toString() ?? '',
     );
   }
@@ -86,60 +96,8 @@ class UnitsStatusPropertyModel extends UnitsStatusPropertyEntity {
 
   factory UnitsStatusPropertyModel.fromJson(Map<String, dynamic> json) {
     return UnitsStatusPropertyModel(
-      id: (json['id'] as num?)?.toInt() ?? 0,
+      id: reportInt(json['id']),
       name: json['name']?.toString() ?? '',
-      code: json['code']?.toString() ?? '',
-    );
-  }
-}
-
-class UnitsStatusFilterOptionsModel extends UnitsStatusFilterOptionsEntity {
-  const UnitsStatusFilterOptionsModel({
-    required super.statuses,
-    required super.properties,
-  });
-
-  factory UnitsStatusFilterOptionsModel.fromJson(Map<String, dynamic> json) {
-    return UnitsStatusFilterOptionsModel(
-      statuses:
-          (json['statuses'] as List<dynamic>?)
-              ?.map((e) => UnitsStatusStatusFilterModel.fromJson(e))
-              .toList() ??
-          [],
-      properties:
-          (json['properties'] as List<dynamic>?)
-              ?.map((e) => UnitsStatusPropertyFilterModel.fromJson(e))
-              .toList() ??
-          [],
-    );
-  }
-}
-
-class UnitsStatusStatusFilterModel extends UnitsStatusStatusFilterEntity {
-  const UnitsStatusStatusFilterModel({
-    required super.value,
-    required super.label,
-  });
-
-  factory UnitsStatusStatusFilterModel.fromJson(Map<String, dynamic> json) {
-    return UnitsStatusStatusFilterModel(
-      value: json['value']?.toString() ?? '',
-      label: json['label']?.toString() ?? '',
-    );
-  }
-}
-
-class UnitsStatusPropertyFilterModel extends UnitsStatusPropertyFilterEntity {
-  const UnitsStatusPropertyFilterModel({
-    required super.id,
-    super.name,
-    required super.code,
-  });
-
-  factory UnitsStatusPropertyFilterModel.fromJson(Map<String, dynamic> json) {
-    return UnitsStatusPropertyFilterModel(
-      id: (json['id'] as num?)?.toInt() ?? 0,
-      name: json['name']?.toString(),
       code: json['code']?.toString() ?? '',
     );
   }

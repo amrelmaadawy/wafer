@@ -275,9 +275,7 @@ class OwnerReportsRepositoryImpl implements OwnerReportsRepository {
     int page = 1,
   }) async {
     try {
-      final result = await _remoteDataSource.getApprovalsReport(
-        page: page,
-      );
+      final result = await _remoteDataSource.getApprovalsReport(page: page);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));

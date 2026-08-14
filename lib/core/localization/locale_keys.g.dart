@@ -2,7 +2,7 @@
 
 // ignore_for_file: constant_identifier_names
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const auth_brand_name = 'auth.brand_name';
   static const auth_brand_subtitle = 'auth.brand_subtitle';
   static const auth_login_title = 'auth.login_title';
@@ -31,7 +31,8 @@ abstract class  LocaleKeys {
   static const dashboard_total_due_pending = 'dashboard.total_due_pending';
   static const dashboard_receipts_this_month = 'dashboard.receipts_this_month';
   static const dashboard_financial_overdues = 'dashboard.financial_overdues';
-  static const dashboard_occupancy_efficiency = 'dashboard.occupancy_efficiency';
+  static const dashboard_occupancy_efficiency =
+      'dashboard.occupancy_efficiency';
   static const dashboard_occupied = 'dashboard.occupied';
   static const dashboard_vacant = 'dashboard.vacant';
   static const dashboard_under_maint = 'dashboard.under_maint';
@@ -55,88 +56,148 @@ abstract class  LocaleKeys {
   static const dashboard_nav_profile = 'dashboard.nav_profile';
   static const dashboard_maintenance_hub = 'dashboard.maintenance_hub';
   static const dashboard_maintenance_pending = 'dashboard.maintenance_pending';
-  static const dashboard_maintenance_view_all = 'dashboard.maintenance_view_all';
-  static const dashboard_maintenance_no_requests = 'dashboard.maintenance_no_requests';
-  static const dashboard_maintenance_no_requests_sub = 'dashboard.maintenance_no_requests_sub';
+  static const dashboard_maintenance_view_all =
+      'dashboard.maintenance_view_all';
+  static const dashboard_maintenance_no_requests =
+      'dashboard.maintenance_no_requests';
+  static const dashboard_maintenance_no_requests_sub =
+      'dashboard.maintenance_no_requests_sub';
   static const dashboard_reports_shortcut = 'dashboard.reports_shortcut';
-  static const dashboard_reports_shortcut_sub = 'dashboard.reports_shortcut_sub';
+  static const dashboard_reports_shortcut_sub =
+      'dashboard.reports_shortcut_sub';
   static const dashboard_defaultersList = 'dashboard.defaultersList';
-  static const dashboard_defaultersTotalRemaining = 'dashboard.defaultersTotalRemaining';
-  static const dashboard_defaultersTotalAmount = 'dashboard.defaultersTotalAmount';
-  static const dashboard_defaultersInstallmentsCount = 'dashboard.defaultersInstallmentsCount';
-  static const dashboard_defaultersUnknownRenter = 'dashboard.defaultersUnknownRenter';
+  static const dashboard_defaultersTotalRemaining =
+      'dashboard.defaultersTotalRemaining';
+  static const dashboard_defaultersTotalAmount =
+      'dashboard.defaultersTotalAmount';
+  static const dashboard_defaultersInstallmentsCount =
+      'dashboard.defaultersInstallmentsCount';
+  static const dashboard_defaultersUnknownRenter =
+      'dashboard.defaultersUnknownRenter';
   static const dashboard_defaultersDays = 'dashboard.defaultersDays';
-  static const dashboard_defaultersInstallmentNo = 'dashboard.defaultersInstallmentNo';
+  static const dashboard_defaultersInstallmentNo =
+      'dashboard.defaultersInstallmentNo';
   static const dashboard_defaultersDueDate = 'dashboard.defaultersDueDate';
   static const dashboard_defaultersAmount = 'dashboard.defaultersAmount';
   static const dashboard_defaultersRemaining = 'dashboard.defaultersRemaining';
   static const dashboard_defaultersNoData = 'dashboard.defaultersNoData';
-  static const dashboard_contractsMovementTitle = 'dashboard.contractsMovementTitle';
-  static const dashboard_contractsMovementTotalMovements = 'dashboard.contractsMovementTotalMovements';
-  static const dashboard_contractsMovementCreations = 'dashboard.contractsMovementCreations';
-  static const dashboard_contractsMovementRenewals = 'dashboard.contractsMovementRenewals';
-  static const dashboard_contractsMovementTerminations = 'dashboard.contractsMovementTerminations';
-  static const dashboard_contractsMovementList = 'dashboard.contractsMovementList';
-  static const dashboard_contractsMovementNoData = 'dashboard.contractsMovementNoData';
-  static const dashboard_contractsMovementContractNo = 'dashboard.contractsMovementContractNo';
-  static const dashboard_contractsMovementDate = 'dashboard.contractsMovementDate';
-  static const dashboard_contractsMovementRentValue = 'dashboard.contractsMovementRentValue';
-  static const dashboard_contractsMovementUnknownRenter = 'dashboard.contractsMovementUnknownRenter';
-  static const dashboard_contractsMovementTypeCreation = 'dashboard.contractsMovementTypeCreation';
-  static const dashboard_contractsMovementTypeRenewal = 'dashboard.contractsMovementTypeRenewal';
-  static const dashboard_contractsMovementTypeTermination = 'dashboard.contractsMovementTypeTermination';
-  static const dashboard_maintenanceRequestsTitle = 'dashboard.maintenanceRequestsTitle';
-  static const dashboard_maintenanceRequestsTotal = 'dashboard.maintenanceRequestsTotal';
-  static const dashboard_maintenanceRequestsOpen = 'dashboard.maintenanceRequestsOpen';
-  static const dashboard_maintenanceRequestsInProgress = 'dashboard.maintenanceRequestsInProgress';
-  static const dashboard_maintenanceRequestsCompleted = 'dashboard.maintenanceRequestsCompleted';
-  static const dashboard_maintenanceRequestsRequestNo = 'dashboard.maintenanceRequestsRequestNo';
-  static const dashboard_maintenanceRequestsClient = 'dashboard.maintenanceRequestsClient';
-  static const dashboard_maintenanceRequestsPhone = 'dashboard.maintenanceRequestsPhone';
-  static const dashboard_maintenanceRequestsUnknownRenter = 'dashboard.maintenanceRequestsUnknownRenter';
-  static const dashboard_maintenanceRequestsList = 'dashboard.maintenanceRequestsList';
-  static const dashboard_maintenanceRequestsNoData = 'dashboard.maintenanceRequestsNoData';
-  static const dashboard_technicianPerformanceTitle = 'dashboard.technicianPerformanceTitle';
-  static const dashboard_technicianPerformanceTotalTechnicians = 'dashboard.technicianPerformanceTotalTechnicians';
-  static const dashboard_technicianPerformanceTotalCompleted = 'dashboard.technicianPerformanceTotalCompleted';
-  static const dashboard_technicianPerformanceTotalPending = 'dashboard.technicianPerformanceTotalPending';
-  static const dashboard_technicianPerformanceTechnicianName = 'dashboard.technicianPerformanceTechnicianName';
-  static const dashboard_technicianPerformanceTechnicianPhone = 'dashboard.technicianPerformanceTechnicianPhone';
-  static const dashboard_technicianPerformanceCompletedRequests = 'dashboard.technicianPerformanceCompletedRequests';
-  static const dashboard_technicianPerformancePendingRequests = 'dashboard.technicianPerformancePendingRequests';
-  static const dashboard_technicianPerformanceList = 'dashboard.technicianPerformanceList';
-  static const dashboard_technicianPerformanceNoData = 'dashboard.technicianPerformanceNoData';
+  static const dashboard_contractsMovementTitle =
+      'dashboard.contractsMovementTitle';
+  static const dashboard_contractsMovementTotalMovements =
+      'dashboard.contractsMovementTotalMovements';
+  static const dashboard_contractsMovementCreations =
+      'dashboard.contractsMovementCreations';
+  static const dashboard_contractsMovementRenewals =
+      'dashboard.contractsMovementRenewals';
+  static const dashboard_contractsMovementTerminations =
+      'dashboard.contractsMovementTerminations';
+  static const dashboard_contractsMovementList =
+      'dashboard.contractsMovementList';
+  static const dashboard_contractsMovementNoData =
+      'dashboard.contractsMovementNoData';
+  static const dashboard_contractsMovementContractNo =
+      'dashboard.contractsMovementContractNo';
+  static const dashboard_contractsMovementDate =
+      'dashboard.contractsMovementDate';
+  static const dashboard_contractsMovementRentValue =
+      'dashboard.contractsMovementRentValue';
+  static const dashboard_contractsMovementUnknownRenter =
+      'dashboard.contractsMovementUnknownRenter';
+  static const dashboard_contractsMovementTypeCreation =
+      'dashboard.contractsMovementTypeCreation';
+  static const dashboard_contractsMovementTypeRenewal =
+      'dashboard.contractsMovementTypeRenewal';
+  static const dashboard_contractsMovementTypeTermination =
+      'dashboard.contractsMovementTypeTermination';
+  static const dashboard_maintenanceRequestsTitle =
+      'dashboard.maintenanceRequestsTitle';
+  static const dashboard_maintenanceRequestsTotal =
+      'dashboard.maintenanceRequestsTotal';
+  static const dashboard_maintenanceRequestsOpen =
+      'dashboard.maintenanceRequestsOpen';
+  static const dashboard_maintenanceRequestsInProgress =
+      'dashboard.maintenanceRequestsInProgress';
+  static const dashboard_maintenanceRequestsCompleted =
+      'dashboard.maintenanceRequestsCompleted';
+  static const dashboard_maintenanceRequestsRequestNo =
+      'dashboard.maintenanceRequestsRequestNo';
+  static const dashboard_maintenanceRequestsClient =
+      'dashboard.maintenanceRequestsClient';
+  static const dashboard_maintenanceRequestsPhone =
+      'dashboard.maintenanceRequestsPhone';
+  static const dashboard_maintenanceRequestsUnknownRenter =
+      'dashboard.maintenanceRequestsUnknownRenter';
+  static const dashboard_maintenanceRequestsList =
+      'dashboard.maintenanceRequestsList';
+  static const dashboard_maintenanceRequestsNoData =
+      'dashboard.maintenanceRequestsNoData';
+  static const dashboard_technicianPerformanceTitle =
+      'dashboard.technicianPerformanceTitle';
+  static const dashboard_technicianPerformanceTotalTechnicians =
+      'dashboard.technicianPerformanceTotalTechnicians';
+  static const dashboard_technicianPerformanceTotalCompleted =
+      'dashboard.technicianPerformanceTotalCompleted';
+  static const dashboard_technicianPerformanceTotalPending =
+      'dashboard.technicianPerformanceTotalPending';
+  static const dashboard_technicianPerformanceTechnicianName =
+      'dashboard.technicianPerformanceTechnicianName';
+  static const dashboard_technicianPerformanceTechnicianPhone =
+      'dashboard.technicianPerformanceTechnicianPhone';
+  static const dashboard_technicianPerformanceCompletedRequests =
+      'dashboard.technicianPerformanceCompletedRequests';
+  static const dashboard_technicianPerformancePendingRequests =
+      'dashboard.technicianPerformancePendingRequests';
+  static const dashboard_technicianPerformanceList =
+      'dashboard.technicianPerformanceList';
+  static const dashboard_technicianPerformanceNoData =
+      'dashboard.technicianPerformanceNoData';
   static const dashboard_employeeTasksTitle = 'dashboard.employeeTasksTitle';
-  static const dashboard_employeeTasksTotalEmployees = 'dashboard.employeeTasksTotalEmployees';
-  static const dashboard_employeeTasksTotalCompleted = 'dashboard.employeeTasksTotalCompleted';
-  static const dashboard_employeeTasksTotalPending = 'dashboard.employeeTasksTotalPending';
-  static const dashboard_employeeTasksTotalOverdue = 'dashboard.employeeTasksTotalOverdue';
-  static const dashboard_employeeTasksEmployeeName = 'dashboard.employeeTasksEmployeeName';
-  static const dashboard_employeeTasksEmployeePhone = 'dashboard.employeeTasksEmployeePhone';
-  static const dashboard_employeeTasksCompleted = 'dashboard.employeeTasksCompleted';
-  static const dashboard_employeeTasksPending = 'dashboard.employeeTasksPending';
-  static const dashboard_employeeTasksOverdue = 'dashboard.employeeTasksOverdue';
+  static const dashboard_employeeTasksTotalEmployees =
+      'dashboard.employeeTasksTotalEmployees';
+  static const dashboard_employeeTasksTotalCompleted =
+      'dashboard.employeeTasksTotalCompleted';
+  static const dashboard_employeeTasksTotalPending =
+      'dashboard.employeeTasksTotalPending';
+  static const dashboard_employeeTasksTotalOverdue =
+      'dashboard.employeeTasksTotalOverdue';
+  static const dashboard_employeeTasksEmployeeName =
+      'dashboard.employeeTasksEmployeeName';
+  static const dashboard_employeeTasksEmployeePhone =
+      'dashboard.employeeTasksEmployeePhone';
+  static const dashboard_employeeTasksCompleted =
+      'dashboard.employeeTasksCompleted';
+  static const dashboard_employeeTasksPending =
+      'dashboard.employeeTasksPending';
+  static const dashboard_employeeTasksOverdue =
+      'dashboard.employeeTasksOverdue';
   static const dashboard_employeeTasksList = 'dashboard.employeeTasksList';
   static const dashboard_employeeTasksNoData = 'dashboard.employeeTasksNoData';
   static const dashboard_activityLogsTitle = 'dashboard.activityLogsTitle';
-  static const dashboard_activityLogsTotalLogs = 'dashboard.activityLogsTotalLogs';
+  static const dashboard_activityLogsTotalLogs =
+      'dashboard.activityLogsTotalLogs';
   static const dashboard_activityLogsCreates = 'dashboard.activityLogsCreates';
   static const dashboard_activityLogsUpdates = 'dashboard.activityLogsUpdates';
   static const dashboard_activityLogsDeletes = 'dashboard.activityLogsDeletes';
   static const dashboard_activityLogsList = 'dashboard.activityLogsList';
   static const dashboard_activityLogsNoData = 'dashboard.activityLogsNoData';
-  static const dashboard_activityLogsActionMessage = 'dashboard.activityLogsActionMessage';
-  static const dashboard_activityLogsActionType = 'dashboard.activityLogsActionType';
-  static const dashboard_activityLogsActionUser = 'dashboard.activityLogsActionUser';
-  static const dashboard_activityLogsActionIp = 'dashboard.activityLogsActionIp';
-  static const dashboard_activityLogsActionDate = 'dashboard.activityLogsActionDate';
+  static const dashboard_activityLogsActionMessage =
+      'dashboard.activityLogsActionMessage';
+  static const dashboard_activityLogsActionType =
+      'dashboard.activityLogsActionType';
+  static const dashboard_activityLogsActionUser =
+      'dashboard.activityLogsActionUser';
+  static const dashboard_activityLogsActionIp =
+      'dashboard.activityLogsActionIp';
+  static const dashboard_activityLogsActionDate =
+      'dashboard.activityLogsActionDate';
   static const dashboard_no_data = 'dashboard.no_data';
   static const dashboard = 'dashboard';
   static const negotiation_settings_title = 'negotiation.settings_title';
   static const negotiation_approval_limit = 'negotiation.approval_limit';
   static const negotiation_is_active = 'negotiation.is_active';
   static const negotiation_save_settings = 'negotiation.save_settings';
-  static const negotiation_validation_required = 'negotiation.validation_required';
+  static const negotiation_validation_required =
+      'negotiation.validation_required';
   static const negotiation_validation_min = 'negotiation.validation_min';
   static const negotiation_list_title = 'negotiation.list_title';
   static const negotiation_empty_list = 'negotiation.empty_list';
@@ -167,7 +228,8 @@ abstract class  LocaleKeys {
   static const profile_edit_profile = 'profile.edit_profile';
   static const profile_edit_profile_subtitle = 'profile.edit_profile_subtitle';
   static const profile_change_password = 'profile.change_password';
-  static const profile_change_password_subtitle = 'profile.change_password_subtitle';
+  static const profile_change_password_subtitle =
+      'profile.change_password_subtitle';
   static const profile_logout = 'profile.logout';
   static const profile_logout_subtitle = 'profile.logout_subtitle';
   static const profile_logout_dialog_msg = 'profile.logout_dialog_msg';
@@ -190,7 +252,8 @@ abstract class  LocaleKeys {
   static const profile_gender = 'profile.gender';
   static const profile_expiring_soon = 'profile.expiring_soon';
   static const profile_expiry_warning = 'profile.expiry_warning';
-  static const profile_identity_warning_banner = 'profile.identity_warning_banner';
+  static const profile_identity_warning_banner =
+      'profile.identity_warning_banner';
   static const profile_copied_title = 'profile.copied_title';
   static const profile_copy_success = 'profile.copy_success';
   static const profile_load_error = 'profile.load_error';
@@ -198,27 +261,38 @@ abstract class  LocaleKeys {
   static const profile_company_type = 'profile.company_type';
   static const profile_tenant_type = 'profile.tenant_type';
   static const profile_unspecified = 'profile.unspecified';
-  static const profile_contact_and_account_info = 'profile.contact_and_account_info';
+  static const profile_contact_and_account_info =
+      'profile.contact_and_account_info';
   static const profile_change_password_toast = 'profile.change_password_toast';
   static const profile_change_password_title = 'profile.change_password_title';
   static const profile_change_password_sub = 'profile.change_password_sub';
-  static const profile_change_password_current = 'profile.change_password_current';
+  static const profile_change_password_current =
+      'profile.change_password_current';
   static const profile_change_password_new = 'profile.change_password_new';
-  static const profile_change_password_confirm = 'profile.change_password_confirm';
+  static const profile_change_password_confirm =
+      'profile.change_password_confirm';
   static const profile_change_password_btn = 'profile.change_password_btn';
-  static const profile_change_password_success = 'profile.change_password_success';
-  static const profile_change_password_req_min = 'profile.change_password_req_min';
-  static const profile_change_password_req_num = 'profile.change_password_req_num';
-  static const profile_change_password_req_match = 'profile.change_password_req_match';
-  static const profile_change_password_val_required = 'profile.change_password_val_required';
-  static const profile_change_password_val_diff = 'profile.change_password_val_diff';
-  static const profile_change_password_val_mismatch = 'profile.change_password_val_mismatch';
+  static const profile_change_password_success =
+      'profile.change_password_success';
+  static const profile_change_password_req_min =
+      'profile.change_password_req_min';
+  static const profile_change_password_req_num =
+      'profile.change_password_req_num';
+  static const profile_change_password_req_match =
+      'profile.change_password_req_match';
+  static const profile_change_password_val_required =
+      'profile.change_password_val_required';
+  static const profile_change_password_val_diff =
+      'profile.change_password_val_diff';
+  static const profile_change_password_val_mismatch =
+      'profile.change_password_val_mismatch';
   static const profile_avatar_change_title = 'profile.avatar_change_title';
   static const profile_avatar_camera = 'profile.avatar_camera';
   static const profile_avatar_gallery = 'profile.avatar_gallery';
   static const profile_avatar_success = 'profile.avatar_success';
   static const profile_reports_center = 'profile.reports_center';
-  static const profile_reports_center_subtitle = 'profile.reports_center_subtitle';
+  static const profile_reports_center_subtitle =
+      'profile.reports_center_subtitle';
   static const profile = 'profile';
   static const common_retry = 'common.retry';
   static const common_currency_sar = 'common.currency_sar';
@@ -271,14 +345,21 @@ abstract class  LocaleKeys {
   static const owner_finance_create_account = 'owner.finance_create_account';
   static const owner_finance_update_account = 'owner.finance_update_account';
   static const owner_finance_update_payment = 'owner.finance_update_payment';
-  static const owner_finance_update_payment_success = 'owner.finance_update_payment_success';
+  static const owner_finance_update_payment_success =
+      'owner.finance_update_payment_success';
   static const owner_finance_cancel_payment = 'owner.finance_cancel_payment';
-  static const owner_finance_cancel_payment_confirmation = 'owner.finance_cancel_payment_confirmation';
-  static const owner_finance_cancel_reason_label = 'owner.finance_cancel_reason_label';
-  static const owner_finance_cancel_reason_hint = 'owner.finance_cancel_reason_hint';
-  static const owner_finance_cancel_reason_error = 'owner.finance_cancel_reason_error';
-  static const owner_finance_cancel_payment_success = 'owner.finance_cancel_payment_success';
-  static const owner_finance_payment_details_title = 'owner.finance_payment_details_title';
+  static const owner_finance_cancel_payment_confirmation =
+      'owner.finance_cancel_payment_confirmation';
+  static const owner_finance_cancel_reason_label =
+      'owner.finance_cancel_reason_label';
+  static const owner_finance_cancel_reason_hint =
+      'owner.finance_cancel_reason_hint';
+  static const owner_finance_cancel_reason_error =
+      'owner.finance_cancel_reason_error';
+  static const owner_finance_cancel_payment_success =
+      'owner.finance_cancel_payment_success';
+  static const owner_finance_payment_details_title =
+      'owner.finance_payment_details_title';
   static const owner_finance_basic_info = 'owner.finance_basic_info';
   static const owner_finance_payment_number = 'owner.finance_payment_number';
   static const owner_finance_payment_date = 'owner.finance_payment_date';
@@ -292,9 +373,12 @@ abstract class  LocaleKeys {
   static const owner_finance_property_id = 'owner.finance_property_id';
   static const owner_finance_contract_id = 'owner.finance_contract_id';
   static const owner_finance_journal_entry = 'owner.finance_journal_entry';
-  static const owner_finance_journal_entry_number = 'owner.finance_journal_entry_number';
-  static const owner_finance_journal_entry_date = 'owner.finance_journal_entry_date';
-  static const owner_finance_journal_entry_status = 'owner.finance_journal_entry_status';
+  static const owner_finance_journal_entry_number =
+      'owner.finance_journal_entry_number';
+  static const owner_finance_journal_entry_date =
+      'owner.finance_journal_entry_date';
+  static const owner_finance_journal_entry_status =
+      'owner.finance_journal_entry_status';
   static const owner_finance_total_debit = 'owner.finance_total_debit';
   static const owner_finance_total_credit = 'owner.finance_total_credit';
   static const owner_finance_total_amount = 'owner.finance_total_amount';
@@ -302,15 +386,22 @@ abstract class  LocaleKeys {
   static const owner_finance_account_name_en = 'owner.finance_account_name_en';
   static const owner_finance_account_code = 'owner.finance_account_code';
   static const owner_finance_account_type = 'owner.finance_account_type';
-  static const owner_finance_account_type_asset = 'owner.finance_account_type_asset';
-  static const owner_finance_account_type_liability = 'owner.finance_account_type_liability';
-  static const owner_finance_account_type_expense = 'owner.finance_account_type_expense';
-  static const owner_finance_account_type_revenue = 'owner.finance_account_type_revenue';
-  static const owner_finance_account_type_equity = 'owner.finance_account_type_equity';
-  static const owner_finance_account_is_active = 'owner.finance_account_is_active';
+  static const owner_finance_account_type_asset =
+      'owner.finance_account_type_asset';
+  static const owner_finance_account_type_liability =
+      'owner.finance_account_type_liability';
+  static const owner_finance_account_type_expense =
+      'owner.finance_account_type_expense';
+  static const owner_finance_account_type_revenue =
+      'owner.finance_account_type_revenue';
+  static const owner_finance_account_type_equity =
+      'owner.finance_account_type_equity';
+  static const owner_finance_account_is_active =
+      'owner.finance_account_is_active';
   static const owner_finance_account_desc = 'owner.finance_account_desc';
   static const owner_finance_account_submit = 'owner.finance_account_submit';
-  static const owner_finance_account_update_submit = 'owner.finance_account_update_submit';
+  static const owner_finance_account_update_submit =
+      'owner.finance_account_update_submit';
   static const owner_finance_receipts = 'owner.finance_receipts';
   static const owner_finance_account_success = 'owner.finance_account_success';
   static const owner_more_title = 'owner.more_title';
@@ -331,14 +422,21 @@ abstract class  LocaleKeys {
   static const owner_finance_receipts_total = 'owner.finance_receipts_total';
   static const owner_finance_payments_total = 'owner.finance_payments_total';
   static const owner_finance_pending_alerts = 'owner.finance_pending_alerts';
-  static const owner_finance_pending_receipts = 'owner.finance_pending_receipts';
-  static const owner_finance_pending_payments = 'owner.finance_pending_payments';
-  static const owner_finance_pending_transfers = 'owner.finance_pending_transfers';
+  static const owner_finance_pending_receipts =
+      'owner.finance_pending_receipts';
+  static const owner_finance_pending_payments =
+      'owner.finance_pending_payments';
+  static const owner_finance_pending_transfers =
+      'owner.finance_pending_transfers';
   static const owner_finance_resources_title = 'owner.finance_resources_title';
-  static const owner_finance_chart_of_accounts = 'owner.finance_chart_of_accounts';
-  static const owner_finance_receipt_vouchers = 'owner.finance_receipt_vouchers';
-  static const owner_finance_payment_vouchers = 'owner.finance_payment_vouchers';
-  static const owner_finance_internal_transfers = 'owner.finance_internal_transfers';
+  static const owner_finance_chart_of_accounts =
+      'owner.finance_chart_of_accounts';
+  static const owner_finance_receipt_vouchers =
+      'owner.finance_receipt_vouchers';
+  static const owner_finance_payment_vouchers =
+      'owner.finance_payment_vouchers';
+  static const owner_finance_internal_transfers =
+      'owner.finance_internal_transfers';
   static const owner_finance_journal_entries = 'owner.finance_journal_entries';
   static const owner = 'owner';
   static const properties_title = 'properties.title';
@@ -392,7 +490,8 @@ abstract class  LocaleKeys {
   static const properties_stats_residential = 'properties.stats_residential';
   static const properties_stats_mixed = 'properties.stats_mixed';
   static const properties_draft_incomplete = 'properties.draft_incomplete';
-  static const properties_draft_incomplete_desc = 'properties.draft_incomplete_desc';
+  static const properties_draft_incomplete_desc =
+      'properties.draft_incomplete_desc';
   static const properties_draft_progress = 'properties.draft_progress';
   static const properties_draft_continue = 'properties.draft_continue';
   static const properties_amenity_parking = 'properties.amenity_parking';
@@ -411,71 +510,113 @@ abstract class  LocaleKeys {
   static const property_details_deed = 'property_details.deed';
   static const property_details_edit = 'property_details.edit';
   static const property_details_clone = 'property_details.clone';
-  static const property_details_clone_success = 'property_details.clone_success';
+  static const property_details_clone_success =
+      'property_details.clone_success';
   static const property_details_clone_undo = 'property_details.clone_undo';
-  static const property_details_representative = 'property_details.representative';
-  static const property_details_remove_representative = 'property_details.remove_representative';
+  static const property_details_representative =
+      'property_details.representative';
+  static const property_details_remove_representative =
+      'property_details.remove_representative';
   static const property_details_delete = 'property_details.delete';
-  static const property_details_delete_confirm_title = 'property_details.delete_confirm_title';
-  static const property_details_delete_confirm_body = 'property_details.delete_confirm_body';
-  static const property_details_delete_confirm_btn = 'property_details.delete_confirm_btn';
-  static const property_details_deleting_property = 'property_details.deleting_property';
+  static const property_details_delete_confirm_title =
+      'property_details.delete_confirm_title';
+  static const property_details_delete_confirm_body =
+      'property_details.delete_confirm_body';
+  static const property_details_delete_confirm_btn =
+      'property_details.delete_confirm_btn';
+  static const property_details_deleting_property =
+      'property_details.deleting_property';
   static const property_details_cancel = 'property_details.cancel';
-  static const property_details_no_units_title = 'property_details.no_units_title';
-  static const property_details_no_units_subtitle = 'property_details.no_units_subtitle';
+  static const property_details_no_units_title =
+      'property_details.no_units_title';
+  static const property_details_no_units_subtitle =
+      'property_details.no_units_subtitle';
   static const property_details_add_unit = 'property_details.add_unit';
   static const property_details_area = 'property_details.area';
   static const property_details_type = 'property_details.type';
   static const property_details_address = 'property_details.address';
   static const property_details_deed_number = 'property_details.deed_number';
   static const property_details_deed_date = 'property_details.deed_date';
-  static const property_details_owner_percentage = 'property_details.owner_percentage';
+  static const property_details_owner_percentage =
+      'property_details.owner_percentage';
   static const property_details_contracts = 'property_details.contracts';
   static const property_details_maintenance = 'property_details.maintenance';
-  static const property_details_publish_property = 'property_details.publish_property';
-  static const property_details_ready_to_publish = 'property_details.ready_to_publish';
+  static const property_details_publish_property =
+      'property_details.publish_property';
+  static const property_details_ready_to_publish =
+      'property_details.ready_to_publish';
   static const property_details_publish_now = 'property_details.publish_now';
-  static const property_details_publish_confirm_title = 'property_details.publish_confirm_title';
-  static const property_details_publish_confirm_desc = 'property_details.publish_confirm_desc';
+  static const property_details_publish_confirm_title =
+      'property_details.publish_confirm_title';
+  static const property_details_publish_confirm_desc =
+      'property_details.publish_confirm_desc';
   static const property_details_publish_btn = 'property_details.publish_btn';
-  static const property_details_publish_success = 'property_details.publish_success';
-  static const property_details_clone_for_deed_title = 'property_details.clone_for_deed_title';
-  static const property_details_clone_for_deed_desc = 'property_details.clone_for_deed_desc';
-  static const property_details_clone_for_deed_copy_all = 'property_details.clone_for_deed_copy_all';
-  static const property_details_clone_for_deed_copy_all_desc = 'property_details.clone_for_deed_copy_all_desc';
-  static const property_details_clone_for_deed_empty = 'property_details.clone_for_deed_empty';
-  static const property_details_clone_for_deed_empty_desc = 'property_details.clone_for_deed_empty_desc';
-  static const property_details_clone_for_deed_confirm = 'property_details.clone_for_deed_confirm';
-  static const property_details_clone_for_deed_success = 'property_details.clone_for_deed_success';
-  static const property_details_basic_info_title = 'property_details.basic_info_title';
-  static const property_details_property_code = 'property_details.property_code';
-  static const property_details_property_type_label = 'property_details.property_type_label';
-  static const property_details_usage_type_label = 'property_details.usage_type_label';
+  static const property_details_publish_success =
+      'property_details.publish_success';
+  static const property_details_clone_for_deed_title =
+      'property_details.clone_for_deed_title';
+  static const property_details_clone_for_deed_desc =
+      'property_details.clone_for_deed_desc';
+  static const property_details_clone_for_deed_copy_all =
+      'property_details.clone_for_deed_copy_all';
+  static const property_details_clone_for_deed_copy_all_desc =
+      'property_details.clone_for_deed_copy_all_desc';
+  static const property_details_clone_for_deed_empty =
+      'property_details.clone_for_deed_empty';
+  static const property_details_clone_for_deed_empty_desc =
+      'property_details.clone_for_deed_empty_desc';
+  static const property_details_clone_for_deed_confirm =
+      'property_details.clone_for_deed_confirm';
+  static const property_details_clone_for_deed_success =
+      'property_details.clone_for_deed_success';
+  static const property_details_basic_info_title =
+      'property_details.basic_info_title';
+  static const property_details_property_code =
+      'property_details.property_code';
+  static const property_details_property_type_label =
+      'property_details.property_type_label';
+  static const property_details_usage_type_label =
+      'property_details.usage_type_label';
   static const property_details_branch_label = 'property_details.branch_label';
-  static const property_details_construction_year_label = 'property_details.construction_year_label';
-  static const property_details_address_label = 'property_details.address_label';
+  static const property_details_construction_year_label =
+      'property_details.construction_year_label';
+  static const property_details_address_label =
+      'property_details.address_label';
   static const property_details_notes_label = 'property_details.notes_label';
   static const property_details_total_units = 'property_details.total_units';
   static const property_details_rented_units = 'property_details.rented_units';
-  static const property_details_available_units_label = 'property_details.available_units_label';
-  static const property_details_occupancy_rate = 'property_details.occupancy_rate';
-  static const property_details_occupancy_rate_sub = 'property_details.occupancy_rate_sub';
+  static const property_details_available_units_label =
+      'property_details.available_units_label';
+  static const property_details_occupancy_rate =
+      'property_details.occupancy_rate';
+  static const property_details_occupancy_rate_sub =
+      'property_details.occupancy_rate_sub';
   static const property_details_total_area = 'property_details.total_area';
   static const property_details_area_unit = 'property_details.area_unit';
-  static const property_details_valuation_amount = 'property_details.valuation_amount';
-  static const property_details_valuation_currency = 'property_details.valuation_currency';
-  static const property_details_valuation_approved = 'property_details.valuation_approved';
+  static const property_details_valuation_amount =
+      'property_details.valuation_amount';
+  static const property_details_valuation_currency =
+      'property_details.valuation_currency';
+  static const property_details_valuation_approved =
+      'property_details.valuation_approved';
   static const property_details_view_deed = 'property_details.view_deed';
   static const property_details_deed_info = 'property_details.deed_info';
-  static const property_details_make_representative = 'property_details.make_representative';
-  static const property_details_make_representative_success = 'property_details.make_representative_success';
-  static const property_details_current_representative = 'property_details.current_representative';
+  static const property_details_make_representative =
+      'property_details.make_representative';
+  static const property_details_make_representative_success =
+      'property_details.make_representative_success';
+  static const property_details_current_representative =
+      'property_details.current_representative';
   static const property_details_no_owners = 'property_details.no_owners';
   static const property_details_no_phone = 'property_details.no_phone';
-  static const property_details_deed_and_docs = 'property_details.deed_and_docs';
-  static const property_details_valuation_entity = 'property_details.valuation_entity';
-  static const property_details_valuation_date = 'property_details.valuation_date';
-  static const property_details_deed_valuation_title = 'property_details.deed_valuation_title';
+  static const property_details_deed_and_docs =
+      'property_details.deed_and_docs';
+  static const property_details_valuation_entity =
+      'property_details.valuation_entity';
+  static const property_details_valuation_date =
+      'property_details.valuation_date';
+  static const property_details_deed_valuation_title =
+      'property_details.deed_valuation_title';
   static const property_details = 'property_details';
   static const property_edit_title = 'property_edit.title';
   static const property_edit_save = 'property_edit.save';
@@ -487,16 +628,22 @@ abstract class  LocaleKeys {
   static const property_create_select_deed = 'property_create.select_deed';
   static const property_create_select_type = 'property_create.select_type';
   static const property_create_no_deeds = 'property_create.no_deeds';
-  static const property_create_create_new_deed = 'property_create.create_new_deed';
+  static const property_create_create_new_deed =
+      'property_create.create_new_deed';
   static const property_create_submit = 'property_create.submit';
   static const property_create_success = 'property_create.success';
-  static const property_create_select_deed_required = 'property_create.select_deed_required';
-  static const property_create_select_type_required = 'property_create.select_type_required';
-  static const property_create_select_branch_required = 'property_create.select_branch_required';
+  static const property_create_select_deed_required =
+      'property_create.select_deed_required';
+  static const property_create_select_type_required =
+      'property_create.select_type_required';
+  static const property_create_select_branch_required =
+      'property_create.select_branch_required';
   static const property_create_search_deeds = 'property_create.search_deeds';
-  static const property_create_deed_properties_count = 'property_create.deed_properties_count';
+  static const property_create_deed_properties_count =
+      'property_create.deed_properties_count';
   static const property_create_draft_banner = 'property_create.draft_banner';
-  static const property_create_completion_rate = 'property_create.completion_rate';
+  static const property_create_completion_rate =
+      'property_create.completion_rate';
   static const property_create_complete_data = 'property_create.complete_data';
   static const property_create_property_name = 'property_create.property_name';
   static const property_create_address = 'property_create.address';
@@ -505,18 +652,26 @@ abstract class  LocaleKeys {
   static const property_create_year_label = 'property_create.year_label';
   static const property_create_year_invalid = 'property_create.year_invalid';
   static const property_create_name_required = 'property_create.name_required';
-  static const property_create_images_uploading = 'property_create.images_uploading';
-  static const property_create_fill_required_fields = 'property_create.fill_required_fields';
-  static const property_create_owners_subtitle = 'property_create.owners_subtitle';
-  static const property_create_owners_added_count = 'property_create.owners_added_count';
-  static const property_create_owner_search_hint = 'property_create.owner_search_hint';
+  static const property_create_images_uploading =
+      'property_create.images_uploading';
+  static const property_create_fill_required_fields =
+      'property_create.fill_required_fields';
+  static const property_create_owners_subtitle =
+      'property_create.owners_subtitle';
+  static const property_create_owners_added_count =
+      'property_create.owners_added_count';
+  static const property_create_owner_search_hint =
+      'property_create.owner_search_hint';
   static const property_create_exit_title = 'property_create.exit_title';
   static const property_create_exit_message = 'property_create.exit_message';
   static const property_create_exit_cancel = 'property_create.exit_cancel';
   static const property_create_exit_confirm = 'property_create.exit_confirm';
-  static const property_create_propertyCreateExitCancel = 'property_create.propertyCreateExitCancel';
-  static const property_create_propertyCreateExitConfirmation = 'property_create.propertyCreateExitConfirmation';
-  static const property_create_propertyCreateExitMessage = 'property_create.propertyCreateExitMessage';
+  static const property_create_propertyCreateExitCancel =
+      'property_create.propertyCreateExitCancel';
+  static const property_create_propertyCreateExitConfirmation =
+      'property_create.propertyCreateExitConfirmation';
+  static const property_create_propertyCreateExitMessage =
+      'property_create.propertyCreateExitMessage';
   static const property_create = 'property_create';
   static const property_review_title = 'property_review.title';
   static const property_review_subtitle = 'property_review.subtitle';
@@ -526,7 +681,8 @@ abstract class  LocaleKeys {
   static const property_review_property_name = 'property_review.property_name';
   static const property_review_address = 'property_review.address';
   static const property_review_area = 'property_review.area';
-  static const property_review_construction_year = 'property_review.construction_year';
+  static const property_review_construction_year =
+      'property_review.construction_year';
   static const property_review_no_images = 'property_review.no_images';
   static const property_review = 'property_review';
   static const notifications_title = 'notifications.title';
@@ -536,11 +692,15 @@ abstract class  LocaleKeys {
   static const notifications_today = 'notifications.today';
   static const notifications_yesterday = 'notifications.yesterday';
   static const notifications_earlier = 'notifications.earlier';
-  static const notifications_no_notifications_title = 'notifications.no_notifications_title';
-  static const notifications_no_notifications_subtitle = 'notifications.no_notifications_subtitle';
-  static const notifications_mark_read_success = 'notifications.mark_read_success';
+  static const notifications_no_notifications_title =
+      'notifications.no_notifications_title';
+  static const notifications_no_notifications_subtitle =
+      'notifications.no_notifications_subtitle';
+  static const notifications_mark_read_success =
+      'notifications.mark_read_success';
   static const notifications_time_just_now = 'notifications.time_just_now';
-  static const notifications_time_minutes_ago = 'notifications.time_minutes_ago';
+  static const notifications_time_minutes_ago =
+      'notifications.time_minutes_ago';
   static const notifications_time_hours_ago = 'notifications.time_hours_ago';
   static const notifications_time_days_ago = 'notifications.time_days_ago';
   static const notifications_no_title = 'notifications.no_title';
@@ -567,9 +727,11 @@ abstract class  LocaleKeys {
   static const contracts_cycle_quarterly = 'contracts.cycle_quarterly';
   static const contracts_cycle_custom = 'contracts.cycle_custom';
   static const contracts_no_contracts_title = 'contracts.no_contracts_title';
-  static const contracts_no_contracts_subtitle = 'contracts.no_contracts_subtitle';
+  static const contracts_no_contracts_subtitle =
+      'contracts.no_contracts_subtitle';
   static const contracts_details_title = 'contracts.details_title';
-  static const contracts_contract_number_label = 'contracts.contract_number_label';
+  static const contracts_contract_number_label =
+      'contracts.contract_number_label';
   static const contracts_type_label = 'contracts.type_label';
   static const contracts_type_residential = 'contracts.type_residential';
   static const contracts_type_commercial = 'contracts.type_commercial';
@@ -577,7 +739,8 @@ abstract class  LocaleKeys {
   static const contracts_type_admin = 'contracts.type_admin';
   static const contracts_ejar_linked = 'contracts.ejar_linked';
   static const contracts_ejar_not_linked = 'contracts.ejar_not_linked';
-  static const contracts_section_property_unit = 'contracts.section_property_unit';
+  static const contracts_section_property_unit =
+      'contracts.section_property_unit';
   static const contracts_section_renter = 'contracts.section_renter';
   static const contracts_renter_phone = 'contracts.renter_phone';
   static const contracts_action_call = 'contracts.action_call';
@@ -593,62 +756,96 @@ abstract class  LocaleKeys {
   static const contracts_currency = 'contracts.currency';
   static const contracts_launcher_error = 'contracts.launcher_error';
   static const contracts_installments_title = 'contracts.installments_title';
-  static const contracts_installments_view_schedule_btn = 'contracts.installments_view_schedule_btn';
-  static const contracts_installments_view_btn = 'contracts.installments_view_btn';
-  static const contracts_installments_count_label = 'contracts.installments_count_label';
-  static const contracts_installments_card_subtitle = 'contracts.installments_card_subtitle';
-  static const contracts_maintenanceDeleteConfirmTitle = 'contracts.maintenanceDeleteConfirmTitle';
-  static const contracts_maintenanceDeleteConfirmDesc = 'contracts.maintenanceDeleteConfirmDesc';
-  static const contracts_maintenanceDeleteCancelBtn = 'contracts.maintenanceDeleteCancelBtn';
-  static const contracts_maintenanceDeleteConfirmBtn = 'contracts.maintenanceDeleteConfirmBtn';
-  static const contracts_installments_total_amount = 'contracts.installments_total_amount';
-  static const contracts_installments_paid_amount = 'contracts.installments_paid_amount';
-  static const contracts_installments_remaining_amount = 'contracts.installments_remaining_amount';
-  static const contracts_installments_installment_num = 'contracts.installments_installment_num';
-  static const contracts_installments_due_date = 'contracts.installments_due_date';
+  static const contracts_installments_view_schedule_btn =
+      'contracts.installments_view_schedule_btn';
+  static const contracts_installments_view_btn =
+      'contracts.installments_view_btn';
+  static const contracts_installments_count_label =
+      'contracts.installments_count_label';
+  static const contracts_installments_card_subtitle =
+      'contracts.installments_card_subtitle';
+  static const contracts_maintenanceDeleteConfirmTitle =
+      'contracts.maintenanceDeleteConfirmTitle';
+  static const contracts_maintenanceDeleteConfirmDesc =
+      'contracts.maintenanceDeleteConfirmDesc';
+  static const contracts_maintenanceDeleteCancelBtn =
+      'contracts.maintenanceDeleteCancelBtn';
+  static const contracts_maintenanceDeleteConfirmBtn =
+      'contracts.maintenanceDeleteConfirmBtn';
+  static const contracts_installments_total_amount =
+      'contracts.installments_total_amount';
+  static const contracts_installments_paid_amount =
+      'contracts.installments_paid_amount';
+  static const contracts_installments_remaining_amount =
+      'contracts.installments_remaining_amount';
+  static const contracts_installments_installment_num =
+      'contracts.installments_installment_num';
+  static const contracts_installments_due_date =
+      'contracts.installments_due_date';
   static const contracts_installments_amount = 'contracts.installments_amount';
   static const contracts_installments_paid = 'contracts.installments_paid';
-  static const contracts_installments_remaining = 'contracts.installments_remaining';
-  static const contracts_installments_status_unpaid = 'contracts.installments_status_unpaid';
-  static const contracts_installments_status_paid = 'contracts.installments_status_paid';
-  static const contracts_installments_status_overdue = 'contracts.installments_status_overdue';
-  static const contracts_installments_status_partial = 'contracts.installments_status_partial';
-  static const contracts_installments_filter_all = 'contracts.installments_filter_all';
-  static const contracts_installments_filter_paid = 'contracts.installments_filter_paid';
-  static const contracts_installments_filter_unpaid = 'contracts.installments_filter_unpaid';
-  static const contracts_installments_empty_title = 'contracts.installments_empty_title';
-  static const contracts_installments_empty_subtitle = 'contracts.installments_empty_subtitle';
+  static const contracts_installments_remaining =
+      'contracts.installments_remaining';
+  static const contracts_installments_status_unpaid =
+      'contracts.installments_status_unpaid';
+  static const contracts_installments_status_paid =
+      'contracts.installments_status_paid';
+  static const contracts_installments_status_overdue =
+      'contracts.installments_status_overdue';
+  static const contracts_installments_status_partial =
+      'contracts.installments_status_partial';
+  static const contracts_installments_filter_all =
+      'contracts.installments_filter_all';
+  static const contracts_installments_filter_paid =
+      'contracts.installments_filter_paid';
+  static const contracts_installments_filter_unpaid =
+      'contracts.installments_filter_unpaid';
+  static const contracts_installments_empty_title =
+      'contracts.installments_empty_title';
+  static const contracts_installments_empty_subtitle =
+      'contracts.installments_empty_subtitle';
   static const contracts_no_title = 'contracts.no_title';
   static const contracts_no_subtitle = 'contracts.no_subtitle';
   static const contracts = 'contracts';
-  static const maintenance_create_description_hint = 'maintenance.create_description_hint';
-  static const maintenance_create_client_name_hint = 'maintenance.create_client_name_hint';
-  static const maintenance_create_client_phone_hint = 'maintenance.create_client_phone_hint';
-  static const maintenance_delete_confirm_title = 'maintenance.delete_confirm_title';
-  static const maintenance_delete_confirm_desc = 'maintenance.delete_confirm_desc';
-  static const maintenance_delete_confirm_btn = 'maintenance.delete_confirm_btn';
+  static const maintenance_create_description_hint =
+      'maintenance.create_description_hint';
+  static const maintenance_create_client_name_hint =
+      'maintenance.create_client_name_hint';
+  static const maintenance_create_client_phone_hint =
+      'maintenance.create_client_phone_hint';
+  static const maintenance_delete_confirm_title =
+      'maintenance.delete_confirm_title';
+  static const maintenance_delete_confirm_desc =
+      'maintenance.delete_confirm_desc';
+  static const maintenance_delete_confirm_btn =
+      'maintenance.delete_confirm_btn';
   static const maintenance_delete_cancel_btn = 'maintenance.delete_cancel_btn';
   static const maintenance_delete_success = 'maintenance.delete_success';
   static const maintenance_title = 'maintenance.title';
   static const maintenance_total_count = 'maintenance.total_count';
   static const maintenance_filter_all = 'maintenance.filter_all';
   static const maintenance_filter_pending = 'maintenance.filter_pending';
-  static const maintenance_filter_in_progress = 'maintenance.filter_in_progress';
+  static const maintenance_filter_in_progress =
+      'maintenance.filter_in_progress';
   static const maintenance_filter_completed = 'maintenance.filter_completed';
   static const maintenance_filter_cancelled = 'maintenance.filter_cancelled';
   static const maintenance_status_pending = 'maintenance.status_pending';
-  static const maintenance_status_pending_supervisor = 'maintenance.status_pending_supervisor';
+  static const maintenance_status_pending_supervisor =
+      'maintenance.status_pending_supervisor';
   static const maintenance_status_approved = 'maintenance.status_approved';
   static const maintenance_status_assigned = 'maintenance.status_assigned';
-  static const maintenance_status_in_progress = 'maintenance.status_in_progress';
+  static const maintenance_status_in_progress =
+      'maintenance.status_in_progress';
   static const maintenance_status_executed = 'maintenance.status_executed';
-  static const maintenance_status_pending_closure = 'maintenance.status_pending_closure';
+  static const maintenance_status_pending_closure =
+      'maintenance.status_pending_closure';
   static const maintenance_status_closed = 'maintenance.status_closed';
   static const maintenance_status_forwarded = 'maintenance.status_forwarded';
   static const maintenance_status_rejected = 'maintenance.status_rejected';
   static const maintenance_status_cancelled = 'maintenance.status_cancelled';
   static const maintenance_cost_bearer_label = 'maintenance.cost_bearer_label';
-  static const maintenance_cost_bearer_client = 'maintenance.cost_bearer_client';
+  static const maintenance_cost_bearer_client =
+      'maintenance.cost_bearer_client';
   static const maintenance_cost_bearer_owner = 'maintenance.cost_bearer_owner';
   static const maintenance_estimated_cost = 'maintenance.estimated_cost';
   static const maintenance_actual_cost = 'maintenance.actual_cost';
@@ -659,39 +856,55 @@ abstract class  LocaleKeys {
   static const maintenance_scheduled_date = 'maintenance.scheduled_date';
   static const maintenance_completed_date = 'maintenance.completed_date';
   static const maintenance_no_requests_title = 'maintenance.no_requests_title';
-  static const maintenance_no_requests_subtitle = 'maintenance.no_requests_subtitle';
+  static const maintenance_no_requests_subtitle =
+      'maintenance.no_requests_subtitle';
   static const maintenance_details_title = 'maintenance.details_title';
   static const maintenance_cost_section = 'maintenance.cost_section';
   static const maintenance_timeline_section = 'maintenance.timeline_section';
   static const maintenance_images_section = 'maintenance.images_section';
   static const maintenance_no_images = 'maintenance.no_images';
   static const maintenance_unspecified_date = 'maintenance.unspecified_date';
-  static const maintenance_not_determined_yet = 'maintenance.not_determined_yet';
+  static const maintenance_not_determined_yet =
+      'maintenance.not_determined_yet';
   static const maintenance_no_title = 'maintenance.no_title';
   static const maintenance_no_subtitle = 'maintenance.no_subtitle';
   static const maintenance_create_title = 'maintenance.create_title';
   static const maintenance_create_success = 'maintenance.create_success';
-  static const maintenance_create_property_unit_section = 'maintenance.create_property_unit_section';
-  static const maintenance_create_select_property = 'maintenance.create_select_property';
-  static const maintenance_create_select_unit = 'maintenance.create_select_unit';
+  static const maintenance_create_property_unit_section =
+      'maintenance.create_property_unit_section';
+  static const maintenance_create_select_property =
+      'maintenance.create_select_property';
+  static const maintenance_create_select_unit =
+      'maintenance.create_select_unit';
   static const maintenance_create_no_unit = 'maintenance.create_no_unit';
-  static const maintenance_create_client_section = 'maintenance.create_client_section';
-  static const maintenance_create_client_name = 'maintenance.create_client_name';
-  static const maintenance_create_client_phone = 'maintenance.create_client_phone';
-  static const maintenance_create_details_section = 'maintenance.create_details_section';
-  static const maintenance_create_description = 'maintenance.create_description';
-  static const maintenance_create_select_date = 'maintenance.create_select_date';
-  static const maintenance_create_types_section = 'maintenance.create_types_section';
+  static const maintenance_create_client_section =
+      'maintenance.create_client_section';
+  static const maintenance_create_client_name =
+      'maintenance.create_client_name';
+  static const maintenance_create_client_phone =
+      'maintenance.create_client_phone';
+  static const maintenance_create_details_section =
+      'maintenance.create_details_section';
+  static const maintenance_create_description =
+      'maintenance.create_description';
+  static const maintenance_create_select_date =
+      'maintenance.create_select_date';
+  static const maintenance_create_types_section =
+      'maintenance.create_types_section';
   static const maintenance_create_is_private = 'maintenance.create_is_private';
   static const maintenance_create_submit = 'maintenance.create_submit';
-  static const maintenance_create_required_field = 'maintenance.create_required_field';
-  static const maintenance_create_fill_all_fields = 'maintenance.create_fill_all_fields';
+  static const maintenance_create_required_field =
+      'maintenance.create_required_field';
+  static const maintenance_create_fill_all_fields =
+      'maintenance.create_fill_all_fields';
   static const maintenance_update_request = 'maintenance.update_request';
-  static const maintenance_updated_successfully = 'maintenance.updated_successfully';
+  static const maintenance_updated_successfully =
+      'maintenance.updated_successfully';
   static const maintenance_edit = 'maintenance.edit';
   static const maintenance_phone_digits_only = 'maintenance.phone_digits_only';
   static const maintenance_approve_request = 'maintenance.approve_request';
-  static const maintenance_approve_confirm_title = 'maintenance.approve_confirm_title';
+  static const maintenance_approve_confirm_title =
+      'maintenance.approve_confirm_title';
   static const maintenance_approve_submit = 'maintenance.approve_submit';
   static const maintenance_approve_success = 'maintenance.approve_success';
   static const maintenance_supervisor_notes = 'maintenance.supervisor_notes';
@@ -712,20 +925,29 @@ abstract class  LocaleKeys {
   static const maintenance_assign_submit = 'maintenance.assign_submit';
   static const maintenance_assign_success = 'maintenance.assign_success';
   static const maintenance_start_work = 'maintenance.start_work';
-  static const maintenance_start_confirm_title = 'maintenance.start_confirm_title';
-  static const maintenance_start_confirm_desc = 'maintenance.start_confirm_desc';
+  static const maintenance_start_confirm_title =
+      'maintenance.start_confirm_title';
+  static const maintenance_start_confirm_desc =
+      'maintenance.start_confirm_desc';
   static const maintenance_start_submit = 'maintenance.start_submit';
   static const maintenance_start_success = 'maintenance.start_success';
-  static const maintenance_task_complete_title = 'maintenance.task_complete_title';
-  static const maintenance_task_complete_notes = 'maintenance.task_complete_notes';
-  static const maintenance_task_complete_notes_hint = 'maintenance.task_complete_notes_hint';
+  static const maintenance_task_complete_title =
+      'maintenance.task_complete_title';
+  static const maintenance_task_complete_notes =
+      'maintenance.task_complete_notes';
+  static const maintenance_task_complete_notes_hint =
+      'maintenance.task_complete_notes_hint';
   static const maintenance_task_complete_btn = 'maintenance.task_complete_btn';
-  static const maintenance_task_complete_success = 'maintenance.task_complete_success';
-  static const maintenance_task_complete_error = 'maintenance.task_complete_error';
+  static const maintenance_task_complete_success =
+      'maintenance.task_complete_success';
+  static const maintenance_task_complete_error =
+      'maintenance.task_complete_error';
   static const maintenance_execute_work = 'maintenance.execute_work';
-  static const maintenance_execute_confirm_title = 'maintenance.execute_confirm_title';
+  static const maintenance_execute_confirm_title =
+      'maintenance.execute_confirm_title';
   static const maintenance_execute_notes = 'maintenance.execute_notes';
-  static const maintenance_execute_notes_hint = 'maintenance.execute_notes_hint';
+  static const maintenance_execute_notes_hint =
+      'maintenance.execute_notes_hint';
   static const maintenance_execute_cost = 'maintenance.execute_cost';
   static const maintenance_execute_cost_hint = 'maintenance.execute_cost_hint';
   static const maintenance_execute_submit = 'maintenance.execute_submit';
@@ -806,19 +1028,27 @@ abstract class  LocaleKeys {
   static const property_owners_edit_btn = 'property_owners.edit_btn';
   static const property_owners_add_owner = 'property_owners.add_owner';
   static const property_owners_select_owner = 'property_owners.select_owner';
-  static const property_owners_total_percentage = 'property_owners.total_percentage';
-  static const property_owners_representative = 'property_owners.representative';
-  static const property_owners_set_representative = 'property_owners.set_representative';
+  static const property_owners_total_percentage =
+      'property_owners.total_percentage';
+  static const property_owners_representative =
+      'property_owners.representative';
+  static const property_owners_set_representative =
+      'property_owners.set_representative';
   static const property_owners_save_btn = 'property_owners.save_btn';
   static const property_owners_success_msg = 'property_owners.success_msg';
-  static const property_owners_validation_error = 'property_owners.validation_error';
-  static const property_owners_auto_distribute = 'property_owners.auto_distribute';
+  static const property_owners_validation_error =
+      'property_owners.validation_error';
+  static const property_owners_auto_distribute =
+      'property_owners.auto_distribute';
   static const property_owners_no_owners = 'property_owners.no_owners';
-  static const property_owners_percentage_label = 'property_owners.percentage_label';
+  static const property_owners_percentage_label =
+      'property_owners.percentage_label';
   static const property_owners_remove_owner = 'property_owners.remove_owner';
-  static const property_owners_no_available_owners = 'property_owners.no_available_owners';
+  static const property_owners_no_available_owners =
+      'property_owners.no_available_owners';
   static const property_owners_sheet_title = 'property_owners.sheet_title';
-  static const property_owners_owner_already_added = 'property_owners.owner_already_added';
+  static const property_owners_owner_already_added =
+      'property_owners.owner_already_added';
   static const property_owners = 'property_owners';
   static const property_wizard_step1_title = 'property_wizard.step1_title';
   static const property_wizard_step2_title = 'property_wizard.step2_title';
@@ -829,7 +1059,8 @@ abstract class  LocaleKeys {
   static const property_wizard_previous = 'property_wizard.previous';
   static const property_wizard_publish = 'property_wizard.publish';
   static const property_wizard_publishing = 'property_wizard.publishing';
-  static const property_wizard_published_success = 'property_wizard.published_success';
+  static const property_wizard_published_success =
+      'property_wizard.published_success';
   static const property_wizard = 'property_wizard';
   static const property_images_title = 'property_images.title';
   static const property_images_subtitle = 'property_images.subtitle';
@@ -838,11 +1069,15 @@ abstract class  LocaleKeys {
   static const property_images_no_images_sub = 'property_images.no_images_sub';
   static const property_images_uploading = 'property_images.uploading';
   static const property_images_upload_failed = 'property_images.upload_failed';
-  static const property_images_upload_success = 'property_images.upload_success';
+  static const property_images_upload_success =
+      'property_images.upload_success';
   static const property_images_save_success = 'property_images.save_success';
-  static const property_images_add_description = 'property_images.add_description';
-  static const property_images_description_hint = 'property_images.description_hint';
-  static const property_images_save_description = 'property_images.save_description';
+  static const property_images_add_description =
+      'property_images.add_description';
+  static const property_images_description_hint =
+      'property_images.description_hint';
+  static const property_images_save_description =
+      'property_images.save_description';
   static const property_images = 'property_images';
   static const unit_details_title = 'unit_details.title';
   static const unit_details_unit_type = 'unit_details.unit_type';
@@ -876,10 +1111,13 @@ abstract class  LocaleKeys {
   static const unit_details_status_available = 'unit_details.status_available';
   static const unit_details_status_rented = 'unit_details.status_rented';
   static const unit_details_status_reserved = 'unit_details.status_reserved';
-  static const unit_details_status_maintenance = 'unit_details.status_maintenance';
-  static const unit_details_usage_residential = 'unit_details.usage_residential';
+  static const unit_details_status_maintenance =
+      'unit_details.status_maintenance';
+  static const unit_details_usage_residential =
+      'unit_details.usage_residential';
   static const unit_details_usage_commercial = 'unit_details.usage_commercial';
-  static const unit_details_usage_administrative = 'unit_details.usage_administrative';
+  static const unit_details_usage_administrative =
+      'unit_details.usage_administrative';
   static const unit_details_no_description = 'unit_details.no_description';
   static const unit_details_floor_number = 'unit_details.floor_number';
   static const unit_details_floor_prefix = 'unit_details.floor_prefix';
@@ -888,11 +1126,22 @@ abstract class  LocaleKeys {
   static const reports_revenueReport = 'reports.revenueReport';
   static const reports_occupancyReportTitle = 'reports.occupancyReportTitle';
   static const reports_defaultersReportTitle = 'reports.defaultersReportTitle';
-  static const reports_unitsStatusReportTitle = 'reports.unitsStatusReportTitle';
+  static const reports_unitsStatusReportTitle =
+      'reports.unitsStatusReportTitle';
   static const reports_unitsStatusTotal = 'reports.unitsStatusTotal';
   static const reports_unitsStatusVacant = 'reports.unitsStatusVacant';
   static const reports_unitsStatusRented = 'reports.unitsStatusRented';
-  static const reports_unitsStatusMaintenance = 'reports.unitsStatusMaintenance';
+  static const reports_unitsStatusMaintenance =
+      'reports.unitsStatusMaintenance';
+  static const reports_portfolioUnitsTitle = 'reports.portfolioUnitsTitle';
+  static const reports_portfolioUnitsSubtitle =
+      'reports.portfolioUnitsSubtitle';
+  static const reports_unitsShortcut = 'reports.unitsShortcut';
+  static const reports_unitsResults = 'reports.unitsResults';
+  static const reports_unitsCards = 'reports.unitsCards';
+  static const reports_unitsCompact = 'reports.unitsCompact';
+  static const reports_resetFilters = 'reports.resetFilters';
+  static const reports_unitsExportPdf = 'reports.unitsExportPdf';
   static const reports_all_properties = 'reports.all_properties';
   static const reports_all_statuses = 'reports.all_statuses';
   static const reports_property = 'reports.property';
@@ -951,13 +1200,15 @@ abstract class  LocaleKeys {
   static const units_usage_type_label = 'units.usage_type_label';
   static const units_usage_type_residential = 'units.usage_type_residential';
   static const units_usage_type_commercial = 'units.usage_type_commercial';
-  static const units_usage_type_administrative = 'units.usage_type_administrative';
+  static const units_usage_type_administrative =
+      'units.usage_type_administrative';
   static const units_purpose_label = 'units.purpose_label';
   static const units_purpose_rent = 'units.purpose_rent';
   static const units_purpose_sale = 'units.purpose_sale';
   static const units_finishing_type_label = 'units.finishing_type_label';
   static const units_finishing_type_finished = 'units.finishing_type_finished';
-  static const units_finishing_type_semi_finished = 'units.finishing_type_semi_finished';
+  static const units_finishing_type_semi_finished =
+      'units.finishing_type_semi_finished';
   static const units_finishing_type_without = 'units.finishing_type_without';
   static const units_is_furnished_label = 'units.is_furnished_label';
   static const units_select_prefix = 'units.select_prefix';
@@ -993,12 +1244,18 @@ abstract class  LocaleKeys {
   static const units_images_add = 'units.images_add';
   static const units_images_uploading = 'units.images_uploading';
   static const units_financials_title = 'units.financials_title';
-  static const units_annual_rent_monthly_label = 'units.annual_rent_monthly_label';
-  static const units_annual_rent_monthly_hint = 'units.annual_rent_monthly_hint';
-  static const units_annual_rent_2_payments_label = 'units.annual_rent_2_payments_label';
-  static const units_annual_rent_2_payments_hint = 'units.annual_rent_2_payments_hint';
-  static const units_annual_rent_4_payments_label = 'units.annual_rent_4_payments_label';
-  static const units_annual_rent_4_payments_hint = 'units.annual_rent_4_payments_hint';
+  static const units_annual_rent_monthly_label =
+      'units.annual_rent_monthly_label';
+  static const units_annual_rent_monthly_hint =
+      'units.annual_rent_monthly_hint';
+  static const units_annual_rent_2_payments_label =
+      'units.annual_rent_2_payments_label';
+  static const units_annual_rent_2_payments_hint =
+      'units.annual_rent_2_payments_hint';
+  static const units_annual_rent_4_payments_label =
+      'units.annual_rent_4_payments_label';
+  static const units_annual_rent_4_payments_hint =
+      'units.annual_rent_4_payments_hint';
   static const units_review_title = 'units.review_title';
   static const units_review_subtitle = 'units.review_subtitle';
   static const units_review_basic_info = 'units.review_basic_info';
@@ -1038,7 +1295,8 @@ abstract class  LocaleKeys {
   static const units_amenity_security = 'units.amenity_security';
   static const units_amenity_elevator = 'units.amenity_elevator';
   static const units_use_price_for_mortgage = 'units.use_price_for_mortgage';
-  static const units_use_price_for_mortgage_desc = 'units.use_price_for_mortgage_desc';
+  static const units_use_price_for_mortgage_desc =
+      'units.use_price_for_mortgage_desc';
   static const units_not_specified = 'units.not_specified';
   static const units_yes = 'units.yes';
   static const units_no = 'units.no';
@@ -1129,7 +1387,8 @@ abstract class  LocaleKeys {
   static const select_branch_validation = 'select_branch_validation';
   static const select_case_type_validation = 'select_case_type_validation';
   static const select_status_validation = 'select_status_validation';
-  static const select_hearing_date_validation = 'select_hearing_date_validation';
+  static const select_hearing_date_validation =
+      'select_hearing_date_validation';
   static const required_field = 'required_field';
   static const optional = 'optional';
   static const legal_case_created_success = 'legal_case_created_success';
@@ -1158,8 +1417,10 @@ abstract class  LocaleKeys {
   static const status = 'status';
   static const property = 'property';
   static const delete_legal_case = 'delete_legal_case';
-  static const delete_legal_case_confirm_title = 'delete_legal_case_confirm_title';
-  static const delete_legal_case_confirm_body = 'delete_legal_case_confirm_body';
+  static const delete_legal_case_confirm_title =
+      'delete_legal_case_confirm_title';
+  static const delete_legal_case_confirm_body =
+      'delete_legal_case_confirm_body';
   static const delete_legal_case_confirm_btn = 'delete_legal_case_confirm_btn';
   static const delete_unit_success = 'delete_unit_success';
   static const delete_unit_title = 'delete_unit_title';
@@ -1171,29 +1432,38 @@ abstract class  LocaleKeys {
   static const owner_finance_expenses = 'owner_finance_expenses';
   static const owner_finance_revenues = 'owner_finance_revenues';
   static const owner_finance_equity = 'owner_finance_equity';
-  static const owner_finance_cancel_receipt_title = 'owner_finance_cancel_receipt_title';
-  static const owner_finance_cancel_receipt_btn = 'owner_finance_cancel_receipt_btn';
-  static const owner_finance_cancel_receipt_desc = 'owner_finance_cancel_receipt_desc';
-  static const owner_finance_cancel_reason_required = 'owner_finance_cancel_reason_required';
+  static const owner_finance_cancel_receipt_title =
+      'owner_finance_cancel_receipt_title';
+  static const owner_finance_cancel_receipt_btn =
+      'owner_finance_cancel_receipt_btn';
+  static const owner_finance_cancel_receipt_desc =
+      'owner_finance_cancel_receipt_desc';
+  static const owner_finance_cancel_reason_required =
+      'owner_finance_cancel_reason_required';
   static const owner_finance_cancel_back_btn = 'owner_finance_cancel_back_btn';
   static const owner_finance_update_receipt = 'owner_finance_update_receipt';
-  static const owner_finance_receipt_not_found = 'owner_finance_receipt_not_found';
+  static const owner_finance_receipt_not_found =
+      'owner_finance_receipt_not_found';
   static const owner_finance_amount_label = 'owner_finance_amount_label';
   static const owner_finance_invalid_value = 'owner_finance_invalid_value';
   static const owner_finance_receipt_date = 'owner_finance_receipt_date';
   static const owner_finance_notes_label = 'owner_finance_notes_label';
   static const owner_finance_save_changes = 'owner_finance_save_changes';
   static const owner_finance_search_hint = 'owner_finance_search_hint';
-  static const owner_finance_financial_accounts = 'owner_finance_financial_accounts';
+  static const owner_finance_financial_accounts =
+      'owner_finance_financial_accounts';
   static const owner_finance_no_data = 'owner_finance_no_data';
-  static const owner_finance_no_records_currently = 'owner_finance_no_records_currently';
-  static const owner_finance_select_accounts_error = 'owner_finance_select_accounts_error';
+  static const owner_finance_no_records_currently =
+      'owner_finance_no_records_currently';
+  static const owner_finance_select_accounts_error =
+      'owner_finance_select_accounts_error';
   static const owner_finance_saving = 'owner_finance_saving';
   static const owner_finance_save_success = 'owner_finance_save_success';
   static const owner_finance_create_payment = 'owner_finance_create_payment';
   static const owner_finance_payee_id = 'owner_finance_payee_id';
   static const owner_finance_update_transfer = 'owner_finance_update_transfer';
-  static const owner_finance_reference_optional = 'owner_finance_reference_optional';
+  static const owner_finance_reference_optional =
+      'owner_finance_reference_optional';
   static const owner_finance_currency_sar = 'owner_finance_currency_sar';
   static const legal_case_deleted_success = 'legal_case_deleted_success';
   static const add_stage = 'add_stage';
@@ -1205,8 +1475,10 @@ abstract class  LocaleKeys {
   static const stage_date_required = 'stage_date_required';
   static const no_stages_found = 'no_stages_found';
   static const delete_stage = 'delete_stage';
-  static const delete_stage_confirmation_title = 'delete_stage_confirmation_title';
-  static const delete_stage_confirmation_desc = 'delete_stage_confirmation_desc';
+  static const delete_stage_confirmation_title =
+      'delete_stage_confirmation_title';
+  static const delete_stage_confirmation_desc =
+      'delete_stage_confirmation_desc';
   static const delete_stage_success = 'delete_stage_success';
   static const cancel = 'cancel';
   static const edit_legal_case = 'edit_legal_case';
@@ -1229,49 +1501,66 @@ abstract class  LocaleKeys {
   static const all = 'all';
   static const add_case = 'add_case';
   static const edit_case = 'edit_case';
-  static const owner_finance_post_journal_entry = 'owner_finance_post_journal_entry';
+  static const owner_finance_post_journal_entry =
+      'owner_finance_post_journal_entry';
   static const owner_finance_post_success = 'owner_finance_post_success';
-  static const owner_finance_reverse_journal_entry = 'owner_finance_reverse_journal_entry';
+  static const owner_finance_reverse_journal_entry =
+      'owner_finance_reverse_journal_entry';
   static const owner_finance_reverse_success = 'owner_finance_reverse_success';
-  static const owner_finance_reverse_confirm_title = 'owner_finance_reverse_confirm_title';
-  static const owner_finance_reverse_confirm_message = 'owner_finance_reverse_confirm_message';
+  static const owner_finance_reverse_confirm_title =
+      'owner_finance_reverse_confirm_title';
+  static const owner_finance_reverse_confirm_message =
+      'owner_finance_reverse_confirm_message';
   static const owner_finance_reverse_reason = 'owner_finance_reverse_reason';
-  static const owner_finance_reverse_reason_hint = 'owner_finance_reverse_reason_hint';
-  static const owner_finance_reverse_reason_required = 'owner_finance_reverse_reason_required';
+  static const owner_finance_reverse_reason_hint =
+      'owner_finance_reverse_reason_hint';
+  static const owner_finance_reverse_reason_required =
+      'owner_finance_reverse_reason_required';
   static const common_approve = 'common_approve';
   static const common_cancel = 'common_cancel';
   static const common_edit = 'common_edit';
   static const common_save = 'common_save';
-  static const owner_finance_transfer_success = 'owner_finance_transfer_success';
+  static const owner_finance_transfer_success =
+      'owner_finance_transfer_success';
   static const journal_entries_line = 'journal_entries_line';
   static const owner_finance_account = 'owner_finance_account';
-  static const owner_finance_account_required = 'owner_finance_account_required';
+  static const owner_finance_account_required =
+      'owner_finance_account_required';
   static const journal_entries_debit = 'journal_entries_debit';
   static const journal_entries_credit = 'journal_entries_credit';
   static const owner_finance_description = 'owner_finance_description';
   static const owner_finance_property = 'owner_finance_property';
   static const owner_finance_contract = 'owner_finance_contract';
   static const journal_entries_status_posted = 'journal_entries_status_posted';
-  static const journal_entries_status_reversed = 'journal_entries_status_reversed';
+  static const journal_entries_status_reversed =
+      'journal_entries_status_reversed';
   static const currency_sar = 'currency_sar';
   static const owner_finance_date_required = 'owner_finance_date_required';
-  static const journal_entries_total_zero_error = 'journal_entries_total_zero_error';
+  static const journal_entries_total_zero_error =
+      'journal_entries_total_zero_error';
   static const journal_entries_balance_error = 'journal_entries_balance_error';
-  static const journal_entries_line_zero_error = 'journal_entries_line_zero_error';
-  static const journal_entries_line_both_error = 'journal_entries_line_both_error';
-  static const owner_finance_update_journal_entry = 'owner_finance_update_journal_entry';
-  static const owner_finance_create_journal_entry = 'owner_finance_create_journal_entry';
-  static const owner_finance_journal_entry_success = 'owner_finance_journal_entry_success';
+  static const journal_entries_line_zero_error =
+      'journal_entries_line_zero_error';
+  static const journal_entries_line_both_error =
+      'journal_entries_line_both_error';
+  static const owner_finance_update_journal_entry =
+      'owner_finance_update_journal_entry';
+  static const owner_finance_create_journal_entry =
+      'owner_finance_create_journal_entry';
+  static const owner_finance_journal_entry_success =
+      'owner_finance_journal_entry_success';
   static const owner_finance_update = 'owner_finance_update';
   static const owner_finance_retry = 'owner_finance_retry';
   static const owner_finance_date = 'owner_finance_date';
-  static const owner_finance_description_required = 'owner_finance_description_required';
+  static const owner_finance_description_required =
+      'owner_finance_description_required';
   static const owner_finance_add_line = 'owner_finance_add_line';
   static const journal_entries_total_debit = 'journal_entries_total_debit';
   static const journal_entries_total_credit = 'journal_entries_total_credit';
   static const journal_entries_not_balanced = 'journal_entries_not_balanced';
   static const owner_finance_create = 'owner_finance_create';
-  static const journal_entries_min_lines_error = 'journal_entries_min_lines_error';
+  static const journal_entries_min_lines_error =
+      'journal_entries_min_lines_error';
   static const testCamelCaseKey = 'testCamelCaseKey';
   static const activityLogsActionDate = 'activityLogsActionDate';
   static const activityLogsActionIp = 'activityLogsActionIp';
@@ -1341,11 +1630,14 @@ abstract class  LocaleKeys {
   static const contractsMovementRentValue = 'contractsMovementRentValue';
   static const contractsMovementTerminations = 'contractsMovementTerminations';
   static const contractsMovementTitle = 'contractsMovementTitle';
-  static const contractsMovementTotalMovements = 'contractsMovementTotalMovements';
+  static const contractsMovementTotalMovements =
+      'contractsMovementTotalMovements';
   static const contractsMovementTypeCreation = 'contractsMovementTypeCreation';
   static const contractsMovementTypeRenewal = 'contractsMovementTypeRenewal';
-  static const contractsMovementTypeTermination = 'contractsMovementTypeTermination';
-  static const contractsMovementUnknownRenter = 'contractsMovementUnknownRenter';
+  static const contractsMovementTypeTermination =
+      'contractsMovementTypeTermination';
+  static const contractsMovementUnknownRenter =
+      'contractsMovementUnknownRenter';
   static const contractsNoContractsTitle = 'contractsNoContractsTitle';
   static const contractsNoSubtitle = 'contractsNoSubtitle';
   static const contractsNoTitle = 'contractsNoTitle';
@@ -1376,8 +1668,10 @@ abstract class  LocaleKeys {
   static const dashboardDefaultUser = 'dashboardDefaultUser';
   static const dashboardFinancialPosition = 'dashboardFinancialPosition';
   static const dashboardMaintenanceHub = 'dashboardMaintenanceHub';
-  static const dashboardMaintenanceNoRequests = 'dashboardMaintenanceNoRequests';
-  static const dashboardMaintenanceNoRequestsSub = 'dashboardMaintenanceNoRequestsSub';
+  static const dashboardMaintenanceNoRequests =
+      'dashboardMaintenanceNoRequests';
+  static const dashboardMaintenanceNoRequestsSub =
+      'dashboardMaintenanceNoRequestsSub';
   static const dashboardMaintenancePending = 'dashboardMaintenancePending';
   static const dashboardMaintenanceViewAll = 'dashboardMaintenanceViewAll';
   static const dashboardNavContracts = 'dashboardNavContracts';
@@ -1441,6 +1735,11 @@ abstract class  LocaleKeys {
   static const employeeTasksOverdue = 'employeeTasksOverdue';
   static const employeeTasksPending = 'employeeTasksPending';
   static const employeeTasksTitle = 'employeeTasksTitle';
+  static const tasksOverviewTitle = 'tasksOverviewTitle';
+  static const tasksOverviewSubtitle = 'tasksOverviewSubtitle';
+  static const tasksReadOnlyNotice = 'tasksReadOnlyNotice';
+  static const tasksExportPdf = 'tasksExportPdf';
+  static const tasksExportExcel = 'tasksExportExcel';
   static const employeeTasksTotalCompleted = 'employeeTasksTotalCompleted';
   static const employeeTasksTotalEmployees = 'employeeTasksTotalEmployees';
   static const employeeTasksTotalOverdue = 'employeeTasksTotalOverdue';
@@ -1483,7 +1782,8 @@ abstract class  LocaleKeys {
   static const maintenanceActualCost = 'maintenanceActualCost';
   static const maintenanceAddSubTask = 'maintenanceAddSubTask';
   static const maintenanceAdvancePayment = 'maintenanceAdvancePayment';
-  static const maintenanceApproveConfirmTitle = 'maintenanceApproveConfirmTitle';
+  static const maintenanceApproveConfirmTitle =
+      'maintenanceApproveConfirmTitle';
   static const maintenanceApproveRequest = 'maintenanceApproveRequest';
   static const maintenanceApproveSubmit = 'maintenanceApproveSubmit';
   static const maintenanceApproveSuccess = 'maintenanceApproveSuccess';
@@ -1497,20 +1797,29 @@ abstract class  LocaleKeys {
   static const maintenanceCostBearerOwner = 'maintenanceCostBearerOwner';
   static const maintenanceCostSection = 'maintenanceCostSection';
   static const maintenanceCreateClientName = 'maintenanceCreateClientName';
-  static const maintenanceCreateClientNameHint = 'maintenanceCreateClientNameHint';
+  static const maintenanceCreateClientNameHint =
+      'maintenanceCreateClientNameHint';
   static const maintenanceCreateClientPhone = 'maintenanceCreateClientPhone';
-  static const maintenanceCreateClientPhoneHint = 'maintenanceCreateClientPhoneHint';
-  static const maintenanceCreateClientSection = 'maintenanceCreateClientSection';
+  static const maintenanceCreateClientPhoneHint =
+      'maintenanceCreateClientPhoneHint';
+  static const maintenanceCreateClientSection =
+      'maintenanceCreateClientSection';
   static const maintenanceCreateDescription = 'maintenanceCreateDescription';
-  static const maintenanceCreateDescriptionHint = 'maintenanceCreateDescriptionHint';
-  static const maintenanceCreateDetailsSection = 'maintenanceCreateDetailsSection';
-  static const maintenanceCreateFillAllFields = 'maintenanceCreateFillAllFields';
+  static const maintenanceCreateDescriptionHint =
+      'maintenanceCreateDescriptionHint';
+  static const maintenanceCreateDetailsSection =
+      'maintenanceCreateDetailsSection';
+  static const maintenanceCreateFillAllFields =
+      'maintenanceCreateFillAllFields';
   static const maintenanceCreateIsPrivate = 'maintenanceCreateIsPrivate';
   static const maintenanceCreateNoUnit = 'maintenanceCreateNoUnit';
-  static const maintenanceCreatePropertyUnitSection = 'maintenanceCreatePropertyUnitSection';
-  static const maintenanceCreateRequiredField = 'maintenanceCreateRequiredField';
+  static const maintenanceCreatePropertyUnitSection =
+      'maintenanceCreatePropertyUnitSection';
+  static const maintenanceCreateRequiredField =
+      'maintenanceCreateRequiredField';
   static const maintenanceCreateSelectDate = 'maintenanceCreateSelectDate';
-  static const maintenanceCreateSelectProperty = 'maintenanceCreateSelectProperty';
+  static const maintenanceCreateSelectProperty =
+      'maintenanceCreateSelectProperty';
   static const maintenanceCreateSelectUnit = 'maintenanceCreateSelectUnit';
   static const maintenanceCreateSubmit = 'maintenanceCreateSubmit';
   static const maintenanceCreateSuccess = 'maintenanceCreateSuccess';
@@ -1526,7 +1835,8 @@ abstract class  LocaleKeys {
   static const maintenanceDueDate = 'maintenanceDueDate';
   static const maintenanceEdit = 'maintenanceEdit';
   static const maintenanceEstimatedCost = 'maintenanceEstimatedCost';
-  static const maintenanceExecuteConfirmTitle = 'maintenanceExecuteConfirmTitle';
+  static const maintenanceExecuteConfirmTitle =
+      'maintenanceExecuteConfirmTitle';
   static const maintenanceExecuteCost = 'maintenanceExecuteCost';
   static const maintenanceExecuteCostHint = 'maintenanceExecuteCostHint';
   static const maintenanceExecuteNotes = 'maintenanceExecuteNotes';
@@ -1564,7 +1874,8 @@ abstract class  LocaleKeys {
   static const maintenanceRequestsRequestNo = 'maintenanceRequestsRequestNo';
   static const maintenanceRequestsTitle = 'maintenanceRequestsTitle';
   static const maintenanceRequestsTotal = 'maintenanceRequestsTotal';
-  static const maintenanceRequestsUnknownRenter = 'maintenanceRequestsUnknownRenter';
+  static const maintenanceRequestsUnknownRenter =
+      'maintenanceRequestsUnknownRenter';
   static const maintenanceRequiredField = 'maintenanceRequiredField';
   static const maintenanceScheduledDate = 'maintenanceScheduledDate';
   static const maintenanceSelectTechnician = 'maintenanceSelectTechnician';
@@ -1580,8 +1891,10 @@ abstract class  LocaleKeys {
   static const maintenanceStatusForwarded = 'maintenanceStatusForwarded';
   static const maintenanceStatusInProgress = 'maintenanceStatusInProgress';
   static const maintenanceStatusPending = 'maintenanceStatusPending';
-  static const maintenanceStatusPendingClosure = 'maintenanceStatusPendingClosure';
-  static const maintenanceStatusPendingSupervisor = 'maintenanceStatusPendingSupervisor';
+  static const maintenanceStatusPendingClosure =
+      'maintenanceStatusPendingClosure';
+  static const maintenanceStatusPendingSupervisor =
+      'maintenanceStatusPendingSupervisor';
   static const maintenanceStatusRejected = 'maintenanceStatusRejected';
   static const maintenanceSubTask = 'maintenanceSubTask';
   static const maintenanceSubTasks = 'maintenanceSubTasks';
@@ -1589,8 +1902,10 @@ abstract class  LocaleKeys {
   static const maintenanceTaskCompleteBtn = 'maintenanceTaskCompleteBtn';
   static const maintenanceTaskCompleteError = 'maintenanceTaskCompleteError';
   static const maintenanceTaskCompleteNotes = 'maintenanceTaskCompleteNotes';
-  static const maintenanceTaskCompleteNotesHint = 'maintenanceTaskCompleteNotesHint';
-  static const maintenanceTaskCompleteSuccess = 'maintenanceTaskCompleteSuccess';
+  static const maintenanceTaskCompleteNotesHint =
+      'maintenanceTaskCompleteNotesHint';
+  static const maintenanceTaskCompleteSuccess =
+      'maintenanceTaskCompleteSuccess';
   static const maintenanceTaskCompleteTitle = 'maintenanceTaskCompleteTitle';
   static const maintenanceTaskDetails = 'maintenanceTaskDetails';
   static const maintenanceTaskDetailsHint = 'maintenanceTaskDetailsHint';
@@ -1600,7 +1915,8 @@ abstract class  LocaleKeys {
   static const maintenanceUnitLabel = 'maintenanceUnitLabel';
   static const maintenanceUnspecifiedDate = 'maintenanceUnspecifiedDate';
   static const maintenanceUpdateRequest = 'maintenanceUpdateRequest';
-  static const maintenanceUpdatedSuccessfully = 'maintenanceUpdatedSuccessfully';
+  static const maintenanceUpdatedSuccessfully =
+      'maintenanceUpdatedSuccessfully';
   static const noSupervisorsFound = 'noSupervisorsFound';
   static const notificationsAll = 'notificationsAll';
   static const notificationsMarkAllRead = 'notificationsMarkAllRead';
@@ -1626,8 +1942,10 @@ abstract class  LocaleKeys {
   static const ownerFinanceAccountsTitle = 'ownerFinanceAccountsTitle';
   static const ownerFinanceBasicInfo = 'ownerFinanceBasicInfo';
   static const ownerFinanceCancelPayment = 'ownerFinanceCancelPayment';
-  static const ownerFinanceCancelPaymentConfirmation = 'ownerFinanceCancelPaymentConfirmation';
-  static const ownerFinanceCancelPaymentSuccess = 'ownerFinanceCancelPaymentSuccess';
+  static const ownerFinanceCancelPaymentConfirmation =
+      'ownerFinanceCancelPaymentConfirmation';
+  static const ownerFinanceCancelPaymentSuccess =
+      'ownerFinanceCancelPaymentSuccess';
   static const ownerFinanceCancelReasonError = 'ownerFinanceCancelReasonError';
   static const ownerFinanceCancelReasonHint = 'ownerFinanceCancelReasonHint';
   static const ownerFinanceCancelReasonLabel = 'ownerFinanceCancelReasonLabel';
@@ -1636,29 +1954,37 @@ abstract class  LocaleKeys {
   static const ownerFinanceDebitAccount = 'ownerFinanceDebitAccount';
   static const ownerFinanceJournalEntry = 'ownerFinanceJournalEntry';
   static const ownerFinanceJournalEntryDate = 'ownerFinanceJournalEntryDate';
-  static const ownerFinanceJournalEntryNumber = 'ownerFinanceJournalEntryNumber';
-  static const ownerFinanceJournalEntryStatus = 'ownerFinanceJournalEntryStatus';
+  static const ownerFinanceJournalEntryNumber =
+      'ownerFinanceJournalEntryNumber';
+  static const ownerFinanceJournalEntryStatus =
+      'ownerFinanceJournalEntryStatus';
   static const ownerFinanceNotes = 'ownerFinanceNotes';
   static const ownerFinancePayee = 'ownerFinancePayee';
   static const ownerFinancePaymentDate = 'ownerFinancePaymentDate';
-  static const ownerFinancePaymentDetailsTitle = 'ownerFinancePaymentDetailsTitle';
+  static const ownerFinancePaymentDetailsTitle =
+      'ownerFinancePaymentDetailsTitle';
   static const ownerFinancePaymentMethod = 'ownerFinancePaymentMethod';
   static const ownerFinancePaymentNumber = 'ownerFinancePaymentNumber';
   static const ownerFinancePostJournalEntry = 'ownerFinancePostJournalEntry';
   static const ownerFinancePostSuccess = 'ownerFinancePostSuccess';
   static const ownerFinancePropertyId = 'ownerFinancePropertyId';
   static const ownerFinanceRelations = 'ownerFinanceRelations';
-  static const ownerFinanceReverseConfirmMessage = 'ownerFinanceReverseConfirmMessage';
-  static const ownerFinanceReverseConfirmTitle = 'ownerFinanceReverseConfirmTitle';
-  static const ownerFinanceReverseJournalEntry = 'ownerFinanceReverseJournalEntry';
+  static const ownerFinanceReverseConfirmMessage =
+      'ownerFinanceReverseConfirmMessage';
+  static const ownerFinanceReverseConfirmTitle =
+      'ownerFinanceReverseConfirmTitle';
+  static const ownerFinanceReverseJournalEntry =
+      'ownerFinanceReverseJournalEntry';
   static const ownerFinanceReverseReason = 'ownerFinanceReverseReason';
   static const ownerFinanceReverseReasonHint = 'ownerFinanceReverseReasonHint';
-  static const ownerFinanceReverseReasonRequired = 'ownerFinanceReverseReasonRequired';
+  static const ownerFinanceReverseReasonRequired =
+      'ownerFinanceReverseReasonRequired';
   static const ownerFinanceReverseSuccess = 'ownerFinanceReverseSuccess';
   static const ownerFinanceTotalAmount = 'ownerFinanceTotalAmount';
   static const ownerFinanceTotalCredit = 'ownerFinanceTotalCredit';
   static const ownerFinanceTotalDebit = 'ownerFinanceTotalDebit';
-  static const ownerFinanceTransferDateRequired = 'ownerFinanceTransferDateRequired';
+  static const ownerFinanceTransferDateRequired =
+      'ownerFinanceTransferDateRequired';
   static const ownerFinanceUpdatePayment = 'ownerFinanceUpdatePayment';
   static const ownerHeaderSubtitle = 'ownerHeaderSubtitle';
   static const ownerPending = 'ownerPending';
@@ -1689,7 +2015,8 @@ abstract class  LocaleKeys {
   static const owner_receipt_edit = 'owner_receipt_edit';
   static const owner_receipt_entry_date = 'owner_receipt_entry_date';
   static const owner_receipt_entry_number = 'owner_receipt_entry_number';
-  static const owner_receipt_financial_accounts = 'owner_receipt_financial_accounts';
+  static const owner_receipt_financial_accounts =
+      'owner_receipt_financial_accounts';
   static const owner_receipt_journal_entry = 'owner_receipt_journal_entry';
   static const owner_receipt_notes = 'owner_receipt_notes';
   static const owner_receipt_number = 'owner_receipt_number';
@@ -1736,7 +2063,8 @@ abstract class  LocaleKeys {
   static const propertyCreateDescription = 'propertyCreateDescription';
   static const propertyCreateExitCancel = 'propertyCreateExitCancel';
   static const propertyCreateExitConfirm = 'propertyCreateExitConfirm';
-  static const propertyCreateExitConfirmation = 'propertyCreateExitConfirmation';
+  static const propertyCreateExitConfirmation =
+      'propertyCreateExitConfirmation';
   static const propertyCreateExitMessage = 'propertyCreateExitMessage';
   static const propertyCreateExitTitle = 'propertyCreateExitTitle';
   static const propertyCreateFillRequired = 'propertyCreateFillRequired';
@@ -1745,7 +2073,8 @@ abstract class  LocaleKeys {
   static const propertyCreateNewDeed = 'propertyCreateNewDeed';
   static const propertyCreateNoDeeds = 'propertyCreateNoDeeds';
   static const propertyCreateOwnerSearchHint = 'propertyCreateOwnerSearchHint';
-  static const propertyCreateOwnersAddedCount = 'propertyCreateOwnersAddedCount';
+  static const propertyCreateOwnersAddedCount =
+      'propertyCreateOwnersAddedCount';
   static const propertyCreateOwnersSubtitle = 'propertyCreateOwnersSubtitle';
   static const propertyCreatePropertyName = 'propertyCreatePropertyName';
   static const propertyCreateSearchDeeds = 'propertyCreateSearchDeeds';
@@ -1760,62 +2089,89 @@ abstract class  LocaleKeys {
   static const propertyDetailsAddressLabel = 'propertyDetailsAddressLabel';
   static const propertyDetailsArea = 'propertyDetailsArea';
   static const propertyDetailsAreaUnit = 'propertyDetailsAreaUnit';
-  static const propertyDetailsAvailableUnitsLabel = 'propertyDetailsAvailableUnitsLabel';
+  static const propertyDetailsAvailableUnitsLabel =
+      'propertyDetailsAvailableUnitsLabel';
   static const propertyDetailsBasicInfoTitle = 'propertyDetailsBasicInfoTitle';
   static const propertyDetailsBranchLabel = 'propertyDetailsBranchLabel';
   static const propertyDetailsCancel = 'propertyDetailsCancel';
   static const propertyDetailsClone = 'propertyDetailsClone';
-  static const propertyDetailsCloneForDeedConfirm = 'propertyDetailsCloneForDeedConfirm';
-  static const propertyDetailsCloneForDeedCopyAll = 'propertyDetailsCloneForDeedCopyAll';
-  static const propertyDetailsCloneForDeedCopyAllDesc = 'propertyDetailsCloneForDeedCopyAllDesc';
-  static const propertyDetailsCloneForDeedDesc = 'propertyDetailsCloneForDeedDesc';
-  static const propertyDetailsCloneForDeedEmpty = 'propertyDetailsCloneForDeedEmpty';
-  static const propertyDetailsCloneForDeedEmptyDesc = 'propertyDetailsCloneForDeedEmptyDesc';
-  static const propertyDetailsCloneForDeedSuccess = 'propertyDetailsCloneForDeedSuccess';
-  static const propertyDetailsCloneForDeedTitle = 'propertyDetailsCloneForDeedTitle';
-  static const propertyDetailsConstructionYearLabel = 'propertyDetailsConstructionYearLabel';
+  static const propertyDetailsCloneForDeedConfirm =
+      'propertyDetailsCloneForDeedConfirm';
+  static const propertyDetailsCloneForDeedCopyAll =
+      'propertyDetailsCloneForDeedCopyAll';
+  static const propertyDetailsCloneForDeedCopyAllDesc =
+      'propertyDetailsCloneForDeedCopyAllDesc';
+  static const propertyDetailsCloneForDeedDesc =
+      'propertyDetailsCloneForDeedDesc';
+  static const propertyDetailsCloneForDeedEmpty =
+      'propertyDetailsCloneForDeedEmpty';
+  static const propertyDetailsCloneForDeedEmptyDesc =
+      'propertyDetailsCloneForDeedEmptyDesc';
+  static const propertyDetailsCloneForDeedSuccess =
+      'propertyDetailsCloneForDeedSuccess';
+  static const propertyDetailsCloneForDeedTitle =
+      'propertyDetailsCloneForDeedTitle';
+  static const propertyDetailsConstructionYearLabel =
+      'propertyDetailsConstructionYearLabel';
   static const propertyDetailsContracts = 'propertyDetailsContracts';
   static const propertyDetailsDeedAndDocs = 'propertyDetailsDeedAndDocs';
   static const propertyDetailsDeedInfo = 'propertyDetailsDeedInfo';
   static const propertyDetailsDeedNumber = 'propertyDetailsDeedNumber';
-  static const propertyDetailsDeedValuationTitle = 'propertyDetailsDeedValuationTitle';
+  static const propertyDetailsDeedValuationTitle =
+      'propertyDetailsDeedValuationTitle';
   static const propertyDetailsDelete = 'propertyDetailsDelete';
-  static const propertyDetailsDeleteConfirmBody = 'propertyDetailsDeleteConfirmBody';
-  static const propertyDetailsDeleteConfirmBtn = 'propertyDetailsDeleteConfirmBtn';
-  static const propertyDetailsDeleteConfirmTitle = 'propertyDetailsDeleteConfirmTitle';
-  static const propertyDetailsDeletingProperty = 'propertyDetailsDeletingProperty';
+  static const propertyDetailsDeleteConfirmBody =
+      'propertyDetailsDeleteConfirmBody';
+  static const propertyDetailsDeleteConfirmBtn =
+      'propertyDetailsDeleteConfirmBtn';
+  static const propertyDetailsDeleteConfirmTitle =
+      'propertyDetailsDeleteConfirmTitle';
+  static const propertyDetailsDeletingProperty =
+      'propertyDetailsDeletingProperty';
   static const propertyDetailsEdit = 'propertyDetailsEdit';
   static const propertyDetailsMaintenance = 'propertyDetailsMaintenance';
-  static const propertyDetailsMakeRepresentative = 'propertyDetailsMakeRepresentative';
+  static const propertyDetailsMakeRepresentative =
+      'propertyDetailsMakeRepresentative';
   static const propertyDetailsNoOwners = 'propertyDetailsNoOwners';
   static const propertyDetailsNoPhone = 'propertyDetailsNoPhone';
-  static const propertyDetailsNoUnitsSubtitle = 'propertyDetailsNoUnitsSubtitle';
+  static const propertyDetailsNoUnitsSubtitle =
+      'propertyDetailsNoUnitsSubtitle';
   static const propertyDetailsNoUnitsTitle = 'propertyDetailsNoUnitsTitle';
   static const propertyDetailsNotesLabel = 'propertyDetailsNotesLabel';
   static const propertyDetailsOccupancyRate = 'propertyDetailsOccupancyRate';
-  static const propertyDetailsOccupancyRateSub = 'propertyDetailsOccupancyRateSub';
+  static const propertyDetailsOccupancyRateSub =
+      'propertyDetailsOccupancyRateSub';
   static const propertyDetailsOverview = 'propertyDetailsOverview';
   static const propertyDetailsOwners = 'propertyDetailsOwners';
   static const propertyDetailsPropertyCode = 'propertyDetailsPropertyCode';
-  static const propertyDetailsPropertyTypeLabel = 'propertyDetailsPropertyTypeLabel';
+  static const propertyDetailsPropertyTypeLabel =
+      'propertyDetailsPropertyTypeLabel';
   static const propertyDetailsPublishBtn = 'propertyDetailsPublishBtn';
-  static const propertyDetailsPublishConfirmDesc = 'propertyDetailsPublishConfirmDesc';
-  static const propertyDetailsPublishConfirmTitle = 'propertyDetailsPublishConfirmTitle';
+  static const propertyDetailsPublishConfirmDesc =
+      'propertyDetailsPublishConfirmDesc';
+  static const propertyDetailsPublishConfirmTitle =
+      'propertyDetailsPublishConfirmTitle';
   static const propertyDetailsPublishNow = 'propertyDetailsPublishNow';
-  static const propertyDetailsPublishProperty = 'propertyDetailsPublishProperty';
+  static const propertyDetailsPublishProperty =
+      'propertyDetailsPublishProperty';
   static const propertyDetailsPublishSuccess = 'propertyDetailsPublishSuccess';
   static const propertyDetailsReadyToPublish = 'propertyDetailsReadyToPublish';
-  static const propertyDetailsRemoveRepresentative = 'propertyDetailsRemoveRepresentative';
+  static const propertyDetailsRemoveRepresentative =
+      'propertyDetailsRemoveRepresentative';
   static const propertyDetailsRentedUnits = 'propertyDetailsRentedUnits';
   static const propertyDetailsTotalArea = 'propertyDetailsTotalArea';
   static const propertyDetailsTotalUnits = 'propertyDetailsTotalUnits';
   static const propertyDetailsUnits = 'propertyDetailsUnits';
   static const propertyDetailsUsageTypeLabel = 'propertyDetailsUsageTypeLabel';
-  static const propertyDetailsValuationAmount = 'propertyDetailsValuationAmount';
-  static const propertyDetailsValuationApproved = 'propertyDetailsValuationApproved';
-  static const propertyDetailsValuationCurrency = 'propertyDetailsValuationCurrency';
+  static const propertyDetailsValuationAmount =
+      'propertyDetailsValuationAmount';
+  static const propertyDetailsValuationApproved =
+      'propertyDetailsValuationApproved';
+  static const propertyDetailsValuationCurrency =
+      'propertyDetailsValuationCurrency';
   static const propertyDetailsValuationDate = 'propertyDetailsValuationDate';
-  static const propertyDetailsValuationEntity = 'propertyDetailsValuationEntity';
+  static const propertyDetailsValuationEntity =
+      'propertyDetailsValuationEntity';
   static const propertyDetailsViewDeed = 'propertyDetailsViewDeed';
   static const propertyDraftContinue = 'propertyDraftContinue';
   static const propertyDraftIncomplete = 'propertyDraftIncomplete';
@@ -1850,7 +2206,8 @@ abstract class  LocaleKeys {
   static const propertyReviewAddress = 'propertyReviewAddress';
   static const propertyReviewArea = 'propertyReviewArea';
   static const propertyReviewBranch = 'propertyReviewBranch';
-  static const propertyReviewConstructionYear = 'propertyReviewConstructionYear';
+  static const propertyReviewConstructionYear =
+      'propertyReviewConstructionYear';
   static const propertyReviewDeed = 'propertyReviewDeed';
   static const propertyReviewNoImages = 'propertyReviewNoImages';
   static const propertyReviewPropertyName = 'propertyReviewPropertyName';
@@ -1859,7 +2216,8 @@ abstract class  LocaleKeys {
   static const propertyWizardNext = 'propertyWizardNext';
   static const propertyWizardPrevious = 'propertyWizardPrevious';
   static const propertyWizardPublish = 'propertyWizardPublish';
-  static const propertyWizardPublishedSuccess = 'propertyWizardPublishedSuccess';
+  static const propertyWizardPublishedSuccess =
+      'propertyWizardPublishedSuccess';
   static const propertyWizardStep1Title = 'propertyWizardStep1Title';
   static const propertyWizardStep2Title = 'propertyWizardStep2Title';
   static const propertyWizardStep3Title = 'propertyWizardStep3Title';
@@ -1878,16 +2236,23 @@ abstract class  LocaleKeys {
   static const revenueTotalExpected = 'revenueTotalExpected';
   static const technicianCompany = 'technicianCompany';
   static const technicianName = 'technicianName';
-  static const technicianPerformanceCompletedRequests = 'technicianPerformanceCompletedRequests';
+  static const technicianPerformanceCompletedRequests =
+      'technicianPerformanceCompletedRequests';
   static const technicianPerformanceList = 'technicianPerformanceList';
   static const technicianPerformanceNoData = 'technicianPerformanceNoData';
-  static const technicianPerformancePendingRequests = 'technicianPerformancePendingRequests';
-  static const technicianPerformanceTechnicianName = 'technicianPerformanceTechnicianName';
-  static const technicianPerformanceTechnicianPhone = 'technicianPerformanceTechnicianPhone';
+  static const technicianPerformancePendingRequests =
+      'technicianPerformancePendingRequests';
+  static const technicianPerformanceTechnicianName =
+      'technicianPerformanceTechnicianName';
+  static const technicianPerformanceTechnicianPhone =
+      'technicianPerformanceTechnicianPhone';
   static const technicianPerformanceTitle = 'technicianPerformanceTitle';
-  static const technicianPerformanceTotalCompleted = 'technicianPerformanceTotalCompleted';
-  static const technicianPerformanceTotalPending = 'technicianPerformanceTotalPending';
-  static const technicianPerformanceTotalTechnicians = 'technicianPerformanceTotalTechnicians';
+  static const technicianPerformanceTotalCompleted =
+      'technicianPerformanceTotalCompleted';
+  static const technicianPerformanceTotalPending =
+      'technicianPerformanceTotalPending';
+  static const technicianPerformanceTotalTechnicians =
+      'technicianPerformanceTotalTechnicians';
   static const technicianPhone = 'technicianPhone';
   static const technicianSpecialty = 'technicianSpecialty';
   static const unitDetailsDescription = 'unitDetailsDescription';
@@ -1899,7 +2264,8 @@ abstract class  LocaleKeys {
   static const unitDetailsStatusReserved = 'unitDetailsStatusReserved';
   static const unitDetailsUnitCode = 'unitDetailsUnitCode';
   static const unitDetailsUnitType = 'unitDetailsUnitType';
-  static const unitDetailsUsageAdministrative = 'unitDetailsUsageAdministrative';
+  static const unitDetailsUsageAdministrative =
+      'unitDetailsUsageAdministrative';
   static const unitDetailsUsageCommercial = 'unitDetailsUsageCommercial';
   static const unitDetailsUsageResidential = 'unitDetailsUsageResidential';
   static const unitDetailsUsageType = 'unitDetailsUsageType';
@@ -1933,7 +2299,8 @@ abstract class  LocaleKeys {
   static const unitsFinancialsTitle = 'unitsFinancialsTitle';
   static const unitsFinishingTypeFinished = 'unitsFinishingTypeFinished';
   static const unitsFinishingTypeLabel = 'unitsFinishingTypeLabel';
-  static const unitsFinishingTypeSemiFinished = 'unitsFinishingTypeSemiFinished';
+  static const unitsFinishingTypeSemiFinished =
+      'unitsFinishingTypeSemiFinished';
   static const unitsFinishingTypeWithout = 'unitsFinishingTypeWithout';
   static const unitsFloorNumberLabel = 'unitsFloorNumberLabel';
   static const unitsFloorTypeBasement = 'unitsFloorTypeBasement';
@@ -2006,7 +2373,8 @@ abstract class  LocaleKeys {
   static const dashboard_partially_paid = 'dashboard_partially_paid';
   static const dashboard_unpaid = 'dashboard_unpaid';
   static const dashboard_latest_overdue = 'dashboard_latest_overdue';
-  static const dashboard_maintenance_breakdown = 'dashboard_maintenance_breakdown';
+  static const dashboard_maintenance_breakdown =
+      'dashboard_maintenance_breakdown';
   static const dashboard_maint_new = 'dashboard_maint_new';
   static const dashboard_maint_in_progress = 'dashboard_maint_in_progress';
   static const dashboard_maint_urgent = 'dashboard_maint_urgent';
@@ -2014,5 +2382,4 @@ abstract class  LocaleKeys {
   static const dashboard_tasks_overdue = 'dashboard_tasks_overdue';
   static const dashboard_legal_open = 'dashboard_legal_open';
   static const dashboard_legal_amount = 'dashboard_legal_amount';
-
 }

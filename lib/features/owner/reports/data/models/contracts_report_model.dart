@@ -43,7 +43,8 @@ class ContractsReportItemModel extends ContractsReportItemEntity {
       id: _parseInt(json['id']),
       contractNumber: json['contract_number']?.toString() ?? '',
       contractType: json['contract_type']?.toString() ?? '',
-      propertyName: (json['property'] != null && json['property']['name'] != null)
+      propertyName:
+          (json['property'] != null && json['property']['name'] != null)
           ? json['property']['name'].toString()
           : '',
       unitName: (json['unit'] != null && json['unit']['name'] != null)
@@ -92,7 +93,9 @@ class ContractsReportModel extends ContractsReportEntity {
               .toList() ??
           [],
       pagination: ReportPaginationModel.fromJson(json['pagination'] ?? {}),
-      filterOptions: ContractsFilterOptionsModel.fromJson(json['filter_options'] ?? {}),
+      filterOptions: ContractsFilterOptionsModel.fromJson(
+        json['filter_options'] ?? {},
+      ),
     );
   }
 }
@@ -105,11 +108,13 @@ class ContractsFilterOptionsModel extends ContractsFilterOptionsEntity {
 
   factory ContractsFilterOptionsModel.fromJson(Map<String, dynamic> json) {
     return ContractsFilterOptionsModel(
-      statuses: (json['statuses'] as List<dynamic>?)
+      statuses:
+          (json['statuses'] as List<dynamic>?)
               ?.map((e) => ContractsStatusFilterModel.fromJson(e))
               .toList() ??
           [],
-      properties: (json['properties'] as List<dynamic>?)
+      properties:
+          (json['properties'] as List<dynamic>?)
               ?.map((e) => ContractsPropertyFilterModel.fromJson(e))
               .toList() ??
           [],

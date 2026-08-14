@@ -8,8 +8,8 @@ class OwnerReportsIndexCubit extends Cubit<OwnerReportsIndexState> {
 
   OwnerReportsIndexCubit({
     required GetOwnerReportsIndexUseCase getReportsIndexUseCase,
-  })  : _getReportsIndexUseCase = getReportsIndexUseCase,
-        super(OwnerReportsIndexInitial());
+  }) : _getReportsIndexUseCase = getReportsIndexUseCase,
+       super(OwnerReportsIndexInitial());
 
   Future<void> fetchReportsIndex() async {
     if (isClosed) return;

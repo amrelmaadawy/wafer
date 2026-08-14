@@ -30,7 +30,6 @@ class ApiConstants {
   static const String ownerAccountingJournalEntries =
       'owner/accounting/journal-entries';
   static const String ownerContracts = 'owner/contracts';
-  static const String cancelOwnerContract = 'contract/owner/cancel';
 
   // Owner Finance/Accounting
   static const String ownerAccounting = 'owner/accounting';
@@ -59,6 +58,7 @@ class ApiConstants {
   static const String ownerTechnicianPerformanceReport =
       'owner/reports/technician-performance';
   static const String ownerEmployeeTasksReport = 'owner/reports/employee-tasks';
+  static const String ownerTasksFormData = 'owner/tasks/form-data';
   static const String ownerActivityLogsReport = 'owner/reports/activity-logs';
   static const String ownerReportsLegalCases = 'owner/reports/legal-cases';
   static const String ownerMaintenanceTechniciansFormData =

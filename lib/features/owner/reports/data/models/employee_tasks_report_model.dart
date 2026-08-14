@@ -3,6 +3,7 @@ import '../../domain/entities/maintenance_requests_report_entity.dart'
 import '../../domain/entities/employee_tasks_report_entity.dart';
 import 'employee_tasks_item_model.dart';
 import 'employee_tasks_summary_model.dart';
+import 'report_model_parsing.dart';
 
 class EmployeeTasksReportModel extends EmployeeTasksReportEntity {
   const EmployeeTasksReportModel({
@@ -12,14 +13,21 @@ class EmployeeTasksReportModel extends EmployeeTasksReportEntity {
   });
 
   factory EmployeeTasksReportModel.fromJson(Map<String, dynamic> json) {
+    final summary = json['summary'];
+    final pagination = json['pagination'];
     return EmployeeTasksReportModel(
-      summary: EmployeeTasksSummaryModel.fromJson(json['summary'] ?? {}),
+      summary: EmployeeTasksSummaryModel.fromJson(
+        summary is Map<String, dynamic> ? summary : const {},
+      ),
       items:
           (json['items'] as List?)
-              ?.map((item) => EmployeeTasksItemModel.fromJson(item))
+              ?.whereType<Map<String, dynamic>>()
+              .map(EmployeeTasksItemModel.fromJson)
               .toList() ??
           [],
-      pagination: PaginationModel.fromJson(json['pagination'] ?? {}),
+      pagination: PaginationModel.fromJson(
+        pagination is Map<String, dynamic> ? pagination : const {},
+      ),
     );
   }
 }
@@ -34,10 +42,10 @@ class PaginationModel extends PaginationEntity {
 
   factory PaginationModel.fromJson(Map<String, dynamic> json) {
     return PaginationModel(
-      currentPage: (json['current_page'] as num?)?.toInt() ?? 1,
-      lastPage: (json['last_page'] as num?)?.toInt() ?? 1,
-      perPage: (json['per_page'] as num?)?.toInt() ?? 15,
-      total: (json['total'] as num?)?.toInt() ?? 0,
+      currentPage: reportNullableInt(json['current_page']) ?? 1,
+      lastPage: reportNullableInt(json['last_page']) ?? 1,
+      perPage: reportNullableInt(json['per_page']) ?? 15,
+      total: reportInt(json['total']),
     );
   }
 }

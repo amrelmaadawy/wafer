@@ -34,13 +34,13 @@ class ReportStatsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        totalProperties,
-        totalUnits,
-        totalContracts,
-        activeContracts,
-        openMaintenance,
-        activeCases,
-      ];
+    totalProperties,
+    totalUnits,
+    totalContracts,
+    activeContracts,
+    openMaintenance,
+    activeCases,
+  ];
 }
 
 class ReportMetaEntity extends Equatable {
@@ -81,12 +81,12 @@ class ReportFilterOptionsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        properties,
-        unitStatuses,
-        contractStatuses,
-        maintenanceStatuses,
-        maintenancePriorities,
-      ];
+    properties,
+    unitStatuses,
+    contractStatuses,
+    maintenanceStatuses,
+    maintenancePriorities,
+  ];
 }
 
 class ReportFilterPropertyEntity extends Equatable {
@@ -99,7 +99,7 @@ class ReportFilterPropertyEntity extends Equatable {
     this.name,
     required this.code,
   });
-  
+
   String get displayName => name ?? code;
 
   @override
@@ -110,10 +110,7 @@ class ReportFilterOptionEntity extends Equatable {
   final String value;
   final String label;
 
-  const ReportFilterOptionEntity({
-    required this.value,
-    required this.label,
-  });
+  const ReportFilterOptionEntity({required this.value, required this.label});
 
   @override
   List<Object?> get props => [value, label];

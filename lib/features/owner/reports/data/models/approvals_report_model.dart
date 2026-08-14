@@ -1,6 +1,8 @@
 import '../../domain/entities/approvals_report_entity.dart';
-import '../../domain/entities/maintenance_requests_report_entity.dart' show PaginationEntity;
-import '../../domain/entities/revenue_report_entity.dart' show PropertyFilterItemEntity;
+import '../../domain/entities/maintenance_requests_report_entity.dart'
+    show PaginationEntity;
+import '../../domain/entities/revenue_report_entity.dart'
+    show PropertyFilterItemEntity;
 
 class ApprovalsReportModel extends ApprovalsReportEntity {
   const ApprovalsReportModel({
@@ -13,12 +15,15 @@ class ApprovalsReportModel extends ApprovalsReportEntity {
   factory ApprovalsReportModel.fromJson(Map<String, dynamic> json) {
     return ApprovalsReportModel(
       summary: ApprovalsSummaryModel.fromJson(json['summary'] ?? {}),
-      items: (json['items'] as List?)
+      items:
+          (json['items'] as List?)
               ?.map((item) => ApprovalItemModel.fromJson(item))
               .toList() ??
           [],
       pagination: ApprovalsPaginationModel.fromJson(json['pagination'] ?? {}),
-      filterOptions: ApprovalsFilterOptionsModel.fromJson(json['filter_options'] ?? {}),
+      filterOptions: ApprovalsFilterOptionsModel.fromJson(
+        json['filter_options'] ?? {},
+      ),
     );
   }
 }
@@ -62,7 +67,8 @@ class ApprovalItemModel extends ApprovalItemEntity {
     final initiator = json['initiator'] as Map<String, dynamic>? ?? {};
 
     // Try to extract a title from common approvable fields
-    final title = approvable['contract_number']?.toString() ??
+    final title =
+        approvable['contract_number']?.toString() ??
         approvable['receipt_number']?.toString() ??
         approvable['reference_number']?.toString() ??
         approvable['name']?.toString() ??
@@ -70,7 +76,8 @@ class ApprovalItemModel extends ApprovalItemEntity {
         '';
 
     // Try to extract an amount from common approvable fields
-    final amount = approvable['total_rent_value']?.toString() ??
+    final amount =
+        approvable['total_rent_value']?.toString() ??
         approvable['amount']?.toString() ??
         approvable['total_amount']?.toString() ??
         approvable['value']?.toString();
@@ -119,19 +126,23 @@ class ApprovalsFilterOptionsModel extends ApprovalsFilterOptionsEntity {
 
   factory ApprovalsFilterOptionsModel.fromJson(Map<String, dynamic> json) {
     return ApprovalsFilterOptionsModel(
-      statuses: (json['statuses'] as List?)
+      statuses:
+          (json['statuses'] as List?)
               ?.map((e) => FilterOptionItemModel.fromJson(e))
               .toList() ??
           [],
-      approvableTypes: (json['approvable_types'] as List?)
+      approvableTypes:
+          (json['approvable_types'] as List?)
               ?.map((e) => ApprovableTypeFilterItemModel.fromJson(e))
               .toList() ??
           [],
-      users: (json['users'] as List?)
+      users:
+          (json['users'] as List?)
               ?.map((e) => UserFilterItemModel.fromJson(e))
               .toList() ??
           [],
-      properties: (json['properties'] as List?)
+      properties:
+          (json['properties'] as List?)
               ?.map((e) => ApprovalsPropertyFilterItemModel.fromJson(e))
               .toList() ??
           [],
@@ -140,10 +151,7 @@ class ApprovalsFilterOptionsModel extends ApprovalsFilterOptionsEntity {
 }
 
 class FilterOptionItemModel extends FilterOptionItemEntity {
-  const FilterOptionItemModel({
-    required super.value,
-    required super.label,
-  });
+  const FilterOptionItemModel({required super.value, required super.label});
 
   factory FilterOptionItemModel.fromJson(Map<String, dynamic> json) {
     return FilterOptionItemModel(

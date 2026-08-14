@@ -10,8 +10,6 @@ class UnitsStatusItemEntity extends Equatable {
   final int? floorNumber;
   final String status;
   final String statusLabel;
-  final dynamic
-  activeContract; // Can be parsed later if needed, mostly null here
   final String createdAt;
 
   const UnitsStatusItemEntity({
@@ -23,7 +21,6 @@ class UnitsStatusItemEntity extends Equatable {
     this.floorNumber,
     required this.status,
     required this.statusLabel,
-    this.activeContract,
     required this.createdAt,
   });
 
@@ -37,7 +34,6 @@ class UnitsStatusItemEntity extends Equatable {
     floorNumber,
     status,
     statusLabel,
-    activeContract,
     createdAt,
   ];
 }

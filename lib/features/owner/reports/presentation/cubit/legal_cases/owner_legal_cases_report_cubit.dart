@@ -6,16 +6,13 @@ class OwnerLegalCasesReportCubit extends Cubit<OwnerLegalCasesReportState> {
   final GetLegalCasesReportUseCase getLegalCasesReportUseCase;
 
   OwnerLegalCasesReportCubit({required this.getLegalCasesReportUseCase})
-      : super(OwnerLegalCasesReportInitial());
+    : super(OwnerLegalCasesReportInitial());
 
   int _currentPage = 1;
   bool _isFetching = false;
   String? _selectedStatus;
 
-  Future<void> fetchReport({
-    bool isRefresh = false,
-    String? status,
-  }) async {
+  Future<void> fetchReport({bool isRefresh = false, String? status}) async {
     if (_isFetching) return;
 
     if (status != null && status != _selectedStatus) {
@@ -30,7 +27,7 @@ class OwnerLegalCasesReportCubit extends Cubit<OwnerLegalCasesReportState> {
     final isFirstFetch = _currentPage == 1;
 
     _isFetching = true;
-    
+
     if (isFirstFetch) {
       emit(const OwnerLegalCasesReportLoading(isFirstFetch: true));
     } else {
@@ -38,10 +35,7 @@ class OwnerLegalCasesReportCubit extends Cubit<OwnerLegalCasesReportState> {
     }
 
     final result = await getLegalCasesReportUseCase(
-      GetLegalCasesReportParams(
-        page: _currentPage,
-        status: _selectedStatus,
-      ),
+      GetLegalCasesReportParams(page: _currentPage, status: _selectedStatus),
     );
 
     result.fold(

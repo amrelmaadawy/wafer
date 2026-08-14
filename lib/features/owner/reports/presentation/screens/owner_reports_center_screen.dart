@@ -27,12 +27,14 @@ class OwnerReportsCenterScreen extends StatelessWidget {
         appBar: CustomAppBar(title: LocaleKeys.dashboardReports.tr()),
         body: BlocBuilder<OwnerReportsIndexCubit, OwnerReportsIndexState>(
           builder: (context, state) {
-            if (state is OwnerReportsIndexLoading || state is OwnerReportsIndexInitial) {
+            if (state is OwnerReportsIndexLoading ||
+                state is OwnerReportsIndexInitial) {
               return const ReportsIndexSkeleton();
             } else if (state is OwnerReportsIndexError) {
               return CustomErrorWidget(
                 message: state.message,
-                onRetry: () => context.read<OwnerReportsIndexCubit>().fetchReportsIndex(),
+                onRetry: () =>
+                    context.read<OwnerReportsIndexCubit>().fetchReportsIndex(),
               );
             } else if (state is OwnerReportsIndexLoaded) {
               return _buildSuccessState(context, state.indexData);
@@ -44,13 +46,14 @@ class OwnerReportsCenterScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSuccessState(BuildContext context, OwnerReportsIndexEntity data) {
+  Widget _buildSuccessState(
+    BuildContext context,
+    OwnerReportsIndexEntity data,
+  ) {
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
-        SliverToBoxAdapter(
-          child: _buildStatsSection(context, data.stats),
-        ),
+        SliverToBoxAdapter(child: _buildStatsSection(context, data.stats)),
         SliverToBoxAdapter(
           child: _buildDynamicReportsSection(context, data.reports),
         ),
@@ -179,7 +182,10 @@ class OwnerReportsCenterScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDynamicReportsSection(BuildContext context, List<ReportMetaEntity> apiReports) {
+  Widget _buildDynamicReportsSection(
+    BuildContext context,
+    List<ReportMetaEntity> apiReports,
+  ) {
     if (apiReports.isEmpty) {
       return Padding(
         padding: const EdgeInsets.all(24.0),
@@ -306,7 +312,7 @@ class _ReportCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (route.isEmpty) return const SizedBox.shrink(); // Hide unmapped reports
-    
+
     return Material(
       color: Colors.white,
       borderRadius: AppRadius.circularXl,

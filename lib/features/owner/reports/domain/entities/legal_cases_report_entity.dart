@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+
 class LegalCasesReportEntity extends Equatable {
   final LegalCasesSummaryEntity summary;
   final List<LegalCaseItemEntity> items;
@@ -41,7 +42,7 @@ class LegalCaseItemEntity extends Equatable {
   final String? nextHearingDate;
   final String status;
   final String createdAt;
-  
+
   // Relations mapped as basic properties to simplify UI usage
   final String? propertyName;
   final String? unitName;
@@ -66,20 +67,20 @@ class LegalCaseItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        caseNumber,
-        plaintiff,
-        defendant,
-        court,
-        hearingDate,
-        nextHearingDate,
-        status,
-        createdAt,
-        propertyName,
-        unitName,
-        contractNumber,
-        renterName,
-      ];
+    id,
+    caseNumber,
+    plaintiff,
+    defendant,
+    court,
+    hearingDate,
+    nextHearingDate,
+    status,
+    createdAt,
+    propertyName,
+    unitName,
+    contractNumber,
+    renterName,
+  ];
 }
 
 class LegalCasesFilterOptionsEntity extends Equatable {

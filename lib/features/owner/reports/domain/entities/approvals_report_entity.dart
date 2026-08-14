@@ -65,18 +65,18 @@ class ApprovalItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        status,
-        statusLabel,
-        typeValue,
-        typeLabel,
-        typeIcon,
-        typeColor,
-        title,
-        date,
-        amount,
-        userName,
-      ];
+    id,
+    status,
+    statusLabel,
+    typeValue,
+    typeLabel,
+    typeIcon,
+    typeColor,
+    title,
+    date,
+    amount,
+    userName,
+  ];
 }
 
 class ApprovalsFilterOptionsEntity extends Equatable {
@@ -100,10 +100,7 @@ class FilterOptionItemEntity extends Equatable {
   final String value;
   final String label;
 
-  const FilterOptionItemEntity({
-    required this.value,
-    required this.label,
-  });
+  const FilterOptionItemEntity({required this.value, required this.label});
 
   @override
   List<Object?> get props => [value, label];

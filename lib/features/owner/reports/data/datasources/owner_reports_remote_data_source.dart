@@ -54,9 +54,7 @@ abstract class OwnerReportsRemoteDataSource {
     String? action,
   });
 
-  Future<ApprovalsReportModel> getApprovalsReport({
-    int page = 1,
-  });
+  Future<ApprovalsReportModel> getApprovalsReport({int page = 1});
 
   Future<LegalCasesReportModel> getLegalCasesReport({
     int page = 1,
@@ -79,8 +77,7 @@ class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
         throw ServerException(response.data?['message'] ?? 'Unknown Error');
       }
     } on DioException catch (e) {
-      throw ServerException(
-          e.response?.data?['message'] ?? 'Network Error');
+      throw ServerException(e.response?.data?['message'] ?? 'Network Error');
     }
   }
 
@@ -146,7 +143,7 @@ class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
     if (status != null) queryParameters['status'] = status;
 
     final response = await _dio.get(
-      'owner/reports/units-status',
+      ApiConstants.ownerUnitsStatusReport,
       queryParameters: queryParameters,
     );
     final data = response.data as Map<String, dynamic>? ?? {};
@@ -293,9 +290,7 @@ class OwnerReportsRemoteDataSourceImpl implements OwnerReportsRemoteDataSource {
   }
 
   @override
-  Future<ApprovalsReportModel> getApprovalsReport({
-    int page = 1,
-  }) async {
+  Future<ApprovalsReportModel> getApprovalsReport({int page = 1}) async {
     try {
       final response = await _dio.get(
         'owner/reports/approvals',

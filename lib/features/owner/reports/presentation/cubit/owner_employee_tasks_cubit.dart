@@ -11,9 +11,11 @@ class OwnerEmployeeTasksCubit extends Cubit<OwnerEmployeeTasksState> {
 
   int _currentPage = 1;
   bool _hasReachedMax = false;
+  bool _isFetching = false;
   EmployeeTasksReportEntity? _currentReport;
 
   Future<void> fetchReport({bool forceRefresh = false}) async {
+    if (_isFetching) return;
     if (forceRefresh) {
       _currentPage = 1;
       _hasReachedMax = false;
@@ -23,14 +25,16 @@ class OwnerEmployeeTasksCubit extends Cubit<OwnerEmployeeTasksState> {
       emit(const OwnerEmployeeTasksLoading(isPagination: false));
     } else {
       if (_hasReachedMax) return;
-      emit(const OwnerEmployeeTasksLoading(isPagination: true));
     }
 
+    _isFetching = true;
     final result = await _getEmployeeTasksReportUseCase(
       forceRefresh: forceRefresh,
       page: _currentPage,
     );
 
+    _isFetching = false;
+    if (isClosed) return;
     result.fold(
       (failure) {
         if (_currentReport == null) {

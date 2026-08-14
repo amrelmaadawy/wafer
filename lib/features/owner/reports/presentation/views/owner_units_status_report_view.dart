@@ -1,21 +1,26 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/app_spacing.dart';
-import '../../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../../../../core/presentation/widgets/app_responsive_content.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../../../../core/routing/routes.dart';
+import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/theme_context.dart';
+import '../../domain/entities/portfolio_units_display_mode.dart';
+import '../../domain/entities/units_status_item_entity.dart';
 import '../cubit/owner_units_status_cubit.dart';
 import '../cubit/owner_units_status_state.dart';
-import '../widgets/units_status_filter_bar.dart';
-import '../widgets/units_status_list_item.dart';
-import '../widgets/units_status_skeleton.dart';
+import '../widgets/portfolio_units_header.dart';
+import '../widgets/portfolio_units_list.dart';
+import '../widgets/portfolio_units_toolbar.dart';
 import '../widgets/report_empty_widget.dart';
+import '../widgets/units_status_filter_bar.dart';
+import '../widgets/units_status_pdf_action.dart';
+import '../widgets/units_status_skeleton.dart';
 import '../widgets/units_status_summary_header.dart';
-import '../widgets/report_export_button.dart';
-import '../../../../../core/services/pdf/pdf_generator_service.dart';
-import '../../../../../core/services/pdf/builders/units_status_pdf_builder.dart';
 
 class OwnerUnitsStatusReportView extends StatefulWidget {
   const OwnerUnitsStatusReportView({super.key});
@@ -27,7 +32,8 @@ class OwnerUnitsStatusReportView extends StatefulWidget {
 
 class _OwnerUnitsStatusReportViewState
     extends State<OwnerUnitsStatusReportView> {
-  final ScrollController _scrollController = ScrollController();
+  final _scrollController = ScrollController();
+  PortfolioUnitsDisplayMode _mode = PortfolioUnitsDisplayMode.cards;
 
   @override
   void initState() {
@@ -36,8 +42,7 @@ class _OwnerUnitsStatusReportViewState
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.extentAfter < 280) {
       context.read<OwnerUnitsStatusCubit>().loadMore();
     }
   }
@@ -51,110 +56,84 @@ class _OwnerUnitsStatusReportViewState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: context.appBackgroundColor,
       appBar: CustomAppBar(
-        title: LocaleKeys.reports_unitsStatusReportTitle.tr(),
-        actions: [
-          BlocBuilder<OwnerUnitsStatusCubit, OwnerUnitsStatusState>(
-            builder: (context, state) {
-              if (state is OwnerUnitsStatusLoaded) {
-                return ReportExportButton(
-                  onPdfPressed: () async {
-                    final pdf = await UnitsStatusPdfBuilder.build(state.report);
-                    if (context.mounted) {
-                      await PdfGeneratorService.exportAndPrint(
-                        context: context,
-                        pdf: pdf,
-                        fileName: 'تقرير_حالة_الوحدات.pdf',
-                      );
-                    }
-                  },
-                  onExcelPressed: () {
-                    // TODO: Implement excel export for units status report
-                  },
-                );
-              }
-              return const SizedBox.shrink();
-            },
-          ),
-        ],
+        title: LocaleKeys.reports_portfolioUnitsTitle.tr(),
+        actions: const [UnitsStatusPdfAction()],
       ),
       body: BlocBuilder<OwnerUnitsStatusCubit, OwnerUnitsStatusState>(
         builder: (context, state) {
           if (state is OwnerUnitsStatusInitial ||
               state is OwnerUnitsStatusLoading) {
-            return const Padding(
+            return const AppResponsiveContent(
               padding: EdgeInsets.all(AppSpacing.lg),
               child: UnitsStatusSkeleton(),
             );
           }
-
           if (state is OwnerUnitsStatusError) {
-            return CustomErrorWidget(
-              message: state.message,
-              onRetry: () => context
-                  .read<OwnerUnitsStatusCubit>()
-                  .loadUnitsStatusReport(forceRefresh: true),
-            );
+            return CustomErrorWidget(message: state.message, onRetry: _refresh);
           }
-
-          if (state is OwnerUnitsStatusEmpty) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                await context
-                    .read<OwnerUnitsStatusCubit>()
-                    .loadUnitsStatusReport(forceRefresh: true);
-              },
-              child: ListView(
-                padding: const EdgeInsets.all(AppSpacing.lg),
-                children: [
-                  UnitsStatusFilterBar(filterOptions: state.filterOptions),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    child: ReportEmptyWidget(
-                      message: LocaleKeys.reports_empty_state.tr(),
-                      icon: Icons.maps_home_work_outlined,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          }
-
-          if (state is OwnerUnitsStatusLoaded) {
-            return RefreshIndicator(
-              onRefresh: () async {
-                await context
-                    .read<OwnerUnitsStatusCubit>()
-                    .loadUnitsStatusReport(forceRefresh: true);
-              },
-              child: ListView(
-                controller: _scrollController,
-                padding: const EdgeInsets.all(AppSpacing.lg),
-                children: [
-                  UnitsStatusFilterBar(
-                    filterOptions: state.report.filterOptions,
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                  UnitsStatusSummaryHeader(summary: state.report.summary),
-                  const SizedBox(height: AppSpacing.xl),
-                  ...state.report.items.map(
-                    (item) => UnitsStatusListItem(item: item),
-                  ),
-                  if (!state.hasReachedMax)
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Center(child: CircularProgressIndicator()),
-                    ),
-                  const SizedBox(height: AppSpacing.xxl * 2), // Bottom padding
-                ],
-              ),
-            );
-          }
-
-          return const SizedBox.shrink();
+          return RefreshIndicator(
+            onRefresh: _refresh,
+            child: AppResponsiveContent(child: _content(state)),
+          );
         },
       ),
+    );
+  }
+
+  Widget _content(OwnerUnitsStatusState state) {
+    final filters = state is OwnerUnitsStatusLoaded
+        ? state.report.filterOptions
+        : (state as OwnerUnitsStatusEmpty).filterOptions;
+    return ListView(
+      controller: _scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+      children: [
+        const PortfolioUnitsHeader(),
+        const SizedBox(height: AppSpacing.lg),
+        UnitsStatusFilterBar(filterOptions: filters),
+        const SizedBox(height: AppSpacing.lg),
+        if (state is OwnerUnitsStatusEmpty)
+          SizedBox(
+            height: 360,
+            child: ReportEmptyWidget(
+              message: LocaleKeys.reports_empty_state.tr(),
+              icon: Icons.maps_home_work_outlined,
+            ),
+          )
+        else if (state is OwnerUnitsStatusLoaded) ...[
+          UnitsStatusSummaryHeader(summary: state.report.summary),
+          const SizedBox(height: AppSpacing.lg),
+          PortfolioUnitsToolbar(
+            total: state.report.pagination.total,
+            mode: _mode,
+            onChanged: (mode) => setState(() => _mode = mode),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          PortfolioUnitsList(
+            units: state.report.items,
+            mode: _mode,
+            onTap: _openUnit,
+          ),
+          if (!state.hasReachedMax)
+            const Padding(
+              padding: EdgeInsets.all(AppSpacing.lg),
+              child: Center(child: CircularProgressIndicator()),
+            ),
+        ],
+      ],
+    );
+  }
+
+  Future<void> _refresh() => context
+      .read<OwnerUnitsStatusCubit>()
+      .loadUnitsStatusReport(forceRefresh: true);
+
+  void _openUnit(UnitsStatusItemEntity unit) {
+    context.push(
+      '${Routes.ownerPropertyUnitDetails}?propertyId=${unit.property.id}&unitId=${unit.id}',
     );
   }
 }

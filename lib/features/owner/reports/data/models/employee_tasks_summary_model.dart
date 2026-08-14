@@ -1,4 +1,5 @@
 import '../../domain/entities/employee_tasks_summary_entity.dart';
+import 'report_model_parsing.dart';
 
 class EmployeeTasksSummaryModel extends EmployeeTasksSummaryEntity {
   const EmployeeTasksSummaryModel({
@@ -10,10 +11,10 @@ class EmployeeTasksSummaryModel extends EmployeeTasksSummaryEntity {
 
   factory EmployeeTasksSummaryModel.fromJson(Map<String, dynamic> json) {
     return EmployeeTasksSummaryModel(
-      totalEmployees: json['total_employees'] ?? 0,
-      totalCompleted: json['total_completed'] ?? 0,
-      totalPending: json['total_pending'] ?? 0,
-      totalOverdue: json['total_overdue'] ?? 0,
+      totalEmployees: reportInt(json['total_employees']),
+      totalCompleted: reportInt(json['total_completed']),
+      totalPending: reportInt(json['total_pending']),
+      totalOverdue: reportInt(json['total_overdue']),
     );
   }
 }

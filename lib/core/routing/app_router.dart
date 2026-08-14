@@ -649,6 +649,10 @@ class AppRouter {
         builder: (context, state) => const OwnerEmployeeTasksReportView(),
       ),
       GoRoute(
+        path: Routes.ownerTasks,
+        builder: (context, state) => const OwnerEmployeeTasksReportView(),
+      ),
+      GoRoute(
         path: Routes.ownerActivityLogsReport,
         builder: (context, state) => const OwnerActivityLogsReportView(),
       ),

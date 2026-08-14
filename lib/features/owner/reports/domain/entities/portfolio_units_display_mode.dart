@@ -1,0 +1,1 @@
+enum PortfolioUnitsDisplayMode { cards, compact }

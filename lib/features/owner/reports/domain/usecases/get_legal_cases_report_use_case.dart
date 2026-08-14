@@ -25,8 +25,5 @@ class GetLegalCasesReportParams {
   final int page;
   final String? status;
 
-  GetLegalCasesReportParams({
-    this.page = 1,
-    this.status,
-  });
+  GetLegalCasesReportParams({this.page = 1, this.status});
 }

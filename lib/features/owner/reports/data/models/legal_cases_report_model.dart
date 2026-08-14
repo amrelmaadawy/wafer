@@ -1,4 +1,5 @@
 import '../../domain/entities/legal_cases_report_entity.dart';
+
 class LegalCasesReportModel extends LegalCasesReportEntity {
   const LegalCasesReportModel({
     required super.summary,
@@ -10,12 +11,15 @@ class LegalCasesReportModel extends LegalCasesReportEntity {
   factory LegalCasesReportModel.fromJson(Map<String, dynamic> json) {
     return LegalCasesReportModel(
       summary: LegalCasesSummaryModel.fromJson(json['summary'] ?? {}),
-      items: (json['items'] as List?)
+      items:
+          (json['items'] as List?)
               ?.map((e) => LegalCaseItemModel.fromJson(e))
               .toList() ??
           [],
       pagination: json['pagination'] ?? {},
-      filterOptions: LegalCasesFilterOptionsModel.fromJson(json['filter_options'] ?? {}),
+      filterOptions: LegalCasesFilterOptionsModel.fromJson(
+        json['filter_options'] ?? {},
+      ),
     );
   }
 }
@@ -77,7 +81,8 @@ class LegalCasesFilterOptionsModel extends LegalCasesFilterOptionsEntity {
 
   factory LegalCasesFilterOptionsModel.fromJson(Map<String, dynamic> json) {
     return LegalCasesFilterOptionsModel(
-      statuses: (json['statuses'] as List?)
+      statuses:
+          (json['statuses'] as List?)
               ?.map((e) => LegalCasesStatusFilterModel.fromJson(e))
               .toList() ??
           [],

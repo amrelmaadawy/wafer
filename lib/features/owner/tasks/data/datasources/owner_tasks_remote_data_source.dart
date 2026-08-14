@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../../../../../core/network/api_constants.dart';
 import '../models/task_form_data_model.dart';
 
 abstract class OwnerTasksRemoteDataSource {
@@ -12,7 +13,7 @@ class OwnerTasksRemoteDataSourceImpl implements OwnerTasksRemoteDataSource {
 
   @override
   Future<TaskFormDataModel> getTaskFormData() async {
-    final response = await dio.get('owner/tasks/form-data');
+    final response = await dio.get(ApiConstants.ownerTasksFormData);
     if (response.data['success'] == true && response.data['data'] != null) {
       return TaskFormDataModel.fromJson(response.data['data']);
     } else {

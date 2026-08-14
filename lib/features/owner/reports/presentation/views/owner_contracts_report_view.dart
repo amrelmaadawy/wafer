@@ -131,7 +131,8 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                       total: state.report.summary.total,
                       active: state.report.summary.active,
                       expired: state.report.summary.expired,
-                      expiringNext30Days: state.report.summary.expiringNext30Days,
+                      expiringNext30Days:
+                          state.report.summary.expiringNext30Days,
                       totalRentValue: state.report.summary.totalRentValue,
                     ),
                     const SizedBox(height: 16),
@@ -142,12 +143,16 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                             value: _selectedStatus,
                             items: [
                               'all',
-                              ...state.report.filterOptions.statuses.map((e) => e.value),
+                              ...state.report.filterOptions.statuses.map(
+                                (e) => e.value,
+                              ),
                             ],
                             itemLabelBuilder: (val) {
-                              if (val == 'all') return LocaleKeys.reports_all.tr();
+                              if (val == 'all')
+                                return LocaleKeys.reports_all.tr();
                               final match = state.report.filterOptions.statuses
-                                  .where((e) => e.value == val).toList();
+                                  .where((e) => e.value == val)
+                                  .toList();
                               return match.isNotEmpty ? match.first.label : val;
                             },
                             hint: LocaleKeys.reports_status.tr(),
@@ -157,11 +162,13 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                                 setState(() {
                                   _selectedStatus = newStatus;
                                 });
-                                context.read<OwnerContractsReportCubit>().loadContractsReport(
-                                  forceRefresh: true,
-                                  status: newStatus,
-                                  propertyId: _selectedPropertyId,
-                                );
+                                context
+                                    .read<OwnerContractsReportCubit>()
+                                    .loadContractsReport(
+                                      forceRefresh: true,
+                                      status: newStatus,
+                                      propertyId: _selectedPropertyId,
+                                    );
                               }
                             },
                           ),
@@ -172,13 +179,22 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                             value: _selectedPropertyId,
                             items: [
                               -1,
-                              ...state.report.filterOptions.properties.map((e) => e.id),
+                              ...state.report.filterOptions.properties.map(
+                                (e) => e.id,
+                              ),
                             ],
                             itemLabelBuilder: (val) {
-                              if (val == -1) return LocaleKeys.reports_allProperties.tr();
-                              final match = state.report.filterOptions.properties
-                                  .where((e) => e.id == val).toList();
-                              return match.isNotEmpty ? (match.first.name ?? match.first.code) : val.toString();
+                              if (val == -1)
+                                return LocaleKeys.reports_allProperties.tr();
+                              final match = state
+                                  .report
+                                  .filterOptions
+                                  .properties
+                                  .where((e) => e.id == val)
+                                  .toList();
+                              return match.isNotEmpty
+                                  ? (match.first.name ?? match.first.code)
+                                  : val.toString();
                             },
                             hint: LocaleKeys.property.tr(),
                             onSelected: (val) {
@@ -187,11 +203,13 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                                 setState(() {
                                   _selectedPropertyId = newProp;
                                 });
-                                context.read<OwnerContractsReportCubit>().loadContractsReport(
-                                  forceRefresh: true,
-                                  propertyId: newProp,
-                                  status: _selectedStatus,
-                                );
+                                context
+                                    .read<OwnerContractsReportCubit>()
+                                    .loadContractsReport(
+                                      forceRefresh: true,
+                                      propertyId: newProp,
+                                      status: _selectedStatus,
+                                    );
                               }
                             },
                           ),

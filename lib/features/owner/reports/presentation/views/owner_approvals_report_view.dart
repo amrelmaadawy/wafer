@@ -16,7 +16,8 @@ class OwnerApprovalsReportView extends StatefulWidget {
   const OwnerApprovalsReportView({super.key});
 
   @override
-  State<OwnerApprovalsReportView> createState() => _OwnerApprovalsReportViewState();
+  State<OwnerApprovalsReportView> createState() =>
+      _OwnerApprovalsReportViewState();
 }
 
 class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
@@ -37,13 +38,16 @@ class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 200) {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
       context.read<OwnerApprovalsReportCubit>().fetchReport();
     }
   }
 
   Future<void> _onRefresh() async {
-    await context.read<OwnerApprovalsReportCubit>().fetchReport(isRefresh: true);
+    await context.read<OwnerApprovalsReportCubit>().fetchReport(
+      isRefresh: true,
+    );
   }
 
   @override
@@ -58,10 +62,16 @@ class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
               if (state is OwnerApprovalsReportLoaded) {
                 return ReportExportButton(
                   onPdfPressed: () async {
-                    AppToast.showError(context, "PDF Export will be implemented using PdfBuilder");
+                    AppToast.showError(
+                      context,
+                      "PDF Export will be implemented using PdfBuilder",
+                    );
                   },
                   onExcelPressed: () async {
-                    AppToast.showError(context, "Excel Export will be implemented using ExcelBuilder");
+                    AppToast.showError(
+                      context,
+                      "Excel Export will be implemented using ExcelBuilder",
+                    );
                   },
                 );
               }
@@ -72,7 +82,8 @@ class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
       ),
       body: BlocBuilder<OwnerApprovalsReportCubit, OwnerApprovalsReportState>(
         builder: (context, state) {
-          if (state is OwnerApprovalsReportInitial || (state is OwnerApprovalsReportLoading && state.isFirstFetch)) {
+          if (state is OwnerApprovalsReportInitial ||
+              (state is OwnerApprovalsReportLoading && state.isFirstFetch)) {
             return const _ApprovalsReportSkeleton();
           }
 
@@ -90,12 +101,17 @@ class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
             );
           }
 
-          if (state is OwnerApprovalsReportLoaded || (state is OwnerApprovalsReportLoading && !state.isFirstFetch)) {
+          if (state is OwnerApprovalsReportLoaded ||
+              (state is OwnerApprovalsReportLoading && !state.isFirstFetch)) {
             final report = (state is OwnerApprovalsReportLoaded)
                 ? state.report
-                : (context.read<OwnerApprovalsReportCubit>().state as dynamic).report;
-            
-            final reportData = (context.read<OwnerApprovalsReportCubit>().state as dynamic).report ?? report;
+                : (context.read<OwnerApprovalsReportCubit>().state as dynamic)
+                      .report;
+
+            final reportData =
+                (context.read<OwnerApprovalsReportCubit>().state as dynamic)
+                    .report ??
+                report;
 
             return RefreshIndicator(
               onRefresh: _onRefresh,
@@ -122,7 +138,9 @@ class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
                             return const Padding(
                               padding: EdgeInsets.symmetric(vertical: 16),
                               child: Center(
-                                child: CircularProgressIndicator(color: AppColors.primaryLight),
+                                child: CircularProgressIndicator(
+                                  color: AppColors.primaryLight,
+                                ),
                               ),
                             );
                           }
@@ -144,8 +162,6 @@ class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
       ),
     );
   }
-
-
 
   Widget _buildSummaryCards(dynamic summary) {
     return Column(
@@ -272,10 +288,13 @@ class _ApprovalsReportSkeleton extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 24),
-        ...List.generate(5, (index) => Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: _buildSkeletonBox(80),
-        )),
+        ...List.generate(
+          5,
+          (index) => Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: _buildSkeletonBox(80),
+          ),
+        ),
       ],
     );
   }
@@ -300,7 +319,7 @@ class _ApprovalItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final statusColor = _getStatusColor(item.status);
     final statusLabel = item.statusLabel ?? item.status;
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -335,11 +354,17 @@ class _ApprovalItemCard extends StatelessWidget {
                 Expanded(
                   child: Row(
                     children: [
-                      Icon(Icons.receipt_long_outlined, size: 18, color: context.primaryColor),
+                      Icon(
+                        Icons.receipt_long_outlined,
+                        size: 18,
+                        color: context.primaryColor,
+                      ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          item.title != null && item.title!.isNotEmpty ? item.title! : (item.typeLabel ?? item.typeValue ?? 'Unknown'),
+                          item.title != null && item.title!.isNotEmpty
+                              ? item.title!
+                              : (item.typeLabel ?? item.typeValue ?? 'Unknown'),
                           style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 14,
@@ -353,7 +378,10 @@ class _ApprovalItemCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(20),
@@ -370,7 +398,7 @@ class _ApprovalItemCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Body: Details
           Padding(
             padding: const EdgeInsets.all(16),
@@ -381,14 +409,20 @@ class _ApprovalItemCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildInfoRow(Icons.account_tree_outlined, item.typeLabel ?? 'Unknown'),
+                      _buildInfoRow(
+                        Icons.account_tree_outlined,
+                        item.typeLabel ?? 'Unknown',
+                      ),
                       const SizedBox(height: 8),
                       if (item.userName != null) ...[
                         _buildInfoRow(Icons.person_outline, item.userName!),
                         const SizedBox(height: 8),
                       ],
                       if (item.date != null)
-                        _buildInfoRow(Icons.calendar_today_outlined, item.date!),
+                        _buildInfoRow(
+                          Icons.calendar_today_outlined,
+                          item.date!,
+                        ),
                     ],
                   ),
                 ),
@@ -397,7 +431,8 @@ class _ApprovalItemCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Text(
-                        LocaleKeys.reports_totalRentValue.tr(), // Using this as a fallback for 'Amount' or just 'القيمة'
+                        LocaleKeys.reports_totalRentValue
+                            .tr(), // Using this as a fallback for 'Amount' or just 'القيمة'
                         style: TextStyle(
                           color: Colors.grey.shade500,
                           fontSize: 11,
@@ -430,10 +465,7 @@ class _ApprovalItemCard extends StatelessWidget {
         Expanded(
           child: Text(
             text,
-            style: TextStyle(
-              color: Colors.grey.shade700,
-              fontSize: 13,
-            ),
+            style: TextStyle(color: Colors.grey.shade700, fontSize: 13),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

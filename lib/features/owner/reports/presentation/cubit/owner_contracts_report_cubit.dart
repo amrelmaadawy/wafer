@@ -19,7 +19,9 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
   }) async {
     if (_isFetching) return;
 
-    if (forceRefresh || propertyId != _selectedPropertyId || status != _selectedStatus) {
+    if (forceRefresh ||
+        propertyId != _selectedPropertyId ||
+        status != _selectedStatus) {
       _currentPage = 1;
       _selectedPropertyId = propertyId ?? _selectedPropertyId;
       _selectedStatus = status ?? _selectedStatus;
