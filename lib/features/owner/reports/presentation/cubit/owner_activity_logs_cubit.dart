@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/error/failures.dart';
 import '../../domain/entities/activity_logs_report_entity.dart';
 import '../../domain/usecases/get_owner_activity_logs_report_use_case.dart';
 import 'owner_activity_logs_state.dart';
@@ -8,20 +7,28 @@ class OwnerActivityLogsCubit extends Cubit<OwnerActivityLogsState> {
   final GetOwnerActivityLogsReportUseCase _getOwnerActivityLogsReportUseCase;
   ActivityLogsReportEntity? _currentReport;
 
-  String? _selectedType;
-  String? _selectedAction;
+  String? selectedType;
+  String? selectedAction;
   bool _isFetching = false;
 
   OwnerActivityLogsCubit(this._getOwnerActivityLogsReportUseCase)
     : super(OwnerActivityLogsInitial());
 
-  void setFilter({String? type, String? action}) {
-    _selectedType = type;
-    _selectedAction = action;
-    fetchReport(forceRefresh: true);
+  bool get hasActiveFilters => selectedType != null || selectedAction != null;
+
+  Future<void> setFilters({String? type, String? action}) {
+    selectedType = type;
+    selectedAction = action;
+    return fetchReport(forceRefresh: true);
   }
 
-  void fetchReport({bool forceRefresh = false}) async {
+  Future<void> clearFilters() {
+    selectedType = null;
+    selectedAction = null;
+    return fetchReport(forceRefresh: true);
+  }
+
+  Future<void> fetchReport({bool forceRefresh = false}) async {
     if (_isFetching) return;
 
     if (forceRefresh) {
@@ -40,29 +47,32 @@ class OwnerActivityLogsCubit extends Cubit<OwnerActivityLogsState> {
     }
 
     _isFetching = true;
-    emit(OwnerActivityLogsLoading(isPagination: isPagination));
+    emit(
+      OwnerActivityLogsLoading(
+        isPagination: isPagination,
+        report: _currentReport,
+      ),
+    );
 
     final result = await _getOwnerActivityLogsReportUseCase(
       page: nextPage,
-      type: _selectedType,
-      action: _selectedAction,
+      type: selectedType,
+      action: selectedAction,
     );
 
     result.fold(
       (failure) {
         _isFetching = false;
+        if (isClosed) return;
         if (isPagination && _currentReport != null) {
           emit(OwnerActivityLogsLoaded(_currentReport!));
         } else {
-          // Determine error message if failure has a message field or fallback
-          final errorMessage = failure is ServerFailure
-              ? failure.message
-              : 'حدث خطأ غير متوقع';
-          emit(OwnerActivityLogsError(errorMessage));
+          emit(OwnerActivityLogsError(failure.message));
         }
       },
       (report) {
         _isFetching = false;
+        if (isClosed) return;
         if (isPagination) {
           final updatedItems = List.of(_currentReport!.items)
             ..addAll(report.items);
@@ -70,15 +80,17 @@ class OwnerActivityLogsCubit extends Cubit<OwnerActivityLogsState> {
             summary: report.summary,
             items: updatedItems,
             pagination: report.pagination,
-            types: report.types,
-            actions: report.actions,
+            types: report.types.isEmpty ? _currentReport!.types : report.types,
+            actions: report.actions.isEmpty
+                ? _currentReport!.actions
+                : report.actions,
           );
         } else {
           _currentReport = report;
         }
 
         if (_currentReport!.items.isEmpty) {
-          emit(OwnerActivityLogsEmpty());
+          emit(OwnerActivityLogsEmpty(_currentReport!));
         } else {
           emit(OwnerActivityLogsLoaded(_currentReport!));
         }

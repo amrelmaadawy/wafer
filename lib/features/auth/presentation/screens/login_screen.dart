@@ -1,11 +1,9 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/di/service_locator.dart';
 import '../../../../core/localization/locale_keys.dart';
-import '../../../../core/routing/routes.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
 import '../cubit/auth_cubit.dart';
 import '../cubit/auth_state.dart';
@@ -23,35 +21,18 @@ class LoginScreen extends StatelessWidget {
             ? ui.TextDirection.rtl
             : ui.TextDirection.ltr,
         child: Scaffold(
-          body: BlocConsumer<AuthCubit, AuthState>(
+          body: BlocListener<AuthCubit, AuthState>(
             listener: (context, state) {
               if (state is AuthError) {
                 AppToast.showError(context, state.message);
               } else if (state is Authenticated) {
+                // Navigation is handled by GoRouter redirect via updateAuthState() in main.dart.
+                // Show success toast only.
                 AppToast.showSuccess(context, LocaleKeys.authLoginSuccess.tr());
-                if (state.user.requiresPasswordChange) {
-                  // TODO: Navigate to ChangePasswordScreen when built
-                  AppToast.showInfo(
-                    context,
-                    LocaleKeys.authRequirePasswordChange.tr(),
-                  );
-                } else {
-                  if (state.user.accountType == 'owner') {
-                    context.go(Routes.ownerDashboard);
-                  } else if (state.user.accountType == 'system' ||
-                      state.user.accountType == 'company') {
-                    context.go(Routes.companyDashboard);
-                  } else if (state.user.accountType == 'tenant') {
-                    context.go(Routes.tenantDashboard);
-                  } else {
-                    context.go(Routes.ownerDashboard); // Fallback
-                  }
-                }
               }
+              // No manual context.go() calls here — the router guard handles all routing.
             },
-            builder: (context, state) {
-              return const LoginView();
-            },
+            child: const LoginView(),
           ),
         ),
       ),

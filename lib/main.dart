@@ -12,6 +12,8 @@ import 'core/storage/cache_helper.dart';
 import 'core/storage/secure_storage_service.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/app_theme_cubit.dart';
+import 'features/auth/presentation/cubit/auth_cubit.dart';
+import 'features/auth/presentation/cubit/auth_state.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -80,25 +82,34 @@ class _RealEstateAppState extends State<RealEstateApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AppThemeCubit>.value(
-      value: sl<AppThemeCubit>(),
-      child: BlocBuilder<AppThemeCubit, ThemeData>(
-        builder: (context, theme) {
-          return MaterialApp.router(
-            title: 'Wafer Real Estate ERP',
-            debugShowCheckedModeBanner: false,
-            theme: theme,
-            darkTheme: AppTheme.buildDark(theme.colorScheme.primary),
-            themeMode: ThemeMode.light,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            routerConfig: AppRouter.router,
-            builder: (context, child) {
-              return NoInternetBanner(child: child!);
-            },
-          );
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AppThemeCubit>.value(value: sl<AppThemeCubit>()),
+        BlocProvider<AuthCubit>(create: (_) => sl<AuthCubit>()..checkAuthStatus()),
+      ],
+      child: BlocListener<AuthCubit, AuthState>(
+        listener: (context, state) {
+          // Keep the router guard in sync with the global auth state
+          updateAuthState(state);
         },
+        child: BlocBuilder<AppThemeCubit, ThemeData>(
+          builder: (context, theme) {
+            return MaterialApp.router(
+              title: 'Wafer Real Estate ERP',
+              debugShowCheckedModeBanner: false,
+              theme: theme,
+              darkTheme: AppTheme.buildDark(theme.colorScheme.primary),
+              themeMode: ThemeMode.light,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              routerConfig: AppRouter.router,
+              builder: (context, child) {
+                return NoInternetBanner(child: child!);
+              },
+            );
+          },
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import '../../domain/entities/activity_logs_item_entity.dart';
 import 'activity_logs_user_model.dart';
+import 'report_model_parsing.dart';
 
 class ActivityLogsItemModel extends ActivityLogsItemEntity {
   const ActivityLogsItemModel({
@@ -15,14 +16,14 @@ class ActivityLogsItemModel extends ActivityLogsItemEntity {
 
   factory ActivityLogsItemModel.fromJson(Map<String, dynamic> json) {
     return ActivityLogsItemModel(
-      id: json['id'] ?? 0,
-      createdAt: json['created_at'] ?? '',
-      user: ActivityLogsUserModel.fromJson(json['user'] ?? {}),
-      type: json['type'] ?? '',
-      action: json['action'] ?? '',
-      message: json['message'] ?? '',
-      description: json['description'],
-      ipAddress: json['ip_address'] ?? '',
+      id: reportInt(json['id']),
+      createdAt: reportString(json['created_at']),
+      user: ActivityLogsUserModel.fromJson(reportMap(json['user'])),
+      type: reportString(json['type']),
+      action: reportString(json['action']),
+      message: reportString(json['message']),
+      description: json['description']?.toString(),
+      ipAddress: reportString(json['ip_address']),
     );
   }
 }

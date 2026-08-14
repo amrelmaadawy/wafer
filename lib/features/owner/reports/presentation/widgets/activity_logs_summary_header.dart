@@ -13,7 +13,7 @@ class ActivityLogsSummaryHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      margin: const EdgeInsets.symmetric(vertical: 12),
       width: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(

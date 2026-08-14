@@ -1,4 +1,5 @@
 import '../../domain/entities/activity_logs_summary_entity.dart';
+import 'report_model_parsing.dart';
 
 class ActivityLogsSummaryModel extends ActivityLogsSummaryEntity {
   const ActivityLogsSummaryModel({
@@ -10,10 +11,10 @@ class ActivityLogsSummaryModel extends ActivityLogsSummaryEntity {
 
   factory ActivityLogsSummaryModel.fromJson(Map<String, dynamic> json) {
     return ActivityLogsSummaryModel(
-      totalLogs: json['total_logs'] ?? 0,
-      creates: json['creates'] ?? 0,
-      updates: json['updates'] ?? 0,
-      deletes: json['deletes'] ?? 0,
+      totalLogs: reportInt(json['total_logs']),
+      creates: reportInt(json['creates']),
+      updates: reportInt(json['updates']),
+      deletes: reportInt(json['deletes']),
     );
   }
 }

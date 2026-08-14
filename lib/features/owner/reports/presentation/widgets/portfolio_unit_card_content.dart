@@ -94,12 +94,12 @@ class PortfolioUnitComfortableContent extends StatelessWidget {
           status,
         ],
       ),
-      const SizedBox(height: AppSpacing.md),
+      const SizedBox(height: AppSpacing.sm),
       Divider(color: context.appBorderColor, height: 1),
       const SizedBox(height: AppSpacing.sm),
       _Info(icon: Icons.apartment_rounded, text: property),
       if (unit.floorNumber != null) ...[
-        const SizedBox(height: AppSpacing.xs),
+        const SizedBox(height: 6),
         _Info(
           icon: Icons.layers_rounded,
           text: LocaleKeys.unit_details_floor_prefix.tr(

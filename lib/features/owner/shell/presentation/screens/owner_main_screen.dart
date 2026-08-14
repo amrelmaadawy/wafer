@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:wafer/core/di/service_locator.dart';
 import 'package:wafer/features/owner/contracts/presentation/cubit/list/owner_contracts_cubit.dart';
 import 'package:wafer/features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
@@ -16,7 +17,9 @@ class OwnerMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: context.locale.languageCode == 'ar'
+          ? TextDirection.rtl
+          : TextDirection.ltr,
       child: MultiBlocProvider(
         providers: [
           BlocProvider<OwnerDashboardCubit>(

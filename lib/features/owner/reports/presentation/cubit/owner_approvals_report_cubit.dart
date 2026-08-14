@@ -27,11 +27,12 @@ class OwnerApprovalsReportCubit extends Cubit<OwnerApprovalsReportState> {
 
     _isFetching = true;
 
-    if (_currentPage == 1) {
-      emit(const OwnerApprovalsReportLoading(isFirstFetch: true));
-    } else {
-      emit(const OwnerApprovalsReportLoading(isFirstFetch: false));
-    }
+    emit(
+      OwnerApprovalsReportLoading(
+        isFirstFetch: _currentReport == null,
+        report: _currentReport,
+      ),
+    );
 
     final result = await getApprovalsReportUseCase(
       forceRefresh: isRefresh,

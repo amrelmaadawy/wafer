@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'finance_account_type.dart';
 
 class FinanceAccountEntity extends Equatable {
   final int id;
@@ -6,7 +7,7 @@ class FinanceAccountEntity extends Equatable {
   final String code;
   final String nameAr;
   final String nameEn;
-  final String type;
+  final FinanceAccountType type;
   final String? systemCode;
   final bool isPostable;
   final int level;

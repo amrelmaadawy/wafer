@@ -1,199 +1,144 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_radius.dart';
-import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../../domain/entities/activity_logs_item_entity.dart';
+import 'activity_logs_action_style.dart';
 
 class ActivityLogsReportItemCard extends StatelessWidget {
-  final ActivityLogsItemEntity item;
-
   const ActivityLogsReportItemCard({super.key, required this.item});
+
+  final ActivityLogsItemEntity item;
 
   @override
   Widget build(BuildContext context) {
-    final (icon, color) = _getTypeStyle(item.type);
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12, left: 16, right: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: AppRadius.circularLg,
-        border: Border.all(color: AppColors.borderLight),
-        boxShadow: const [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 10,
-            offset: Offset(0, 2),
-          ),
-        ],
+    final (icon, color) = activityLogActionStyle(item.action);
+    return Card(
+      color: context.appSurfaceColor,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: AppRadius.circularXl,
+        side: BorderSide(color: context.appBorderColor),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          _buildHeader(context, icon, color),
-          const Divider(height: 1, color: AppColors.borderLight),
-          _buildBody(context),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeader(BuildContext context, IconData icon, Color color) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: color.withAlpha(25),
-              borderRadius: AppRadius.circularSm,
-            ),
-            child: Icon(icon, size: 20, color: color),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
               children: [
-                Text(
-                  item.message,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimaryLight,
+                Container(
+                  padding: const EdgeInsets.all(AppSpacing.xs),
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.12),
+                    borderRadius: AppRadius.circularLg,
+                  ),
+                  child: Icon(icon, size: 20, color: color),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: Text(
+                    item.message.isEmpty
+                        ? LocaleKeys.activityLogsUnknownActivity.tr()
+                        : item.message,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: context.appOnSurfaceColor,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 4),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.access_time_rounded,
-                      size: 14,
-                      color: AppColors.textSecondaryLight,
-                    ),
-                    const SizedBox(width: 4),
-                    Text(
-                      item.createdAt,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.textSecondaryLight,
-                      ),
-                    ),
-                  ],
-                ),
+                _ActionBadge(action: item.action, color: color),
               ],
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-            decoration: BoxDecoration(
-              color: context.primaryColor.withAlpha(25),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: Text(
-              item.action.toUpperCase(),
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.bold,
-                color: context.primaryColor,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildBody(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (item.description != null && item.description!.isNotEmpty) ...[
-            Text(
-              item.description!,
-              style: const TextStyle(
-                fontSize: 13,
-                color: AppColors.textSecondaryLight,
-              ),
-            ),
-            const SizedBox(height: 12),
-          ],
-          Row(
-            children: [
-              Expanded(
-                child: _buildInfoRow(
-                  icon: Icons.person_outline,
-                  label: item.user.name,
-                  subLabel: item.user.userType,
-                ),
-              ),
-              Expanded(
-                child: _buildInfoRow(
-                  icon: Icons.computer_rounded,
-                  label: item.ipAddress,
-                  subLabel: 'IP Address',
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInfoRow({
-    required IconData icon,
-    required String label,
-    required String subLabel,
-  }) {
-    return Row(
-      children: [
-        Icon(icon, size: 18, color: AppColors.textSecondaryLight),
-        const SizedBox(width: 8),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            if (item.description?.isNotEmpty == true) ...[
+              const SizedBox(height: AppSpacing.sm),
               Text(
-                label,
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.textPrimaryLight,
-                ),
-                maxLines: 1,
+                item.description!,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-              ),
-              Text(
-                subLabel,
-                style: const TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.textSecondaryLight,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: context.appSecondaryTextColor,
                 ),
               ),
             ],
+            const Spacer(),
+            Divider(color: context.appBorderColor, height: 1),
+            const SizedBox(height: AppSpacing.sm),
+            _InfoLine(
+              icon: Icons.person_outline_rounded,
+              value: item.user.name.isEmpty
+                  ? LocaleKeys.activityLogsUnknownUser.tr()
+                  : item.user.name,
+              trailing: item.user.userType,
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            _InfoLine(
+              icon: Icons.schedule_rounded,
+              value: item.createdAt,
+              trailing: item.ipAddress,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ActionBadge extends StatelessWidget {
+  const _ActionBadge({required this.action, required this.color});
+  final String action;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(
+      horizontal: AppSpacing.xs,
+      vertical: AppSpacing.xxs,
+    ),
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: 0.1),
+      borderRadius: AppRadius.circularFull,
+    ),
+    child: Text(
+      action.toUpperCase(),
+      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+        color: color,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
+  );
+}
+
+class _InfoLine extends StatelessWidget {
+  const _InfoLine({required this.icon, required this.value, this.trailing});
+  final IconData icon;
+  final String value;
+  final String? trailing;
+
+  @override
+  Widget build(BuildContext context) => Row(
+    children: [
+      Icon(icon, size: 16, color: context.appSecondaryTextColor),
+      const SizedBox(width: AppSpacing.xs),
+      Expanded(
+        child: Text(
+          value,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ),
+      if (trailing?.isNotEmpty == true)
+        Text(
+          trailing!,
+          style: Theme.of(context).textTheme.labelSmall?.copyWith(
+            color: context.appSecondaryTextColor,
           ),
         ),
-      ],
-    );
-  }
-
-  (IconData, Color) _getTypeStyle(String type) {
-    switch (type.toLowerCase()) {
-      case 'success':
-        return (Icons.check_circle_outline_rounded, Colors.green);
-      case 'warning':
-        return (Icons.warning_amber_rounded, Colors.orange);
-      case 'error':
-        return (Icons.error_outline_rounded, Colors.red);
-      case 'info':
-      default:
-        return (Icons.info_outline_rounded, Colors.blue);
-    }
-  }
+    ],
+  );
 }

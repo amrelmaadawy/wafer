@@ -4,9 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
-import '../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../core/services/excel/builders/legal_cases_excel_builder.dart';
+import '../../../../../core/services/excel/excel_export_service.dart';
+import '../../../../../core/services/pdf/builders/legal_cases_pdf_builder.dart';
+import '../../../../../core/services/pdf/pdf_generator_service.dart';
 import '../cubit/legal_cases/owner_legal_cases_report_cubit.dart';
 import '../cubit/legal_cases/owner_legal_cases_report_state.dart';
 import '../widgets/report_export_button.dart';
@@ -59,7 +63,7 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: context.appBackgroundColor,
       appBar: CustomAppBar(
         title: LocaleKeys.reports_legalCases.tr(),
         actions: [
@@ -68,15 +72,27 @@ class _OwnerLegalCasesReportViewState extends State<OwnerLegalCasesReportView> {
               if (state is OwnerLegalCasesReportLoaded) {
                 return ReportExportButton(
                   onPdfPressed: () async {
-                    AppToast.showError(
-                      context,
-                      "PDF Export will be implemented soon",
+                    final pdf = await LegalCasesPdfBuilder.build(
+                      state.report.items,
+                      state.report.summary,
+                    );
+                    if (!context.mounted) return;
+                    await PdfGeneratorService.exportAndPrint(
+                      context: context,
+                      pdf: pdf,
+                      fileName: 'legal_cases_report.pdf',
                     );
                   },
                   onExcelPressed: () async {
-                    AppToast.showError(
-                      context,
-                      "Excel Export will be implemented soon",
+                    final bytes = await LegalCasesExcelBuilder.build(
+                      state.report.items,
+                      state.report.summary,
+                    );
+                    if (!context.mounted) return;
+                    await ExcelExportService.saveAndShare(
+                      context: context,
+                      bytes: bytes,
+                      fileName: 'legal_cases_report.xlsx',
                     );
                   },
                 );

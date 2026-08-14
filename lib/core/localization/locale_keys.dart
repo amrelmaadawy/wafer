@@ -2485,4 +2485,21 @@ abstract class LocaleKeys {
   static const financeSelectContract = 'financeSelectContract';
   static const financeNotes = 'financeNotes';
   static const financeCreateAction = 'financeCreateAction';
+  static const authUnsupportedAccountTitle = 'authUnsupportedAccountTitle';
+  static const authUnsupportedAccountBody = 'authUnsupportedAccountBody';
+  static const profileLogout = 'profile_logout';
+  static const routeErrorTitle = 'routeErrorTitle';
+  static const routeErrorBody = 'routeErrorBody';
+  static const routeErrorBack = 'routeErrorBack';
+  static const activityLogsResults = 'activityLogsResults';
+  static const reports_exportTitle = 'reports_exportTitle';
+  static const reports_exportPdf = 'reports_exportPdf';
+  static const reports_exportExcel = 'reports_exportExcel';
+  static const reports_export = 'reports_export';
+  static const activityLogsAllTypes = 'activityLogsAllTypes';
+  static const activityLogsAllActions = 'activityLogsAllActions';
+  static const activityLogsSubtitle = 'activityLogsSubtitle';
+  static const activityLogsReadOnlyNotice = 'activityLogsReadOnlyNotice';
+  static const activityLogsUnknownActivity = 'activityLogsUnknownActivity';
+  static const activityLogsUnknownUser = 'activityLogsUnknownUser';
 }

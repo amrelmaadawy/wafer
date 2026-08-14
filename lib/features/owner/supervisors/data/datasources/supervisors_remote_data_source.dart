@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import '../../../../../core/error/exceptions.dart';
+import '../../../../../core/network/api_constants.dart';
+import '../../domain/entities/create_maintenance_supervisor_params.dart';
 import '../models/supervisor_form_data_response_model.dart';
 import '../models/supervisors_list_response_model.dart';
 import '../models/supervisor_model.dart';
@@ -7,7 +9,7 @@ import '../models/supervisor_model.dart';
 abstract class SupervisorsRemoteDataSource {
   Future<SupervisorFormDataResponseModel> getFormData();
   Future<SupervisorsListResponseModel> getSupervisors(int page);
-  Future<SupervisorModel> createSupervisor(Map<String, dynamic> body);
+  Future<SupervisorModel> createSupervisor(CreateMaintenanceSupervisorParams params);
 }
 
 class SupervisorsRemoteDataSourceImpl implements SupervisorsRemoteDataSource {
@@ -19,7 +21,7 @@ class SupervisorsRemoteDataSourceImpl implements SupervisorsRemoteDataSource {
   Future<SupervisorFormDataResponseModel> getFormData() async {
     try {
       final response = await client.get(
-        'owner/maintenance-supervisors/form-data',
+        ApiConstants.ownerMaintenanceSupervisorsFormData,
       );
 
       return SupervisorFormDataResponseModel.fromJson(response.data['data']);
@@ -34,7 +36,7 @@ class SupervisorsRemoteDataSourceImpl implements SupervisorsRemoteDataSource {
   Future<SupervisorsListResponseModel> getSupervisors(int page) async {
     try {
       final response = await client.get(
-        'owner/maintenance-supervisors',
+        ApiConstants.ownerMaintenanceSupervisors,
         queryParameters: {'page': page},
       );
 
@@ -47,11 +49,11 @@ class SupervisorsRemoteDataSourceImpl implements SupervisorsRemoteDataSource {
   }
 
   @override
-  Future<SupervisorModel> createSupervisor(Map<String, dynamic> body) async {
+  Future<SupervisorModel> createSupervisor(CreateMaintenanceSupervisorParams params) async {
     try {
       final response = await client.post(
-        'owner/maintenance-supervisors',
-        data: body,
+        ApiConstants.ownerMaintenanceSupervisors,
+        data: params.toJson(),
       );
 
       return SupervisorModel.fromJson(
@@ -59,8 +61,8 @@ class SupervisorsRemoteDataSourceImpl implements SupervisorsRemoteDataSource {
       );
     } on DioException catch (e) {
       throw ServerException(e.message ?? 'Server Error');
-    } catch (e, stack) {
-      throw ServerException('Parse error: $e\n$stack');
+    } catch (e) {
+      throw const ServerException('Failed to parse response');
     }
   }
 }

@@ -15,14 +15,7 @@ abstract class FinanceRemoteDataSource {
   Future<FinanceOverviewModel> getFinanceOverview();
   Future<FinanceFormDataModel> getFinanceFormData();
   
-  Future<FinanceAccountsResponseModel> getAccounts({
-    int page = 1,
-    int perPage = 15,
-    String? search,
-    String? accountType,
-    bool? isActive,
-    bool? isPostable,
-  });
+  Future<FinanceAccountsResponseModel> getAccounts(Map<String, dynamic> queryParams);
 
   Future<FinanceAccountModel> createAccount(Map<String, dynamic> body);
 
@@ -107,27 +100,11 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   }
 
   @override
-  Future<FinanceAccountsResponseModel> getAccounts({
-    int page = 1,
-    int perPage = 15,
-    String? search,
-    String? accountType,
-    bool? isActive,
-    bool? isPostable,
-  }) async {
-    final Map<String, dynamic> queryParameters = {
-      'page': page,
-      'per_page': perPage,
-      if (search != null && search.isNotEmpty) 'search': search,
-      if (accountType != null && accountType.isNotEmpty) 'account_type': accountType,
-      'is_active': isActive,
-      'is_postable': isPostable,
-    };
-
+  Future<FinanceAccountsResponseModel> getAccounts(Map<String, dynamic> queryParams) async {
     try {
       final response = await dio.get(
         ApiConstants.ownerAccountingAccounts,
-        queryParameters: queryParameters,
+        queryParameters: queryParams,
       );
       return FinanceAccountsResponseModel.fromJson(response.data);
     } on DioException catch (e) {
@@ -156,7 +133,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   Future<FinanceAccountModel> updateAccount(int id, Map<String, dynamic> body) async {
     try {
       final response = await dio.patch(
-        '${ApiConstants.ownerAccountingAccounts}/$id',
+        ApiConstants.ownerAccountingAccountDetails(id),
         data: body,
       );
       return FinanceAccountModel.fromJson(response.data['data']['account']);
@@ -170,7 +147,7 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
   @override
   Future<FinanceAccountModel> getAccountDetails(int id) async {
     try {
-      final response = await dio.get('${ApiConstants.ownerAccountingAccounts}/$id');
+      final response = await dio.get(ApiConstants.ownerAccountingAccountDetails(id));
       return FinanceAccountModel.fromJson(response.data['data']['account']);
     } on DioException catch (e) {
       throw _handleDioException(e, 'Failed to get account details');

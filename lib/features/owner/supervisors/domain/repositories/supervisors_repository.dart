@@ -3,6 +3,7 @@ import '../../../../../core/error/failures.dart';
 import '../entities/supervisor_entity.dart';
 import '../entities/supervisor_form_data_entity.dart';
 import '../entities/supervisors_list_response_entity.dart';
+import '../entities/create_maintenance_supervisor_params.dart';
 
 abstract class SupervisorsRepository {
   Future<Either<Failure, SupervisorFormDataEntity>> getFormData();
@@ -10,6 +11,6 @@ abstract class SupervisorsRepository {
     int page,
   );
   Future<Either<Failure, SupervisorEntity>> createSupervisor(
-    Map<String, dynamic> body,
+    CreateMaintenanceSupervisorParams params,
   );
 }

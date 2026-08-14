@@ -8,6 +8,7 @@ import '../../../../../core/services/pdf/builders/employee_tasks_pdf_builder.dar
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
 import '../cubit/owner_employee_tasks_cubit.dart';
 import '../cubit/owner_employee_tasks_state.dart';
+import 'report_export_button.dart';
 
 class EmployeeTasksExportActions extends StatelessWidget {
   const EmployeeTasksExportActions({super.key});
@@ -17,19 +18,9 @@ class EmployeeTasksExportActions extends StatelessWidget {
     return BlocBuilder<OwnerEmployeeTasksCubit, OwnerEmployeeTasksState>(
       builder: (context, state) {
         if (state is! OwnerEmployeeTasksLoaded) return const SizedBox.shrink();
-        return Row(
-          children: [
-            IconButton(
-              tooltip: LocaleKeys.tasksExportPdf.tr(),
-              icon: const Icon(Icons.picture_as_pdf_outlined),
-              onPressed: () => _exportPdf(context, state),
-            ),
-            IconButton(
-              tooltip: LocaleKeys.tasksExportExcel.tr(),
-              icon: const Icon(Icons.table_view_outlined),
-              onPressed: () => _exportExcel(context, state),
-            ),
-          ],
+        return ReportExportButton(
+          onPdfPressed: () => _exportPdf(context, state),
+          onExcelPressed: () => _exportExcel(context, state),
         );
       },
     );

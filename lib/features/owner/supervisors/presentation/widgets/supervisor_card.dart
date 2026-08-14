@@ -22,59 +22,58 @@ class SupervisorCard extends StatelessWidget {
         border: Border.all(color: AppColors.borderLight.withValues(alpha: 0.5)),
         boxShadow: [
           BoxShadow(
-            color: context.primaryShadow.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: context.primaryShadow.withValues(alpha: 0.04),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
-      child: Column(
+      child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _buildAvatarWithStatus(context),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+          _buildAvatarWithStatus(context),
+          const SizedBox(width: AppSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      supervisor.user?.name ?? '-',
-                      style: AppTextStyles.h4.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.textPrimaryLight,
+                    Expanded(
+                      child: Text(
+                        supervisor.user?.name ?? '-',
+                        style: AppTextStyles.h4.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.textPrimaryLight,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
                     ),
-                    const SizedBox(height: 4),
                     _buildScopeBadge(context),
                   ],
                 ),
-              ),
-            ],
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
-            child: Divider(color: AppColors.borderLight, height: 1),
-          ),
-          if (supervisor.user?.phone != null) ...[
-            _buildIconText(
-              context,
-              Icons.phone_android_outlined,
-              supervisor.user!.phone!,
+                const SizedBox(height: AppSpacing.sm),
+                if (supervisor.user?.phone != null) ...[
+                  _buildIconText(
+                    context,
+                    Icons.phone_android_outlined,
+                    supervisor.user!.phone!,
+                  ),
+                  if (supervisor.user?.email != null) 
+                    const SizedBox(height: AppSpacing.xs),
+                ],
+                if (supervisor.user?.email != null) ...[
+                  _buildIconText(
+                    context,
+                    Icons.mail_outline_rounded,
+                    supervisor.user!.email!,
+                  ),
+                ],
+              ],
             ),
-            const SizedBox(height: AppSpacing.xs),
-          ],
-          if (supervisor.user?.email != null) ...[
-            _buildIconText(
-              context,
-              Icons.mail_outline_rounded,
-              supervisor.user!.email!,
-            ),
-          ],
+          ),
         ],
       ),
     );

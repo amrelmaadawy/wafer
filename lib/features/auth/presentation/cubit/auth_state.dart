@@ -24,6 +24,16 @@ class Authenticated extends AuthState {
 
 class Unauthenticated extends AuthState {}
 
+/// Emitted when session check fails due to network/server error,
+/// not because the session has expired. Allows showing a Retry option.
+class AuthSessionError extends AuthState {
+  final String message;
+  const AuthSessionError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
 class AuthError extends AuthState {
   final String message;
   const AuthError(this.message);
@@ -31,3 +41,4 @@ class AuthError extends AuthState {
   @override
   List<Object> get props => [message];
 }
+

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'scope_value_id.dart';
 
 class SupervisorFormDataEntity extends Equatable {
   final List<SupervisorUserEntity> users;
@@ -61,7 +62,7 @@ class SupervisorScopeTypeEntity extends Equatable {
 }
 
 class SupervisorScopeValueEntity extends Equatable {
-  final dynamic id; // can be int or string
+  final ScopeValueId id; // can be int or string
   final String? name;
   final String? code;
   final String? email;
@@ -108,7 +109,7 @@ class SupervisorBooleanValueEntity extends Equatable {
 class SupervisorFormDefaultsEntity extends Equatable {
   final String? scopeType;
   final String? scopeCondition;
-  final List<dynamic>? scopeValues;
+  final List<ScopeValueId>? scopeValues;
   final int? sortOrder;
   final bool? isActive;
 

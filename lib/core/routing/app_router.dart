@@ -7,7 +7,12 @@ import 'package:wafer/features/owner/finance/presentation/cubit/journal_entries/
 import 'package:wafer/features/owner/finance/presentation/cubit/journal_entries/update_journal_entry_cubit.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
+import '../../features/auth/presentation/screens/unsupported_account_screen.dart';
 import '../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../features/auth/presentation/cubit/auth_state.dart';
+import '../../features/auth/domain/entities/user_entity.dart';
+import '../presentation/screens/route_error_screen.dart';
+import 'app_router_guard.dart';
 import '../../features/notifications/presentation/screens/notifications_screen.dart';
 import '../../features/owner/shell/presentation/screens/owner_main_screen.dart';
 import '../../features/owner/dashboard/presentation/views/owner_dashboard_view.dart';
@@ -121,10 +126,55 @@ import 'routes.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
+// Holds the latest auth state for use in the redirect callback
+UserEntity? _currentUser;
+bool _isAuthenticated = false;
+bool _isLoading = true;
+bool _isSessionError = false;
+
+void updateAuthState(AuthState state) {
+  if (state is AuthLoading || state is AuthInitial) {
+    _isLoading = true;
+    _isAuthenticated = false;
+    _isSessionError = false;
+    _currentUser = null;
+  } else if (state is Authenticated) {
+    _isLoading = false;
+    _isAuthenticated = true;
+    _isSessionError = false;
+    _currentUser = state.user;
+  } else if (state is Unauthenticated) {
+    _isLoading = false;
+    _isAuthenticated = false;
+    _isSessionError = false;
+    _currentUser = null;
+  } else if (state is AuthSessionError) {
+    _isLoading = false;
+    _isAuthenticated = false;
+    _isSessionError = true;
+    _currentUser = null;
+  } else {
+    _isLoading = false;
+    _isAuthenticated = false;
+    _isSessionError = false;
+    _currentUser = null;
+  }
+  AppRouter.router.refresh();
+}
+
 class AppRouter {
   static final GoRouter router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: Routes.splash,
+    redirect: (context, state) {
+      return appRouterGuard(
+        state: state,
+        currentUser: _currentUser,
+        isAuthenticated: _isAuthenticated,
+        isLoading: _isLoading,
+        isSessionError: _isSessionError,
+      );
+    },
     routes: [
       GoRoute(
         path: Routes.splash,
@@ -132,68 +182,33 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.home,
-        builder: (context, state) =>
-            const LoginScreen(), // Just placeholder or check auth
-      ),
-      GoRoute(
-        path: Routes.companyDashboard,
-        builder: (context, state) => BlocProvider<AuthCubit>(
-          create: (_) => sl<AuthCubit>(),
-          child: Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('لوحة تحكم الشركات/النظام (قيد التطوير)'),
-                  const SizedBox(height: 20),
-                  Builder(
-                    builder: (ctx) => ElevatedButton.icon(
-                      onPressed: () => ctx.read<AuthCubit>().logout(),
-                      icon: const Icon(Icons.logout_rounded),
-                      label: const Text('تسجيل الخروج'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        foregroundColor: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-      GoRoute(
-        path: Routes.tenantDashboard,
-        builder: (context, state) => BlocProvider<AuthCubit>(
-          create: (_) => sl<AuthCubit>(),
-          child: Scaffold(
-            body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('لوحة تحكم المستأجر (قيد التطوير)'),
-                  const SizedBox(height: 20),
-                  Builder(
-                    builder: (ctx) => ElevatedButton.icon(
-                      onPressed: () => ctx.read<AuthCubit>().logout(),
-                      icon: const Icon(Icons.logout_rounded),
-                      label: const Text('تسجيل الخروج'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        foregroundColor: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const LoginScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          transitionDuration: const Duration(milliseconds: 600),
         ),
       ),
       GoRoute(
         path: Routes.login,
-        builder: (context, state) => const LoginScreen(),
+        pageBuilder: (context, state) => CustomTransitionPage(
+          key: state.pageKey,
+          child: const LoginScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          transitionDuration: const Duration(milliseconds: 600),
+        ),
+      ),
+      GoRoute(
+        path: Routes.unsupportedAccount,
+        builder: (context, state) => const UnsupportedAccountScreen(),
+      ),
+      GoRoute(
+        path: Routes.routeError,
+        builder: (context, state) => const RouteErrorScreen(),
       ),
       GoRoute(
         path: Routes.notifications,
@@ -465,7 +480,8 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerPropertyEdit,
         builder: (context, state) {
-          final property = state.extra as PropertyDetailsEntity;
+          final property = state.extra as PropertyDetailsEntity?;
+          if (property == null) return const RouteErrorScreen();
           return BlocProvider<PropertyEditCubit>(
             create: (_) => sl<PropertyEditCubit>(),
             child: PropertyEditScreen(property: property),
@@ -513,7 +529,8 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerMaintenanceDetails,
         builder: (context, state) {
-          final item = state.extra as MaintenanceItemEntity;
+          final item = state.extra as MaintenanceItemEntity?;
+          if (item == null) return const RouteErrorScreen();
           return OwnerMaintenanceDetailsScreen(item: item);
         },
       ),
@@ -526,7 +543,8 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerMaintenanceEdit,
         builder: (context, state) {
-          final item = state.extra as MaintenanceItemEntity;
+          final item = state.extra as MaintenanceItemEntity?;
+          if (item == null) return const RouteErrorScreen();
           return OwnerUpdateMaintenanceScreen(maintenanceItem: item);
         },
       ),

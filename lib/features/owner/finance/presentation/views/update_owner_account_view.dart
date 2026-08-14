@@ -12,6 +12,7 @@ import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/utils/widgets/custom_text_field.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/localization/locale_keys.dart';
+import '../../domain/entities/finance_account_type.dart';
 import '../../domain/entities/finance_account_entity.dart';
 import '../cubit/accounts/update_finance_account_cubit.dart';
 import '../cubit/accounts/update_finance_account_state.dart';
@@ -32,7 +33,7 @@ class _UpdateOwnerAccountViewState extends State<UpdateOwnerAccountView> {
   late final TextEditingController _codeController;
   late final TextEditingController _descController;
 
-  late String _selectedType;
+  late FinanceAccountType _selectedType;
   late bool _isPostable;
   late bool _isActive;
 
@@ -64,7 +65,7 @@ class _UpdateOwnerAccountViewState extends State<UpdateOwnerAccountView> {
             code: _codeController.text,
             nameAr: _nameArController.text,
             nameEn: _nameEnController.text,
-            type: _selectedType,
+            type: _selectedType.value,
             isPostable: _isPostable,
             isActive: _isActive,
             descriptionAr: _descController.text,
@@ -117,24 +118,24 @@ class _UpdateOwnerAccountViewState extends State<UpdateOwnerAccountView> {
                 validator: (value) => value == null || value.isEmpty ? LocaleKeys.required_field.tr() : null,
               ),
               const SizedBox(height: 16),
-              CustomDropdownMenu<String>(
+              CustomDropdownMenu<FinanceAccountType>(
                 hint: LocaleKeys.owner_finance_account_type.tr(),
                 value: _selectedType,
-                items: const ['asset', 'liability', 'expense', 'revenue', 'equity'],
+                items: FinanceAccountType.values.where((e) => e != FinanceAccountType.unknown).toList(),
                 itemLabelBuilder: (item) {
                   switch (item) {
-                    case 'asset':
+                    case FinanceAccountType.asset:
                       return LocaleKeys.owner_finance_account_type_asset.tr();
-                    case 'liability':
+                    case FinanceAccountType.liability:
                       return LocaleKeys.owner_finance_account_type_liability.tr();
-                    case 'expense':
+                    case FinanceAccountType.expense:
                       return LocaleKeys.owner_finance_account_type_expense.tr();
-                    case 'revenue':
+                    case FinanceAccountType.revenue:
                       return LocaleKeys.owner_finance_account_type_revenue.tr();
-                    case 'equity':
+                    case FinanceAccountType.equity:
                       return LocaleKeys.owner_finance_account_type_equity.tr();
                     default:
-                      return item;
+                      return item.value;
                   }
                 },
                 onSelected: (value) {

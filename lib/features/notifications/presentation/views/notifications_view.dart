@@ -1,11 +1,13 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wafer/core/theme/app_colors.dart';
 import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../domain/entities/notification_item_entity.dart';
 import '../cubit/notifications_cubit.dart';
@@ -213,7 +215,39 @@ class _NotificationsViewState extends State<NotificationsView> {
   }
 
   void _handleCardTap(BuildContext context, NotificationItemEntity item) {
-    // Proactive deep linking handling or mark single as read can be added here
+    final data = item.data ?? {};
+    final type = item.type.toLowerCase();
+
+    try {
+      if (type.contains('maintenance')) {
+        final id = int.tryParse(data['id']?.toString() ?? '');
+        if (id != null) {
+          context.push(Routes.ownerMaintenance);
+        }
+      } else if (type.contains('contract') || type.contains('lease')) {
+        final id = data['id']?.toString() ?? data['contract_id']?.toString();
+        if (id != null && id.isNotEmpty) {
+          context.push(Routes.ownerContractDetailsPath(id));
+        }
+      } else if (type.contains('payment')) {
+        final id = int.tryParse(data['id']?.toString() ?? '');
+        if (id != null) {
+          context.push(
+            Routes.ownerFinancePaymentDetails.replaceFirst(':id', '$id'),
+          );
+        }
+      } else if (type.contains('invoice') || type.contains('receipt')) {
+        final id = int.tryParse(data['id']?.toString() ?? '');
+        if (id != null) {
+          context.push(
+            Routes.ownerFinanceReceiptDetails.replaceFirst(':id', '$id'),
+          );
+        }
+      }
+      // Unknown types: silently ignored — no crash, no broken navigation
+    } catch (_) {
+      // Defensive: swallow any unexpected errors from notification routing
+    }
   }
 }
 

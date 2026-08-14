@@ -1,4 +1,4 @@
-﻿import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:wafer/core/theme/color_utils.dart';
 
@@ -7,6 +7,7 @@ import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/finance_account_entity.dart';
+import '../../domain/entities/finance_account_type.dart';
 
 class FinanceAccountCard extends StatelessWidget {
   final FinanceAccountEntity account;
@@ -148,40 +149,30 @@ class FinanceAccountCard extends StatelessWidget {
   Widget _buildTypeTag(BuildContext context) {
     Color color;
     String label;
-    switch (account.type.toLowerCase()) {
-      case 'asset':
-      case 'Ø£ØµÙˆÙ„':
+    switch (account.type) {
+      case FinanceAccountType.asset:
         color = AppColors.success;
         label = LocaleKeys.owner_finance_assets.tr();
         break;
-      case 'liability':
-      case 'Ø®ØµÙˆÙ…':
+      case FinanceAccountType.liability:
         color = AppColors.error;
         label = LocaleKeys.owner_finance_liabilities.tr();
         break;
-      case 'discount / credit':
-      case 'Ø®ØµÙ… / Ø¯Ø§Ø¦Ù†':
-        color = AppColors.error;
-        label = LocaleKeys.owner_finance_discount_credit.tr();
-        break;
-      case 'expense':
-      case 'Ù…ØµØ±ÙˆÙØ§Øª':
+      case FinanceAccountType.expense:
         color = AppColors.warning;
         label = LocaleKeys.owner_finance_expenses.tr();
         break;
-      case 'revenue':
-      case 'Ø¥ÙŠØ±Ø§Ø¯Ø§Øª':
+      case FinanceAccountType.revenue:
         color = AppColors.info;
         label = LocaleKeys.owner_finance_revenues.tr();
         break;
-      case 'equity':
-      case 'Ø­Ù‚ÙˆÙ‚ Ù…Ù„ÙƒÙŠØ©':
+      case FinanceAccountType.equity:
         color = Colors.purple;
         label = LocaleKeys.owner_finance_equity.tr();
         break;
       default:
         color = AppColors.textSecondaryLight;
-        label = account.type;
+        label = account.type.value;
     }
 
     return Container(

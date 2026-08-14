@@ -54,7 +54,11 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () {
       if (mounted) {
-        context.read<FinanceAccountsCubit>().fetchAccounts(search: query, isRefresh: true);
+        final cubit = context.read<FinanceAccountsCubit>();
+        cubit.fetchAccounts(
+          query: cubit.currentQuery.copyWith(search: query),
+          isRefresh: true,
+        );
       }
     });
   }
@@ -97,7 +101,11 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
                 _isSearching = !_isSearching;
                 if (!_isSearching) {
                   _searchController.clear();
-                  context.read<FinanceAccountsCubit>().fetchAccounts(search: '', isRefresh: true);
+                  final cubit = context.read<FinanceAccountsCubit>();
+                  cubit.fetchAccounts(
+                    query: cubit.currentQuery.copyWith(search: ''),
+                    isRefresh: true,
+                  );
                 }
               });
             },

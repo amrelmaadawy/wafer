@@ -4,13 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../cubit/owner_approvals_report_cubit.dart';
 import '../cubit/owner_approvals_report_state.dart';
-import '../widgets/report_export_button.dart';
+import '../../domain/entities/approvals_report_entity.dart';
 import '../widgets/report_empty_widget.dart';
-import '../../../../../core/utils/widgets/app_toast.dart';
 
 class OwnerApprovalsReportView extends StatefulWidget {
   const OwnerApprovalsReportView({super.key});
@@ -53,33 +53,8 @@ class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(
-        title: LocaleKeys.ownerReportsApprovals.tr(),
-        actions: [
-          BlocBuilder<OwnerApprovalsReportCubit, OwnerApprovalsReportState>(
-            builder: (context, state) {
-              if (state is OwnerApprovalsReportLoaded) {
-                return ReportExportButton(
-                  onPdfPressed: () async {
-                    AppToast.showError(
-                      context,
-                      "PDF Export will be implemented using PdfBuilder",
-                    );
-                  },
-                  onExcelPressed: () async {
-                    AppToast.showError(
-                      context,
-                      "Excel Export will be implemented using ExcelBuilder",
-                    );
-                  },
-                );
-              }
-              return const SizedBox.shrink();
-            },
-          ),
-        ],
-      ),
+      backgroundColor: context.appBackgroundColor,
+      appBar: CustomAppBar(title: LocaleKeys.ownerReportsApprovals.tr()),
       body: BlocBuilder<OwnerApprovalsReportCubit, OwnerApprovalsReportState>(
         builder: (context, state) {
           if (state is OwnerApprovalsReportInitial ||
@@ -96,22 +71,17 @@ class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
 
           if (state is OwnerApprovalsReportEmpty) {
             return ReportEmptyWidget(
-              message: 'No approvals found',
+              message: LocaleKeys.reports_noData.tr(),
               icon: Icons.checklist_rtl,
             );
           }
 
           if (state is OwnerApprovalsReportLoaded ||
               (state is OwnerApprovalsReportLoading && !state.isFirstFetch)) {
-            final report = (state is OwnerApprovalsReportLoaded)
+            final reportData = state is OwnerApprovalsReportLoaded
                 ? state.report
-                : (context.read<OwnerApprovalsReportCubit>().state as dynamic)
-                      .report;
-
-            final reportData =
-                (context.read<OwnerApprovalsReportCubit>().state as dynamic)
-                    .report ??
-                report;
+                : (state as OwnerApprovalsReportLoading).report;
+            if (reportData == null) return const _ApprovalsReportSkeleton();
 
             return RefreshIndicator(
               onRefresh: _onRefresh,
@@ -163,7 +133,7 @@ class _OwnerApprovalsReportViewState extends State<OwnerApprovalsReportView> {
     );
   }
 
-  Widget _buildSummaryCards(dynamic summary) {
+  Widget _buildSummaryCards(ApprovalsSummaryEntity summary) {
     return Column(
       children: [
         Row(
@@ -311,7 +281,7 @@ class _ApprovalsReportSkeleton extends StatelessWidget {
 }
 
 class _ApprovalItemCard extends StatelessWidget {
-  final dynamic item; // ApprovalItemEntity
+  final ApprovalItemEntity item;
 
   const _ApprovalItemCard({required this.item});
 

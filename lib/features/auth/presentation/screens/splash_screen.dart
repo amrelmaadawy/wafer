@@ -1,55 +1,18 @@
-import 'dart:math' as math;
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../../../core/di/service_locator.dart';
 import '../../../../core/localization/locale_keys.dart';
-import '../../../../core/routing/routes.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_fonts.dart';
 import '../../../../core/theme/color_utils.dart';
-import '../cubit/auth_cubit.dart';
-import '../cubit/auth_state.dart';
+import '../widgets/building_blueprint_painter.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final startTime = DateTime.now();
-
-    return BlocProvider(
-      create: (context) => sl<AuthCubit>()..checkAuthStatus(),
-      child: BlocListener<AuthCubit, AuthState>(
-        listener: (context, state) async {
-          // Guarantee a minimum splash duration (2.5s) so the full animation sequence plays smoothly
-          final elapsed = DateTime.now().difference(startTime);
-          const minDuration = Duration(milliseconds: 2500);
-          if (elapsed < minDuration) {
-            await Future.delayed(minDuration - elapsed);
-          }
-
-          if (!context.mounted) return;
-
-          if (state is Authenticated) {
-            if (state.user.accountType == 'owner') {
-              context.go(Routes.ownerDashboard);
-            } else if (state.user.accountType == 'system' ||
-                state.user.accountType == 'company') {
-              context.go(Routes.companyDashboard);
-            } else if (state.user.accountType == 'tenant') {
-              context.go(Routes.tenantDashboard);
-            } else {
-              context.go(Routes.ownerDashboard); // Fallback
-            }
-          } else if (state is Unauthenticated) {
-            context.go(Routes.login);
-          }
-        },
-        child: const _SplashBody(),
-      ),
-    );
+    return const _SplashBody();
   }
 }
 
@@ -61,253 +24,244 @@ class _SplashBody extends StatefulWidget {
 }
 
 class _SplashBodyState extends State<_SplashBody> with TickerProviderStateMixin {
-  late final AnimationController _entranceController;
-  late final AnimationController _bgRotateController;
-  late final AnimationController _dotsController;
+  late final AnimationController _masterController;
 
-  late final Animation<double> _logoScale;
+  // Phase 1: 0–150ms — Background fade in
+  late final Animation<double> _bgOpacity;
+
+  // Phase 2: 150–500ms — Draw architectural lines
+  late final Animation<double> _drawProgress;
+
+  // Phase 3: 500–750ms — Fill with theme color
+  late final Animation<double> _fillOpacity;
+
+  // Phase 3b: 600–850ms — Glow blooms behind the icon
+  late final Animation<double> _glowOpacity;
+
+  // Phase 4: 650–900ms — App name & tagline slide up
   late final Animation<double> _textOpacity;
   late final Animation<Offset> _textSlide;
-  late final Animation<double> _taglineOpacity;
-  late final Animation<Offset> _taglineSlide;
+
+  // Phase 4b: 700–950ms — Subtle divider line grows
+  late final Animation<double> _dividerWidth;
+
+  // Phase 5: 900–1050ms — Bottom caption fades in
+  late final Animation<double> _captionOpacity;
 
   @override
   void initState() {
     super.initState();
-    
-    // 1. Entrance Animation (Spring effect and staggered fading)
-    _entranceController = AnimationController(
+
+    // Total intro: 2200ms — slow and cinematic so the user can appreciate every phase
+    _masterController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1400),
+      duration: const Duration(milliseconds: 2200),
     );
 
-    // Spring scale for the logo (0.0 to 1.0)
-    _logoScale = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _entranceController,
-        curve: const Interval(0.1, 0.6, curve: Curves.elasticOut),
-      ),
+    final c = _masterController;
+
+    _bgOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: c, curve: const Interval(0.0, 0.14, curve: Curves.easeIn)),
     );
 
-    // Slide and fade for the brand text (starts slightly after logo)
-    _textSlide = Tween<Offset>(begin: const Offset(0.0, 0.5), end: Offset.zero).animate(
-      CurvedAnimation(
-        parent: _entranceController,
-        curve: const Interval(0.4, 0.8, curve: Curves.easeOutCubic),
-      ),
+    _drawProgress = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: c, curve: const Interval(0.14, 0.52, curve: Curves.easeInOutCubic)),
     );
-    
+
+    _fillOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: c, curve: const Interval(0.50, 0.72, curve: Curves.easeIn)),
+    );
+
+    _glowOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: c, curve: const Interval(0.58, 0.80, curve: Curves.easeOut)),
+    );
+
     _textOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _entranceController,
-        curve: const Interval(0.4, 0.8, curve: Curves.easeIn),
-      ),
+      CurvedAnimation(parent: c, curve: const Interval(0.64, 0.90, curve: Curves.easeOut)),
     );
 
-    // Slide and fade for the tagline (starts slightly after the title)
-    _taglineSlide = Tween<Offset>(begin: const Offset(0.0, 0.5), end: Offset.zero).animate(
-      CurvedAnimation(
-        parent: _entranceController,
-        curve: const Interval(0.6, 1.0, curve: Curves.easeOutCubic),
-      ),
-    );
-    
-    _taglineOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _entranceController,
-        curve: const Interval(0.6, 1.0, curve: Curves.easeIn),
-      ),
+    _textSlide = Tween<Offset>(begin: const Offset(0.0, 0.25), end: Offset.zero).animate(
+      CurvedAnimation(parent: c, curve: const Interval(0.64, 0.92, curve: Curves.easeOutCubic)),
     );
 
-    // Haptic feedback when the logo "hits" the peak of the spring
-    Future.delayed(const Duration(milliseconds: 250), () {
-      if (mounted) HapticFeedback.lightImpact();
-    });
+    _dividerWidth = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: c, curve: const Interval(0.70, 0.90, curve: Curves.easeOut)),
+    );
 
-    // 2. Background continuous rotation
-    _bgRotateController = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 40),
-    )..repeat();
+    _captionOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: c, curve: const Interval(0.85, 1.0, curve: Curves.easeOut)),
+    );
 
-    // 3. Staggered Dots Animation
-    _dotsController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1200),
-    )..repeat();
-
-    // Start entrance animation
-    _entranceController.forward();
+    _masterController.forward();
   }
 
   @override
   void dispose() {
-    _entranceController.dispose();
-    _bgRotateController.dispose();
-    _dotsController.dispose();
+    _masterController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    // Premium Minimalist Palette
-    // Light mode: Clean white background, Dark Blue text/icons
-    // Dark mode: Dark background, White text/icons
+    final primaryColor = context.primaryColor;
     final backgroundColor = isDark ? AppColors.backgroundDark : AppColors.surfaceLight;
-    final mainElementsColor = isDark ? Colors.white : context.primaryColor;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Colors.transparent,
-      ),
+      value: isDark
+          ? SystemUiOverlayStyle.light
+          : SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
         backgroundColor: backgroundColor,
-        body: Stack(
-          alignment: Alignment.center,
-          children: [
-            // 1. Subtle Background Watermark
-            AnimatedBuilder(
-              animation: _bgRotateController,
-              builder: (context, child) {
-                return Transform.rotate(
-                  angle: _bgRotateController.value * 2 * math.pi,
-                  child: Opacity(
-                    opacity: isDark ? 0.08 : 0.12, // Increased visibility based on feedback
-                    child: Icon(
-                      Icons.maps_home_work_rounded, // More professional ERP icon
-                      size: 450,
-                      color: mainElementsColor,
-                    ),
-                  ),
-                );
-              },
-            ),
-
-            // 2. Main Content
-            SafeArea(
-              child: Column(
-                children: [
-                  const Spacer(flex: 4),
-                  
-                  // Animated Logo & Text
-                  AnimatedBuilder(
-                    animation: _entranceController,
-                    builder: (context, child) {
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          // Spring Logo (Clean, no box)
-                          Transform.scale(
-                            scale: _logoScale.value,
-                            child: Icon(
-                              Icons.maps_home_work_rounded,
-                              size: 96,
-                              color: mainElementsColor,
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          
-                          // Slide + Fade Text
-                          Opacity(
-                            opacity: _textOpacity.value,
-                            child: SlideTransition(
-                              position: _textSlide,
-                              child: Text(
-                                LocaleKeys.auth_brand_name.tr(),
-                                style: TextStyle(
-                                  fontSize: 36,
-                                  fontWeight: FontWeight.w800,
-                                  color: mainElementsColor,
-                                  letterSpacing: 1.2,
-                                  height: 1.2,
-                                ),
-                              ),
-                            ),
-                          ),
-                          
-                          // Tagline
-                          Opacity(
-                            opacity: _taglineOpacity.value,
-                            child: SlideTransition(
-                              position: _taglineSlide,
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: Text(
-                                  "splashTagline".tr(),
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: mainElementsColor.withValues(alpha: 0.7),
-                                    letterSpacing: 0.5,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                  
-                  const Spacer(flex: 3),
-                  
-                  // 3. Staggered Wave Loading Dots
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 56.0),
-                    child: _StaggeredDotsLoader(
-                      controller: _dotsController,
-                      color: mainElementsColor, // Matches the theme perfectly
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        body: AnimatedBuilder(
+          animation: _masterController,
+          builder: (context, _) {
+            return Opacity(
+              opacity: _bgOpacity.value,
+              child: _buildBody(context, primaryColor, isDark),
+            );
+          },
         ),
       ),
     );
   }
-}
 
-class _StaggeredDotsLoader extends StatelessWidget {
-  final AnimationController controller;
-  final Color color;
+  Widget _buildBody(BuildContext context, Color primaryColor, bool isDark) {
+    final textSecondary = isDark ? AppColors.textSecondaryDark : AppColors.textSecondaryLight;
 
-  const _StaggeredDotsLoader({
-    required this.controller,
-    required this.color,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: controller,
-      builder: (context, child) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(3, (index) {
-            // Create a staggered phase for each dot
-            final t = (controller.value * 2 * math.pi) + (index * math.pi / 2.5);
-            // Sine wave for smooth oscillating scale and opacity
-            final value = (math.sin(t) + 1) / 2; // Normalize to 0..1
-            
-            final size = 6.0 + (value * 4.0); // Size pulses between 6 and 10
-            final opacity = 0.3 + (value * 0.7); // Opacity pulses between 0.3 and 1.0
-
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 6),
-              width: size,
-              height: size,
-              decoration: BoxDecoration(
-                color: color.withValues(alpha: opacity),
-                shape: BoxShape.circle,
+    return Stack(
+      children: [
+        // ── Subtle radial glow on background ──────────────────────────────
+        if (_glowOpacity.value > 0)
+          Positioned.fill(
+            child: Opacity(
+              opacity: _glowOpacity.value * 0.12,
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: RadialGradient(
+                    center: const Alignment(0, -0.25),
+                    radius: 1.2,
+                    colors: [
+                      primaryColor.withValues(alpha: 0.5),
+                      Colors.transparent,
+                    ],
+                  ),
+                ),
               ),
-            );
-          }),
-        );
-      },
+            ),
+          ),
+
+        // ── Main centered content ──────────────────────────────────────────
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Building icon — wider than tall for a proper skyline feel
+                SizedBox(
+                  width: 240,
+                  height: 160,
+                  child: CustomPaint(
+                    painter: BuildingBlueprintPainter(
+                      drawProgress: _drawProgress.value,
+                      fillOpacity: _fillOpacity.value,
+                      glowOpacity: _glowOpacity.value,
+                      themeColor: primaryColor,
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 36),
+
+                // Animated text block
+                SlideTransition(
+                  position: _textSlide,
+                  child: Opacity(
+                    opacity: _textOpacity.value,
+                    child: Column(
+                      children: [
+                        // App name
+                        Text(
+                          LocaleKeys.authBrandName.tr(),
+                          style: TextStyle(
+                            fontFamily: AppFonts.fontFamilyEn,
+                            fontSize: 48,
+                            fontWeight: FontWeight.w800,
+                            color: primaryColor,
+                            letterSpacing: 2.5,
+                            height: 1.1,
+                          ),
+                        ),
+
+                        const SizedBox(height: 14),
+
+                        // Animated divider
+                        LayoutBuilder(builder: (ctx, constraints) {
+                          return Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              width: constraints.maxWidth * 0.45 * _dividerWidth.value,
+                              height: 1.5,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    primaryColor.withValues(alpha: 0.0),
+                                    primaryColor.withValues(alpha: 0.8),
+                                    primaryColor.withValues(alpha: 0.0),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(2),
+                              ),
+                            ),
+                          );
+                        }),
+
+                        const SizedBox(height: 14),
+
+                        // Tagline
+                        Text(
+                          LocaleKeys.splashTagline.tr(),
+                          style: TextStyle(
+                            fontFamily: AppFonts.fontFamilyPrimary,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500,
+                            color: textSecondary,
+                            letterSpacing: 0.3,
+                            height: 1.5,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+
+        // ── Bottom caption ─────────────────────────────────────────────────
+        Positioned(
+          bottom: 40,
+          left: 0,
+          right: 0,
+          child: Opacity(
+            opacity: _captionOpacity.value,
+            child: Text(
+              LocaleKeys.authCopyrights.tr(),
+              style: TextStyle(
+                fontFamily: AppFonts.fontFamilyPrimary,
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: textSecondary.withValues(alpha: 0.6),
+                letterSpacing: 0.2,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

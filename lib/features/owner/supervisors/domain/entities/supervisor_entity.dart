@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'scope_value_id.dart';
 
 class SupervisorEntity extends Equatable {
   final int id;
@@ -52,7 +53,7 @@ class SupervisorScopeEntity extends Equatable {
   final String? type;
   final String? typeLabel;
   final String? condition;
-  final List<int>? values;
+  final List<ScopeValueId>? values;
 
   const SupervisorScopeEntity({
     this.type,

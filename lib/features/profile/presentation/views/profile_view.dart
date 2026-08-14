@@ -12,6 +12,7 @@ import '../cubit/profile_state.dart';
 import '../widgets/profile_actions_card.dart';
 import '../widgets/profile_header_card.dart';
 import '../widgets/profile_info_card.dart';
+import '../widgets/operations_card.dart';
 import '../widgets/profile_skeleton_widget.dart';
 
 class ProfileView extends StatelessWidget {
@@ -22,7 +23,7 @@ class ProfileView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       appBar: CustomAppBar(
-        title: LocaleKeys.profileTitle.tr(),
+        title: LocaleKeys.owner_more_title.tr(),
         showBackButton: false,
       ),
       body: BlocBuilder<ProfileCubit, ProfileState>(
@@ -51,6 +52,8 @@ class ProfileView extends StatelessWidget {
           ProfileHeaderCard(profile: profile),
           const SizedBox(height: 16),
           ProfileInfoCard(profile: profile),
+          const SizedBox(height: 16),
+          const OperationsCard(),
           const SizedBox(height: 16),
           ProfileActionsCard(profile: profile),
         ],

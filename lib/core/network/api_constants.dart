@@ -35,6 +35,8 @@ class ApiConstants {
   static const String ownerAccounting = 'owner/accounting';
   static const String ownerAccountingFormData = 'owner/accounting/form-data';
   static const String ownerAccountingAccounts = 'owner/accounting/accounts';
+  static String ownerAccountingAccountDetails(int id) =>
+      'owner/accounting/accounts/$id';
   static const String ownerAccountingReceipts = 'owner/accounting/receipts';
   static const String ownerAccountingPayments = 'owner/accounting/payments';
 
@@ -65,6 +67,10 @@ class ApiConstants {
       'owner/maintenance-technicians/form-data';
   static const String ownerMaintenanceTechnicians =
       'owner/maintenance-technicians';
+  static const String ownerMaintenanceSupervisors =
+      'owner/maintenance-supervisors';
+  static const String ownerMaintenanceSupervisorsFormData =
+      'owner/maintenance-supervisors/form-data';
 
   // Owner Properties & Deeds
   static const String ownerProperties = 'owner/properties';

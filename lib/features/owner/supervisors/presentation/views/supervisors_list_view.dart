@@ -10,6 +10,7 @@ import '../../../../../../core/theme/color_utils.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/utils/widgets/app_shimmer.dart';
+import '../../../../../../core/utils/widgets/custom_button.dart';
 import '../../../../../../core/di/service_locator.dart';
 import '../cubit/list/supervisors_list_cubit.dart';
 import '../cubit/list/supervisors_list_state.dart';
@@ -117,17 +118,21 @@ class _SupervisorsListViewState extends State<SupervisorsListView> {
                 },
               ),
             ),
-            floatingActionButton: FloatingActionButton(
-              backgroundColor: context.primaryColor,
-              onPressed: () async {
-                final result = await AddSupervisorBottomSheet.show(context);
-                if (result == true && context.mounted) {
-                  context.read<SupervisorsListCubit>().fetchSupervisors(
-                    isRefresh: true,
-                  );
-                }
-              },
-              child: const Icon(Icons.add, color: AppColors.surfaceLight),
+            bottomNavigationBar: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: CustomButton(
+                  text: LocaleKeys.addSupervisor.tr(),
+                  onPressed: () async {
+                    final result = await AddSupervisorBottomSheet.show(context);
+                    if (result == true && context.mounted) {
+                      context.read<SupervisorsListCubit>().fetchSupervisors(
+                        isRefresh: true,
+                      );
+                    }
+                  },
+                ),
+              ),
             ),
           );
         },

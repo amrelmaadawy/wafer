@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/theme/app_radius.dart';
-import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/theme_context.dart';
+import '../../../../../core/localization/locale_keys.dart';
 
 class ReportExportButton extends StatelessWidget {
   final VoidCallback onPdfPressed;
@@ -16,7 +18,7 @@ class ReportExportButton extends StatelessWidget {
   void _showExportOptions(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: context.appSurfaceColor,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -30,17 +32,17 @@ class ReportExportButton extends StatelessWidget {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: AppColors.borderLight,
+                  color: context.appBorderColor,
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
               const SizedBox(height: 24),
-              const Text(
-                'تصدير التقرير',
+              Text(
+                LocaleKeys.reports_exportTitle.tr(),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimaryLight,
+                  color: context.appOnSurfaceColor,
                 ),
               ),
               const SizedBox(height: 16),
@@ -53,9 +55,12 @@ class ReportExportButton extends StatelessWidget {
                   ),
                   child: const Icon(Icons.picture_as_pdf, color: Colors.red),
                 ),
-                title: const Text(
-                  'تصدير كـ PDF',
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                title: Text(
+                  LocaleKeys.reports_exportPdf.tr(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: context.appOnSurfaceColor,
+                  ),
                 ),
                 onTap: () {
                   Navigator.pop(ctx);
@@ -71,9 +76,12 @@ class ReportExportButton extends StatelessWidget {
                   ),
                   child: const Icon(Icons.table_chart, color: Colors.green),
                 ),
-                title: const Text(
-                  'تصدير كـ Excel',
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                title: Text(
+                  LocaleKeys.reports_exportExcel.tr(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    color: context.appOnSurfaceColor,
+                  ),
                 ),
                 onTap: () {
                   Navigator.pop(ctx);
@@ -115,7 +123,7 @@ class ReportExportButton extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 Text(
-                  'تصدير',
+                  LocaleKeys.reports_export.tr(),
                   style: TextStyle(
                     color: context.primaryColor,
                     fontWeight: FontWeight.w700,

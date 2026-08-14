@@ -1,3 +1,4 @@
+import '../../domain/entities/scope_value_id.dart';
 import '../../domain/entities/supervisor_entity.dart';
 
 class SupervisorModel extends SupervisorEntity {
@@ -74,7 +75,7 @@ class SupervisorScopeModel extends SupervisorScopeEntity {
       condition: json['condition']?.toString(),
       values: json['values'] != null && json['values'] is List
           ? (json['values'] as List)
-                .map((e) => int.tryParse(e.toString()) ?? 0)
+                .map((e) => ScopeValueId.from(e))
                 .toList()
           : null,
     );

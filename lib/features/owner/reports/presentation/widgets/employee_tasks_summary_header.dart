@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_breakpoints.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../domain/entities/employee_tasks_summary_entity.dart';
 
@@ -44,9 +45,9 @@ class EmployeeTasksSummaryHeader extends StatelessWidget {
       itemCount: metrics.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: context.isCompact ? 2 : 4,
-        crossAxisSpacing: AppSpacing.sm,
-        mainAxisSpacing: AppSpacing.sm,
-        mainAxisExtent: 96,
+        crossAxisSpacing: AppSpacing.md,
+        mainAxisSpacing: AppSpacing.md,
+        mainAxisExtent: 106,
       ),
       itemBuilder: (_, index) => _MetricCard(metric: metrics[index]),
     );
@@ -67,23 +68,29 @@ class _MetricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(AppSpacing.sm),
+    padding: const EdgeInsets.all(AppSpacing.md),
     decoration: BoxDecoration(
       color: context.appSurfaceColor,
       borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: context.appBorderColor),
+      boxShadow: [
+        BoxShadow(
+          color: context.primaryShadow.withValues(alpha: 0.06),
+          blurRadius: 10,
+          offset: const Offset(0, 3),
+        ),
+      ],
     ),
     child: Row(
       children: [
         Container(
-          padding: const EdgeInsets.all(9),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: metric.color.withValues(alpha: .1),
-            shape: BoxShape.circle,
+            color: metric.color.withValues(alpha: .12),
+            borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(metric.icon, color: metric.color, size: 20),
+          child: Icon(metric.icon, color: metric.color, size: 24),
         ),
-        const SizedBox(width: AppSpacing.sm),
+        const SizedBox(width: AppSpacing.md),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -93,13 +100,16 @@ class _MetricCard extends StatelessWidget {
                 '${metric.value}',
                 style: Theme.of(
                   context,
-                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800),
+                ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w800, height: 1.2),
               ),
+              const SizedBox(height: AppSpacing.xxs),
               Text(
                 metric.label,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.bodySmall,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: context.appSecondaryTextColor,
+                ),
               ),
             ],
           ),

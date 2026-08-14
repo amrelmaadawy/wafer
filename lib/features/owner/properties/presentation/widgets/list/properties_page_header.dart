@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_breakpoints.dart';
 import '../../../../../../core/theme/app_spacing.dart';
+import '../../../../../../core/theme/color_utils.dart';
 
 class PropertiesPageHeader extends StatelessWidget {
   final VoidCallback onOpenUnits;
@@ -45,10 +46,22 @@ class PropertiesPageHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.sm),
-          OutlinedButton.icon(
+          FilledButton.icon(
             onPressed: onOpenUnits,
-            icon: const Icon(Icons.door_front_door_outlined, size: 18),
-            label: Text(LocaleKeys.reports_unitsShortcut.tr()),
+            style: FilledButton.styleFrom(
+              backgroundColor: context.primaryColor.withValues(alpha: 0.1),
+              foregroundColor: context.primaryColor,
+              elevation: 0,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            icon: const Icon(Icons.door_front_door_rounded, size: 18),
+            label: Text(
+              LocaleKeys.reports_unitsShortcut.tr(),
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+            ),
           ),
         ],
       ),

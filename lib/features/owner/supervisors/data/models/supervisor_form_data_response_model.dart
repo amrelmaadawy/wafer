@@ -1,3 +1,4 @@
+import '../../domain/entities/scope_value_id.dart';
 import '../../domain/entities/supervisor_form_data_entity.dart';
 
 class SupervisorFormDataResponseModel extends SupervisorFormDataEntity {
@@ -112,7 +113,7 @@ class SupervisorScopeValueModel extends SupervisorScopeValueEntity {
 
   factory SupervisorScopeValueModel.fromJson(Map<String, dynamic> json) {
     return SupervisorScopeValueModel(
-      id: json['id'],
+      id: ScopeValueId.from(json['id']),
       name: json['name'] as String?,
       code: json['code'] as String?,
       email: json['email'] as String?,
@@ -162,7 +163,9 @@ class SupervisorFormDefaultsModel extends SupervisorFormDefaultsEntity {
     return SupervisorFormDefaultsModel(
       scopeType: json['scope_type'] as String?,
       scopeCondition: json['scope_condition'] as String?,
-      scopeValues: json['scope_values'] as List<dynamic>?,
+      scopeValues: (json['scope_values'] as List<dynamic>?)
+          ?.map((e) => ScopeValueId.from(e))
+          .toList(),
       sortOrder: json['sort_order'] as int?,
       isActive: json['is_active'] as bool?,
     );

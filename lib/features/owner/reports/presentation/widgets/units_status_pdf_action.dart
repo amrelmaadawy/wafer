@@ -15,18 +15,33 @@ class UnitsStatusPdfAction extends StatelessWidget {
     return BlocBuilder<OwnerUnitsStatusCubit, OwnerUnitsStatusState>(
       builder: (context, state) {
         if (state is! OwnerUnitsStatusLoaded) return const SizedBox.shrink();
-        return IconButton(
-          tooltip: LocaleKeys.reports_unitsExportPdf.tr(),
-          icon: const Icon(Icons.picture_as_pdf_outlined),
-          onPressed: () async {
-            final pdf = await UnitsStatusPdfBuilder.build(state.report);
-            if (!context.mounted) return;
-            await PdfGeneratorService.exportAndPrint(
-              context: context,
-              pdf: pdf,
-              fileName: 'portfolio_units.pdf',
-            );
-          },
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Center(
+            child: IconButton(
+              tooltip: LocaleKeys.reports_unitsExportPdf.tr(),
+              onPressed: () async {
+                final pdf = await UnitsStatusPdfBuilder.build(state.report);
+                if (!context.mounted) return;
+                await PdfGeneratorService.exportAndPrint(
+                  context: context,
+                  pdf: pdf,
+                  fileName: 'portfolio_units.pdf',
+                );
+              },
+              style: IconButton.styleFrom(
+                backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              icon: Icon(
+                Icons.picture_as_pdf_rounded,
+                color: Theme.of(context).primaryColor,
+                size: 22,
+              ),
+            ),
+          ),
         );
       },
     );

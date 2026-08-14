@@ -4,7 +4,8 @@
 
 Phase 5 is in progress. The dashboard confirmed scope, standalone portfolio
 units destination, and confirmed read-only tasks overview are complete and
-verified. Dashboard property/period filters, website-only metrics, contract
+verified. Report export parity for confirmed local builders is also complete.
+Dashboard property/period filters, website-only metrics, contract
 lifecycle mutations, and operational task mutations remain API-blocked and
 were not fabricated.
 
@@ -74,6 +75,34 @@ assignee updates, progress changes, and comments remain blocked because the
 workspace exposes form-data but no method/endpoint/body/response contracts for
 those operations.
 
+### Finance and report parity
+
+- Replaced the shared hard-coded report export control with Arabic/English
+  localized labels and dynamic light/dark surfaces.
+- Connected the legal-cases report to its existing confirmed local PDF and
+  Excel builders and export services.
+- Preserved the confirmed server-provided legal-case status filter.
+- Removed the approvals report's misleading PDF/Excel actions because no
+  approval export builder or API contract exists in the workspace.
+- Localized the approvals empty state and aligned both touched report screens
+  with the active scaffold theme.
+- Added widget coverage for opening export choices and invoking the selected
+  export callback.
+
+### Operational approvals foundation
+
+- Audited the workspace and confirmed that `GET owner/reports/approvals` is a
+  read-only report, not an operational approval inbox contract.
+- Confirmed that maintenance and transfer approval mutations are scoped to
+  their own bounded contexts and cannot be reused as generic approval actions.
+- Removed `dynamic` access from approval summary and item rendering.
+- Preserved the typed loaded report while fetching subsequent pages, fixing a
+  pagination-time runtime failure where the UI attempted to read `report` from
+  a loading state that did not expose it.
+- Added a Cubit test covering typed pagination preservation and page merging.
+- Kept generic approve/reject actions hidden until dedicated endpoints,
+  permissions, request bodies, responses, and state-transition rules exist.
+
 ## Verification
 
 - Dashboard and related core files analyze with no issues.
@@ -85,7 +114,8 @@ those operations.
   - core: 5/5 passed.
   - owner properties: 10/10 passed.
   - owner contracts: 5/5 passed.
-- Total verified tests: 41/41.
+- Report tests: 13/13 passed.
+- Total verified tests: 44/44.
 - `git diff --check`: passed.
 
 ## Required API input for remaining dashboard parity
@@ -110,4 +140,17 @@ and lifecycle contracts are supplied. The unused legacy
 response, caller, or supporting history and must not be treated as an API
 contract.
 
-The next independent P1 item is finance/report filter and export parity.
+Finance/report filter and export parity is complete for all capabilities
+confirmed by the current workspace. Trial balance, dedicated banking UX, and
+approvals export remain API/product-contract blocked and were not fabricated.
+
+The operational approvals foundation is hardened and read-only. Completing an
+actionable inbox requires dedicated typed list/detail/history and
+approve/reject API contracts plus permission and state-transition rules; the
+existing approvals report cannot be treated as an operational endpoint.
+
+The P1 backlog is complete within the API contracts confirmed by this
+workspace. P2 starts with warehouse, followed by clients, tenant support
+tickets, establishment/users/permissions settings, and dedicated banks/trial
+balance. None currently has a mobile API contract in `ApiConstants`, so the
+next implementation requires a product decision and exact API contracts.

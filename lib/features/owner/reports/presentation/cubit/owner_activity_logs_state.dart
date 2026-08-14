@@ -12,10 +12,11 @@ class OwnerActivityLogsInitial extends OwnerActivityLogsState {}
 
 class OwnerActivityLogsLoading extends OwnerActivityLogsState {
   final bool isPagination;
-  const OwnerActivityLogsLoading({this.isPagination = false});
+  final ActivityLogsReportEntity? report;
+  const OwnerActivityLogsLoading({this.isPagination = false, this.report});
 
   @override
-  List<Object?> get props => [isPagination];
+  List<Object?> get props => [isPagination, report];
 }
 
 class OwnerActivityLogsLoaded extends OwnerActivityLogsState {
@@ -36,4 +37,11 @@ class OwnerActivityLogsError extends OwnerActivityLogsState {
   List<Object?> get props => [message];
 }
 
-class OwnerActivityLogsEmpty extends OwnerActivityLogsState {}
+class OwnerActivityLogsEmpty extends OwnerActivityLogsState {
+  final ActivityLogsReportEntity report;
+
+  const OwnerActivityLogsEmpty(this.report);
+
+  @override
+  List<Object?> get props => [report];
+}

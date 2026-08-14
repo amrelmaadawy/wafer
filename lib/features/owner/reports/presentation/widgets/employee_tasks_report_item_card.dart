@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../domain/entities/employee_tasks_item_entity.dart';
 
@@ -17,7 +18,13 @@ class EmployeeTasksReportItemCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: context.appSurfaceColor,
         borderRadius: AppRadius.circularLg,
-        border: Border.all(color: context.appBorderColor),
+        boxShadow: [
+          BoxShadow(
+            color: context.primaryShadow.withValues(alpha: 0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +40,7 @@ class EmployeeTasksReportItemCard extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ),
-              const SizedBox(width: AppSpacing.sm),
+              const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,11 +51,14 @@ class EmployeeTasksReportItemCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(fontWeight: FontWeight.w800),
                     ),
+                    const SizedBox(height: AppSpacing.xxs),
                     Text(
                       item.phone.isNotEmpty ? item.phone : item.email,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: context.appSecondaryTextColor,
+                      ),
                     ),
                   ],
                 ),
@@ -67,6 +77,7 @@ class EmployeeTasksReportItemCard extends StatelessWidget {
                   color: const Color(0xFF10B981),
                 ),
               ),
+              const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: _TaskMetric(
                   label: LocaleKeys.employeeTasksPending.tr(),
@@ -74,6 +85,7 @@ class EmployeeTasksReportItemCard extends StatelessWidget {
                   color: const Color(0xFFF59E0B),
                 ),
               ),
+              const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: _TaskMetric(
                   label: LocaleKeys.employeeTasksOverdue.tr(),
@@ -100,22 +112,33 @@ class _TaskMetric extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Column(
-    children: [
-      Text(
-        '$value',
-        style: Theme.of(context).textTheme.titleMedium?.copyWith(
-          color: color,
-          fontWeight: FontWeight.w800,
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm, horizontal: AppSpacing.xs),
+    decoration: BoxDecoration(
+      color: color.withValues(alpha: 0.08),
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          '$value',
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: color,
+            fontWeight: FontWeight.w800,
+          ),
         ),
-      ),
-      const SizedBox(height: AppSpacing.xxs),
-      Text(
-        label,
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
-        style: Theme.of(context).textTheme.bodySmall,
-      ),
-    ],
+        const SizedBox(height: AppSpacing.xxs),
+        Text(
+          label,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+            color: color.darken(0.1),
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+    ),
   );
 }

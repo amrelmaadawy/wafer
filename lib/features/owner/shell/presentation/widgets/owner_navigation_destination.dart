@@ -36,8 +36,8 @@ List<OwnerNavigationDestination> ownerNavigationDestinations() => [
     icon: Icons.account_balance_wallet_outlined,
   ),
   OwnerNavigationDestination(
-    label: LocaleKeys.dashboardNavProfile.tr(),
-    selectedIcon: Icons.person_rounded,
-    icon: Icons.person_outline_rounded,
+    label: LocaleKeys.owner_more_title.tr(),
+    selectedIcon: Icons.more_horiz_rounded,
+    icon: Icons.more_horiz_outlined,
   ),
 ];

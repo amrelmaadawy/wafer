@@ -57,13 +57,8 @@ class UnitsStatusFilterBar extends StatelessWidget {
             SizedBox(width: 260, child: property),
             SizedBox(width: 220, child: status),
           ];
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      decoration: BoxDecoration(
-        color: context.appSubtleSurfaceColor,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: context.appBorderColor),
-      ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
       child: Row(
         children: [
           fields.first,
@@ -72,10 +67,17 @@ class UnitsStatusFilterBar extends StatelessWidget {
           if (cubit.selectedPropertyId != null ||
               cubit.selectedStatus != null) ...[
             const SizedBox(width: AppSpacing.sm),
-            IconButton.outlined(
-              onPressed: cubit.clearFilters,
-              icon: const Icon(Icons.filter_alt_off_rounded, size: 20),
-              tooltip: LocaleKeys.reports_resetFilters.tr(),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.red.withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: IconButton(
+                onPressed: cubit.clearFilters,
+                icon: const Icon(Icons.filter_alt_off_rounded, size: 20),
+                color: Colors.red,
+                tooltip: LocaleKeys.reports_resetFilters.tr(),
+              ),
             ),
           ],
         ],

@@ -4,6 +4,7 @@ import '../../../../../core/data/base_repository.dart';
 import '../../../../../core/error/failures.dart';
 
 import '../../domain/entities/finance_account_entity.dart';
+import '../../domain/entities/finance_accounts_query_entity.dart';
 import '../../domain/entities/finance_accounts_response_entity.dart';
 import '../../domain/entities/finance_overview_entity.dart';
 import '../../domain/entities/finance_form_data_entity.dart';
@@ -50,23 +51,11 @@ class FinanceRepositoryImpl extends BaseRepository
   }
 
   @override
-  Future<Either<Failure, FinanceAccountsResponseEntity>> getAccounts({
-    int page = 1,
-    int perPage = 15,
-    String? search,
-    String? accountType,
-    bool? isActive,
-    bool? isPostable,
-  }) async {
+  Future<Either<Failure, FinanceAccountsResponseEntity>> getAccounts(
+    FinanceAccountsQueryEntity query,
+  ) async {
     return executeApiCall<FinanceAccountsResponseEntity>(
-      call: () => remoteDataSource.getAccounts(
-        page: page,
-        perPage: perPage,
-        search: search,
-        accountType: accountType,
-        isActive: isActive,
-        isPostable: isPostable,
-      ),
+      call: () => remoteDataSource.getAccounts(query.toQueryParams()),
     );
   }
 

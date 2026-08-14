@@ -49,7 +49,7 @@ class PortfolioUnitsList extends StatelessWidget {
         crossAxisCount: count,
         crossAxisSpacing: AppSpacing.md,
         mainAxisSpacing: AppSpacing.md,
-        mainAxisExtent: 174,
+        mainAxisExtent: 144,
       ),
       itemBuilder: (_, index) => PortfolioUnitCard(
         unit: units[index],

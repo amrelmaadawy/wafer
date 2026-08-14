@@ -108,35 +108,46 @@ class _ResourceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = context.primaryColor;
+    final isSupported = [
+      'accounts',
+      'receipts',
+      'payments',
+      'transfers',
+      'journal-entries'
+    ].contains(resource.key);
 
     return Material(
       color: AppColors.surfaceLight,
       borderRadius: AppRadius.circularXxl,
       child: InkWell(
-        onTap: () {
-          if (resource.key == 'accounts') {
-            context.push(Routes.ownerFinanceAccounts);
-          } else if (resource.key == 'receipts') {
-            context.push(Routes.ownerFinanceReceipts);
-          } else if (resource.key == 'payments') {
-            context.push(Routes.ownerFinancePayments);
-          } else if (resource.key == 'transfers') {
-            context.push(Routes.ownerFinanceTransfers);
-          } else if (resource.key == 'journal-entries') {
-            context.push(Routes.ownerFinanceJournalEntries);
-          }
-        },
+        onTap: isSupported
+            ? () {
+                if (resource.key == 'accounts') {
+                  context.push(Routes.ownerFinanceAccounts);
+                } else if (resource.key == 'receipts') {
+                  context.push(Routes.ownerFinanceReceipts);
+                } else if (resource.key == 'payments') {
+                  context.push(Routes.ownerFinancePayments);
+                } else if (resource.key == 'transfers') {
+                  context.push(Routes.ownerFinanceTransfers);
+                } else if (resource.key == 'journal-entries') {
+                  context.push(Routes.ownerFinanceJournalEntries);
+                }
+              }
+            : null,
         borderRadius: AppRadius.circularXxl,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.borderLight),
-            borderRadius: AppRadius.circularXxl,
-          ),
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
+        child: Opacity(
+          opacity: isSupported ? 1.0 : 0.5,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.borderLight),
+              borderRadius: AppRadius.circularXxl,
+            ),
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
                 child: Row(
                   children: [
                     Container(
@@ -189,7 +200,8 @@ class _ResourceCard extends StatelessWidget {
                     ),
                   ),
                 ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -38,9 +38,9 @@ class OwnerBottomNavWidget extends StatelessWidget {
       Icons.account_balance_wallet_outlined,
     ),
     _NavTab(
-      LocaleKeys.dashboardNavProfile.tr(),
-      Icons.person_rounded,
-      Icons.person_outline_rounded,
+      LocaleKeys.owner_more_title.tr(),
+      Icons.more_horiz_rounded,
+      Icons.more_horiz_outlined,
     ),
   ];
 

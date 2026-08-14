@@ -10,7 +10,9 @@ import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/theme/color_utils.dart';
 import '../../domain/entities/finance_account_entity.dart';
+import '../../domain/entities/finance_account_type.dart';
 import '../cubit/accounts/finance_account_details_cubit.dart';
 import '../cubit/accounts/finance_account_details_state.dart';
 
@@ -90,22 +92,23 @@ class _OwnerAccountDetailsViewState extends State<OwnerAccountDetailsView> {
 
   Widget _buildDetails(BuildContext context, FinanceAccountEntity account) {
     final name = context.locale.languageCode == 'ar' ? account.nameAr : account.nameEn;
+    final primary = context.primaryColor;
 
     return ListView(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(20),
       children: [
         // Main Info Card
         Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: AppColors.surfaceLight,
-            borderRadius: AppRadius.circularXl,
+            borderRadius: AppRadius.circularXxl,
             border: Border.all(color: AppColors.borderLight),
             boxShadow: [
               BoxShadow(
-                color: AppColors.textPrimaryLight.withValues(alpha: 0.02),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
+                color: primary.withValues(alpha: 0.05),
+                blurRadius: 20,
+                offset: const Offset(0, 8),
               ),
             ],
           ),
@@ -118,15 +121,15 @@ class _OwnerAccountDetailsViewState extends State<OwnerAccountDetailsView> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: AppColors.backgroundLight,
-                      borderRadius: AppRadius.circularMd,
+                      color: primary.withValues(alpha: 0.1),
+                      borderRadius: AppRadius.circularLg,
                     ),
                     child: Text(
                       account.code,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
                             fontFamily: AppFonts.fontFamilyEn,
-                            color: AppColors.textSecondaryLight,
-                            fontWeight: FontWeight.w700,
+                            color: primary,
+                            fontWeight: FontWeight.w800,
                           ),
                     ),
                   ),
@@ -137,14 +140,17 @@ class _OwnerAccountDetailsViewState extends State<OwnerAccountDetailsView> {
               Text(
                 name,
                 style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.textPrimaryLight,
+                      height: 1.3,
                     ),
               ),
-              const SizedBox(height: 16),
-              Row(
+              const SizedBox(height: 20),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
                 children: [
                   _buildTypeTag(context, account.type),
-                  const SizedBox(width: 8),
                   if (account.isPostable) _buildPostableTag(context),
                 ],
               ),
@@ -153,59 +159,83 @@ class _OwnerAccountDetailsViewState extends State<OwnerAccountDetailsView> {
         ),
         const SizedBox(height: 24),
         
-        // Other Details
-        if (account.descriptionAr != null && account.descriptionAr!.isNotEmpty) ...[
-          Text(
-            LocaleKeys.owner_finance_account_desc.tr(),
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-          ),
-          const SizedBox(height: 12),
-          Container(
-            padding: const EdgeInsets.all(16),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: AppColors.surfaceLight,
-              borderRadius: AppRadius.circularXl,
-              border: Border.all(color: AppColors.borderLight),
-            ),
-            child: Text(
-              account.descriptionAr!,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: AppColors.textSecondaryLight,
-                    height: 1.6,
-                  ),
-            ),
-          ),
-        ],
-        const SizedBox(height: 16),
-        _buildInfoRow(
-          context,
-          title: LocaleKeys.owner_finance_account_name_ar.tr(),
-          value: account.nameAr,
+        // Other Details Card
+        Text(
+          LocaleKeys.profile_basic_info.tr(),
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+                color: AppColors.textPrimaryLight,
+              ),
         ),
-        const SizedBox(height: 16),
-        _buildInfoRow(
-          context,
-          title: LocaleKeys.owner_finance_account_name_en.tr(),
-          value: account.nameEn,
+        const SizedBox(height: 12),
+        Container(
+          decoration: BoxDecoration(
+            color: AppColors.surfaceLight,
+            borderRadius: AppRadius.circularXxl,
+            border: Border.all(color: AppColors.borderLight),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (account.descriptionAr != null && account.descriptionAr!.isNotEmpty) ...[
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.description_outlined, size: 18, color: AppColors.textSecondaryLight),
+                          const SizedBox(width: 8),
+                          Text(
+                            LocaleKeys.owner_finance_account_desc.tr(),
+                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  color: AppColors.textSecondaryLight,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        account.descriptionAr!,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: AppColors.textPrimaryLight,
+                              height: 1.6,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+                const Divider(height: 1, color: AppColors.borderLight),
+              ],
+              _buildInfoRow(
+                context,
+                icon: Icons.translate_rounded,
+                title: LocaleKeys.owner_finance_account_name_ar.tr(),
+                value: account.nameAr,
+              ),
+              const Divider(height: 1, color: AppColors.borderLight, indent: 40),
+              _buildInfoRow(
+                context,
+                icon: Icons.language_rounded,
+                title: LocaleKeys.owner_finance_account_name_en.tr(),
+                value: account.nameEn,
+              ),
+            ],
+          ),
         ),
       ],
     );
   }
 
-  Widget _buildInfoRow(BuildContext context, {required String title, required String value}) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.surfaceLight,
-        borderRadius: AppRadius.circularMd,
-        border: Border.all(color: AppColors.borderLight),
-      ),
+  Widget _buildInfoRow(BuildContext context, {required IconData icon, required String title, required String value}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Icon(icon, size: 20, color: AppColors.textSecondaryLight.withValues(alpha: 0.7)),
+          const SizedBox(width: 12),
           Text(
             title,
             style: const TextStyle(
@@ -214,11 +244,16 @@ class _OwnerAccountDetailsViewState extends State<OwnerAccountDetailsView> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: const TextStyle(
+                fontSize: 14,
+                color: AppColors.textPrimaryLight,
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
@@ -262,38 +297,32 @@ class _OwnerAccountDetailsViewState extends State<OwnerAccountDetailsView> {
     );
   }
 
-  Widget _buildTypeTag(BuildContext context, String type) {
+  Widget _buildTypeTag(BuildContext context, FinanceAccountType type) {
     Color color;
     String label;
-    switch (type.toLowerCase()) {
-      case 'asset':
-      case 'أصول':
+    switch (type) {
+      case FinanceAccountType.asset:
         label = LocaleKeys.owner_finance_assets.tr();
         color = AppColors.success;
         break;
-      case 'liability':
-      case 'خصوم':
-      case 'خصم / دائن':
+      case FinanceAccountType.liability:
         label = LocaleKeys.owner_finance_liabilities.tr();
         color = AppColors.error;
         break;
-      case 'expense':
-      case 'مصروفات':
+      case FinanceAccountType.expense:
         label = LocaleKeys.owner_finance_expenses.tr();
         color = AppColors.warning;
         break;
-      case 'revenue':
-      case 'إيرادات':
+      case FinanceAccountType.revenue:
         label = LocaleKeys.owner_finance_revenues.tr();
         color = AppColors.info;
         break;
-      case 'equity':
-      case 'حقوق ملكية':
+      case FinanceAccountType.equity:
         label = LocaleKeys.owner_finance_equity.tr();
         color = Colors.purple;
         break;
       default:
-        label = type;
+        label = type.value;
         color = AppColors.textSecondaryLight;
     }
 

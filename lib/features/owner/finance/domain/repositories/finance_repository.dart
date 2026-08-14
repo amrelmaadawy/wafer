@@ -12,20 +12,16 @@ import '../usecases/create_finance_account_use_case.dart';
 import '../usecases/create_finance_receipt_use_case.dart';
 import '../usecases/update_finance_account_use_case.dart';
 import '../usecases/update_finance_receipt_use_case.dart';
+import '../entities/finance_accounts_query_entity.dart';
 
 abstract class FinanceRepository {
   Future<Either<Failure, FinanceOverviewEntity>> getFinanceOverview();
 
   Future<Either<Failure, FinanceFormDataEntity>> getFinanceFormData();
 
-  Future<Either<Failure, FinanceAccountsResponseEntity>> getAccounts({
-    int page = 1,
-    int perPage = 15,
-    String? search,
-    String? accountType,
-    bool? isActive,
-    bool? isPostable,
-  });
+  Future<Either<Failure, FinanceAccountsResponseEntity>> getAccounts(
+    FinanceAccountsQueryEntity query,
+  );
 
   Future<Either<Failure, FinanceAccountEntity>> createAccount(
     CreateFinanceAccountParams params,

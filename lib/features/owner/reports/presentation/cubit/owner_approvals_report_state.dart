@@ -12,11 +12,12 @@ class OwnerApprovalsReportInitial extends OwnerApprovalsReportState {}
 
 class OwnerApprovalsReportLoading extends OwnerApprovalsReportState {
   final bool isFirstFetch;
+  final ApprovalsReportEntity? report;
 
-  const OwnerApprovalsReportLoading({this.isFirstFetch = false});
+  const OwnerApprovalsReportLoading({this.isFirstFetch = false, this.report});
 
   @override
-  List<Object?> get props => [isFirstFetch];
+  List<Object?> get props => [isFirstFetch, report];
 }
 
 class OwnerApprovalsReportLoaded extends OwnerApprovalsReportState {
