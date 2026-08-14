@@ -159,7 +159,7 @@ class _UnitEditScreenContentState extends State<_UnitEditScreenContent> {
     if (_selectedUnitType == null ||
         _selectedUnitStatus == null ||
         _selectedPurpose == null) {
-      AppToast.showError(context, 'errorOccurred'.tr());
+      AppToast.showError(context, LocaleKeys.errorOccurred.tr());
       return;
     }
 

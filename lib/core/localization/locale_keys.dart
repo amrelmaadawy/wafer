@@ -2502,6 +2502,7 @@ abstract class LocaleKeys {
   static const activityLogsReadOnlyNotice = 'activityLogsReadOnlyNotice';
   static const activityLogsUnknownActivity = 'activityLogsUnknownActivity';
   static const activityLogsUnknownUser = 'activityLogsUnknownUser';
+  static const errorOccurred = 'errorOccurred';
   static const properties_amenity_smart_lock = 'properties_amenity_smart_lock';
   static const properties_amenity_central_ac = 'properties_amenity_central_ac';
 }

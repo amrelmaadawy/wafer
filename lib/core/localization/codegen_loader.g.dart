@@ -2251,7 +2251,8 @@ class CodegenLoader extends AssetLoader{
   "reports_exportExcel": "تصدير بصيغة Excel",
   "account_balance": "رصيد الحساب",
   "properties_amenity_smart_lock": "قفل ذكي",
-  "properties_amenity_central_ac": "تكييف مركزي"
+  "properties_amenity_central_ac": "تكييف مركزي",
+  "errorOccurred": "حدث خطأ ما، يرجى المحاولة لاحقاً"
 };
 static const Map<String,dynamic> _ar_recovered = {
   "auth": {
@@ -5456,7 +5457,8 @@ static const Map<String,dynamic> _en = {
   "financeNotes": "Notes",
   "financeCreateAction": "Create",
   "properties_amenity_smart_lock": "Smart Lock",
-  "properties_amenity_central_ac": "Central AC"
+  "properties_amenity_central_ac": "Central AC",
+  "errorOccurred": "An error occurred, please try again later"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"ar": _ar, "ar_recovered": _ar_recovered, "en": _en};
 }

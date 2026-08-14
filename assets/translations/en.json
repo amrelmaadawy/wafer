@@ -2130,5 +2130,6 @@
   "financeNotes": "Notes",
   "financeCreateAction": "Create",
   "properties_amenity_smart_lock": "Smart Lock",
-  "properties_amenity_central_ac": "Central AC"
+  "properties_amenity_central_ac": "Central AC",
+  "errorOccurred": "An error occurred, please try again later"
 }

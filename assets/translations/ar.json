@@ -2235,5 +2235,6 @@
   "reports_exportExcel": "تصدير بصيغة Excel",
   "account_balance": "رصيد الحساب",
   "properties_amenity_smart_lock": "قفل ذكي",
-  "properties_amenity_central_ac": "تكييف مركزي"
+  "properties_amenity_central_ac": "تكييف مركزي",
+  "errorOccurred": "حدث خطأ ما، يرجى المحاولة لاحقاً"
 }
