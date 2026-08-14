@@ -62,6 +62,7 @@ class UnitMediaSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 ListView.separated(
+                  padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: files.length,

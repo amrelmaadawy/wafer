@@ -57,6 +57,7 @@ class UnitMetersSection extends StatelessWidget {
           color: Colors.transparent,
         ),
           child: ListView.separated(
+            padding: EdgeInsets.zero,
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount: rows.length,
