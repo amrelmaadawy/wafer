@@ -19,23 +19,45 @@ class OwnerInstallmentStatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: const EdgeInsets.all(AppSpacing.sm),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 6),
         decoration: BoxDecoration(
           color: color.withValues(alpha: 0.06),
-          borderRadius: AppRadius.circularLg,
-          border: Border.all(color: color.withValues(alpha: 0.16)),
+          borderRadius: AppRadius.circularSm,
+          border: Border.all(color: color.withValues(alpha: 0.15), width: 1),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
-              child: Text(
-                label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.labelSmall.copyWith(color: color),
+            Row(
+              children: [
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+                ),
+                const SizedBox(width: AppSpacing.xs),
+                Expanded(
+                  child: Text(
+                    label,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyles.labelMedium.copyWith(
+                      color: Theme.of(context).textTheme.bodyMedium?.color?.withValues(alpha: 0.8),
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 2),
+            Text(
+              '$count',
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: Theme.of(context).textTheme.bodyLarge?.color,
+                fontWeight: FontWeight.w800,
               ),
             ),
-            Text('$count', style: AppTextStyles.h4.copyWith(color: color)),
           ],
         ),
       ),

@@ -29,9 +29,15 @@ class OwnerQuickActions extends StatelessWidget {
         onTap: () => context.push('${Routes.ownerReportsCenter}?tab=0'),
       ),
       OwnerQuickActionCard(
+        title: LocaleKeys.dashboard_tasks.tr(),
+        icon: Icons.task_rounded,
+        color: AppColors.accent,
+        onTap: () => context.push(Routes.ownerTasks),
+      ),
+      OwnerQuickActionCard(
         title: LocaleKeys.legal_cases.tr(),
         icon: Icons.gavel_rounded,
-        color: AppColors.accent,
+        color: AppColors.info,
         onTap: () => context.push(Routes.ownerLegalCases),
       ),
     ];

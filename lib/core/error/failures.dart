@@ -14,7 +14,8 @@ abstract class Failure extends Equatable {
 }
 
 class ServerFailure extends Failure {
-  const ServerFailure(super.message);
+  final Map<String, dynamic>? validationErrors;
+  const ServerFailure(super.message, {this.validationErrors});
 
   factory ServerFailure.fromDioException(DioException e) {
     if (e.response != null && e.response!.data != null) {
@@ -38,7 +39,10 @@ class ServerFailure extends Failure {
             }
           });
           if (sb.isNotEmpty) {
-            return ServerFailure(sb.toString().trim());
+            return ServerFailure(
+              sb.toString().trim(),
+              validationErrors: Map<String, dynamic>.from(errors),
+            );
           }
         }
 

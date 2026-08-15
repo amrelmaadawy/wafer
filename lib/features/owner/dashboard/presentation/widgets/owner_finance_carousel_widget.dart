@@ -53,7 +53,7 @@ class _OwnerFinanceCarouselWidgetState
     return Column(
       children: [
         SizedBox(
-          height: 250, // increased height for new 2x2 grid
+          height: 220,
           child: PageView(
             controller: _pageController,
             onPageChanged: (index) {

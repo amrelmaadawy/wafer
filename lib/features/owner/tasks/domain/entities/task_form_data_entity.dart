@@ -1,256 +1,229 @@
 import 'package:equatable/equatable.dart';
 
 class TaskFormDataEntity extends Equatable {
-  final TaskFormOptionsEntity? options;
-  final TaskFormDefaultsEntity? defaults;
-  final TaskFormValidationEntity? validation;
-  final TaskFormWorkflowEntity? workflow;
+  final TaskOptionsEntity options;
+  final TaskDefaultsEntity defaults;
+  final TaskWorkflowEntity workflow;
 
   const TaskFormDataEntity({
-    this.options,
-    this.defaults,
-    this.validation,
-    this.workflow,
+    required this.options,
+    required this.defaults,
+    required this.workflow,
   });
 
   @override
-  List<Object?> get props => [options, defaults, validation, workflow];
+  List<Object?> get props => [options, defaults, workflow];
 }
 
-class TaskFormOptionsEntity extends Equatable {
-  final List<TaskPropertyOptionEntity>? properties;
-  final List<TaskDeedOptionEntity>? deeds;
-  final List<TaskBranchOptionEntity>? branches;
-  final List<TaskAssigneeOptionEntity>? assignees;
-  final List<TaskStatusOptionEntity>? statuses;
-  final List<TaskStatusOptionEntity>? kanbanStatuses;
-  final List<TaskStatusOptionEntity>? priorities;
-  final List<TaskStatusOptionEntity>? categories;
-  final List<TaskStatusOptionEntity>? linkedTo;
-  final List<TaskBooleanValueEntity>? booleanValues;
+class TaskOptionsEntity extends Equatable {
+  final List<TaskPropertyOptionEntity> properties;
+  final List<TaskDeedOptionEntity> deeds;
+  final List<TaskBranchOptionEntity> branches;
+  final List<TaskAssigneeOptionEntity> assignees;
+  final List<TaskStatusOptionEntity> statuses;
+  final List<TaskStatusOptionEntity> kanbanStatuses;
+  final List<TaskPriorityOptionEntity> priorities;
+  final List<TaskCategoryOptionEntity> categories;
+  final List<TaskLinkedToOptionEntity> linkedTo;
 
-  const TaskFormOptionsEntity({
-    this.properties,
-    this.deeds,
-    this.branches,
-    this.assignees,
-    this.statuses,
-    this.kanbanStatuses,
-    this.priorities,
-    this.categories,
-    this.linkedTo,
-    this.booleanValues,
+  const TaskOptionsEntity({
+    required this.properties,
+    required this.deeds,
+    required this.branches,
+    required this.assignees,
+    required this.statuses,
+    required this.kanbanStatuses,
+    required this.priorities,
+    required this.categories,
+    required this.linkedTo,
   });
 
   @override
   List<Object?> get props => [
-    properties,
-    deeds,
-    branches,
-    assignees,
-    statuses,
-    kanbanStatuses,
-    priorities,
-    categories,
-    linkedTo,
-    booleanValues,
-  ];
+        properties,
+        deeds,
+        branches,
+        assignees,
+        statuses,
+        kanbanStatuses,
+        priorities,
+        categories,
+        linkedTo,
+      ];
 }
 
 class TaskPropertyOptionEntity extends Equatable {
-  final int? id;
+  final int id;
+  final String code;
   final String? name;
-  final String? code;
   final String? propertyType;
-  final String? status;
-  final String? city;
-  final String? district;
+  final int? branchId;
+  final int? deedId;
 
   const TaskPropertyOptionEntity({
-    this.id,
+    required this.id,
+    required this.code,
     this.name,
-    this.code,
     this.propertyType,
-    this.status,
-    this.city,
-    this.district,
+    this.branchId,
+    this.deedId,
   });
 
   @override
-  List<Object?> get props => [
-    id,
-    name,
-    code,
-    propertyType,
-    status,
-    city,
-    district,
-  ];
+  List<Object?> get props => [id, code, name, propertyType, branchId, deedId];
 }
 
 class TaskDeedOptionEntity extends Equatable {
-  final int? id;
-  final String? code;
+  final int id;
+  final String code;
   final String? name;
   final String? documentNumber;
-  final String? city;
-  final String? district;
+  final int? branchId;
+  final int? propertyId;
 
   const TaskDeedOptionEntity({
-    this.id,
-    this.code,
+    required this.id,
+    required this.code,
     this.name,
     this.documentNumber,
-    this.city,
-    this.district,
+    this.branchId,
+    this.propertyId,
   });
 
   @override
-  List<Object?> get props => [id, code, name, documentNumber, city, district];
+  List<Object?> get props => [id, code, name, documentNumber, branchId, propertyId];
 }
 
 class TaskBranchOptionEntity extends Equatable {
-  final int? id;
-  final String? name;
-  final String? city;
-  final String? district;
-  final String? status;
+  final int id;
+  final String name;
 
   const TaskBranchOptionEntity({
-    this.id,
-    this.name,
-    this.city,
-    this.district,
-    this.status,
+    required this.id,
+    required this.name,
   });
 
   @override
-  List<Object?> get props => [id, name, city, district, status];
+  List<Object?> get props => [id, name];
 }
 
 class TaskAssigneeOptionEntity extends Equatable {
-  final int? id;
-  final String? name;
+  final int id;
+  final String name;
   final String? email;
   final String? phone;
-  final String? userType;
-  final bool? isActive;
 
   const TaskAssigneeOptionEntity({
-    this.id,
-    this.name,
+    required this.id,
+    required this.name,
     this.email,
     this.phone,
-    this.userType,
-    this.isActive,
   });
 
   @override
-  List<Object?> get props => [id, name, email, phone, userType, isActive];
+  List<Object?> get props => [id, name, email, phone];
 }
 
 class TaskStatusOptionEntity extends Equatable {
-  final String? value;
-  final String? label;
+  final String value;
+  final String label;
   final String? color;
-  final String? backgroundColor;
   final String? icon;
 
   const TaskStatusOptionEntity({
-    this.value,
-    this.label,
+    required this.value,
+    required this.label,
     this.color,
-    this.backgroundColor,
     this.icon,
   });
 
   @override
-  List<Object?> get props => [value, label, color, backgroundColor, icon];
+  List<Object?> get props => [value, label, color, icon];
 }
 
-class TaskBooleanValueEntity extends Equatable {
-  final bool? value;
-  final String? label;
+class TaskPriorityOptionEntity extends Equatable {
+  final String value;
+  final String label;
+  final String? color;
+  final String? icon;
 
-  const TaskBooleanValueEntity({this.value, this.label});
+  const TaskPriorityOptionEntity({
+    required this.value,
+    required this.label,
+    this.color,
+    this.icon,
+  });
+
+  @override
+  List<Object?> get props => [value, label, color, icon];
+}
+
+class TaskCategoryOptionEntity extends Equatable {
+  final String value;
+  final String label;
+  final String? color;
+  final String? icon;
+
+  const TaskCategoryOptionEntity({
+    required this.value,
+    required this.label,
+    this.color,
+    this.icon,
+  });
+
+  @override
+  List<Object?> get props => [value, label, color, icon];
+}
+
+class TaskLinkedToOptionEntity extends Equatable {
+  final String value;
+  final String label;
+
+  const TaskLinkedToOptionEntity({
+    required this.value,
+    required this.label,
+  });
 
   @override
   List<Object?> get props => [value, label];
 }
 
-class TaskFormDefaultsEntity extends Equatable {
-  final String? code;
+class TaskDefaultsEntity extends Equatable {
   final String? status;
   final String? priority;
   final int? progress;
-  final String? startDate;
-  final String? dueDate;
   final int? maxImages;
-  final List<String>? allowedImageMimes;
+  final List<String> allowedImageMimes;
   final int? maxImageSizeKb;
 
-  const TaskFormDefaultsEntity({
-    this.code,
+  const TaskDefaultsEntity({
     this.status,
     this.priority,
     this.progress,
-    this.startDate,
-    this.dueDate,
     this.maxImages,
-    this.allowedImageMimes,
+    this.allowedImageMimes = const [],
     this.maxImageSizeKb,
   });
 
   @override
   List<Object?> get props => [
-    code,
-    status,
-    priority,
-    progress,
-    startDate,
-    dueDate,
-    maxImages,
-    allowedImageMimes,
-    maxImageSizeKb,
-  ];
+        status,
+        priority,
+        progress,
+        maxImages,
+        allowedImageMimes,
+        maxImageSizeKb,
+      ];
 }
 
-class TaskFormValidationEntity extends Equatable {
-  final List<String>? requiredFields;
-  final int? titleMax;
-  final int? progressMin;
-  final int? progressMax;
-  final int? maxImagesCount;
-  final List<String>? imageMimes;
-  final int? imageMaxKb;
+class TaskWorkflowEntity extends Equatable {
+  final List<String> sequence;
+  final List<String> terminal;
 
-  const TaskFormValidationEntity({
-    this.requiredFields,
-    this.titleMax,
-    this.progressMin,
-    this.progressMax,
-    this.maxImagesCount,
-    this.imageMimes,
-    this.imageMaxKb,
+  const TaskWorkflowEntity({
+    required this.sequence,
+    required this.terminal,
   });
-
-  @override
-  List<Object?> get props => [
-    requiredFields,
-    titleMax,
-    progressMin,
-    progressMax,
-    maxImagesCount,
-    imageMimes,
-    imageMaxKb,
-  ];
-}
-
-class TaskFormWorkflowEntity extends Equatable {
-  final List<String>? sequence;
-  final List<String>? terminal;
-
-  const TaskFormWorkflowEntity({this.sequence, this.terminal});
 
   @override
   List<Object?> get props => [sequence, terminal];

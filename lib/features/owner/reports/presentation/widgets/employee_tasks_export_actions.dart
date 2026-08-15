@@ -1,7 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/services/excel/builders/employee_tasks_excel_builder.dart';
 import '../../../../../core/services/excel/excel_export_service.dart';
 import '../../../../../core/services/pdf/builders/employee_tasks_pdf_builder.dart';

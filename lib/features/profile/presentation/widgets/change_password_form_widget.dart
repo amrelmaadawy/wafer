@@ -8,9 +8,11 @@ import '../../../../core/theme/color_utils.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
 import '../cubit/change_password_cubit.dart';
 import '../cubit/change_password_state.dart';
+import '../../../../features/auth/presentation/cubit/auth_cubit.dart';
 
 class ChangePasswordFormWidget extends StatefulWidget {
-  const ChangePasswordFormWidget({super.key});
+  final bool isForced;
+  const ChangePasswordFormWidget({super.key, this.isForced = false});
 
   @override
   State<ChangePasswordFormWidget> createState() =>
@@ -55,7 +57,11 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
             context,
             LocaleKeys.profile_change_password_success.tr(),
           );
-          Navigator.pop(context);
+          if (widget.isForced) {
+            context.read<AuthCubit>().checkAuthStatus();
+          } else {
+            Navigator.pop(context);
+          }
         } else if (state is ChangePasswordError) {
           AppToast.showError(context, state.message);
         }

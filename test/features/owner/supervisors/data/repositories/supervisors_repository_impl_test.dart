@@ -9,7 +9,6 @@ import 'package:wafer/features/owner/supervisors/domain/entities/create_maintena
 import 'package:wafer/features/owner/supervisors/domain/entities/scope_value_id.dart';
 import 'package:wafer/features/owner/supervisors/data/models/supervisor_model.dart';
 import 'package:wafer/features/owner/supervisors/data/models/supervisors_pagination_model.dart';
-import 'package:wafer/features/owner/supervisors/data/models/supervisor_form_data_response_model.dart';
 import 'package:wafer/features/owner/supervisors/data/models/supervisors_list_response_model.dart';
 
 class MockSupervisorsRemoteDataSource extends Mock implements SupervisorsRemoteDataSource {}

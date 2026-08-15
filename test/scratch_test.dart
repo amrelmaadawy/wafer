@@ -29,7 +29,7 @@ void main() {
     final box2 = await Hive.openBox('codra_cache_v1');
     
     expect(box2.get('test_key'), equals('test_value'));
-    print('Value retrieved from Hive after reopen: ${box2.get('test_key')}');
+    // print('Value retrieved from Hive after reopen: ${box2.get('test_key')}');
     
     await sl.reset();
   });

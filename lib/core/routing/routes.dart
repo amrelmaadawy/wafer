@@ -98,6 +98,10 @@ class Routes {
       '/owner/reports/technician-performance';
   static const String ownerEmployeeTasksReport =
       '/owner/reports/employee-tasks';
-  static const String ownerTasks = '/owner/tasks';
+  static const String ownerTasks = '/owner-tasks';
+  static const String ownerTasksCreate = '/owner-tasks/create';
+  static const String ownerTasksEdit = '/owner-tasks/edit';
+  static const String ownerTaskDetails = '/owner-tasks/:id';
+  static String ownerTaskDetailsPath(String id) => '/owner-tasks/$id';
   static const String ownerActivityLogsReport = '/owner/reports/activity-logs';
 }

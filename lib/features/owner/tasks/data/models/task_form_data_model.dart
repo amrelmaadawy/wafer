@@ -2,285 +2,256 @@ import '../../domain/entities/task_form_data_entity.dart';
 
 class TaskFormDataModel extends TaskFormDataEntity {
   const TaskFormDataModel({
-    super.options,
-    super.defaults,
-    super.validation,
-    super.workflow,
+    required super.options,
+    required super.defaults,
+    required super.workflow,
   });
 
   factory TaskFormDataModel.fromJson(Map<String, dynamic> json) {
     return TaskFormDataModel(
-      options: json['options'] != null
-          ? TaskFormOptionsModel.fromJson(json['options'])
-          : null,
-      defaults: json['defaults'] != null
-          ? TaskFormDefaultsModel.fromJson(json['defaults'])
-          : null,
-      validation: json['validation'] != null
-          ? TaskFormValidationModel.fromJson(json['validation'])
-          : null,
-      workflow: json['workflow'] != null
-          ? TaskFormWorkflowModel.fromJson(json['workflow'])
-          : null,
+      options: TaskOptionsModel.fromJson(json['options'] ?? {}),
+      defaults: TaskDefaultsModel.fromJson(json['defaults'] ?? {}),
+      workflow: TaskWorkflowModel.fromJson(json['workflow'] ?? {}),
     );
   }
 }
 
-class TaskFormOptionsModel extends TaskFormOptionsEntity {
-  const TaskFormOptionsModel({
-    super.properties,
-    super.deeds,
-    super.branches,
-    super.assignees,
-    super.statuses,
-    super.kanbanStatuses,
-    super.priorities,
-    super.categories,
-    super.linkedTo,
-    super.booleanValues,
+class TaskOptionsModel extends TaskOptionsEntity {
+  const TaskOptionsModel({
+    required super.properties,
+    required super.deeds,
+    required super.branches,
+    required super.assignees,
+    required super.statuses,
+    required super.kanbanStatuses,
+    required super.priorities,
+    required super.categories,
+    required super.linkedTo,
   });
 
-  factory TaskFormOptionsModel.fromJson(Map<String, dynamic> json) {
-    return TaskFormOptionsModel(
-      properties: json['properties'] != null
-          ? (json['properties'] as List)
-                .map((e) => TaskPropertyOptionModel.fromJson(e))
-                .toList()
-          : null,
-      deeds: json['deeds'] != null
-          ? (json['deeds'] as List)
-                .map((e) => TaskDeedOptionModel.fromJson(e))
-                .toList()
-          : null,
-      branches: json['branches'] != null
-          ? (json['branches'] as List)
-                .map((e) => TaskBranchOptionModel.fromJson(e))
-                .toList()
-          : null,
-      assignees: json['assignees'] != null
-          ? (json['assignees'] as List)
-                .map((e) => TaskAssigneeOptionModel.fromJson(e))
-                .toList()
-          : null,
-      statuses: json['statuses'] != null
-          ? (json['statuses'] as List)
-                .map((e) => TaskStatusOptionModel.fromJson(e))
-                .toList()
-          : null,
-      kanbanStatuses: json['kanban_statuses'] != null
-          ? (json['kanban_statuses'] as List)
-                .map((e) => TaskStatusOptionModel.fromJson(e))
-                .toList()
-          : null,
-      priorities: json['priorities'] != null
-          ? (json['priorities'] as List)
-                .map((e) => TaskStatusOptionModel.fromJson(e))
-                .toList()
-          : null,
-      categories: json['categories'] != null
-          ? (json['categories'] as List)
-                .map((e) => TaskStatusOptionModel.fromJson(e))
-                .toList()
-          : null,
-      linkedTo: json['linked_to'] != null
-          ? (json['linked_to'] as List)
-                .map((e) => TaskStatusOptionModel.fromJson(e))
-                .toList()
-          : null,
-      booleanValues: json['boolean_values'] != null
-          ? (json['boolean_values'] as List)
-                .map((e) => TaskBooleanValueModel.fromJson(e))
-                .toList()
-          : null,
+  factory TaskOptionsModel.fromJson(Map<String, dynamic> json) {
+    return TaskOptionsModel(
+      properties: (json['properties'] as List?)
+              ?.map((e) => TaskPropertyOptionModel.fromJson(e))
+              .toList() ??
+          [],
+      deeds: (json['deeds'] as List?)
+              ?.map((e) => TaskDeedOptionModel.fromJson(e))
+              .toList() ??
+          [],
+      branches: (json['branches'] as List?)
+              ?.map((e) => TaskBranchOptionModel.fromJson(e))
+              .toList() ??
+          [],
+      assignees: (json['assignees'] as List?)
+              ?.map((e) => TaskAssigneeOptionModel.fromJson(e))
+              .toList() ??
+          [],
+      statuses: (json['statuses'] as List?)
+              ?.map((e) => TaskStatusOptionModel.fromJson(e))
+              .toList() ??
+          [],
+      kanbanStatuses: (json['kanban_statuses'] as List?)
+              ?.map((e) => TaskStatusOptionModel.fromJson(e))
+              .toList() ??
+          [],
+      priorities: (json['priorities'] as List?)
+              ?.map((e) => TaskPriorityOptionModel.fromJson(e))
+              .toList() ??
+          [],
+      categories: (json['categories'] as List?)
+              ?.map((e) => TaskCategoryOptionModel.fromJson(e))
+              .toList() ??
+          [],
+      linkedTo: (json['linked_to'] as List?)
+              ?.map((e) => TaskLinkedToOptionModel.fromJson(e))
+              .toList() ??
+          [],
     );
   }
 }
 
 class TaskPropertyOptionModel extends TaskPropertyOptionEntity {
   const TaskPropertyOptionModel({
-    super.id,
+    required super.id,
+    required super.code,
     super.name,
-    super.code,
     super.propertyType,
-    super.status,
-    super.city,
-    super.district,
+    super.branchId,
+    super.deedId,
   });
 
   factory TaskPropertyOptionModel.fromJson(Map<String, dynamic> json) {
     return TaskPropertyOptionModel(
-      id: json['id'],
-      name: json['name'],
-      code: json['code'],
-      propertyType: json['property_type'],
-      status: json['status'],
-      city: json['city'],
-      district: json['district'],
+      id: json['id'] as int,
+      code: json['code'] as String,
+      name: json['name'] as String?,
+      propertyType: json['property_type'] as String?,
+      branchId: json['branch_id'] as int?,
+      deedId: json['deed_id'] as int?,
     );
   }
 }
 
 class TaskDeedOptionModel extends TaskDeedOptionEntity {
   const TaskDeedOptionModel({
-    super.id,
-    super.code,
+    required super.id,
+    required super.code,
     super.name,
     super.documentNumber,
-    super.city,
-    super.district,
+    super.branchId,
+    super.propertyId,
   });
 
   factory TaskDeedOptionModel.fromJson(Map<String, dynamic> json) {
     return TaskDeedOptionModel(
-      id: json['id'],
-      code: json['code'],
-      name: json['name'],
-      documentNumber: json['document_number'],
-      city: json['city'],
-      district: json['district'],
+      id: json['id'] as int,
+      code: json['code'] as String,
+      name: json['name'] as String?,
+      documentNumber: json['document_number'] as String?,
+      branchId: json['branch_id'] as int?,
+      propertyId: json['property_id'] as int?,
     );
   }
 }
 
 class TaskBranchOptionModel extends TaskBranchOptionEntity {
   const TaskBranchOptionModel({
-    super.id,
-    super.name,
-    super.city,
-    super.district,
-    super.status,
+    required super.id,
+    required super.name,
   });
 
   factory TaskBranchOptionModel.fromJson(Map<String, dynamic> json) {
     return TaskBranchOptionModel(
-      id: json['id'],
-      name: json['name'],
-      city: json['city'],
-      district: json['district'],
-      status: json['status'],
+      id: json['id'] as int,
+      name: json['name'] as String,
     );
   }
 }
 
 class TaskAssigneeOptionModel extends TaskAssigneeOptionEntity {
   const TaskAssigneeOptionModel({
-    super.id,
-    super.name,
+    required super.id,
+    required super.name,
     super.email,
     super.phone,
-    super.userType,
-    super.isActive,
   });
 
   factory TaskAssigneeOptionModel.fromJson(Map<String, dynamic> json) {
     return TaskAssigneeOptionModel(
-      id: json['id'],
-      name: json['name'],
-      email: json['email'],
-      phone: json['phone'],
-      userType: json['user_type'],
-      isActive: json['is_active'],
+      id: json['id'] as int,
+      name: json['name'] as String,
+      email: json['email'] as String?,
+      phone: json['phone'] as String?,
     );
   }
 }
 
 class TaskStatusOptionModel extends TaskStatusOptionEntity {
   const TaskStatusOptionModel({
-    super.value,
-    super.label,
+    required super.value,
+    required super.label,
     super.color,
-    super.backgroundColor,
     super.icon,
   });
 
   factory TaskStatusOptionModel.fromJson(Map<String, dynamic> json) {
     return TaskStatusOptionModel(
-      value: json['value'],
-      label: json['label'],
-      color: json['color'],
-      backgroundColor: json['background_color'],
-      icon: json['icon'],
+      value: json['value'] as String,
+      label: json['label'] as String,
+      color: json['color'] as String?,
+      icon: json['icon'] as String?,
     );
   }
 }
 
-class TaskBooleanValueModel extends TaskBooleanValueEntity {
-  const TaskBooleanValueModel({super.value, super.label});
+class TaskPriorityOptionModel extends TaskPriorityOptionEntity {
+  const TaskPriorityOptionModel({
+    required super.value,
+    required super.label,
+    super.color,
+    super.icon,
+  });
 
-  factory TaskBooleanValueModel.fromJson(Map<String, dynamic> json) {
-    return TaskBooleanValueModel(value: json['value'], label: json['label']);
+  factory TaskPriorityOptionModel.fromJson(Map<String, dynamic> json) {
+    return TaskPriorityOptionModel(
+      value: json['value'] as String,
+      label: json['label'] as String,
+      color: json['color'] as String?,
+      icon: json['icon'] as String?,
+    );
   }
 }
 
-class TaskFormDefaultsModel extends TaskFormDefaultsEntity {
-  const TaskFormDefaultsModel({
-    super.code,
+class TaskCategoryOptionModel extends TaskCategoryOptionEntity {
+  const TaskCategoryOptionModel({
+    required super.value,
+    required super.label,
+    super.color,
+    super.icon,
+  });
+
+  factory TaskCategoryOptionModel.fromJson(Map<String, dynamic> json) {
+    return TaskCategoryOptionModel(
+      value: json['value'] as String,
+      label: json['label'] as String,
+      color: json['color'] as String?,
+      icon: json['icon'] as String?,
+    );
+  }
+}
+
+class TaskLinkedToOptionModel extends TaskLinkedToOptionEntity {
+  const TaskLinkedToOptionModel({
+    required super.value,
+    required super.label,
+  });
+
+  factory TaskLinkedToOptionModel.fromJson(Map<String, dynamic> json) {
+    return TaskLinkedToOptionModel(
+      value: json['value'] as String,
+      label: json['label'] as String,
+    );
+  }
+}
+
+class TaskDefaultsModel extends TaskDefaultsEntity {
+  const TaskDefaultsModel({
     super.status,
     super.priority,
     super.progress,
-    super.startDate,
-    super.dueDate,
     super.maxImages,
-    super.allowedImageMimes,
+    super.allowedImageMimes = const [],
     super.maxImageSizeKb,
   });
 
-  factory TaskFormDefaultsModel.fromJson(Map<String, dynamic> json) {
-    return TaskFormDefaultsModel(
-      code: json['code'],
-      status: json['status'],
-      priority: json['priority'],
-      progress: json['progress'],
-      startDate: json['start_date'],
-      dueDate: json['due_date'],
-      maxImages: json['max_images'],
-      allowedImageMimes: json['allowed_image_mimes'] != null
-          ? List<String>.from(json['allowed_image_mimes'])
-          : null,
-      maxImageSizeKb: json['max_image_size_kb'],
+  factory TaskDefaultsModel.fromJson(Map<String, dynamic> json) {
+    return TaskDefaultsModel(
+      status: json['status'] as String?,
+      priority: json['priority'] as String?,
+      progress: json['progress'] as int?,
+      maxImages: json['max_images'] as int?,
+      allowedImageMimes: (json['allowed_image_mimes'] as List?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      maxImageSizeKb: json['max_image_size_kb'] as int?,
     );
   }
 }
 
-class TaskFormValidationModel extends TaskFormValidationEntity {
-  const TaskFormValidationModel({
-    super.requiredFields,
-    super.titleMax,
-    super.progressMin,
-    super.progressMax,
-    super.maxImagesCount,
-    super.imageMimes,
-    super.imageMaxKb,
+class TaskWorkflowModel extends TaskWorkflowEntity {
+  const TaskWorkflowModel({
+    required super.sequence,
+    required super.terminal,
   });
 
-  factory TaskFormValidationModel.fromJson(Map<String, dynamic> json) {
-    return TaskFormValidationModel(
-      requiredFields: json['required'] != null
-          ? List<String>.from(json['required'])
-          : null,
-      titleMax: json['title']?['max'],
-      progressMin: json['progress']?['min'],
-      progressMax: json['progress']?['max'],
-      maxImagesCount: json['images']?['max_count'],
-      imageMimes: json['images']?['mimes'] != null
-          ? List<String>.from(json['images']['mimes'])
-          : null,
-      imageMaxKb: json['images']?['max_kb'],
-    );
-  }
-}
-
-class TaskFormWorkflowModel extends TaskFormWorkflowEntity {
-  const TaskFormWorkflowModel({super.sequence, super.terminal});
-
-  factory TaskFormWorkflowModel.fromJson(Map<String, dynamic> json) {
-    return TaskFormWorkflowModel(
-      sequence: json['sequence'] != null
-          ? List<String>.from(json['sequence'])
-          : null,
-      terminal: json['terminal'] != null
-          ? List<String>.from(json['terminal'])
-          : null,
+  factory TaskWorkflowModel.fromJson(Map<String, dynamic> json) {
+    return TaskWorkflowModel(
+      sequence:
+          (json['sequence'] as List?)?.map((e) => e as String).toList() ?? [],
+      terminal:
+          (json['terminal'] as List?)?.map((e) => e as String).toList() ?? [],
     );
   }
 }

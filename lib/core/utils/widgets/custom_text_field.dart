@@ -21,6 +21,7 @@ class CustomTextField extends StatefulWidget {
   final ValueChanged<String>? onFieldSubmitted;
   final bool readOnly;
   final Widget? suffixIcon;
+  final String? errorText;
 
   const CustomTextField({
     super.key,
@@ -41,6 +42,7 @@ class CustomTextField extends StatefulWidget {
     this.onFieldSubmitted,
     this.readOnly = false,
     this.suffixIcon,
+    this.errorText,
   });
 
   @override
@@ -83,6 +85,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               color: AppColors.textSecondaryLight.withValues(alpha: 0.45),
               overflow: TextOverflow.visible,
             ),
+            errorText: widget.errorText,
             hintMaxLines: 2,
             prefixIcon: widget.prefixIcon,
             suffixIcon: widget.isPassword

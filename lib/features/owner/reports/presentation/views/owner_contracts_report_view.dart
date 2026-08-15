@@ -148,8 +148,9 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                               ),
                             ],
                             itemLabelBuilder: (val) {
-                              if (val == 'all')
+                              if (val == 'all') {
                                 return LocaleKeys.reports_all.tr();
+                              }
                               final match = state.report.filterOptions.statuses
                                   .where((e) => e.value == val)
                                   .toList();
@@ -184,8 +185,9 @@ class _OwnerContractsReportViewState extends State<OwnerContractsReportView> {
                               ),
                             ],
                             itemLabelBuilder: (val) {
-                              if (val == -1)
+                              if (val == -1) {
                                 return LocaleKeys.reports_allProperties.tr();
+                              }
                               final match = state
                                   .report
                                   .filterOptions

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../../../features/auth/presentation/cubit/auth_state.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -11,20 +14,37 @@ class ChangePasswordView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(title: LocaleKeys.changePasswordTitle.tr()),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-        child: Column(
-          children: const [
-            ChangePasswordHeaderCard(),
-            SizedBox(height: 24),
-            ChangePasswordFormWidget(),
-            SizedBox(height: 40),
-          ],
-        ),
-      ),
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, authState) {
+        final isForced = authState is Authenticated && authState.user.requiresPasswordChange;
+
+        return Scaffold(
+          backgroundColor: AppColors.backgroundLight,
+          appBar: CustomAppBar(
+            title: LocaleKeys.changePasswordTitle.tr(),
+            showBackButton: !isForced,
+            actions: isForced
+                ? [
+                    IconButton(
+                      icon: const Icon(Icons.logout, color: AppColors.error),
+                      onPressed: () => context.read<AuthCubit>().logout(),
+                    ),
+                  ]
+                : null,
+          ),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
+            child: Column(
+              children: [
+                const ChangePasswordHeaderCard(),
+                const SizedBox(height: 24),
+                ChangePasswordFormWidget(isForced: isForced),
+                const SizedBox(height: 40),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

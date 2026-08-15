@@ -1,4 +1,12 @@
 import 'package:flutter/material.dart';
+import '../../features/owner/tasks/presentation/screens/owner_tasks_screen.dart';
+import '../../features/owner/tasks/presentation/cubit/list/tasks_list_cubit.dart';
+import '../../features/owner/tasks/presentation/screens/owner_task_details_screen.dart';
+import '../../features/owner/tasks/presentation/screens/owner_create_task_screen.dart';
+import '../../features/owner/tasks/domain/entities/task_entity.dart';
+import '../../features/owner/tasks/presentation/cubits/form_data/task_form_data_cubit.dart';
+import '../../features/owner/tasks/presentation/cubit/create_task/create_task_cubit.dart';
+import '../../features/owner/tasks/presentation/cubits/update_task/update_task_cubit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wafer/features/owner/finance/domain/entities/payment_entity.dart';
 import 'package:wafer/features/owner/finance/presentation/cubit/journal_entries/create_journal_entry_cubit.dart';
@@ -142,15 +150,20 @@ void updateAuthState(AuthState state) {
     _isAuthenticated = true;
     _isSessionError = false;
     _currentUser = state.user;
-  } else if (state is Unauthenticated) {
-    _isLoading = false;
-    _isAuthenticated = false;
-    _isSessionError = false;
-    _currentUser = null;
   } else if (state is AuthSessionError) {
     _isLoading = false;
     _isAuthenticated = false;
     _isSessionError = true;
+    _currentUser = null;
+  } else if (state is AuthLoading || state is AuthInitial) {
+    _isLoading = true;
+    _isAuthenticated = false;
+    _isSessionError = false;
+    _currentUser = null;
+  } else if (state is Unauthenticated) {
+    _isLoading = false;
+    _isAuthenticated = false;
+    _isSessionError = false;
     _currentUser = null;
   } else {
     _isLoading = false;
@@ -208,6 +221,10 @@ class AppRouter {
       GoRoute(
         path: Routes.routeError,
         builder: (context, state) => const RouteErrorScreen(),
+      ),
+      GoRoute(
+        path: Routes.changePassword,
+        builder: (context, state) => const ChangePasswordScreen(),
       ),
       GoRoute(
         path: Routes.notifications,
@@ -667,7 +684,45 @@ class AppRouter {
       ),
       GoRoute(
         path: Routes.ownerTasks,
-        builder: (context, state) => const OwnerEmployeeTasksReportView(),
+        builder: (context, state) => BlocProvider<TasksListCubit>(
+          create: (_) => sl<TasksListCubit>(),
+          child: const OwnerTasksScreen(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerTasksCreate,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider<TaskFormDataCubit>(
+              create: (_) => sl<TaskFormDataCubit>(),
+            ),
+            BlocProvider<CreateTaskCubit>(
+              create: (_) => sl<CreateTaskCubit>(),
+            ),
+          ],
+          child: const OwnerCreateTaskScreen(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerTasksEdit,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider<TaskFormDataCubit>(
+              create: (_) => sl<TaskFormDataCubit>(),
+            ),
+            BlocProvider<UpdateTaskCubit>(
+              create: (_) => sl<UpdateTaskCubit>(),
+            ),
+          ],
+          child: OwnerCreateTaskScreen(taskToEdit: state.extra as TaskEntity?),
+        ),
+      ),
+      GoRoute(
+        path: Routes.ownerTaskDetails,
+        builder: (context, state) {
+          final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+          return OwnerTaskDetailsScreen(taskId: id);
+        },
       ),
       GoRoute(
         path: Routes.ownerActivityLogsReport,

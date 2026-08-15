@@ -211,13 +211,22 @@ import '../maintenance_negotiations/domain/usecases/create_negotiation_use_case.
 import '../maintenance_negotiations/presentation/cubit/form_data/negotiation_form_data_cubit.dart';
 import '../maintenance_negotiations/presentation/cubit/list/negotiations_list_cubit.dart';
 import '../maintenance_negotiations/presentation/cubit/create/create_negotiation_cubit.dart';
-
-// Tasks
-import '../tasks/data/datasources/owner_tasks_remote_data_source.dart';
-import '../tasks/data/repositories/owner_tasks_repository_impl.dart';
-import '../tasks/domain/repositories/owner_tasks_repository.dart';
-import '../tasks/domain/usecases/get_task_form_data_use_case.dart';
+import '../tasks/domain/use_cases/get_tasks_use_case.dart';
+import '../tasks/domain/use_cases/get_task_details_use_case.dart';
+import '../tasks/domain/usecases/create_task_usecase.dart';
+import '../tasks/domain/usecases/update_task_usecase.dart';
+import '../tasks/domain/usecases/get_task_form_data_usecase.dart';
+import '../tasks/presentation/cubit/list/tasks_list_cubit.dart';
+import '../tasks/presentation/cubit/details/task_details_cubit.dart';
+import '../tasks/presentation/cubit/create_task/create_task_cubit.dart';
+import '../tasks/presentation/cubits/update_task/update_task_cubit.dart';
 import '../tasks/presentation/cubits/form_data/task_form_data_cubit.dart';
+import '../tasks/domain/use_cases/delete_task_use_case.dart';
+import '../tasks/presentation/cubit/delete/delete_task_cubit.dart';
+// Tasks
+import '../tasks/data/datasources/tasks_remote_data_source.dart';
+import '../tasks/data/repositories/tasks_repository_impl.dart';
+import '../tasks/domain/repositories/tasks_repository.dart';
 
 void initOwnerModule() {
   _initDashboard();
@@ -933,20 +942,50 @@ void _initReports() {
 }
 
 void _initTasks() {
-  if (!sl.isRegistered<OwnerTasksRemoteDataSource>()) {
-    sl.registerLazySingleton<OwnerTasksRemoteDataSource>(
-      () => OwnerTasksRemoteDataSourceImpl(dio: sl()),
+  if (!sl.isRegistered<TasksRemoteDataSource>()) {
+    sl.registerLazySingleton<TasksRemoteDataSource>(
+      () => TasksRemoteDataSourceImpl(dio: sl()),
     );
   }
-  if (!sl.isRegistered<OwnerTasksRepository>()) {
-    sl.registerLazySingleton<OwnerTasksRepository>(
-      () => OwnerTasksRepositoryImpl(remoteDataSource: sl()),
+  if (!sl.isRegistered<TasksRepository>()) {
+    sl.registerLazySingleton<TasksRepository>(
+      () => TasksRepositoryImpl(remoteDataSource: sl()),
     );
+  }
+  if (!sl.isRegistered<GetTasksUseCase>()) {
+    sl.registerLazySingleton(() => GetTasksUseCase(sl()));
+  }
+  if (!sl.isRegistered<TasksListCubit>()) {
+    sl.registerFactory(() => TasksListCubit(sl()));
+  }
+  if (!sl.isRegistered<GetTaskDetailsUseCase>()) {
+    sl.registerLazySingleton(() => GetTaskDetailsUseCase(sl()));
+  }
+  if (!sl.isRegistered<TaskDetailsCubit>()) {
+    sl.registerFactory(() => TaskDetailsCubit(sl()));
+  }
+  if (!sl.isRegistered<CreateTaskUseCase>()) {
+    sl.registerLazySingleton(() => CreateTaskUseCase(sl()));
   }
   if (!sl.isRegistered<GetTaskFormDataUseCase>()) {
     sl.registerLazySingleton(() => GetTaskFormDataUseCase(sl()));
   }
+  if (!sl.isRegistered<CreateTaskCubit>()) {
+    sl.registerFactory(() => CreateTaskCubit(createTaskUseCase: sl()));
+  }
   if (!sl.isRegistered<TaskFormDataCubit>()) {
     sl.registerFactory(() => TaskFormDataCubit(getTaskFormDataUseCase: sl()));
+  }
+  if (!sl.isRegistered<UpdateTaskUseCase>()) {
+    sl.registerLazySingleton(() => UpdateTaskUseCase(sl()));
+  }
+  if (!sl.isRegistered<UpdateTaskCubit>()) {
+    sl.registerFactory(() => UpdateTaskCubit(sl()));
+  }
+  if (!sl.isRegistered<DeleteTaskUseCase>()) {
+    sl.registerLazySingleton(() => DeleteTaskUseCase(repository: sl()));
+  }
+  if (!sl.isRegistered<DeleteTaskCubit>()) {
+    sl.registerFactory(() => DeleteTaskCubit(sl()));
   }
 }

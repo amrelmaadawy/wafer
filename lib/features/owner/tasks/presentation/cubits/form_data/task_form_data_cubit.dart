@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wafer/core/usecases/usecase.dart';
-import '../../../domain/usecases/get_task_form_data_use_case.dart';
+import '../../../domain/usecases/get_task_form_data_usecase.dart';
 import 'task_form_data_state.dart';
 
 class TaskFormDataCubit extends Cubit<TaskFormDataState> {
