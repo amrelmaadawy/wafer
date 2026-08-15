@@ -317,7 +317,10 @@ class _OwnerCreateTaskScreenState extends State<OwnerCreateTaskScreen> {
                             hint: LocaleKeys.tasks_status_input.tr(),
                             errorText: _getError('status'),
                             items: options.statuses.map((e) => e.value).toList(),
-                            itemLabelBuilder: (val) => options.statuses.firstWhere((e) => e.value == val).label,
+                            itemLabelBuilder: (val) {
+                              final m = options.statuses.where((e) => e.value == val);
+                              return m.isNotEmpty ? m.first.label : val;
+                            },
                             onSelected: (val) => setState(() => _selectedStatus = val),
                           ),
                           const SizedBox(height: 16),
@@ -326,7 +329,10 @@ class _OwnerCreateTaskScreenState extends State<OwnerCreateTaskScreen> {
                             hint: LocaleKeys.tasks_priority_input.tr(),
                             errorText: _getError('priority'),
                             items: options.priorities.map((e) => e.value).toList(),
-                            itemLabelBuilder: (val) => options.priorities.firstWhere((e) => e.value == val).label,
+                            itemLabelBuilder: (val) {
+                              final m = options.priorities.where((e) => e.value == val);
+                              return m.isNotEmpty ? m.first.label : val;
+                            },
                             onSelected: (val) => setState(() => _selectedPriority = val),
                           ),
                           const SizedBox(height: 16),
@@ -335,7 +341,10 @@ class _OwnerCreateTaskScreenState extends State<OwnerCreateTaskScreen> {
                             hint: LocaleKeys.tasks_category_input.tr(),
                             errorText: _getError('category'),
                             items: options.categories.map((e) => e.value).toList(),
-                            itemLabelBuilder: (val) => options.categories.firstWhere((e) => e.value == val).label,
+                            itemLabelBuilder: (val) {
+                              final m = options.categories.where((e) => e.value == val);
+                              return m.isNotEmpty ? m.first.label : val;
+                            },
                             onSelected: (val) => setState(() => _selectedCategory = val),
                           ),
                         ],
@@ -359,16 +368,23 @@ class _OwnerCreateTaskScreenState extends State<OwnerCreateTaskScreen> {
                             hint: LocaleKeys.tasks_property_input.tr(),
                             errorText: _getError('property_id'),
                             items: filteredProperties.map((e) => e.id).toList(),
-                            itemLabelBuilder: (id) => options.properties.firstWhere((e) => e.id == id).name ?? id.toString(),
+                            itemLabelBuilder: (id) {
+                              final m = options.properties.where((e) => e.id == id);
+                              return m.isNotEmpty ? (m.first.name ?? id.toString()) : id.toString();
+                            },
                             onSelected: (val) {
                               setState(() {
                                 _selectedPropertyId = val;
                                 if (_selectedDeedId != null) {
                                   bool matches = false;
                                   try {
-                                    final prop = options.properties.firstWhere((e) => e.id == val);
-                                    final deed = options.deeds.firstWhere((e) => e.id == _selectedDeedId);
-                                    if (prop.deedId == _selectedDeedId || deed.propertyId == val) matches = true;
+                                    final propMatch = options.properties.where((e) => e.id == val);
+                                    final deedMatch = options.deeds.where((e) => e.id == _selectedDeedId);
+                                    if (propMatch.isNotEmpty && deedMatch.isNotEmpty) {
+                                      final prop = propMatch.first;
+                                      final deed = deedMatch.first;
+                                      if (prop.deedId == _selectedDeedId || deed.propertyId == val) matches = true;
+                                    }
                                   } catch (_) {}
                                   if (!matches) _selectedDeedId = null;
                                 }
@@ -381,16 +397,23 @@ class _OwnerCreateTaskScreenState extends State<OwnerCreateTaskScreen> {
                             hint: LocaleKeys.tasks_deed_input.tr(),
                             errorText: _getError('deed_id'),
                             items: filteredDeeds.map((e) => e.id).toList(),
-                            itemLabelBuilder: (id) => options.deeds.firstWhere((e) => e.id == id).name ?? id.toString(),
+                            itemLabelBuilder: (id) {
+                              final m = options.deeds.where((e) => e.id == id);
+                              return m.isNotEmpty ? (m.first.name ?? id.toString()) : id.toString();
+                            },
                             onSelected: (val) {
                               setState(() {
                                 _selectedDeedId = val;
                                 if (_selectedPropertyId != null) {
                                   bool matches = false;
                                   try {
-                                    final deed = options.deeds.firstWhere((e) => e.id == val);
-                                    final prop = options.properties.firstWhere((e) => e.id == _selectedPropertyId);
-                                    if (deed.propertyId == _selectedPropertyId || prop.deedId == val) matches = true;
+                                    final deedMatch = options.deeds.where((e) => e.id == val);
+                                    final propMatch = options.properties.where((e) => e.id == _selectedPropertyId);
+                                    if (deedMatch.isNotEmpty && propMatch.isNotEmpty) {
+                                      final deed = deedMatch.first;
+                                      final prop = propMatch.first;
+                                      if (deed.propertyId == _selectedPropertyId || prop.deedId == val) matches = true;
+                                    }
                                   } catch (_) {}
                                   if (!matches) _selectedPropertyId = null;
                                 }
@@ -403,7 +426,10 @@ class _OwnerCreateTaskScreenState extends State<OwnerCreateTaskScreen> {
                             hint: LocaleKeys.tasks_branch_input.tr(),
                             errorText: _getError('branch_id'),
                             items: options.branches.map((e) => e.id).toList(),
-                            itemLabelBuilder: (id) => options.branches.firstWhere((e) => e.id == id).name,
+                            itemLabelBuilder: (id) {
+                              final m = options.branches.where((e) => e.id == id);
+                              return m.isNotEmpty ? m.first.name : id.toString();
+                            },
                             onSelected: (val) => setState(() => _selectedBranchId = val),
                           ),
                           const SizedBox(height: 16),

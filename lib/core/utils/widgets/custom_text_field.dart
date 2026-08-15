@@ -22,6 +22,7 @@ class CustomTextField extends StatefulWidget {
   final bool readOnly;
   final Widget? suffixIcon;
   final String? errorText;
+  final VoidCallback? onTap;
 
   const CustomTextField({
     super.key,
@@ -43,6 +44,7 @@ class CustomTextField extends StatefulWidget {
     this.readOnly = false,
     this.suffixIcon,
     this.errorText,
+    this.onTap,
   });
 
   @override
@@ -78,6 +80,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           maxLength: widget.maxLength,
           inputFormatters: widget.inputFormatters,
           readOnly: widget.readOnly,
+          onTap: widget.onTap,
           style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
             hintText: widget.hintText,

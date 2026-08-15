@@ -84,9 +84,11 @@ class TaskCommentModel extends TaskCommentEntity {
   factory TaskCommentModel.fromJson(Map<String, dynamic> json) {
     return TaskCommentModel(
       id: json['id'],
-      content: json['content'],
+      content: json['body'] ?? json['content'],
       createdAt: json['created_at'],
-      user: json['user'] != null ? TaskAssigneeModel.fromJson(json['user']) : null,
+      user: json['author'] != null
+          ? TaskAssigneeModel.fromJson(json['author'])
+          : (json['user'] != null ? TaskAssigneeModel.fromJson(json['user']) : null),
     );
   }
 }

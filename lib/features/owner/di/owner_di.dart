@@ -216,12 +216,26 @@ import '../tasks/domain/use_cases/get_task_details_use_case.dart';
 import '../tasks/domain/usecases/create_task_usecase.dart';
 import '../tasks/domain/usecases/update_task_usecase.dart';
 import '../tasks/domain/usecases/get_task_form_data_usecase.dart';
+import '../tasks/domain/usecases/update_task_status_usecase.dart';
+import '../tasks/domain/use_cases/delete_task_use_case.dart';
 import '../tasks/presentation/cubit/list/tasks_list_cubit.dart';
 import '../tasks/presentation/cubit/details/task_details_cubit.dart';
 import '../tasks/presentation/cubit/create_task/create_task_cubit.dart';
 import '../tasks/presentation/cubits/update_task/update_task_cubit.dart';
 import '../tasks/presentation/cubits/form_data/task_form_data_cubit.dart';
-import '../tasks/domain/use_cases/delete_task_use_case.dart';
+import '../tasks/presentation/cubits/update_status/update_task_status_cubit.dart';
+import '../tasks/domain/usecases/update_task_progress_usecase.dart';
+import '../tasks/presentation/cubits/update_progress/update_task_progress_cubit.dart';
+import '../tasks/domain/usecases/update_task_priority_usecase.dart';
+import '../tasks/presentation/cubits/update_priority/update_task_priority_cubit.dart';
+import '../tasks/domain/usecases/update_task_dates_usecase.dart';
+import '../tasks/presentation/cubits/update_dates/update_task_dates_cubit.dart';
+import '../tasks/domain/usecases/add_task_comment_usecase.dart';
+import '../tasks/presentation/cubits/add_comment/add_task_comment_cubit.dart';
+import '../tasks/domain/usecases/add_task_assignee_usecase.dart';
+import '../tasks/presentation/cubits/add_assignee/add_task_assignee_cubit.dart';
+import '../tasks/domain/usecases/remove_task_assignee_usecase.dart';
+import '../tasks/presentation/cubits/remove_assignee/remove_task_assignee_cubit.dart';
 import '../tasks/presentation/cubit/delete/delete_task_cubit.dart';
 // Tasks
 import '../tasks/data/datasources/tasks_remote_data_source.dart';
@@ -987,5 +1001,47 @@ void _initTasks() {
   }
   if (!sl.isRegistered<DeleteTaskCubit>()) {
     sl.registerFactory(() => DeleteTaskCubit(sl()));
+  }
+  if (!sl.isRegistered<UpdateTaskStatusUseCase>()) {
+    sl.registerLazySingleton(() => UpdateTaskStatusUseCase(sl()));
+  }
+  if (!sl.isRegistered<UpdateTaskStatusCubit>()) {
+    sl.registerFactory(() => UpdateTaskStatusCubit(updateTaskStatusUseCase: sl()));
+  }
+  if (!sl.isRegistered<UpdateTaskProgressUseCase>()) {
+    sl.registerLazySingleton(() => UpdateTaskProgressUseCase(sl()));
+  }
+  if (!sl.isRegistered<UpdateTaskProgressCubit>()) {
+    sl.registerFactory(() => UpdateTaskProgressCubit(updateTaskProgressUseCase: sl()));
+  }
+  if (!sl.isRegistered<UpdateTaskPriorityUseCase>()) {
+    sl.registerLazySingleton(() => UpdateTaskPriorityUseCase(sl()));
+  }
+  if (!sl.isRegistered<UpdateTaskPriorityCubit>()) {
+    sl.registerFactory(() => UpdateTaskPriorityCubit(updateTaskPriorityUseCase: sl()));
+  }
+  if (!sl.isRegistered<UpdateTaskDatesUseCase>()) {
+    sl.registerLazySingleton(() => UpdateTaskDatesUseCase(sl()));
+  }
+  if (!sl.isRegistered<UpdateTaskDatesCubit>()) {
+    sl.registerFactory(() => UpdateTaskDatesCubit(updateTaskDatesUseCase: sl()));
+  }
+  if (!sl.isRegistered<AddTaskCommentUseCase>()) {
+    sl.registerLazySingleton(() => AddTaskCommentUseCase(sl()));
+  }
+  if (!sl.isRegistered<AddTaskCommentCubit>()) {
+    sl.registerFactory(() => AddTaskCommentCubit(addTaskCommentUseCase: sl()));
+  }
+  if (!sl.isRegistered<AddTaskAssigneeUseCase>()) {
+    sl.registerLazySingleton(() => AddTaskAssigneeUseCase(sl()));
+  }
+  if (!sl.isRegistered<AddTaskAssigneeCubit>()) {
+    sl.registerFactory(() => AddTaskAssigneeCubit(addTaskAssigneeUseCase: sl()));
+  }
+  if (!sl.isRegistered<RemoveTaskAssigneeUseCase>()) {
+    sl.registerLazySingleton(() => RemoveTaskAssigneeUseCase(sl()));
+  }
+  if (!sl.isRegistered<RemoveTaskAssigneeCubit>()) {
+    sl.registerFactory(() => RemoveTaskAssigneeCubit(removeTaskAssigneeUseCase: sl()));
   }
 }

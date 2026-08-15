@@ -81,6 +81,90 @@ class TasksRepositoryImpl implements TasksRepository {
   }
 
   @override
+  Future<Either<Failure, TaskEntity>> updateTaskStatus(int id, String status) async {
+    try {
+      final task = await remoteDataSource.updateTaskStatus(id, status);
+      return Right(task);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TaskEntity>> updateTaskProgress(int id, int progress) async {
+    try {
+      final task = await remoteDataSource.updateTaskProgress(id, progress);
+      return Right(task);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TaskEntity>> updateTaskPriority(int id, String priority) async {
+    try {
+      final task = await remoteDataSource.updateTaskPriority(id, priority);
+      return Right(task);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TaskEntity>> addTaskComment(int id, String body) async {
+    try {
+      final task = await remoteDataSource.addTaskComment(id, body);
+      return Right(task);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TaskEntity>> addTaskAssignee(int id, int userId) async {
+    try {
+      final task = await remoteDataSource.addTaskAssignee(id, userId);
+      return Right(task);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TaskEntity>> removeTaskAssignee(int taskId, int assigneeId) async {
+    try {
+      final task = await remoteDataSource.removeTaskAssignee(taskId, assigneeId);
+      return Right(task);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TaskEntity>> updateTaskDates(int id, String? startDate, String? dueDate) async {
+    try {
+      final task = await remoteDataSource.updateTaskDates(id, startDate, dueDate);
+      return Right(task);
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
   Future<Either<Failure, void>> deleteTask(int id) async {
     try {
       await remoteDataSource.deleteTask(id);

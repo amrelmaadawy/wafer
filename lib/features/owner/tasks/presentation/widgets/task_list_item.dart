@@ -303,9 +303,10 @@ class TaskListItem extends StatelessWidget {
                             ),
                           if (isOverdue)
                             _buildChip(
-                              '⚠ متأخرة',
+                              LocaleKeys.dashboardOverdue.tr(),
                               AppColors.error,
                               filled: true,
+                              icon: Icons.warning_rounded,
                             ),
                           if (!isOverdue && task.dates?.dueDate != null)
                             _buildDateChip(context, task.dates!.dueDate!, false),
@@ -461,20 +462,29 @@ class TaskListItem extends StatelessWidget {
     );
   }
 
-  Widget _buildChip(String label, Color color, {bool filled = false}) {
+  Widget _buildChip(String label, Color color, {bool filled = false, IconData? icon}) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: filled ? color : color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(6),
       ),
-      child: Text(
-        label,
-        style: AppTextStyles.labelSmall.copyWith(
-          color: filled ? Colors.white : color,
-          fontWeight: FontWeight.w700,
-          fontSize: 11,
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) ...[
+            Icon(icon, size: 13, color: filled ? Colors.white : color),
+            const SizedBox(width: 4),
+          ],
+          Text(
+            label,
+            style: AppTextStyles.labelSmall.copyWith(
+              color: filled ? Colors.white : color,
+              fontWeight: FontWeight.w700,
+              fontSize: 11,
+            ),
+          ),
+        ],
       ),
     );
   }

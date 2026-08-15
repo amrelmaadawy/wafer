@@ -11,8 +11,9 @@ import '../../domain/entities/task_entity.dart';
 
 class TaskDatesCard extends StatelessWidget {
   final TaskDatesEntity dates;
+  final VoidCallback? onEditPressed;
 
-  const TaskDatesCard({super.key, required this.dates});
+  const TaskDatesCard({super.key, required this.dates, this.onEditPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,20 @@ class TaskDatesCard extends StatelessWidget {
                     color: context.appOnSurfaceColor,
                   ),
                 ),
+                if (onEditPressed != null) ...[
+                  const Spacer(),
+                  IconButton(
+                    onPressed: onEditPressed,
+                    icon: Icon(Icons.edit_outlined, color: Theme.of(context).primaryColor, size: 20),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    style: IconButton.styleFrom(
+                      backgroundColor: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                      shape: const CircleBorder(),
+                      padding: const EdgeInsets.all(8),
+                    ),
+                  ),
+                ],
               ],
             ),
           ),
