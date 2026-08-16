@@ -15,7 +15,13 @@ class PaymentEntity extends Equatable {
   final FinanceAccountEntity? debitAccount;
   final FinanceAccountEntity? creditAccount;
   final int? propertyId;
+  final String? propertyName;
+  final int? unitId;
+  final String? unitName;
   final int? contractId;
+  final String? contractNumber;
+  final int? tenantId;
+  final String? tenantName;
   final JournalEntryEntity? journalEntry;
   final String? notes;
   final String? createdAt;
@@ -33,7 +39,13 @@ class PaymentEntity extends Equatable {
     this.debitAccount,
     this.creditAccount,
     this.propertyId,
+    this.propertyName,
+    this.unitId,
+    this.unitName,
     this.contractId,
+    this.contractNumber,
+    this.tenantId,
+    this.tenantName,
     this.journalEntry,
     this.notes,
     this.createdAt,
@@ -53,7 +65,13 @@ class PaymentEntity extends Equatable {
         debitAccount,
         creditAccount,
         propertyId,
+        propertyName,
+        unitId,
+        unitName,
         contractId,
+        contractNumber,
+        tenantId,
+        tenantName,
         journalEntry,
         notes,
         createdAt,

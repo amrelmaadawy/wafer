@@ -14,6 +14,8 @@ class TaskEntity extends Equatable {
   final TaskLinkedEntity? linkedEntity;
   final TaskBranchEntity? branch;
   final TaskPropertyEntity? property;
+  final TaskUnitEntity? unit;
+  final TaskContractEntity? contract;
   final TaskDeedEntity? deed;
   final List<TaskAssigneeEntity>? assignees;
   final List<TaskCommentEntity>? comments;
@@ -36,6 +38,8 @@ class TaskEntity extends Equatable {
     this.linkedEntity,
     this.branch,
     this.property,
+    this.unit,
+    this.contract,
     this.deed,
     this.assignees,
     this.comments,
@@ -60,6 +64,8 @@ class TaskEntity extends Equatable {
         linkedEntity,
         branch,
         property,
+        unit,
+        contract,
         deed,
         assignees,
         comments,
@@ -140,13 +146,14 @@ class TaskDatesEntity extends Equatable {
 }
 
 class TaskLinkedEntity extends Equatable {
+  final int? id;
   final String? type;
   final String? name;
 
-  const TaskLinkedEntity({this.type, this.name});
+  const TaskLinkedEntity({this.id, this.type, this.name});
 
   @override
-  List<Object?> get props => [type, name];
+  List<Object?> get props => [id, type, name];
 }
 
 class TaskBranchEntity extends Equatable {
@@ -180,6 +187,42 @@ class TaskPropertyEntity extends Equatable {
 
   @override
   List<Object?> get props => [id, name, code, propertyType, city, district];
+}
+
+class TaskUnitEntity extends Equatable {
+  final int id;
+  final String? name;
+  final String? unitNumber;
+  final int? propertyId;
+  final String? propertyName;
+
+  const TaskUnitEntity({
+    required this.id,
+    this.name,
+    this.unitNumber,
+    this.propertyId,
+    this.propertyName,
+  });
+
+  @override
+  List<Object?> get props => [id, name, unitNumber, propertyId, propertyName];
+}
+
+class TaskContractEntity extends Equatable {
+  final int id;
+  final String? contractNumber;
+  final String? status;
+  final String? renterName;
+
+  const TaskContractEntity({
+    required this.id,
+    this.contractNumber,
+    this.status,
+    this.renterName,
+  });
+
+  @override
+  List<Object?> get props => [id, contractNumber, status, renterName];
 }
 
 class TaskDeedEntity extends Equatable {

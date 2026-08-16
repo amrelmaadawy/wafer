@@ -16,6 +16,8 @@ class TaskModel extends TaskEntity {
     super.linkedEntity,
     super.branch,
     super.property,
+    super.unit,
+    super.contract,
     super.deed,
     super.assignees,
     super.comments,
@@ -40,6 +42,8 @@ class TaskModel extends TaskEntity {
       linkedEntity: json['linked_entity'] != null ? TaskLinkedModel.fromJson(json['linked_entity']) : null,
       branch: json['branch'] != null ? TaskBranchModel.fromJson(json['branch']) : null,
       property: json['property'] != null ? TaskPropertyModel.fromJson(json['property']) : null,
+      unit: json['unit'] != null ? TaskUnitModel.fromJson(json['unit']) : null,
+      contract: json['contract'] != null ? TaskContractModel.fromJson(json['contract']) : null,
       deed: json['deed'] != null ? TaskDeedModel.fromJson(json['deed']) : null,
       assignees: json['assignees'] != null
           ? (json['assignees'] as List).map((e) => TaskAssigneeModel.fromJson(e)).toList()
@@ -146,12 +150,53 @@ class TaskDatesModel extends TaskDatesEntity {
 }
 
 class TaskLinkedModel extends TaskLinkedEntity {
-  const TaskLinkedModel({super.type, super.name});
+  const TaskLinkedModel({super.id, super.type, super.name});
 
   factory TaskLinkedModel.fromJson(Map<String, dynamic> json) {
     return TaskLinkedModel(
+      id: json['id'],
       type: json['type'],
       name: json['name'],
+    );
+  }
+}
+
+class TaskUnitModel extends TaskUnitEntity {
+  const TaskUnitModel({
+    required super.id,
+    super.name,
+    super.unitNumber,
+    super.propertyId,
+    super.propertyName,
+  });
+
+  factory TaskUnitModel.fromJson(Map<String, dynamic> json) {
+    final propertyMap = json['property'] is Map<String, dynamic> ? json['property'] as Map<String, dynamic> : null;
+    return TaskUnitModel(
+      id: json['id'] ?? 0,
+      name: json['name'],
+      unitNumber: json['unit_number']?.toString(),
+      propertyId: json['property_id'] ?? propertyMap?['id'],
+      propertyName: json['property_name'] ?? propertyMap?['name'],
+    );
+  }
+}
+
+class TaskContractModel extends TaskContractEntity {
+  const TaskContractModel({
+    required super.id,
+    super.contractNumber,
+    super.status,
+    super.renterName,
+  });
+
+  factory TaskContractModel.fromJson(Map<String, dynamic> json) {
+    final renterMap = json['renter'] is Map<String, dynamic> ? json['renter'] as Map<String, dynamic> : null;
+    return TaskContractModel(
+      id: json['id'] ?? 0,
+      contractNumber: json['contract_number']?.toString() ?? json['number']?.toString(),
+      status: json['status']?.toString(),
+      renterName: json['renter_name']?.toString() ?? renterMap?['name']?.toString(),
     );
   }
 }

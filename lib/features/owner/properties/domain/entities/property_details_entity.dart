@@ -5,6 +5,7 @@ import 'maintenance_entity.dart';
 import 'property_summary_entity.dart';
 import 'property_kpi_entity.dart';
 import 'unit_entity.dart';
+import 'media_item_entity.dart';
 
 class PropertyDetailsEntity extends Equatable {
   final int id;
@@ -48,6 +49,7 @@ class PropertyDetailsEntity extends Equatable {
   final List<UnitEntity> units;
   final List<ContractEntity> contracts;
   final List<MaintenanceEntity> maintenance;
+  final List<MediaItemEntity> documents;
   final PropertySummaryEntity? summary;
   final PropertyKpiEntity? kpi;
 
@@ -91,6 +93,7 @@ class PropertyDetailsEntity extends Equatable {
     this.units = const [],
     this.contracts = const [],
     this.maintenance = const [],
+    this.documents = const [],
     this.summary,
     this.kpi,
   });
@@ -153,6 +156,7 @@ class PropertyDetailsEntity extends Equatable {
     units,
     contracts,
     maintenance,
+    documents,
     summary,
     kpi,
   ];

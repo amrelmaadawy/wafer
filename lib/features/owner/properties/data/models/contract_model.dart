@@ -12,11 +12,19 @@ class ContractModel extends ContractEntity {
     super.isExpired = false,
     super.totalRentValue = 0,
     super.amount = 0,
+    super.propertyId,
+    super.propertyName,
+    super.unitId,
     required super.unitName,
+    super.tenantId,
+    super.tenantName,
     required super.renterName,
   });
 
   factory ContractModel.fromJson(Map<String, dynamic> json) {
+    final propertyMap = json['property'] is Map<String, dynamic>
+        ? json['property'] as Map<String, dynamic>
+        : null;
     final unitMap = json['unit'] is Map<String, dynamic>
         ? json['unit'] as Map<String, dynamic>
         : null;
@@ -25,6 +33,8 @@ class ContractModel extends ContractEntity {
         : json['tenant'] is Map<String, dynamic>
         ? json['tenant'] as Map<String, dynamic>
         : null;
+
+    final tenantName = renterMap?['name']?.toString() ?? json['tenant_name']?.toString() ?? json['renter_name']?.toString() ?? '';
 
     return ContractModel(
       id: json['id'] as int? ?? 0,
@@ -41,8 +51,13 @@ class ContractModel extends ContractEntity {
       isExpired: json['is_expired'] == true,
       totalRentValue: json['total_rent_value'] as num? ?? 0,
       amount: json['amount'] as num? ?? 0,
-      unitName: unitMap?['name']?.toString() ?? '',
-      renterName: renterMap?['name']?.toString() ?? '',
+      propertyId: json['property_id'] as int? ?? propertyMap?['id'] as int?,
+      propertyName: json['property_name']?.toString() ?? propertyMap?['name']?.toString(),
+      unitId: json['unit_id'] as int? ?? unitMap?['id'] as int?,
+      unitName: unitMap?['name']?.toString() ?? json['unit_name']?.toString() ?? '',
+      tenantId: json['tenant_id'] as int? ?? renterMap?['id'] as int?,
+      tenantName: tenantName,
+      renterName: tenantName,
     );
   }
 }

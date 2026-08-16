@@ -5,6 +5,7 @@ import 'contract_model.dart';
 import 'maintenance_model.dart';
 import 'property_summary_model.dart';
 import 'property_kpi_model.dart';
+import 'media_item_model.dart';
 
 class PropertyDetailsModel extends PropertyDetailsEntity {
   const PropertyDetailsModel({
@@ -47,6 +48,7 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
     super.units = const [],
     super.contracts = const [],
     super.maintenance = const [],
+    super.documents = const [],
     super.summary,
     super.kpi,
   });
@@ -109,6 +111,15 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
 
     final maintenanceList = (json['maintenance'] as List<dynamic>? ?? [])
         .map((e) => MaintenanceModel.fromJson(e as Map<String, dynamic>))
+        .toList();
+
+    final documentsList = (json['documents'] as List<dynamic>? ??
+            json['files'] as List<dynamic>? ??
+            json['attachments'] as List<dynamic>? ??
+            [])
+        .map((e) => e is Map<String, dynamic>
+            ? MediaItemModel.fromJson(e)
+            : MediaItemModel(id: 0, path: e.toString(), url: e.toString(), type: 'document'))
         .toList();
 
     return PropertyDetailsModel(
@@ -176,6 +187,7 @@ class PropertyDetailsModel extends PropertyDetailsEntity {
       units: unitsList,
       contracts: contractsList,
       maintenance: maintenanceList,
+      documents: documentsList,
       summary: financialSummary != null
           ? PropertySummaryModel.fromJson(financialSummary)
           : null,

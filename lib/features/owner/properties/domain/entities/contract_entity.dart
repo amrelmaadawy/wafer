@@ -11,7 +11,12 @@ class ContractEntity extends Equatable {
   final bool isExpired;
   final num totalRentValue;
   final num amount;
+  final int? propertyId;
+  final String? propertyName;
+  final int? unitId;
   final String unitName;
+  final int? tenantId;
+  final String? tenantName;
   final String renterName;
 
   const ContractEntity({
@@ -25,7 +30,12 @@ class ContractEntity extends Equatable {
     this.isExpired = false,
     this.totalRentValue = 0,
     this.amount = 0,
+    this.propertyId,
+    this.propertyName,
+    this.unitId,
     required this.unitName,
+    this.tenantId,
+    this.tenantName,
     required this.renterName,
   });
 
@@ -41,7 +51,12 @@ class ContractEntity extends Equatable {
     isExpired,
     totalRentValue,
     amount,
+    propertyId,
+    propertyName,
+    unitId,
     unitName,
+    tenantId,
+    tenantName,
     renterName,
   ];
 }

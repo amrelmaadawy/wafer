@@ -14,9 +14,27 @@ class UnitMetersEntity extends Equatable {
   List<Object?> get props => [electricity, water, gas];
 }
 
+class UnitTenantEntity extends Equatable {
+  final int id;
+  final String name;
+  final String? phone;
+  final String? email;
+
+  const UnitTenantEntity({
+    required this.id,
+    required this.name,
+    this.phone,
+    this.email,
+  });
+
+  @override
+  List<Object?> get props => [id, name, phone, email];
+}
+
 class UnitFullDetailsEntity extends Equatable {
   final int id;
   final int? propertyId;
+  final String? propertyName;
   final String? name;
   final String unitNumber;
   final String? code;
@@ -43,6 +61,7 @@ class UnitFullDetailsEntity extends Equatable {
   final List<String> images;
   final List<String> videos;
   final List<String> attachments;
+  final List<MediaItemEntity> documents;
   final MediaDetailsEntity media;
   final List<MaintenanceItemEntity> maintenanceRequests;
 
@@ -60,11 +79,13 @@ class UnitFullDetailsEntity extends Equatable {
   final num quarterlyPrice;
 
   final ContractEntity? currentContract;
+  final UnitTenantEntity? currentTenant;
   final List<ContractEntity> contractsHistory;
 
   const UnitFullDetailsEntity({
     required this.id,
     this.propertyId,
+    this.propertyName,
     this.name,
     required this.unitNumber,
     this.code,
@@ -91,6 +112,7 @@ class UnitFullDetailsEntity extends Equatable {
     this.images = const [],
     this.videos = const [],
     this.attachments = const [],
+    this.documents = const [],
     this.media = const MediaDetailsEntity(),
     this.maintenanceRequests = const [],
     this.roomsCount = 0,
@@ -103,6 +125,7 @@ class UnitFullDetailsEntity extends Equatable {
     this.perTwoPaymentsPrice = 0,
     this.quarterlyPrice = 0,
     this.currentContract,
+    this.currentTenant,
     this.contractsHistory = const [],
   });
 
@@ -118,6 +141,7 @@ class UnitFullDetailsEntity extends Equatable {
   List<Object?> get props => [
     id,
     propertyId,
+    propertyName,
     name,
     unitNumber,
     code,
@@ -144,6 +168,7 @@ class UnitFullDetailsEntity extends Equatable {
     images,
     videos,
     attachments,
+    documents,
     media,
     maintenanceRequests,
     roomsCount,
@@ -156,6 +181,7 @@ class UnitFullDetailsEntity extends Equatable {
     perTwoPaymentsPrice,
     quarterlyPrice,
     currentContract,
+    currentTenant,
     contractsHistory,
   ];
 }

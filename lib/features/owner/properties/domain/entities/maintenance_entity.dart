@@ -9,7 +9,13 @@ class MaintenanceEntity extends Equatable {
   final num estimatedCost;
   final num actualCost;
   final String? requestedDate;
+  final int? propertyId;
+  final String? propertyName;
+  final int? unitId;
   final String unitName;
+  final int? tenantId;
+  final String? tenantName;
+  final int? contractId;
 
   const MaintenanceEntity({
     required this.id,
@@ -20,7 +26,13 @@ class MaintenanceEntity extends Equatable {
     this.estimatedCost = 0,
     this.actualCost = 0,
     this.requestedDate,
+    this.propertyId,
+    this.propertyName,
+    this.unitId,
     required this.unitName,
+    this.tenantId,
+    this.tenantName,
+    this.contractId,
   });
 
   @override
@@ -33,6 +45,12 @@ class MaintenanceEntity extends Equatable {
     estimatedCost,
     actualCost,
     requestedDate,
+    propertyId,
+    propertyName,
+    unitId,
     unitName,
+    tenantId,
+    tenantName,
+    contractId,
   ];
 }
