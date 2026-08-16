@@ -94,11 +94,7 @@ import '../finance/presentation/cubit/accounts/create_finance_account_cubit.dart
 import '../finance/presentation/cubit/accounts/update_finance_account_cubit.dart';
 import '../finance/presentation/cubit/accounts/finance_account_details_cubit.dart';
 import '../finance/domain/usecases/get_unified_transactions_use_case.dart';
-import '../finance/domain/usecases/get_receivables_use_case.dart';
-import '../finance/domain/usecases/get_payables_use_case.dart';
 import '../finance/presentation/cubit/transactions/unified_transactions_cubit.dart';
-import '../finance/presentation/cubit/receivables/receivables_cubit.dart';
-import '../finance/presentation/cubit/payables/payables_cubit.dart';
 import '../finance/presentation/cubit/receipts/finance_receipts_cubit.dart';
 import '../finance/presentation/cubit/receipts/create_finance_receipt_cubit.dart';
 import '../finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
@@ -728,6 +724,7 @@ void _initDashboard() {
     sl.registerFactory(() => OwnerDashboardCubit(sl(), sl()));
   }
 }
+
 
 void _initContracts() {
   if (!sl.isRegistered<OwnerContractsRemoteDataSource>()) {

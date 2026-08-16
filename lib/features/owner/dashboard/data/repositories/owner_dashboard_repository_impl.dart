@@ -23,7 +23,6 @@ class OwnerDashboardRepositoryImpl implements OwnerDashboardRepository {
       );
       return Right(result);
     } on TypeError catch (_) {
-      // If cache deserialization fails due to schema change, retry from network
       if (!forceRefresh) {
         return getDashboardStats(forceRefresh: true, cancelToken: cancelToken);
       }

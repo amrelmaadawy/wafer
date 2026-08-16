@@ -2325,4 +2325,12 @@ abstract class  LocaleKeys {
   static const String financeTotalCollected = 'financeTotalCollected';
   static const String financeTotalDue = 'financeTotalDue';
   static const String financeUrgentObligations = 'financeUrgentObligations';
+  static const String portfolioAllProperties = 'portfolioAllProperties';
+  static const String portfolioSelectProperty = 'portfolioSelectProperty';
+  static const String portfolioFilterByProperty = 'portfolioFilterByProperty';
+  static const String portfolioPropertyRevenue = 'portfolioPropertyRevenue';
+  static const String portfolioPropertyExpenses = 'portfolioPropertyExpenses';
+  static const String portfolioPropertyNet = 'portfolioPropertyNet';
+  static const String portfolioPropertyOccupancy = 'portfolioPropertyOccupancy';
+  static const String portfolioNoPropertiesFound = 'portfolioNoPropertiesFound';
 }

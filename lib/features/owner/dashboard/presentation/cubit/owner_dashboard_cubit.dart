@@ -38,9 +38,14 @@ class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
         maintResult.fold((_) {}, (maintData) {
           recentItems = maintData.items.take(5).toList();
         });
-        emit(OwnerDashboardLoaded(data, recentMaintenanceItems: recentItems));
+        emit(
+          OwnerDashboardLoaded(
+            data,
+            recentMaintenanceItems: recentItems,
+          ),
+        );
 
-        // Stale-while-revalidate pattern: if we didn't force refresh, let's update from network in background
+        // Stale-while-revalidate: if not forced, refresh in background
         if (!forceRefresh && !isClosed) {
           _revalidateBackground();
         }
@@ -54,7 +59,7 @@ class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
       cancelToken: _cancelToken,
     );
     result.fold(
-      (_) {}, // ignore errors in background fetch
+      (_) {},
       (data) async {
         if (isClosed) return;
         List<MaintenanceItemEntity> recentItems = [];
@@ -65,7 +70,12 @@ class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
           recentItems = maintData.items.take(5).toList();
         });
         if (!isClosed) {
-          emit(OwnerDashboardLoaded(data, recentMaintenanceItems: recentItems));
+          emit(
+            OwnerDashboardLoaded(
+              data,
+              recentMaintenanceItems: recentItems,
+            ),
+          );
         }
       },
     );

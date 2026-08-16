@@ -2356,5 +2356,13 @@
   "financeRemainingToPay": "Remaining to Pay",
   "financeTotalCollected": "Collected",
   "financeTotalDue": "Total Due",
-  "financeUrgentObligations": "Urgent Obligations"
+  "financeUrgentObligations": "Urgent Obligations",
+  "portfolioAllProperties": "All Properties",
+  "portfolioSelectProperty": "Select Property",
+  "portfolioFilterByProperty": "Filter by Property",
+  "portfolioPropertyRevenue": "Revenue",
+  "portfolioPropertyExpenses": "Expenses",
+  "portfolioPropertyNet": "Net Income",
+  "portfolioPropertyOccupancy": "Occupancy",
+  "portfolioNoPropertiesFound": "No properties found"
 }

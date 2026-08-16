@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../../core/usecases/usecase.dart';
 import '../../domain/usecases/get_finance_overview_usecase.dart';
 import 'finance_overview_state.dart';
 
@@ -14,7 +13,7 @@ class FinanceOverviewCubit extends Cubit<FinanceOverviewState> {
       emit(FinanceOverviewLoading());
     }
 
-    final result = await getFinanceOverviewUseCase(const NoParams());
+    final result = await getFinanceOverviewUseCase();
 
     result.fold(
       (failure) => emit(FinanceOverviewError(message: failure.message)),

@@ -2351,5 +2351,13 @@
   "financeRemainingToPay": "المتبقي للسداد",
   "financeTotalCollected": "تم تحصيله",
   "financeTotalDue": "إجمالي المستحق",
-  "financeUrgentObligations": "التزامات عاجلة"
+  "financeUrgentObligations": "التزامات عاجلة",
+  "portfolioAllProperties": "جميع العقارات",
+  "portfolioSelectProperty": "تحديد العقار",
+  "portfolioFilterByProperty": "تصفية حسب العقار",
+  "portfolioPropertyRevenue": "الإيرادات",
+  "portfolioPropertyExpenses": "المصروفات",
+  "portfolioPropertyNet": "صافي الدخل",
+  "portfolioPropertyOccupancy": "نسبة الإشغال",
+  "portfolioNoPropertiesFound": "لا توجد عقارات متاحة"
 }

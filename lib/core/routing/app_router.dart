@@ -56,7 +56,7 @@ import '../../features/owner/finance/presentation/views/update_owner_account_vie
 import '../../features/owner/finance/presentation/views/owner_account_details_view.dart';
 import '../../features/owner/finance/presentation/views/update_owner_receipt_view.dart';
 import '../../features/owner/finance/presentation/views/owner_payments_view.dart';
-import '../../features/owner/finance/presentation/cubit/transactions/unified_transactions_cubit.dart';
+
 import '../../features/owner/finance/presentation/views/create_owner_journal_entry_view.dart';
 import '../../features/owner/finance/domain/entities/journal_entry_entity.dart';
 import '../../features/owner/finance/presentation/views/create_owner_payment_view.dart';

@@ -26,6 +26,16 @@ class OwnerDashboardLoaded extends OwnerDashboardState {
     this.recentMaintenanceItems = const [],
   });
 
+  OwnerDashboardLoaded copyWith({
+    OwnerDashboardEntity? data,
+    List<MaintenanceItemEntity>? recentMaintenanceItems,
+  }) {
+    return OwnerDashboardLoaded(
+      data ?? this.data,
+      recentMaintenanceItems: recentMaintenanceItems ?? this.recentMaintenanceItems,
+    );
+  }
+
   @override
   List<Object?> get props => [data, recentMaintenanceItems];
 }
