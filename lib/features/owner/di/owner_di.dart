@@ -247,6 +247,13 @@ import '../tasks/data/datasources/tasks_remote_data_source.dart';
 import '../tasks/data/repositories/tasks_repository_impl.dart';
 import '../tasks/domain/repositories/tasks_repository.dart';
 
+// Search
+import '../search/data/datasources/search_remote_data_source.dart';
+import '../search/data/repositories/search_repository_impl.dart';
+import '../search/domain/repositories/search_repository.dart';
+import '../search/domain/usecases/global_search_use_case.dart';
+import '../search/presentation/cubit/search_cubit.dart';
+
 void initOwnerModule() {
   _initDashboard();
   _initProperties();
@@ -261,6 +268,7 @@ void initOwnerModule() {
   _initMaintenanceNegotiations();
   initLegalCases();
   _initTasks();
+  _initSearch();
 }
 
 void _initFinance() {
@@ -1069,3 +1077,21 @@ void _initTasks() {
   }
 }
 
+void _initSearch() {
+  if (!sl.isRegistered<SearchRemoteDataSource>()) {
+    sl.registerLazySingleton<SearchRemoteDataSource>(
+      () => SearchRemoteDataSourceImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<SearchRepository>()) {
+    sl.registerLazySingleton<SearchRepository>(
+      () => SearchRepositoryImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<GlobalSearchUseCase>()) {
+    sl.registerLazySingleton(() => GlobalSearchUseCase(sl()));
+  }
+  if (!sl.isRegistered<SearchCubit>()) {
+    sl.registerFactory(() => SearchCubit(searchUseCase: sl()));
+  }
+}

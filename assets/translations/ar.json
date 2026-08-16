@@ -2359,5 +2359,18 @@
   "portfolioPropertyExpenses": "المصروفات",
   "portfolioPropertyNet": "صافي الدخل",
   "portfolioPropertyOccupancy": "نسبة الإشغال",
-  "portfolioNoPropertiesFound": "لا توجد عقارات متاحة"
+  "portfolioNoPropertiesFound": "لا توجد عقارات متاحة",
+  "search_title": "ابحث في الوافر",
+  "search_hint": "ابحث عن العقارات، العقود، المدفوعات...",
+  "search_no_results": "لا توجد نتائج لـ \"{query}\"",
+  "search_results_for": "نتائج \"{query}\"",
+  "search_group_properties": "العقارات",
+  "search_group_units": "الوحدات",
+  "search_group_contracts": "العقود",
+  "search_group_payments": "المدفوعات",
+  "search_group_receipts": "المقبوضات",
+  "search_group_maintenance": "الصيانة",
+  "search_group_tasks": "المهام",
+  "search_group_legal_cases": "القضايا",
+  "search_min_chars": "اكتب حرفين على الأقل للبحث"
 }

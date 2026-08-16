@@ -128,10 +128,10 @@ import '../../features/owner/legal_cases/presentation/views/legal_case_create_vi
 import '../../features/owner/legal_cases/domain/entities/legal_case_item_entity.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiations_list_view.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiation_settings_view.dart';
+import '../../features/owner/search/presentation/screens/search_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
-
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 
 // Holds the latest auth state for use in the redirect callback
@@ -230,6 +230,10 @@ class AppRouter {
       GoRoute(
         path: Routes.notifications,
         builder: (context, state) => const NotificationsScreen(),
+      ),
+      GoRoute(
+        path: Routes.ownerSearch,
+        builder: (context, state) => const SearchScreen(),
       ),
       GoRoute(
         path: Routes.ownerFinanceAccounts,

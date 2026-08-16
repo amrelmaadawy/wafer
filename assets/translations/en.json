@@ -2364,5 +2364,18 @@
   "portfolioPropertyExpenses": "Expenses",
   "portfolioPropertyNet": "Net Income",
   "portfolioPropertyOccupancy": "Occupancy",
-  "portfolioNoPropertiesFound": "No properties found"
+  "portfolioNoPropertiesFound": "No properties found",
+  "search_title": "Search Wafer",
+  "search_hint": "Search properties, contracts, payments...",
+  "search_no_results": "No results for \"{query}\"",
+  "search_results_for": "Results for \"{query}\"",
+  "search_group_properties": "Properties",
+  "search_group_units": "Units",
+  "search_group_contracts": "Contracts",
+  "search_group_payments": "Payments",
+  "search_group_receipts": "Receipts",
+  "search_group_maintenance": "Maintenance",
+  "search_group_tasks": "Tasks",
+  "search_group_legal_cases": "Legal Cases",
+  "search_min_chars": "Type at least 2 characters to search"
 }
