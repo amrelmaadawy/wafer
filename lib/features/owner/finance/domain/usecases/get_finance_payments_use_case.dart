@@ -17,6 +17,9 @@ class GetFinancePaymentsUseCase
       page: params.page,
       perPage: params.perPage,
       search: params.search,
+      propertyId: params.propertyId,
+      unitId: params.unitId,
+      contractId: params.contractId,
     );
   }
 }
@@ -25,10 +28,16 @@ class GetFinancePaymentsParams {
   final int page;
   final int perPage;
   final String? search;
+  final int? propertyId;
+  final int? unitId;
+  final int? contractId;
 
   GetFinancePaymentsParams({
     this.page = 1,
     this.perPage = 15,
     this.search,
+    this.propertyId,
+    this.unitId,
+    this.contractId,
   });
 }

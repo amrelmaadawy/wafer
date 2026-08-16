@@ -33,6 +33,9 @@ abstract class FinanceRemoteDataSource {
     int page = 1,
     int perPage = 15,
     String? search,
+    int? propertyId,
+    int? unitId,
+    int? contractId,
   });
 
   Future<PaymentModel> createPayment(Map<String, dynamic> body);
@@ -205,12 +208,18 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
     int page = 1,
     int perPage = 15,
     String? search,
+    int? propertyId,
+    int? unitId,
+    int? contractId,
   }) async {
     try {
-      final queryParameters = {
+      final queryParameters = <String, dynamic>{
         'page': page,
         'per_page': perPage,
         if (search != null && search.isNotEmpty) 'search': search,
+        ...?propertyId == null ? null : {'property_id': propertyId},
+        ...?unitId == null ? null : {'unit_id': unitId},
+        ...?contractId == null ? null : {'contract_id': contractId},
       };
 
       final response = await dio.get(

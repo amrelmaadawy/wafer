@@ -20,7 +20,9 @@ import '../widgets/details/property_details_skeleton.dart';
 import '../widgets/details/property_overview_tab.dart';
 import '../widgets/details/property_units_tab.dart';
 import '../widgets/details/property_contracts_tab.dart';
+import '../widgets/details/property_finance_tab.dart';
 import '../widgets/details/property_maintenance_tab.dart';
+import '../widgets/details/property_documents_tab.dart';
 import '../widgets/details/property_owners_tab.dart';
 import '../widgets/details/property_details_app_bar.dart';
 import '../widgets/details/clone_for_deed_sheet.dart';
@@ -28,6 +30,7 @@ import '../widgets/publish/publish_property_sheet.dart';
 import '../widgets/details/property_delete_dialog.dart';
 import '../cubit/delete/delete_property_cubit.dart';
 import '../cubit/delete/delete_property_state.dart';
+import '../cubit/property_finance/property_finance_cubit.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/utils/widgets/loading_widget.dart';
 
@@ -48,7 +51,7 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 7, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<PropertyDetailsCubit>().loadDetails(widget.propertyId);
     });
@@ -97,7 +100,6 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
     BuildContext context,
     PropertyDetailsEntity property,
   ) async {
-    // Wait for the actions sheet to close and get the chosen action
     final action = await showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
@@ -114,7 +116,6 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
       ),
     );
 
-    // After sheet is FULLY closed, handle the action
     if (!context.mounted) return;
 
     switch (action) {
@@ -133,7 +134,6 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
         _showCloneForDeedSheet(context, property);
         break;
       case 'delete':
-        // Screen is still alive, BlocProvider still alive, cubit NOT closed
         _showDeleteConfirmDialog(context, property);
         break;
       case 'publish':
@@ -157,8 +157,11 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => sl<DeletePropertyCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => sl<DeletePropertyCubit>()),
+        BlocProvider(create: (_) => sl<PropertyFinanceCubit>()),
+      ],
       child: Builder(
         builder: (ctx) =>
             BlocListener<DeletePropertyCubit, DeletePropertyState>(
@@ -284,8 +287,14 @@ class _PropertyDetailsScreenState extends State<PropertyDetailsScreen>
                                 PropertyContractsTab(
                                   contracts: property.contracts,
                                 ),
+                                PropertyFinanceTab(
+                                  propertyId: widget.propertyId,
+                                ),
                                 PropertyMaintenanceTab(
                                   maintenanceRequests: property.maintenance,
+                                ),
+                                PropertyDocumentsTab(
+                                  property: property,
                                 ),
                                 PropertyOwnersTab(property: property),
                               ],

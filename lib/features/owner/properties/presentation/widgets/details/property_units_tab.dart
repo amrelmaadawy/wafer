@@ -35,10 +35,7 @@ class PropertyUnitsTab extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
           final result = await context.push(
-            Uri(
-              path: Routes.ownerUnitCreate,
-              queryParameters: {'propertyId': propertyId.toString()},
-            ).toString(),
+            Routes.ownerUnitCreatePath(propertyId.toString()),
           );
 
           if (result == true && context.mounted) {
@@ -62,13 +59,10 @@ class PropertyUnitsTab extends StatelessWidget {
             unit: unit,
             onTap: () async {
               final result = await context.push(
-                Uri(
-                  path: Routes.ownerPropertyUnitDetails,
-                  queryParameters: {
-                    'propertyId': propertyId.toString(),
-                    'unitId': unit.id.toString(),
-                  },
-                ).toString(),
+                Routes.ownerUnitDetailsPath(
+                  propertyId.toString(),
+                  unit.id.toString(),
+                ),
               );
 
               if (result == true && context.mounted) {
@@ -156,10 +150,7 @@ class PropertyUnitsTab extends StatelessWidget {
               child: ElevatedButton.icon(
                 onPressed: () async {
                   final result = await context.push(
-                    Uri(
-                      path: Routes.ownerUnitCreate,
-                      queryParameters: {'propertyId': propertyId.toString()},
-                    ).toString(),
+                    Routes.ownerUnitCreatePath(propertyId.toString()),
                   );
 
                   if (result == true && context.mounted) {

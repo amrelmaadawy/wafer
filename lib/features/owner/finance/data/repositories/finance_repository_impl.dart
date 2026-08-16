@@ -159,12 +159,18 @@ class FinanceRepositoryImpl extends BaseRepository
     int page = 1,
     int perPage = 15,
     String? search,
+    int? propertyId,
+    int? unitId,
+    int? contractId,
   }) async {
     return executeApiCall<PaymentsResponseEntity>(
       call: () => remoteDataSource.getPayments(
         page: page,
         perPage: perPage,
         search: search,
+        propertyId: propertyId,
+        unitId: unitId,
+        contractId: contractId,
       ),
     );
   }

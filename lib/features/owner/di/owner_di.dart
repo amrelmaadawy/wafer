@@ -16,6 +16,7 @@ import '../contracts/domain/usecases/get_owner_contract_installments_use_case.da
 import '../contracts/presentation/cubit/list/owner_contracts_cubit.dart';
 import '../contracts/presentation/cubit/details/owner_contract_details_cubit.dart';
 import '../contracts/presentation/cubit/installments/owner_contract_installments_cubit.dart';
+import '../contracts/presentation/cubit/payments/contract_payments_cubit.dart';
 // Maintenance
 import '../maintenance/data/datasources/owner_maintenance_remote_data_source.dart';
 import '../maintenance/data/repositories/owner_maintenance_repository_impl.dart';
@@ -169,6 +170,8 @@ import '../properties/presentation/cubit/create/property_create_cubit.dart';
 import '../properties/presentation/cubit/publish/publish_property_cubit.dart';
 import '../properties/presentation/cubit/delete_unit/unit_delete_cubit.dart';
 import '../properties/presentation/cubit/unit_details/unit_details_cubit.dart';
+import '../properties/presentation/cubit/property_finance/property_finance_cubit.dart';
+import '../properties/presentation/cubit/unit_payments/unit_payments_cubit.dart';
 
 // Units
 import '../properties/data/datasources/units_remote_data_source.dart';
@@ -548,6 +551,9 @@ void _initUnits() {
   if (!sl.isRegistered<UnitEditCubit>()) {
     sl.registerFactory(() => UnitEditCubit(sl(), sl(), sl()));
   }
+  if (!sl.isRegistered<UnitPaymentsCubit>()) {
+    sl.registerFactory(() => UnitPaymentsCubit(sl()));
+  }
 }
 
 void _initProperties() {
@@ -635,6 +641,9 @@ void _initProperties() {
   }
   if (!sl.isRegistered<PropertyDetailsCubit>()) {
     sl.registerFactory(() => PropertyDetailsCubit(sl(), sl(), sl()));
+  }
+  if (!sl.isRegistered<PropertyFinanceCubit>()) {
+    sl.registerFactory(() => PropertyFinanceCubit(sl()));
   }
   if (!sl.isRegistered<PropertyCreateCubit>()) {
     sl.registerLazySingleton(
@@ -734,6 +743,9 @@ void _initContracts() {
   }
   if (!sl.isRegistered<OwnerContractInstallmentsCubit>()) {
     sl.registerFactory(() => OwnerContractInstallmentsCubit(sl()));
+  }
+  if (!sl.isRegistered<ContractPaymentsCubit>()) {
+    sl.registerFactory(() => ContractPaymentsCubit(sl()));
   }
 }
 

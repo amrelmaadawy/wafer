@@ -63,5 +63,8 @@ abstract class FinanceRepository {
     int page = 1,
     int perPage = 15,
     String? search,
+    int? propertyId,
+    int? unitId,
+    int? contractId,
   });
 }

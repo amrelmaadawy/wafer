@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/di/service_locator.dart';
 import '../cubit/unit_details/unit_details_cubit.dart';
 import '../cubit/delete_unit/unit_delete_cubit.dart';
+import '../cubit/unit_payments/unit_payments_cubit.dart';
 import '../views/unit_details_view.dart';
 
 class UnitDetailsScreen extends StatelessWidget {
@@ -25,6 +26,9 @@ class UnitDetailsScreen extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => sl<UnitDeleteCubit>(),
+        ),
+        BlocProvider(
+          create: (context) => sl<UnitPaymentsCubit>(),
         ),
       ],
       child: const UnitDetailsView(),

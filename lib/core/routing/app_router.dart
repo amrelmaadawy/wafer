@@ -477,6 +477,13 @@ class AppRouter {
       ),
 
       GoRoute(
+        path: Routes.ownerPropertyCreate,
+        builder: (context, state) => BlocProvider<PropertyCreateCubit>.value(
+          value: sl<PropertyCreateCubit>(),
+          child: const PropertyCreateScreen(),
+        ),
+      ),
+      GoRoute(
         path: Routes.ownerPropertyDetails,
         builder: (context, state) {
           final id = int.tryParse(state.pathParameters['propertyId'] ?? '0') ?? 0;
@@ -485,13 +492,6 @@ class AppRouter {
             child: PropertyDetailsScreen(propertyId: id),
           );
         },
-      ),
-      GoRoute(
-        path: Routes.ownerPropertyCreate,
-        builder: (context, state) => BlocProvider<PropertyCreateCubit>.value(
-          value: sl<PropertyCreateCubit>(),
-          child: const PropertyCreateScreen(),
-        ),
       ),
       GoRoute(
         path: Routes.ownerPropertyEdit,
@@ -505,6 +505,14 @@ class AppRouter {
         },
       ),
       GoRoute(
+        path: Routes.ownerUnitCreate,
+        builder: (context, state) {
+          final propertyId =
+              int.tryParse(state.pathParameters['propertyId'] ?? '0') ?? 0;
+          return UnitCreateScreen(propertyId: propertyId);
+        },
+      ),
+      GoRoute(
         path: Routes.ownerPropertyUnitDetails,
         builder: (context, state) {
           final propertyId =
@@ -512,14 +520,6 @@ class AppRouter {
           final unitId =
               int.tryParse(state.pathParameters['unitId'] ?? '0') ?? 0;
           return UnitDetailsScreen(propertyId: propertyId, unitId: unitId);
-        },
-      ),
-      GoRoute(
-        path: Routes.ownerUnitCreate,
-        builder: (context, state) {
-          final propertyId =
-              int.tryParse(state.pathParameters['propertyId'] ?? '0') ?? 0;
-          return UnitCreateScreen(propertyId: propertyId);
         },
       ),
       GoRoute(
@@ -543,17 +543,17 @@ class AppRouter {
         },
       ),
       GoRoute(
+        path: Routes.ownerMaintenanceCreate,
+        builder: (context, state) {
+          return const OwnerCreateMaintenanceScreen();
+        },
+      ),
+      GoRoute(
         path: Routes.ownerMaintenanceDetails,
         builder: (context, state) {
           final item = state.extra as MaintenanceItemEntity?;
           if (item == null) return const RouteErrorScreen();
           return OwnerMaintenanceDetailsScreen(item: item);
-        },
-      ),
-      GoRoute(
-        path: Routes.ownerMaintenanceCreate,
-        builder: (context, state) {
-          return const OwnerCreateMaintenanceScreen();
         },
       ),
       GoRoute(
