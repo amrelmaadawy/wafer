@@ -39,6 +39,9 @@ class ApiConstants {
       'owner/accounting/accounts/$id';
   static const String ownerAccountingReceipts = 'owner/accounting/receipts';
   static const String ownerAccountingPayments = 'owner/accounting/payments';
+  static const String ownerAccountingTransactions = 'owner/accounting/transactions';
+  static const String ownerAccountingReceivables = 'owner/accounting/receivables';
+  static const String ownerAccountingPayables = 'owner/accounting/payables';
 
   static const String ownerMaintenance = 'owner/maintenance-requests';
   static String ownerMaintenanceDetails(int id) =>

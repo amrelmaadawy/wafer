@@ -93,6 +93,12 @@ import '../finance/presentation/cubit/journal_entries/reverse_journal_entry_cubi
 import '../finance/presentation/cubit/accounts/create_finance_account_cubit.dart';
 import '../finance/presentation/cubit/accounts/update_finance_account_cubit.dart';
 import '../finance/presentation/cubit/accounts/finance_account_details_cubit.dart';
+import '../finance/domain/usecases/get_unified_transactions_use_case.dart';
+import '../finance/domain/usecases/get_receivables_use_case.dart';
+import '../finance/domain/usecases/get_payables_use_case.dart';
+import '../finance/presentation/cubit/transactions/unified_transactions_cubit.dart';
+import '../finance/presentation/cubit/receivables/receivables_cubit.dart';
+import '../finance/presentation/cubit/payables/payables_cubit.dart';
 import '../finance/presentation/cubit/receipts/finance_receipts_cubit.dart';
 import '../finance/presentation/cubit/receipts/create_finance_receipt_cubit.dart';
 import '../finance/presentation/cubit/receipts/update_finance_receipt_cubit.dart';
@@ -326,8 +332,16 @@ void _initFinance() {
   if (!sl.isRegistered<CreateFinancePaymentUseCase>()) {
     sl.registerLazySingleton(() => CreateFinancePaymentUseCase(sl()));
   }
+  if (!sl.isRegistered<GetUnifiedTransactionsUseCase>()) {
+    sl.registerLazySingleton(() => GetUnifiedTransactionsUseCase(sl()));
+  }
 
   // Cubits
+  if (!sl.isRegistered<UnifiedTransactionsCubit>()) {
+    sl.registerFactory(
+      () => UnifiedTransactionsCubit(getUnifiedTransactionsUseCase: sl()),
+    );
+  }
   if (!sl.isRegistered<FinanceFormDataCubit>()) {
     sl.registerFactory(() => FinanceFormDataCubit(sl()));
   }

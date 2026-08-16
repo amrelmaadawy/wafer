@@ -7,6 +7,7 @@ import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../domain/entities/contract_details_entity.dart';
+import '../../../domain/entities/contract_status_extension.dart';
 
 class ContractDetailsSliverAppBar extends StatelessWidget {
   final ContractDetailsEntity contract;
@@ -21,8 +22,18 @@ class ContractDetailsSliverAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primary = context.primaryColor;
-    final isDraft = contract.status.toLowerCase() == 'draft';
-    final statusColor = isDraft ? AppColors.warning : AppColors.success;
+    Color statusColor;
+    if (contract.isActive) {
+      statusColor = AppColors.success;
+    } else if (contract.isDraft || contract.isPending) {
+      statusColor = AppColors.warning;
+    } else if (contract.isExpiring) {
+      statusColor = const Color(0xFFD97706);
+    } else if (contract.isExpired || contract.isTerminated) {
+      statusColor = AppColors.error;
+    } else {
+      statusColor = AppColors.info;
+    }
 
     return SliverAppBar(
       expandedHeight: 210.0,

@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../../../core/constants/maintenance_status.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../../domain/business_rules/maintenance_business_rules.dart';
 import '../../../domain/usecases/approve_owner_maintenance_use_case.dart';
 import 'owner_approve_maintenance_state.dart';
 
@@ -16,7 +18,19 @@ class OwnerApproveMaintenanceCubit extends Cubit<OwnerApproveMaintenanceState> {
     num? advancePayment,
     required String costBearer,
     String? supervisorNotes,
+    String? currentStatus,
   }) async {
+    if (currentStatus != null) {
+      final violation = MaintenanceBusinessRules.validateTransition(
+        currentStatus,
+        MaintenanceStatus.approved,
+      );
+      if (violation != null) {
+        emit(OwnerApproveMaintenanceError(violation.messageKey.tr()));
+        return;
+      }
+    }
+
     emit(const OwnerApproveMaintenanceLoading());
 
     final params = ApproveOwnerMaintenanceParams(

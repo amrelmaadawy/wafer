@@ -17,7 +17,7 @@ void main() {
     await CacheInterceptorConfig.init(customPath: 'test_cache_dir');
     
     Hive.init('test_cache_dir');
-    final box = await Hive.openBox('codra_cache_v1');
+    final box = await Hive.openBox('test_scratch_box');
     await box.put('test_key', 'test_value');
     
     expect(box.get('test_key'), equals('test_value'));
@@ -25,11 +25,10 @@ void main() {
     await box.close();
     
     // Simulating app restart
-    await CacheInterceptorConfig.init(customPath: 'test_cache_dir');
-    final box2 = await Hive.openBox('codra_cache_v1');
+    final box2 = await Hive.openBox('test_scratch_box');
     
     expect(box2.get('test_key'), equals('test_value'));
-    // print('Value retrieved from Hive after reopen: ${box2.get('test_key')}');
+    await box2.close();
     
     await sl.reset();
   });

@@ -13,6 +13,10 @@ import '../usecases/create_finance_receipt_use_case.dart';
 import '../usecases/update_finance_account_use_case.dart';
 import '../usecases/update_finance_receipt_use_case.dart';
 import '../entities/finance_accounts_query_entity.dart';
+import '../entities/unified_transaction_entity.dart';
+import '../entities/unified_transactions_query_entity.dart';
+import '../entities/receivable_entity.dart';
+import '../entities/payable_entity.dart';
 
 abstract class FinanceRepository {
   Future<Either<Failure, FinanceOverviewEntity>> getFinanceOverview();
@@ -66,5 +70,21 @@ abstract class FinanceRepository {
     int? propertyId,
     int? unitId,
     int? contractId,
+  });
+
+  Future<Either<Failure, List<UnifiedTransactionEntity>>> getUnifiedTransactions(
+    UnifiedTransactionsQueryEntity query,
+  );
+
+  Future<Either<Failure, List<ReceivableEntity>>> getReceivables({
+    String? status,
+    int? propertyId,
+    int page = 1,
+  });
+
+  Future<Either<Failure, List<PayableEntity>>> getPayables({
+    String? status,
+    int? propertyId,
+    int page = 1,
   });
 }

@@ -12,6 +12,7 @@ import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 
 import '../../domain/entities/maintenance_item_entity.dart';
+import '../../domain/entities/maintenance_status_extension.dart';
 import '../cubit/details/owner_maintenance_details_cubit.dart';
 import '../cubit/details/owner_maintenance_details_state.dart';
 import '../cubit/delete_maintenance/owner_delete_maintenance_cubit.dart';
@@ -137,12 +138,7 @@ class _OwnerMaintenanceDetailsScreenState
                                 title: LocaleKeys.maintenanceDetailsTitle.tr(),
                                 onBackPressed: () => context.pop(_isModified),
                                 actions: [
-                                  if ([
-                                    'new',
-                                    'pending_supervisor',
-                                    'approved',
-                                    'draft',
-                                  ].contains(displayItem.status))
+                                  if (displayItem.canDelete)
                                     IconButton(
                                       icon: const Icon(
                                         Icons.delete_outline,
@@ -154,11 +150,7 @@ class _OwnerMaintenanceDetailsScreenState
                                             displayItem,
                                           ),
                                     ),
-                                  if ([
-                                    'new',
-                                    'pending_supervisor',
-                                    'draft',
-                                  ].contains(displayItem.status))
+                                  if (displayItem.canEdit)
                                     IconButton(
                                       icon: Icon(
                                         Icons.edit,

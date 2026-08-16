@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:wafer/core/theme/color_utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -14,6 +14,7 @@ import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/payment_entity.dart';
+import '../../domain/entities/payment_status_extension.dart';
 import '../cubit/payments/finance_payment_details_cubit.dart';
 import '../cubit/payments/finance_payment_details_state.dart';
 import '../cubit/payments/cancel_finance_payment_cubit.dart';
@@ -58,10 +59,7 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
         actions: [
           BlocBuilder<FinancePaymentDetailsCubit, FinancePaymentDetailsState>(
             builder: (context, state) {
-              if (state is FinancePaymentDetailsSuccess) {
-                if (state.payment.status.toLowerCase() == 'cancelled') {
-                  return const SizedBox.shrink();
-                }
+              if (state is FinancePaymentDetailsSuccess && state.payment.canEdit) {
                 return Container(
                   margin: const EdgeInsets.symmetric(horizontal: 8),
                   decoration: BoxDecoration(
@@ -196,7 +194,7 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
               ],
             ),
           ],
-          if (payment.status != 'cancelled') ...[
+          if (payment.canCancel) ...[
             const SizedBox(height: 32),
             SizedBox(
               width: double.infinity,
@@ -239,9 +237,15 @@ class _OwnerFinancePaymentDetailsViewState extends State<OwnerFinancePaymentDeta
   }
 
   Widget _buildHeader(BuildContext context, PaymentEntity payment) {
-    final isConfirmed = payment.status == 'confirmed';
-    final statusColor = isConfirmed ? AppColors.success : AppColors.error;
-    final statusText = isConfirmed ? LocaleKeys.profile_active.tr() : LocaleKeys.profile_inactive.tr();
+    Color statusColor;
+    if (payment.isPaid || payment.status == 'confirmed') {
+      statusColor = AppColors.success;
+    } else if (payment.isPending || payment.isDraft) {
+      statusColor = AppColors.warning;
+    } else {
+      statusColor = AppColors.error;
+    }
+    final statusText = payment.status;
 
     return Container(
       padding: const EdgeInsets.all(24),

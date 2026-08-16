@@ -17,6 +17,10 @@ import '../datasources/finance_remote_data_source.dart';
 import '../../domain/entities/receipts_response_entity.dart';
 import '../../domain/entities/receipt_entity.dart';
 import '../../domain/usecases/create_finance_receipt_use_case.dart';
+import '../../domain/entities/unified_transaction_entity.dart';
+import '../../domain/entities/unified_transactions_query_entity.dart';
+import '../../domain/entities/receivable_entity.dart';
+import '../../domain/entities/payable_entity.dart';
 
 class FinanceRepositoryImpl extends BaseRepository
     implements FinanceRepository {
@@ -172,6 +176,71 @@ class FinanceRepositoryImpl extends BaseRepository
         unitId: unitId,
         contractId: contractId,
       ),
+    );
+  }
+
+  @override
+  Future<Either<Failure, List<UnifiedTransactionEntity>>> getUnifiedTransactions(
+    UnifiedTransactionsQueryEntity query,
+  ) async {
+    final queryParams = <String, dynamic>{
+      'page': query.page,
+      'per_page': query.limit,
+      if (query.search != null && query.search!.isNotEmpty) 'search': query.search,
+      if (query.dateFrom != null && query.dateFrom!.isNotEmpty) 'date_from': query.dateFrom,
+      if (query.dateTo != null && query.dateTo!.isNotEmpty) 'date_to': query.dateTo,
+      if (query.type != null && query.type!.isNotEmpty && query.type != 'all') 'type': query.type,
+      if (query.status != null && query.status!.isNotEmpty) 'status': query.status,
+      if (query.propertyId != null) 'property_id': query.propertyId,
+      if (query.unitId != null) 'unit_id': query.unitId,
+      if (query.contractId != null) 'contract_id': query.contractId,
+      if (query.accountId != null) 'account_id': query.accountId,
+    };
+
+    return executeApiCall<List<UnifiedTransactionEntity>>(
+      call: () => remoteDataSource.getUnifiedTransactions(queryParams),
+    );
+  }
+
+  @override
+  Future<Either<Failure, List<ReceivableEntity>>> getReceivables({
+    String? status,
+    int? propertyId,
+    int page = 1,
+  }) async {
+    final queryParams = <String, dynamic>{
+      'page': page,
+    };
+    if (status != null && status.isNotEmpty) {
+      queryParams['status'] = status;
+    }
+    if (propertyId != null) {
+      queryParams['property_id'] = propertyId;
+    }
+
+    return executeApiCall<List<ReceivableEntity>>(
+      call: () => remoteDataSource.getReceivables(queryParams),
+    );
+  }
+
+  @override
+  Future<Either<Failure, List<PayableEntity>>> getPayables({
+    String? status,
+    int? propertyId,
+    int page = 1,
+  }) async {
+    final queryParams = <String, dynamic>{
+      'page': page,
+    };
+    if (status != null && status.isNotEmpty) {
+      queryParams['status'] = status;
+    }
+    if (propertyId != null) {
+      queryParams['property_id'] = propertyId;
+    }
+
+    return executeApiCall<List<PayableEntity>>(
+      call: () => remoteDataSource.getPayables(queryParams),
     );
   }
 }

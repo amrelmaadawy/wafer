@@ -20,6 +20,7 @@ import '../widgets/details/legal_case_header_card.dart';
 import '../widgets/details/legal_case_parties_card.dart';
 import '../widgets/details/legal_case_property_card.dart';
 import 'package:go_router/go_router.dart';
+import '../../domain/entities/legal_case_status_extension.dart';
 import '../widgets/legal_case_details_skeleton.dart';
 import '../widgets/case_stages_timeline_widget.dart';
 import '../widgets/add_legal_case_stage_bottom_sheet.dart';
@@ -146,23 +147,23 @@ class _LegalCaseDetailsViewState extends State<LegalCaseDetailsView> {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        if (state is LegalCaseDetailsLoaded) ...[
+                        if (state is LegalCaseDetailsLoaded && state.legalCase.canEdit) ...[
                           Container(
                             decoration: BoxDecoration(
-                              color: AppColors.primary.withValues(alpha: 0.1),
+                              color: context.primaryColor.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: IconButton(
-                              icon: const Icon(
+                              icon: Icon(
                                 Icons.edit_outlined,
-                                color: AppColors.primary,
+                                color: context.primaryColor,
                                 size: 22,
                               ),
                               constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
                               padding: EdgeInsets.zero,
                               onPressed: () {
-                                final String path =
-                                    '${Routes.ownerLegalCases}/${Routes.ownerLegalCaseEdit}';
+                                final caseId = state.legalCase.id ?? widget.legalCaseId;
+                                final String path = Routes.ownerLegalCaseEditPath(caseId.toString());
                                 context.push(path, extra: state.legalCase).then((
                                   updated,
                                 ) {
@@ -175,22 +176,23 @@ class _LegalCaseDetailsViewState extends State<LegalCaseDetailsView> {
                           ),
                           const SizedBox(width: 8),
                         ],
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.error.withValues(alpha: 0.1),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: IconButton(
-                            icon: const Icon(
-                              Icons.delete_outline,
-                              color: AppColors.error,
-                              size: 22,
+                        if (state is LegalCaseDetailsLoaded && state.legalCase.canDelete)
+                          Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.error.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                            constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
-                            padding: EdgeInsets.zero,
-                            onPressed: () => _showDeleteDialog(context),
+                            child: IconButton(
+                              icon: const Icon(
+                                Icons.delete_outline,
+                                color: AppColors.error,
+                                size: 22,
+                              ),
+                              constraints: const BoxConstraints(minWidth: 40, minHeight: 40),
+                              padding: EdgeInsets.zero,
+                              onPressed: () => _showDeleteDialog(context),
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),

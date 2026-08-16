@@ -39,6 +39,7 @@ class Routes {
   static const String ownerFinanceCreateJournalEntry = '/owner-main/finance/journal-entries/create';
   static const String ownerFinanceUpdateJournalEntry = '/owner-main/finance/journal-entries/update';
 
+
   // --- Contracts ---
   static const String ownerContractDetails = '/owner/contracts/:contractId';
   static const String ownerContractInstallments = '/owner/contracts/:contractId/installments';

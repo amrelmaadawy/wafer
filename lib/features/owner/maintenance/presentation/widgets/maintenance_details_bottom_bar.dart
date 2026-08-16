@@ -9,6 +9,7 @@ import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../domain/entities/maintenance_item_entity.dart';
+import '../../domain/entities/maintenance_status_extension.dart';
 import '../cubit/details/owner_maintenance_details_cubit.dart';
 import '../cubit/execute_maintenance/owner_execute_maintenance_cubit.dart';
 import '../cubit/verify_close_maintenance/owner_verify_close_maintenance_cubit.dart';
@@ -32,8 +33,7 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (displayItem.status == 'new' ||
-        displayItem.status == 'pending_supervisor') {
+    if (displayItem.canApprove || displayItem.canReject) {
       return _ActionBarContainer(
         child: Row(
           children: [
@@ -76,7 +76,7 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
           ],
         ),
       );
-    } else if (displayItem.status == 'approved') {
+    } else if (displayItem.canAssign) {
       return _ActionBarContainer(
         child: _buildButton(
           context,
@@ -92,7 +92,7 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
           },
         ),
       );
-    } else if (displayItem.status == 'assigned') {
+    } else if (displayItem.canStart) {
       return _ActionBarContainer(
         child: _buildButton(
           context,
@@ -111,7 +111,7 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
           },
         ),
       );
-    } else if (displayItem.status == 'in_progress') {
+    } else if (displayItem.canExecute) {
       return _ActionBarContainer(
         child: _buildButton(
           context,
@@ -146,7 +146,7 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
           },
         ),
       );
-    } else if (displayItem.status == 'executed') {
+    } else if (displayItem.canVerifyClose) {
       return _ActionBarContainer(
         child: _buildButton(
           context,
@@ -173,7 +173,7 @@ class MaintenanceDetailsBottomBar extends StatelessWidget {
           },
         ),
       );
-    } else if (displayItem.status == 'closed') {
+    } else if (displayItem.canForward) {
       return _ActionBarContainer(
         child: _buildButton(
           context,

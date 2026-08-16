@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/constants/maintenance_status.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
@@ -23,33 +24,33 @@ class MaintenanceStatusBadge extends StatelessWidget {
     String labelKey = '';
 
     switch (lower) {
-      case 'new':
+      case MaintenanceStatus.new_:
       case 'pending':
         bg = AppColors.warning.withValues(alpha: 0.12);
         fg = AppColors.warning;
         labelKey = LocaleKeys.maintenanceStatusPending;
         break;
-      case 'pending_supervisor':
+      case MaintenanceStatus.pendingSupervisor:
         bg = const Color(0xFFD97706).withValues(alpha: 0.12); // Amber
         fg = const Color(0xFFD97706);
         labelKey = LocaleKeys.maintenanceStatusPendingSupervisor;
         break;
-      case 'approved':
+      case MaintenanceStatus.approved:
         bg = AppColors.info.withValues(alpha: 0.12); // Blue
         fg = AppColors.info;
         labelKey = LocaleKeys.maintenanceStatusApproved;
         break;
-      case 'assigned':
+      case MaintenanceStatus.assigned:
         bg = const Color(0xFF6366F1).withValues(alpha: 0.12); // Indigo
         fg = const Color(0xFF6366F1);
         labelKey = LocaleKeys.maintenanceStatusAssigned;
         break;
-      case 'in_progress':
+      case MaintenanceStatus.inProgress:
         bg = const Color(0xFF8B5CF6).withValues(alpha: 0.12); // Purple
         fg = const Color(0xFF8B5CF6);
         labelKey = LocaleKeys.maintenanceStatusInProgress;
         break;
-      case 'executed':
+      case MaintenanceStatus.executed:
       case 'completed':
         bg = AppColors.success.withValues(alpha: 0.12); // Green
         fg = AppColors.success;
@@ -60,7 +61,7 @@ class MaintenanceStatusBadge extends StatelessWidget {
         fg = const Color(0xFF14B8A6);
         labelKey = LocaleKeys.maintenanceStatusPendingClosure;
         break;
-      case 'closed':
+      case MaintenanceStatus.closed:
         bg = const Color(0xFF64748B).withValues(alpha: 0.12); // Slate
         fg = const Color(0xFF64748B);
         labelKey = LocaleKeys.maintenanceStatusClosed;
@@ -70,12 +71,12 @@ class MaintenanceStatusBadge extends StatelessWidget {
         fg = const Color(0xFF06B6D4);
         labelKey = LocaleKeys.maintenanceStatusForwarded;
         break;
-      case 'rejected':
+      case MaintenanceStatus.rejected:
         bg = AppColors.error.withValues(alpha: 0.12); // Red
         fg = AppColors.error;
         labelKey = LocaleKeys.maintenanceStatusRejected;
         break;
-      case 'cancelled':
+      case MaintenanceStatus.cancelled:
         bg = const Color(0xFFF97316).withValues(alpha: 0.12); // Orange-Red
         fg = const Color(0xFFF97316);
         labelKey = LocaleKeys.maintenanceStatusCancelled;

@@ -11,6 +11,11 @@ import '../models/receipts_response_model.dart';
 import '../models/receipt_model.dart';
 import '../models/finance_form_data_model.dart';
 
+import '../models/unified_transaction_model.dart';
+import '../models/receivable_model.dart';
+import '../models/payable_model.dart';
+import '../../domain/entities/unified_transaction_entity.dart';
+
 abstract class FinanceRemoteDataSource {
   Future<FinanceOverviewModel> getFinanceOverview();
   Future<FinanceFormDataModel> getFinanceFormData();
@@ -50,6 +55,10 @@ abstract class FinanceRemoteDataSource {
 
   Future<ReceiptModel> getReceiptDetails(int receiptId);
   Future<ReceiptModel> cancelReceipt(int receiptId, String reason);
+
+  Future<List<UnifiedTransactionModel>> getUnifiedTransactions(Map<String, dynamic> queryParams);
+  Future<List<ReceivableModel>> getReceivables(Map<String, dynamic> queryParams);
+  Future<List<PayableModel>> getPayables(Map<String, dynamic> queryParams);
 }
 
 class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
@@ -335,6 +344,147 @@ class FinanceRemoteDataSourceImpl implements FinanceRemoteDataSource {
       throw _handleDioException(e, 'Failed to cancel receipt');
     } catch (e) {
       throw ServerException(e.toString());
+    }
+  }
+
+  @override
+  Future<List<UnifiedTransactionModel>> getUnifiedTransactions(
+    Map<String, dynamic> queryParams,
+  ) async {
+    try {
+      final response = await dio.get(
+        ApiConstants.ownerAccountingTransactions,
+        queryParameters: queryParams,
+      );
+      final dynamic rawData = response.data['data'];
+      List list = [];
+      if (rawData is List) {
+        list = rawData;
+      } else if (rawData is Map && rawData['transactions'] is List) {
+        list = rawData['transactions'];
+      } else if (rawData is Map && rawData['data'] is List) {
+        list = rawData['data'];
+      }
+      return list.map((item) => UnifiedTransactionModel.fromJson(item as Map<String, dynamic>)).toList();
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404 || e.response?.statusCode == 405) {
+        // Graceful aggregation fallback from receipts and payments
+        return _fallbackUnifiedTransactions(queryParams);
+      }
+      throw _handleDioException(e, 'Failed to fetch transactions');
+    } catch (e) {
+      return _fallbackUnifiedTransactions(queryParams);
+    }
+  }
+
+  Future<List<UnifiedTransactionModel>> _fallbackUnifiedTransactions(
+    Map<String, dynamic> queryParams,
+  ) async {
+    try {
+      final results = <UnifiedTransactionModel>[];
+      final page = queryParams['page'] ?? 1;
+      final perPage = queryParams['per_page'] ?? 15;
+      final type = queryParams['type']?.toString().toLowerCase();
+
+      if (type == null || type == 'all' || type == 'receipt') {
+        try {
+          final receiptsRes = await getReceipts(page: page is int ? page : int.tryParse(page.toString()) ?? 1, perPage: perPage is int ? perPage : 15);
+          for (final r in receiptsRes.receipts) {
+            results.add(UnifiedTransactionModel(
+              id: r.id,
+              referenceNumber: r.receiptNumber,
+              type: UnifiedTransactionType.receipt,
+              date: r.receiptDate,
+              amount: r.amount,
+              isPositive: true,
+              status: r.status,
+              partyName: r.owner.name,
+              notes: r.notes,
+            ));
+          }
+        } catch (_) {}
+      }
+
+      if (type == null || type == 'all' || type == 'payment') {
+        try {
+          final paymentsRes = await getPayments(page: page is int ? page : int.tryParse(page.toString()) ?? 1, perPage: perPage is int ? perPage : 15);
+          for (final p in paymentsRes.payments) {
+            results.add(UnifiedTransactionModel(
+              id: p.id,
+              referenceNumber: p.paymentNumber,
+              type: UnifiedTransactionType.payment,
+              date: p.paymentDate,
+              amount: p.amount,
+              isPositive: false,
+              propertyName: p.propertyName,
+              unitName: p.unitName,
+              contractNumber: p.contractNumber,
+              status: p.status,
+              partyName: p.payee.name,
+              notes: p.notes,
+            ));
+          }
+        } catch (_) {}
+      }
+
+      results.sort((a, b) => b.date.compareTo(a.date));
+      return results;
+    } catch (e) {
+      return [];
+    }
+  }
+
+  @override
+  Future<List<ReceivableModel>> getReceivables(Map<String, dynamic> queryParams) async {
+    try {
+      final response = await dio.get(
+        ApiConstants.ownerAccountingReceivables,
+        queryParameters: queryParams,
+      );
+      final dynamic rawData = response.data['data'];
+      List list = [];
+      if (rawData is List) {
+        list = rawData;
+      } else if (rawData is Map && rawData['receivables'] is List) {
+        list = rawData['receivables'];
+      } else if (rawData is Map && rawData['data'] is List) {
+        list = rawData['data'];
+      }
+      return list.map((item) => ReceivableModel.fromJson(item as Map<String, dynamic>)).toList();
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404 || e.response?.statusCode == 405) {
+        return [];
+      }
+      throw _handleDioException(e, 'Failed to fetch receivables');
+    } catch (_) {
+      return [];
+    }
+  }
+
+  @override
+  Future<List<PayableModel>> getPayables(Map<String, dynamic> queryParams) async {
+    try {
+      final response = await dio.get(
+        ApiConstants.ownerAccountingPayables,
+        queryParameters: queryParams,
+      );
+      final dynamic rawData = response.data['data'];
+      List list = [];
+      if (rawData is List) {
+        list = rawData;
+      } else if (rawData is Map && rawData['payables'] is List) {
+        list = rawData['payables'];
+      } else if (rawData is Map && rawData['data'] is List) {
+        list = rawData['data'];
+      }
+      return list.map((item) => PayableModel.fromJson(item as Map<String, dynamic>)).toList();
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404 || e.response?.statusCode == 405) {
+        return [];
+      }
+      throw _handleDioException(e, 'Failed to fetch payables');
+    } catch (_) {
+      return [];
     }
   }
 }

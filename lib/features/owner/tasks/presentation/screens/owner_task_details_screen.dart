@@ -17,10 +17,13 @@ import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/routing/routes.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../core/constants/task_status.dart';
 import '../../domain/entities/task_entity.dart';
+import '../../domain/entities/task_status_extension.dart';
 import '../cubits/details/task_details_cubit.dart';
 import '../cubits/details/task_details_state.dart';
 import '../widgets/task_details_widgets.dart';
+import '../widgets/task_details_bottom_bar.dart';
 import '../cubits/delete/delete_task_cubit.dart';
 import '../cubits/delete/delete_task_state.dart';
 import '../cubits/form_data/task_form_data_cubit.dart';
@@ -126,50 +129,53 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          InkWell(
-                            onTap: () => _showDeleteConfirmation(context, state.task),
-                            borderRadius: AppRadius.circularMd,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: AppColors.error.withValues(alpha: 0.1),
-                                borderRadius: AppRadius.circularMd,
-                                border: Border.all(
-                                  color: AppColors.error.withValues(alpha: 0.2),
+                          if (state.task.canDelete)
+                            InkWell(
+                              onTap: () => _showDeleteConfirmation(context, state.task),
+                              borderRadius: AppRadius.circularMd,
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: AppColors.error.withValues(alpha: 0.1),
+                                  borderRadius: AppRadius.circularMd,
+                                  border: Border.all(
+                                    color: AppColors.error.withValues(alpha: 0.2),
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.delete_outline_rounded,
+                                  color: AppColors.error,
+                                  size: 20,
                                 ),
                               ),
-                              child: const Icon(
-                                Icons.delete_outline_rounded,
-                                color: AppColors.error,
-                                size: 20,
-                              ),
                             ),
-                          ),
-                          const SizedBox(width: AppSpacing.sm),
-                          InkWell(
-                            onTap: () async {
-                              final result = await context.push(Routes.ownerTasksEdit, extra: state.task);
-                              if (result == true && context.mounted) {
-                                _cubit.fetchTaskDetails(widget.taskId, refresh: true);
-                              }
-                            },
-                            borderRadius: AppRadius.circularMd,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: context.primaryColor.withValues(alpha: 0.1),
-                                borderRadius: AppRadius.circularMd,
-                                border: Border.all(
-                                  color: context.primaryColor.withValues(alpha: 0.2),
+                          if (state.task.canDelete && state.task.canEdit)
+                            const SizedBox(width: AppSpacing.sm),
+                          if (state.task.canEdit)
+                            InkWell(
+                              onTap: () async {
+                                final result = await context.push(Routes.ownerTasksEdit, extra: state.task);
+                                if (result == true && context.mounted) {
+                                  _cubit.fetchTaskDetails(widget.taskId, refresh: true);
+                                }
+                              },
+                              borderRadius: AppRadius.circularMd,
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: context.primaryColor.withValues(alpha: 0.1),
+                                  borderRadius: AppRadius.circularMd,
+                                  border: Border.all(
+                                    color: context.primaryColor.withValues(alpha: 0.2),
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.edit_rounded,
+                                  color: context.primaryColor,
+                                  size: 20,
                                 ),
                               ),
-                              child: Icon(
-                                Icons.edit_rounded,
-                                color: context.primaryColor,
-                                size: 20,
-                              ),
                             ),
-                          ),
                         ],
                       ),
                     ),
@@ -267,6 +273,22 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
                   ),
                 ],
                 child: _buildContent(context, state.task),
+              );
+            }
+            return const SizedBox.shrink();
+          },
+        ),
+        bottomNavigationBar: BlocBuilder<TaskDetailsCubit, TaskDetailsState>(
+          builder: (context, state) {
+            if (state is TaskDetailsLoaded) {
+              return TaskDetailsBottomBar(
+                task: state.task,
+                onStartWork: () {
+                  _updateStatusCubit.updateStatus(widget.taskId, TaskStatus.inProgress);
+                },
+                onCompleteTask: () {
+                  _updateStatusCubit.updateStatus(widget.taskId, TaskStatus.completed);
+                },
               );
             }
             return const SizedBox.shrink();
