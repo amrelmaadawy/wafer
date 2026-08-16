@@ -2191,6 +2191,8 @@ abstract class  LocaleKeys {
   static const assignee_removed_successfully = 'assignee_removed_successfully';
   static const confirm = 'confirm';
   static const delete_task = 'delete_task';
+  static const no_tasks_yet = 'no_tasks_yet';
   static const delete = 'delete';
 
 }
+

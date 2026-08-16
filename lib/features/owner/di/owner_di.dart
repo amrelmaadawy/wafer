@@ -211,16 +211,16 @@ import '../maintenance_negotiations/domain/usecases/create_negotiation_use_case.
 import '../maintenance_negotiations/presentation/cubit/form_data/negotiation_form_data_cubit.dart';
 import '../maintenance_negotiations/presentation/cubit/list/negotiations_list_cubit.dart';
 import '../maintenance_negotiations/presentation/cubit/create/create_negotiation_cubit.dart';
-import '../tasks/domain/use_cases/get_tasks_use_case.dart';
-import '../tasks/domain/use_cases/get_task_details_use_case.dart';
+import '../tasks/domain/usecases/get_tasks_usecase.dart';
+import '../tasks/domain/usecases/get_task_details_usecase.dart';
 import '../tasks/domain/usecases/create_task_usecase.dart';
 import '../tasks/domain/usecases/update_task_usecase.dart';
 import '../tasks/domain/usecases/get_task_form_data_usecase.dart';
 import '../tasks/domain/usecases/update_task_status_usecase.dart';
-import '../tasks/domain/use_cases/delete_task_use_case.dart';
-import '../tasks/presentation/cubit/list/tasks_list_cubit.dart';
-import '../tasks/presentation/cubit/details/task_details_cubit.dart';
-import '../tasks/presentation/cubit/create_task/create_task_cubit.dart';
+import '../tasks/domain/usecases/delete_task_usecase.dart';
+import '../tasks/presentation/cubits/list/tasks_list_cubit.dart';
+import '../tasks/presentation/cubits/details/task_details_cubit.dart';
+import '../tasks/presentation/cubits/create_task/create_task_cubit.dart';
 import '../tasks/presentation/cubits/update_task/update_task_cubit.dart';
 import '../tasks/presentation/cubits/form_data/task_form_data_cubit.dart';
 import '../tasks/presentation/cubits/update_status/update_task_status_cubit.dart';
@@ -236,7 +236,7 @@ import '../tasks/domain/usecases/add_task_assignee_usecase.dart';
 import '../tasks/presentation/cubits/add_assignee/add_task_assignee_cubit.dart';
 import '../tasks/domain/usecases/remove_task_assignee_usecase.dart';
 import '../tasks/presentation/cubits/remove_assignee/remove_task_assignee_cubit.dart';
-import '../tasks/presentation/cubit/delete/delete_task_cubit.dart';
+import '../tasks/presentation/cubits/delete/delete_task_cubit.dart';
 // Tasks
 import '../tasks/data/datasources/tasks_remote_data_source.dart';
 import '../tasks/data/repositories/tasks_repository_impl.dart';
@@ -1045,3 +1045,4 @@ void _initTasks() {
     sl.registerFactory(() => RemoveTaskAssigneeCubit(removeTaskAssigneeUseCase: sl()));
   }
 }
+

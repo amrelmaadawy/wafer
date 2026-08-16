@@ -1,8 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import '../../../../../../core/error/failures.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../core/localization/locale_keys.dart';
 import '../../../domain/entities/task_entity.dart';
-import '../../../domain/use_cases/get_tasks_use_case.dart';
+import '../../../domain/usecases/get_tasks_usecase.dart';
 
 part 'tasks_list_state.dart';
 
@@ -59,6 +61,9 @@ class TasksListCubit extends Cubit<TasksListState> {
     if (failure is ServerFailure) {
       return failure.message;
     }
-    return 'Unexpected Error';
+    return LocaleKeys.errorOccurred.tr();
   }
 }
+
+
+

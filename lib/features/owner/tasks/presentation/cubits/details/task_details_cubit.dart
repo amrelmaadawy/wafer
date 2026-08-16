@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../domain/use_cases/get_task_details_use_case.dart';
+import '../../../domain/usecases/get_task_details_usecase.dart';
 import 'task_details_state.dart';
 
 class TaskDetailsCubit extends Cubit<TaskDetailsState> {

@@ -10,7 +10,7 @@ import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_empty_widget.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
-import '../cubit/list/tasks_list_cubit.dart';
+import '../cubits/list/tasks_list_cubit.dart';
 import '../widgets/task_list_item.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/di/service_locator.dart';
@@ -94,7 +94,7 @@ class _OwnerTasksScreenState extends State<OwnerTasksScreen> {
 
               if (state.items.isEmpty) {
                 return CustomEmptyWidget(
-                  title: LocaleKeys.propertiesEmptySearch.tr(),
+                  title: LocaleKeys.no_tasks_yet.tr(),
                   subtitle: '',
                   icon: Icons.task_rounded,
                 );

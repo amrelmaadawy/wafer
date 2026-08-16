@@ -7,6 +7,7 @@ import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/utils/helpers/color_helper.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/app_surface_card.dart';
@@ -16,13 +17,12 @@ import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/routing/routes.dart';
 import 'package:go_router/go_router.dart';
 import '../../domain/entities/task_entity.dart';
-import '../cubit/details/task_details_cubit.dart';
-import '../cubit/details/task_details_state.dart';
+import '../cubits/details/task_details_cubit.dart';
+import '../cubits/details/task_details_state.dart';
 import '../widgets/task_details_widgets.dart';
-import '../cubit/delete/delete_task_cubit.dart';
-import '../cubit/delete/delete_task_state.dart';
+import '../cubits/delete/delete_task_cubit.dart';
+import '../cubits/delete/delete_task_state.dart';
 import '../cubits/form_data/task_form_data_cubit.dart';
-import '../cubits/form_data/task_form_data_state.dart';
 import '../cubits/update_status/update_task_status_cubit.dart';
 import '../cubits/update_status/update_task_status_state.dart';
 import '../cubits/update_progress/update_task_progress_cubit.dart';
@@ -38,10 +38,13 @@ import '../cubits/add_assignee/add_task_assignee_state.dart';
 import '../cubits/remove_assignee/remove_task_assignee_cubit.dart';
 import '../cubits/remove_assignee/remove_task_assignee_state.dart';
 import '../widgets/task_comments_section.dart';
+import '../widgets/details/task_details_status_bottom_sheet.dart';
+import '../widgets/details/task_details_progress_bottom_sheet.dart';
+import '../widgets/details/task_details_priority_bottom_sheet.dart';
+import '../widgets/details/task_details_dates_bottom_sheet.dart';
 import '../widgets/task_assignees_section.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
-import '../../../../../core/utils/widgets/custom_text_field.dart';
 
 class OwnerTaskDetailsScreen extends StatefulWidget {
   final int taskId;
@@ -507,7 +510,7 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
                   context,
                   icon: Icons.flag_rounded,
                   label: task.priority!.label,
-                  color: _parseColor(task.priority!.color, AppColors.warning),
+                  color: ColorHelper.parseHexColor(task.priority!.color, AppColors.warning),
                   onTap: () => _showPriorityBottomSheet(context, task.priority!.value),
                   showEdit: true,
                 ),
@@ -516,7 +519,7 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
                   context,
                   icon: Icons.category_rounded,
                   label: task.category!.label,
-                  color: _parseColor(task.category!.color, AppColors.info),
+                  color: ColorHelper.parseHexColor(task.category!.color, AppColors.info),
                 ),
             ],
           ),
@@ -526,8 +529,8 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
   }
 
   Widget _buildStatusPill(BuildContext context, TaskOptionEntity status) {
-    final bgColor = _parseColor(status.backgroundColor, Theme.of(context).primaryColor.withValues(alpha: 0.1));
-    final textColor = _parseColor(status.color, Theme.of(context).primaryColor);
+    final bgColor = ColorHelper.parseHexColor(status.backgroundColor, Theme.of(context).primaryColor.withValues(alpha: 0.1));
+    final textColor = ColorHelper.parseHexColor(status.color, Theme.of(context).primaryColor);
     return BlocBuilder<UpdateTaskStatusCubit, UpdateTaskStatusState>(
       builder: (context, state) {
         final isLoading = state is UpdateTaskStatusLoading;
@@ -578,99 +581,11 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.lg)),
       ),
-      builder: (ctx) {
-        return BlocBuilder<TaskFormDataCubit, TaskFormDataState>(
-          bloc: _formDataCubit,
-          builder: (context, state) {
-            if (state is TaskFormDataLoading || state is TaskFormDataInitial) {
-              return const SizedBox(
-                height: 200,
-                child: Center(child: CircularProgressIndicator()),
-              );
-            } else if (state is TaskFormDataError) {
-              return SizedBox(
-                height: 200,
-                child: CustomErrorWidget(
-                  message: state.message,
-                  onRetry: () => _formDataCubit.fetchFormData(),
-                ),
-              );
-            } else if (state is TaskFormDataLoaded) {
-              final statuses = state.formData.options.statuses;
-              return SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                        child: Text(
-                          LocaleKeys.status.tr(),
-                          style: AppTextStyles.h3.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: context.appOnSurfaceColor,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      ...statuses.map((statusOption) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pop(ctx);
-                              _updateStatusCubit.updateStatus(widget.taskId, statusOption.value);
-                            },
-                            borderRadius: AppRadius.circularMd,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
-                              decoration: BoxDecoration(
-                                color: _parseColor(statusOption.color, context.primaryColor).withValues(alpha: 0.1),
-                                borderRadius: AppRadius.circularMd,
-                                border: Border.all(color: _parseColor(statusOption.color, context.primaryColor).withValues(alpha: 0.2)),
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      color: _parseColor(statusOption.color, context.primaryColor),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(width: AppSpacing.md),
-                                  Expanded(
-                                    child: Text(
-                                      statusOption.label,
-                                      style: AppTextStyles.bodyLarge.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: _parseColor(statusOption.color, context.primaryColor),
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    size: 14,
-                                    color: _parseColor(statusOption.color, context.primaryColor).withValues(alpha: 0.5),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                ),
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        );
-      },
+      builder: (ctx) => TaskDetailsStatusBottomSheet(
+        formDataCubit: _formDataCubit,
+        updateStatusCubit: _updateStatusCubit,
+        taskId: widget.taskId,
+      ),
     );
   }
 
@@ -735,20 +650,7 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
     );
   }
 
-  Color _parseColor(String? hexString, Color defaultColor) {
-    if (hexString == null || hexString.isEmpty) return defaultColor;
-    try {
-      final buffer = StringBuffer();
-      if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-      buffer.write(hexString.replaceFirst('#', ''));
-      return Color(int.parse(buffer.toString(), radix: 16));
-    } catch (e) {
-      return defaultColor;
-    }
-  }
-
   void _showProgressBottomSheet(BuildContext context, int initialProgress) {
-    double currentProgress = initialProgress.toDouble();
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -756,96 +658,11 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (ctx) {
-        return BlocProvider.value(
-          value: _updateProgressCubit,
-          child: StatefulBuilder(
-            builder: (context, setState) {
-            return Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(ctx).viewInsets.bottom + AppSpacing.xl,
-                top: AppSpacing.xl,
-                left: AppSpacing.md,
-                right: AppSpacing.md,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: 40,
-                    height: 4,
-                    decoration: BoxDecoration(
-                      color: context.appOnSurfaceColor.withValues(alpha: 0.2),
-                      borderRadius: AppRadius.circularSm,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  Text(
-                    LocaleKeys.update_progress.tr(),
-                    style: AppTextStyles.h3.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: context.appOnSurfaceColor,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.xxl),
-                  Text(
-                    '${currentProgress.toInt()}%',
-                    style: AppTextStyles.h1.copyWith(
-                      fontWeight: FontWeight.w900,
-                      color: context.primaryColor,
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                      activeTrackColor: context.primaryColor,
-                      inactiveTrackColor: context.primaryColor.withValues(alpha: 0.15),
-                      thumbColor: context.primaryColor,
-                      overlayColor: context.primaryColor.withValues(alpha: 0.2),
-                      trackHeight: 8.0,
-                      thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 12.0),
-                      overlayShape: const RoundSliderOverlayShape(overlayRadius: 24.0),
-                    ),
-                    child: Slider(
-                      value: currentProgress,
-                      min: 0,
-                      max: 100,
-                      divisions: 100,
-                      onChanged: (value) {
-                        setState(() {
-                          currentProgress = value;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.xxl),
-                  BlocBuilder<UpdateTaskProgressCubit, UpdateTaskProgressState>(
-                    builder: (context, state) {
-                      return CustomButton(
-                        text: LocaleKeys.common_save.tr(),
-                        isLoading: state is UpdateTaskProgressLoading,
-                        onPressed: () {
-                          if (currentProgress.toInt() == initialProgress) {
-                            Navigator.pop(ctx);
-                            return;
-                          }
-                          _updateProgressCubit.updateProgress(widget.taskId, currentProgress.toInt()).then((_) {
-                            if (_updateProgressCubit.state is UpdateTaskProgressSuccess) {
-                              if (ctx.mounted) Navigator.pop(ctx);
-                            }
-                          });
-                        },
-                        width: double.infinity,
-                      );
-                    },
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      );
-    },
+      builder: (ctx) => TaskDetailsProgressBottomSheet(
+        updateProgressCubit: _updateProgressCubit,
+        taskId: widget.taskId,
+        initialProgress: initialProgress,
+      ),
     );
   }
 
@@ -856,106 +673,15 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (ctx) {
-        return BlocBuilder<TaskFormDataCubit, TaskFormDataState>(
-          bloc: _formDataCubit,
-          builder: (context, state) {
-            if (state is TaskFormDataLoading || state is TaskFormDataInitial) {
-              return const SizedBox(
-                height: 200,
-                child: Center(child: CircularProgressIndicator()),
-              );
-            } else if (state is TaskFormDataError) {
-              return SizedBox(
-                height: 200,
-                child: CustomErrorWidget(
-                  message: state.message,
-                  onRetry: () => _formDataCubit.fetchFormData(),
-                ),
-              );
-            } else if (state is TaskFormDataLoaded) {
-              final priorities = state.formData.options.priorities;
-              return SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.md),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                        child: Text(
-                          LocaleKeys.update_priority.tr(),
-                          style: AppTextStyles.h3.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: context.appOnSurfaceColor,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      ...priorities.map((priorityOption) {
-                        return Padding(
-                          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pop(ctx);
-                              _updatePriorityCubit.updatePriority(widget.taskId, priorityOption.value);
-                            },
-                            borderRadius: AppRadius.circularMd,
-                            child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
-                              decoration: BoxDecoration(
-                                color: _parseColor(priorityOption.color, context.primaryColor).withValues(alpha: 0.1),
-                                borderRadius: AppRadius.circularMd,
-                                border: Border.all(color: _parseColor(priorityOption.color, context.primaryColor).withValues(alpha: 0.2)),
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: 10,
-                                    height: 10,
-                                    decoration: BoxDecoration(
-                                      color: _parseColor(priorityOption.color, context.primaryColor),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  const SizedBox(width: AppSpacing.md),
-                                  Expanded(
-                                    child: Text(
-                                      priorityOption.label,
-                                      style: AppTextStyles.bodyLarge.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: _parseColor(priorityOption.color, context.primaryColor),
-                                      ),
-                                    ),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios_rounded,
-                                    size: 14,
-                                    color: _parseColor(priorityOption.color, context.primaryColor).withValues(alpha: 0.5),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                ),
-              );
-            }
-            return const SizedBox.shrink();
-          },
-        );
-      },
+      builder: (ctx) => TaskDetailsPriorityBottomSheet(
+        formDataCubit: _formDataCubit,
+        updatePriorityCubit: _updatePriorityCubit,
+        taskId: widget.taskId,
+      ),
     );
   }
 
   void _showUpdateDatesBottomSheet(BuildContext context, TaskDatesEntity currentDates) {
-    String? selectedStartDate = currentDates.startDate;
-    String? selectedDueDate = currentDates.dueDate;
-
     showModalBottomSheet(
       context: context,
       backgroundColor: context.appSurfaceColor,
@@ -963,128 +689,11 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (ctx) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return Padding(
-              padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-                left: AppSpacing.md,
-                right: AppSpacing.md,
-                top: AppSpacing.lg,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    LocaleKeys.update_dates.tr(),
-                    style: AppTextStyles.h3.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: context.appOnSurfaceColor,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  CustomTextField(
-                    label: LocaleKeys.contractsStartDateLabel.tr(),
-                    hintText: 'YYYY-MM-DD',
-                    readOnly: true,
-                    controller: TextEditingController(text: selectedStartDate),
-                    prefixIcon: const Icon(Icons.calendar_today_rounded, size: 20),
-                    onTap: () async {
-                      final date = await showDatePicker(
-                        context: context,
-                        initialDate: selectedStartDate != null ? DateTime.tryParse(selectedStartDate!) ?? DateTime.now() : DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
-                        builder: (context, child) {
-                          return Theme(
-                            data: Theme.of(context).copyWith(
-                              colorScheme: ColorScheme.light(
-                                primary: Theme.of(context).primaryColor,
-                                onPrimary: Colors.white,
-                                surface: context.appSurfaceColor,
-                                onSurface: context.appOnSurfaceColor,
-                              ),
-                            ),
-                            child: child!,
-                          );
-                        },
-                      );
-                      if (date != null) {
-                        setState(() {
-                          selectedStartDate = DateFormat('yyyy-MM-dd').format(date);
-                        });
-                      }
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.md),
-                  CustomTextField(
-                    label: LocaleKeys.maintenanceDueDate.tr(),
-                    hintText: 'YYYY-MM-DD',
-                    readOnly: true,
-                    controller: TextEditingController(text: selectedDueDate),
-                    prefixIcon: const Icon(Icons.event_rounded, size: 20),
-                    onTap: () async {
-                      final date = await showDatePicker(
-                        context: context,
-                        initialDate: selectedDueDate != null ? DateTime.tryParse(selectedDueDate!) ?? DateTime.now() : DateTime.now(),
-                        firstDate: DateTime(2000),
-                        lastDate: DateTime(2100),
-                        builder: (context, child) {
-                          return Theme(
-                            data: Theme.of(context).copyWith(
-                              colorScheme: ColorScheme.light(
-                                primary: Theme.of(context).primaryColor,
-                                onPrimary: Colors.white,
-                                surface: context.appSurfaceColor,
-                                onSurface: context.appOnSurfaceColor,
-                              ),
-                            ),
-                            child: child!,
-                          );
-                        },
-                      );
-                      if (date != null) {
-                        setState(() {
-                          selectedDueDate = DateFormat('yyyy-MM-dd').format(date);
-                        });
-                      }
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.xl),
-                  BlocBuilder<UpdateTaskDatesCubit, UpdateTaskDatesState>(
-                    bloc: _updateDatesCubit,
-                    builder: (context, state) {
-                      return CustomButton(
-                        text: LocaleKeys.save.tr(),
-                        isLoading: state is UpdateTaskDatesLoading,
-                        onPressed: () {
-                          if (selectedStartDate == null || selectedStartDate!.isEmpty) {
-                            AppToast.showError(context, LocaleKeys.start_date_required.tr());
-                            return;
-                          }
-                          if (selectedDueDate == null || selectedDueDate!.isEmpty) {
-                            AppToast.showError(context, LocaleKeys.due_date_required.tr());
-                            return;
-                          }
-                          _updateDatesCubit.updateDates(
-                            widget.taskId,
-                            startDate: selectedStartDate,
-                            dueDate: selectedDueDate,
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  const SizedBox(height: AppSpacing.lg),
-                ],
-              ),
-            );
-          },
-        );
-      },
+      builder: (ctx) => TaskDetailsDatesBottomSheet(
+        updateDatesCubit: _updateDatesCubit,
+        taskId: widget.taskId,
+        currentDates: currentDates,
+      ),
     );
   }
 
@@ -1104,3 +713,11 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
     );
   }
 }
+
+
+
+
+
+
+
+

@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/error/failures.dart';
-import '../../../domain/use_cases/delete_task_use_case.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../../core/localization/locale_keys.dart';
+import '../../../domain/usecases/delete_task_usecase.dart';
 import 'delete_task_state.dart';
 
 class DeleteTaskCubit extends Cubit<DeleteTaskState> {
@@ -22,6 +24,9 @@ class DeleteTaskCubit extends Cubit<DeleteTaskState> {
     if (failure is ServerFailure) {
       return failure.message;
     }
-    return 'Unexpected Error';
+    return LocaleKeys.errorOccurred.tr();
   }
 }
+
+
+

@@ -5,6 +5,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/presentation/widgets/app_surface_card.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
 import '../../../../../core/utils/widgets/custom_text_field.dart';
@@ -70,10 +71,15 @@ class TaskAssigneesSection extends StatelessWidget {
                         text: LocaleKeys.save.tr(),
                         onPressed: () {
                           final idText = idController.text.trim();
-                          if (idText.isEmpty) return;
+                          if (idText.isEmpty) {
+                            AppToast.showError(context, LocaleKeys.tasks_validation_required.tr());
+                            return;
+                          }
                           final userId = int.tryParse(idText);
                           if (userId != null) {
                             context.read<AddTaskAssigneeCubit>().addAssignee(taskId, userId);
+                          } else {
+                            AppToast.showError(context, LocaleKeys.maintenance_task_complete_error.tr());
                           }
                         },
                         isLoading: isLoading,
@@ -119,6 +125,7 @@ class TaskAssigneesSection extends StatelessWidget {
                   return CustomButton(
                     text: LocaleKeys.confirm.tr(),
                     width: 100,
+                    
                     isLoading: isLoading,
                     onPressed: () {
                       context.read<RemoveTaskAssigneeCubit>().removeAssignee(taskId, assignee.id);
@@ -230,3 +237,7 @@ class TaskAssigneesSection extends StatelessWidget {
     );
   }
 }
+
+
+
+

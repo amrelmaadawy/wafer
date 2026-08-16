@@ -14,6 +14,7 @@ class CustomButton extends StatelessWidget {
   final bool isDisabled;
   final double? width;
   final Widget? icon;
+  final Color? backgroundColor;
 
   const CustomButton({
     super.key,
@@ -24,6 +25,7 @@ class CustomButton extends StatelessWidget {
     this.isDisabled = false,
     this.width = AppSizes.buttonWidthLarge,
     this.icon,
+    this.backgroundColor,
   });
 
   @override
@@ -43,7 +45,7 @@ class CustomButton extends StatelessWidget {
         return ElevatedButton(
           onPressed: disabled ? null : onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: context.primaryColor,
+            backgroundColor: backgroundColor ?? context.primaryColor,
             foregroundColor: Colors.white,
             shape: const RoundedRectangleBorder(
               borderRadius: AppRadius.circularMd,
@@ -100,3 +102,4 @@ class CustomButton extends StatelessWidget {
     return Text(text, style: const TextStyle(fontWeight: FontWeight.bold));
   }
 }
+

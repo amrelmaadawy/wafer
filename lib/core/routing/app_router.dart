@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../features/owner/tasks/presentation/screens/owner_tasks_screen.dart';
-import '../../features/owner/tasks/presentation/cubit/list/tasks_list_cubit.dart';
+import '../../features/owner/tasks/presentation/cubits/list/tasks_list_cubit.dart';
 import '../../features/owner/tasks/presentation/screens/owner_task_details_screen.dart';
 import '../../features/owner/tasks/presentation/screens/owner_create_task_screen.dart';
 import '../../features/owner/tasks/domain/entities/task_entity.dart';
 import '../../features/owner/tasks/presentation/cubits/form_data/task_form_data_cubit.dart';
-import '../../features/owner/tasks/presentation/cubit/create_task/create_task_cubit.dart';
+import '../../features/owner/tasks/presentation/cubits/create_task/create_task_cubit.dart';
 import '../../features/owner/tasks/presentation/cubits/update_task/update_task_cubit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:wafer/features/owner/finance/domain/entities/payment_entity.dart';
@@ -868,3 +868,4 @@ class AppRouter {
     ],
   );
 }
+

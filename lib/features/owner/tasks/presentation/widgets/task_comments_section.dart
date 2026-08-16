@@ -8,6 +8,7 @@ import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/utils/widgets/custom_text_field.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../domain/entities/task_entity.dart';
 import '../cubits/add_comment/add_task_comment_cubit.dart';
 import '../cubits/add_comment/add_task_comment_state.dart';
@@ -56,15 +57,30 @@ class _TaskCommentsSectionState extends State<TaskCommentsSection> {
         const SizedBox(height: AppSpacing.md),
         
         if (widget.comments.isEmpty)
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.xl),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.xxl),
+            decoration: BoxDecoration(
+              color: context.appSurfaceColor,
+              borderRadius: AppRadius.circularMd,
+              border: Border.all(color: context.appOnSurfaceColor.withValues(alpha: 0.05)),
+            ),
             child: Center(
-              child: Text(
-                LocaleKeys.no_comments_yet.tr(),
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: context.appSecondaryTextColor,
-                  fontWeight: FontWeight.w500,
-                ),
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.chat_bubble_outline_rounded,
+                    size: 48,
+                    color: context.appSecondaryTextColor.withValues(alpha: 0.5),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  Text(
+                    LocaleKeys.no_comments_yet.tr(),
+                    style: AppTextStyles.bodyLarge.copyWith(
+                      color: context.appSecondaryTextColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ],
               ),
             ),
           )
@@ -121,7 +137,14 @@ class _TaskCommentsSectionState extends State<TaskCommentsSection> {
           ),
           
         const SizedBox(height: AppSpacing.lg),
-        BlocBuilder<AddTaskCommentCubit, AddTaskCommentState>(
+        BlocConsumer<AddTaskCommentCubit, AddTaskCommentState>(
+          listener: (context, state) {
+            if (state is AddTaskCommentSuccess) {
+              _commentController.clear();
+            } else if (state is AddTaskCommentError) {
+              AppToast.showError(context, state.message);
+            }
+          },
           builder: (context, state) {
             final isLoading = state is AddTaskCommentLoading;
             return Row(
@@ -157,7 +180,6 @@ class _TaskCommentsSectionState extends State<TaskCommentsSection> {
                           onPressed: () {
                             if (_commentController.text.trim().isEmpty) return;
                             context.read<AddTaskCommentCubit>().addComment(widget.taskId, _commentController.text.trim());
-                            _commentController.clear();
                           },
                         ),
                 ),
@@ -169,3 +191,4 @@ class _TaskCommentsSectionState extends State<TaskCommentsSection> {
     );
   }
 }
+
