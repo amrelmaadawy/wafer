@@ -131,7 +131,7 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
                               onTap: () {
                                 FocusManager.instance.primaryFocus?.unfocus();
                                 context.push(
-                                  '${Routes.ownerDeedDetails}?id=${deed.id}',
+                                  Routes.ownerDeedDetailsPath(deed.id.toString()),
                                 );
                               },
                               onAttachmentTap: () =>

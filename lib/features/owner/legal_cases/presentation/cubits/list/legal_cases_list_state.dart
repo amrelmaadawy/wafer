@@ -1,81 +1,68 @@
 import 'package:equatable/equatable.dart';
+import '../../../../../../core/utils/app_page_status.dart';
+import '../../../../../../core/utils/app_page_state_mixin.dart';
 import '../../../domain/entities/legal_case_item_entity.dart';
+import '../../../domain/entities/legal_cases_filter_params.dart';
 import '../../../domain/entities/legal_cases_list_response_entity.dart';
 
-abstract class LegalCasesListState extends Equatable {
-  const LegalCasesListState();
-
+class LegalCasesListState extends Equatable with AppPageStateMixin {
   @override
-  List<Object?> get props => [];
-}
-
-class LegalCasesListInitial extends LegalCasesListState {}
-
-class LegalCasesListLoading extends LegalCasesListState {
-  final bool isFirstFetch;
-
-  const LegalCasesListLoading({this.isFirstFetch = false});
-
-  @override
-  List<Object?> get props => [isFirstFetch];
-}
-
-class LegalCasesListLoaded extends LegalCasesListState {
+  final AppPageStatus status;
   final List<LegalCaseItemEntity> legalCases;
+  final LegalCasesFilterParams filterParams;
   final LegalCasePaginationEntity? pagination;
   final LegalCaseFiltersEntity? filters;
   final LegalCaseStatsEntity? stats;
+  final bool isLoadingNextPage;
   final bool hasReachedMax;
-  final bool isPaginating;
-  final String? paginationError;
+  final String? errorMessage;
 
-  const LegalCasesListLoaded({
-    required this.legalCases,
+  const LegalCasesListState({
+    this.status = AppPageStatus.initial,
+    this.legalCases = const [],
+    this.filterParams = const LegalCasesFilterParams(),
     this.pagination,
     this.filters,
     this.stats,
+    this.isLoadingNextPage = false,
     this.hasReachedMax = false,
-    this.isPaginating = false,
-    this.paginationError,
+    this.errorMessage,
   });
 
-  LegalCasesListLoaded copyWith({
+  LegalCasesListState copyWith({
+    AppPageStatus? status,
     List<LegalCaseItemEntity>? legalCases,
+    LegalCasesFilterParams? filterParams,
     LegalCasePaginationEntity? pagination,
     LegalCaseFiltersEntity? filters,
     LegalCaseStatsEntity? stats,
+    bool? isLoadingNextPage,
     bool? hasReachedMax,
-    bool? isPaginating,
-    String? paginationError,
+    String? errorMessage,
   }) {
-    return LegalCasesListLoaded(
+    return LegalCasesListState(
+      status: status ?? this.status,
       legalCases: legalCases ?? this.legalCases,
+      filterParams: filterParams ?? this.filterParams,
       pagination: pagination ?? this.pagination,
       filters: filters ?? this.filters,
       stats: stats ?? this.stats,
+      isLoadingNextPage: isLoadingNextPage ?? this.isLoadingNextPage,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
-      isPaginating: isPaginating ?? this.isPaginating,
-      paginationError: paginationError ?? this.paginationError,
+      errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
   @override
   List<Object?> get props => [
-    legalCases,
-    pagination,
-    filters,
-    stats,
-    hasReachedMax,
-    isPaginating,
-    paginationError,
-  ];
-}
-
-class LegalCasesListError extends LegalCasesListState {
-  final String message;
-
-  const LegalCasesListError({required this.message});
-
-  @override
-  List<Object?> get props => [message];
+        status,
+        legalCases,
+        filterParams,
+        pagination,
+        filters,
+        stats,
+        isLoadingNextPage,
+        hasReachedMax,
+        errorMessage,
+      ];
 }

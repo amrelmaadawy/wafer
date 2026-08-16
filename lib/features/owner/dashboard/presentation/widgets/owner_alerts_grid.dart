@@ -25,6 +25,7 @@ class OwnerAlertsGrid extends StatelessWidget {
         count: data.activeContracts,
         color: AppColors.success,
         icon: Icons.description_rounded,
+        onTap: () => context.push(Routes.ownerContracts),
       ),
       OwnerAlertCard(
         title: LocaleKeys.ownerExpiringTitle.tr(),
@@ -35,6 +36,7 @@ class OwnerAlertsGrid extends StatelessWidget {
             : context.appSecondaryTextColor,
         icon: Icons.update_rounded,
         highlight: data.expiringContracts > 0,
+        onTap: () => context.push(Routes.ownerContracts),
       ),
       OwnerAlertCard(
         title: LocaleKeys.ownerPendingMaintTitle.tr(),

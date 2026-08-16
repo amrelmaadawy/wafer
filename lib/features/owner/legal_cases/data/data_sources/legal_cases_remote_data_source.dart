@@ -4,6 +4,7 @@ import '../../../../../core/error/exceptions.dart';
 import '../models/legal_case_form_data_model.dart';
 import '../models/legal_cases_list_response_model.dart';
 import '../models/legal_case_item_model.dart';
+import '../../domain/entities/legal_cases_filter_params.dart';
 import '../../domain/usecases/create_legal_case_use_case.dart';
 import '../../domain/usecases/update_legal_case_use_case.dart';
 import '../../domain/usecases/add_legal_case_stage_use_case.dart';
@@ -11,9 +12,7 @@ import '../../domain/usecases/add_legal_case_stage_use_case.dart';
 abstract class LegalCasesRemoteDataSource {
   Future<LegalCaseFormDataModel> getLegalCaseFormData();
   Future<LegalCasesListResponseModel> getLegalCasesList({
-    int page = 1,
-    int perPage = 15,
-    String? status,
+    LegalCasesFilterParams params = const LegalCasesFilterParams(),
   });
   Future<LegalCaseItemModel> getLegalCaseDetails(int id);
   Future<LegalCaseItemModel> createLegalCase(CreateLegalCaseParams params);
@@ -48,23 +47,12 @@ class LegalCasesRemoteDataSourceImpl implements LegalCasesRemoteDataSource {
 
   @override
   Future<LegalCasesListResponseModel> getLegalCasesList({
-    int page = 1,
-    int perPage = 15,
-    String? status,
+    LegalCasesFilterParams params = const LegalCasesFilterParams(),
   }) async {
     try {
-      final Map<String, dynamic> queryParameters = {
-        'page': page,
-        'per_page': perPage,
-      };
-
-      if (status != null && status.isNotEmpty && status != 'الكل') {
-        queryParameters['status'] = status;
-      }
-
       final response = await dio.get(
         'owner/legal-cases',
-        queryParameters: queryParameters,
+        queryParameters: params.toQueryMap(),
       );
 
       if (response.data != null && response.data['data'] != null) {

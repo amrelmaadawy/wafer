@@ -90,7 +90,7 @@ class DeedDetailsPropertiesCard extends StatelessWidget {
                   onTap: () {
                     FocusManager.instance.primaryFocus?.unfocus();
                     context.push(
-                      '${Routes.ownerPropertyDetails}?id=${property.id}',
+                      Routes.ownerPropertyDetailsPath(property.id.toString()),
                     );
                   },
                   child: Row(

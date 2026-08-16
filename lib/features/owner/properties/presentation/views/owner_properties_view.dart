@@ -150,7 +150,7 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
 
   Future<void> _openProperty(PropertyListItemEntity property) async {
     final cubit = context.read<PropertiesListCubit>();
-    await context.push('${Routes.ownerPropertyDetails}?id=${property.id}');
+    await context.push(Routes.ownerPropertyDetailsPath(property.id.toString()));
     if (mounted) cubit.getProperties(forceRefresh: true);
   }
 }

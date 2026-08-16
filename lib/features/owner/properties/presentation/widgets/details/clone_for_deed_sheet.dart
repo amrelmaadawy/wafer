@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
@@ -39,7 +39,7 @@ class _CloneForDeedSheetState extends State<CloneForDeedSheet> {
           );
           // Navigate to the new property details
           context.pushReplacement(
-            '${Routes.ownerPropertyDetails}?id=${state.newPropertyId}',
+            Routes.ownerPropertyDetailsPath(state.newPropertyId.toString()),
           );
         } else if (state is CloneForDeedError) {
           ScaffoldMessenger.of(context).showSnackBar(

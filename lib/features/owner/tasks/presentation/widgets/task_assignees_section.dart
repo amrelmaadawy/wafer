@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/presentation/widgets/app_confirm_dialog.dart';
 import '../../../../../core/presentation/widgets/app_surface_card.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_spacing.dart';
@@ -13,7 +14,6 @@ import '../../domain/entities/task_entity.dart';
 import '../cubits/add_assignee/add_task_assignee_cubit.dart';
 import '../cubits/add_assignee/add_task_assignee_state.dart';
 import '../cubits/remove_assignee/remove_task_assignee_cubit.dart';
-import '../cubits/remove_assignee/remove_task_assignee_state.dart';
 
 class TaskAssigneesSection extends StatelessWidget {
   final int taskId;
@@ -95,49 +95,18 @@ class TaskAssigneesSection extends StatelessWidget {
     );
   }
 
-  void _showRemoveConfirmationDialog(BuildContext context, TaskAssigneeEntity assignee) {
-    showDialog(
+  void _showRemoveConfirmationDialog(BuildContext context, TaskAssigneeEntity assignee) async {
+    final confirmed = await AppConfirmDialog.show(
       context: context,
-      builder: (dialogContext) {
-        return BlocProvider.value(
-          value: context.read<RemoveTaskAssigneeCubit>(),
-          child: AlertDialog(
-            title: Text(
-              LocaleKeys.remove_assignee.tr(),
-              style: AppTextStyles.h3.copyWith(fontWeight: FontWeight.bold),
-            ),
-            content: Text(
-              LocaleKeys.remove_assignee_confirmation.tr(),
-              style: AppTextStyles.bodyMedium,
-            ),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(dialogContext),
-                child: Text(
-                  LocaleKeys.cancel.tr(),
-                  style: TextStyle(color: context.appSecondaryTextColor),
-                ),
-              ),
-              BlocBuilder<RemoveTaskAssigneeCubit, RemoveTaskAssigneeState>(
-                builder: (context, state) {
-                  final isLoading = state is RemoveTaskAssigneeLoading && state.assigneeId == assignee.id;
-                  return CustomButton(
-                    text: LocaleKeys.confirm.tr(),
-                    width: 100,
-                    
-                    isLoading: isLoading,
-                    onPressed: () {
-                      context.read<RemoveTaskAssigneeCubit>().removeAssignee(taskId, assignee.id);
-                    },
-                  );
-                },
-              ),
-            ],
-          ),
-        );
-      },
+      titleKey: LocaleKeys.remove_assignee,
+      messageKey: LocaleKeys.remove_assignee_confirmation,
+      impactKey: LocaleKeys.commonActionCannotBeUndone,
+      isDangerous: true,
     );
+
+    if (confirmed == true && context.mounted) {
+      context.read<RemoveTaskAssigneeCubit>().removeAssignee(taskId, assignee.id);
+    }
   }
 
   @override

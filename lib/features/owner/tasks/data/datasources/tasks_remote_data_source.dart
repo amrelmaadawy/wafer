@@ -4,13 +4,13 @@ import '../../../../../core/error/exceptions.dart';
 import '../models/task_form_data_model.dart';
 import '../models/task_model.dart';
 import '../../domain/entities/create_task_params.dart';
+import '../../domain/entities/tasks_filter_params.dart';
 import '../../domain/entities/update_task_params.dart';
 
 abstract class TasksRemoteDataSource {
   Future<TaskFormDataModel> getTaskFormData();
   Future<(List<TaskModel>, TasksPaginationMetaModel)> getTasks({
-    required int page,
-    int perPage = 15,
+    TasksFilterParams params = const TasksFilterParams(),
   });
 
   Future<TaskModel> getTaskDetails(int id);
@@ -39,16 +39,12 @@ class TasksRemoteDataSourceImpl implements TasksRemoteDataSource {
 
   @override
   Future<(List<TaskModel>, TasksPaginationMetaModel)> getTasks({
-    required int page,
-    int perPage = 15,
+    TasksFilterParams params = const TasksFilterParams(),
   }) async {
     try {
       final response = await dio.get(
         '${ApiConstants.baseUrl}owner/tasks',
-        queryParameters: {
-          'page': page,
-          'per_page': perPage,
-        },
+        queryParameters: params.toQueryMap(),
       );
 
       if (response.data['success'] == true) {

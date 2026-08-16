@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:wafer/core/routing/routes.dart';
 import 'package:wafer/core/theme/app_colors.dart';
 import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../../../core/localization/locale_keys.dart';
@@ -107,7 +108,10 @@ class _UnitHeaderSectionState extends State<UnitHeaderSection> {
             padding: EdgeInsets.zero,
             onPressed: () {
               context.push(
-                '/owner-unit-edit?propertyId=${widget.propertyId}&unitId=${widget.unit.id}',
+                Routes.ownerUnitEditPath(
+                  widget.propertyId.toString(),
+                  widget.unit.id.toString(),
+                ),
               );
             },
           ),

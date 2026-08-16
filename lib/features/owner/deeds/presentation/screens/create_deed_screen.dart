@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/services.dart';
@@ -287,7 +288,7 @@ class _CreateDeedViewState extends State<_CreateDeedView> {
             context,
             LocaleKeys.deeds_success_create_deed.tr(),
           );
-          Navigator.of(context).pop(true);
+          context.pop(true);
         } else if (state is CreateDeedError) {
           AppToast.showError(context, state.message);
         }

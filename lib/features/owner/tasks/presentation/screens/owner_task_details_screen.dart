@@ -11,6 +11,7 @@ import '../../../../../core/utils/helpers/color_helper.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/app_surface_card.dart';
+import '../../../../../core/presentation/widgets/app_confirm_dialog.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../../../../../core/di/service_locator.dart';
@@ -44,7 +45,6 @@ import '../widgets/details/task_details_priority_bottom_sheet.dart';
 import '../widgets/details/task_details_dates_bottom_sheet.dart';
 import '../widgets/task_assignees_section.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
-import '../../../../../core/utils/widgets/custom_button.dart';
 
 class OwnerTaskDetailsScreen extends StatefulWidget {
   final int taskId;
@@ -276,57 +276,27 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
     );
   }
 
-  void _showDeleteConfirmation(BuildContext context, TaskEntity task) {
-    showDialog(
+  void _showDeleteConfirmation(BuildContext context, TaskEntity task) async {
+    final confirmed = await AppConfirmDialog.show(
       context: context,
-      builder: (ctx) => BlocConsumer<DeleteTaskCubit, DeleteTaskState>(
-        bloc: _deleteCubit,
-        listener: (context, state) {
-          if (state is DeleteTaskSuccess) {
-            Navigator.pop(ctx);
-            AppToast.showSuccess(context, LocaleKeys.task_deleted_successfully.tr());
-            context.pop(true);
-          } else if (state is DeleteTaskError) {
-            AppToast.showError(context, state.message);
-          }
-        },
-        builder: (context, state) {
-          final isLoading = state is DeleteTaskLoading;
-          return AlertDialog(
-            backgroundColor: context.appSurfaceColor,
-            shape: const RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
-            title: Text(
-              LocaleKeys.delete_task.tr(),
-              style: AppTextStyles.h3.copyWith(
-                color: AppColors.error,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            content: Text(
-              LocaleKeys.delete_task_confirmation.tr(),
-              style: AppTextStyles.bodyMedium.copyWith(color: context.appSecondaryTextColor),
-            ),
-            actionsPadding: const EdgeInsets.all(AppSpacing.md),
-            actions: [
-              TextButton(
-                onPressed: isLoading ? null : () => Navigator.pop(ctx),
-                child: Text(
-                  LocaleKeys.cancel.tr(),
-                  style: AppTextStyles.labelLarge.copyWith(color: context.appSecondaryTextColor),
-                ),
-              ),
-              CustomButton(
-                text: LocaleKeys.delete.tr(),
-                onPressed: () => _deleteCubit.deleteTask(widget.taskId),
-                isLoading: isLoading,
-                width: 100,
-                type: ButtonType.primary,
-              ),
-            ],
-          );
-        },
-      ),
+      titleKey: LocaleKeys.delete_task,
+      messageKey: LocaleKeys.delete_task_confirmation,
+      impactKey: LocaleKeys.commonActionCannotBeUndone,
+      isDangerous: true,
     );
+
+    if (confirmed == true && context.mounted) {
+      _deleteCubit.stream.listen((state) {
+        if (!context.mounted) return;
+        if (state is DeleteTaskSuccess) {
+          AppToast.showSuccess(context, LocaleKeys.task_deleted_successfully.tr());
+          context.pop(true);
+        } else if (state is DeleteTaskError) {
+          AppToast.showError(context, state.message);
+        }
+      });
+      _deleteCubit.deleteTask(widget.taskId);
+    }
   }
 
   Widget _buildContent(BuildContext context, TaskEntity task) {

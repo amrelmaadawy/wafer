@@ -86,7 +86,7 @@ class PropertyDeedCard extends StatelessWidget {
             child: ElevatedButton(
               onPressed: () {
                 context.push(
-                  '${Routes.ownerDeedDetails}?id=${property.deedId}',
+                  Routes.ownerDeedDetailsPath(property.deedId.toString()),
                 );
               },
               style: ElevatedButton.styleFrom(

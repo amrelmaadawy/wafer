@@ -24,6 +24,7 @@ import '../widgets/legal_case_details_skeleton.dart';
 import '../widgets/case_stages_timeline_widget.dart';
 import '../widgets/add_legal_case_stage_bottom_sheet.dart';
 import '../../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../../core/presentation/widgets/app_confirm_dialog.dart';
 import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
 
 class LegalCaseDetailsView extends StatefulWidget {
@@ -361,88 +362,38 @@ class _LegalCaseDetailsViewState extends State<LegalCaseDetailsView> {
     });
   }
 
-  void _showDeleteDialog(BuildContext context) {
-    showDialog(
+  void _showDeleteDialog(BuildContext context) async {
+    final confirmed = await AppConfirmDialog.show(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(
-          LocaleKeys.delete_legal_case_confirm_title.tr(),
-          style: AppTextStyles.h4.copyWith(color: AppColors.error),
-        ),
-        content: Text(
-          LocaleKeys.delete_legal_case_confirm_body.tr(),
-          style: AppTextStyles.bodyMedium,
-        ),
-        shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(
-              LocaleKeys.cancel.tr(),
-              style: AppTextStyles.labelLarge.copyWith(
-                color: AppColors.textSecondaryLight,
-              ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              _deleteCubit.deleteLegalCase(widget.legalCaseId);
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: Text(
-              LocaleKeys.delete_legal_case_confirm_btn.tr(),
-              style: AppTextStyles.labelLarge.copyWith(color: Colors.white),
-            ),
-          ),
-        ],
-      ),
+      titleKey: LocaleKeys.delete_legal_case_confirm_title,
+      messageKey: LocaleKeys.delete_legal_case_confirm_body,
+      impactKey: LocaleKeys.commonActionCannotBeUndone,
+      isDangerous: true,
     );
+
+    if (confirmed == true && context.mounted) {
+      _deleteCubit.deleteLegalCase(widget.legalCaseId);
+    }
   }
 
   void _showDeleteStageDialog(
     BuildContext context,
     int legalCaseId,
     int stageId,
-  ) {
-    showDialog(
+  ) async {
+    final confirmed = await AppConfirmDialog.show(
       context: context,
-      builder: (dialogContext) => AlertDialog(
-        title: Text(
-          LocaleKeys.delete_stage_confirmation_title.tr(),
-          style: AppTextStyles.h4.copyWith(color: AppColors.error),
-        ),
-        content: Text(
-          LocaleKeys.delete_stage_confirmation_desc.tr(),
-          style: AppTextStyles.bodyMedium,
-        ),
-        shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            child: Text(
-              LocaleKeys.cancel.tr(),
-              style: AppTextStyles.labelLarge.copyWith(
-                color: AppColors.textSecondaryLight,
-              ),
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(dialogContext).pop();
-              _deleteStageCubit.deleteStage(
-                legalCaseId: legalCaseId,
-                stageId: stageId,
-              );
-            },
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
-            child: Text(
-              LocaleKeys.delete_stage.tr(),
-              style: AppTextStyles.labelLarge.copyWith(color: Colors.white),
-            ),
-          ),
-        ],
-      ),
+      titleKey: LocaleKeys.delete_stage_confirmation_title,
+      messageKey: LocaleKeys.delete_stage_confirmation_desc,
+      impactKey: LocaleKeys.commonActionCannotBeUndone,
+      isDangerous: true,
     );
+
+    if (confirmed == true && context.mounted) {
+      _deleteStageCubit.deleteStage(
+        legalCaseId: legalCaseId,
+        stageId: stageId,
+      );
+    }
   }
 }

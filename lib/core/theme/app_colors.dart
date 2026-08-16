@@ -20,6 +20,7 @@ class AppColors {
   static const Color surfaceDark = Color(0xFF1F2937);
   static const Color surfaceSubtleLight = Color(0xFFF8FAFC);
   static const Color surfaceSubtleDark = Color(0xFF1E2937);
+  static const Color surfaceSubtle = surfaceSubtleLight;
 
   // Semantic Colors
   static const Color success = Color(0xFF10B981);
@@ -32,6 +33,9 @@ class AppColors {
   static const Color textPrimaryLight = Color(0xFF111827);
   static const Color textSecondaryLight = Color(0xFF4B5563);
   static const Color textTertiaryLight = Color(0xFF94A3B8);
+  static const Color textPrimary = textPrimaryLight;
+  static const Color textSecondary = textSecondaryLight;
+  static const Color textLight = textTertiaryLight;
   static const Color textPrimaryDark = Color(0xFFF9FAFB);
   static const Color textSecondaryDark = Color(0xFF9CA3AF);
   static const Color textTertiaryDark = Color(0xFF6B7280);

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 import '../../domain/entities/legal_case_form_data_entity.dart';
+import '../../domain/entities/legal_cases_filter_params.dart';
 import '../../domain/entities/legal_cases_list_response_entity.dart';
 import '../../domain/entities/legal_case_item_entity.dart';
 import '../../domain/repositories/legal_cases_repository.dart';
@@ -34,15 +35,11 @@ class LegalCasesRepositoryImpl implements LegalCasesRepository {
 
   @override
   Future<Either<Failure, LegalCasesListResponseEntity>> getLegalCasesList({
-    int page = 1,
-    int perPage = 15,
-    String? status,
+    LegalCasesFilterParams params = const LegalCasesFilterParams(),
   }) async {
     try {
       final remoteData = await remoteDataSource.getLegalCasesList(
-        page: page,
-        perPage: perPage,
-        status: status,
+        params: params,
       );
       return Right(remoteData);
     } on ServerException catch (e) {

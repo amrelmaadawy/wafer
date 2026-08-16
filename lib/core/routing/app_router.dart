@@ -479,7 +479,7 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerPropertyDetails,
         builder: (context, state) {
-          final id = int.tryParse(state.uri.queryParameters['id'] ?? '0') ?? 0;
+          final id = int.tryParse(state.pathParameters['propertyId'] ?? '0') ?? 0;
           return BlocProvider<PropertyDetailsCubit>(
             create: (_) => sl<PropertyDetailsCubit>(),
             child: PropertyDetailsScreen(propertyId: id),
@@ -508,9 +508,9 @@ class AppRouter {
         path: Routes.ownerPropertyUnitDetails,
         builder: (context, state) {
           final propertyId =
-              int.tryParse(state.uri.queryParameters['propertyId'] ?? '0') ?? 0;
+              int.tryParse(state.pathParameters['propertyId'] ?? '0') ?? 0;
           final unitId =
-              int.tryParse(state.uri.queryParameters['unitId'] ?? '0') ?? 0;
+              int.tryParse(state.pathParameters['unitId'] ?? '0') ?? 0;
           return UnitDetailsScreen(propertyId: propertyId, unitId: unitId);
         },
       ),
@@ -518,7 +518,7 @@ class AppRouter {
         path: Routes.ownerUnitCreate,
         builder: (context, state) {
           final propertyId =
-              int.tryParse(state.uri.queryParameters['propertyId'] ?? '0') ?? 0;
+              int.tryParse(state.pathParameters['propertyId'] ?? '0') ?? 0;
           return UnitCreateScreen(propertyId: propertyId);
         },
       ),
@@ -526,9 +526,9 @@ class AppRouter {
         path: Routes.ownerUnitEdit,
         builder: (context, state) {
           final propertyId =
-              int.tryParse(state.uri.queryParameters['propertyId'] ?? '0') ?? 0;
+              int.tryParse(state.pathParameters['propertyId'] ?? '0') ?? 0;
           final unitId =
-              int.tryParse(state.uri.queryParameters['unitId'] ?? '0') ?? 0;
+              int.tryParse(state.pathParameters['unitId'] ?? '0') ?? 0;
           return UnitEditScreen(propertyId: propertyId, unitId: unitId);
         },
       ),
@@ -596,30 +596,28 @@ class AppRouter {
         builder: (context, state) {
           return const LegalCasesListView();
         },
-        routes: [
-          GoRoute(
-            path: Routes.ownerLegalCaseCreate,
-            builder: (context, state) => const LegalCaseCreateView(),
-          ),
-          GoRoute(
-            path: Routes.ownerLegalCaseEdit,
-            builder: (context, state) {
-              final extra = state.extra;
-              if (extra is! LegalCaseItemEntity) {
-                return const LegalCasesListView();
-              }
-              return LegalCaseCreateView(legalCaseToEdit: extra);
-            },
-          ),
-          GoRoute(
-            path: Routes.ownerLegalCaseDetails,
-            builder: (context, state) {
-              final id = int.tryParse(state.pathParameters['id'] ?? '');
-              if (id == null) return const LegalCasesListView();
-              return LegalCaseDetailsView(legalCaseId: id);
-            },
-          ),
-        ],
+      ),
+      GoRoute(
+        path: Routes.ownerLegalCaseCreate,
+        builder: (context, state) => const LegalCaseCreateView(),
+      ),
+      GoRoute(
+        path: Routes.ownerLegalCaseEdit,
+        builder: (context, state) {
+          final extra = state.extra;
+          if (extra is! LegalCaseItemEntity) {
+            return const LegalCasesListView();
+          }
+          return LegalCaseCreateView(legalCaseToEdit: extra);
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerLegalCaseDetails,
+        builder: (context, state) {
+          final id = int.tryParse(state.pathParameters['caseId'] ?? '');
+          if (id == null) return const LegalCasesListView();
+          return LegalCaseDetailsView(legalCaseId: id);
+        },
       ),
       GoRoute(
         path: Routes.ownerRevenueReport,
@@ -720,7 +718,7 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerTaskDetails,
         builder: (context, state) {
-          final id = int.tryParse(state.pathParameters['id'] ?? '0') ?? 0;
+          final id = int.tryParse(state.pathParameters['taskId'] ?? '0') ?? 0;
           return OwnerTaskDetailsScreen(taskId: id);
         },
       ),
@@ -778,7 +776,7 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerDeedDetails,
         builder: (context, state) {
-          final id = int.tryParse(state.uri.queryParameters['id'] ?? '0') ?? 0;
+          final id = int.tryParse(state.pathParameters['deedId'] ?? '0') ?? 0;
           return BlocProvider<DeedDetailsCubit>(
             create: (_) => sl<DeedDetailsCubit>(),
             child: DeedDetailsScreen(deedId: id),
@@ -788,13 +786,13 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerContractDetails,
         builder: (context, state) => OwnerContractDetailsScreen(
-          contractId: state.pathParameters['id'] ?? '',
+          contractId: state.pathParameters['contractId'] ?? '',
         ),
       ),
       GoRoute(
         path: Routes.ownerContractInstallments,
         builder: (context, state) => OwnerContractInstallmentsScreen(
-          contractId: state.pathParameters['id'] ?? '',
+          contractId: state.pathParameters['contractId'] ?? '',
           contractNumber: state.extra as String? ?? '',
         ),
       ),

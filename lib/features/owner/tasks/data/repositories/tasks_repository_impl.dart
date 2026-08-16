@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import '../../../../../core/error/failures.dart';
 import '../../domain/entities/task_form_data_entity.dart';
 import '../../domain/entities/task_entity.dart';
+import '../../domain/entities/tasks_filter_params.dart';
 import '../../domain/entities/tasks_pagination_meta_entity.dart';
 import '../../domain/entities/create_task_params.dart';
 import '../../domain/entities/update_task_params.dart';
@@ -28,11 +29,10 @@ class TasksRepositoryImpl implements TasksRepository {
 
   @override
   Future<Either<Failure, (List<TaskEntity>, TasksPaginationMetaEntity)>> getTasks({
-    required int page,
-    int perPage = 15,
+    TasksFilterParams params = const TasksFilterParams(),
   }) async {
     try {
-      final result = await remoteDataSource.getTasks(page: page, perPage: perPage);
+      final result = await remoteDataSource.getTasks(params: params);
       return Right((
         result.$1.cast<TaskEntity>(),
         result.$2 as TasksPaginationMetaEntity,

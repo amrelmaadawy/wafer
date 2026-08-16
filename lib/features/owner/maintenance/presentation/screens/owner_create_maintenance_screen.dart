@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +60,7 @@ class _OwnerCreateMaintenanceViewState
                   context,
                   LocaleKeys.maintenanceCreateSuccess.tr(),
                 );
-                Navigator.of(context).pop(true);
+                context.pop(true);
               } else if (state.status == CreateMaintenanceStatus.failure) {
                 AppToast.showError(
                   context,

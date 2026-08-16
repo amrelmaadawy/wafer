@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import '../../routing/routes.dart';
 import '../../theme/app_radius.dart';
 import '../../theme/color_utils.dart';
 
@@ -26,7 +28,14 @@ class CustomBackButton extends StatelessWidget {
               size: 18,
             ),
             padding: EdgeInsets.zero,
-            onPressed: onPressed ?? () => Navigator.of(context).pop(),
+            onPressed: onPressed ??
+                () {
+                  if (context.canPop()) {
+                    context.pop();
+                  } else {
+                    context.go(Routes.ownerDashboard);
+                  }
+                },
           ),
         ),
       ),

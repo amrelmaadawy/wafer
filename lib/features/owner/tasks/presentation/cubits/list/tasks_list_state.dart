@@ -1,38 +1,48 @@
 part of 'tasks_list_cubit.dart';
 
-enum TasksListStatus { initial, loading, loaded, error, loadingMore }
-
-class TasksListState extends Equatable {
-  final TasksListStatus status;
+class TasksListState extends Equatable with AppPageStateMixin {
+  @override
+  final AppPageStatus status;
   final List<TaskEntity> items;
+  final TasksFilterParams filterParams;
+  final bool isLoadingNextPage;
   final bool hasReachedMax;
-  final int page;
   final String? errorMessage;
 
   const TasksListState({
-    this.status = TasksListStatus.initial,
+    this.status = AppPageStatus.initial,
     this.items = const [],
+    this.filterParams = const TasksFilterParams(),
+    this.isLoadingNextPage = false,
     this.hasReachedMax = false,
-    this.page = 1,
     this.errorMessage,
   });
 
   TasksListState copyWith({
-    TasksListStatus? status,
+    AppPageStatus? status,
     List<TaskEntity>? items,
+    TasksFilterParams? filterParams,
+    bool? isLoadingNextPage,
     bool? hasReachedMax,
-    int? page,
     String? errorMessage,
   }) {
     return TasksListState(
       status: status ?? this.status,
       items: items ?? this.items,
+      filterParams: filterParams ?? this.filterParams,
+      isLoadingNextPage: isLoadingNextPage ?? this.isLoadingNextPage,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
-      page: page ?? this.page,
       errorMessage: errorMessage ?? this.errorMessage,
     );
   }
 
   @override
-  List<Object?> get props => [status, items, hasReachedMax, page, errorMessage];
+  List<Object?> get props => [
+        status,
+        items,
+        filterParams,
+        isLoadingNextPage,
+        hasReachedMax,
+        errorMessage,
+      ];
 }

@@ -2193,6 +2193,26 @@ abstract class  LocaleKeys {
   static const delete_task = 'delete_task';
   static const no_tasks_yet = 'no_tasks_yet';
   static const delete = 'delete';
-
+  static const String commonSearch = 'common_search';
+  static const String commonConfirm = 'common_confirm';
+  static const String commonActionCannotBeUndone = 'common_this_action_cannot_be_undone';
+  static const String commonFilterAll = 'common_filter_all';
+  static const String infoContractsReadOnly = 'info_contracts_read_only';
+  static const String taskFilterAll = 'task_filter_all';
+  static const String taskFilterPending = 'task_filter_pending';
+  static const String taskFilterInProgress = 'task_filter_in_progress';
+  static const String taskFilterCompleted = 'task_filter_completed';
+  static const String taskFilterCancelled = 'task_filter_cancelled';
+  static const String taskSearchHint = 'task_search_hint';
+  static const String legalCasesSearchHint = 'legal_cases_search_hint';
+  static const String legalCaseFilterAll = 'legal_case_filter_all';
+  static const String legalCaseFilterActive = 'legal_case_filter_active';
+  static const String legalCaseFilterClosed = 'legal_case_filter_closed';
+  static const String legalCaseFilterInProgress = 'legal_case_filter_in_progress';
+  static const String deleteLegalCase = 'delete_legal_case';
+  static const String deleteLegalCaseConfirmation = 'delete_legal_case_confirmation';
+  static const String deleteStage = 'delete_stage';
+  static const String deleteStageConfirmation = 'delete_stage_confirmation';
+  static const String legalCaseDeletedSuccessfully = 'legal_case_deleted_successfully';
+  static const String stageDeletedSuccessfully = 'stage_deleted_successfully';
 }
-

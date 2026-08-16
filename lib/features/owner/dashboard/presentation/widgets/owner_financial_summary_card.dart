@@ -18,9 +18,13 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => context.push(Routes.ownerRevenueReport),
-      child: Container(
+    return Material(
+      color: Colors.transparent,
+      borderRadius: AppRadius.circularXxl,
+      child: InkWell(
+        onTap: () => context.push(Routes.ownerRevenueReport),
+        borderRadius: AppRadius.circularXxl,
+        child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -138,8 +142,9 @@ class OwnerFinancialSummaryCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   String _currency(num value) => LocaleKeys.commonCurrencySar.tr(
         args: [value.toStringAsFixed(value == value.toInt() ? 0 : 2)],

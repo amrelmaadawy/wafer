@@ -133,7 +133,7 @@ class _OwnerUnitsStatusReportViewState
 
   void _openUnit(UnitsStatusItemEntity unit) {
     context.push(
-      '${Routes.ownerPropertyUnitDetails}?propertyId=${unit.property.id}&unitId=${unit.id}',
+      Routes.ownerUnitDetailsPath(unit.property.id.toString(), unit.id.toString()),
     );
   }
 }
