@@ -36,6 +36,7 @@ import '../widgets/maintenance_action_logs_section.dart';
 import '../widgets/maintenance_details_bottom_bar.dart';
 import '../widgets/maintenance_delete_confirmation_sheet.dart';
 import '../widgets/maintenance_details_skeleton.dart';
+import '../../../../../core/documents/widgets/documents_list_widget.dart';
 
 class OwnerMaintenanceDetailsScreen extends StatefulWidget {
   final MaintenanceItemEntity item;
@@ -279,17 +280,17 @@ class _OwnerMaintenanceDetailsScreenState
                                                     .actionLogs!
                                                     .isNotEmpty)
                                               const SizedBox(height: 16),
-                                            MaintenanceImagesSection(
-                                              images: displayItem.images ?? [],
-                                            ),
-                                            if (displayItem.actionLogs !=
-                                                    null &&
-                                                displayItem
-                                                    .actionLogs!
-                                                    .isNotEmpty)
-                                              const SizedBox(
-                                                height: 100,
-                                              ), // spacing for bottom bar
+                                             MaintenanceImagesSection(
+                                               images: displayItem.images ?? [],
+                                             ),
+                                             const SizedBox(height: 16),
+                                             const DocumentsListWidget(
+                                               documents: [],
+                                               padding: EdgeInsets.zero,
+                                             ),
+                                             const SizedBox(
+                                               height: 100,
+                                             ), // spacing for bottom bar
                                           ],
                                         ),
                                       ),

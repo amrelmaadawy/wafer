@@ -27,6 +27,8 @@ import '../widgets/add_legal_case_stage_bottom_sheet.dart';
 import '../../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../../core/presentation/widgets/app_confirm_dialog.dart';
 import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../../core/documents/widgets/documents_list_widget.dart';
+import '../../../../../../core/activity/widgets/activity_timeline_widget.dart';
 
 class LegalCaseDetailsView extends StatefulWidget {
   final int legalCaseId;
@@ -333,6 +335,16 @@ class _LegalCaseDetailsViewState extends State<LegalCaseDetailsView> {
                                 ],
                               ),
                             ),
+                          const SizedBox(height: AppSpacing.lg),
+                          const DocumentsListWidget(
+                            documents: [],
+                            padding: EdgeInsets.zero,
+                          ),
+                          const SizedBox(height: AppSpacing.lg),
+                          const ActivityTimelineWidget(
+                            activities: [],
+                            padding: EdgeInsets.zero,
+                          ),
                         ],
                       ),
                     ),

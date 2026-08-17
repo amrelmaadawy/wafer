@@ -2360,4 +2360,34 @@ abstract class  LocaleKeys {
   static const String portfolioPropertyNet = 'portfolioPropertyNet';
   static const String portfolioPropertyOccupancy = 'portfolioPropertyOccupancy';
   static const String portfolioNoPropertiesFound = 'portfolioNoPropertiesFound';
+
+  // --- Phase 10: Document Management ---
+  static const String documentsTitle = 'documentsTitle';
+  static const String documentsEmpty = 'documentsEmpty';
+  static const String documentsEmptySubtitle = 'documentsEmptySubtitle';
+  static const String documentsOpenFile = 'documentsOpenFile';
+  static const String documentsDownload = 'documentsDownload';
+  static const String documentTypePdf = 'documentTypePdf';
+  static const String documentTypeImage = 'documentTypeImage';
+  static const String documentTypeFile = 'documentTypeFile';
+  static const String documentsCount = 'documentsCount';
+  static const String documentsAttachments = 'documentsAttachments';
+  static const String documentsSectionHeader = 'documentsSectionHeader';
+  static const String documentsOpenError = 'documentsOpenError';
+
+  // --- Phase 11: Activity & Audit Trail ---
+  static const String activityTitle = 'activityTitle';
+  static const String activityEmpty = 'activityEmpty';
+  static const String activityEmptySubtitle = 'activityEmptySubtitle';
+  static const String activityActionCreated = 'activityActionCreated';
+  static const String activityActionApproved = 'activityActionApproved';
+  static const String activityActionRejected = 'activityActionRejected';
+  static const String activityActionAssigned = 'activityActionAssigned';
+  static const String activityActionUpdated = 'activityActionUpdated';
+  static const String activityActionCompleted = 'activityActionCompleted';
+  static const String activityActionCancelled = 'activityActionCancelled';
+  static const String activityByUser = 'activityByUser';
+  static const String activityStatusChanged = 'activityStatusChanged';
+  static const String activityCount = 'activityCount';
 }
+
