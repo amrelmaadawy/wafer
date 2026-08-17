@@ -2401,5 +2401,15 @@
   "activityActionCancelled": "Cancelled",
   "activityByUser": "By: {}",
   "activityStatusChanged": "Status: {}",
-  "activityCount": "{} Events"
+  "activityCount": "{} Events",
+  "notificationsDefaultTitle": "New Notification",
+  "notificationCategoryFinancial": "Financial",
+  "notificationCategoryContracts": "Contracts",
+  "notificationCategoryMaintenance": "Maintenance",
+  "notificationCategoryTasks": "Tasks",
+  "notificationCategoryLegal": "Legal Cases",
+  "notificationCategorySystem": "System",
+  "notificationPriorityHigh": "High",
+  "notificationPriorityMedium": "Medium",
+  "notificationPriorityLow": "Low"
 }

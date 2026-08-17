@@ -1,15 +1,24 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../core/usecases/usecase.dart';
 import '../../domain/entities/notification_item_entity.dart';
 import '../../domain/usecases/get_notifications_use_case.dart';
+import '../../domain/usecases/mark_all_notifications_read_use_case.dart';
+import '../../domain/usecases/mark_notification_read_use_case.dart';
 import 'notifications_state.dart';
 import 'unread_count_cubit.dart';
 
 class NotificationsCubit extends Cubit<NotificationsState> {
   final GetNotificationsUseCase _getNotificationsUseCase;
+  final MarkNotificationReadUseCase? _markNotificationReadUseCase;
+  final MarkAllNotificationsReadUseCase? _markAllNotificationsReadUseCase;
   final UnreadCountCubit? _unreadCountCubit;
 
-  NotificationsCubit(this._getNotificationsUseCase, [this._unreadCountCubit])
-    : super(const NotificationsInitial());
+  NotificationsCubit(
+    this._getNotificationsUseCase, [
+    this._unreadCountCubit,
+    this._markNotificationReadUseCase,
+    this._markAllNotificationsReadUseCase,
+  ]) : super(const NotificationsInitial());
 
   int _currentPage = 1;
   bool _isFetchingNext = false;
@@ -100,24 +109,42 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     }
   }
 
-  void markAllAsReadLocal() {
+  Future<void> markNotificationAsRead(String notificationId) async {
+    final currentState = state;
+    if (currentState is NotificationsLoaded) {
+      bool wasUnread = false;
+      final updated = currentState.notifications.map((n) {
+        if (n.id == notificationId && !n.isRead) {
+          wasUnread = true;
+          return n.copyWith(readAt: DateTime.now().toIso8601String());
+        }
+        return n;
+      }).toList();
+
+      if (wasUnread) {
+        final newCount = (currentState.unreadCount - 1).clamp(0, 999999);
+        _unreadCountCubit?.updateCount(newCount);
+        emit(
+          currentState.copyWith(
+            notifications: updated,
+            unreadCount: newCount,
+          ),
+        );
+      }
+    }
+    await _markNotificationReadUseCase?.call(notificationId);
+  }
+
+  Future<void> markAllAsRead() async {
     final currentState = state;
     if (currentState is NotificationsLoaded) {
       final updated = currentState.notifications.map((n) {
-        return NotificationItemEntity(
-          id: n.id,
-          title: n.title,
-          body: n.body,
-          type: n.type,
-          readAt: DateTime.now().toIso8601String(),
-          createdAt: n.createdAt,
-          data: n.data,
-        );
+        return n.copyWith(readAt: DateTime.now().toIso8601String());
       }).toList();
 
       _unreadCountCubit?.resetCount();
-
       emit(currentState.copyWith(notifications: updated, unreadCount: 0));
     }
+    await _markAllNotificationsReadUseCase?.call(const NoParams());
   }
 }

@@ -24,16 +24,7 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      String? serverMsg;
-      if (e.response?.data is Map<String, dynamic>) {
-        serverMsg =
-            (e.response?.data as Map<String, dynamic>)['message'] as String?;
-      }
-      return Left(
-        ServerFailure(
-          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
-        ),
-      );
+      return Left(_mapDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
@@ -47,18 +38,50 @@ class NotificationsRepositoryImpl implements NotificationsRepository {
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
-      String? serverMsg;
-      if (e.response?.data is Map<String, dynamic>) {
-        serverMsg =
-            (e.response?.data as Map<String, dynamic>)['message'] as String?;
-      }
-      return Left(
-        ServerFailure(
-          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
-        ),
-      );
+      return Left(_mapDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }
+  }
+
+  @override
+  Future<Either<Failure, void>> markNotificationRead(
+    String notificationId,
+  ) async {
+    try {
+      await _remoteDataSource.markNotificationRead(notificationId);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(_mapDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> markAllNotificationsRead() async {
+    try {
+      await _remoteDataSource.markAllNotificationsRead();
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(_mapDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  Failure _mapDioException(DioException e) {
+    String? serverMsg;
+    if (e.response?.data is Map<String, dynamic>) {
+      serverMsg =
+          (e.response?.data as Map<String, dynamic>)['message'] as String?;
+    }
+    return ServerFailure(
+      serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
+    );
   }
 }

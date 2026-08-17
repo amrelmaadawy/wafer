@@ -9,4 +9,8 @@ abstract class NotificationsRepository {
   });
 
   Future<Either<Failure, int>> getUnreadNotificationsCount();
+
+  Future<Either<Failure, void>> markNotificationRead(String notificationId);
+
+  Future<Either<Failure, void>> markAllNotificationsRead();
 }

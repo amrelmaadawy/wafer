@@ -22,6 +22,10 @@ class ApiConstants {
   static const String sharedUpdateAvatar = 'shared/update-avatar';
   static const String sharedNotifications = 'shared/notifications';
   static const String sharedUnreadCount = 'shared/notifications/unread-count';
+  static String sharedMarkNotificationRead(String id) =>
+      'shared/notifications/$id/read';
+  static const String sharedMarkAllNotificationsRead =
+      'shared/notifications/read-all';
   static const String sharedLogout = 'shared/logout';
 
   /// Owner Endpoints

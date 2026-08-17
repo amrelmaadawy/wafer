@@ -1,18 +1,18 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wafer/core/theme/app_colors.dart';
-import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../core/routing/routes.dart';
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
 import '../../domain/entities/notification_item_entity.dart';
 import '../cubit/notifications_cubit.dart';
 import '../cubit/notifications_state.dart';
 import '../widgets/notification_card.dart';
+import '../widgets/notification_category_chips.dart';
 import '../widgets/notifications_empty_widget.dart';
 import '../widgets/notifications_skeleton_widget.dart';
 
@@ -54,7 +54,7 @@ class _NotificationsViewState extends State<NotificationsView> {
       appBar: _buildAppBar(context, cubit),
       body: Column(
         children: [
-          _buildFilterChips(context),
+          const NotificationCategoryChips(),
           Expanded(
             child: BlocBuilder<NotificationsCubit, NotificationsState>(
               builder: (context, state) {
@@ -133,7 +133,7 @@ class _NotificationsViewState extends State<NotificationsView> {
           builder: (context, state) {
             if (state is NotificationsLoaded && state.unreadCount > 0) {
               return TextButton(
-                onPressed: () => cubit.markAllAsReadLocal(),
+                onPressed: () => cubit.markAllAsRead(),
                 child: Text(
                   LocaleKeys.notificationsMarkAllRead.tr(),
                   style: TextStyle(
@@ -152,102 +152,67 @@ class _NotificationsViewState extends State<NotificationsView> {
     );
   }
 
-  Widget _buildFilterChips(BuildContext context) {
-    return Container(
-      color: Colors.transparent,
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 12, bottom: 4),
-      child: BlocBuilder<NotificationsCubit, NotificationsState>(
-        builder: (context, state) {
-          String current = 'all';
-          if (state is NotificationsLoaded) current = state.activeFilter;
-          if (state is NotificationsEmpty) current = state.activeFilter;
-
-          return Row(
-            children: [
-              _buildChip(
-                context: context,
-                label: LocaleKeys.notificationsAll.tr(),
-                isSelected: current == 'all',
-                onTap: () =>
-                    context.read<NotificationsCubit>().changeFilter('all'),
-              ),
-              const SizedBox(width: 10),
-              _buildChip(
-                context: context,
-                label: LocaleKeys.notificationsUnread.tr(),
-                isSelected: current == 'unread',
-                onTap: () =>
-                    context.read<NotificationsCubit>().changeFilter('unread'),
-              ),
-            ],
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildChip({
-    required BuildContext context,
-    required String label,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    final primary = context.primaryColor;
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 7),
-        decoration: BoxDecoration(
-          color: isSelected ? primary : AppColors.dividerSubtleLight,
-          borderRadius: AppRadius.circularXxl,
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            fontSize: 13,
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-            color: isSelected ? Colors.white : AppColors.textSecondaryLight,
-          ),
-        ),
-      ),
-    );
-  }
-
   void _handleCardTap(BuildContext context, NotificationItemEntity item) {
-    final data = item.data ?? {};
-    final type = item.type.toLowerCase();
+    if (!item.isRead) {
+      context.read<NotificationsCubit>().markNotificationAsRead(item.id);
+    }
+    final entityId = item.entityId;
 
     try {
-      if (type.contains('maintenance')) {
-        final id = int.tryParse(data['id']?.toString() ?? '');
-        if (id != null) {
-          context.push(Routes.ownerMaintenance);
-        }
-      } else if (type.contains('contract') || type.contains('lease')) {
-        final id = data['id']?.toString() ?? data['contract_id']?.toString();
-        if (id != null && id.isNotEmpty) {
-          context.push(Routes.ownerContractDetailsPath(id));
-        }
-      } else if (type.contains('payment')) {
-        final id = int.tryParse(data['id']?.toString() ?? '');
-        if (id != null) {
-          context.push(
-            Routes.ownerFinancePaymentDetails.replaceFirst(':id', '$id'),
-          );
-        }
-      } else if (type.contains('invoice') || type.contains('receipt')) {
-        final id = int.tryParse(data['id']?.toString() ?? '');
-        if (id != null) {
-          context.push(
-            Routes.ownerFinanceReceiptDetails.replaceFirst(':id', '$id'),
-          );
-        }
+      switch (item.category) {
+        case NotificationCategory.maintenance:
+          if (entityId != null && entityId.isNotEmpty) {
+            context.push(Routes.ownerMaintenanceDetailsPath(entityId));
+          } else {
+            context.push(Routes.ownerMaintenance);
+          }
+          break;
+        case NotificationCategory.contracts:
+          if (entityId != null && entityId.isNotEmpty) {
+            context.push(Routes.ownerContractDetailsPath(entityId));
+          } else {
+            context.push(Routes.ownerContracts);
+          }
+          break;
+        case NotificationCategory.tasks:
+          if (entityId != null && entityId.isNotEmpty) {
+            context.push(Routes.ownerTaskDetailsPath(entityId));
+          } else {
+            context.push(Routes.ownerTasks);
+          }
+          break;
+        case NotificationCategory.legal:
+          if (entityId != null && entityId.isNotEmpty) {
+            context.push(Routes.ownerLegalCaseDetailsPath(entityId));
+          } else {
+            context.push(Routes.ownerLegalCases);
+          }
+          break;
+        case NotificationCategory.financial:
+          final idNum = int.tryParse(entityId ?? '');
+          if (item.type.contains('receipt') || item.type.contains('invoice')) {
+            if (idNum != null) {
+              context.push(
+                Routes.ownerFinanceReceiptDetails.replaceFirst(':id', '$idNum'),
+              );
+            } else {
+              context.push(Routes.ownerFinanceReceipts);
+            }
+          } else {
+            if (idNum != null) {
+              context.push(
+                Routes.ownerFinancePaymentDetails.replaceFirst(':id', '$idNum'),
+              );
+            } else {
+              context.push(Routes.ownerFinancePayments);
+            }
+          }
+          break;
+        case NotificationCategory.system:
+          break;
       }
-      // Unknown types: silently ignored — no crash, no broken navigation
     } catch (_) {
-      // Defensive: swallow any unexpected errors from notification routing
+      // Defensive fallback
     }
   }
 }
-

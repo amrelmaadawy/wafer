@@ -22,7 +22,7 @@ class NotificationsLoaded extends NotificationsState {
   final NotificationPaginationMetaEntity meta;
   final int unreadCount;
   final bool isFetchingMore;
-  final String activeFilter; // 'all' or 'unread'
+  final String activeFilter; // 'all', 'unread', or category name
 
   const NotificationsLoaded({
     required this.notifications,
@@ -35,6 +35,36 @@ class NotificationsLoaded extends NotificationsState {
   List<NotificationItemEntity> get filteredNotifications {
     if (activeFilter == 'unread') {
       return notifications.where((item) => !item.isRead).toList();
+    }
+    if (activeFilter == 'financial') {
+      return notifications
+          .where((item) => item.category == NotificationCategory.financial)
+          .toList();
+    }
+    if (activeFilter == 'contracts') {
+      return notifications
+          .where((item) => item.category == NotificationCategory.contracts)
+          .toList();
+    }
+    if (activeFilter == 'maintenance') {
+      return notifications
+          .where((item) => item.category == NotificationCategory.maintenance)
+          .toList();
+    }
+    if (activeFilter == 'tasks') {
+      return notifications
+          .where((item) => item.category == NotificationCategory.tasks)
+          .toList();
+    }
+    if (activeFilter == 'legal') {
+      return notifications
+          .where((item) => item.category == NotificationCategory.legal)
+          .toList();
+    }
+    if (activeFilter == 'system') {
+      return notifications
+          .where((item) => item.category == NotificationCategory.system)
+          .toList();
     }
     return notifications;
   }
@@ -57,12 +87,12 @@ class NotificationsLoaded extends NotificationsState {
 
   @override
   List<Object?> get props => [
-    notifications,
-    meta,
-    unreadCount,
-    isFetchingMore,
-    activeFilter,
-  ];
+        notifications,
+        meta,
+        unreadCount,
+        isFetchingMore,
+        activeFilter,
+      ];
 }
 
 class NotificationsError extends NotificationsState {

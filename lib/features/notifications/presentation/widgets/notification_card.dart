@@ -1,5 +1,5 @@
-﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:wafer/core/theme/app_radius.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
@@ -39,7 +39,7 @@ class NotificationCard extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildIconBox(context, notification.type),
+            _buildIconBox(context, notification.category),
             const SizedBox(width: 14),
             Expanded(
               child: Column(
@@ -62,6 +62,11 @@ class NotificationCard extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
+                      if (notification.priority != null &&
+                          notification.priority!.isNotEmpty) ...[
+                        const SizedBox(width: 6),
+                        _buildPriorityBadge(notification.priority!),
+                      ],
                       if (unread) ...[
                         const SizedBox(width: 8),
                         Container(
@@ -75,20 +80,20 @@ class NotificationCard extends StatelessWidget {
                       ],
                     ],
                   ),
-                  const SizedBox(height: 5),
-                  Text(
-                    notification.body,
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                      color: unread
-                          ? AppColors.textSecondaryLight
-                          : AppColors.textSecondaryLight,
-                      height: 1.45,
+                  if (notification.body.isNotEmpty) ...[
+                    const SizedBox(height: 5),
+                    Text(
+                      notification.body,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.textSecondaryLight,
+                        height: 1.45,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  ],
                   const SizedBox(height: 8),
                   Row(
                     children: [
@@ -117,28 +122,38 @@ class NotificationCard extends StatelessWidget {
     );
   }
 
-  Widget _buildIconBox(BuildContext context, String type) {
+  Widget _buildIconBox(BuildContext context, NotificationCategory category) {
     IconData icon;
     Color bg;
     Color fg;
 
-    switch (type) {
-      case 'payment':
+    switch (category) {
+      case NotificationCategory.financial:
         icon = Icons.receipt_long_rounded;
         bg = AppColors.success.withValues(alpha: 0.12);
         fg = AppColors.success;
         break;
-      case 'lease':
+      case NotificationCategory.contracts:
         icon = Icons.description_outlined;
         bg = context.primaryColor.withValues(alpha: 0.12);
         fg = context.primaryColor;
         break;
-      case 'maintenance':
+      case NotificationCategory.maintenance:
         icon = Icons.build_circle_outlined;
         bg = AppColors.warning.withValues(alpha: 0.14);
         fg = AppColors.warning;
         break;
-      default:
+      case NotificationCategory.tasks:
+        icon = Icons.task_alt_rounded;
+        bg = AppColors.info.withValues(alpha: 0.12);
+        fg = AppColors.info;
+        break;
+      case NotificationCategory.legal:
+        icon = Icons.gavel_rounded;
+        bg = AppColors.error.withValues(alpha: 0.12);
+        fg = AppColors.error;
+        break;
+      case NotificationCategory.system:
         icon = Icons.notifications_outlined;
         bg = AppColors.dividerSubtleLight;
         fg = AppColors.textSecondaryLight;
@@ -152,6 +167,36 @@ class NotificationCard extends StatelessWidget {
         borderRadius: AppRadius.circularLg,
       ),
       child: Icon(icon, color: fg, size: 22),
+    );
+  }
+
+  Widget _buildPriorityBadge(String priority) {
+    final lower = priority.toLowerCase();
+    Color color = AppColors.info;
+    String label = LocaleKeys.notificationPriorityLow.tr();
+
+    if (lower == 'high' || lower == 'urgent') {
+      color = AppColors.error;
+      label = LocaleKeys.notificationPriorityHigh.tr();
+    } else if (lower == 'medium' || lower == 'normal') {
+      color = AppColors.warning;
+      label = LocaleKeys.notificationPriorityMedium.tr();
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.12),
+        borderRadius: AppRadius.circularSm,
+      ),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: color,
+          fontSize: 10.5,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
     );
   }
 
@@ -178,4 +223,3 @@ class NotificationCard extends StatelessWidget {
     }
   }
 }
-

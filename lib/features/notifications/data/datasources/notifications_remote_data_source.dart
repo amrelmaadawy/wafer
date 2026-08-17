@@ -5,6 +5,8 @@ import '../models/notifications_response_model.dart';
 abstract class NotificationsRemoteDataSource {
   Future<NotificationsResponseModel> getNotifications({int page = 1});
   Future<int> getUnreadNotificationsCount();
+  Future<void> markNotificationRead(String notificationId);
+  Future<void> markAllNotificationsRead();
 }
 
 class NotificationsRemoteDataSourceImpl
@@ -29,5 +31,15 @@ class NotificationsRemoteDataSourceImpl
     final dataMap = response.data as Map<String, dynamic>? ?? {};
     final innerData = dataMap['data'] as Map<String, dynamic>? ?? {};
     return innerData['count'] as int? ?? 0;
+  }
+
+  @override
+  Future<void> markNotificationRead(String notificationId) async {
+    await _dio.post(ApiConstants.sharedMarkNotificationRead(notificationId));
+  }
+
+  @override
+  Future<void> markAllNotificationsRead() async {
+    await _dio.post(ApiConstants.sharedMarkAllNotificationsRead);
   }
 }

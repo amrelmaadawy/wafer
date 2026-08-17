@@ -2389,5 +2389,17 @@ abstract class  LocaleKeys {
   static const String activityByUser = 'activityByUser';
   static const String activityStatusChanged = 'activityStatusChanged';
   static const String activityCount = 'activityCount';
+
+  // --- Phase 12: Notifications System ---
+  static const String notificationsDefaultTitle = 'notificationsDefaultTitle';
+  static const String notificationCategoryFinancial = 'notificationCategoryFinancial';
+  static const String notificationCategoryContracts = 'notificationCategoryContracts';
+  static const String notificationCategoryMaintenance = 'notificationCategoryMaintenance';
+  static const String notificationCategoryTasks = 'notificationCategoryTasks';
+  static const String notificationCategoryLegal = 'notificationCategoryLegal';
+  static const String notificationCategorySystem = 'notificationCategorySystem';
+  static const String notificationPriorityHigh = 'notificationPriorityHigh';
+  static const String notificationPriorityMedium = 'notificationPriorityMedium';
+  static const String notificationPriorityLow = 'notificationPriorityLow';
 }
 

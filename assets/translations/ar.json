@@ -2396,5 +2396,15 @@
   "activityActionCancelled": "تم الإلغاء",
   "activityByUser": "بواسطة: {}",
   "activityStatusChanged": "حالة الطلب: {}",
-  "activityCount": "{} إجراء"
+  "activityCount": "{} إجراء",
+  "notificationsDefaultTitle": "تنبيه جديد",
+  "notificationCategoryFinancial": "المالية",
+  "notificationCategoryContracts": "العقود",
+  "notificationCategoryMaintenance": "الصيانة",
+  "notificationCategoryTasks": "المهام",
+  "notificationCategoryLegal": "القضايا القانونية",
+  "notificationCategorySystem": "النظام",
+  "notificationPriorityHigh": "عالية",
+  "notificationPriorityMedium": "متوسطة",
+  "notificationPriorityLow": "منخفضة"
 }
