@@ -9,10 +9,18 @@ class OwnerMaintenanceDetailsCubit extends Cubit<OwnerMaintenanceDetailsState> {
     : super(const OwnerMaintenanceDetailsInitial());
 
   Future<void> getMaintenanceDetails(int id) async {
-    emit(const OwnerMaintenanceDetailsLoading());
+    final currentState = state;
+    if (currentState is! OwnerMaintenanceDetailsLoaded) {
+      emit(const OwnerMaintenanceDetailsLoading());
+    }
     final result = await _getDetailsUseCase(id);
     result.fold(
-      (failure) => emit(OwnerMaintenanceDetailsError(failure.message)),
+      (failure) {
+        if (currentState is OwnerMaintenanceDetailsLoaded) {
+          return;
+        }
+        emit(OwnerMaintenanceDetailsError(failure.message));
+      },
       (item) => emit(OwnerMaintenanceDetailsLoaded(item)),
     );
   }

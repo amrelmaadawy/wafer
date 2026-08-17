@@ -3,7 +3,7 @@ import '../../../domain/entities/maintenance_form_data_entity.dart';
 import '../../../domain/entities/maintenance_sub_entities.dart';
 import '../../../domain/entities/maintenance_complex_sub_entities.dart';
 
-enum CreateMaintenanceStatus { initial, loading, success, failure }
+enum CreateMaintenanceStatus { initial, loading, success, offlineQueued, failure }
 
 class OwnerCreateMaintenanceState extends Equatable {
   final CreateMaintenanceStatus status;

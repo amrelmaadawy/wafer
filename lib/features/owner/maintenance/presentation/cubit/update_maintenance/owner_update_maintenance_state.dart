@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import '../../../domain/entities/maintenance_sub_entities.dart';
 
-enum UpdateMaintenanceStatus { initial, loading, success, failure }
+enum UpdateMaintenanceStatus { initial, loading, success, offlineQueued, failure }
 
 class OwnerUpdateMaintenanceState extends Equatable {
   final UpdateMaintenanceStatus status;

@@ -2427,5 +2427,21 @@
   "notificationCategorySystem": "System",
   "notificationPriorityHigh": "High",
   "notificationPriorityMedium": "Medium",
-  "notificationPriorityLow": "Low"
+  "notificationPriorityLow": "Low",
+  "offlineMode": "No internet connection",
+  "offlineRetry": "Retry",
+  "offlineDataStale": "Showing last saved data",
+  "offlineQueuePending": "Saved — will sync when online",
+  "offlineQueueSyncing": "Syncing offline requests...",
+  "offlineQueueSynced": "All offline requests synced",
+  "offlineQueueFailed": "Sync failed — tap to retry",
+  "offline": {
+    "offline_mode": "No internet connection",
+    "offline_retry": "Retry",
+    "offline_data_stale": "Showing last saved data",
+    "offline_queue_pending": "Saved — will sync when online",
+    "offline_queue_syncing": "Syncing offline requests...",
+    "offline_queue_synced": "All offline requests synced",
+    "offline_queue_failed": "Sync failed — tap to retry"
+  }
 }

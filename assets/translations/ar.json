@@ -2422,5 +2422,21 @@
   "notificationCategorySystem": "النظام",
   "notificationPriorityHigh": "عالية",
   "notificationPriorityMedium": "متوسطة",
-  "notificationPriorityLow": "منخفضة"
+  "notificationPriorityLow": "منخفضة",
+  "offlineMode": "لا يوجد اتصال بالإنترنت",
+  "offlineRetry": "إعادة المحاولة",
+  "offlineDataStale": "عرض آخر بيانات محفوظة",
+  "offlineQueuePending": "محفوظ — سيُزامَن عند الاتصال",
+  "offlineQueueSyncing": "جارٍ مزامنة الطلبات...",
+  "offlineQueueSynced": "تمت مزامنة جميع الطلبات",
+  "offlineQueueFailed": "فشلت المزامنة — اضغط للمحاولة",
+  "offline": {
+    "offline_mode": "لا يوجد اتصال بالإنترنت",
+    "offline_retry": "إعادة المحاولة",
+    "offline_data_stale": "عرض آخر بيانات محفوظة",
+    "offline_queue_pending": "محفوظ — سيُزامَن عند الاتصال",
+    "offline_queue_syncing": "جارٍ مزامنة الطلبات...",
+    "offline_queue_synced": "تمت مزامنة جميع الطلبات",
+    "offline_queue_failed": "فشلت المزامنة — اضغط للمحاولة"
+  }
 }

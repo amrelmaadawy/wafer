@@ -61,6 +61,12 @@ class _OwnerCreateMaintenanceViewState
                   LocaleKeys.maintenanceCreateSuccess.tr(),
                 );
                 context.pop(true);
+              } else if (state.status == CreateMaintenanceStatus.offlineQueued) {
+                AppToast.showInfo(
+                  context,
+                  LocaleKeys.offlineQueuePending.tr(),
+                );
+                context.pop(true);
               } else if (state.status == CreateMaintenanceStatus.failure) {
                 AppToast.showError(
                   context,

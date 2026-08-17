@@ -2,12 +2,15 @@ import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import '../network/dio_factory.dart';
 import '../network/interceptors/auth_interceptor.dart';
 import '../network/interceptors/error_interceptor.dart';
 import '../network/interceptors/locale_interceptor.dart';
 import '../network/connectivity/network_info.dart';
 import '../network/connectivity/network_info_impl.dart';
+import '../offline/services/offline_queue_service.dart';
+import '../services/connectivity_service.dart';
 import '../storage/cache_helper.dart';
 import '../storage/secure_storage_service.dart';
 import '../theme/app_theme_cubit.dart';
@@ -22,6 +25,7 @@ Future<void> setupServiceLocator() async {
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+  sl.registerLazySingleton<Connectivity>(() => Connectivity());
 
   // Storage
   sl.registerLazySingleton<SecureStorageService>(() => SecureStorageService());
@@ -32,6 +36,14 @@ Future<void> setupServiceLocator() async {
 
   // Connectivity
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl());
+  sl.registerLazySingleton<ConnectivityService>(
+    () => ConnectivityServiceImpl(sl(), sl()),
+  );
+
+  // Offline Queue
+  sl.registerLazySingleton<OfflineQueueService>(
+    () => OfflineQueueServiceImpl(sl(), sl()),
+  );
 
   // Network Interceptors
   sl.registerLazySingleton<AuthInterceptor>(() => AuthInterceptor(sl()));

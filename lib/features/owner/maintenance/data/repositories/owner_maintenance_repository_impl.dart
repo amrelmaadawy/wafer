@@ -14,14 +14,23 @@ import '../../domain/usecases/complete_owner_maintenance_task_use_case.dart';
 import '../../domain/usecases/execute_owner_maintenance_use_case.dart';
 import '../../domain/usecases/verify_close_owner_maintenance_use_case.dart';
 import '../../domain/usecases/forward_owner_maintenance_use_case.dart';
+import '../../../../../core/network/connectivity/network_info.dart';
+import '../../../../../core/offline/models/offline_queue_entry.dart';
+import '../../../../../core/offline/services/offline_queue_service.dart';
 import '../../domain/entities/execute_owner_maintenance_response_entity.dart';
 import '../../domain/entities/maintenance_form_data_entity.dart';
 import '../datasources/owner_maintenance_remote_data_source.dart';
 
 class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
   final OwnerMaintenanceRemoteDataSource _remoteDataSource;
+  final NetworkInfo _networkInfo;
+  final OfflineQueueService _offlineQueueService;
 
-  OwnerMaintenanceRepositoryImpl(this._remoteDataSource);
+  OwnerMaintenanceRepositoryImpl(
+    this._remoteDataSource,
+    this._networkInfo,
+    this._offlineQueueService,
+  );
 
   @override
   Future<Either<Failure, MaintenanceFormDataEntity>> getFormData() async {
@@ -79,11 +88,33 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
     CreateOwnerMaintenanceParams params,
   ) async {
     try {
+      final isOnline = await _networkInfo.isConnected;
+      if (!isOnline) {
+        final entry = OfflineQueueEntry(
+          id: 'maint_create_${DateTime.now().millisecondsSinceEpoch}',
+          featureKey: 'maintenance.create',
+          payload: params.toJson(),
+          createdAt: DateTime.now(),
+        );
+        await _offlineQueueService.enqueue(entry);
+        return const Right(null);
+      }
       await _remoteDataSource.createMaintenanceRequest(params);
       return const Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
+      if (e.type == DioExceptionType.connectionError ||
+          e.type == DioExceptionType.connectionTimeout) {
+        final entry = OfflineQueueEntry(
+          id: 'maint_create_${DateTime.now().millisecondsSinceEpoch}',
+          featureKey: 'maintenance.create',
+          payload: params.toJson(),
+          createdAt: DateTime.now(),
+        );
+        await _offlineQueueService.enqueue(entry);
+        return const Right(null);
+      }
       return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
@@ -95,11 +126,43 @@ class OwnerMaintenanceRepositoryImpl implements OwnerMaintenanceRepository {
     UpdateOwnerMaintenanceParams params,
   ) async {
     try {
+      final isOnline = await _networkInfo.isConnected;
+      if (!isOnline) {
+        final entry = OfflineQueueEntry(
+          id: 'maint_update_${params.id}_${DateTime.now().millisecondsSinceEpoch}',
+          featureKey: 'maintenance.update',
+          payload: params.toJson(),
+          createdAt: DateTime.now(),
+        );
+        await _offlineQueueService.enqueue(entry);
+        return Right(
+          MaintenanceItemEntity(
+            id: params.id,
+            description: params.description,
+          ),
+        );
+      }
       final result = await _remoteDataSource.updateMaintenanceRequest(params);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
+      if (e.type == DioExceptionType.connectionError ||
+          e.type == DioExceptionType.connectionTimeout) {
+        final entry = OfflineQueueEntry(
+          id: 'maint_update_${params.id}_${DateTime.now().millisecondsSinceEpoch}',
+          featureKey: 'maintenance.update',
+          payload: params.toJson(),
+          createdAt: DateTime.now(),
+        );
+        await _offlineQueueService.enqueue(entry);
+        return Right(
+          MaintenanceItemEntity(
+            id: params.id,
+            description: params.description,
+          ),
+        );
+      }
       return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));

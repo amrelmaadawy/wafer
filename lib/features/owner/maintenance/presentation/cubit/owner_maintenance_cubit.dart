@@ -30,9 +30,14 @@ class OwnerMaintenanceCubit extends Cubit<OwnerMaintenanceState> {
     );
 
     result.fold(
-      (failure) => emit(
-        OwnerMaintenanceError(failure.message, activeStatus: _currentStatus),
-      ),
+      (failure) {
+        if (state is OwnerMaintenanceLoaded) {
+          return;
+        }
+        emit(
+          OwnerMaintenanceError(failure.message, activeStatus: _currentStatus),
+        );
+      },
       (response) {
         if (response.items.isEmpty) {
           emit(

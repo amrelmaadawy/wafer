@@ -46,6 +46,8 @@ import '../maintenance/domain/usecases/verify_close_owner_maintenance_use_case.d
 import '../maintenance/domain/usecases/forward_owner_maintenance_use_case.dart';
 import '../maintenance/presentation/cubit/verify_close_maintenance/owner_verify_close_maintenance_cubit.dart';
 import '../maintenance/presentation/cubit/forward_maintenance/owner_forward_maintenance_cubit.dart';
+import '../maintenance/data/datasources/maintenance_offline_queue_handler.dart';
+import '../../../../core/offline/services/offline_queue_service.dart';
 // Finance
 import '../finance/data/datasources/finance_remote_data_source.dart';
 import '../finance/data/repositories/finance_repository_impl.dart';
@@ -776,8 +778,13 @@ void _initMaintenance() {
   }
   if (!sl.isRegistered<OwnerMaintenanceRepository>()) {
     sl.registerLazySingleton<OwnerMaintenanceRepository>(
-      () => OwnerMaintenanceRepositoryImpl(sl()),
+      () => OwnerMaintenanceRepositoryImpl(sl(), sl(), sl()),
     );
+  }
+  if (sl.isRegistered<OfflineQueueService>()) {
+    final queueService = sl<OfflineQueueService>();
+    queueService.registerHandler(MaintenanceCreateOfflineQueueHandler(sl()));
+    queueService.registerHandler(MaintenanceUpdateOfflineQueueHandler(sl()));
   }
   if (!sl.isRegistered<GetOwnerMaintenanceUseCase>()) {
     sl.registerLazySingleton(() => GetOwnerMaintenanceUseCase(sl()));
@@ -798,13 +805,13 @@ void _initMaintenance() {
     sl.registerLazySingleton(() => GetOwnerMaintenanceFormDataUseCase(sl()));
   }
   if (!sl.isRegistered<OwnerCreateMaintenanceCubit>()) {
-    sl.registerFactory(() => OwnerCreateMaintenanceCubit(sl(), sl()));
+    sl.registerFactory(() => OwnerCreateMaintenanceCubit(sl(), sl(), sl()));
   }
   if (!sl.isRegistered<UpdateOwnerMaintenanceUseCase>()) {
     sl.registerLazySingleton(() => UpdateOwnerMaintenanceUseCase(sl()));
   }
   if (!sl.isRegistered<OwnerUpdateMaintenanceCubit>()) {
-    sl.registerFactory(() => OwnerUpdateMaintenanceCubit(sl(), sl()));
+    sl.registerFactory(() => OwnerUpdateMaintenanceCubit(sl(), sl(), sl()));
   }
   if (!sl.isRegistered<DeleteOwnerMaintenanceUseCase>()) {
     sl.registerLazySingleton(() => DeleteOwnerMaintenanceUseCase(sl()));

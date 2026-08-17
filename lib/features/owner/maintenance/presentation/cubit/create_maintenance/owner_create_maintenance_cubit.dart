@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../../core/localization/locale_keys.dart';
+import '../../../../../../core/services/connectivity_service.dart';
 import '../../../domain/usecases/get_owner_maintenance_form_data_use_case.dart';
 import '../../../domain/usecases/create_owner_maintenance_use_case.dart';
 import 'owner_create_maintenance_state.dart';
@@ -8,10 +9,12 @@ import 'owner_create_maintenance_state.dart';
 class OwnerCreateMaintenanceCubit extends Cubit<OwnerCreateMaintenanceState> {
   final GetOwnerMaintenanceFormDataUseCase _getFormDataUseCase;
   final CreateOwnerMaintenanceUseCase _createMaintenanceUseCase;
+  final ConnectivityService _connectivityService;
 
   OwnerCreateMaintenanceCubit(
     this._getFormDataUseCase,
     this._createMaintenanceUseCase,
+    this._connectivityService,
   ) : super(const OwnerCreateMaintenanceState());
 
   void init() {
@@ -112,8 +115,13 @@ class OwnerCreateMaintenanceCubit extends Cubit<OwnerCreateMaintenanceState> {
         );
         emit(state.copyWith(status: CreateMaintenanceStatus.initial));
       },
-      (_) {
-        emit(state.copyWith(status: CreateMaintenanceStatus.success));
+      (_) async {
+        final isOnline = await _connectivityService.isConnected;
+        if (!isOnline) {
+          emit(state.copyWith(status: CreateMaintenanceStatus.offlineQueued));
+        } else {
+          emit(state.copyWith(status: CreateMaintenanceStatus.success));
+        }
       },
     );
   }

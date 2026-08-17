@@ -20,10 +20,23 @@ class UpdateOwnerMaintenanceParams extends Equatable {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'description': description,
       if (scheduledDate != null) 'scheduled_date': scheduledDate,
       'maintenance_types': maintenanceTypes,
     };
+  }
+
+  factory UpdateOwnerMaintenanceParams.fromJson(Map<String, dynamic> json) {
+    return UpdateOwnerMaintenanceParams(
+      id: json['id'] as int,
+      description: json['description'] as String? ?? '',
+      scheduledDate: json['scheduled_date'] as String?,
+      maintenanceTypes: (json['maintenance_types'] as List?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          [],
+    );
   }
 
   @override

@@ -38,6 +38,22 @@ class CreateOwnerMaintenanceParams extends Equatable {
     };
   }
 
+  factory CreateOwnerMaintenanceParams.fromJson(Map<String, dynamic> json) {
+    return CreateOwnerMaintenanceParams(
+      propertyId: json['property_id'] as int,
+      unitId: json['unit_id'] as int?,
+      clientName: json['client_name'] as String? ?? '',
+      clientPhone: json['client_phone'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      requestedDate: json['requested_date'] as String? ?? '',
+      maintenanceTypes: (json['maintenance_types'] as List?)
+              ?.map((e) => e.toString())
+              .toList() ??
+          [],
+      isPrivate: json['is_private'] as bool? ?? false,
+    );
+  }
+
   @override
   List<Object?> get props => [
     propertyId,

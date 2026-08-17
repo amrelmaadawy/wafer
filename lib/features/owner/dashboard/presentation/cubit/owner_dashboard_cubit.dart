@@ -29,7 +29,12 @@ class OwnerDashboardCubit extends Cubit<OwnerDashboardState> {
       cancelToken: _cancelToken,
     );
     await result.fold(
-      (failure) async => emit(OwnerDashboardError(failure.message)),
+      (failure) async {
+        if (state is OwnerDashboardLoaded) {
+          return;
+        }
+        emit(OwnerDashboardError(failure.message));
+      },
       (data) async {
         List<MaintenanceItemEntity> recentItems = [];
         final maintResult = await _getMaintenanceUseCase(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../../core/presentation/widgets/offline_banner.dart';
 import '../../../../../core/theme/app_breakpoints.dart';
 import 'owner_bottom_nav_widget.dart';
 import 'owner_navigation_rail.dart';
@@ -17,10 +18,12 @@ class OwnerAdaptiveShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final wrappedChild = OfflineBannerWidget(child: child);
+
     if (context.isCompact) {
       return Scaffold(
         extendBody: true,
-        body: child,
+        body: wrappedChild,
         bottomNavigationBar: OwnerBottomNavWidget(
           currentIndex: currentIndex,
           onTabChanged: onTabChanged,
@@ -34,7 +37,7 @@ class OwnerAdaptiveShell extends StatelessWidget {
             currentIndex: currentIndex,
             onTabChanged: onTabChanged,
           ),
-          Expanded(child: child),
+          Expanded(child: wrappedChild),
         ],
       ),
     );

@@ -2433,5 +2433,21 @@ abstract class  LocaleKeys {
   static const String notificationPriorityHigh = 'notificationPriorityHigh';
   static const String notificationPriorityMedium = 'notificationPriorityMedium';
   static const String notificationPriorityLow = 'notificationPriorityLow';
+
+  // --- Phase 15: Offline Strategy ---
+  static const String offlineMode = 'offlineMode';
+  static const String offlineRetry = 'offlineRetry';
+  static const String offlineDataStale = 'offlineDataStale';
+  static const String offlineQueuePending = 'offlineQueuePending';
+  static const String offlineQueueSyncing = 'offlineQueueSyncing';
+  static const String offlineQueueSynced = 'offlineQueueSynced';
+  static const String offlineQueueFailed = 'offlineQueueFailed';
+  static const String offline_mode = 'offline.offline_mode';
+  static const String offline_retry = 'offline.offline_retry';
+  static const String offline_data_stale = 'offline.offline_data_stale';
+  static const String offline_queue_pending = 'offline.offline_queue_pending';
+  static const String offline_queue_syncing = 'offline.offline_queue_syncing';
+  static const String offline_queue_synced = 'offline.offline_queue_synced';
+  static const String offline_queue_failed = 'offline.offline_queue_failed';
 }
 

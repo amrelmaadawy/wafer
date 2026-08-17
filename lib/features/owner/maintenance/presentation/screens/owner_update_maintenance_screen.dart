@@ -132,6 +132,9 @@ class _OwnerUpdateMaintenanceViewState
               if (state.status == UpdateMaintenanceStatus.success) {
                 AppToast.showSuccess(context, state.successMessage ?? '');
                 context.pop(true);
+              } else if (state.status == UpdateMaintenanceStatus.offlineQueued) {
+                AppToast.showInfo(context, state.successMessage ?? '');
+                context.pop(true);
               } else if (state.status == UpdateMaintenanceStatus.failure) {
                 AppToast.showError(context, state.errorMessage ?? '');
               }
