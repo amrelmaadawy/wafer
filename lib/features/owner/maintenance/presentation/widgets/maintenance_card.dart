@@ -6,7 +6,10 @@ import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../domain/entities/maintenance_item_entity.dart';
+import '../../domain/entities/maintenance_status_extension.dart';
 import 'maintenance_status_badge.dart';
+import 'maintenance_priority_badge.dart';
+import 'maintenance_pending_action_badge.dart';
 
 class MaintenanceCard extends StatelessWidget {
   final MaintenanceItemEntity item;
@@ -76,6 +79,13 @@ class MaintenanceCard extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 10),
                     child: _buildBottomTimelineRow(context),
                   ),
+                if (item.pendingActionLocaleKey.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10),
+                    child: MaintenancePendingActionBadge(
+                      localeKey: item.pendingActionLocaleKey,
+                    ),
+                  ),
               ],
             ),
           ),
@@ -114,13 +124,19 @@ class MaintenanceCard extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 8),
-        Row(
+        Wrap(
+          spacing: 6,
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
+            if (item.priority != null && item.priority!.isNotEmpty)
+              MaintenancePriorityBadge(
+                priority: item.priority!,
+                label: item.priorityLabel,
+              ),
             MaintenanceStatusBadge(
               status: item.status ?? 'new',
               statusLabel: item.statusLabel ?? '',
             ),
-            const SizedBox(width: 6),
             Icon(
               Icons.arrow_forward_ios_rounded,
               size: 14,

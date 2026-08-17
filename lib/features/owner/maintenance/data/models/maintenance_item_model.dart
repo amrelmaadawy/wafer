@@ -34,6 +34,8 @@ class MaintenanceItemModel extends MaintenanceItemEntity {
     super.qa,
     super.rating,
     super.images,
+    super.priority,
+    super.priorityLabel,
     super.assignments,
     super.tasks,
     super.actionLogs,
@@ -82,6 +84,8 @@ class MaintenanceItemModel extends MaintenanceItemEntity {
       images: json['images'] != null
           ? (json['images'] as List).map((e) => e.toString()).toList()
           : null,
+      priority: json['priority'] as String?,
+      priorityLabel: json['priority_label'] as String?,
       assignments: json['assignments'] != null
           ? (json['assignments'] as List)
                 .map((e) => MaintenanceAssignmentModel.fromJson(e))

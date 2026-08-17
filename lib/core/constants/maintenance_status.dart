@@ -11,4 +11,5 @@ class MaintenanceStatus {
   static const String closed = 'closed';
   static const String rejected = 'rejected';
   static const String cancelled = 'cancelled';
+  static const String forwarded = 'forwarded';
 }

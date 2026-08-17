@@ -26,6 +26,8 @@ class MaintenanceItemEntity extends Equatable {
   final MaintenanceQaEntity? qa;
   final MaintenanceRatingEntity? rating;
   final List<String>? images;
+  final String? priority;
+  final String? priorityLabel;
   final List<MaintenanceAssignmentEntity>? assignments;
   final List<MaintenanceTaskEntity>? tasks;
   final List<MaintenanceActionLogEntity>? actionLogs;
@@ -52,6 +54,8 @@ class MaintenanceItemEntity extends Equatable {
     this.qa,
     this.rating,
     this.images,
+    this.priority,
+    this.priorityLabel,
     this.assignments,
     this.tasks,
     this.actionLogs,
@@ -80,6 +84,8 @@ class MaintenanceItemEntity extends Equatable {
     qa,
     rating,
     images,
+    priority,
+    priorityLabel,
     assignments,
     tasks,
     actionLogs,
