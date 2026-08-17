@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import '../network/dio_factory.dart';
 import '../network/interceptors/auth_interceptor.dart';
+import '../network/interceptors/cache_interceptor_config.dart';
 import '../network/interceptors/error_interceptor.dart';
 import '../network/interceptors/locale_interceptor.dart';
 import '../network/connectivity/network_info.dart';
@@ -49,6 +50,9 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton<AuthInterceptor>(() => AuthInterceptor(sl()));
   sl.registerLazySingleton<LocaleInterceptor>(() => LocaleInterceptor(sl()));
   sl.registerLazySingleton<ErrorInterceptor>(() => ErrorInterceptor());
+
+  // Initialize API Cache Store (Needs SecureStorageService)
+  await CacheInterceptorConfig.init();
 
   // Network
   sl.registerLazySingleton<Dio>(

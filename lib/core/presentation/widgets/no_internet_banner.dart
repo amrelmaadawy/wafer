@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../localization/locale_keys.dart';
 import '../../network/connectivity/network_info.dart';
 import '../../di/service_locator.dart';
+import '../../theme/app_colors.dart';
 
 /// A global banner that overlays on top of the app content when the device
 /// loses internet connectivity, and auto-hides once connection is restored.
@@ -30,13 +31,17 @@ class _NoInternetBannerState extends State<NoInternetBanner>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 600),
     );
 
     _slideAnimation = Tween<Offset>(
-      begin: const Offset(0, -1),
+      begin: const Offset(0, -1.5),
       end: Offset.zero,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
+    ).animate(CurvedAnimation(
+      parent: _controller,
+      curve: Curves.elasticOut,
+      reverseCurve: Curves.easeInBack,
+    ));
 
     // Check connectivity every 5 seconds
     _startConnectivityPolling();
@@ -78,9 +83,14 @@ class _NoInternetBannerState extends State<NoInternetBanner>
       children: [
         widget.child,
         // Animated Banner
-        SlideTransition(
-          position: _slideAnimation,
-          child: _isOffline ? _buildBanner(context) : const SizedBox.shrink(),
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: SlideTransition(
+            position: _slideAnimation,
+            child: _isOffline ? _buildBanner(context) : const SizedBox.shrink(),
+          ),
         ),
       ],
     );
@@ -88,72 +98,91 @@ class _NoInternetBannerState extends State<NoInternetBanner>
 
   Widget _buildBanner(BuildContext context) {
     return SafeArea(
-      child: Material(
-        color: Colors.transparent,
-        child: Container(
-          width: double.infinity,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          decoration: BoxDecoration(
-            color: const Color(0xFFEF4444),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.15),
-                blurRadius: 8,
-                offset: const Offset(0, 3),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              const Icon(Icons.wifi_off_rounded, color: Colors.white, size: 20),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      LocaleKeys.errorsNoInternetTitle.tr(),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    Text(
-                      LocaleKeys.errorsNoInternetSubtitle.tr(),
-                      style: const TextStyle(
-                        color: Colors.white70,
-                        fontSize: 11,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              color: AppColors.error,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.error.withValues(alpha: 0.3),
+                  blurRadius: 16,
+                  offset: const Offset(0, 8),
                 ),
-              ),
-              // Manual retry button
-              GestureDetector(
-                onTap: _checkConnectivity,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 5,
-                  ),
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(8),
+                    shape: BoxShape.circle,
                   ),
-                  child: Text(
-                    LocaleKeys.commonRetry.tr(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 11,
-                      fontWeight: FontWeight.w700,
+                  child: const Icon(Icons.wifi_off_rounded, color: Colors.white, size: 22),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        LocaleKeys.errorsNoInternetTitle.tr(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        LocaleKeys.errorsNoInternetSubtitle.tr(),
+                        style: TextStyle(
+                          color: Colors.white.withValues(alpha: 0.85),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Manual retry button
+                Material(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  elevation: 2,
+                  shadowColor: Colors.black.withValues(alpha: 0.2),
+                  child: InkWell(
+                    onTap: _checkConnectivity,
+                    borderRadius: BorderRadius.circular(10),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 14,
+                        vertical: 8,
+                      ),
+                      child: Text(
+                        LocaleKeys.commonRetry.tr(),
+                        style: const TextStyle(
+                          color: AppColors.error,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w800,
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

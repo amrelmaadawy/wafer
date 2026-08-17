@@ -24,9 +24,6 @@ void main() async {
   // Initialize Dependency Injection
   await setupServiceLocator();
 
-  // Initialize API Cache Store
-  await CacheInterceptorConfig.init();
-
   // Load saved primary color and apply it before first frame
   final savedColor = sl<CacheHelper>().getPrimaryColor();
   sl<AppThemeCubit>().loadFromPrefs(savedColor);
