@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import '../../theme/app_colors.dart';
+import '../../theme/app_fonts.dart';
 import '../../theme/app_radius.dart';
+import '../../theme/app_spacing.dart';
 import '../../theme/color_utils.dart';
+import '../../theme/theme_context.dart';
 
 /// A full-screen loading overlay shown during async operations.
 /// Used when performing actions that block the entire screen.
@@ -28,10 +30,14 @@ class AppLoadingOverlay extends StatelessWidget {
             color: Colors.black.withValues(alpha: 0.3),
             child: Center(
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg,
+                  vertical: AppSpacing.md,
+                ),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: context.appSurfaceColor,
                   borderRadius: AppRadius.circularMd,
+                  border: Border.all(color: context.appBorderColor),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.1),
@@ -52,11 +58,11 @@ class AppLoadingOverlay extends StatelessWidget {
                       ),
                     ),
                     if (messageKey != null) ...[
-                      const SizedBox(width: 16),
+                      const SizedBox(width: AppSpacing.md),
                       Text(
                         messageKey!.tr(),
-                        style: const TextStyle(
-                          color: AppColors.textPrimary,
+                        style: AppTextStyles.labelMedium.copyWith(
+                          color: context.appOnSurfaceColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

@@ -22,6 +22,25 @@ class PropertiesPageHeader extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          Padding(
+            padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
+            child: Material(
+              color: context.primaryColor.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(10),
+              child: InkWell(
+                onTap: () => Scaffold.of(context).openDrawer(),
+                borderRadius: BorderRadius.circular(10),
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Icon(
+                    Icons.menu_rounded,
+                    color: context.primaryColor,
+                    size: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

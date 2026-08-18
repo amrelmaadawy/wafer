@@ -9,13 +9,13 @@ import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../../../../core/theme/app_fonts.dart';
-import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../../core/utils/widgets/app_shimmer.dart';
 import '../../../../../../core/di/service_locator.dart';
 import '../../domain/entities/negotiation_form_data_entity.dart';
 import '../cubit/list/negotiations_list_cubit.dart';
 import '../cubit/list/negotiations_list_state.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
 
 class NegotiationsListView extends StatefulWidget {
   const NegotiationsListView({super.key});
@@ -60,9 +60,8 @@ class _NegotiationsListViewState extends State<NegotiationsListView> {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            appBar: CustomAppBar(
-              title: LocaleKeys.negotiation_list_title.tr(),
-              showBackButton: true,
+            appBar: OwnerTopAppBar(
+              title: LocaleKeys.drawerNavNegotiations.tr(),
             ),
             floatingActionButton: FloatingActionButton(
               onPressed: () async {

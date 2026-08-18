@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:wafer/core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
-import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/localization/locale_keys.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
+import '../../../shell/presentation/models/breadcrumb_item.dart';
+import '../../../../../core/routing/routes.dart';
 import '../cubit/details/deed_details_cubit.dart';
 import '../cubit/details/deed_details_state.dart';
 import '../widgets/details/deed_details_header.dart';
@@ -48,9 +50,18 @@ class _DeedDetailsScreenState extends State<DeedDetailsScreen> {
 
         return Scaffold(
           backgroundColor: AppColors.backgroundLight,
-          appBar: CustomAppBar(
+          appBar: OwnerTopAppBar(
             title: LocaleKeys.deedDetailsTitle.tr(),
-            actions: hasAttachment
+            breadcrumbs: [
+              BreadcrumbItem(
+                label: LocaleKeys.drawerNavDeeds.tr(),
+                route: Routes.ownerDeeds,
+              ),
+              BreadcrumbItem(
+                label: LocaleKeys.deedDetailsTitle.tr(),
+              ),
+            ],
+            extraActions: hasAttachment
                 ? [
                     IconButton(
                       icon: const Icon(Icons.file_download_outlined),

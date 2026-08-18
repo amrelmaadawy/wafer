@@ -5,24 +5,23 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/presentation/widgets/app_filter_chips.dart';
-import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_empty_widget.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/presentation/widgets/list/filter_sort_header_bar.dart';
 import '../../../../../core/presentation/widgets/list/paginated_list_view.dart';
 import '../../../../../core/presentation/widgets/list/unified_search_field.dart';
 import '../../../../../core/routing/routes.dart';
-import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/theme/theme_context.dart';
-import '../../../../../core/utils/widgets/app_shimmer.dart';
+import '../../../../../core/utils/app_page_status.dart';
 import '../../../tasks/domain/entities/task_entity.dart';
 import '../cubits/list/tasks_list_cubit.dart';
 import '../widgets/task_filter_sheet.dart';
 import '../widgets/task_list_item.dart';
 import '../widgets/task_sort_sheet.dart';
-import '../../../../../core/utils/app_page_status.dart';
+import '../widgets/tasks_list_skeleton.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
 
 class OwnerTasksScreen extends StatefulWidget {
   const OwnerTasksScreen({super.key});
@@ -85,7 +84,7 @@ class _OwnerTasksScreenState extends State<OwnerTasksScreen> {
       value: _cubit,
       child: Scaffold(
         backgroundColor: context.appBackgroundColor,
-        appBar: CustomAppBar(title: LocaleKeys.dashboard_tasks.tr()),
+        appBar: OwnerTopAppBar(title: LocaleKeys.drawerNavTasks.tr()),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
             final result = await context.push(Routes.ownerTasksCreate);
@@ -139,9 +138,10 @@ class _OwnerTasksScreenState extends State<OwnerTasksScreen> {
                     isLoading: state.isLoading,
                     isFetchingMore: state.isLoadingNextPage,
                     hasReachedMax: state.hasReachedMax,
+                    useStaggeredAnimation: true,
                     onRefresh: () => _cubit.fetchTasks(refresh: true),
                     onLoadMore: () => _cubit.fetchTasks(isLoadMore: true),
-                    loadingWidget: _buildShimmer(),
+                    loadingWidget: const TasksListSkeleton(),
                     errorWidget: state.status == AppPageStatus.error
                         ? CustomErrorWidget(
                             message: state.errorMessage ??
@@ -165,26 +165,6 @@ class _OwnerTasksScreenState extends State<OwnerTasksScreen> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildShimmer() {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 5,
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.md,
-        vertical: AppSpacing.sm,
-      ),
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-          child: AppShimmer.box(
-            height: 120,
-            borderRadius: AppRadius.circularMd,
-          ),
-        );
-      },
     );
   }
 }

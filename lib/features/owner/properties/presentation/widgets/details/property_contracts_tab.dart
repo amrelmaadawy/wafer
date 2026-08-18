@@ -1,10 +1,13 @@
-﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:wafer/core/presentation/widgets/custom_empty_widget.dart';
-import 'package:wafer/core/theme/app_radius.dart';
+import 'package:flutter/material.dart';
 import '../../../../../../core/localization/locale_keys.dart';
+import '../../../../../../core/presentation/widgets/custom_empty_widget.dart';
 import '../../../../../../core/theme/app_colors.dart';
+import '../../../../../../core/theme/app_fonts.dart';
+import '../../../../../../core/theme/app_radius.dart';
+import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
+import '../../../../../../core/theme/theme_context.dart';
 import '../../../domain/entities/contract_entity.dart';
 
 class PropertyContractsTab extends StatelessWidget {
@@ -23,20 +26,26 @@ class PropertyContractsTab extends StatelessWidget {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
+      ),
       itemCount: contracts.length,
       itemBuilder: (context, index) {
         final contract = contracts[index];
+        final isDraft = contract.status == 'draft';
+        final statusColor = isDraft ? AppColors.warning : AppColors.success;
+
         return Card(
           elevation: 0,
-          margin: const EdgeInsets.only(bottom: 12),
-          color: Colors.white,
+          margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+          color: context.appSurfaceColor,
           shape: RoundedRectangleBorder(
             borderRadius: AppRadius.circularXl,
-            side: BorderSide(color: Colors.grey.withValues(alpha: 0.2)),
+            side: BorderSide(color: context.appBorderColor),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(AppSpacing.md),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -45,58 +54,59 @@ class PropertyContractsTab extends StatelessWidget {
                   children: [
                     Text(
                       contract.contractNumber,
-                      style: const TextStyle(
+                      style: AppTextStyles.h4.copyWith(
                         fontWeight: FontWeight.bold,
-                        fontSize: 16,
+                        color: context.appOnSurfaceColor,
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
+                        horizontal: AppSpacing.xs,
                         vertical: 4,
                       ),
                       decoration: BoxDecoration(
-                        color: contract.status == 'draft'
-                            ? AppColors.warning.withValues(alpha: 0.1)
-                            : AppColors.success.withValues(alpha: 0.1),
+                        color: statusColor.withValues(alpha: 0.1),
                         borderRadius: AppRadius.circularMd,
                       ),
                       child: Text(
                         contract.statusLabel,
-                        style: TextStyle(
-                          color: contract.status == 'draft'
-                              ? AppColors.warning
-                              : AppColors.success,
-                          fontSize: 12,
+                        style: AppTextStyles.labelSmall.copyWith(
+                          color: statusColor,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.xs),
                 Text(
                   '${LocaleKeys.contractsSectionPropertyUnit.tr()}: ${contract.unitName}',
-                  style: const TextStyle(color: Colors.grey),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: context.appSecondaryTextColor,
+                  ),
                 ),
                 Text(
                   '${LocaleKeys.contractsTenantLabel.tr()}: ${contract.renterName}',
-                  style: const TextStyle(color: Colors.grey),
+                  style: AppTextStyles.bodySmall.copyWith(
+                    color: context.appSecondaryTextColor,
+                  ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: AppSpacing.xs),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       '${LocaleKeys.contractsTotalRentValue.tr()}: ${contract.totalRentValue} ${LocaleKeys.commonCurrencySar.tr()}',
-                      style: TextStyle(
+                      style: AppTextStyles.labelMedium.copyWith(
                         color: context.primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       '${LocaleKeys.contractsTypeLabel.tr()}: ${contract.contractType}',
-                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: context.appSecondaryTextColor,
+                      ),
                     ),
                   ],
                 ),
@@ -108,4 +118,3 @@ class PropertyContractsTab extends StatelessWidget {
     );
   }
 }
-

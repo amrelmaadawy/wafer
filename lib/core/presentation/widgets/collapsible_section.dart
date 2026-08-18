@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import '../../theme/app_colors.dart';
+import '../../theme/app_fonts.dart';
 import '../../theme/app_radius.dart';
+import '../../theme/app_spacing.dart';
 import '../../theme/color_utils.dart';
+import '../../theme/theme_context.dart';
 
 class CollapsibleSection extends StatefulWidget {
   final String title;
@@ -40,8 +42,9 @@ class _CollapsibleSectionState extends State<CollapsibleSection> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.appSurfaceColor,
         borderRadius: AppRadius.circularXxl,
+        border: Border.all(color: context.appBorderColor),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.03),
@@ -56,25 +59,24 @@ class _CollapsibleSectionState extends State<CollapsibleSection> {
             onTap: _toggleExpanded,
             borderRadius: AppRadius.circularXxl,
             child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(AppSpacing.lg),
               child: Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(AppSpacing.sm),
                     decoration: BoxDecoration(
                       color: context.primaryColor.withValues(alpha: 0.1),
                       borderRadius: AppRadius.circularMd,
                     ),
                     child: Icon(widget.icon, size: 18, color: context.primaryColor),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
                       widget.title,
-                      style: const TextStyle(
-                        fontSize: 16,
+                      style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w700,
-                        color: AppColors.textPrimaryLight,
+                        color: context.appOnSurfaceColor,
                       ),
                     ),
                   ),
@@ -82,7 +84,7 @@ class _CollapsibleSectionState extends State<CollapsibleSection> {
                     _isExpanded
                         ? Icons.keyboard_arrow_up_rounded
                         : Icons.keyboard_arrow_down_rounded,
-                    color: AppColors.textSecondaryLight,
+                    color: context.appSecondaryTextColor,
                   ),
                 ],
               ),
@@ -91,7 +93,7 @@ class _CollapsibleSectionState extends State<CollapsibleSection> {
           AnimatedCrossFade(
             firstChild: const SizedBox.shrink(),
             secondChild: Padding(
-              padding: const EdgeInsets.only(bottom: 20),
+              padding: const EdgeInsets.only(bottom: AppSpacing.lg),
               child: widget.child,
             ),
             crossFadeState: _isExpanded

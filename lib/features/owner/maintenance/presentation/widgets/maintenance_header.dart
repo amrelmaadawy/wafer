@@ -38,6 +38,25 @@ class MaintenanceHeader extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 12),
+              ] else ...[
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: context.primaryColor.withValues(alpha: 0.1),
+                    borderRadius: AppRadius.circularLg,
+                  ),
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.menu_rounded,
+                      color: context.primaryColor,
+                      size: 20,
+                    ),
+                    padding: EdgeInsets.zero,
+                    onPressed: () => Scaffold.of(context).openDrawer(),
+                  ),
+                ),
+                const SizedBox(width: 12),
               ],
               Text(
                 LocaleKeys.maintenanceTitle.tr(),

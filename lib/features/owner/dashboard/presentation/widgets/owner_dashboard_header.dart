@@ -49,6 +49,19 @@ class OwnerDashboardHeader extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              _HeaderActionButton(
+                icon: Icons.menu_rounded,
+                onTap: () {
+                  final rootScaffold = context.findRootAncestorStateOfType<ScaffoldState>();
+                  if (rootScaffold != null) {
+                    rootScaffold.openDrawer();
+                  } else {
+                    Scaffold.of(context).openDrawer();
+                  }
+                },
+                primary: primary,
+              ),
+              const SizedBox(width: AppSpacing.sm),
               // Avatar + Greeting
               Container(
                 width: 40,

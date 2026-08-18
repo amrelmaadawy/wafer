@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:wafer/core/localization/locale_keys.dart';
-import 'package:wafer/core/theme/app_colors.dart';
-import 'package:wafer/core/theme/app_radius.dart';
-import 'package:wafer/core/utils/widgets/custom_button.dart';
+import '../../localization/locale_keys.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_fonts.dart';
+import '../../theme/app_radius.dart';
+import '../../theme/app_spacing.dart';
+import '../../theme/theme_context.dart';
+import '../../utils/widgets/custom_button.dart';
 
 class CustomErrorWidget extends StatelessWidget {
   final String message;
@@ -23,15 +26,16 @@ class CustomErrorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Container(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(AppSpacing.xxl),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: context.appSurfaceColor,
             borderRadius: AppRadius.circularXxl,
+            border: Border.all(color: context.appBorderColor),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: AppColors.error.withValues(alpha: 0.05),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),
@@ -56,28 +60,25 @@ class CustomErrorWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.lg),
               Text(
                 title ?? LocaleKeys.errorsServerError.tr(),
-                style: const TextStyle(
-                  fontSize: 18,
+                style: AppTextStyles.h3.copyWith(
                   fontWeight: FontWeight.w800,
-                  color: AppColors.textPrimaryLight,
+                  color: context.appOnSurfaceColor,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.sm),
               Text(
                 message,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.textSecondaryLight,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: context.appSecondaryTextColor,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: AppSpacing.xxl),
               SizedBox(
                 width: double.infinity,
                 child: CustomButton(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../theme/app_colors.dart';
 import '../../../theme/app_radius.dart';
 import '../../../theme/color_utils.dart';
 import '../../../theme/theme_context.dart';
@@ -114,7 +113,7 @@ class _ActionButton extends StatelessWidget {
             border: Border.all(
               color: hasBadge
                   ? primaryColor.withValues(alpha: 0.4)
-                  : AppColors.borderLight.withValues(alpha: 0.6),
+                  : context.appBorderColor.withValues(alpha: 0.6),
             ),
           ),
           child: Stack(

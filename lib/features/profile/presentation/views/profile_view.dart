@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/color_utils.dart';
-import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../owner/shell/presentation/widgets/owner_top_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../domain/entities/profile_entity.dart';
 import '../cubit/profile_cubit.dart';
@@ -12,7 +12,6 @@ import '../cubit/profile_state.dart';
 import '../widgets/profile_actions_card.dart';
 import '../widgets/profile_header_card.dart';
 import '../widgets/profile_info_card.dart';
-import '../widgets/operations_card.dart';
 import '../widgets/profile_skeleton_widget.dart';
 
 class ProfileView extends StatelessWidget {
@@ -22,9 +21,8 @@ class ProfileView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(
-        title: LocaleKeys.owner_more_title.tr(),
-        showBackButton: false,
+      appBar: OwnerTopAppBar(
+        title: LocaleKeys.drawerNavProfile.tr(),
       ),
       body: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
@@ -47,13 +45,11 @@ class ProfileView extends StatelessWidget {
       onRefresh: () =>
           context.read<ProfileCubit>().fetchProfile(forceRefresh: true),
       child: ListView(
-        padding: const EdgeInsets.fromLTRB(16, 4, 16, 120),
+        padding: const EdgeInsets.fromLTRB(16, 12, 16, 32),
         children: [
           ProfileHeaderCard(profile: profile),
           const SizedBox(height: 16),
           ProfileInfoCard(profile: profile),
-          const SizedBox(height: 16),
-          const OperationsCard(),
           const SizedBox(height: 16),
           ProfileActionsCard(profile: profile),
         ],

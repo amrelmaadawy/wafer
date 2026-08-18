@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/documents/widgets/documents_list_widget.dart';
 import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -25,6 +24,9 @@ import 'maintenance_images_section.dart';
 import 'maintenance_tasks_section.dart';
 import 'maintenance_timeline_section.dart';
 import 'maintenance_workflow_stepper.dart';
+
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
+import '../../../shell/presentation/models/breadcrumb_item.dart';
 
 class MaintenanceDetailsViewContent extends StatelessWidget {
   final MaintenanceItemEntity initialItem;
@@ -49,10 +51,19 @@ class MaintenanceDetailsViewContent extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: AppColors.backgroundLight,
-          appBar: CustomAppBar(
+          appBar: OwnerTopAppBar(
             title: LocaleKeys.maintenanceDetailsTitle.tr(),
+            breadcrumbs: [
+              BreadcrumbItem(
+                label: LocaleKeys.drawerNavMaintenance.tr(),
+                route: Routes.ownerMaintenance,
+              ),
+              BreadcrumbItem(
+                label: LocaleKeys.maintenanceDetailsTitle.tr(),
+              ),
+            ],
             onBackPressed: () => context.pop(isModified),
-            actions: [
+            extraActions: [
               if (displayItem.canDelete)
                 IconButton(
                   icon: const Icon(

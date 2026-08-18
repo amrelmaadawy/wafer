@@ -1,11 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/presentation/widgets/app_responsive_content.dart';
 import '../../../../../../core/presentation/widgets/custom_empty_widget.dart';
-import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_fonts.dart';
 import '../../../../../../core/theme/app_radius.dart';
+import '../../../../../../core/theme/app_spacing.dart';
+import '../../../../../../core/theme/theme_context.dart';
 import '../../../domain/entities/contract_entity.dart';
 import '../../../domain/entities/unit_full_details_entity.dart';
 import '../details/unit_contract_banner.dart';
@@ -29,25 +30,27 @@ class UnitContractTab extends StatelessWidget {
     }
 
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
+      ),
       child: AppResponsiveContent(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (contract != null) ...[
               UnitContractBanner(contract: contract),
-              const SizedBox(height: 24),
+              const SizedBox(height: AppSpacing.xl),
             ],
             if (history.isNotEmpty) ...[
               Text(
                 LocaleKeys.unitDetailsContractHistory.tr(),
-                style: const TextStyle(
-                  fontFamily: AppFonts.fontFamilyPrimary,
+                style: AppTextStyles.h4.copyWith(
                   fontWeight: FontWeight.w700,
-                  fontSize: 16,
+                  color: context.appOnSurfaceColor,
                 ),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: AppSpacing.sm),
               ...history.map((c) => _ContractHistoryCard(contract: c)),
             ],
           ],
@@ -65,12 +68,12 @@ class _ContractHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+      padding: const EdgeInsets.all(AppSpacing.md),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: context.appSurfaceColor,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: Colors.grey.withValues(alpha: 0.15)),
+        border: Border.all(color: context.appBorderColor),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,46 +83,40 @@ class _ContractHistoryCard extends StatelessWidget {
             children: [
               Text(
                 contract.contractNumber,
-                style: const TextStyle(
-                  fontFamily: AppFonts.fontFamilyPrimary,
+                style: AppTextStyles.labelMedium.copyWith(
                   fontWeight: FontWeight.w700,
-                  fontSize: 14,
+                  color: context.appOnSurfaceColor,
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                 decoration: BoxDecoration(
-                  color: AppColors.textSecondaryLight.withValues(alpha: 0.1),
+                  color: context.appSecondaryTextColor.withValues(alpha: 0.1),
                   borderRadius: AppRadius.circularMd,
                 ),
                 child: Text(
                   contract.statusLabel,
-                  style: const TextStyle(
-                    fontSize: 11,
+                  style: AppTextStyles.labelSmall.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textSecondaryLight,
+                    color: context.appSecondaryTextColor,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: AppSpacing.xs),
           Text(
             '${LocaleKeys.contractsTenantLabel.tr()}: ${contract.renterName}',
-            style: TextStyle(
-              fontSize: 12,
-              color: Colors.grey.shade600,
-              fontFamily: AppFonts.fontFamilyPrimary,
+            style: AppTextStyles.bodySmall.copyWith(
+              color: context.appSecondaryTextColor,
             ),
           ),
           if (contract.startDate != null && contract.endDate != null) ...[
             const SizedBox(height: 4),
             Text(
               '${contract.startDate} - ${contract.endDate}',
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.grey.shade500,
-                fontFamily: AppFonts.fontFamilyPrimary,
+              style: AppTextStyles.labelSmall.copyWith(
+                color: context.appSecondaryTextColor.withValues(alpha: 0.8),
               ),
             ),
           ],

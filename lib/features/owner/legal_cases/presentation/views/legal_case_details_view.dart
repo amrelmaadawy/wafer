@@ -26,9 +26,10 @@ import '../widgets/case_stages_timeline_widget.dart';
 import '../widgets/add_legal_case_stage_bottom_sheet.dart';
 import '../../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../../core/presentation/widgets/app_confirm_dialog.dart';
-import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../../core/documents/widgets/documents_list_widget.dart';
 import '../../../../../../core/activity/widgets/activity_timeline_widget.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
+import '../../../shell/presentation/models/breadcrumb_item.dart';
 
 class LegalCaseDetailsView extends StatefulWidget {
   final int legalCaseId;
@@ -141,9 +142,18 @@ class _LegalCaseDetailsViewState extends State<LegalCaseDetailsView> {
         child: BlocBuilder<LegalCaseDetailsCubit, LegalCaseDetailsState>(
           builder: (context, state) {
             return Scaffold(
-              appBar: CustomAppBar(
+              appBar: OwnerTopAppBar(
                 title: LocaleKeys.case_details.tr(),
-                actions: [
+                breadcrumbs: [
+                  BreadcrumbItem(
+                    label: LocaleKeys.drawerNavLegalCases.tr(),
+                    route: Routes.ownerLegalCases,
+                  ),
+                  BreadcrumbItem(
+                    label: LocaleKeys.case_details.tr(),
+                  ),
+                ],
+                extraActions: [
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
                     child: Row(

@@ -9,9 +9,9 @@ import '../../../../../core/presentation/widgets/list/filter_sort_header_bar.dar
 import '../../../../../core/presentation/widgets/list/paginated_list_view.dart';
 import '../../../../../core/presentation/widgets/list/unified_search_field.dart';
 import '../../../../../core/routing/routes.dart';
-import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../domain/entities/payment_entity.dart';
 import '../cubit/payments/cancel_finance_payment_cubit.dart';
@@ -32,8 +32,6 @@ class OwnerPaymentsView extends StatefulWidget {
 }
 
 class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
-  final ScrollController _scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
@@ -41,12 +39,6 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
     if (cubit.state is FinancePaymentsInitial) {
       cubit.fetchPayments();
     }
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   Future<void> _onRefresh() async {
@@ -59,14 +51,14 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
     final filter = cubit.currentFilter;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: context.appBackgroundColor,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         title: Text(
           LocaleKeys.owner_finance_payment_vouchers.tr(),
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        backgroundColor: AppColors.backgroundLight,
+        backgroundColor: context.appBackgroundColor,
         elevation: 0,
         centerTitle: true,
       ),
@@ -74,9 +66,7 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
         backgroundColor: context.primaryColor,
         onPressed: () async {
           final result = await context.push(Routes.ownerFinanceCreatePayment);
-          if (result == true && mounted) {
-            _onRefresh();
-          }
+          if (result == true && mounted) _onRefresh();
         },
         child: const Icon(Icons.add, color: Colors.white),
       ),
@@ -88,8 +78,7 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
                 showDialog(
                   context: context,
                   barrierDismissible: false,
-                  builder: (context) =>
-                      const Center(child: CircularProgressIndicator()),
+                  builder: (_) => const Center(child: CircularProgressIndicator()),
                 );
               } else if (cancelState is CancelFinancePaymentSuccess) {
                 Navigator.of(context, rootNavigator: true).pop();
@@ -118,20 +107,16 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
               ),
               activeFiltersCount: filter.activeFiltersCount,
               isSortActive: filter.isSortActive,
-              onFilterTap: () {
-                FinanceFilterSheet.show(
-                  context,
-                  currentFilter: filter,
-                  onApply: cubit.applyFilter,
-                );
-              },
-              onSortTap: () {
-                FinanceSortSheet.show(
-                  context,
-                  currentFilter: filter,
-                  onApply: cubit.applyFilter,
-                );
-              },
+              onFilterTap: () => FinanceFilterSheet.show(
+                context,
+                currentFilter: filter,
+                onApply: cubit.applyFilter,
+              ),
+              onSortTap: () => FinanceSortSheet.show(
+                context,
+                currentFilter: filter,
+                onApply: cubit.applyFilter,
+              ),
             ),
             Expanded(
               child: BlocConsumer<FinancePaymentsCubit, FinancePaymentsState>(
@@ -166,11 +151,11 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
                       : true;
 
                   return PaginatedListView<PaymentEntity>(
-                    controller: _scrollController,
                     items: payments,
                     isFetchingMore: state is FinancePaymentsLoading &&
                         !state.isFirstFetch,
                     hasReachedMax: hasReachedMax,
+                    useStaggeredAnimation: true,
                     onRefresh: _onRefresh,
                     onLoadMore: () => cubit.fetchPayments(),
                     padding: const EdgeInsets.symmetric(
@@ -187,36 +172,17 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
                     itemBuilder: (context, index, payment) {
                       return FinancePaymentCard(
                         payment: payment,
-                        onTap: () {
-                          context.push(
-                            Routes.ownerFinancePaymentDetails.replaceFirst(
-                              ':id',
-                              payment.id.toString(),
-                            ),
-                          );
-                        },
-                        onEditTap: () {
-                          context.push(
-                            Routes.ownerFinancePaymentUpdate,
-                            extra: {
-                              'cubit': cubit,
-                              'payment': payment,
-                            },
-                          );
-                        },
-                        onCancelTap: () {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (dialogContext) => CancelPaymentDialog(
-                              onConfirm: (reason) {
-                                context
-                                    .read<CancelFinancePaymentCubit>()
-                                    .cancelPayment(payment.id, reason);
-                              },
-                            ),
-                          );
-                        },
+                        onTap: () => context.push(
+                          Routes.ownerFinancePaymentDetails.replaceFirst(
+                            ':id',
+                            payment.id.toString(),
+                          ),
+                        ),
+                        onEditTap: () => context.push(
+                          Routes.ownerFinancePaymentUpdate,
+                          extra: {'cubit': cubit, 'payment': payment},
+                        ),
+                        onCancelTap: () => _showCancelDialog(context, payment),
                       );
                     },
                   );
@@ -225,6 +191,20 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showCancelDialog(BuildContext context, PaymentEntity payment) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => CancelPaymentDialog(
+        onConfirm: (reason) {
+          context
+              .read<CancelFinancePaymentCubit>()
+              .cancelPayment(payment.id, reason);
+        },
       ),
     );
   }

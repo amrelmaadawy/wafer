@@ -10,9 +10,9 @@ import '../../../../../core/presentation/widgets/list/filter_sort_header_bar.dar
 import '../../../../../core/presentation/widgets/list/paginated_list_view.dart';
 import '../../../../../core/presentation/widgets/list/unified_search_field.dart';
 import '../../../../../core/routing/routes.dart';
-import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../domain/entities/receipt_entity.dart';
 import '../cubit/receipts/finance_receipts_cubit.dart';
@@ -30,18 +30,10 @@ class OwnerReceiptsView extends StatefulWidget {
 }
 
 class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
-  final ScrollController _scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
     context.read<FinanceReceiptsCubit>().fetchReceipts(isRefresh: true);
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
   }
 
   @override
@@ -50,12 +42,13 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
     final filter = cubit.currentFilter;
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: context.appBackgroundColor,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leadingWidth: 68,
         leading: const CustomBackButton(),
         title: Text(LocaleKeys.owner_finance_receipts.tr()),
+        backgroundColor: context.appBackgroundColor,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -79,20 +72,16 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
             ),
             activeFiltersCount: filter.activeFiltersCount,
             isSortActive: filter.isSortActive,
-            onFilterTap: () {
-              FinanceFilterSheet.show(
-                context,
-                currentFilter: filter,
-                onApply: cubit.applyFilter,
-              );
-            },
-            onSortTap: () {
-              FinanceSortSheet.show(
-                context,
-                currentFilter: filter,
-                onApply: cubit.applyFilter,
-              );
-            },
+            onFilterTap: () => FinanceFilterSheet.show(
+              context,
+              currentFilter: filter,
+              onApply: cubit.applyFilter,
+            ),
+            onSortTap: () => FinanceSortSheet.show(
+              context,
+              currentFilter: filter,
+              onApply: cubit.applyFilter,
+            ),
           ),
           Expanded(
             child: BlocConsumer<FinanceReceiptsCubit, FinanceReceiptsState>(
@@ -132,10 +121,10 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
                 }
 
                 return PaginatedListView<ReceiptEntity>(
-                  controller: _scrollController,
                   items: receipts,
                   isFetchingMore: isFetchingMore,
                   hasReachedMax: hasReachedMax,
+                  useStaggeredAnimation: true,
                   onRefresh: () => cubit.fetchReceipts(isRefresh: true),
                   onLoadMore: () => cubit.fetchReceipts(),
                   padding: const EdgeInsets.symmetric(
@@ -163,10 +152,7 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
                       onEditTap: () {
                         context.push(
                           Routes.ownerFinanceReceiptUpdate,
-                          extra: {
-                            'cubit': cubit,
-                            'receipt': receipt,
-                          },
+                          extra: {'cubit': cubit, 'receipt': receipt},
                         );
                       },
                     );

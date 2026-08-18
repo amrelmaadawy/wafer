@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import '../../theme/app_colors.dart';
+import '../../theme/app_fonts.dart';
+import '../../theme/app_spacing.dart';
 import '../../theme/color_utils.dart';
 import '../../theme/theme_context.dart';
 
@@ -35,12 +36,15 @@ class AppFilterChips<T> extends StatelessWidget {
 
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.xs,
+      ),
       child: Row(
         children: options.map((option) {
           final isSelected = selectedValue == option.value;
           return Padding(
-            padding: const EdgeInsetsDirectional.only(end: 10),
+            padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               curve: Curves.easeOut,
@@ -52,23 +56,30 @@ class AppFilterChips<T> extends StatelessWidget {
                       Icon(
                         option.icon,
                         size: 16,
-                        color: isSelected ? Colors.white : context.appSecondaryTextColor,
+                        color: isSelected
+                            ? Colors.white
+                            : context.appSecondaryTextColor,
                       ),
                       const SizedBox(width: 6),
                     ],
                     Text(
                       option.labelKey.tr(),
-                      style: TextStyle(
-                        color: isSelected ? Colors.white : context.appSecondaryTextColor,
-                        fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
-                        fontSize: 14,
+                      style: AppTextStyles.labelMedium.copyWith(
+                        color: isSelected
+                            ? Colors.white
+                            : context.appSecondaryTextColor,
+                        fontWeight:
+                            isSelected ? FontWeight.w700 : FontWeight.w500,
                       ),
                     ),
                   ],
                 ),
                 selected: isSelected,
                 showCheckmark: false,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.md,
+                  vertical: AppSpacing.sm,
+                ),
                 labelPadding: EdgeInsets.zero,
                 elevation: 0,
                 pressElevation: 0,
@@ -84,7 +95,9 @@ class AppFilterChips<T> extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(24),
                   side: BorderSide(
-                    color: isSelected ? primaryColor : AppColors.borderLight.withValues(alpha: 0.6),
+                    color: isSelected
+                        ? primaryColor
+                        : context.appBorderColor.withValues(alpha: 0.8),
                     width: isSelected ? 0 : 1,
                   ),
                 ),

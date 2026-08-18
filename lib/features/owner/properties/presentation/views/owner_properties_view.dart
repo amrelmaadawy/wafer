@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_breakpoints.dart';
-import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../../../../core/theme/theme_context.dart';
 import '../../domain/entities/property_list_item_entity.dart';
 import '../cubit/list/properties_list_cubit.dart';
 import '../cubit/list/properties_list_state.dart';
@@ -59,7 +59,7 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: context.appBackgroundColor,
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: context.isCompact ? 110 : 16),
         child: FloatingActionButton(

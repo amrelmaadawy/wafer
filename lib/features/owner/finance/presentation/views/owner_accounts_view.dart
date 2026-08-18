@@ -1,15 +1,19 @@
-import '../../../../../core/localization/locale_keys.dart';
-import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/presentation/widgets/custom_back_button.dart';
-import '../../../../../core/routing/routes.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/color_utils.dart';
-import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/presentation/widgets/custom_empty_widget.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../../../../core/presentation/widgets/list/paginated_list_view.dart';
+import '../../../../../core/routing/routes.dart';
+import '../../../../../core/theme/app_fonts.dart';
+import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/theme/theme_context.dart';
+import '../../domain/entities/finance_account_entity.dart';
 import '../cubit/accounts/finance_accounts_cubit.dart';
 import '../cubit/accounts/finance_accounts_state.dart';
 import '../widgets/finance_account_card.dart';
@@ -23,7 +27,6 @@ class OwnerAccountsView extends StatefulWidget {
 }
 
 class _OwnerAccountsViewState extends State<OwnerAccountsView> {
-  final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
   bool _isSearching = false;
   Timer? _debounce;
@@ -31,20 +34,11 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
     context.read<FinanceAccountsCubit>().fetchAccounts();
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent * 0.8) {
-      context.read<FinanceAccountsCubit>().fetchAccounts();
-    }
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
     _searchController.dispose();
     _debounce?.cancel();
     super.dispose();
@@ -65,35 +59,33 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<FinanceAccountsCubit>();
+
     return Scaffold(
-      backgroundColor: AppColors.backgroundLight,
+      backgroundColor: context.appBackgroundColor,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         leadingWidth: 68,
         leading: const CustomBackButton(),
+        backgroundColor: context.appBackgroundColor,
         title: _isSearching
             ? TextField(
                 controller: _searchController,
                 autofocus: true,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: AppColors.textPrimaryLight,
+                style: AppTextStyles.bodyMedium.copyWith(
+                  color: context.appOnSurfaceColor,
                 ),
                 decoration: InputDecoration(
                   hintText: LocaleKeys.owner_finance_search_hint.tr(),
-                  hintStyle: const TextStyle(
-                    color: AppColors.textSecondaryLight,
-                    fontSize: 16,
+                  hintStyle: AppTextStyles.bodyMedium.copyWith(
+                    color: context.appSecondaryTextColor,
                   ),
                   border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                  focusedBorder: InputBorder.none,
                 ),
                 onChanged: _onSearchChanged,
               )
             : Text(LocaleKeys.owner_finance_financial_accounts.tr()),
         actions: [
-
           IconButton(
             icon: Icon(_isSearching ? Icons.close : Icons.search),
             onPressed: () {
@@ -101,7 +93,6 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
                 _isSearching = !_isSearching;
                 if (!_isSearching) {
                   _searchController.clear();
-                  final cubit = context.read<FinanceAccountsCubit>();
                   cubit.fetchAccounts(
                     query: cubit.currentQuery.copyWith(search: ''),
                     isRefresh: true,
@@ -122,81 +113,61 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
           if (state is FinanceAccountsError) {
             return CustomErrorWidget(
               message: state.message,
-              onRetry: () => context
-                  .read<FinanceAccountsCubit>()
-                  .fetchAccounts(isRefresh: true),
+              onRetry: () => cubit.fetchAccounts(isRefresh: true),
             );
           }
 
-          if (state is FinanceAccountsEmpty) {
-            return CustomEmptyWidget(
+          final accounts = state is FinanceAccountsSuccess
+              ? state.accounts
+              : <FinanceAccountEntity>[];
+          final hasReachedMax =
+              state is FinanceAccountsSuccess ? state.hasReachedMax : true;
+
+          return PaginatedListView<FinanceAccountEntity>(
+            items: accounts,
+            hasReachedMax: hasReachedMax,
+            useStaggeredAnimation: true,
+            onRefresh: () => cubit.fetchAccounts(isRefresh: true),
+            onLoadMore: () => cubit.fetchAccounts(),
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            emptyWidget: CustomEmptyWidget(
               title: LocaleKeys.owner_finance_no_data.tr(),
               subtitle: LocaleKeys.owner_finance_no_records_currently.tr(),
               icon: Icons.account_balance_wallet_outlined,
-            );
-          }
-
-          if (state is FinanceAccountsSuccess) {
-            final accounts = state.accounts;
-            
-            return RefreshIndicator(
-              onRefresh: () async {
-                context
-                    .read<FinanceAccountsCubit>()
-                    .fetchAccounts(isRefresh: true);
-              },
-              child: ListView.separated(
-                controller: _scrollController,
-                padding: const EdgeInsets.all(24),
-                itemCount: accounts.length + (state.hasReachedMax ? 0 : 1),
-                separatorBuilder: (_, _) => const SizedBox(height: 16),
-                itemBuilder: (context, index) {
-                  if (index >= accounts.length) {
-                    return const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(16),
-                        child: CircularProgressIndicator(),
-                      ),
-                    );
-                  }
-
-                  return FinanceAccountCard(
-                    account: accounts[index],
-                    onTap: () {
-                      context.push(
-                        Routes.ownerFinanceAccountDetails.replaceFirst(':id', accounts[index].id.toString()),
-                      );
-                    },
-                    onEdit: () async {
-                      final result = await context.push(
-                        Routes.ownerFinanceAccountUpdate,
-                        extra: accounts[index],
-                      );
-                      if (result == true && context.mounted) {
-                        context.read<FinanceAccountsCubit>().fetchAccounts(isRefresh: true);
-                      }
-                    },
+            ),
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.md),
+            itemBuilder: (context, index, account) {
+              return FinanceAccountCard(
+                account: account,
+                onTap: () => context.push(
+                  Routes.ownerFinanceAccountDetails.replaceFirst(
+                    ':id',
+                    account.id.toString(),
+                  ),
+                ),
+                onEdit: () async {
+                  final result = await context.push(
+                    Routes.ownerFinanceAccountUpdate,
+                    extra: account,
                   );
+                  if (result == true && context.mounted) {
+                    cubit.fetchAccounts(isRefresh: true);
+                  }
                 },
-              ),
-            );
-          }
-
-          return const SizedBox.shrink();
+              );
+            },
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           final result = await context.push(Routes.ownerFinanceAccountCreate);
           if (result == true && context.mounted) {
-            context.read<FinanceAccountsCubit>().fetchAccounts(isRefresh: true);
+            cubit.fetchAccounts(isRefresh: true);
           }
         },
         backgroundColor: context.primaryColor,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
     );
   }

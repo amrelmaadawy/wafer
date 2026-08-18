@@ -7,9 +7,10 @@ import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
-import '../../../../../core/utils/helpers/color_helper.dart';
 import '../../../../../core/theme/theme_context.dart';
-import '../../../../../core/presentation/widgets/custom_app_bar.dart';
+import '../../../../../core/utils/helpers/color_helper.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
+import '../../../shell/presentation/models/breadcrumb_item.dart';
 import '../../../../../core/presentation/widgets/app_surface_card.dart';
 import '../../../../../core/presentation/widgets/app_confirm_dialog.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
@@ -117,9 +118,18 @@ class _OwnerTaskDetailsScreenState extends State<OwnerTaskDetailsScreen> {
       ],
       child: Scaffold(
         backgroundColor: context.appBackgroundColor,
-        appBar: CustomAppBar(
+        appBar: OwnerTopAppBar(
           title: LocaleKeys.task_details_title.tr(),
-          actions: [
+          breadcrumbs: [
+            BreadcrumbItem(
+              label: LocaleKeys.drawerNavTasks.tr(),
+              route: Routes.ownerTasks,
+            ),
+            BreadcrumbItem(
+              label: LocaleKeys.task_details_title.tr(),
+            ),
+          ],
+          extraActions: [
             BlocBuilder<TaskDetailsCubit, TaskDetailsState>(
               builder: (context, state) {
                 if (state is TaskDetailsLoaded) {

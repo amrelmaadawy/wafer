@@ -539,16 +539,6 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: Routes.ownerMaintenance,
-        builder: (context, state) {
-          final filter = state.uri.queryParameters['filter'];
-          return BlocProvider<OwnerMaintenanceCubit>(
-            create: (_) => sl<OwnerMaintenanceCubit>(),
-            child: OwnerMaintenanceView(initialStatusFilter: filter),
-          );
-        },
-      ),
-      GoRoute(
         path: Routes.ownerMaintenanceCreate,
         builder: (context, state) {
           return const OwnerCreateMaintenanceScreen();
@@ -571,36 +561,15 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: Routes.ownerTechniciansList,
-        builder: (context, state) {
-          return BlocProvider<TechniciansListCubit>(
-            create: (_) => sl<TechniciansListCubit>(),
-            child: const TechniciansListView(),
-          );
-        },
-      ),
-      GoRoute(
         path: Routes.ownerTechnicianCreate,
         builder: (context, state) {
           return const AddTechnicianView();
         },
       ),
       GoRoute(
-        path: Routes.ownerSupervisorsList,
+        path: Routes.ownerSupervisorCreate,
         builder: (context, state) {
           return const SupervisorsListView();
-        },
-      ),
-      GoRoute(
-        path: Routes.ownerReportsCenter,
-        builder: (context, state) {
-          return const OwnerReportsCenterScreen();
-        },
-      ),
-      GoRoute(
-        path: Routes.ownerLegalCases,
-        builder: (context, state) {
-          return const LegalCasesListView();
         },
       ),
       GoRoute(
@@ -687,13 +656,6 @@ class AppRouter {
         builder: (context, state) => const OwnerEmployeeTasksReportView(),
       ),
       GoRoute(
-        path: Routes.ownerTasks,
-        builder: (context, state) => BlocProvider<TasksListCubit>(
-          create: (_) => sl<TasksListCubit>(),
-          child: const OwnerTasksScreen(),
-        ),
-      ),
-      GoRoute(
         path: Routes.ownerTasksCreate,
         builder: (context, state) => MultiBlocProvider(
           providers: [
@@ -747,10 +709,6 @@ class AppRouter {
         ),
       ),
       GoRoute(
-        path: Routes.ownerNegotiationsList,
-        builder: (context, state) => const NegotiationsListView(),
-      ),
-      GoRoute(
         path: Routes.ownerNegotiationSettings,
         builder: (context, state) => const NegotiationSettingsView(),
       ),
@@ -767,13 +725,6 @@ class AppRouter {
       GoRoute(
         path: Routes.changePassword,
         builder: (context, state) => const ChangePasswordScreen(),
-      ),
-      GoRoute(
-        path: Routes.ownerDeeds,
-        builder: (context, state) => BlocProvider<DeedsListCubit>(
-          create: (_) => sl<DeedsListCubit>(),
-          child: const DeedsListScreen(),
-        ),
       ),
       GoRoute(
         path: Routes.ownerDeedsCreate,
@@ -856,6 +807,85 @@ class AppRouter {
                   create: (_) => sl<FinanceOverviewCubit>(),
                   child: const OwnerFinanceView(),
                 ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerMaintenance,
+                builder: (context, state) {
+                  final filter = state.uri.queryParameters['filter'];
+                  return BlocProvider<OwnerMaintenanceCubit>(
+                    create: (_) => sl<OwnerMaintenanceCubit>(),
+                    child: OwnerMaintenanceView(initialStatusFilter: filter),
+                  );
+                },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerTasks,
+                builder: (context, state) => BlocProvider<TasksListCubit>(
+                  create: (_) => sl<TasksListCubit>(),
+                  child: const OwnerTasksScreen(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerLegalCases,
+                builder: (context, state) => const LegalCasesListView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerDeeds,
+                builder: (context, state) => BlocProvider<DeedsListCubit>(
+                  create: (_) => sl<DeedsListCubit>(),
+                  child: const DeedsListScreen(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerTechniciansList,
+                builder: (context, state) => BlocProvider<TechniciansListCubit>(
+                  create: (_) => sl<TechniciansListCubit>(),
+                  child: const TechniciansListView(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerSupervisorsList,
+                builder: (context, state) => const SupervisorsListView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerNegotiationsList,
+                builder: (context, state) => const NegotiationsListView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerReportsCenter,
+                builder: (context, state) => const OwnerReportsCenterScreen(),
               ),
             ],
           ),

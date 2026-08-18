@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../../../core/localization/locale_keys.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_spacing.dart';
-import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../../../../core/theme/app_fonts.dart';
@@ -16,6 +15,7 @@ import '../cubit/list/supervisors_list_cubit.dart';
 import '../cubit/list/supervisors_list_state.dart';
 import '../widgets/supervisor_card.dart';
 import '../widgets/add_supervisor_bottom_sheet.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
 
 class SupervisorsListView extends StatefulWidget {
   const SupervisorsListView({super.key});
@@ -45,9 +45,8 @@ class _SupervisorsListViewState extends State<SupervisorsListView> {
       child: Builder(
         builder: (context) {
           return Scaffold(
-            appBar: CustomAppBar(
-              title: LocaleKeys.supervisorsList.tr(),
-              showBackButton: true,
+            appBar: OwnerTopAppBar(
+              title: LocaleKeys.drawerNavSupervisors.tr(),
             ),
             body: NotificationListener<ScrollNotification>(
               onNotification: (notification) {

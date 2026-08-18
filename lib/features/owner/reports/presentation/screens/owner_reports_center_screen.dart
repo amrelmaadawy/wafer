@@ -6,7 +6,6 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
-import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/di/service_locator.dart';
@@ -14,6 +13,7 @@ import '../../domain/entities/owner_reports_index_entity.dart';
 import '../cubit/owner_reports_index_cubit.dart';
 import '../cubit/owner_reports_index_state.dart';
 import '../widgets/reports_index_skeleton.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
 
 class OwnerReportsCenterScreen extends StatelessWidget {
   const OwnerReportsCenterScreen({super.key});
@@ -24,7 +24,7 @@ class OwnerReportsCenterScreen extends StatelessWidget {
       create: (context) => sl<OwnerReportsIndexCubit>()..fetchReportsIndex(),
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
-        appBar: CustomAppBar(title: LocaleKeys.dashboardReports.tr()),
+        appBar: OwnerTopAppBar(title: LocaleKeys.drawerNavReports.tr()),
         body: BlocBuilder<OwnerReportsIndexCubit, OwnerReportsIndexState>(
           builder: (context, state) {
             if (state is OwnerReportsIndexLoading ||

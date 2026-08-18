@@ -2,8 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../localization/locale_keys.dart';
 import '../../theme/app_colors.dart';
+import '../../theme/app_fonts.dart';
 import '../../theme/app_radius.dart';
+import '../../theme/app_spacing.dart';
 import '../../theme/color_utils.dart';
+import '../../theme/theme_context.dart';
 import '../../utils/widgets/custom_button.dart';
 
 /// A standardized confirmation dialog for destructive actions.
@@ -56,10 +59,10 @@ class AppConfirmDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: AppRadius.circularLg),
-      backgroundColor: Colors.white,
+      backgroundColor: context.appSurfaceColor,
       surfaceTintColor: Colors.transparent,
       child: Padding(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -69,30 +72,28 @@ class AppConfirmDialog extends StatelessWidget {
               color: isDangerous ? AppColors.error : context.primaryColor,
               size: 48,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: AppSpacing.md),
             Text(
               titleKey.tr(),
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 18,
+              style: AppTextStyles.h3.copyWith(
                 fontWeight: FontWeight.bold,
-                color: AppColors.textPrimary,
+                color: context.appOnSurfaceColor,
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: AppSpacing.sm),
             Text(
               messageKey.tr(),
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 14,
-                color: AppColors.textSecondary,
+              style: AppTextStyles.bodyMedium.copyWith(
+                color: context.appSecondaryTextColor,
                 height: 1.5,
               ),
             ),
             if (impactKey != null) ...[
-              const SizedBox(height: 16),
+              const SizedBox(height: AppSpacing.md),
               Container(
-                padding: const EdgeInsets.all(12),
+                padding: const EdgeInsets.all(AppSpacing.sm),
                 decoration: BoxDecoration(
                   color: AppColors.error.withValues(alpha: 0.1),
                   borderRadius: AppRadius.circularSm,
@@ -100,14 +101,13 @@ class AppConfirmDialog extends StatelessWidget {
                 child: Row(
                   children: [
                     const Icon(Icons.info_outline, color: AppColors.error, size: 16),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: AppSpacing.xs),
                     Expanded(
                       child: Text(
                         impactKey!.tr(),
-                        style: const TextStyle(
+                        style: AppTextStyles.labelSmall.copyWith(
                           color: AppColors.error,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -115,7 +115,7 @@ class AppConfirmDialog extends StatelessWidget {
                 ),
               ),
             ],
-            const SizedBox(height: 24),
+            const SizedBox(height: AppSpacing.lg),
             Row(
               children: [
                 Expanded(
@@ -126,7 +126,7 @@ class AppConfirmDialog extends StatelessWidget {
                     width: double.infinity,
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: CustomButton(
                     onPressed: onConfirm,

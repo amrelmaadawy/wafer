@@ -41,21 +41,54 @@ class _OwnerFinanceViewState extends State<OwnerFinanceView> {
           children: [
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    LocaleKeys.owner_finance_title.tr(),
-                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: context.primaryLight,
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(end: 12),
+                    child: Material(
+                      color: context.primaryColor.withValues(alpha: 0.08),
+                      borderRadius: BorderRadius.circular(10),
+                      child: InkWell(
+                        onTap: () {
+                          final rootScaffold = context.findRootAncestorStateOfType<ScaffoldState>();
+                          if (rootScaffold != null) {
+                            rootScaffold.openDrawer();
+                          } else {
+                            Scaffold.of(context).openDrawer();
+                          }
+                        },
+                        borderRadius: BorderRadius.circular(10),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.menu_rounded,
+                            color: context.primaryColor,
+                            size: 20,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    LocaleKeys.owner_finance_subtitle.tr(),
-                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.textSecondaryLight,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          LocaleKeys.owner_finance_title.tr(),
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: context.primaryColor,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          LocaleKeys.owner_finance_subtitle.tr(),
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: AppColors.textSecondaryLight,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../localization/locale_keys.dart';
-import '../../../theme/app_colors.dart';
 import '../../../theme/app_radius.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/color_utils.dart';
@@ -61,7 +60,7 @@ class UnifiedBottomSheet extends StatelessWidget {
               width: 44,
               height: 4,
               decoration: BoxDecoration(
-                color: AppColors.borderLight,
+                color: context.appBorderColor,
                 borderRadius: AppRadius.circularFull,
               ),
             ),
@@ -108,7 +107,7 @@ class UnifiedBottomSheet extends StatelessWidget {
                           color: context.appBackgroundColor,
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: AppColors.borderLight.withValues(alpha: 0.6),
+                            color: context.appBorderColor.withValues(alpha: 0.6),
                           ),
                         ),
                         child: Icon(
@@ -122,7 +121,7 @@ class UnifiedBottomSheet extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(height: 1, color: AppColors.borderLight),
+            Divider(height: 1, color: context.appBorderColor),
             Flexible(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(
@@ -132,7 +131,7 @@ class UnifiedBottomSheet extends StatelessWidget {
                 child: child,
               ),
             ),
-            const Divider(height: 1, color: AppColors.borderLight),
+            Divider(height: 1, color: context.appBorderColor),
             Padding(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.lg,
@@ -159,7 +158,7 @@ class UnifiedBottomSheet extends StatelessWidget {
                         style: OutlinedButton.styleFrom(
                           foregroundColor: context.appSecondaryTextColor,
                           side: BorderSide(
-                            color: AppColors.borderLight.withValues(alpha: 0.8),
+                            color: context.appBorderColor.withValues(alpha: 0.8),
                           ),
                           shape: RoundedRectangleBorder(
                             borderRadius: AppRadius.circularXl,

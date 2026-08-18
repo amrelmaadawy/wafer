@@ -8,14 +8,13 @@ import '../../../../../../core/routing/routes.dart';
 import '../../../../../../core/theme/app_colors.dart';
 import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
-
 import '../../../../../../core/utils/widgets/custom_button.dart';
-import '../../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../cubit/list/technicians_list_cubit.dart';
 import '../cubit/list/technicians_list_state.dart';
 import '../widgets/technician_card.dart';
 import '../widgets/technician_shimmer.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
 
 class TechniciansListView extends StatefulWidget {
   const TechniciansListView({super.key});
@@ -58,9 +57,9 @@ class _TechniciansListViewState extends State<TechniciansListView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      appBar: CustomAppBar(
-        title: LocaleKeys.techniciansList.tr(),
-        actions: [
+      appBar: OwnerTopAppBar(
+        title: LocaleKeys.drawerNavTechnicians.tr(),
+        extraActions: [
           IconButton(
             icon: Icon(Icons.add_circle_outline, color: context.primaryColor),
             onPressed: () {

@@ -2565,5 +2565,34 @@ abstract class  LocaleKeys {
   static const String dashboardAlertExpiringContracts = 'dashboardAlertExpiringContracts';
   static const String dashboardAlertPendingMaintenance = 'dashboardAlertPendingMaintenance';
   static const String dashboardAlertOpenLegalCases = 'dashboardAlertOpenLegalCases';
+  static const String drawerSectionMain = 'drawerSectionMain';
+  static const String drawerNavTechnicalSupport = 'drawerNavTechnicalSupport';
+  static const String drawerAppName = 'drawerAppName';
+  static const String drawerTagline = 'drawerTagline';
+  static const String drawerNavHome = 'drawerNavHome';
+  static const String drawerNavProperties = 'drawerNavProperties';
+  static const String drawerNavContracts = 'drawerNavContracts';
+  static const String drawerNavFinance = 'drawerNavFinance';
+  static const String drawerSectionOperations = 'drawerSectionOperations';
+  static const String drawerNavMaintenance = 'drawerNavMaintenance';
+  static const String drawerNavTasks = 'drawerNavTasks';
+  static const String drawerNavLegalCases = 'drawerNavLegalCases';
+  static const String drawerSectionDocuments = 'drawerSectionDocuments';
+  static const String drawerNavDeeds = 'drawerNavDeeds';
+  static const String drawerSectionTeam = 'drawerSectionTeam';
+  static const String drawerNavTechnicians = 'drawerNavTechnicians';
+  static const String drawerNavSupervisors = 'drawerNavSupervisors';
+  static const String drawerNavNegotiations = 'drawerNavNegotiations';
+  static const String drawerNavReports = 'drawerNavReports';
+  static const String drawerNavSearch = 'drawerNavSearch';
+  static const String drawerSectionAccount = 'drawerSectionAccount';
+  static const String drawerNavProfile = 'drawerNavProfile';
+  static const String drawerNavSettings = 'drawerNavSettings';
+  static const String drawerNavLogout = 'drawerNavLogout';
+  static const String drawerLogoutConfirmTitle = 'drawerLogoutConfirmTitle';
+  static const String drawerLogoutConfirmMessage = 'drawerLogoutConfirmMessage';
+  static const String drawerLogoutConfirmBtn = 'drawerLogoutConfirmBtn';
+  static const String drawerLogoutCancelBtn = 'drawerLogoutCancelBtn';
+  static const String drawerMenuTooltip = 'drawerMenuTooltip';
 }
 
