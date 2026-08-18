@@ -31,20 +31,20 @@ class DioFactory {
     // 1. Connectivity check (first — rejects immediately if offline)
     dio.interceptors.add(ConnectivityInterceptor(networkInfo));
 
-    // 2. Auth token injection
+    // 2. Global 401/403 event dispatch (executes after AuthInterceptor in error chain)
+    dio.interceptors.add(errorInterceptor);
+
+    // 3. Auth token injection & refresh retry
     dio.interceptors.add(authInterceptor);
 
-    // 3. Accept-Language header
+    // 4. Accept-Language header
     dio.interceptors.add(localeInterceptor);
 
-    // 4. Auto-retry for GET requests on transient timeouts
+    // 5. Auto-retry for GET requests on transient timeouts
     dio.interceptors.add(RetryInterceptor(dio));
 
-    // 5. API Response Caching
+    // 6. API Response Caching
     dio.interceptors.add(CacheInterceptorConfig.buildInterceptor());
-
-    // 5. 401/403 global error handling
-    dio.interceptors.add(errorInterceptor);
 
     // 6. Debug logging (debug only)
     if (kDebugMode) {

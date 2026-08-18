@@ -58,8 +58,9 @@ class _ChangePasswordFormWidgetState extends State<ChangePasswordFormWidget> {
             LocaleKeys.profile_change_password_success.tr(),
           );
           if (widget.isForced) {
-            context.read<AuthCubit>().checkAuthStatus();
+            context.read<AuthCubit>().confirmPasswordChanged();
           } else {
+            context.read<AuthCubit>().confirmPasswordChanged();
             Navigator.pop(context);
           }
         } else if (state is ChangePasswordError) {

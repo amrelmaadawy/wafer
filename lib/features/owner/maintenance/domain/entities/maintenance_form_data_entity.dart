@@ -76,14 +76,28 @@ class MaintenanceFormDataEntity extends Equatable {
   final List<MaintenanceFormDataUnitEntity> units;
   final List<MaintenanceTypeEntity> maintenanceTypes;
   final List<MaintenanceTechnicianEntity> technicians;
+  final List<MaintenanceStatusOptionEntity> statuses;
+  final List<MaintenancePriorityOptionEntity> priorities;
+  final List<MaintenanceCostBearerOptionEntity> costBearers;
 
   const MaintenanceFormDataEntity({
     required this.properties,
     required this.units,
     required this.maintenanceTypes,
     required this.technicians,
+    this.statuses = const [],
+    this.priorities = const [],
+    this.costBearers = const [],
   });
 
   @override
-  List<Object?> get props => [properties, units, maintenanceTypes, technicians];
+  List<Object?> get props => [
+    properties,
+    units,
+    maintenanceTypes,
+    technicians,
+    statuses,
+    priorities,
+    costBearers,
+  ];
 }

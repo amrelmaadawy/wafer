@@ -16,6 +16,8 @@ import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/builders/technician_performance_pdf_builder.dart';
 import '../../../../../core/services/excel/builders/technician_performance_excel_builder.dart';
 import '../../../../../core/services/excel/excel_export_service.dart';
+import '../widgets/filter/universal_reports_filter_bar.dart';
+import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
 
 class OwnerTechnicianPerformanceReportView extends StatefulWidget {
@@ -141,25 +143,49 @@ class _OwnerTechnicianPerformanceReportViewState
 
                   return RefreshIndicator(
                     onRefresh: () => _cubit.loadReport(refresh: true),
-                    color: AppColors.primary,
+                    color: context.primaryColor,
                     child: ListView(
                       controller: _scrollController,
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       children: [
-                        TechnicianPerformanceSummaryHeader(
-                          summary: report.summary,
+                        UniversalReportsFilterBar(
+                          showDateRange: true,
+                          selectedStartDate: _cubit.selectedStartDate,
+                          selectedEndDate: _cubit.selectedEndDate,
+                          onDateRangeSelected: (start, end) {
+                            _cubit.loadReport(
+                              refresh: true,
+                              startDate: start,
+                              endDate: end,
+                            );
+                          },
+                          hasActiveFilters: _cubit.hasActiveFilters,
+                          onReset: _cubit.clearFilters,
+                        ),
+                        const SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: TechnicianPerformanceSummaryHeader(
+                            summary: report.summary,
+                          ),
                         ),
                         const SizedBox(height: 24),
-                        Text(
-                          LocaleKeys.technicianPerformanceList.tr(),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimaryLight,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            LocaleKeys.technicianPerformanceList.tr(),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textPrimaryLight,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        TechnicianPerformanceReportList(items: report.items),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: TechnicianPerformanceReportList(items: report.items),
+                        ),
                         if (currentState is OwnerTechnicianPerformanceLoading &&
                             currentState.isPagination) ...[
                           const SizedBox(height: 16),

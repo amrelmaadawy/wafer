@@ -7,24 +7,49 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
   int _currentPage = 1;
   int? _selectedPropertyId;
   String? _selectedStatus;
+  String? _selectedStartDate;
+  String? _selectedEndDate;
   bool _isFetching = false;
 
+  int? get selectedPropertyId => _selectedPropertyId;
+  String? get selectedStatus => _selectedStatus;
+  String? get selectedStartDate => _selectedStartDate;
+  String? get selectedEndDate => _selectedEndDate;
+  bool get hasActiveFilters =>
+      _selectedPropertyId != null ||
+      _selectedStatus != null ||
+      (_selectedStartDate != null && _selectedEndDate != null);
+
   OwnerContractsReportCubit({required this.getContractsReportUseCase})
-    : super(OwnerContractsReportInitial());
+      : super(OwnerContractsReportInitial());
+
+  void clearFilters() {
+    _selectedPropertyId = null;
+    _selectedStatus = null;
+    _selectedStartDate = null;
+    _selectedEndDate = null;
+    loadContractsReport(forceRefresh: true);
+  }
 
   Future<void> loadContractsReport({
     bool forceRefresh = false,
     int? propertyId,
     String? status,
+    String? startDate,
+    String? endDate,
   }) async {
     if (_isFetching) return;
 
     if (forceRefresh ||
         propertyId != _selectedPropertyId ||
-        status != _selectedStatus) {
+        status != _selectedStatus ||
+        startDate != _selectedStartDate ||
+        endDate != _selectedEndDate) {
       _currentPage = 1;
       _selectedPropertyId = propertyId ?? _selectedPropertyId;
       _selectedStatus = status ?? _selectedStatus;
+      _selectedStartDate = startDate ?? _selectedStartDate;
+      _selectedEndDate = endDate ?? _selectedEndDate;
       emit(OwnerContractsReportLoading());
     } else {
       if (state is OwnerContractsReportLoaded &&
@@ -40,14 +65,19 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
       page: _currentPage,
       propertyId: _selectedPropertyId,
       status: _selectedStatus,
+      startDate: _selectedStartDate,
+      endDate: _selectedEndDate,
     );
+
+    _isFetching = false;
+    if (isClosed) return;
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (_currentPage == 1) {
           emit(OwnerContractsReportError(failure.message));
         } else {
-          // If pagination fails, we just keep the loaded state
           final currentState = state;
           if (currentState is OwnerContractsReportLoaded) {
             emit(
@@ -60,6 +90,7 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
         }
       },
       (report) {
+        if (isClosed) return;
         if (_currentPage == 1) {
           emit(
             OwnerContractsReportLoaded(
@@ -90,7 +121,5 @@ class OwnerContractsReportCubit extends Cubit<OwnerContractsReportState> {
         _currentPage++;
       },
     );
-
-    _isFetching = false;
   }
 }

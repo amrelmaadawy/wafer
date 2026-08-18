@@ -16,6 +16,9 @@ import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/builders/maintenance_requests_pdf_builder.dart';
 import '../../../../../core/services/excel/builders/maintenance_requests_excel_builder.dart';
 import '../../../../../core/services/excel/excel_export_service.dart';
+import '../widgets/filter/report_status_chip.dart';
+import '../widgets/filter/universal_reports_filter_bar.dart';
+import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
 
 class OwnerMaintenanceRequestsReportView extends StatefulWidget {
@@ -137,27 +140,66 @@ class _OwnerMaintenanceRequestsReportViewState
 
                   if (report == null) return const SizedBox.shrink();
 
+                  final statuses = [
+                    ReportStatusItem(value: 'OPEN', label: LocaleKeys.maintenanceRequestsOpen.tr()),
+                    ReportStatusItem(value: 'IN_PROGRESS', label: LocaleKeys.maintenanceRequestsInProgress.tr()),
+                    ReportStatusItem(value: 'COMPLETED', label: LocaleKeys.maintenanceRequestsCompleted.tr()),
+                  ];
+
                   return RefreshIndicator(
                     onRefresh: () => _cubit.loadReport(refresh: true),
-                    color: AppColors.primary,
+                    color: context.primaryColor,
                     child: ListView(
                       controller: _scrollController,
-                      padding: const EdgeInsets.all(20),
+                      padding: const EdgeInsets.symmetric(vertical: 20),
                       children: [
-                        MaintenanceRequestsSummaryHeader(
-                          summary: report.summary,
+                        UniversalReportsFilterBar(
+                          showDateRange: true,
+                          selectedStartDate: _cubit.selectedStartDate,
+                          selectedEndDate: _cubit.selectedEndDate,
+                          onDateRangeSelected: (start, end) {
+                            _cubit.loadReport(
+                              refresh: true,
+                              startDate: start,
+                              endDate: end,
+                            );
+                          },
+                          showStatus: true,
+                          selectedStatus: _cubit.selectedStatus,
+                          statuses: statuses,
+                          onStatusSelected: (status) {
+                            _cubit.loadReport(
+                              refresh: true,
+                              status: status,
+                            );
+                          },
+                          hasActiveFilters: _cubit.hasActiveFilters,
+                          onReset: _cubit.clearFilters,
+                        ),
+                        const SizedBox(height: 16),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: MaintenanceRequestsSummaryHeader(
+                            summary: report.summary,
+                          ),
                         ),
                         const SizedBox(height: 24),
-                        Text(
-                          LocaleKeys.maintenanceRequestsList.tr(),
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimaryLight,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            LocaleKeys.maintenanceRequestsList.tr(),
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.textPrimaryLight,
+                            ),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        MaintenanceRequestsReportList(items: report.items),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: MaintenanceRequestsReportList(items: report.items),
+                        ),
                         if (currentState is OwnerMaintenanceRequestsLoading &&
                             currentState.isPagination) ...[
                           const SizedBox(height: 16),

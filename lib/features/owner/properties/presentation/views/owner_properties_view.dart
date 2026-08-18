@@ -6,9 +6,7 @@ import '../../../../../core/theme/app_breakpoints.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
-import '../../domain/entities/property_display_mode.dart';
 import '../../domain/entities/property_list_item_entity.dart';
-import '../cubit/display/property_display_cubit.dart';
 import '../cubit/list/properties_list_cubit.dart';
 import '../cubit/list/properties_list_state.dart';
 import '../widgets/list/properties_empty_widget.dart';
@@ -16,7 +14,6 @@ import '../widgets/list/properties_filter_bar.dart';
 import '../widgets/list/properties_loaded_list.dart';
 import '../widgets/list/properties_page_header.dart';
 import '../widgets/list/properties_stats_header_widget.dart';
-import '../widgets/list/property_display_toolbar.dart';
 import '../widgets/list/property_skeleton_card.dart';
 
 class OwnerPropertiesView extends StatefulWidget {
@@ -61,11 +58,6 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
 
   @override
   Widget build(BuildContext context) {
-    final displayMode = context
-        .select<PropertyDisplayCubit, PropertyDisplayMode>(
-          (cubit) => cubit.state.mode,
-        );
-
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       floatingActionButton: Padding(
@@ -92,26 +84,14 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
               },
             ),
             const PropertiesFilterBar(),
-            BlocBuilder<PropertiesListCubit, PropertiesListState>(
-              builder: (context, state) {
-                if (state is! PropertiesListLoaded) {
-                  return const SizedBox.shrink();
-                }
-                return PropertyDisplayToolbar(
-                  total: state.meta.total,
-                  mode: displayMode,
-                  onChanged: context.read<PropertyDisplayCubit>().changeMode,
-                );
-              },
-            ),
-            Expanded(child: _buildBody(context, displayMode)),
+            Expanded(child: _buildBody(context)),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context, PropertyDisplayMode displayMode) {
+  Widget _buildBody(BuildContext context) {
     return BlocBuilder<PropertiesListCubit, PropertiesListState>(
       builder: (context, state) {
         if (state is PropertiesListLoading || state is PropertiesListInitial) {
@@ -135,7 +115,6 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
         } else if (state is PropertiesListLoaded) {
           return PropertiesLoadedList(
             state: state,
-            mode: displayMode,
             controller: _scrollController,
             onRefresh: () => context.read<PropertiesListCubit>().getProperties(
               forceRefresh: true,

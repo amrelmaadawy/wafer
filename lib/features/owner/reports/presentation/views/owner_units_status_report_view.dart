@@ -17,8 +17,8 @@ import '../widgets/portfolio_units_header.dart';
 import '../widgets/portfolio_units_list.dart';
 import '../widgets/portfolio_units_toolbar.dart';
 import '../widgets/report_empty_widget.dart';
+import '../widgets/units_status_export_actions.dart';
 import '../widgets/units_status_filter_bar.dart';
-import '../widgets/units_status_pdf_action.dart';
 import '../widgets/units_status_skeleton.dart';
 import '../widgets/units_status_summary_header.dart';
 
@@ -59,7 +59,7 @@ class _OwnerUnitsStatusReportViewState
       backgroundColor: context.appBackgroundColor,
       appBar: CustomAppBar(
         title: LocaleKeys.reports_portfolioUnitsTitle.tr(),
-        actions: const [UnitsStatusPdfAction()],
+        actions: const [UnitsStatusExportActions()],
       ),
       body: BlocBuilder<OwnerUnitsStatusCubit, OwnerUnitsStatusState>(
         builder: (context, state) {

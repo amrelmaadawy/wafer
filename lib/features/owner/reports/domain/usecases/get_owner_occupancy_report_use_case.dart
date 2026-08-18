@@ -11,10 +11,16 @@ class GetOwnerOccupancyReportUseCase {
   Future<Either<Failure, OccupancyReportEntity>> call({
     bool forceRefresh = false,
     int page = 1,
+    int? propertyId,
+    String? startDate,
+    String? endDate,
   }) async {
     return await repository.getOccupancyReport(
       forceRefresh: forceRefresh,
       page: page,
+      propertyId: propertyId,
+      startDate: startDate,
+      endDate: endDate,
     );
   }
 }

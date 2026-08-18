@@ -27,11 +27,17 @@ abstract class OwnerReportsRepository {
   Future<Either<Failure, OccupancyReportEntity>> getOccupancyReport({
     bool forceRefresh = false,
     int page = 1,
+    int? propertyId,
+    String? startDate,
+    String? endDate,
   });
 
   Future<Either<Failure, DefaultersReportEntity>> getDefaultersReport({
     bool forceRefresh = false,
     int page = 1,
+    int? propertyId,
+    String? startDate,
+    String? endDate,
   });
 
   Future<Either<Failure, UnitsStatusReportEntity>> getUnitsStatusReport({
@@ -46,20 +52,41 @@ abstract class OwnerReportsRepository {
     int page = 1,
     int? propertyId,
     String? status,
+    String? startDate,
+    String? endDate,
   });
 
   Future<Either<Failure, ContractsMovementReportEntity>>
-  getContractsMovementReport({bool forceRefresh = false, int page = 1});
+  getContractsMovementReport({
+    bool forceRefresh = false,
+    int page = 1,
+    String? startDate,
+    String? endDate,
+  });
 
   Future<Either<Failure, MaintenanceRequestsReportEntity>>
-  getMaintenanceRequestsReport({bool forceRefresh = false, int page = 1});
+  getMaintenanceRequestsReport({
+    bool forceRefresh = false,
+    int page = 1,
+    String? status,
+    String? startDate,
+    String? endDate,
+  });
 
   Future<Either<Failure, TechnicianPerformanceReportEntity>>
-  getTechnicianPerformanceReport({bool forceRefresh = false, int page = 1});
+  getTechnicianPerformanceReport({
+    bool forceRefresh = false,
+    int page = 1,
+    String? startDate,
+    String? endDate,
+  });
 
   Future<Either<Failure, EmployeeTasksReportEntity>> getEmployeeTasksReport({
     bool forceRefresh = false,
     int page = 1,
+    String? status,
+    String? startDate,
+    String? endDate,
   });
 
   Future<Either<Failure, ActivityLogsReportEntity>> getActivityLogsReport({
@@ -67,15 +94,23 @@ abstract class OwnerReportsRepository {
     int page = 1,
     String? type,
     String? action,
+    String? startDate,
+    String? endDate,
   });
 
   Future<Either<Failure, ApprovalsReportEntity>> getApprovalsReport({
     bool forceRefresh = false,
     int page = 1,
+    String? status,
+    String? startDate,
+    String? endDate,
   });
 
   Future<Either<Failure, LegalCasesReportEntity>> getLegalCasesReport({
+    bool forceRefresh = false,
     int page = 1,
     String? status,
+    String? startDate,
+    String? endDate,
   });
 }

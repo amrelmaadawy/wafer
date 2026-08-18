@@ -32,9 +32,10 @@ class OwnerAlertCard extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: const EdgeInsets.all(6),
@@ -42,43 +43,56 @@ class OwnerAlertCard extends StatelessWidget {
                   color: color.withValues(alpha: 0.12),
                   borderRadius: AppRadius.circularMd,
                 ),
-                child: Icon(icon, color: color, size: 14),
+                child: Icon(icon, color: color, size: 15),
               ),
               const Spacer(),
               if (highlight)
                 Container(
-                  width: 6,
-                  height: 6,
+                  width: 7,
+                  height: 7,
                   decoration: BoxDecoration(
                     color: color,
                     shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: color.withValues(alpha: 0.4),
+                        blurRadius: 4,
+                        spreadRadius: 1,
+                      ),
+                    ],
                   ),
                 ),
             ],
           ),
-          const SizedBox(height: AppSpacing.xs),
-          Text(
-            '$count',
-            style: AppTextStyles.h4.copyWith(
-              color: highlight ? color : context.appOnSurfaceColor,
-            ),
-          ),
-          Text(
-            title,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.labelMedium.copyWith(
-              color: highlight ? color : context.appSecondaryTextColor,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Text(
-            subtitle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: AppTextStyles.labelSmall.copyWith(
-              color: context.appSecondaryTextColor,
-            ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '$count',
+                style: AppTextStyles.h3.copyWith(
+                  color: highlight ? color : context.appOnSurfaceColor,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: highlight ? color : context.appOnSurfaceColor,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                subtitle,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: context.appSecondaryTextColor,
+                  fontSize: 10,
+                ),
+              ),
+            ],
           ),
         ],
       ),

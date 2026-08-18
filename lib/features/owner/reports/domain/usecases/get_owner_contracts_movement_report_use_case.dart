@@ -11,10 +11,14 @@ class GetOwnerContractsMovementReportUseCase {
   Future<Either<Failure, ContractsMovementReportEntity>> call({
     bool forceRefresh = false,
     int page = 1,
+    String? startDate,
+    String? endDate,
   }) {
     return repository.getContractsMovementReport(
       forceRefresh: forceRefresh,
       page: page,
+      startDate: startDate,
+      endDate: endDate,
     );
   }
 }

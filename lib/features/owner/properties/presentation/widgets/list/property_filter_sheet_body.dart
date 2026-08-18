@@ -7,7 +7,6 @@ import '../../../domain/entities/properties_query_filter_entity.dart';
 import '../../../domain/entities/property_form_options_entity.dart';
 import 'property_filter_controls.dart';
 import 'property_filter_context_filters.dart';
-import 'property_sort_filters.dart';
 
 class PropertyFilterSheetBody extends StatelessWidget {
   final PropertiesQueryFilterEntity filter;
@@ -58,25 +57,6 @@ class PropertyFilterSheetBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           PropertyFilterChoiceGroup<String>(
-            title: LocaleKeys.propertiesStatusTitle.tr(),
-            selected: filter.status ?? nullValue,
-            options: [
-              PropertyFilterOption(nullValue, LocaleKeys.commonAll.tr()),
-              PropertyFilterOption(
-                'published',
-                LocaleKeys.propertiesStatusPublished.tr(),
-              ),
-              PropertyFilterOption(
-                'draft',
-                LocaleKeys.propertiesStatusDraft.tr(),
-              ),
-            ],
-            onChanged: (value) => onChanged(
-              filter.copyWith(status: () => value == nullValue ? null : value),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.lg),
-          PropertyFilterChoiceGroup<String>(
             title: LocaleKeys.propertiesTypeTitle.tr(),
             selected: filter.propertyType ?? nullValue,
             options: [
@@ -111,8 +91,6 @@ class PropertyFilterSheetBody extends StatelessWidget {
             options: options,
             onChanged: onChanged,
           ),
-          const SizedBox(height: AppSpacing.lg),
-          PropertySortFilters(filter: filter, onChanged: onChanged),
         ],
       ),
     );

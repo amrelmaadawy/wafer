@@ -27,6 +27,7 @@ class ApiConstants {
   static const String sharedMarkAllNotificationsRead =
       'shared/notifications/read-all';
   static const String sharedLogout = 'shared/logout';
+  static const String sharedRefreshToken = 'shared/refresh-token';
 
   /// Owner Endpoints
   static const String ownerDashboard = 'owner/dashboard';
@@ -69,6 +70,7 @@ class ApiConstants {
   static const String ownerEmployeeTasksReport = 'owner/reports/employee-tasks';
   static const String ownerTasksFormData = 'owner/tasks/form-data';
   static const String ownerActivityLogsReport = 'owner/reports/activity-logs';
+  static const String ownerApprovalsReport = 'owner/reports/approvals';
   static const String ownerReportsLegalCases = 'owner/reports/legal-cases';
   static const String ownerMaintenanceTechniciansFormData =
       'owner/maintenance-technicians/form-data';

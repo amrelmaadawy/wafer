@@ -7,11 +7,23 @@ class OwnerContractsMovementCubit extends Cubit<OwnerContractsMovementState> {
 
   int _currentPage = 1;
   bool _hasReachedMax = false;
+  String? selectedStartDate;
+  String? selectedEndDate;
+
+  bool get hasActiveFilters =>
+      selectedStartDate != null || selectedEndDate != null;
 
   OwnerContractsMovementCubit(this._getReportUseCase)
     : super(OwnerContractsMovementInitial());
 
-  Future<void> loadReport({bool refresh = false}) async {
+  Future<void> loadReport({
+    bool refresh = false,
+    String? startDate,
+    String? endDate,
+  }) async {
+    if (startDate != null) selectedStartDate = startDate.isEmpty ? null : startDate;
+    if (endDate != null) selectedEndDate = endDate.isEmpty ? null : endDate;
+
     if (refresh) {
       _currentPage = 1;
       _hasReachedMax = false;
@@ -28,10 +40,15 @@ class OwnerContractsMovementCubit extends Cubit<OwnerContractsMovementState> {
     final result = await _getReportUseCase(
       forceRefresh: refresh,
       page: _currentPage,
+      startDate: selectedStartDate,
+      endDate: selectedEndDate,
     );
+
+    if (isClosed) return;
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (state is OwnerContractsMovementLoaded && !refresh) {
           emit(OwnerContractsMovementError(failure.message));
         } else {
@@ -39,6 +56,7 @@ class OwnerContractsMovementCubit extends Cubit<OwnerContractsMovementState> {
         }
       },
       (report) {
+        if (isClosed) return;
         if (report.items.isEmpty && refresh) {
           emit(OwnerContractsMovementEmpty());
           return;
@@ -71,5 +89,11 @@ class OwnerContractsMovementCubit extends Cubit<OwnerContractsMovementState> {
         }
       },
     );
+  }
+
+  void clearFilters() {
+    selectedStartDate = null;
+    selectedEndDate = null;
+    loadReport(refresh: true);
   }
 }

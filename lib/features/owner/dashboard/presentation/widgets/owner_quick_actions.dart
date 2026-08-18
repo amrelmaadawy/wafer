@@ -4,43 +4,16 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/app_breakpoints.dart';
 import '../../../../../core/theme/app_fonts.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/theme_context.dart';
-import 'owner_quick_action_card.dart';
 
 class OwnerQuickActions extends StatelessWidget {
   const OwnerQuickActions({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final cards = [
-      OwnerQuickActionCard(
-        title: LocaleKeys.maintenance_title.tr(),
-        icon: Icons.build_circle_outlined,
-        color: AppColors.error,
-        onTap: () => context.push(Routes.ownerMaintenance),
-      ),
-      OwnerQuickActionCard(
-        title: LocaleKeys.dashboard_reports.tr(),
-        icon: Icons.bar_chart_rounded,
-        color: AppColors.warning,
-        onTap: () => context.push('${Routes.ownerReportsCenter}?tab=0'),
-      ),
-      OwnerQuickActionCard(
-        title: LocaleKeys.dashboard_tasks.tr(),
-        icon: Icons.task_rounded,
-        color: AppColors.accent,
-        onTap: () => context.push(Routes.ownerTasks),
-      ),
-      OwnerQuickActionCard(
-        title: LocaleKeys.legal_cases.tr(),
-        icon: Icons.gavel_rounded,
-        color: AppColors.info,
-        onTap: () => context.push(Routes.ownerLegalCases),
-      ),
-    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -48,41 +21,130 @@ class OwnerQuickActions extends StatelessWidget {
           children: [
             Icon(
               Icons.grid_view_rounded,
-              size: 17,
+              size: 15,
               color: context.appSecondaryTextColor,
             ),
-            const SizedBox(width: AppSpacing.xs),
+            const SizedBox(width: 5),
             Text(
               LocaleKeys.dashboard_quick_actions.tr(),
-              style: AppTextStyles.bodyMedium.copyWith(
+              style: AppTextStyles.labelLarge.copyWith(
                 color: context.appOnSurfaceColor,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
               ),
             ),
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
-        if (context.isCompact)
-          SizedBox(
-            height: 120,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-              itemCount: cards.length,
-              separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.sm),
-              itemBuilder: (_, index) =>
-                  SizedBox(width: 130, child: cards[index]),
+        Row(
+          children: [
+            Expanded(
+              child: _QuickActionTile(
+                icon: Icons.build_circle_outlined,
+                label: LocaleKeys.maintenance_title.tr(),
+                color: AppColors.error,
+                onTap: () => context.push(Routes.ownerMaintenance),
+              ),
             ),
-          )
-        else
-          Row(
-            children: [
-              for (var index = 0; index < cards.length; index++) ...[
-                if (index > 0) const SizedBox(width: AppSpacing.sm),
-                Expanded(child: SizedBox(height: 110, child: cards[index])),
-              ],
+            const SizedBox(width: AppSpacing.xs),
+            Expanded(
+              child: _QuickActionTile(
+                icon: Icons.bar_chart_rounded,
+                label: LocaleKeys.dashboard_reports.tr(),
+                color: AppColors.warning,
+                onTap: () =>
+                    context.push('${Routes.ownerReportsCenter}?tab=0'),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.xs),
+            Expanded(
+              child: _QuickActionTile(
+                icon: Icons.task_rounded,
+                label: LocaleKeys.dashboard_tasks.tr(),
+                color: AppColors.accent,
+                onTap: () => context.push(Routes.ownerTasks),
+              ),
+            ),
+            const SizedBox(width: AppSpacing.xs),
+            Expanded(
+              child: _QuickActionTile(
+                icon: Icons.gavel_rounded,
+                label: LocaleKeys.legal_cases.tr(),
+                color: AppColors.info,
+                onTap: () => context.push(Routes.ownerLegalCases),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _QuickActionTile extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _QuickActionTile({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      borderRadius: AppRadius.circularXl,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadius.circularXl,
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            vertical: AppSpacing.sm,
+            horizontal: AppSpacing.xs,
+          ),
+          decoration: BoxDecoration(
+            color: context.appSurfaceColor,
+            borderRadius: AppRadius.circularXl,
+            border: Border.all(color: color.withValues(alpha: 0.2)),
+            boxShadow: [
+              BoxShadow(
+                color: color.withValues(alpha: 0.06),
+                blurRadius: 8,
+                offset: const Offset(0, 3),
+              ),
             ],
           ),
-      ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(9),
+                decoration: BoxDecoration(
+                  color: color.withValues(alpha: 0.1),
+                  borderRadius: AppRadius.circularMd,
+                ),
+                child: Icon(icon, size: 20, color: color),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                label,
+                textAlign: TextAlign.center,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyles.labelSmall.copyWith(
+                  color: context.appOnSurfaceColor,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 10.5,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

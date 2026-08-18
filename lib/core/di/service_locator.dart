@@ -15,6 +15,10 @@ import '../services/connectivity_service.dart';
 import '../storage/cache_helper.dart';
 import '../storage/secure_storage_service.dart';
 import '../theme/app_theme_cubit.dart';
+import '../permissions/data/repositories/permission_repository_impl.dart';
+import '../permissions/domain/repositories/permission_repository.dart';
+import '../permissions/services/permission_service.dart';
+import '../permissions/services/permission_service_impl.dart';
 import '../../features/auth/di/auth_di.dart';
 import '../../features/notifications/di/notifications_di.dart';
 import '../../features/owner/di/owner_di.dart';
@@ -31,6 +35,10 @@ Future<void> setupServiceLocator() async {
   // Storage
   sl.registerLazySingleton<SecureStorageService>(() => SecureStorageService());
   sl.registerLazySingleton<CacheHelper>(() => CacheHelper(sl()));
+
+  // Permissions & Security
+  sl.registerLazySingleton<PermissionRepository>(() => PermissionRepositoryImpl());
+  sl.registerLazySingleton<PermissionService>(() => PermissionServiceImpl(sl()));
 
   // Theme
   sl.registerLazySingleton<AppThemeCubit>(() => AppThemeCubit());

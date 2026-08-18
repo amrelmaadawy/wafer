@@ -1,4 +1,5 @@
 import '../../domain/entities/maintenance_form_data_entity.dart';
+import '../../domain/entities/maintenance_sub_entities.dart';
 import 'maintenance_sub_models.dart';
 import 'maintenance_complex_sub_models.dart';
 
@@ -75,6 +76,9 @@ class MaintenanceFormDataModel extends MaintenanceFormDataEntity {
     required super.units,
     required super.maintenanceTypes,
     required super.technicians,
+    super.statuses,
+    super.priorities,
+    super.costBearers,
   });
 
   factory MaintenanceFormDataModel.fromJson(Map<String, dynamic> json) {
@@ -82,6 +86,9 @@ class MaintenanceFormDataModel extends MaintenanceFormDataEntity {
     final unitsList = json['units'] as List<dynamic>? ?? [];
     final typesList = json['maintenance_types'] as List<dynamic>? ?? [];
     final techniciansList = json['technicians'] as List<dynamic>? ?? [];
+    final statusesList = json['statuses'] as List<dynamic>? ?? [];
+    final prioritiesList = json['priorities'] as List<dynamic>? ?? [];
+    final costBearersList = json['cost_bearers'] as List<dynamic>? ?? [];
 
     return MaintenanceFormDataModel(
       properties: propertiesList
@@ -105,6 +112,30 @@ class MaintenanceFormDataModel extends MaintenanceFormDataEntity {
           .map(
             (t) =>
                 MaintenanceTechnicianModel.fromJson(t as Map<String, dynamic>),
+          )
+          .toList(),
+      statuses: statusesList
+          .map(
+            (s) => MaintenanceStatusOptionEntity(
+              value: (s as Map<String, dynamic>)['value']?.toString() ?? '',
+              label: s['label']?.toString() ?? '',
+            ),
+          )
+          .toList(),
+      priorities: prioritiesList
+          .map(
+            (p) => MaintenancePriorityOptionEntity(
+              value: (p as Map<String, dynamic>)['value']?.toString() ?? '',
+              label: p['label']?.toString() ?? '',
+            ),
+          )
+          .toList(),
+      costBearers: costBearersList
+          .map(
+            (c) => MaintenanceCostBearerOptionEntity(
+              value: (c as Map<String, dynamic>)['value']?.toString() ?? '',
+              label: c['label']?.toString() ?? '',
+            ),
           )
           .toList(),
     );

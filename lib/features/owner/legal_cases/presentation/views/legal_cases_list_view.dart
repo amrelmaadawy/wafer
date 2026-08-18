@@ -64,9 +64,9 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
           icon: Icons.all_inbox_rounded,
         ),
         AppFilterOption(
-          value: 'active',
-          labelKey: LocaleKeys.legalCaseFilterActive,
-          icon: Icons.play_arrow_rounded,
+          value: 'open',
+          labelKey: LocaleKeys.legalCaseFilterOpen,
+          icon: Icons.lock_open_rounded,
         ),
         AppFilterOption(
           value: 'in_progress',
@@ -74,9 +74,19 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
           icon: Icons.pending_actions_rounded,
         ),
         AppFilterOption(
+          value: 'hearing',
+          labelKey: LocaleKeys.legalCaseFilterHearing,
+          icon: Icons.gavel_rounded,
+        ),
+        AppFilterOption(
+          value: 'resolved',
+          labelKey: LocaleKeys.legalCaseFilterResolved,
+          icon: Icons.check_circle_outline_rounded,
+        ),
+        AppFilterOption(
           value: 'closed',
           labelKey: LocaleKeys.legalCaseFilterClosed,
-          icon: Icons.check_circle_outline_rounded,
+          icon: Icons.lock_outline_rounded,
         ),
       ];
 

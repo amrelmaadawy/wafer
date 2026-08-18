@@ -35,6 +35,7 @@ Future<void> initAuthModule() async {
       loginUseCase: sl(),
       logoutUseCase: sl(),
       checkAuthStatusUseCase: sl(),
+      permissionService: sl(),
     ),
   );
 }

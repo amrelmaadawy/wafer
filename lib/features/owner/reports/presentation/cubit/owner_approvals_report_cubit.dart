@@ -8,11 +8,28 @@ class OwnerApprovalsReportCubit extends Cubit<OwnerApprovalsReportState> {
   int _currentPage = 1;
   bool _isFetching = false;
   ApprovalsReportEntity? _currentReport;
+  String? selectedStatus;
+  String? selectedStartDate;
+  String? selectedEndDate;
+
+  bool get hasActiveFilters =>
+      selectedStatus != null ||
+      selectedStartDate != null ||
+      selectedEndDate != null;
 
   OwnerApprovalsReportCubit({required this.getApprovalsReportUseCase})
     : super(OwnerApprovalsReportInitial());
 
-  Future<void> fetchReport({bool isRefresh = false}) async {
+  Future<void> fetchReport({
+    bool isRefresh = false,
+    String? status,
+    String? startDate,
+    String? endDate,
+  }) async {
+    if (status != null) selectedStatus = status == 'ALL' ? null : status;
+    if (startDate != null) selectedStartDate = startDate.isEmpty ? null : startDate;
+    if (endDate != null) selectedEndDate = endDate.isEmpty ? null : endDate;
+
     if (_isFetching) return;
 
     if (isRefresh) {
@@ -37,6 +54,9 @@ class OwnerApprovalsReportCubit extends Cubit<OwnerApprovalsReportState> {
     final result = await getApprovalsReportUseCase(
       forceRefresh: isRefresh,
       page: _currentPage,
+      status: selectedStatus,
+      startDate: selectedStartDate,
+      endDate: selectedEndDate,
     );
 
     result.fold(
@@ -80,5 +100,12 @@ class OwnerApprovalsReportCubit extends Cubit<OwnerApprovalsReportState> {
     );
 
     _isFetching = false;
+  }
+
+  void clearFilters() {
+    selectedStatus = null;
+    selectedStartDate = null;
+    selectedEndDate = null;
+    fetchReport(isRefresh: true);
   }
 }

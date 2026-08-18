@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/theme_context.dart';
+import '../widgets/filter/report_date_range_chip.dart';
 import '../cubit/owner_activity_logs_cubit.dart';
 
 class ActivityLogsFilterBar extends StatelessWidget {
@@ -29,6 +30,12 @@ class ActivityLogsFilterBar extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final fields = [
+            ReportDateRangeChip(
+              startDate: cubit.selectedStartDate,
+              endDate: cubit.selectedEndDate,
+              onDateRangeSelected: (start, end) =>
+                  cubit.setFilters(startDate: start, endDate: end),
+            ),
             _FilterMenu(
               icon: Icons.category_outlined,
               value: cubit.selectedType,
@@ -46,7 +53,7 @@ class ActivityLogsFilterBar extends StatelessWidget {
                   cubit.setFilters(type: cubit.selectedType, action: value),
             ),
           ];
-          if (constraints.maxWidth < 560) {
+          if (constraints.maxWidth < 680) {
             return Column(
               children: [
                 ...fields.expand(

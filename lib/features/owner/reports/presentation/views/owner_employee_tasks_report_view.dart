@@ -14,6 +14,8 @@ import '../widgets/employee_tasks_export_actions.dart';
 import '../widgets/employee_tasks_page_header.dart';
 import '../widgets/employee_tasks_report_list.dart';
 import '../widgets/employee_tasks_summary_header.dart';
+import '../widgets/filter/report_status_chip.dart';
+import '../widgets/filter/universal_reports_filter_bar.dart';
 import '../widgets/report_empty_widget.dart';
 import '../widgets/report_skeleton.dart';
 
@@ -91,25 +93,66 @@ class _OwnerEmployeeTasksReportViewState
     );
   }
 
-  Widget _loadedState(OwnerEmployeeTasksLoaded state) => ListView(
-    controller: _scrollController,
-    physics: const AlwaysScrollableScrollPhysics(),
-    padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
-    children: [
-      const EmployeeTasksPageHeader(),
-      const SizedBox(height: AppSpacing.lg),
-      EmployeeTasksSummaryHeader(summary: state.report.summary),
-      const SizedBox(height: AppSpacing.lg),
-      Text(
-        LocaleKeys.employeeTasksList.tr(),
-        style: Theme.of(
-          context,
-        ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
-      ),
-      const SizedBox(height: AppSpacing.sm),
-      EmployeeTasksReportList(items: state.report.items),
-    ],
-  );
+  Widget _loadedState(OwnerEmployeeTasksLoaded state) {
+    final statuses = [
+      ReportStatusItem(value: 'COMPLETED', label: LocaleKeys.employeeTasksCompleted.tr()),
+      ReportStatusItem(value: 'PENDING', label: LocaleKeys.employeeTasksPending.tr()),
+      ReportStatusItem(value: 'OVERDUE', label: LocaleKeys.employeeTasksOverdue.tr()),
+    ];
+
+    return ListView(
+      controller: _scrollController,
+      physics: const AlwaysScrollableScrollPhysics(),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
+      children: [
+        const EmployeeTasksPageHeader(),
+        const SizedBox(height: AppSpacing.md),
+        UniversalReportsFilterBar(
+          showDateRange: true,
+          selectedStartDate: _cubit.selectedStartDate,
+          selectedEndDate: _cubit.selectedEndDate,
+          onDateRangeSelected: (start, end) {
+            _cubit.fetchReport(
+              forceRefresh: true,
+              startDate: start,
+              endDate: end,
+            );
+          },
+          showStatus: true,
+          selectedStatus: _cubit.selectedStatus,
+          statuses: statuses,
+          onStatusSelected: (status) {
+            _cubit.fetchReport(
+              forceRefresh: true,
+              status: status,
+            );
+          },
+          hasActiveFilters: _cubit.hasActiveFilters,
+          onReset: _cubit.clearFilters,
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          child: EmployeeTasksSummaryHeader(summary: state.report.summary),
+        ),
+        const SizedBox(height: AppSpacing.lg),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          child: Text(
+            LocaleKeys.employeeTasksList.tr(),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w800),
+          ),
+        ),
+        const SizedBox(height: AppSpacing.sm),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+          child: EmployeeTasksReportList(items: state.report.items),
+        ),
+      ],
+    );
+  }
 
   Widget _emptyState() => AppResponsiveContent(
     child: ListView(

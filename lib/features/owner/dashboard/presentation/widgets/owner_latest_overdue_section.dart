@@ -5,6 +5,7 @@ import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
@@ -23,27 +24,41 @@ class OwnerLatestOverdueSection extends StatelessWidget {
       children: [
         InkWell(
           onTap: () => context.push(Routes.ownerDefaultersReport),
+          borderRadius: AppRadius.circularSm,
           child: Row(
             children: [
-              const Icon(
-                Icons.warning_rounded,
-                color: AppColors.error,
-                size: 20,
+              Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  color: AppColors.error.withValues(alpha: 0.1),
+                  borderRadius: AppRadius.circularSm,
+                ),
+                child: const Icon(
+                  Icons.warning_rounded,
+                  color: AppColors.error,
+                  size: 14,
+                ),
               ),
-              const SizedBox(width: AppSpacing.xs),
+              const SizedBox(width: 6),
               Text(
                 LocaleKeys.dashboard_latest_overdue.tr(),
-                style: AppTextStyles.bodyLarge.copyWith(
+                style: AppTextStyles.labelLarge.copyWith(
                   color: context.appOnSurfaceColor,
-                  fontWeight: FontWeight.w700,
+                  fontWeight: FontWeight.w800,
                 ),
+              ),
+              const Spacer(),
+              Icon(
+                Icons.arrow_forward_ios_rounded,
+                size: 12,
+                color: context.appSecondaryTextColor,
               ),
             ],
           ),
         ),
         const SizedBox(height: AppSpacing.sm),
         SizedBox(
-          height: 140,
+          height: 150,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemCount: installments.length,

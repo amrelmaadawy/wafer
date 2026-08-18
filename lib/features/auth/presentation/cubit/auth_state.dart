@@ -34,6 +34,22 @@ class AuthSessionError extends AuthState {
   List<Object> get props => [message];
 }
 
+class AuthSessionExpired extends AuthState {
+  final String? message;
+  const AuthSessionExpired([this.message]);
+
+  @override
+  List<Object> get props => message != null ? [message!] : [];
+}
+
+class AuthForbidden extends AuthState {
+  final String? message;
+  const AuthForbidden([this.message]);
+
+  @override
+  List<Object> get props => message != null ? [message!] : [];
+}
+
 class AuthError extends AuthState {
   final String message;
   const AuthError(this.message);
@@ -41,4 +57,3 @@ class AuthError extends AuthState {
   @override
   List<Object> get props => [message];
 }
-

@@ -11,8 +11,25 @@ class OwnerOccupancyCubit extends Cubit<OwnerOccupancyState> {
 
   int _currentPage = 1;
   bool _isFetching = false;
+  int? selectedPropertyId;
+  String? selectedStartDate;
+  String? selectedEndDate;
 
-  Future<void> loadOccupancyReport({bool forceRefresh = false}) async {
+  bool get hasActiveFilters =>
+      selectedPropertyId != null ||
+      selectedStartDate != null ||
+      selectedEndDate != null;
+
+  Future<void> loadOccupancyReport({
+    bool forceRefresh = false,
+    int? propertyId,
+    String? startDate,
+    String? endDate,
+  }) async {
+    if (propertyId != null) selectedPropertyId = propertyId == -1 ? null : propertyId;
+    if (startDate != null) selectedStartDate = startDate.isEmpty ? null : startDate;
+    if (endDate != null) selectedEndDate = endDate.isEmpty ? null : endDate;
+
     if (_isFetching) return;
 
     if (forceRefresh) {
@@ -30,15 +47,23 @@ class OwnerOccupancyCubit extends Cubit<OwnerOccupancyState> {
     final result = await _getOwnerOccupancyReportUseCase(
       forceRefresh: forceRefresh,
       page: _currentPage,
+      propertyId: selectedPropertyId,
+      startDate: selectedStartDate,
+      endDate: selectedEndDate,
     );
+
+    _isFetching = false;
+    if (isClosed) return;
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (state is! OwnerOccupancyLoaded) {
           emit(OwnerOccupancyError(failure.message));
         }
       },
       (report) {
+        if (isClosed) return;
         if (report.items.isEmpty && _currentPage == 1) {
           emit(const OwnerOccupancyEmpty());
         } else {
@@ -75,7 +100,12 @@ class OwnerOccupancyCubit extends Cubit<OwnerOccupancyState> {
         }
       },
     );
+  }
 
-    _isFetching = false;
+  void clearFilters() {
+    selectedPropertyId = null;
+    selectedStartDate = null;
+    selectedEndDate = null;
+    loadOccupancyReport(forceRefresh: true);
   }
 }

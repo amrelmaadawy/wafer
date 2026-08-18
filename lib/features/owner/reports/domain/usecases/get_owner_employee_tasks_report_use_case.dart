@@ -11,10 +11,16 @@ class GetOwnerEmployeeTasksReportUseCase {
   Future<Either<Failure, EmployeeTasksReportEntity>> call({
     bool forceRefresh = false,
     int page = 1,
+    String? status,
+    String? startDate,
+    String? endDate,
   }) async {
     return await repository.getEmployeeTasksReport(
       forceRefresh: forceRefresh,
       page: page,
+      status: status,
+      startDate: startDate,
+      endDate: endDate,
     );
   }
 }

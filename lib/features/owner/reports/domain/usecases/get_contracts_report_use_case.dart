@@ -13,12 +13,16 @@ class GetContractsReportUseCase {
     int page = 1,
     int? propertyId,
     String? status,
+    String? startDate,
+    String? endDate,
   }) async {
     return await repository.getContractsReport(
       forceRefresh: forceRefresh,
       page: page,
       propertyId: propertyId,
       status: status,
+      startDate: startDate,
+      endDate: endDate,
     );
   }
 }

@@ -97,6 +97,18 @@ class LegalCasesListCubit extends Cubit<LegalCasesListState> {
     fetchLegalCases(refresh: true);
   }
 
+  void filterByCategory(String? caseType) {
+    if (state.filterParams.caseType == caseType) return;
+    emit(state.copyWith(
+      filterParams: state.filterParams.copyWith(
+        caseType: caseType,
+        clearCaseType: caseType == null,
+        page: 1,
+      ),
+    ));
+    fetchLegalCases(refresh: true);
+  }
+
   void filterByPriority(String? priority) {
     if (state.filterParams.priority == priority) return;
     emit(state.copyWith(

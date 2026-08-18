@@ -14,6 +14,9 @@ class OwnerUnitsStatusCubit extends Cubit<OwnerUnitsStatusState> {
   int _currentPage = 1;
   bool _isFetching = false;
 
+  bool get hasActiveFilters =>
+      selectedPropertyId != null || selectedStatus != null;
+
   Future<void> loadUnitsStatusReport({
     bool forceRefresh = false,
     int? propertyId,

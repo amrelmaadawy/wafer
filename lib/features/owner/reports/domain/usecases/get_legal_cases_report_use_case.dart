@@ -15,15 +15,27 @@ class GetLegalCasesReportUseCase
     GetLegalCasesReportParams params,
   ) async {
     return await repository.getLegalCasesReport(
+      forceRefresh: params.forceRefresh,
       page: params.page,
       status: params.status,
+      startDate: params.startDate,
+      endDate: params.endDate,
     );
   }
 }
 
 class GetLegalCasesReportParams {
+  final bool forceRefresh;
   final int page;
   final String? status;
+  final String? startDate;
+  final String? endDate;
 
-  GetLegalCasesReportParams({this.page = 1, this.status});
+  GetLegalCasesReportParams({
+    this.forceRefresh = false,
+    this.page = 1,
+    this.status,
+    this.startDate,
+    this.endDate,
+  });
 }

@@ -10,8 +10,25 @@ class OwnerDefaultersCubit extends Cubit<OwnerDefaultersState> {
 
   int _currentPage = 1;
   bool _isFetching = false;
+  int? selectedPropertyId;
+  String? selectedStartDate;
+  String? selectedEndDate;
 
-  Future<void> loadDefaultersReport({bool forceRefresh = false}) async {
+  bool get hasActiveFilters =>
+      selectedPropertyId != null ||
+      selectedStartDate != null ||
+      selectedEndDate != null;
+
+  Future<void> loadDefaultersReport({
+    bool forceRefresh = false,
+    int? propertyId,
+    String? startDate,
+    String? endDate,
+  }) async {
+    if (propertyId != null) selectedPropertyId = propertyId == -1 ? null : propertyId;
+    if (startDate != null) selectedStartDate = startDate.isEmpty ? null : startDate;
+    if (endDate != null) selectedEndDate = endDate.isEmpty ? null : endDate;
+
     if (_isFetching) return;
 
     if (forceRefresh) {
@@ -31,18 +48,25 @@ class OwnerDefaultersCubit extends Cubit<OwnerDefaultersState> {
     final result = await getOwnerDefaultersReportUseCase(
       forceRefresh: forceRefresh,
       page: _currentPage,
+      propertyId: selectedPropertyId,
+      startDate: selectedStartDate,
+      endDate: selectedEndDate,
     );
+
+    _isFetching = false;
+    if (isClosed) return;
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (_currentPage == 1) {
           emit(OwnerDefaultersError(failure.message));
         } else {
           _currentPage--;
-          // Do not emit error for pagination to keep current items, could show a toast
         }
       },
       (report) {
+        if (isClosed) return;
         if (report.items.isEmpty && _currentPage == 1) {
           emit(OwnerDefaultersEmpty());
         } else {
@@ -72,7 +96,12 @@ class OwnerDefaultersCubit extends Cubit<OwnerDefaultersState> {
         }
       },
     );
+  }
 
-    _isFetching = false;
+  void clearFilters() {
+    selectedPropertyId = null;
+    selectedStartDate = null;
+    selectedEndDate = null;
+    loadDefaultersReport(forceRefresh: true);
   }
 }

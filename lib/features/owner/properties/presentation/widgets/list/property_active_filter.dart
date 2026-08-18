@@ -19,9 +19,6 @@ class PropertyActiveFilterResolver {
     PropertyFormOptionsEntity? options,
   ) {
     final result = <PropertyActiveFilter>[];
-    if (filter.status != null) {
-      result.add(PropertyActiveFilter('status', _status(filter.status!)));
-    }
     if (filter.propertyType != null) {
       result.add(
         PropertyActiveFilter(
@@ -78,12 +75,6 @@ class PropertyActiveFilterResolver {
     final match = options?.where((option) => option.value == value);
     return match != null && match.isNotEmpty ? match.first.label : value;
   }
-
-  static String _status(String value) => switch (value) {
-    'published' => LocaleKeys.propertiesStatusPublished.tr(),
-    'draft' => LocaleKeys.propertiesStatusDraft.tr(),
-    _ => value,
-  };
 
   static String _sort(PropertySortField field) => switch (field) {
     PropertySortField.name => LocaleKeys.propertiesSortName.tr(),

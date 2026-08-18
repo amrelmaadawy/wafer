@@ -11,11 +11,23 @@ class OwnerTechnicianPerformanceCubit
   TechnicianPerformanceReportEntity? _currentReport;
   int _currentPage = 1;
   bool _isFetching = false;
+  String? selectedStartDate;
+  String? selectedEndDate;
+
+  bool get hasActiveFilters =>
+      selectedStartDate != null || selectedEndDate != null;
 
   OwnerTechnicianPerformanceCubit(this._getTechnicianPerformanceReportUseCase)
     : super(OwnerTechnicianPerformanceInitial());
 
-  Future<void> loadReport({bool refresh = false}) async {
+  Future<void> loadReport({
+    bool refresh = false,
+    String? startDate,
+    String? endDate,
+  }) async {
+    if (startDate != null) selectedStartDate = startDate.isEmpty ? null : startDate;
+    if (endDate != null) selectedEndDate = endDate.isEmpty ? null : endDate;
+
     if (_isFetching) return;
 
     if (refresh) {
@@ -40,14 +52,21 @@ class OwnerTechnicianPerformanceCubit
     final result = await _getTechnicianPerformanceReportUseCase(
       page: _currentPage,
       forceRefresh: refresh,
+      startDate: selectedStartDate,
+      endDate: selectedEndDate,
     );
+
+    _isFetching = false;
+    if (isClosed) return;
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (_currentPage > 1) _currentPage--;
         emit(OwnerTechnicianPerformanceError(failure.message));
       },
       (report) {
+        if (isClosed) return;
         if (report.items.isEmpty && _currentReport == null) {
           emit(OwnerTechnicianPerformanceEmpty());
         } else {
@@ -74,7 +93,11 @@ class OwnerTechnicianPerformanceCubit
         }
       },
     );
+  }
 
-    _isFetching = false;
+  void clearFilters() {
+    selectedStartDate = null;
+    selectedEndDate = null;
+    loadReport(refresh: true);
   }
 }

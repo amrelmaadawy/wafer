@@ -9,22 +9,37 @@ class OwnerActivityLogsCubit extends Cubit<OwnerActivityLogsState> {
 
   String? selectedType;
   String? selectedAction;
+  String? selectedStartDate;
+  String? selectedEndDate;
   bool _isFetching = false;
 
   OwnerActivityLogsCubit(this._getOwnerActivityLogsReportUseCase)
     : super(OwnerActivityLogsInitial());
 
-  bool get hasActiveFilters => selectedType != null || selectedAction != null;
+  bool get hasActiveFilters =>
+      selectedType != null ||
+      selectedAction != null ||
+      selectedStartDate != null ||
+      selectedEndDate != null;
 
-  Future<void> setFilters({String? type, String? action}) {
-    selectedType = type;
-    selectedAction = action;
+  Future<void> setFilters({
+    String? type,
+    String? action,
+    String? startDate,
+    String? endDate,
+  }) {
+    if (type != null) selectedType = type == '__all__' ? null : type;
+    if (action != null) selectedAction = action == '__all__' ? null : action;
+    if (startDate != null) selectedStartDate = startDate.isEmpty ? null : startDate;
+    if (endDate != null) selectedEndDate = endDate.isEmpty ? null : endDate;
     return fetchReport(forceRefresh: true);
   }
 
   Future<void> clearFilters() {
     selectedType = null;
     selectedAction = null;
+    selectedStartDate = null;
+    selectedEndDate = null;
     return fetchReport(forceRefresh: true);
   }
 
@@ -55,9 +70,12 @@ class OwnerActivityLogsCubit extends Cubit<OwnerActivityLogsState> {
     );
 
     final result = await _getOwnerActivityLogsReportUseCase(
+      forceRefresh: forceRefresh,
       page: nextPage,
       type: selectedType,
       action: selectedAction,
+      startDate: selectedStartDate,
+      endDate: selectedEndDate,
     );
 
     result.fold(

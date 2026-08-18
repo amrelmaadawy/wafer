@@ -80,7 +80,14 @@ void main() {
     'sends confirmed filters and retains options for an empty result',
     build: () {
       when(
-        () => useCase(page: 1, type: 'property', action: 'update'),
+        () => useCase(
+          forceRefresh: any(named: 'forceRefresh'),
+          page: 1,
+          type: 'property',
+          action: 'update',
+          startDate: any(named: 'startDate'),
+          endDate: any(named: 'endDate'),
+        ),
       ).thenAnswer((_) async => Right(_report(1, 0, empty: true)));
       return OwnerActivityLogsCubit(useCase);
     },

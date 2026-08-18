@@ -8,8 +8,13 @@ import '../../domain/entities/revenue_entry_entity.dart';
 
 class RevenueMonthRow extends StatelessWidget {
   final RevenueEntryEntity item;
+  final RevenueEntryEntity? previousItem;
 
-  const RevenueMonthRow({super.key, required this.item});
+  const RevenueMonthRow({
+    super.key,
+    required this.item,
+    this.previousItem,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +68,10 @@ class RevenueMonthRow extends StatelessWidget {
                       ),
                     ),
                   ),
+                  if (previousItem != null) ...[
+                    const SizedBox(width: 8),
+                    _buildComparisonBadge(),
+                  ],
                 ],
               ),
               Container(
@@ -114,25 +123,57 @@ class RevenueMonthRow extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: AppRadius.circularFull,
-                  child: TweenAnimationBuilder<double>(
-                    tween: Tween(begin: 0, end: progress),
-                    duration: const Duration(milliseconds: 800),
-                    curve: Curves.easeOutCubic,
-                    builder: (context, val, _) => LinearProgressIndicator(
-                      value: val,
-                      minHeight: 7,
-                      backgroundColor: AppColors.backgroundLight,
-                      valueColor: AlwaysStoppedAnimation<Color>(progressColor),
-                    ),
-                  ),
-                ),
+          ClipRRect(
+            borderRadius: AppRadius.circularFull,
+            child: TweenAnimationBuilder<double>(
+              tween: Tween(begin: 0, end: progress),
+              duration: const Duration(milliseconds: 800),
+              curve: Curves.easeOutCubic,
+              builder: (context, val, _) => LinearProgressIndicator(
+                value: val,
+                minHeight: 7,
+                backgroundColor: AppColors.backgroundLight,
+                valueColor: AlwaysStoppedAnimation<Color>(progressColor),
               ),
-            ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildComparisonBadge() {
+    if (previousItem == null || previousItem!.collected == 0) {
+      return const SizedBox.shrink();
+    }
+    final prev = previousItem!.collected;
+    final curr = item.collected;
+    final double diffPercent = ((curr - prev) / prev) * 100;
+    final isPositive = diffPercent >= 0;
+    final color = isPositive ? const Color(0xFF10B981) : const Color(0xFFEF4444);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: AppRadius.circularSm,
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            isPositive ? Icons.trending_up_rounded : Icons.trending_down_rounded,
+            size: 14,
+            color: color,
+          ),
+          const SizedBox(width: 4),
+          Text(
+            '${isPositive ? '+' : ''}${diffPercent.toStringAsFixed(1)}%',
+            style: TextStyle(
+              color: color,
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+            ),
           ),
         ],
       ),
@@ -168,25 +209,13 @@ class RevenueMonthRow extends StatelessWidget {
     );
   }
 
-  /// Converts "2027-06" → "يونيو 2027"
   String _formatMonthLabel(String rawMonth) {
     final parts = rawMonth.split('-');
     if (parts.length < 2) return rawMonth;
     final monthNum = int.tryParse(parts[1]) ?? 0;
     const arabic = [
-      '',
-      'يناير',
-      'فبراير',
-      'مارس',
-      'إبريل',
-      'مايو',
-      'يونيو',
-      'يوليو',
-      'أغسطس',
-      'سبتمبر',
-      'أكتوبر',
-      'نوفمبر',
-      'ديسمبر',
+      '', 'يناير', 'فبراير', 'مارس', 'إبريل', 'مايو', 'يونيو',
+      'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر',
     ];
     final monthName = (monthNum >= 1 && monthNum <= 12)
         ? arabic[monthNum]

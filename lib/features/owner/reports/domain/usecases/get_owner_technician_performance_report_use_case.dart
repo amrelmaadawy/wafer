@@ -11,10 +11,14 @@ class GetOwnerTechnicianPerformanceReportUseCase {
   Future<Either<Failure, TechnicianPerformanceReportEntity>> call({
     bool forceRefresh = false,
     int page = 1,
+    String? startDate,
+    String? endDate,
   }) async {
     return await repository.getTechnicianPerformanceReport(
       forceRefresh: forceRefresh,
       page: page,
+      startDate: startDate,
+      endDate: endDate,
     );
   }
 }

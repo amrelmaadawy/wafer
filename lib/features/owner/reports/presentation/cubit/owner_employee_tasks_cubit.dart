@@ -13,8 +13,25 @@ class OwnerEmployeeTasksCubit extends Cubit<OwnerEmployeeTasksState> {
   bool _hasReachedMax = false;
   bool _isFetching = false;
   EmployeeTasksReportEntity? _currentReport;
+  String? selectedStatus;
+  String? selectedStartDate;
+  String? selectedEndDate;
 
-  Future<void> fetchReport({bool forceRefresh = false}) async {
+  bool get hasActiveFilters =>
+      selectedStatus != null ||
+      selectedStartDate != null ||
+      selectedEndDate != null;
+
+  Future<void> fetchReport({
+    bool forceRefresh = false,
+    String? status,
+    String? startDate,
+    String? endDate,
+  }) async {
+    if (status != null) selectedStatus = status == 'ALL' ? null : status;
+    if (startDate != null) selectedStartDate = startDate.isEmpty ? null : startDate;
+    if (endDate != null) selectedEndDate = endDate.isEmpty ? null : endDate;
+
     if (_isFetching) return;
     if (forceRefresh) {
       _currentPage = 1;
@@ -31,6 +48,9 @@ class OwnerEmployeeTasksCubit extends Cubit<OwnerEmployeeTasksState> {
     final result = await _getEmployeeTasksReportUseCase(
       forceRefresh: forceRefresh,
       page: _currentPage,
+      status: selectedStatus,
+      startDate: selectedStartDate,
+      endDate: selectedEndDate,
     );
 
     _isFetching = false;
@@ -76,5 +96,12 @@ class OwnerEmployeeTasksCubit extends Cubit<OwnerEmployeeTasksState> {
         }
       },
     );
+  }
+
+  void clearFilters() {
+    selectedStatus = null;
+    selectedStartDate = null;
+    selectedEndDate = null;
+    fetchReport(forceRefresh: true);
   }
 }

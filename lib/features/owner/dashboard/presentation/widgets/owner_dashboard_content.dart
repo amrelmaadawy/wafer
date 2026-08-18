@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../../../core/theme/app_breakpoints.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../cubit/owner_dashboard_state.dart';
-import 'owner_alerts_grid.dart';
+import 'owner_critical_alerts_section.dart';
+import 'owner_pending_actions_section.dart';
 import 'owner_finance_carousel_widget.dart';
-import 'owner_latest_overdue_section.dart';
 import 'owner_occupancy_card.dart';
 import 'owner_quick_actions.dart';
-import 'owner_tasks_legal_card.dart';
 
 class OwnerDashboardContent extends StatelessWidget {
   final OwnerDashboardLoaded state;
@@ -19,7 +18,18 @@ class OwnerDashboardContent extends StatelessWidget {
     if (!context.isExpanded) {
       return _DashboardColumn(children: _sections);
     }
-    final supportingSections = _supportingSections;
+    return _buildExpandedLayout(context);
+  }
+
+  List<Widget> get _sections => [
+    OwnerFinanceCarouselWidget(data: state.data),
+    OwnerOccupancyCard(data: state.data),
+    OwnerCriticalAlertsSection(data: state.data),
+    OwnerPendingActionsSection(data: state.data),
+    const OwnerQuickActions(),
+  ];
+
+  Widget _buildExpandedLayout(BuildContext context) {
     return Column(
       children: [
         Row(
@@ -31,49 +41,14 @@ class OwnerDashboardContent extends StatelessWidget {
           ],
         ),
         const SizedBox(height: AppSpacing.md),
-        const OwnerQuickActions(),
+        OwnerCriticalAlertsSection(data: state.data),
         const SizedBox(height: AppSpacing.md),
-        OwnerAlertsGrid(data: state.data),
-        if (supportingSections.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.md),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (
-                var index = 0;
-                index < supportingSections.length;
-                index++
-              ) ...[
-                if (index > 0) const SizedBox(width: AppSpacing.md),
-                Expanded(child: supportingSections[index]),
-              ],
-            ],
-          ),
-        ],
+        OwnerPendingActionsSection(data: state.data),
+        const SizedBox(height: AppSpacing.md),
+        const OwnerQuickActions(),
       ],
     );
   }
-
-  List<Widget> get _sections => [
-    OwnerFinanceCarouselWidget(data: state.data),
-    OwnerOccupancyCard(data: state.data),
-    const OwnerQuickActions(),
-    OwnerAlertsGrid(data: state.data),
-    ..._supportingSections,
-  ];
-
-  List<Widget> get _supportingSections => [
-    if (state.data.latestOverdueInstallments.isNotEmpty)
-      OwnerLatestOverdueSection(
-        installments: state.data.latestOverdueInstallments,
-      ),
-    if (state.data.tasksBreakdown != null ||
-        state.data.legalCasesBreakdown != null)
-      OwnerTasksLegalCard(
-        tasks: state.data.tasksBreakdown,
-        legalCases: state.data.legalCasesBreakdown,
-      ),
-  ];
 }
 
 class _DashboardColumn extends StatelessWidget {

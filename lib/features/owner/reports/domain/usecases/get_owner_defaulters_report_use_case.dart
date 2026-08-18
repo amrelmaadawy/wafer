@@ -11,10 +11,16 @@ class GetOwnerDefaultersReportUseCase {
   Future<Either<Failure, DefaultersReportEntity>> call({
     bool forceRefresh = false,
     int page = 1,
+    int? propertyId,
+    String? startDate,
+    String? endDate,
   }) async {
     return await repository.getDefaultersReport(
       forceRefresh: forceRefresh,
       page: page,
+      propertyId: propertyId,
+      startDate: startDate,
+      endDate: endDate,
     );
   }
 }

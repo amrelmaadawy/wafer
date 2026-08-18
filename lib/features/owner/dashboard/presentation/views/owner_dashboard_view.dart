@@ -30,9 +30,9 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
 
   @override
   Widget build(BuildContext context) {
-    final overlayStyle = Theme.of(context).brightness == Brightness.dark
-        ? SystemUiOverlayStyle.light
-        : SystemUiOverlayStyle.dark;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final overlayStyle =
+        isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: overlayStyle,
       child: ColoredBox(
@@ -65,13 +65,16 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
     if (state is! OwnerDashboardLoaded) return const SizedBox.shrink();
     return RefreshIndicator(
       color: context.primaryColor,
+      displacement: 20,
       onRefresh: () => context.read<OwnerDashboardCubit>().loadDashboardStats(
-        forceRefresh: true,
-      ),
+            forceRefresh: true,
+          ),
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.only(top: 20, bottom: 120),
-        child: AppResponsiveContent(child: OwnerDashboardContent(state: state)),
+        child: AppResponsiveContent(
+          child: OwnerDashboardContent(state: state),
+        ),
       ),
     );
   }
@@ -79,9 +82,9 @@ class _OwnerDashboardViewState extends State<OwnerDashboardView> {
   Future<void> _retry(BuildContext context) async {
     setState(() => _isRetrying = true);
     await context.read<OwnerDashboardCubit>().loadDashboardStats(
-      forceRefresh: true,
-      showLoadingState: false,
-    );
+          forceRefresh: true,
+          showLoadingState: false,
+        );
     if (mounted) setState(() => _isRetrying = false);
   }
 }

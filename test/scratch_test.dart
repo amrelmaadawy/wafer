@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive_ce/hive_ce.dart';
@@ -13,10 +14,12 @@ void main() {
     SharedPreferences.setMockInitialValues({});
     FlutterSecureStorage.setMockInitialValues({});
     
-    sl.registerLazySingleton(() => SecureStorageService());
-    await CacheInterceptorConfig.init(customPath: 'test_cache_dir');
+    final tempDir = Directory.systemTemp.createTempSync('hive_test_');
     
-    Hive.init('test_cache_dir');
+    sl.registerLazySingleton(() => SecureStorageService());
+    await CacheInterceptorConfig.init(customPath: tempDir.path);
+    
+    Hive.init(tempDir.path);
     final box = await Hive.openBox('test_scratch_box');
     await box.put('test_key', 'test_value');
     
@@ -31,5 +34,8 @@ void main() {
     await box2.close();
     
     await sl.reset();
+    try {
+      tempDir.deleteSync(recursive: true);
+    } catch (_) {}
   });
 }

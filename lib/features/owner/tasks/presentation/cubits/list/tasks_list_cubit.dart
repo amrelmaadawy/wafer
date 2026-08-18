@@ -135,6 +135,25 @@ class TasksListCubit extends Cubit<TasksListState> {
     fetchTasks(refresh: true);
   }
 
+  void applyAdvancedFilter(TasksFilterParams params) {
+    emit(state.copyWith(
+      filterParams: params.copyWith(page: 1),
+    ));
+    fetchTasks(refresh: true);
+  }
+
+  void setSort(String? sortBy, String? sortOrder) {
+    emit(state.copyWith(
+      filterParams: state.filterParams.copyWith(
+        sortBy: sortBy,
+        sortOrder: sortOrder,
+        clearSort: sortBy == null,
+        page: 1,
+      ),
+    ));
+    fetchTasks(refresh: true);
+  }
+
   String _mapFailureToMessage(Failure failure) {
     if (failure is ServerFailure) {
       return failure.message;

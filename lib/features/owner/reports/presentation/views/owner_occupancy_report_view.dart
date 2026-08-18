@@ -16,6 +16,7 @@ import '../widgets/report_export_button.dart';
 import '../../../../../core/services/pdf/pdf_generator_service.dart';
 import '../../../../../core/services/pdf/builders/occupancy_pdf_builder.dart';
 import '../../../../../core/services/excel/excel_export_service.dart';
+import '../widgets/filter/universal_reports_filter_bar.dart';
 import '../../../../../core/services/excel/builders/occupancy_excel_builder.dart';
 
 class OwnerOccupancyReportView extends StatefulWidget {
@@ -117,28 +118,48 @@ class _OwnerOccupancyReportViewState extends State<OwnerOccupancyReportView> {
               icon: Icons.domain_disabled_rounded,
             );
           } else if (state is OwnerOccupancyLoaded) {
+            final cubit = context.read<OwnerOccupancyCubit>();
             return RefreshIndicator(
               color: context.primaryColor,
-              onRefresh: () => context
-                  .read<OwnerOccupancyCubit>()
-                  .loadOccupancyReport(forceRefresh: true),
+              onRefresh: () => cubit.loadOccupancyReport(forceRefresh: true),
               child: SingleChildScrollView(
                 controller: _scrollController,
                 physics: const AlwaysScrollableScrollPhysics(),
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    OccupancySummaryHeader(
-                      overallRate: state.report.summary.overallOccupancy,
-                      totalUnits: state.report.summary.totalUnits,
-                      totalRented: state.report.summary.rentedUnits,
-                      totalVacant:
-                          state.report.summary.totalUnits -
-                          state.report.summary.rentedUnits,
+                    UniversalReportsFilterBar(
+                      showDateRange: true,
+                      selectedStartDate: cubit.selectedStartDate,
+                      selectedEndDate: cubit.selectedEndDate,
+                      onDateRangeSelected: (start, end) {
+                        cubit.loadOccupancyReport(
+                          forceRefresh: true,
+                          startDate: start,
+                          endDate: end,
+                        );
+                      },
+                      hasActiveFilters: cubit.hasActiveFilters,
+                      onReset: cubit.clearFilters,
+                    ),
+                    const SizedBox(height: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: OccupancySummaryHeader(
+                        overallRate: state.report.summary.overallOccupancy,
+                        totalUnits: state.report.summary.totalUnits,
+                        totalRented: state.report.summary.rentedUnits,
+                        totalVacant:
+                            state.report.summary.totalUnits -
+                            state.report.summary.rentedUnits,
+                      ),
                     ),
                     const SizedBox(height: 22),
-                    OccupancyPropertiesList(properties: state.report.items),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: OccupancyPropertiesList(properties: state.report.items),
+                    ),
                     if (!state.hasReachedMax)
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 20),

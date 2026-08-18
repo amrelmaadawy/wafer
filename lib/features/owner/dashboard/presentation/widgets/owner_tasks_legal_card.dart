@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/presentation/widgets/app_surface_card.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
+import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../domain/entities/owner_dashboard_entity.dart';
@@ -20,6 +20,7 @@ class OwnerTasksLegalCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (tasks == null && legalCases == null) return const SizedBox.shrink();
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (tasks != null)
           Expanded(
@@ -75,46 +76,89 @@ class _BreakdownCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppSurfaceCard(
-      onTap: onTap,
-      padding: const EdgeInsets.all(AppSpacing.sm),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    return Material(
+      color: Colors.transparent,
+      borderRadius: AppRadius.circularXl,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: AppRadius.circularXl,
+        child: Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+            color: context.appSurfaceColor,
+            borderRadius: AppRadius.circularXl,
+            border: Border.all(color: context.appBorderColor),
+            boxShadow: [
+              BoxShadow(
+                color: color.withValues(alpha: 0.06),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Icon(icon, color: color, size: 20),
-              const SizedBox(width: AppSpacing.xs),
-              Expanded(
-                child: Text(
-                  title,
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: context.appSecondaryTextColor,
-                  ),
+              Container(height: 2.5, color: color),
+              Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: color.withValues(alpha: 0.1),
+                            borderRadius: AppRadius.circularMd,
+                          ),
+                          child: Icon(icon, color: color, size: 16),
+                        ),
+                        const Spacer(),
+                        Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          size: 12,
+                          color: context.appSecondaryTextColor,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.sm),
+                    Text(
+                      value,
+                      style: AppTextStyles.h3.copyWith(
+                        color: context.appOnSurfaceColor,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      title,
+                      style: AppTextStyles.labelSmall.copyWith(
+                        color: context.appSecondaryTextColor,
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                      decoration: BoxDecoration(
+                        color: color.withValues(alpha: 0.1),
+                        borderRadius: AppRadius.circularFull,
+                      ),
+                      child: Text(
+                        '$subtitle: $subtitleValue',
+                        style: AppTextStyles.labelSmall.copyWith(
+                          color: color,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.sm),
-          Text(
-            value,
-            style: AppTextStyles.h3.copyWith(color: context.appOnSurfaceColor),
-          ),
-          Text.rich(
-            TextSpan(
-              text: '$subtitle ',
-              children: [
-                TextSpan(
-                  text: subtitleValue,
-                  style: TextStyle(color: color, fontWeight: FontWeight.w700),
-                ),
-              ],
-            ),
-            style: AppTextStyles.labelSmall.copyWith(
-              color: context.appSecondaryTextColor,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

@@ -69,8 +69,54 @@ class MaintenanceTypeEntity extends Equatable {
 
   const MaintenanceTypeEntity({this.id, this.name, this.nameAr, this.isActive});
 
+  String getLocalizedName(String langCode) {
+    if (langCode == 'ar' && nameAr != null && nameAr!.isNotEmpty) {
+      return nameAr!;
+    }
+    return name ?? (id != null ? '$id' : '');
+  }
+
   @override
   List<Object?> get props => [id, name, nameAr, isActive];
+}
+
+class MaintenanceStatusOptionEntity extends Equatable {
+  final String value;
+  final String label;
+
+  const MaintenanceStatusOptionEntity({
+    required this.value,
+    required this.label,
+  });
+
+  @override
+  List<Object?> get props => [value, label];
+}
+
+class MaintenancePriorityOptionEntity extends Equatable {
+  final String value;
+  final String label;
+
+  const MaintenancePriorityOptionEntity({
+    required this.value,
+    required this.label,
+  });
+
+  @override
+  List<Object?> get props => [value, label];
+}
+
+class MaintenanceCostBearerOptionEntity extends Equatable {
+  final String value;
+  final String label;
+
+  const MaintenanceCostBearerOptionEntity({
+    required this.value,
+    required this.label,
+  });
+
+  @override
+  List<Object?> get props => [value, label];
 }
 
 class MaintenanceDatesEntity extends Equatable {

@@ -9,14 +9,20 @@ class GetOwnerActivityLogsReportUseCase {
   GetOwnerActivityLogsReportUseCase(this.repository);
 
   Future<Either<Failure, ActivityLogsReportEntity>> call({
+    bool forceRefresh = false,
     int page = 1,
     String? type,
     String? action,
+    String? startDate,
+    String? endDate,
   }) async {
     return await repository.getActivityLogsReport(
+      forceRefresh: forceRefresh,
       page: page,
       type: type,
       action: action,
+      startDate: startDate,
+      endDate: endDate,
     );
   }
 }

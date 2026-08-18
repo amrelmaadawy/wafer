@@ -1,22 +1,28 @@
-import 'package:flutter/material.dart';
-import 'package:wafer/core/theme/color_utils.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-
 import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/routing/routes.dart';
-import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/presentation/widgets/custom_empty_widget.dart';
-import '../../../../../../core/utils/widgets/app_toast.dart';
-import '../cubit/payments/finance_payments_cubit.dart';
-import '../cubit/payments/finance_payments_state.dart';
+import '../../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../../../../core/presentation/widgets/list/filter_sort_header_bar.dart';
+import '../../../../../core/presentation/widgets/list/paginated_list_view.dart';
+import '../../../../../core/presentation/widgets/list/unified_search_field.dart';
+import '../../../../../core/routing/routes.dart';
+import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
+import '../../domain/entities/payment_entity.dart';
 import '../cubit/payments/cancel_finance_payment_cubit.dart';
 import '../cubit/payments/cancel_finance_payment_state.dart';
-import '../widgets/finance_payment_card.dart';
+import '../cubit/payments/finance_payments_cubit.dart';
+import '../cubit/payments/finance_payments_state.dart';
 import '../widgets/cancel_payment_dialog.dart';
+import '../widgets/finance_filter_sheet.dart';
+import '../widgets/finance_payment_card.dart';
 import '../widgets/finance_payments_skeleton.dart';
+import '../widgets/finance_sort_sheet.dart';
 
 class OwnerPaymentsView extends StatefulWidget {
   const OwnerPaymentsView({super.key});
@@ -31,17 +37,9 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(_onScroll);
     final cubit = context.read<FinancePaymentsCubit>();
     if (cubit.state is FinancePaymentsInitial) {
       cubit.fetchPayments();
-    }
-  }
-
-  void _onScroll() {
-    if (_scrollController.position.pixels >=
-        _scrollController.position.maxScrollExtent - 200) {
-      context.read<FinancePaymentsCubit>().fetchPayments();
     }
   }
 
@@ -57,6 +55,9 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.watch<FinancePaymentsCubit>();
+    final filter = cubit.currentFilter;
+
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
       appBar: AppBar(
@@ -69,132 +70,6 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
         elevation: 0,
         centerTitle: true,
       ),
-      body: MultiBlocListener(
-        listeners: [
-          BlocListener<CancelFinancePaymentCubit, CancelFinancePaymentState>(
-            listener: (context, cancelState) {
-              if (cancelState is CancelFinancePaymentLoading) {
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => const Center(child: CircularProgressIndicator()),
-                );
-              } else if (cancelState is CancelFinancePaymentSuccess) {
-                Navigator.of(context, rootNavigator: true).pop(); // Close loading
-                AppToast.showSuccess(context, LocaleKeys.ownerFinanceCancelPaymentSuccess.tr());
-                context.read<FinancePaymentsCubit>().fetchPayments(isRefresh: true);
-              } else if (cancelState is CancelFinancePaymentError) {
-                Navigator.of(context, rootNavigator: true).pop(); // Close loading
-                AppToast.showError(context, cancelState.message);
-              }
-            },
-          ),
-        ],
-        child: RefreshIndicator(
-          onRefresh: _onRefresh,
-          color: context.primaryColor,
-          child: BlocConsumer<FinancePaymentsCubit, FinancePaymentsState>(
-            listener: (context, state) {
-              if (state is FinancePaymentsError && state.oldPayments.isNotEmpty) {
-                AppToast.showError(context, state.message);
-              }
-            },
-            builder: (context, state) {
-              if (state is FinancePaymentsInitial ||
-                  (state is FinancePaymentsLoading && state.isFirstFetch)) {
-                return const FinancePaymentsSkeleton();
-              } else if (state is FinancePaymentsEmpty) {
-                return SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.7,
-                    child: CustomEmptyWidget(
-                      icon: Icons.payments_outlined,
-                      title: LocaleKeys.no_data_available.tr(),
-                      subtitle: '',
-                    ),
-                  ),
-                );
-              } else if (state is FinancePaymentsError && state.oldPayments.isEmpty) {
-                return SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.7,
-                    child: CustomErrorWidget(
-                      message: state.message,
-                      onRetry: _onRefresh,
-                    ),
-                  ),
-                );
-              }
-
-              final payments = state is FinancePaymentsLoaded
-                  ? state.payments
-                  : state is FinancePaymentsError 
-                      ? state.oldPayments
-                      : (context.read<FinancePaymentsCubit>().state
-                              as FinancePaymentsLoaded?)
-                          ?.payments ??
-                          [];
-
-              final hasReachedMax = state is FinancePaymentsLoaded
-                  ? state.hasReachedMax
-                  : (context.read<FinancePaymentsCubit>().state
-                          as FinancePaymentsLoaded?)
-                      ?.hasReachedMax ??
-                      true;
-
-              return ListView.builder(
-                controller: _scrollController,
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-                itemCount: payments.length + (hasReachedMax ? 0 : 1),
-                itemBuilder: (context, index) {
-                  if (index < payments.length) {
-                    final payment = payments[index];
-                    return FinancePaymentCard(
-                      payment: payment,
-                      onTap: () {
-                        context.push(
-                          Routes.ownerFinancePaymentDetails.replaceFirst(':id', payment.id.toString()),
-                        );
-                      },
-                      onEditTap: () {
-                        context.push(
-                          Routes.ownerFinancePaymentUpdate,
-                          extra: {
-                            'cubit': context.read<FinancePaymentsCubit>(),
-                            'payment': payment,
-                          },
-                        );
-                      },
-                      onCancelTap: () {
-                        showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (dialogContext) => CancelPaymentDialog(
-                            onConfirm: (reason) {
-                              context.read<CancelFinancePaymentCubit>().cancelPayment(payment.id, reason);
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: context.primaryLight,
-                        ),
-                      ),
-                    );
-                  }
-                },
-              );
-          },
-        ),
-      ),
-      ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: context.primaryColor,
         onPressed: () async {
@@ -204,6 +79,152 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
           }
         },
         child: const Icon(Icons.add, color: Colors.white),
+      ),
+      body: MultiBlocListener(
+        listeners: [
+          BlocListener<CancelFinancePaymentCubit, CancelFinancePaymentState>(
+            listener: (context, cancelState) {
+              if (cancelState is CancelFinancePaymentLoading) {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) =>
+                      const Center(child: CircularProgressIndicator()),
+                );
+              } else if (cancelState is CancelFinancePaymentSuccess) {
+                Navigator.of(context, rootNavigator: true).pop();
+                AppToast.showSuccess(
+                  context,
+                  LocaleKeys.ownerFinanceCancelPaymentSuccess.tr(),
+                );
+                _onRefresh();
+              } else if (cancelState is CancelFinancePaymentError) {
+                Navigator.of(context, rootNavigator: true).pop();
+                AppToast.showError(context, cancelState.message);
+              }
+            },
+          ),
+        ],
+        child: Column(
+          children: [
+            FilterSortHeaderBar(
+              searchField: UnifiedSearchField(
+                hintLocaleKey: LocaleKeys.propertiesSearchHint,
+                initialValue: filter.search,
+                onChanged: (val) =>
+                    cubit.fetchPayments(isRefresh: true, search: val),
+                onClear: () =>
+                    cubit.fetchPayments(isRefresh: true, search: ''),
+              ),
+              activeFiltersCount: filter.activeFiltersCount,
+              isSortActive: filter.isSortActive,
+              onFilterTap: () {
+                FinanceFilterSheet.show(
+                  context,
+                  currentFilter: filter,
+                  onApply: cubit.applyFilter,
+                );
+              },
+              onSortTap: () {
+                FinanceSortSheet.show(
+                  context,
+                  currentFilter: filter,
+                  onApply: cubit.applyFilter,
+                );
+              },
+            ),
+            Expanded(
+              child: BlocConsumer<FinancePaymentsCubit, FinancePaymentsState>(
+                listener: (context, state) {
+                  if (state is FinancePaymentsError &&
+                      state.oldPayments.isNotEmpty) {
+                    AppToast.showError(context, state.message);
+                  }
+                },
+                builder: (context, state) {
+                  if (state is FinancePaymentsInitial ||
+                      (state is FinancePaymentsLoading && state.isFirstFetch)) {
+                    return const FinancePaymentsSkeleton();
+                  }
+
+                  if (state is FinancePaymentsError &&
+                      state.oldPayments.isEmpty) {
+                    return CustomErrorWidget(
+                      message: state.message,
+                      onRetry: _onRefresh,
+                    );
+                  }
+
+                  final payments = state is FinancePaymentsLoaded
+                      ? state.payments
+                      : state is FinancePaymentsError
+                          ? state.oldPayments
+                          : const <PaymentEntity>[];
+
+                  final hasReachedMax = state is FinancePaymentsLoaded
+                      ? state.hasReachedMax
+                      : true;
+
+                  return PaginatedListView<PaymentEntity>(
+                    controller: _scrollController,
+                    items: payments,
+                    isFetchingMore: state is FinancePaymentsLoading &&
+                        !state.isFirstFetch,
+                    hasReachedMax: hasReachedMax,
+                    onRefresh: _onRefresh,
+                    onLoadMore: () => cubit.fetchPayments(),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.lg,
+                      vertical: AppSpacing.md,
+                    ),
+                    emptyWidget: CustomEmptyWidget(
+                      icon: Icons.payments_outlined,
+                      title: LocaleKeys.noMatchingFilterResults.tr(),
+                      subtitle: '',
+                    ),
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(height: AppSpacing.sm),
+                    itemBuilder: (context, index, payment) {
+                      return FinancePaymentCard(
+                        payment: payment,
+                        onTap: () {
+                          context.push(
+                            Routes.ownerFinancePaymentDetails.replaceFirst(
+                              ':id',
+                              payment.id.toString(),
+                            ),
+                          );
+                        },
+                        onEditTap: () {
+                          context.push(
+                            Routes.ownerFinancePaymentUpdate,
+                            extra: {
+                              'cubit': cubit,
+                              'payment': payment,
+                            },
+                          );
+                        },
+                        onCancelTap: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (dialogContext) => CancelPaymentDialog(
+                              onConfirm: (reason) {
+                                context
+                                    .read<CancelFinancePaymentCubit>()
+                                    .cancelPayment(payment.id, reason);
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

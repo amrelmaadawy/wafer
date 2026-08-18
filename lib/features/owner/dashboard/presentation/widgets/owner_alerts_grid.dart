@@ -57,15 +57,15 @@ class OwnerAlertsGrid extends StatelessWidget {
           children: [
             Icon(
               Icons.bolt_rounded,
-              size: 17,
+              size: 15,
               color: context.appSecondaryTextColor,
             ),
-            const SizedBox(width: AppSpacing.xs),
+            const SizedBox(width: 5),
             Text(
               LocaleKeys.ownerQuickAlerts.tr(),
-              style: AppTextStyles.bodyMedium.copyWith(
+              style: AppTextStyles.labelLarge.copyWith(
                 color: context.appOnSurfaceColor,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w800,
               ),
             ),
           ],
@@ -73,13 +73,13 @@ class OwnerAlertsGrid extends StatelessWidget {
         const SizedBox(height: AppSpacing.sm),
         if (context.isCompact)
           SizedBox(
-            height: 120,
+            height: 110,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: cards.length,
               separatorBuilder: (_, _) => const SizedBox(width: AppSpacing.sm),
               itemBuilder: (_, index) =>
-                  SizedBox(width: 140, child: cards[index]),
+                  SizedBox(width: 130, child: cards[index]),
             ),
           )
         else
@@ -87,7 +87,7 @@ class OwnerAlertsGrid extends StatelessWidget {
             children: [
               for (var index = 0; index < cards.length; index++) ...[
                 if (index > 0) const SizedBox(width: AppSpacing.sm),
-                Expanded(child: SizedBox(height: 120, child: cards[index])),
+                Expanded(child: SizedBox(height: 110, child: cards[index])),
               ],
             ],
           ),

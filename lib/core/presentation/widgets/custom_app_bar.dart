@@ -10,6 +10,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showBackButton;
   final VoidCallback? onBackPressed;
   final PreferredSizeWidget? bottom;
+  final double? toolbarHeight;
 
   const CustomAppBar({
     super.key,
@@ -20,7 +21,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showBackButton = true,
     this.onBackPressed,
     this.bottom,
+    this.toolbarHeight,
   });
+
+  double get _effectiveToolbarHeight =>
+      toolbarHeight ?? (subtitle != null ? 64.0 : kToolbarHeight);
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +33,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       scrolledUnderElevation: 0,
       backgroundColor: Colors.transparent,
-      toolbarHeight: 70,
-      leadingWidth: showBackButton ? 70 : null,
+      toolbarHeight: _effectiveToolbarHeight,
+      leadingWidth: showBackButton ? 68 : null,
       leading: showBackButton
           ? CustomBackButton(onPressed: onBackPressed)
           : null,
       title: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: centerTitle
             ? CrossAxisAlignment.center
             : CrossAxisAlignment.start,
@@ -67,5 +73,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize =>
-      Size.fromHeight(70 + (bottom?.preferredSize.height ?? 0.0));
+      Size.fromHeight(_effectiveToolbarHeight + (bottom?.preferredSize.height ?? 0.0));
 }

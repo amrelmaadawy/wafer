@@ -11,12 +11,36 @@ class OwnerLegalCasesReportCubit extends Cubit<OwnerLegalCasesReportState> {
   int _currentPage = 1;
   bool _isFetching = false;
   String? _selectedStatus;
+  String? _selectedStartDate;
+  String? _selectedEndDate;
 
-  Future<void> fetchReport({bool isRefresh = false, String? status}) async {
+  String? get selectedStatus => _selectedStatus;
+  String? get selectedStartDate => _selectedStartDate;
+  String? get selectedEndDate => _selectedEndDate;
+
+  bool get hasActiveFilters =>
+      _selectedStatus != null ||
+      _selectedStartDate != null ||
+      _selectedEndDate != null;
+
+  Future<void> fetchReport({
+    bool isRefresh = false,
+    String? status,
+    String? startDate,
+    String? endDate,
+  }) async {
     if (_isFetching) return;
 
-    if (status != null && status != _selectedStatus) {
-      _selectedStatus = status;
+    if (status != null) {
+      _selectedStatus = status == 'ALL' ? null : status;
+      isRefresh = true;
+    }
+    if (startDate != null) {
+      _selectedStartDate = startDate.isEmpty ? null : startDate;
+      isRefresh = true;
+    }
+    if (endDate != null) {
+      _selectedEndDate = endDate.isEmpty ? null : endDate;
       isRefresh = true;
     }
 
@@ -35,23 +59,39 @@ class OwnerLegalCasesReportCubit extends Cubit<OwnerLegalCasesReportState> {
     }
 
     final result = await getLegalCasesReportUseCase(
-      GetLegalCasesReportParams(page: _currentPage, status: _selectedStatus),
+      GetLegalCasesReportParams(
+        forceRefresh: isRefresh,
+        page: _currentPage,
+        status: _selectedStatus,
+        startDate: _selectedStartDate,
+        endDate: _selectedEndDate,
+      ),
     );
+
+    _isFetching = false;
+    if (isClosed) return;
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         emit(OwnerLegalCasesReportError(failure.message));
-        _isFetching = false;
       },
       (report) {
+        if (isClosed) return;
         if (isFirstFetch && report.items.isEmpty) {
           emit(OwnerLegalCasesReportEmpty());
         } else {
           emit(OwnerLegalCasesReportLoaded(report));
           _currentPage++;
         }
-        _isFetching = false;
       },
     );
+  }
+
+  void clearFilters() {
+    _selectedStatus = null;
+    _selectedStartDate = null;
+    _selectedEndDate = null;
+    fetchReport(isRefresh: true);
   }
 }

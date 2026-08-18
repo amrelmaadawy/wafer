@@ -11,11 +11,28 @@ class OwnerMaintenanceRequestsCubit
   MaintenanceRequestsReportEntity? _currentReport;
   int _currentPage = 1;
   bool _isFetching = false;
+  String? selectedStatus;
+  String? selectedStartDate;
+  String? selectedEndDate;
+
+  bool get hasActiveFilters =>
+      selectedStatus != null ||
+      selectedStartDate != null ||
+      selectedEndDate != null;
 
   OwnerMaintenanceRequestsCubit(this._getMaintenanceRequestsReportUseCase)
     : super(OwnerMaintenanceRequestsInitial());
 
-  Future<void> loadReport({bool refresh = false}) async {
+  Future<void> loadReport({
+    bool refresh = false,
+    String? status,
+    String? startDate,
+    String? endDate,
+  }) async {
+    if (status != null) selectedStatus = status == 'ALL' ? null : status;
+    if (startDate != null) selectedStartDate = startDate.isEmpty ? null : startDate;
+    if (endDate != null) selectedEndDate = endDate.isEmpty ? null : endDate;
+
     if (_isFetching) return;
 
     if (refresh) {
@@ -40,14 +57,22 @@ class OwnerMaintenanceRequestsCubit
     final result = await _getMaintenanceRequestsReportUseCase(
       page: _currentPage,
       forceRefresh: refresh,
+      status: selectedStatus,
+      startDate: selectedStartDate,
+      endDate: selectedEndDate,
     );
+
+    _isFetching = false;
+    if (isClosed) return;
 
     result.fold(
       (failure) {
+        if (isClosed) return;
         if (_currentPage > 1) _currentPage--;
         emit(OwnerMaintenanceRequestsError(failure.message));
       },
       (report) {
+        if (isClosed) return;
         if (report.items.isEmpty && _currentReport == null) {
           emit(OwnerMaintenanceRequestsEmpty());
         } else {
@@ -74,7 +99,12 @@ class OwnerMaintenanceRequestsCubit
         }
       },
     );
+  }
 
-    _isFetching = false;
+  void clearFilters() {
+    selectedStatus = null;
+    selectedStartDate = null;
+    selectedEndDate = null;
+    loadReport(refresh: true);
   }
 }

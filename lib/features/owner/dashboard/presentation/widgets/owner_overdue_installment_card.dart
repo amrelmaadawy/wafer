@@ -16,69 +16,105 @@ class OwnerOverdueInstallmentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 270,
-      padding: const EdgeInsets.all(AppSpacing.sm),
+      width: 240,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: AppColors.error.withValues(alpha: 0.06),
+        color: context.appSurfaceColor,
         borderRadius: AppRadius.circularXl,
-        border: Border.all(color: AppColors.error.withValues(alpha: 0.2)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  installment.tenantName.isEmpty ? '-' : installment.tenantName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.bodyMedium.copyWith(
-                    color: context.appOnSurfaceColor,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Text(
-                LocaleKeys.commonCurrencySar.tr(
-                  args: [installment.amount.toStringAsFixed(0)],
-                ),
-                style: AppTextStyles.labelLarge.copyWith(
-                  color: AppColors.error,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.xs),
-          _InfoRow(
-            icon: Icons.business_rounded,
-            text: installment.propertyName,
-          ),
-          _InfoRow(
-            icon: Icons.door_front_door_outlined,
-            text: installment.unitName,
-          ),
-          const Spacer(),
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  installment.contractNumber,
-                  style: AppTextStyles.labelSmall.copyWith(
-                    color: context.appSecondaryTextColor,
-                  ),
-                ),
-              ),
-              Text(
-                _formattedDate(context),
-                style: AppTextStyles.labelSmall.copyWith(
-                  color: AppColors.error,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ],
+        border: Border.all(color: context.appBorderColor),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.error.withValues(alpha: 0.07),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
+      ),
+      child: IntrinsicHeight(
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(width: 3.5, color: AppColors.error),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            installment.tenantName.isEmpty
+                                ? '-'
+                                : installment.tenantName,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyles.labelMedium.copyWith(
+                              color: context.appOnSurfaceColor,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: AppColors.error.withValues(alpha: 0.1),
+                            borderRadius: AppRadius.circularFull,
+                          ),
+                          child: Text(
+                            LocaleKeys.commonCurrencySar.tr(
+                              args: [installment.amount.toStringAsFixed(0)],
+                            ),
+                            style: AppTextStyles.labelSmall.copyWith(
+                              color: AppColors.error,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    _InfoRow(
+                      icon: Icons.business_rounded,
+                      text: installment.propertyName,
+                    ),
+                    _InfoRow(
+                      icon: Icons.door_front_door_outlined,
+                      text: installment.unitName,
+                    ),
+                    const Spacer(),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.calendar_today_rounded,
+                          size: 11,
+                          color: AppColors.error,
+                        ),
+                        const SizedBox(width: 4),
+                        Text(
+                          _formattedDate(context),
+                          style: AppTextStyles.labelSmall.copyWith(
+                            color: AppColors.error,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          installment.contractNumber,
+                          style: AppTextStyles.labelSmall.copyWith(
+                            color: context.appSecondaryTextColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -102,8 +138,8 @@ class _InfoRow extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: AppSpacing.xxs),
       child: Row(
         children: [
-          Icon(icon, size: 14, color: context.appSecondaryTextColor),
-          const SizedBox(width: AppSpacing.xxs),
+          Icon(icon, size: 13, color: context.appSecondaryTextColor),
+          const SizedBox(width: 4),
           Expanded(
             child: Text(
               text,

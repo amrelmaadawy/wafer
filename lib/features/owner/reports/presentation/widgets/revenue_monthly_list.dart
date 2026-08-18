@@ -34,7 +34,15 @@ class RevenueMonthlyList extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 14),
-        ...entries.map((item) => RevenueMonthRow(item: item)),
+        ...entries.asMap().entries.map((entry) {
+          final index = entry.key;
+          final item = entry.value;
+          final prevItem = index > 0 ? entries[index - 1] : null;
+          return RevenueMonthRow(
+            item: item,
+            previousItem: prevItem,
+          );
+        }),
       ],
     );
   }
