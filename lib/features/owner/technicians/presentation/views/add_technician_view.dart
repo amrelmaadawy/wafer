@@ -11,6 +11,7 @@ import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/utils/widgets/custom_text_field.dart';
+import '../../../../../core/utils/widgets/custom_dropdown_field.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
 import '../../../../../core/utils/widgets/app_shimmer.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
@@ -48,16 +49,14 @@ class _AddTechnicianViewBodyState extends State<_AddTechnicianViewBody> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _specialtyController = TextEditingController();
-  final _companyController = TextEditingController();
+  String? _selectedSpecialty;
+  String? _selectedCompany;
   bool _isActive = true;
 
   @override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
-    _specialtyController.dispose();
-    _companyController.dispose();
     super.dispose();
   }
 
@@ -66,8 +65,8 @@ class _AddTechnicianViewBodyState extends State<_AddTechnicianViewBody> {
       context.read<AddTechnicianCubit>().submit(
         name: _nameController.text.trim(),
         phone: _phoneController.text.trim(),
-        specialty: _specialtyController.text.trim(),
-        companyName: _companyController.text.trim(),
+        specialty: _selectedSpecialty ?? '',
+        companyName: _selectedCompany ?? '',
         isActive: _isActive,
       );
     }
@@ -171,16 +170,38 @@ class _AddTechnicianViewBodyState extends State<_AddTechnicianViewBody> {
                         maxLength: validation.phone['max'] as int?,
                       ),
                       const SizedBox(height: AppSpacing.md),
-                      CustomTextField(
-                        controller: _specialtyController,
+                      CustomDropdownField<String>(
                         label: LocaleKeys.technicianSpecialty.tr(),
-                        hintText: LocaleKeys.technicianSpecialty.tr(),
+                        hint: LocaleKeys.technicianSpecialty.tr(),
+                        value: _selectedSpecialty,
+                        items: data.options.specialties.toSet().toList().map((e) {
+                          return DropdownMenuItem(
+                            value: e,
+                            child: Text(e),
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          setState(() {
+                            _selectedSpecialty = val;
+                          });
+                        },
                       ),
                       const SizedBox(height: AppSpacing.md),
-                      CustomTextField(
-                        controller: _companyController,
+                      CustomDropdownField<String>(
                         label: LocaleKeys.technicianCompany.tr(),
-                        hintText: LocaleKeys.technicianCompany.tr(),
+                        hint: LocaleKeys.technicianCompany.tr(),
+                        value: _selectedCompany,
+                        items: data.options.companies.toSet().toList().map((e) {
+                          return DropdownMenuItem(
+                            value: e,
+                            child: Text(e),
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          setState(() {
+                            _selectedCompany = val;
+                          });
+                        },
                       ),
                       const SizedBox(height: AppSpacing.md),
                       Row(

@@ -6,9 +6,7 @@ import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
 
 class PropertiesPageHeader extends StatelessWidget {
-  final VoidCallback onOpenUnits;
-
-  const PropertiesPageHeader({super.key, required this.onOpenUnits});
+  const PropertiesPageHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +26,7 @@ class PropertiesPageHeader extends StatelessWidget {
               color: context.primaryColor.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(10),
               child: InkWell(
-                onTap: () => Scaffold.of(context).openDrawer(),
+                onTap: () => context.findRootAncestorStateOfType<ScaffoldState>()?.openDrawer(),
                 borderRadius: BorderRadius.circular(10),
                 child: Padding(
                   padding: const EdgeInsets.all(8),
@@ -62,24 +60,6 @@ class PropertiesPageHeader extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          FilledButton.icon(
-            onPressed: onOpenUnits,
-            style: FilledButton.styleFrom(
-              backgroundColor: context.primaryColor.withValues(alpha: 0.1),
-              foregroundColor: context.primaryColor,
-              elevation: 0,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-            ),
-            icon: const Icon(Icons.door_front_door_rounded, size: 18),
-            label: Text(
-              LocaleKeys.reports_unitsShortcut.tr(),
-              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
             ),
           ),
         ],

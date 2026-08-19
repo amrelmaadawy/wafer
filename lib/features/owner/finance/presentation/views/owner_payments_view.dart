@@ -62,7 +62,7 @@ class _OwnerPaymentsViewState extends State<OwnerPaymentsView> {
         elevation: 0,
         centerTitle: true,
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(heroTag: null, 
         backgroundColor: context.primaryColor,
         onPressed: () async {
           final result = await context.push(Routes.ownerFinanceCreatePayment);

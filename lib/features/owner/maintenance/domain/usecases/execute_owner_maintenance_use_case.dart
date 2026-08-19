@@ -34,10 +34,19 @@ class ExecuteOwnerMaintenanceParams extends Equatable {
     required this.actualCost,
   });
 
-  Map<String, dynamic> toJson() => {
-    'technician_response': technicianResponse,
-    'actual_cost': actualCost,
-  };
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = {
+      'technician_response': technicianResponse,
+    };
+    
+    if (actualCost % 1 == 0) {
+      data['actual_cost'] = actualCost.toInt();
+    } else {
+      data['actual_cost'] = actualCost;
+    }
+    
+    return data;
+  }
 
   @override
   List<Object?> get props => [id, technicianResponse, actualCost];

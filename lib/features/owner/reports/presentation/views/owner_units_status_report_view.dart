@@ -4,18 +4,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/presentation/widgets/app_responsive_content.dart';
-import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/routing/routes.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/theme_context.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
 import '../../domain/entities/portfolio_units_display_mode.dart';
 import '../../domain/entities/units_status_item_entity.dart';
 import '../cubit/owner_units_status_cubit.dart';
 import '../cubit/owner_units_status_state.dart';
-import '../widgets/portfolio_units_header.dart';
 import '../widgets/portfolio_units_list.dart';
-import '../widgets/portfolio_units_toolbar.dart';
 import '../widgets/report_empty_widget.dart';
 import '../widgets/units_status_export_actions.dart';
 import '../widgets/units_status_filter_bar.dart';
@@ -23,7 +21,9 @@ import '../widgets/units_status_skeleton.dart';
 import '../widgets/units_status_summary_header.dart';
 
 class OwnerUnitsStatusReportView extends StatefulWidget {
-  const OwnerUnitsStatusReportView({super.key});
+  final bool isListMode;
+  
+  const OwnerUnitsStatusReportView({super.key, this.isListMode = false});
 
   @override
   State<OwnerUnitsStatusReportView> createState() =>
@@ -33,7 +33,6 @@ class OwnerUnitsStatusReportView extends StatefulWidget {
 class _OwnerUnitsStatusReportViewState
     extends State<OwnerUnitsStatusReportView> {
   final _scrollController = ScrollController();
-  PortfolioUnitsDisplayMode _mode = PortfolioUnitsDisplayMode.cards;
 
   @override
   void initState() {
@@ -57,9 +56,9 @@ class _OwnerUnitsStatusReportViewState
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.appBackgroundColor,
-      appBar: CustomAppBar(
-        title: LocaleKeys.reports_portfolioUnitsTitle.tr(),
-        actions: const [UnitsStatusExportActions()],
+      appBar: OwnerTopAppBar(
+        title: LocaleKeys.drawerNavUnits.tr(),
+        extraActions: widget.isListMode ? null : const [UnitsStatusExportActions()],
       ),
       body: BlocBuilder<OwnerUnitsStatusCubit, OwnerUnitsStatusState>(
         builder: (context, state) {
@@ -91,8 +90,6 @@ class _OwnerUnitsStatusReportViewState
       physics: const AlwaysScrollableScrollPhysics(),
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.lg),
       children: [
-        const PortfolioUnitsHeader(),
-        const SizedBox(height: AppSpacing.lg),
         UnitsStatusFilterBar(filterOptions: filters),
         const SizedBox(height: AppSpacing.lg),
         if (state is OwnerUnitsStatusEmpty)
@@ -104,17 +101,14 @@ class _OwnerUnitsStatusReportViewState
             ),
           )
         else if (state is OwnerUnitsStatusLoaded) ...[
-          UnitsStatusSummaryHeader(summary: state.report.summary),
-          const SizedBox(height: AppSpacing.lg),
-          PortfolioUnitsToolbar(
-            total: state.report.pagination.total,
-            mode: _mode,
-            onChanged: (mode) => setState(() => _mode = mode),
-          ),
-          const SizedBox(height: AppSpacing.md),
+          if (!widget.isListMode) ...[
+            UnitsStatusSummaryHeader(summary: state.report.summary),
+            const SizedBox(height: AppSpacing.lg),
+          ],
+
           PortfolioUnitsList(
             units: state.report.items,
-            mode: _mode,
+            mode: PortfolioUnitsDisplayMode.cards,
             onTap: _openUnit,
           ),
           if (!state.hasReachedMax)

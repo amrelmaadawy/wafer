@@ -84,6 +84,7 @@ import '../../features/owner/finance/presentation/views/owner_transfers_view.dar
 import '../../features/owner/finance/presentation/views/owner_journal_entries_view.dart';
 import '../../features/owner/finance/presentation/views/owner_receipts_view.dart';
 import '../../features/profile/presentation/screens/profile_screen.dart';
+import '../../features/profile/presentation/views/owner_settings_view.dart';
 import '../../features/owner/maintenance/presentation/views/owner_maintenance_view.dart';
 import '../../features/owner/maintenance/presentation/cubit/owner_maintenance_cubit.dart';
 import '../../features/owner/maintenance/presentation/screens/owner_create_maintenance_screen.dart';
@@ -611,6 +612,7 @@ class AppRouter {
           child: const OwnerUnitsStatusReportView(),
         ),
       ),
+
       GoRoute(
         path: Routes.ownerContractsReport,
         builder: (context, state) => BlocProvider<OwnerContractsReportCubit>(
@@ -712,6 +714,7 @@ class AppRouter {
         path: Routes.ownerNegotiationSettings,
         builder: (context, state) => const NegotiationSettingsView(),
       ),
+
       GoRoute(
         path: Routes.editProfile,
         builder: (context, state) {
@@ -894,6 +897,30 @@ class AppRouter {
               GoRoute(
                 path: Routes.ownerProfile,
                 builder: (context, state) => const ProfileScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerUnitsList,
+                builder: (context, state) => BlocProvider<OwnerUnitsStatusCubit>(
+                  create: (_) =>
+                      sl<OwnerUnitsStatusCubit>()
+                        ..loadUnitsStatusReport(forceRefresh: true),
+                  child: const OwnerUnitsStatusReportView(isListMode: true),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerSettings,
+                builder: (context, state) => BlocProvider<ProfileCubit>(
+                  create: (context) => sl<ProfileCubit>()..fetchProfile(),
+                  child: const OwnerSettingsView(),
+                ),
               ),
             ],
           ),

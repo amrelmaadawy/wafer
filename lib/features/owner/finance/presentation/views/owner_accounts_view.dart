@@ -159,7 +159,7 @@ class _OwnerAccountsViewState extends State<OwnerAccountsView> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(heroTag: null, 
         onPressed: () async {
           final result = await context.push(Routes.ownerFinanceAccountCreate);
           if (result == true && context.mounted) {

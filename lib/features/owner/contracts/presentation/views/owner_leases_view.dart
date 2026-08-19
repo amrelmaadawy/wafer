@@ -4,7 +4,10 @@ import '../../../../../core/presentation/widgets/app_responsive_content.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../cubit/list/owner_contracts_cubit.dart';
 import '../cubit/list/owner_contracts_state.dart';
-import '../widgets/contracts_page_header.dart';
+import '../../../../../core/localization/locale_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
+import '../widgets/contracts_filter_bar.dart';
 import '../widgets/contracts_state_content.dart';
 
 class OwnerLeasesView extends StatefulWidget {
@@ -37,19 +40,24 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: BlocBuilder<OwnerContractsCubit, OwnerContractsState>(
-          builder: (context, state) {
-            final totalCount = state is OwnerContractsLoaded
-                ? state.meta.total
-                : null;
-            return Column(
+    return BlocBuilder<OwnerContractsCubit, OwnerContractsState>(
+      builder: (context, state) {
+        final totalCount = state is OwnerContractsLoaded
+            ? state.meta.total
+            : null;
+
+        return Scaffold(
+          appBar: OwnerTopAppBar(
+            title: LocaleKeys.contractsTitle.tr(),
+            subtitle: totalCount != null ? '${LocaleKeys.contractsTotalCount.tr()}: $totalCount' : null,
+          ),
+          body: SafeArea(
+            child: Column(
               children: [
-                AppResponsiveContent(
+                const AppResponsiveContent(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: AppSpacing.md),
-                    child: ContractsPageHeader(totalCount: totalCount),
+                    padding: EdgeInsets.only(top: AppSpacing.md),
+                    child: ContractsFilterBar(),
                   ),
                 ),
                 Expanded(
@@ -64,10 +72,10 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
                   ),
                 ),
               ],
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

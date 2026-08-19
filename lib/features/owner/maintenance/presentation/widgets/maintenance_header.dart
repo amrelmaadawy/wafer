@@ -53,7 +53,7 @@ class MaintenanceHeader extends StatelessWidget {
                       size: 20,
                     ),
                     padding: EdgeInsets.zero,
-                    onPressed: () => Scaffold.of(context).openDrawer(),
+                    onPressed: () => context.findRootAncestorStateOfType<ScaffoldState>()?.openDrawer(),
                   ),
                 ),
                 const SizedBox(width: 12),

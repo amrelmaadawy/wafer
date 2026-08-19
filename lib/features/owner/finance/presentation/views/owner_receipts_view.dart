@@ -50,7 +50,7 @@ class _OwnerReceiptsViewState extends State<OwnerReceiptsView> {
         title: Text(LocaleKeys.owner_finance_receipts.tr()),
         backgroundColor: context.appBackgroundColor,
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(heroTag: null, 
         onPressed: () {
           context.push(
             Routes.ownerFinanceReceiptCreate,

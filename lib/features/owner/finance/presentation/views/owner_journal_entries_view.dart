@@ -88,7 +88,7 @@ class _OwnerJournalEntriesViewState extends State<OwnerJournalEntriesView> {
       appBar: CustomAppBar(
         title: LocaleKeys.owner_finance_journal_entries.tr(),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(heroTag: null, 
         onPressed: () {
           context.push(Routes.ownerFinanceCreateJournalEntry).then((value) {
             if (value == true) {

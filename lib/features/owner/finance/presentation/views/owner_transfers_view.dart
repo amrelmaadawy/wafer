@@ -57,7 +57,7 @@ class _OwnerTransfersViewState extends State<OwnerTransfersView> {
       appBar: CustomAppBar(
         title: LocaleKeys.owner_finance_internal_transfers.tr(),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton(heroTag: null, 
         onPressed: () {
           context.push(Routes.ownerFinanceCreateTransfer).then((value) {
             if (value == true) {

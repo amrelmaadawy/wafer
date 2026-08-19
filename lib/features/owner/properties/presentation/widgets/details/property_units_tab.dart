@@ -32,7 +32,7 @@ class PropertyUnitsTab extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton.extended(heroTag: null, 
         onPressed: () async {
           final result = await context.push(
             Routes.ownerUnitCreatePath(propertyId.toString()),

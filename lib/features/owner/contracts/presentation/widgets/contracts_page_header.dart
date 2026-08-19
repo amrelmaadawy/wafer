@@ -25,7 +25,7 @@ class ContractsPageHeader extends StatelessWidget {
                 color: context.primaryColor.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(10),
                 child: InkWell(
-                  onTap: () => Scaffold.of(context).openDrawer(),
+                  onTap: () => context.findRootAncestorStateOfType<ScaffoldState>()?.openDrawer(),
                   borderRadius: BorderRadius.circular(10),
                   child: Padding(
                     padding: const EdgeInsets.all(8),

@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/theme/color_utils.dart';
 import '../cubit/finance_overview_cubit.dart';
 import '../cubit/finance_overview_state.dart';
 import '../widgets/finance_overview_tab_content.dart';
+
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
 
 class OwnerFinanceView extends StatefulWidget {
   const OwnerFinanceView({super.key});
@@ -35,65 +36,14 @@ class _OwnerFinanceViewState extends State<OwnerFinanceView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
+      appBar: OwnerTopAppBar(
+        title: LocaleKeys.owner_finance_title.tr(),
+        subtitle: LocaleKeys.owner_finance_subtitle.tr(),
+      ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 12),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(end: 12),
-                    child: Material(
-                      color: context.primaryColor.withValues(alpha: 0.08),
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
-                        onTap: () {
-                          final rootScaffold = context.findRootAncestorStateOfType<ScaffoldState>();
-                          if (rootScaffold != null) {
-                            rootScaffold.openDrawer();
-                          } else {
-                            Scaffold.of(context).openDrawer();
-                          }
-                        },
-                        borderRadius: BorderRadius.circular(10),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Icon(
-                            Icons.menu_rounded,
-                            color: context.primaryColor,
-                            size: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          LocaleKeys.owner_finance_title.tr(),
-                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                            fontWeight: FontWeight.bold,
-                            color: context.primaryColor,
-                          ),
-                        ),
-                        const SizedBox(height: 2),
-                        Text(
-                          LocaleKeys.owner_finance_subtitle.tr(),
-                          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: AppColors.textSecondaryLight,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
             Expanded(
               child: FinanceOverviewTabContent(onRefresh: _onRefresh),
             ),

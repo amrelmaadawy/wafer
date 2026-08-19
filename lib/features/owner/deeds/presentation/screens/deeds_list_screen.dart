@@ -149,7 +149,7 @@ class _DeedsListScreenState extends State<DeedsListScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      floatingActionButton: FloatingActionButton.extended(heroTag: null, 
         onPressed: () async {
           final result = await GoRouter.of(
             context,

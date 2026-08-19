@@ -12,8 +12,12 @@ import '../cubit/owner_maintenance_state.dart';
 import '../widgets/maintenance_card.dart';
 import '../widgets/maintenance_empty_widget.dart';
 import '../widgets/maintenance_filter_bar.dart';
-import '../widgets/maintenance_header.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../../../core/localization/locale_keys.dart';
+
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
 import '../widgets/maintenance_shimmer.dart';
+
 class OwnerMaintenanceView extends StatefulWidget {
   final String? initialStatusFilter;
 
@@ -53,7 +57,29 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundLight,
-      floatingActionButton: FloatingActionButton(
+      appBar: OwnerTopAppBar(
+        title: LocaleKeys.maintenanceTitle.tr(),
+        extraIconActions: [
+          Material(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.circular(100),
+            child: InkWell(
+              onTap: () => context.push(Routes.ownerNegotiationsList),
+              borderRadius: BorderRadius.circular(100),
+              child: SizedBox(
+                width: 40,
+                height: 40,
+                child: Icon(
+                  Icons.gavel_rounded,
+                  color: context.primaryColor,
+                  size: 20,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(heroTag: null, 
         onPressed: () {
           context.push(Routes.ownerMaintenanceCreate).then((value) {
             if (value == true && context.mounted) {
@@ -69,7 +95,6 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
       body: SafeArea(
         child: Column(
           children: [
-            const MaintenanceHeader(),
             const MaintenanceFilterBar(),
             Expanded(child: _buildBody(context)),
           ],

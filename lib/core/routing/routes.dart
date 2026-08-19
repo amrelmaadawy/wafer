@@ -18,6 +18,7 @@ class Routes {
   static const String ownerContracts = '/owner-main/contracts';
   static const String ownerFinance = '/owner-main/finance';
   static const String ownerProfile = '/owner-main/profile';
+  static const String ownerSettings = '/owner-main/settings';
 
   // --- Finance Sub-sections (Keep as is) ---
   static const String ownerFinanceAccounts = '/owner-main/finance/accounts';
@@ -106,6 +107,7 @@ class Routes {
   static const String ownerOccupancyReport = '/owner/reports/occupancy';
   static const String ownerDefaultersReport = '/owner/reports/defaulters';
   static const String ownerUnitsStatusReport = '/owner/reports/units-status';
+  static const String ownerUnitsList = '/owner/units-list';
   static const String ownerContractsReport = '/owner/reports/contracts';
   static const String ownerContractsMovementReport = '/owner/reports/contracts-movement';
   static const String ownerReportsApprovals = '/owner/reports/approvals';

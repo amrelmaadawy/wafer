@@ -46,9 +46,9 @@ class FinanceTransferCard extends StatelessWidget {
       case 'posted':
         return LocaleKeys.owner_finance_update_payment_success.tr(); // fallback to generic success/posted
       case 'draft':
-        return LocaleKeys.owner_reports_pending.tr();
+        return LocaleKeys.ownerReportsPending.tr();
       case 'pending':
-        return LocaleKeys.owner_reports_pending.tr();
+        return LocaleKeys.ownerReportsPending.tr();
       case 'cancelled':
         return LocaleKeys.owner_finance_cancel_payment.tr();
       default:

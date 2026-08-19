@@ -85,7 +85,7 @@ class _OwnerTasksScreenState extends State<OwnerTasksScreen> {
       child: Scaffold(
         backgroundColor: context.appBackgroundColor,
         appBar: OwnerTopAppBar(title: LocaleKeys.drawerNavTasks.tr()),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(heroTag: null, 
           onPressed: () async {
             final result = await context.push(Routes.ownerTasksCreate);
             if (result == true && mounted) {

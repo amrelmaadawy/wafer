@@ -34,6 +34,7 @@ class LegalCasesFilterChips extends StatelessWidget {
             count: statsByStatus.values.fold(0, (sum, val) => sum + val),
             isSelected: selectedStatus == null,
             onTap: () => onStatusSelected(null),
+            icon: Icons.all_inbox_rounded,
           ),
           ...statsByStatus.entries.map((entry) {
             return _buildChip(
@@ -42,11 +43,28 @@ class LegalCasesFilterChips extends StatelessWidget {
               count: entry.value,
               isSelected: selectedStatus == entry.key,
               onTap: () => onStatusSelected(entry.key),
+              icon: _getIconForStatus(entry.key),
             );
           }),
         ],
       ),
     );
+  }
+
+  IconData? _getIconForStatus(String status) {
+    final lower = status.toLowerCase();
+    if (lower.contains('مفتوح') || lower == 'open') {
+      return Icons.lock_open_rounded;
+    } else if (lower.contains('جاري') || lower.contains('تنفيذ') || lower == 'in_progress') {
+      return Icons.pending_actions_rounded;
+    } else if (lower.contains('جلسة') || lower.contains('جلسه') || lower == 'hearing') {
+      return Icons.gavel_rounded;
+    } else if (lower.contains('منتهي') || lower.contains('محسوم') || lower == 'resolved') {
+      return Icons.check_circle_outline_rounded;
+    } else if (lower.contains('مغلق') || lower == 'closed') {
+      return Icons.lock_outline_rounded;
+    }
+    return null;
   }
 
   Widget _buildChip({
@@ -55,6 +73,7 @@ class LegalCasesFilterChips extends StatelessWidget {
     required int count,
     required bool isSelected,
     required VoidCallback onTap,
+    IconData? icon,
   }) {
     return Padding(
       padding: const EdgeInsets.only(left: AppSpacing.sm),
@@ -87,6 +106,14 @@ class LegalCasesFilterChips extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
+              if (icon != null) ...[
+                Icon(
+                  icon,
+                  size: 16,
+                  color: isSelected ? Colors.white : AppColors.textPrimaryLight,
+                ),
+                const SizedBox(width: 6),
+              ],
               Text(
                 label,
                 style: AppTextStyles.bodyMedium.copyWith(

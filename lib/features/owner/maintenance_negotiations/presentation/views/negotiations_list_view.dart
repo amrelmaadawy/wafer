@@ -63,7 +63,7 @@ class _NegotiationsListViewState extends State<NegotiationsListView> {
             appBar: OwnerTopAppBar(
               title: LocaleKeys.drawerNavNegotiations.tr(),
             ),
-            floatingActionButton: FloatingActionButton(
+            floatingActionButton: FloatingActionButton(heroTag: null, 
               onPressed: () async {
                 final result = await context.push(
                   Routes.ownerNegotiationSettings,

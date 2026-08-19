@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../../core/di/service_locator.dart';
 import '../../../../../../core/localization/locale_keys.dart';
-import '../../../../../../core/presentation/widgets/app_filter_chips.dart';
 import '../../../../../../core/presentation/widgets/custom_empty_widget.dart';
 import '../../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../../core/presentation/widgets/list/paginated_list_view.dart';
@@ -18,6 +17,7 @@ import '../cubits/list/legal_cases_list_cubit.dart';
 import '../cubits/list/legal_cases_list_state.dart';
 import '../widgets/legal_case_card_widget.dart';
 import '../widgets/legal_cases_list_skeleton.dart';
+import '../widgets/legal_cases_filter_chips.dart';
 import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
 
 class LegalCasesListView extends StatefulWidget {
@@ -42,38 +42,7 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
     super.dispose();
   }
 
-  List<AppFilterOption<String>> get _statusOptions => const [
-    AppFilterOption(
-      value: '',
-      labelKey: LocaleKeys.legalCaseFilterAll,
-      icon: Icons.all_inbox_rounded,
-    ),
-    AppFilterOption(
-      value: 'open',
-      labelKey: LocaleKeys.legalCaseFilterOpen,
-      icon: Icons.lock_open_rounded,
-    ),
-    AppFilterOption(
-      value: 'in_progress',
-      labelKey: LocaleKeys.legalCaseFilterInProgress,
-      icon: Icons.pending_actions_rounded,
-    ),
-    AppFilterOption(
-      value: 'hearing',
-      labelKey: LocaleKeys.legalCaseFilterHearing,
-      icon: Icons.gavel_rounded,
-    ),
-    AppFilterOption(
-      value: 'resolved',
-      labelKey: LocaleKeys.legalCaseFilterResolved,
-      icon: Icons.check_circle_outline_rounded,
-    ),
-    AppFilterOption(
-      value: 'closed',
-      labelKey: LocaleKeys.legalCaseFilterClosed,
-      icon: Icons.lock_outline_rounded,
-    ),
-  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +51,7 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
       child: Scaffold(
         appBar: OwnerTopAppBar(title: LocaleKeys.drawerNavLegalCases.tr()),
         backgroundColor: context.appBackgroundColor,
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton(heroTag: null, 
           onPressed: () async {
             final result = await context.push<bool>(Routes.ownerLegalCaseCreate);
             if (result == true && mounted) {
@@ -108,13 +77,14 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
               ),
             ),
             BlocBuilder<LegalCasesListCubit, LegalCasesListState>(
-              buildWhen: (p, c) => p.filterParams.status != c.filterParams.status,
+              buildWhen: (p, c) => 
+                  p.filterParams.status != c.filterParams.status || 
+                  p.stats?.byStatus != c.stats?.byStatus,
               builder: (context, state) {
-                return AppFilterChips<String>(
-                  options: _statusOptions,
-                  selectedValue: state.filterParams.status ?? '',
-                  onSelected: (val) =>
-                      _cubit.filterByStatus(val?.isEmpty == true ? null : val),
+                return LegalCasesFilterChips(
+                  statsByStatus: state.stats?.byStatus ?? {},
+                  selectedStatus: state.filterParams.status,
+                  onStatusSelected: (val) => _cubit.filterByStatus(val),
                 );
               },
             ),

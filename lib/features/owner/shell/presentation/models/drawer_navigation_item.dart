@@ -113,31 +113,19 @@ class OwnerDrawerConfig {
   static const int branchNegotiations = 10;
   static const int branchReports = 11;
   static const int branchProfile = 12;
+  static const int branchUnits = 13;
+  static const int branchSettings = 14;
 
   /// Returns the raw complete ordered business module structure for the Drawer.
   static List<DrawerNavEntry> getEntries() {
     return const [
-      // 1. "الرئيسية" (Main Section)
-      DrawerNavSection(
-        titleKey: LocaleKeys.drawerSectionMain,
+      // 1. "لوحة المعلومات" (Dashboard Top Level)
+      DrawerNavItem(
+        labelKey: LocaleKeys.drawerNavHome,
         icon: Icons.home_outlined,
-        items: [
-          DrawerNavItem(
-            labelKey: LocaleKeys.drawerNavHome,
-            icon: Icons.home_outlined,
-            activeIcon: Icons.home_rounded,
-            branchIndex: branchDashboard,
-            route: Routes.ownerDashboard,
-          ),
-          DrawerNavItem(
-            labelKey: LocaleKeys.drawerNavDeeds,
-            icon: Icons.verified_user_outlined,
-            activeIcon: Icons.verified_user_rounded,
-            branchIndex: branchDeeds,
-            route: Routes.ownerDeeds,
-            allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
-          ),
-        ],
+        activeIcon: Icons.home_rounded,
+        branchIndex: branchDashboard,
+        route: Routes.ownerDashboard,
       ),
 
       // 2. "إدارة الأملاك" (Operations/Property Management Section)
@@ -151,6 +139,14 @@ class OwnerDrawerConfig {
             activeIcon: Icons.apartment_rounded,
             branchIndex: branchProperties,
             route: Routes.ownerProperties,
+            allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
+          ),
+          DrawerNavItem(
+            labelKey: LocaleKeys.drawerNavUnits,
+            icon: Icons.door_front_door_outlined,
+            activeIcon: Icons.door_front_door_rounded,
+            branchIndex: branchUnits,
+            route: Routes.ownerUnitsList,
             allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
           ),
           DrawerNavItem(
@@ -170,8 +166,8 @@ class OwnerDrawerConfig {
           ),
           DrawerNavItem(
             labelKey: LocaleKeys.drawerNavTechnicians,
-            icon: Icons.inventory_2_outlined,
-            activeIcon: Icons.inventory_2_rounded,
+            icon: Icons.engineering_outlined,
+            activeIcon: Icons.engineering_rounded,
             branchIndex: branchTechnicians,
             route: Routes.ownerTechniciansList,
             allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
@@ -200,14 +196,7 @@ class OwnerDrawerConfig {
             route: Routes.ownerTasks,
             allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
           ),
-          DrawerNavItem(
-            labelKey: LocaleKeys.drawerNavNegotiations,
-            icon: Icons.headset_mic_outlined,
-            activeIcon: Icons.headset_mic_rounded,
-            branchIndex: branchNegotiations,
-            route: Routes.ownerNegotiationsList,
-            allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
-          ),
+
         ],
       ),
 
@@ -239,16 +228,10 @@ class OwnerDrawerConfig {
       DrawerNavItem(
         labelKey: LocaleKeys.drawerNavSettings,
         icon: Icons.settings_outlined,
-        route: Routes.ownerNegotiationSettings,
+        branchIndex: branchSettings,
+        route: Routes.ownerSettings,
       ),
-      DrawerNavItem(
-        labelKey: LocaleKeys.drawerNavSearch,
-        icon: Icons.history_rounded,
-      ),
-      DrawerNavItem(
-        labelKey: LocaleKeys.drawerNavTechnicalSupport,
-        icon: Icons.headset_mic_outlined,
-      ),
+
       DrawerNavItem(
         labelKey: LocaleKeys.drawerNavReports,
         icon: Icons.bar_chart_outlined,

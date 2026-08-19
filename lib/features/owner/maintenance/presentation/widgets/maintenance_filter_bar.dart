@@ -19,41 +19,36 @@ class MaintenanceFilterBar extends StatelessWidget {
         final cubit = context.read<OwnerMaintenanceCubit>();
         final filter = cubit.currentFilter;
 
-        final categoryOptions = const [
+        final statusOptions = const [
           AppFilterOption(
             value: 'all',
             labelKey: LocaleKeys.propertiesFilterAll,
             icon: Icons.all_inbox_rounded,
           ),
           AppFilterOption(
-            value: 'HVAC',
-            labelKey: LocaleKeys.maintCatAc,
-            icon: Icons.ac_unit_rounded,
+            value: 'new',
+            labelKey: LocaleKeys.maintenanceStatusNew,
+            icon: Icons.fiber_new_rounded,
           ),
           AppFilterOption(
-            value: 'Plumbing',
-            labelKey: LocaleKeys.maintCatPlumbing,
-            icon: Icons.plumbing_rounded,
+            value: 'in_progress',
+            labelKey: LocaleKeys.maintenanceStatusInProgress,
+            icon: Icons.handyman_rounded,
           ),
           AppFilterOption(
-            value: 'Electrical',
-            labelKey: LocaleKeys.maintCatElectrical,
-            icon: Icons.electric_bolt_rounded,
+            value: 'executed',
+            labelKey: LocaleKeys.maintenanceStatusExecuted,
+            icon: Icons.done_all_rounded,
           ),
           AppFilterOption(
-            value: 'Carpentry',
-            labelKey: LocaleKeys.maintCatCarpentry,
-            icon: Icons.carpenter_rounded,
+            value: 'rejected',
+            labelKey: LocaleKeys.maintenanceStatusRejected,
+            icon: Icons.cancel_rounded,
           ),
           AppFilterOption(
-            value: 'Painting',
-            labelKey: LocaleKeys.maintCatPainting,
-            icon: Icons.format_paint_rounded,
-          ),
-          AppFilterOption(
-            value: 'General',
-            labelKey: LocaleKeys.maintCatGeneral,
-            icon: Icons.build_rounded,
+            value: 'closed',
+            labelKey: LocaleKeys.maintenanceStatusClosed,
+            icon: Icons.lock_rounded,
           ),
         ];
 
@@ -68,10 +63,10 @@ class MaintenanceFilterBar extends StatelessWidget {
               ),
               activeFiltersCount: filter.activeFiltersCount,
               isSortActive: filter.sortBy != null,
-              quickFilterOptions: categoryOptions,
-              selectedQuickFilter: cubit.currentCategory ?? 'all',
-              onQuickFilterSelected: (newCat) {
-                cubit.changeCategoryFilter(newCat);
+              quickFilterOptions: statusOptions,
+              selectedQuickFilter: cubit.currentStatus,
+              onQuickFilterSelected: (newStatus) {
+                cubit.changeStatusFilter(newStatus ?? 'all');
               },
               onFilterTap: () {
                 MaintenanceFilterSheet.show(

@@ -68,7 +68,7 @@ class OwnerQuickActions extends StatelessWidget {
             Expanded(
               child: _QuickActionTile(
                 icon: Icons.gavel_rounded,
-                label: LocaleKeys.legal_cases.tr(),
+                label: LocaleKeys.legalCasesTitle.tr(),
                 color: AppColors.info,
                 onTap: () => context.push(Routes.ownerLegalCases),
               ),

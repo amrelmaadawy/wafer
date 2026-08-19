@@ -8,11 +8,10 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_radius.dart';
 import '../../../../../core/theme/app_spacing.dart';
-import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../../../auth/presentation/cubit/auth_cubit.dart';
-
 import '../models/drawer_navigation_item.dart';
+
 
 class OwnerDrawerFooter extends StatelessWidget {
   final int currentBranchIndex;
@@ -48,7 +47,12 @@ class OwnerDrawerFooter extends StatelessWidget {
                 Icons.settings_outlined,
                 color: context.appSecondaryTextColor,
               ),
-              onPressed: () => context.push(Routes.ownerNegotiationSettings),
+              onPressed: () {
+                if (Scaffold.maybeOf(context)?.isDrawerOpen ?? false) {
+                  Navigator.of(context).pop();
+                }
+                onSelectBranch(OwnerDrawerConfig.branchSettings);
+              },
             ),
             IconButton(
               tooltip: LocaleKeys.drawerNavLogout.tr(),

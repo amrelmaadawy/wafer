@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../../core/routing/routes.dart';
-import '../../../../../core/theme/app_breakpoints.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../domain/entities/property_list_item_entity.dart';
 import '../cubit/list/properties_list_cubit.dart';
 import '../cubit/list/properties_list_state.dart';
+import '../../../../../core/localization/locale_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../../../shell/presentation/widgets/owner_top_app_bar.dart';
 import '../widgets/list/properties_empty_widget.dart';
 import '../widgets/list/properties_filter_bar.dart';
 import '../widgets/list/properties_loaded_list.dart';
-import '../widgets/list/properties_page_header.dart';
 import '../widgets/list/properties_stats_header_widget.dart';
 import '../widgets/list/property_skeleton_card.dart';
 
@@ -60,21 +61,20 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: context.appBackgroundColor,
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: context.isCompact ? 110 : 16),
-        child: FloatingActionButton(
-          onPressed: _onAddNewProperty,
-          backgroundColor: context.primaryColor,
-          elevation: 4,
-          child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
-        ),
+      appBar: OwnerTopAppBar(
+        title: LocaleKeys.propertiesTitle.tr(),
+        subtitle: LocaleKeys.propertiesSubtitle.tr(),
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: null, 
+        onPressed: _onAddNewProperty,
+        backgroundColor: context.primaryColor,
+        elevation: 4,
+        child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
       ),
       body: SafeArea(
         child: Column(
           children: [
-            PropertiesPageHeader(
-              onOpenUnits: () => context.push(Routes.ownerUnitsStatusReport),
-            ),
             BlocBuilder<PropertiesListCubit, PropertiesListState>(
               builder: (context, state) {
                 if (state is PropertiesListLoaded && state.stats != null) {

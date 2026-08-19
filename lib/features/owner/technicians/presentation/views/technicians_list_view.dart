@@ -59,16 +59,17 @@ class _TechniciansListViewState extends State<TechniciansListView> {
       backgroundColor: AppColors.backgroundLight,
       appBar: OwnerTopAppBar(
         title: LocaleKeys.drawerNavTechnicians.tr(),
-        extraActions: [
-          IconButton(
-            icon: Icon(Icons.add_circle_outline, color: context.primaryColor),
-            onPressed: () {
-              context.push(Routes.ownerTechnicianCreate).then((_) {
-                _onRefresh();
-              });
-            },
-          ),
-        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        heroTag: null,
+        onPressed: () {
+          context.push(Routes.ownerTechnicianCreate).then((_) {
+            _onRefresh();
+          });
+        },
+        backgroundColor: context.primaryColor,
+        elevation: 4,
+        child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
       ),
       body: BlocBuilder<TechniciansListCubit, TechniciansListState>(
         builder: (context, state) {

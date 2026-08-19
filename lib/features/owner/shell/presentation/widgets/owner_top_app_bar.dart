@@ -17,12 +17,14 @@ import '../models/breadcrumb_item.dart';
 class OwnerTopAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final String? subtitle;
+  final IconData? titleIcon;
   final List<BreadcrumbItem>? breadcrumbs;
   final bool showDrawerButton;
   final bool showSearch;
   final bool showNotifications;
   final VoidCallback? onBackPressed;
   final List<Widget>? extraActions;
+  final List<Widget>? extraIconActions;
   final PreferredSizeWidget? bottom;
   final double? elevation;
 
@@ -30,12 +32,14 @@ class OwnerTopAppBar extends StatelessWidget implements PreferredSizeWidget {
     super.key,
     required this.title,
     this.subtitle,
+    this.titleIcon,
     this.breadcrumbs,
     this.showDrawerButton = true,
     this.showSearch = true,
     this.showNotifications = true,
     this.onBackPressed,
     this.extraActions,
+    this.extraIconActions,
     this.bottom,
     this.elevation,
   });
@@ -95,70 +99,52 @@ class OwnerTopAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: false,
       leadingWidth: canPop ? 68 : (showDrawerButton ? 56 : null),
       leading: leadingWidget,
-      title: Column(
+      title: Row(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: AppTextStyles.h4.copyWith(
-              color: context.appOnSurfaceColor,
-              fontWeight: FontWeight.w800,
-              fontSize: 18,
-            ),
-          ),
-          if (breadcrumbs != null && breadcrumbs!.isNotEmpty) ...[
-            const SizedBox(height: 2),
-            _buildBreadcrumbs(context, breadcrumbs!, primary),
-          ] else if (subtitle != null) ...[
-            const SizedBox(height: 2),
-            Text(
-              subtitle!,
-              style: AppTextStyles.bodySmall.copyWith(
-                color: context.appSecondaryTextColor,
-                fontSize: 11,
-              ),
-            ),
-          ],
-        ],
-      ),
-      actions: [
-        ...?extraActions,
-        if (showSearch)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2),
-            child: Material(
-              color: primary.withValues(alpha: 0.08),
-              borderRadius: AppRadius.circularMd,
-              child: InkWell(
-                onTap: () {
-                  HapticFeedback.lightImpact();
-                  context.push(Routes.ownerSearch);
-                },
+          if (titleIcon != null) ...[
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: primary.withValues(alpha: .12),
                 borderRadius: AppRadius.circularMd,
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Icon(
-                    Icons.search_rounded,
-                    color: primary,
-                    size: 20,
+              ),
+              child: Icon(titleIcon, color: primary, size: 22),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+          ],
+          Flexible(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: AppTextStyles.h4.copyWith(
+                    color: context.appOnSurfaceColor,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18,
                   ),
                 ),
-              ),
+                if (breadcrumbs != null && breadcrumbs!.isNotEmpty) ...[
+                  const SizedBox(height: 2),
+                  _buildBreadcrumbs(context, breadcrumbs!, primary),
+                ] else if (subtitle != null) ...[
+                  const SizedBox(height: 2),
+                  Text(
+                    subtitle!,
+                    style: AppTextStyles.bodySmall.copyWith(
+                      color: context.appSecondaryTextColor,
+                      fontSize: 11,
+                    ),
+                  ),
+                ],
+              ],
             ),
           ),
-        if (showNotifications)
-          Padding(
-            padding: const EdgeInsetsDirectional.only(
-              start: 2,
-              end: AppSpacing.sm,
-            ),
-            child: BlocProvider.value(
-              value: sl<UnreadCountCubit>()..getUnreadCount(),
-              child: const NotificationBellBadgeWidget(),
-            ),
-          ),
-      ],
+        ],
+      ),
+      actions: _buildActions(context, primary),
       bottom: bottom,
     );
   }
@@ -241,6 +227,82 @@ class OwnerTopAppBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
+    );
+  }
+
+  List<Widget> _buildActions(BuildContext context, Color primary) {
+    final hasSearchOrNotif = showSearch || showNotifications;
+    final hasExtra = extraActions != null && extraActions!.isNotEmpty;
+    final hasExtraIcons = extraIconActions != null && extraIconActions!.isNotEmpty;
+
+    if (!hasSearchOrNotif && !hasExtra && !hasExtraIcons) return [];
+
+    return [
+      if (hasExtra) ...extraActions!,
+      if (hasSearchOrNotif || hasExtraIcons)
+        Padding(
+          padding: const EdgeInsetsDirectional.only(end: AppSpacing.md, start: 4),
+          child: Container(
+            height: 40,
+            decoration: BoxDecoration(
+              color: primary.withValues(alpha: 0.08),
+              borderRadius: BorderRadius.circular(100),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (hasExtraIcons)
+                  ...extraIconActions!.expand((action) => [
+                        action,
+                        if (hasSearchOrNotif || action != extraIconActions!.last)
+                          _buildDivider(primary),
+                      ]),
+                if (showSearch)
+                  Material(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(100),
+                    child: InkWell(
+                      onTap: () {
+                        HapticFeedback.lightImpact();
+                        context.push(Routes.ownerSearch);
+                      },
+                      borderRadius: BorderRadius.circular(100),
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: Icon(
+                          Icons.search_rounded,
+                          color: primary,
+                          size: 22,
+                        ),
+                      ),
+                    ),
+                  ),
+                if (showSearch && showNotifications)
+                  Container(
+                    width: 1.5,
+                    height: 20,
+                    color: primary.withValues(alpha: 0.15),
+                    margin: const EdgeInsets.symmetric(horizontal: 2),
+                  ),
+                if (showNotifications)
+                  BlocProvider.value(
+                    value: sl<UnreadCountCubit>()..getUnreadCount(),
+                    child: const NotificationBellBadgeWidget(isTransparent: true),
+                  ),
+              ],
+            ),
+          ),
+        ),
+    ];
+  }
+
+  Widget _buildDivider(Color primary) {
+    return Container(
+      width: 1.5,
+      height: 20,
+      color: primary.withValues(alpha: 0.15),
+      margin: const EdgeInsets.symmetric(horizontal: 2),
     );
   }
 }
