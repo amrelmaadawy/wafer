@@ -29,7 +29,11 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
     _currentFilter = _currentFilter.copyWith(page: 1);
 
     if (forceRefresh || state is! OwnerContractsLoaded) {
-      emit(OwnerContractsLoading(activeStatus: _currentFilter.status));
+      if (state is OwnerContractsError && forceRefresh) {
+        emit((state as OwnerContractsError).copyWith(isRetrying: true));
+      } else {
+        emit(OwnerContractsLoading(activeStatus: _currentFilter.status));
+      }
     }
 
     final result = await _getContractsUseCase(
@@ -62,7 +66,7 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
       filtered = filtered.where((c) {
         return c.contractNumber.toLowerCase().contains(query) ||
             c.propertyName.toLowerCase().contains(query) ||
-            c.tenantName.toLowerCase().contains(query) ||
+            c.renterName.toLowerCase().contains(query) ||
             c.unitName.toLowerCase().contains(query);
       }).toList();
     }
@@ -81,7 +85,7 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
         _currentFilter.tenantName!.trim().isNotEmpty) {
       final tQuery = _currentFilter.tenantName!.trim().toLowerCase();
       filtered = filtered
-          .where((c) => c.tenantName.toLowerCase().contains(tQuery))
+          .where((c) => c.renterName.toLowerCase().contains(tQuery))
           .toList();
     }
 
@@ -97,7 +101,7 @@ class OwnerContractsCubit extends Cubit<OwnerContractsState> {
             cmp = a.startDate.compareTo(b.startDate);
             break;
           case ContractSortField.rentAmount:
-            cmp = a.rentAmount.compareTo(b.rentAmount);
+            cmp = a.totalRentValue.compareTo(b.totalRentValue);
             break;
           case ContractSortField.contractNumber:
             cmp = a.contractNumber.compareTo(b.contractNumber);

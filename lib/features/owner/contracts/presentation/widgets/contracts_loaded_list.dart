@@ -40,7 +40,7 @@ class ContractsLoadedList extends StatelessWidget {
           onRefresh: () => cubit.getContracts(forceRefresh: true),
           onLoadMore: cubit.loadNextPage,
           isGrid: isLargeScreen,
-          padding: const EdgeInsets.only(top: 12, bottom: 40),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12).copyWith(bottom: 40),
           gridDelegate: isLargeScreen
               ? const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 560,

@@ -6,28 +6,32 @@ class ContractsResponseModel extends ContractsResponseEntity {
   const ContractsResponseModel({required super.contracts, required super.meta});
 
   factory ContractsResponseModel.fromJson(Map<String, dynamic> json) {
-    Map<String, dynamic> contractsMap = {};
+    List<dynamic> rawList = [];
+    Map<String, dynamic> metaMap = {};
 
     if (json['data'] is Map<String, dynamic>) {
       final dataMap = json['data'] as Map<String, dynamic>;
-      if (dataMap['contracts'] is Map<String, dynamic>) {
-        contractsMap = dataMap['contracts'] as Map<String, dynamic>;
-      } else {
-        contractsMap = dataMap;
+      if (dataMap['contracts'] is List) {
+        rawList = dataMap['contracts'] as List<dynamic>;
+      } else if (dataMap['contracts'] is Map && dataMap['contracts']['data'] is List) {
+        rawList = dataMap['contracts']['data'] as List<dynamic>;
       }
-    } else if (json['contracts'] is Map<String, dynamic>) {
-      contractsMap = json['contracts'] as Map<String, dynamic>;
-    } else {
-      contractsMap = json;
+      
+      if (dataMap['pagination'] is Map<String, dynamic>) {
+        metaMap = dataMap['pagination'] as Map<String, dynamic>;
+      } else if (dataMap['meta'] is Map<String, dynamic>) {
+        metaMap = dataMap['meta'] as Map<String, dynamic>;
+      }
+    } else if (json['contracts'] is List) {
+      rawList = json['contracts'] as List<dynamic>;
+      metaMap = json['pagination'] as Map<String, dynamic>? ?? json['meta'] as Map<String, dynamic>? ?? {};
     }
 
-    final rawList = contractsMap['data'] as List<dynamic>? ?? [];
     final contractsList = rawList
         .whereType<Map<String, dynamic>>()
         .map((item) => ContractItemModel.fromJson(item))
         .toList();
 
-    final metaMap = contractsMap['meta'] as Map<String, dynamic>? ?? {};
     final meta = ContractsPaginationMetaModel.fromJson(metaMap);
 
     return ContractsResponseModel(contracts: contractsList, meta: meta);

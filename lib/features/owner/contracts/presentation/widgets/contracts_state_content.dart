@@ -22,8 +22,9 @@ class ContractsStateContent extends StatelessWidget {
     return switch (state) {
       OwnerContractsInitial() ||
       OwnerContractsLoading() => const ContractsSkeletonWidget(),
-      OwnerContractsError(:final message) => CustomErrorWidget(
+      OwnerContractsError(:final message, :final isRetrying) => CustomErrorWidget(
         message: message,
+        isLoading: isRetrying,
         onRetry: () => context.read<OwnerContractsCubit>().getContracts(
           forceRefresh: true,
         ),

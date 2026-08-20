@@ -1,9 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
-import '../../../../../core/error/exceptions.dart';
+import '../../../../../core/data/base_repository.dart';
 import '../../../../../core/error/failures.dart';
-import '../../../../../core/localization/locale_keys.dart';
 import '../../domain/entities/contract_details_entity.dart';
 import '../../domain/entities/contract_installment_entity.dart';
 import '../../domain/entities/contracts_response_entity.dart';
@@ -11,10 +8,14 @@ import '../../domain/entities/contract_status_filter.dart';
 import '../../domain/repositories/owner_contracts_repository.dart';
 import '../datasources/owner_contracts_remote_data_source.dart';
 
-class OwnerContractsRepositoryImpl implements OwnerContractsRepository {
+class OwnerContractsRepositoryImpl extends BaseRepository
+    implements OwnerContractsRepository {
   final OwnerContractsRemoteDataSource _remoteDataSource;
 
-  OwnerContractsRepositoryImpl(this._remoteDataSource);
+  OwnerContractsRepositoryImpl({
+    required OwnerContractsRemoteDataSource remoteDataSource,
+    required super.networkInfo,
+  }) : _remoteDataSource = remoteDataSource;
 
   @override
   Future<Either<Failure, ContractsResponseEntity>> getContracts({
@@ -22,78 +23,40 @@ class OwnerContractsRepositoryImpl implements OwnerContractsRepository {
     ContractStatusFilter status = ContractStatusFilter.all,
     bool forceRefresh = false,
   }) async {
-    try {
-      final result = await _remoteDataSource.getContracts(
-        page: page,
-        status: status,
-      );
-      return Right(result);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    } on DioException catch (e) {
-      String? serverMsg;
-      if (e.response?.data is Map<String, dynamic>) {
-        serverMsg =
-            (e.response?.data as Map<String, dynamic>)['message'] as String?;
-      }
-      return Left(
-        ServerFailure(
-          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
-        ),
-      );
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return executeApiCall<ContractsResponseEntity>(
+      call: () => _remoteDataSource.getContracts(page: page, status: status),
+    );
   }
 
   @override
   Future<Either<Failure, ContractDetailsEntity>> getContractDetails(
     String id,
   ) async {
-    try {
-      final result = await _remoteDataSource.getContractDetails(id);
-      return Right(result);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    } on DioException catch (e) {
-      String? serverMsg;
-      if (e.response?.data is Map<String, dynamic>) {
-        serverMsg =
-            (e.response?.data as Map<String, dynamic>)['message'] as String?;
-      }
-      return Left(
-        ServerFailure(
-          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
-        ),
-      );
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return executeApiCall<ContractDetailsEntity>(
+      call: () => _remoteDataSource.getContractDetails(id),
+    );
+  }
+
+  @override
+  Future<Either<Failure, ContractDetailsEntity>> updateContract({
+    required String id,
+    int? renewalNoticeDays,
+    String? notes,
+  }) async {
+    return executeApiCall<ContractDetailsEntity>(
+      call: () => _remoteDataSource.updateContract(
+        id: id,
+        renewalNoticeDays: renewalNoticeDays,
+        notes: notes,
+      ),
+    );
   }
 
   @override
   Future<Either<Failure, List<ContractInstallmentEntity>>>
   getContractInstallments(String contractId) async {
-    try {
-      final result = await _remoteDataSource.getContractInstallments(
-        contractId,
-      );
-      return Right(result);
-    } on ServerException catch (e) {
-      return Left(ServerFailure(e.message));
-    } on DioException catch (e) {
-      String? serverMsg;
-      if (e.response?.data is Map<String, dynamic>) {
-        serverMsg =
-            (e.response?.data as Map<String, dynamic>)['message'] as String?;
-      }
-      return Left(
-        ServerFailure(
-          serverMsg ?? e.message ?? LocaleKeys.errorsServerError.tr(),
-        ),
-      );
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return executeApiCall<List<ContractInstallmentEntity>>(
+      call: () => _remoteDataSource.getContractInstallments(contractId),
+    );
   }
 }

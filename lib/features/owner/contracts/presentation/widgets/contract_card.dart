@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/presentation/widgets/app_surface_card.dart';
+import '../../../../../core/presentation/widgets/app_status_badge.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/theme/theme_context.dart';
 import '../../domain/entities/contract_item_entity.dart';
-import 'contract_status_badge.dart';
 
 class ContractCard extends StatelessWidget {
   final ContractItemEntity contract;
@@ -19,11 +20,12 @@ class ContractCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppSurfaceCard(
       onTap: onTap,
+      padding: const EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _ContractHeader(contract: contract),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: AppSpacing.md),
           Text(
             _locationLabel,
             maxLines: 2,
@@ -33,26 +35,34 @@ class ContractCard extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          const SizedBox(height: AppSpacing.xs),
+          const SizedBox(height: AppSpacing.sm),
           Row(
             children: [
-              Icon(Icons.person_outline, size: 17, color: context.primaryColor),
-              const SizedBox(width: AppSpacing.xs),
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: context.primaryColor.withValues(alpha: 0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.person_outline, size: 16, color: context.primaryColor),
+              ),
+              const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: Text(
-                  contract.tenantName.isEmpty ? '-' : contract.tenantName,
+                  contract.renterName.isEmpty ? '-' : contract.renterName,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyles.bodySmall.copyWith(
+                  style: AppTextStyles.bodyMedium.copyWith(
                     color: context.appSecondaryTextColor,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.md),
+          const SizedBox(height: AppSpacing.lg),
           Divider(color: context.appBorderColor, height: 1),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: AppSpacing.lg),
           _ContractFooter(contract: contract),
         ],
       ),
@@ -77,8 +87,15 @@ class _ContractHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(Icons.description_outlined, size: 18, color: context.primaryColor),
-        const SizedBox(width: AppSpacing.xs),
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: context.primaryColor.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Icon(Icons.description_outlined, size: 20, color: context.primaryColor),
+        ),
+        const SizedBox(width: AppSpacing.md),
         Expanded(
           child: Text(
             contract.contractNumber,
@@ -86,19 +103,43 @@ class _ContractHeader extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             style: AppTextStyles.labelLarge.copyWith(
               color: context.primaryColor,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w800,
             ),
           ),
         ),
-        ContractStatusBadge(status: contract.status),
-        const SizedBox(width: AppSpacing.xs),
+        AppStatusBadge(
+          labelKey: contract.statusLabel.isNotEmpty ? contract.statusLabel : contract.status,
+          color: _getStatusColor(contract.status),
+          size: AppStatusBadgeSize.small,
+        ),
+        const SizedBox(width: AppSpacing.sm),
         Icon(
           Icons.arrow_forward_ios_rounded,
           size: 14,
-          color: context.appSecondaryTextColor,
+          color: context.appSecondaryTextColor.withValues(alpha: 0.5),
         ),
       ],
     );
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase().trim()) {
+      case 'active':
+      case 'sari':
+        return AppColors.success;
+      case 'expiring':
+      case 'expiring_soon':
+        return AppColors.warning;
+      case 'draft':
+        return AppColors.textSecondaryLight;
+      case 'terminated':
+      case 'cancelled':
+        return AppColors.error;
+      case 'renewed':
+        return AppColors.info;
+      default:
+        return AppColors.textPrimaryLight;
+    }
   }
 }
 
@@ -114,16 +155,39 @@ class _ContractFooter extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            '${contract.rentAmount.toStringAsFixed(0)} '
+            '${contract.totalRentValue.toStringAsFixed(0)} '
             '${LocaleKeys.contractsCurrency.tr()}',
-            style: AppTextStyles.h4.copyWith(color: context.primaryColor),
+            style: AppTextStyles.h3.copyWith(
+              color: context.primaryColor,
+              fontWeight: FontWeight.w800,
+            ),
           ),
         ),
         if (contract.startDate.isNotEmpty && contract.endDate.isNotEmpty)
-          Text(
-            '${contract.startDate} – ${contract.endDate}',
-            style: AppTextStyles.labelSmall.copyWith(
-              color: context.appSecondaryTextColor,
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+            decoration: BoxDecoration(
+              color: context.appSurfaceColor,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: context.appBorderColor),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.date_range_rounded,
+                  size: 14,
+                  color: context.appSecondaryTextColor,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  '${contract.startDate} – ${contract.endDate}',
+                  style: AppTextStyles.labelSmall.copyWith(
+                    color: context.appSecondaryTextColor,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
             ),
           ),
       ],

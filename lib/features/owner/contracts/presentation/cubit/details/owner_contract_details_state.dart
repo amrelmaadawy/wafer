@@ -27,9 +27,10 @@ class OwnerContractDetailsLoaded extends OwnerContractDetailsState {
 
 class OwnerContractDetailsError extends OwnerContractDetailsState {
   final String message;
+  final bool isRetrying;
 
-  const OwnerContractDetailsError(this.message);
+  const OwnerContractDetailsError(this.message, {this.isRetrying = false});
 
   @override
-  List<Object?> get props => [message];
+  List<Object?> get props => [message, isRetrying];
 }

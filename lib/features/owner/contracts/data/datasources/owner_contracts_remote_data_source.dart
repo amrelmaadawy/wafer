@@ -11,6 +11,13 @@ abstract class OwnerContractsRemoteDataSource {
     ContractStatusFilter status = ContractStatusFilter.all,
   });
   Future<ContractDetailsModel> getContractDetails(String id);
+
+  Future<ContractDetailsModel> updateContract({
+    required String id,
+    int? renewalNoticeDays,
+    String? notes,
+  });
+
   Future<List<ContractInstallmentModel>> getContractInstallments(
     String contractId,
   );
@@ -47,6 +54,29 @@ class OwnerContractsRemoteDataSourceImpl
 
     final data = response.data as Map<String, dynamic>? ?? {};
     return ContractDetailsModel.fromJson(data);
+  }
+
+  @override
+  Future<ContractDetailsModel> updateContract({
+    required String id,
+    int? renewalNoticeDays,
+    String? notes,
+  }) async {
+    final data = <String, dynamic>{};
+    if (renewalNoticeDays != null) {
+      data['renewal_notice_days'] = renewalNoticeDays;
+    }
+    if (notes != null) {
+      data['notes'] = notes;
+    }
+
+    final response = await _dio.put(
+      '${ApiConstants.ownerContracts}/$id',
+      data: data,
+    );
+
+    final responseData = response.data as Map<String, dynamic>? ?? {};
+    return ContractDetailsModel.fromJson(responseData);
   }
 
   @override

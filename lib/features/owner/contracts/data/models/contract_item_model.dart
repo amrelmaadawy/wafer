@@ -4,69 +4,55 @@ class ContractItemModel extends ContractItemEntity {
   const ContractItemModel({
     required super.id,
     required super.contractNumber,
+    required super.contractTypeLabel,
     required super.propertyName,
     required super.unitName,
-    required super.tenantName,
+    required super.renterName,
     required super.startDate,
     required super.endDate,
-    required super.rentAmount,
-    required super.paymentCycle,
+    required super.totalRentValue,
     required super.status,
+    required super.statusLabel,
   });
 
   factory ContractItemModel.fromJson(Map<String, dynamic> json) {
     final property = _asMap(json['property']);
     final unit = _asMap(json['unit']);
-    final tenant = _asMap(json['tenant']) ?? _asMap(json['renter']);
+    final renter = _asMap(json['renter']);
+    final dates = _asMap(json['dates']);
+    final financial = _asMap(json['financial']);
+
     return ContractItemModel(
       id: json['id']?.toString() ?? '',
-      contractNumber:
-          (json['contract_number'] ?? json['code'] ?? json['number'] ?? '')
-              .toString(),
-      propertyName:
-          (json['property_name'] ??
-                  property?['name'] ??
-                  property?['title'] ??
-                  json['title'] ??
-                  '')
-              .toString(),
-      unitName:
-          (json['unit_name'] ??
-                  unit?['name'] ??
-                  unit?['unit_number'] ??
-                  unit?['number'] ??
-                  '')
-              .toString(),
-      tenantName:
-          (json['tenant_name'] ??
-                  tenant?['name'] ??
-                  tenant?['full_name'] ??
-                  json['party_name'] ??
-                  '')
-              .toString(),
-      startDate: (json['start_date'] ?? json['from_date'] ?? '').toString(),
-      endDate: (json['end_date'] ?? json['to_date'] ?? '').toString(),
-      rentAmount: _asDouble(
-        json['rent_amount'] ?? json['total_amount'] ?? json['price'],
-      ),
-      paymentCycle:
-          (json['payment_cycle'] ?? json['cycle'] ?? json['frequency'] ?? '')
-              .toString(),
+      contractNumber: json['contract_number']?.toString() ?? '',
+      contractTypeLabel: json['contract_type_label']?.toString() ?? '',
+      propertyName: property?['name']?.toString() ?? '',
+      unitName: unit?['name']?.toString() ?? '',
+      renterName: renter?['name']?.toString() ?? '',
+      startDate: dates?['start_date']?.toString() ?? '',
+      endDate: dates?['end_date']?.toString() ?? '',
+      totalRentValue: _asDouble(financial?['total_rent_value']),
       status: json['status']?.toString() ?? '',
+      statusLabel: json['status_label']?.toString() ?? '',
     );
   }
 
   Map<String, dynamic> toJson() => {
     'id': id,
     'contract_number': contractNumber,
-    'property_name': propertyName,
-    'unit_name': unitName,
-    'tenant_name': tenantName,
-    'start_date': startDate,
-    'end_date': endDate,
-    'rent_amount': rentAmount,
-    'payment_cycle': paymentCycle,
+    'contract_type_label': contractTypeLabel,
+    'property': {'name': propertyName},
+    'unit': {'name': unitName},
+    'renter': {'name': renterName},
+    'dates': {
+      'start_date': startDate,
+      'end_date': endDate,
+    },
+    'financial': {
+      'total_rent_value': totalRentValue,
+    },
     'status': status,
+    'status_label': statusLabel,
   };
 }
 

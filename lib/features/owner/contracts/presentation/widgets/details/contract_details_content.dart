@@ -5,6 +5,9 @@ import 'contract_details_header_card.dart';
 import 'contract_details_installments_action_card.dart';
 import 'contract_details_property_card.dart';
 import 'contract_details_renter_card.dart';
+import 'contract_details_ejar_card.dart';
+import 'contract_details_settings_card.dart';
+import 'contract_details_handover_card.dart';
 
 class ContractDetailsContent extends StatelessWidget {
   final ContractDetailsEntity contract;
@@ -21,6 +24,9 @@ class ContractDetailsContent extends StatelessWidget {
               ContractDetailsHeaderCard(contract: contract),
               ContractDetailsPropertyCard(contract: contract),
               ContractDetailsRenterCard(contract: contract),
+              ContractDetailsEjarCard(contract: contract),
+              ContractDetailsSettingsCard(contract: contract),
+              ContractDetailsHandoverCard(contract: contract),
               ContractDetailsFinancialCard(contract: contract),
               _installmentsCard,
             ],
@@ -35,6 +41,7 @@ class ContractDetailsContent extends StatelessWidget {
                   ContractDetailsHeaderCard(contract: contract),
                   ContractDetailsPropertyCard(contract: contract),
                   ContractDetailsRenterCard(contract: contract),
+                  ContractDetailsEjarCard(contract: contract),
                 ],
               ),
             ),
@@ -42,6 +49,8 @@ class ContractDetailsContent extends StatelessWidget {
             Expanded(
               child: _CardColumn(
                 children: [
+                  ContractDetailsSettingsCard(contract: contract),
+                  ContractDetailsHandoverCard(contract: contract),
                   ContractDetailsFinancialCard(contract: contract),
                   _installmentsCard,
                 ],

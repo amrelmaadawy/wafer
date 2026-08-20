@@ -67,6 +67,7 @@ class _OwnerContractDetailsScreenState extends State<OwnerContractDetailsScreen>
             if (state is OwnerContractDetailsError) {
               return CustomErrorWidget(
                 message: state.message,
+                isLoading: state.isRetrying,
                 onRetry: () => context
                     .read<OwnerContractDetailsCubit>()
                     .getContractDetails(widget.contractId),

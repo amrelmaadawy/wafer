@@ -8,6 +8,7 @@ import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../../../../core/theme/theme_context.dart';
 import '../../../domain/entities/contract_details_entity.dart';
+import 'contract_details_row.dart';
 import 'contract_section_header.dart';
 
 class ContractDetailsPropertyCard extends StatelessWidget {
@@ -77,6 +78,15 @@ class ContractDetailsPropertyCard extends StatelessWidget {
               ],
             ),
           ),
+          if (contract.branchName.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.sm),
+            Divider(color: context.appBorderColor, height: 1),
+            ContractDetailsRow(
+              label: LocaleKeys.contractsBranch.tr(),
+              value: contract.branchName,
+              showDivider: false,
+            ),
+          ],
         ],
       ),
     );

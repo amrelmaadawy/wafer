@@ -9,7 +9,13 @@ class OwnerContractDetailsCubit extends Cubit<OwnerContractDetailsState> {
     : super(const OwnerContractDetailsInitial());
 
   Future<void> getContractDetails(String contractId) async {
-    emit(const OwnerContractDetailsLoading());
+    if (state is OwnerContractDetailsError) {
+      final currentError = state as OwnerContractDetailsError;
+      emit(OwnerContractDetailsError(currentError.message, isRetrying: true));
+    } else {
+      emit(const OwnerContractDetailsLoading());
+    }
+
     final result = await _getContractDetailsUseCase(contractId);
     result.fold(
       (failure) => emit(OwnerContractDetailsError(failure.message)),

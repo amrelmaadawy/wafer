@@ -66,12 +66,26 @@ class OwnerContractsEmpty extends OwnerContractsState {
 class OwnerContractsError extends OwnerContractsState {
   final String message;
   final ContractStatusFilter activeStatus;
+  final bool isRetrying;
 
   const OwnerContractsError(
     this.message, {
     this.activeStatus = ContractStatusFilter.all,
+    this.isRetrying = false,
   });
 
+  OwnerContractsError copyWith({
+    String? message,
+    ContractStatusFilter? activeStatus,
+    bool? isRetrying,
+  }) {
+    return OwnerContractsError(
+      message ?? this.message,
+      activeStatus: activeStatus ?? this.activeStatus,
+      isRetrying: isRetrying ?? this.isRetrying,
+    );
+  }
+
   @override
-  List<Object?> get props => [message, activeStatus];
+  List<Object?> get props => [message, activeStatus, isRetrying];
 }
