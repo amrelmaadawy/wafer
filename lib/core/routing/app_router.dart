@@ -130,6 +130,8 @@ import '../../features/owner/legal_cases/domain/entities/legal_case_item_entity.
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiations_list_view.dart';
 import '../../features/owner/maintenance_negotiations/presentation/views/negotiation_settings_view.dart';
 import '../../features/owner/search/presentation/screens/search_screen.dart';
+import '../../features/owner/clients/presentation/owner_clients_list_view.dart';
+import '../../features/owner/clients/presentation/cubit/list/owner_clients_list_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
@@ -920,6 +922,17 @@ class AppRouter {
                 builder: (context, state) => BlocProvider<ProfileCubit>(
                   create: (context) => sl<ProfileCubit>()..fetchProfile(),
                   child: const OwnerSettingsView(),
+                ),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerClientsList,
+                builder: (context, state) => BlocProvider<OwnerClientsListCubit>(
+                  create: (_) => sl<OwnerClientsListCubit>()..loadClients(forceRefresh: true),
+                  child: const OwnerClientsListView(),
                 ),
               ),
             ],

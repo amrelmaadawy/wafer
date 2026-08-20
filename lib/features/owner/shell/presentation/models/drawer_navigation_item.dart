@@ -115,6 +115,7 @@ class OwnerDrawerConfig {
   static const int branchProfile = 12;
   static const int branchUnits = 13;
   static const int branchSettings = 14;
+  static const int branchClients = 15;
 
   /// Returns the raw complete ordered business module structure for the Drawer.
   static List<DrawerNavEntry> getEntries() {
@@ -147,6 +148,14 @@ class OwnerDrawerConfig {
             activeIcon: Icons.door_front_door_rounded,
             branchIndex: branchUnits,
             route: Routes.ownerUnitsList,
+            allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
+          ),
+          DrawerNavItem(
+            labelKey: LocaleKeys.clients,
+            icon: Icons.people_outline_rounded,
+            activeIcon: Icons.people_rounded,
+            branchIndex: branchClients,
+            route: Routes.ownerClientsList,
             allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
           ),
           DrawerNavItem(
@@ -196,7 +205,6 @@ class OwnerDrawerConfig {
             route: Routes.ownerTasks,
             allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
           ),
-
         ],
       ),
 

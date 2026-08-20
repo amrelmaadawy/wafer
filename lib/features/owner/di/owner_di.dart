@@ -258,11 +258,18 @@ import '../search/domain/repositories/search_repository.dart';
 import '../search/domain/usecases/global_search_use_case.dart';
 import '../search/presentation/cubit/search_cubit.dart';
 
+import '../clients/data/datasources/owner_clients_remote_data_source.dart';
+import '../clients/data/repositories/owner_clients_repository_impl.dart';
+import '../clients/domain/repositories/owner_clients_repository.dart';
+import '../clients/domain/usecases/get_owner_clients_use_case.dart';
+import '../clients/presentation/cubit/list/owner_clients_list_cubit.dart';
+
 void initOwnerModule() {
   _initDashboard();
   _initProperties();
   _initUnits();
   _initContracts();
+  _initClients();
   _initMaintenance();
   _initFinance();
   _initReports();
@@ -778,6 +785,30 @@ void _initContracts() {
   }
   if (!sl.isRegistered<ContractPaymentsCubit>()) {
     sl.registerFactory(() => ContractPaymentsCubit(sl()));
+  }
+}
+
+void _initClients() {
+  if (!sl.isRegistered<OwnerClientsRemoteDataSource>()) {
+    sl.registerLazySingleton<OwnerClientsRemoteDataSource>(
+      () => OwnerClientsRemoteDataSourceImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<OwnerClientsRepository>()) {
+    sl.registerLazySingleton<OwnerClientsRepository>(
+      () => OwnerClientsRepositoryImpl(
+        remoteDataSource: sl(),
+        networkInfo: sl(),
+      ),
+    );
+  }
+  if (!sl.isRegistered<GetOwnerClientsUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerClientsUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerClientsListCubit>()) {
+    sl.registerFactory(() => OwnerClientsListCubit(
+      getOwnerClientsUseCase: sl(),
+    ));
   }
 }
 

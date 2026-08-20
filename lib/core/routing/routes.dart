@@ -97,6 +97,11 @@ class Routes {
   static const String ownerSupervisorsList = '/owner/supervisors';
   static const String ownerSupervisorCreate = '/owner/supervisors/create';
 
+  // --- Clients ---
+  static const String ownerClientsList = '/owner/clients';
+  static const String ownerClientDetails = '/owner/clients/:clientId';
+  static String ownerClientDetailsPath(String id) => '/owner/clients/$id';
+
   // --- Negotiations ---
   static const String ownerNegotiationsList = '/owner/negotiations';
   static const String ownerNegotiationSettings = '/owner/negotiations/settings';

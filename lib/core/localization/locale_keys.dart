@@ -1420,6 +1420,9 @@ abstract class  LocaleKeys {
   static const saveChanges = 'saveChanges';
   static const contractNotes = 'contractNotes';
   static const contractSettingsUpdatedSuccessfully = 'contractSettingsUpdatedSuccessfully';
+  static const clients = 'clients';
+  static const noClientsFound = 'noClientsFound';
+  static const noClientsFoundSubtitle = 'noClientsFoundSubtitle';
   static const contractsSecurityDeposit = 'contractsSecurityDeposit';
   static const contractsStartDateLabel = 'contractsStartDateLabel';
   static const contractsStatusActive = 'contractsStatusActive';

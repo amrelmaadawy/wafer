@@ -1,0 +1,61 @@
+import '../../domain/entities/client_entity.dart';
+
+class ClientModel extends ClientEntity {
+  const ClientModel({
+    required super.id,
+    required super.name,
+    super.username,
+    super.email,
+    super.phone,
+    super.identityNumber,
+    super.identityExpiry,
+    super.gender,
+    super.genderLabel,
+    super.clientType,
+    super.clientTypeLabel,
+    super.tenantCode,
+    required super.isTenantAdmin,
+    required super.isActive,
+    required super.status,
+    required super.statusLabel,
+    super.jobRank,
+    super.jobRankIds,
+    super.jobRankNames,
+    super.roles,
+    required super.propertiesCount,
+    required super.contractsCount,
+    super.glAccountId,
+    required super.createdAt,
+    required super.updatedAt,
+  });
+
+  factory ClientModel.fromJson(Map<String, dynamic> json) {
+    return ClientModel(
+      id: json['id'] is num ? (json['id'] as num).toInt() : int.tryParse(json['id']?.toString() ?? '0') ?? 0,
+      name: json['name']?.toString() ?? '',
+      username: json['username']?.toString(),
+      email: json['email']?.toString(),
+      phone: json['phone']?.toString(),
+      identityNumber: json['identity_number']?.toString(),
+      identityExpiry: json['identity_expiry']?.toString(),
+      gender: json['gender']?.toString(),
+      genderLabel: json['gender_label']?.toString(),
+      clientType: json['client_type']?.toString(),
+      clientTypeLabel: json['client_type_label']?.toString(),
+      tenantCode: json['tenant_code']?.toString(),
+      isTenantAdmin: json['is_tenant_admin'] == true || json['is_tenant_admin']?.toString() == '1',
+      isActive: json['is_active'] == true || json['is_active']?.toString() == '1',
+      status: json['status']?.toString() ?? '',
+      statusLabel: json['status_label']?.toString() ?? '',
+      jobRank: json['job_rank']?.toString(),
+      jobRankIds: json['job_rank_ids'] is List ? json['job_rank_ids'] as List<dynamic> : [],
+      jobRankNames: json['job_rank_names']?.toString(),
+      roles: json['roles'] is List ? json['roles'] as List<dynamic> : [],
+      propertiesCount: json['properties_count'] is num ? (json['properties_count'] as num).toInt() : int.tryParse(json['properties_count']?.toString() ?? '0') ?? 0,
+      contractsCount: json['contracts_count'] is num ? (json['contracts_count'] as num).toInt() : int.tryParse(json['contracts_count']?.toString() ?? '0') ?? 0,
+      glAccountId: json['gl_account_id'] is num ? (json['gl_account_id'] as num).toInt() : int.tryParse(json['gl_account_id']?.toString() ?? ''),
+      createdAt: json['created_at']?.toString() ?? '',
+      updatedAt: json['updated_at']?.toString() ?? '',
+    );
+  }
+}

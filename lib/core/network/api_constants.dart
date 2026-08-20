@@ -48,7 +48,10 @@ class ApiConstants {
   static const String ownerAccountingReceivables = 'owner/accounting/receivables';
   static const String ownerAccountingPayables = 'owner/accounting/payables';
 
+  static const String ownerTechnicians = 'owner/technicians';
   static const String ownerMaintenance = 'owner/maintenance-requests';
+  static const String ownerClients = 'owner/clients';
+
   static String ownerMaintenanceDetails(int id) =>
       'owner/maintenance-requests/$id';
   static String ownerMaintenanceApprove(int id) =>
