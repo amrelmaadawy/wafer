@@ -86,6 +86,8 @@ class _OwnerClientsListViewContentState extends State<_OwnerClientsListViewConte
           child: Scaffold(
             appBar: CustomAppBar(
               title: LocaleKeys.clients.tr(),
+              showBackButton: false,
+              showMenuButton: true,
             ),
       body: BlocBuilder<OwnerClientsListCubit, OwnerClientsListState>(
         builder: (context, state) {

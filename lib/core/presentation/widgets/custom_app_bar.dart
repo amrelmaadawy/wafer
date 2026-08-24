@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../theme/app_colors.dart';
 import 'custom_back_button.dart';
+import 'custom_menu_button.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -8,6 +9,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool centerTitle;
   final List<Widget>? actions;
   final bool showBackButton;
+  final bool showMenuButton;
   final VoidCallback? onBackPressed;
   final PreferredSizeWidget? bottom;
   final double? toolbarHeight;
@@ -19,6 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.centerTitle = true,
     this.actions,
     this.showBackButton = true,
+    this.showMenuButton = false,
     this.onBackPressed,
     this.bottom,
     this.toolbarHeight,
@@ -34,10 +37,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 0,
       backgroundColor: Colors.transparent,
       toolbarHeight: _effectiveToolbarHeight,
-      leadingWidth: showBackButton ? 68 : null,
+      leadingWidth: (showBackButton || showMenuButton) ? 68 : null,
       leading: showBackButton
           ? CustomBackButton(onPressed: onBackPressed)
-          : null,
+          : (showMenuButton ? CustomMenuButton(onPressed: onBackPressed) : null),
       title: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: centerTitle

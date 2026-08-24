@@ -16,9 +16,6 @@ class ErrorInterceptor extends Interceptor {
     if (statusCode == 401) {
       // Token expired or invalid — trigger global logout flow.
       AuthEventBus.fire(AuthEvent.unauthorized);
-    } else if (statusCode == 403) {
-      // Access forbidden — notify the app if needed.
-      AuthEventBus.fire(AuthEvent.forbidden);
     }
 
     // Always forward the error so repositories / cubits can handle it.

@@ -28,110 +28,194 @@ class OwnerClientCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryColor = context.primaryColor;
+    final String initial = client.name.trim().isNotEmpty 
+        ? client.name.trim().substring(0, 1).toUpperCase() 
+        : '?';
+
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: AppSurfaceCard(
         onTap: onTap,
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: EdgeInsets.zero,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        client.name.isEmpty ? '-' : client.name,
-                        style: AppTextStyles.bodyLarge.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: context.appOnSurfaceColor,
-                        ),
+            Padding(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Client Avatar
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: primaryColor.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: primaryColor.withValues(alpha: 0.2),
+                        width: 1,
                       ),
-                      if (client.phone != null && client.phone!.isNotEmpty) ...[
-                        const SizedBox(height: AppSpacing.xs),
-                        Text(
-                          client.phone!,
-                          textDirection: ui.TextDirection.ltr,
-                          style: AppTextStyles.bodyMedium.copyWith(
-                            color: context.appSecondaryTextColor,
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      initial,
+                      style: AppTextStyles.h4.copyWith(
+                        color: primaryColor,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.sm),
+                  // Client Info
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                client.name.isEmpty ? '-' : client.name,
+                                style: AppTextStyles.bodyLarge.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  color: context.appOnSurfaceColor,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(width: AppSpacing.xs),
+                            AppStatusBadge(
+                              labelKey: _getClientTypeLabelKey(client.clientType),
+                              color: _getClientTypeColor(client.clientType),
+                            ),
+                          ],
+                        ),
+                        if (client.phone != null && client.phone!.isNotEmpty) ...[
+                          const SizedBox(height: 4),
+                          Text(
+                            client.phone!,
+                            textDirection: ui.TextDirection.ltr,
+                            textAlign: context.locale.languageCode == 'ar' 
+                                ? TextAlign.right 
+                                : TextAlign.left,
+                            style: AppTextStyles.bodyMedium.copyWith(
+                              color: context.appSecondaryTextColor,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            
+            // Footer Section (Stats & Actions)
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md, 
+                vertical: AppSpacing.sm,
+              ),
+              decoration: BoxDecoration(
+                color: context.appBorderColor.withValues(alpha: 0.2),
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(16), // Match AppSurfaceCard default radius
+                ),
+              ),
+              child: Row(
+                children: [
+                  // Stats
+                  Expanded(
+                    child: Wrap(
+                      spacing: AppSpacing.md,
+                      runSpacing: AppSpacing.xs,
+                      children: [
+                        _buildInfoItem(
+                          context,
+                          LocaleKeys.drawerNavContracts.tr(),
+                          client.contractsCount.toString(),
+                          Icons.description_outlined,
+                        ),
+                        _buildInfoItem(
+                          context,
+                          LocaleKeys.drawerNavProperties.tr(),
+                          client.propertiesCount.toString(),
+                          Icons.domain_outlined,
                         ),
                       ],
+                    ),
+                  ),
+                  
+                  // Actions
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      _buildActionButton(
+                        context,
+                        icon: Icons.edit_rounded,
+                        color: context.primaryColor,
+                        onTap: () {
+                          UpdateClientBottomSheet.show(
+                            context,
+                            client,
+                            () {
+                              context.read<OwnerClientsListCubit>().loadClients(forceRefresh: true);
+                            },
+                          );
+                        },
+                      ),
+                      const SizedBox(width: 8),
+                      _buildActionButton(
+                        context,
+                        icon: Icons.delete_outline_rounded,
+                        color: AppColors.error,
+                        onTap: () async {
+                          final confirmed = await AppConfirmDialog.show(
+                            context: context,
+                            titleKey: LocaleKeys.clientsDeleteTitle,
+                            messageKey: LocaleKeys.clientsDeleteMessage,
+                          );
+                          if (confirmed == true && context.mounted) {
+                            context.read<DeleteOwnerClientCubit>().deleteClient(client.id);
+                          }
+                        },
+                      ),
                     ],
                   ),
-                ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () async {
-                    final confirmed = await AppConfirmDialog.show(
-                      context: context,
-                      titleKey: LocaleKeys.clientsDeleteTitle, // Need to add to translation
-                      messageKey: LocaleKeys.clientsDeleteMessage, // Need to add to translation
-                    );
-                    if (confirmed == true && context.mounted) {
-                      context.read<DeleteOwnerClientCubit>().deleteClient(client.id);
-                    }
-                  },
-                  icon: Icon(
-                    Icons.delete_outline_rounded,
-                    color: AppColors.error,
-                    size: 20,
-                  ),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  splashRadius: 20,
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                IconButton(
-                  onPressed: () {
-                    UpdateClientBottomSheet.show(
-                      context,
-                      client,
-                      () {
-                        context.read<OwnerClientsListCubit>().loadClients(forceRefresh: true);
-                      },
-                    );
-                  },
-                  icon: Icon(
-                    Icons.edit_rounded,
-                    color: context.primaryColor,
-                    size: 20,
-                  ),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  splashRadius: 20,
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                AppStatusBadge(
-                  labelKey: _getClientTypeLabelKey(client.clientType),
-                  color: _getClientTypeColor(client.clientType),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.md),
-            const Divider(),
-            const SizedBox(height: AppSpacing.sm),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _buildInfoItem(
-                  context,
-                  LocaleKeys.drawerNavContracts.tr(),
-                  client.contractsCount.toString(),
-                  Icons.description_outlined,
-                ),
-                _buildInfoItem(
-                  context,
-                  LocaleKeys.drawerNavProperties.tr(),
-                  client.propertiesCount.toString(),
-                  Icons.domain_outlined,
-                ),
-              ],
+                ],
+              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton(BuildContext context, {
+    required IconData icon, 
+    required Color color, 
+    required VoidCallback onTap
+  }) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Container(
+          padding: const EdgeInsets.all(6),
+          decoration: BoxDecoration(
+            color: color.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Icon(
+            icon,
+            size: 18,
+            color: color,
+          ),
         ),
       ),
     );
@@ -148,19 +232,20 @@ class OwnerClientCard extends StatelessWidget {
       children: [
         Icon(
           icon,
-          size: 16,
+          size: 14,
           color: context.appSecondaryTextColor,
         ),
-        const SizedBox(width: AppSpacing.xs),
+        const SizedBox(width: 4),
         Text(
           '$label: ',
           style: AppTextStyles.bodySmall.copyWith(
             color: context.appSecondaryTextColor,
+            fontWeight: FontWeight.w500,
           ),
         ),
         Text(
           value,
-          style: AppTextStyles.bodyMedium.copyWith(
+          style: AppTextStyles.bodySmall.copyWith(
             fontWeight: FontWeight.w700,
             color: context.appOnSurfaceColor,
           ),
@@ -182,3 +267,4 @@ class OwnerClientCard extends StatelessWidget {
     return '';
   }
 }
+

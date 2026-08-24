@@ -2,7 +2,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
-import '../../../../core/di/service_locator.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
 import '../cubit/auth_cubit.dart';

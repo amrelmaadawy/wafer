@@ -6,7 +6,7 @@ import '../../../../../../core/theme/app_radius.dart';
 import '../../../../../../core/theme/app_spacing.dart';
 import '../../../../../../core/theme/color_utils.dart';
 import '../../../../../../core/theme/theme_context.dart';
-import '../../../../../../core/presentation/widgets/app_loading_overlay.dart';
+
 import '../../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../../../../../../core/utils/widgets/custom_text_field.dart';
 import '../../../../../../core/utils/widgets/app_toast.dart';
@@ -79,8 +79,8 @@ class _UpdateClientBottomSheetState extends State<UpdateClientBottomSheet> {
       builder: (context, state) {
         final isLoading = state.status == UpdateOwnerClientStatus.loading;
 
-        return AppLoadingOverlay(
-          isLoading: isLoading,
+        return IgnorePointer(
+          ignoring: isLoading,
           child: Container(
             constraints: BoxConstraints(maxHeight: maxSheetHeight),
             decoration: BoxDecoration(
