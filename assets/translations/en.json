@@ -2617,5 +2617,16 @@
   "clients": "Clients",
   "searchClientsHint": "Search by client name or phone...",
   "searchClientsNoResults": "No clients match your search",
-  "searchClientsError": "An error occurred during search"
+  "searchClientsError": "An error occurred during search",
+  "clientStatementTitle": "Client Statement",
+  "openingBalance": "Opening Balance",
+  "totalDebit": "Total Debit",
+  "totalCredit": "Total Credit",
+  "currentBalance": "Current Balance",
+  "transactionType": "Transaction Type",
+  "transactionReference": "Reference",
+  "statementFilter": "Filter Statement",
+  "statementEmpty": "No financial transactions",
+  "statementEmptySubtitle": "No transactions were found for the selected period",
+  "dateRange": "Period"
 }

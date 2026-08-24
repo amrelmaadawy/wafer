@@ -3,6 +3,7 @@ import '../../../../../core/data/base_repository.dart';
 import '../../../../../core/error/failures.dart';
 import '../../domain/entities/clients_list_response_entity.dart';
 import '../../domain/entities/client_entity.dart';
+import '../../domain/entities/client_statement_response_entity.dart';
 import '../../domain/repositories/owner_clients_repository.dart';
 import '../datasources/owner_clients_remote_data_source.dart';
 
@@ -45,6 +46,23 @@ class OwnerClientsRepositoryImpl extends BaseRepository implements OwnerClientsR
   Future<Either<Failure, List<ClientEntity>>> searchClients(String keyword) async {
     return executeApiCall<List<ClientEntity>>(
       call: () => remoteDataSource.searchClients(keyword),
+    );
+  }
+
+  @override
+  Future<Either<Failure, ClientStatementResponseEntity>> getClientStatement({
+    required int clientId,
+    String? startDate,
+    String? endDate,
+    String? transactionType,
+  }) async {
+    return executeApiCall<ClientStatementResponseEntity>(
+      call: () => remoteDataSource.getClientStatement(
+        clientId: clientId,
+        startDate: startDate,
+        endDate: endDate,
+        transactionType: transactionType,
+      ),
     );
   }
 }

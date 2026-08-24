@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/routing/routes.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../core/presentation/widgets/custom_error_widget.dart';
@@ -16,6 +16,7 @@ import 'cubit/delete/delete_owner_client_state.dart';
 import '../../../../core/utils/widgets/app_toast.dart';
 import '../../../../core/presentation/widgets/app_loading_overlay.dart';
 import 'widgets/owner_client_card.dart';
+import 'widgets/client_shimmer_card.dart';
 
 class OwnerClientsListView extends StatelessWidget {
   const OwnerClientsListView({super.key});
@@ -103,7 +104,7 @@ class _OwnerClientsListViewContentState extends State<_OwnerClientsListViewConte
       body: BlocBuilder<OwnerClientsListCubit, OwnerClientsListState>(
         builder: (context, state) {
           if (state.status == OwnerClientsListStatus.loading) {
-            return const Center(child: CircularProgressIndicator());
+            return const ClientsListShimmer();
           }
 
           if (state.status == OwnerClientsListStatus.failure &&
@@ -129,13 +130,20 @@ class _OwnerClientsListViewContentState extends State<_OwnerClientsListViewConte
               itemBuilder: (context, index) {
                 if (index >= state.clients.length) {
                   return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: AppSpacing.md),
-                    child: Center(child: CircularProgressIndicator()),
+                    padding: EdgeInsets.only(bottom: AppSpacing.md),
+                    child: ClientShimmerCard(),
                   );
                 }
 
                 final client = state.clients[index];
-                return OwnerClientCard(client: client);
+                return OwnerClientCard(
+                  client: client,
+                  onTap: () {
+                    context.push(
+                      Routes.ownerClientStatementPath(client.id.toString()),
+                    );
+                  },
+                );
               },
             ),
           );

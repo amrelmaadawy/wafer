@@ -2611,5 +2611,16 @@
   "clients": "العملاء",
   "searchClientsHint": "ابحث باسم العميل أو رقم الهاتف...",
   "searchClientsNoResults": "لا يوجد عملاء يطابقون بحثك",
-  "searchClientsError": "حدث خطأ أثناء البحث"
+  "searchClientsError": "حدث خطأ أثناء البحث",
+  "clientStatementTitle": "كشف حساب العميل",
+  "openingBalance": "الرصيد الافتتاحي",
+  "totalDebit": "إجمالي المدين",
+  "totalCredit": "إجمالي الدائن",
+  "currentBalance": "الرصيد الحالي",
+  "transactionType": "نوع العملية",
+  "transactionReference": "المرجع",
+  "statementFilter": "تصفية كشف الحساب",
+  "statementEmpty": "لا يوجد حركات مالية",
+  "statementEmptySubtitle": "لم يتم العثور على أي حركات مالية في الفترة المحددة",
+  "dateRange": "الفترة"
 }

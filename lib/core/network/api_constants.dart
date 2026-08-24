@@ -52,6 +52,7 @@ class ApiConstants {
   static const String ownerMaintenance = 'owner/maintenance-requests';
   static const String ownerClients = 'owner/clients';
   static const String ownerClientsSearch = 'owner/clients/search';
+  static String ownerClientStatement(int id) => 'owner/clients/$id/statement';
 
   static String ownerMaintenanceDetails(int id) =>
       'owner/maintenance-requests/$id';

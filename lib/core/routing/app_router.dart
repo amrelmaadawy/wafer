@@ -134,6 +134,7 @@ import '../../features/owner/clients/presentation/owner_clients_list_view.dart';
 import '../../features/owner/clients/presentation/cubit/list/owner_clients_list_cubit.dart';
 import '../../features/owner/clients/presentation/owner_clients_search_view.dart';
 import '../../features/owner/clients/presentation/cubit/search/search_owner_clients_cubit.dart';
+import '../../features/owner/clients/presentation/owner_client_statement_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
@@ -943,6 +944,13 @@ class AppRouter {
                   create: (_) => sl<SearchOwnerClientsCubit>(),
                   child: const OwnerClientsSearchView(),
                 ),
+              ),
+              GoRoute(
+                path: Routes.ownerClientStatement,
+                builder: (context, state) {
+                  final id = int.tryParse(state.pathParameters['clientId'] ?? '0') ?? 0;
+                  return OwnerClientStatementView(clientId: id);
+                },
               ),
             ],
           ),

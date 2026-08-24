@@ -101,7 +101,9 @@ class Routes {
   static const String ownerClientsList = '/owner/clients';
   static const String ownerClientsSearch = '/owner/clients/search';
   static const String ownerClientDetails = '/owner/clients/:clientId';
+  static const String ownerClientStatement = '/owner/clients/:clientId/statement';
   static String ownerClientDetailsPath(String id) => '/owner/clients/$id';
+  static String ownerClientStatementPath(String id) => '/owner/clients/$id/statement';
 
   // --- Negotiations ---
   static const String ownerNegotiationsList = '/owner/negotiations';

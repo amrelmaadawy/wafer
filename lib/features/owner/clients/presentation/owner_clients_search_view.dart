@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../../core/presentation/widgets/app_search.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
@@ -10,6 +12,7 @@ import '../../../../../core/theme/app_spacing.dart';
 import 'cubit/search/search_owner_clients_cubit.dart';
 import 'cubit/search/search_owner_clients_state.dart';
 import 'widgets/owner_client_card.dart';
+import 'widgets/client_shimmer_card.dart';
 
 class OwnerClientsSearchView extends StatelessWidget {
   const OwnerClientsSearchView({super.key});
@@ -42,9 +45,7 @@ class OwnerClientsSearchView extends StatelessWidget {
                 }
 
                 if (state is SearchOwnerClientsLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
+                  return const ClientsListShimmer();
                 }
 
                 if (state is SearchOwnerClientsError) {
@@ -68,7 +69,14 @@ class OwnerClientsSearchView extends StatelessWidget {
                     separatorBuilder: (context, index) =>
                         const SizedBox(height: AppSpacing.md),
                     itemBuilder: (context, index) {
-                      return OwnerClientCard(client: state.clients[index]);
+                      return OwnerClientCard(
+                        client: state.clients[index],
+                        onTap: () {
+                          context.push(
+                            Routes.ownerClientStatementPath(state.clients[index].id.toString()),
+                          );
+                        },
+                      );
                     },
                   );
                 }

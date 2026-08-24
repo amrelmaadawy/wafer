@@ -2586,5 +2586,16 @@ abstract class  LocaleKeys {
   static const searchClientsHint = 'searchClientsHint';
   static const searchClientsNoResults = 'searchClientsNoResults';
   static const searchClientsError = 'searchClientsError';
+  static const clientStatementTitle = 'clientStatementTitle';
+  static const openingBalance = 'openingBalance';
+  static const totalDebit = 'totalDebit';
+  static const totalCredit = 'totalCredit';
+  static const currentBalance = 'currentBalance';
+  static const transactionType = 'transactionType';
+  static const transactionReference = 'transactionReference';
+  static const statementFilter = 'statementFilter';
+  static const statementEmpty = 'statementEmpty';
+  static const statementEmptySubtitle = 'statementEmptySubtitle';
+  static const dateRange = 'dateRange';
 
 }
