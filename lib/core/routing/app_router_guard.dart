@@ -24,6 +24,9 @@ String? appRouterGuard({
 
   // Not authenticated: redirect to login
   if (!isAuthenticated || currentUser == null) {
+    if (path == Routes.splash) {
+      return Routes.login;
+    }
     if (isSessionError) {
       // Session error from network: stay on login (can retry)
       return isPublicRoute ? null : Routes.login;
