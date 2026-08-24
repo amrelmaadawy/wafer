@@ -277,7 +277,9 @@ import '../warehouse/data/datasources/owner_warehouse_remote_data_source.dart';
 import '../warehouse/data/repositories/owner_warehouse_repository_impl.dart';
 import '../warehouse/domain/repositories/owner_warehouse_repository.dart';
 import '../warehouse/domain/usecases/get_owner_warehouse_summary_use_case.dart';
+import '../warehouse/domain/usecases/get_owner_warehouse_items_use_case.dart';
 import '../warehouse/presentation/cubit/summary/owner_warehouse_summary_cubit.dart';
+import '../warehouse/presentation/cubit/items/owner_warehouse_items_cubit.dart';
 
 void initOwnerModule() {
   _initDashboard();
@@ -315,6 +317,14 @@ void _initWarehouse() {
   if (!sl.isRegistered<OwnerWarehouseSummaryCubit>()) {
     sl.registerFactory(
       () => OwnerWarehouseSummaryCubit(getWarehouseSummaryUseCase: sl()),
+    );
+  }
+  if (!sl.isRegistered<GetOwnerWarehouseItemsUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerWarehouseItemsUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerWarehouseItemsCubit>()) {
+    sl.registerFactory(
+      () => OwnerWarehouseItemsCubit(getItemsUseCase: sl()),
     );
   }
 }

@@ -136,6 +136,7 @@ import '../../features/owner/clients/presentation/owner_clients_search_view.dart
 import '../../features/owner/clients/presentation/cubit/search/search_owner_clients_cubit.dart';
 import '../../features/owner/clients/presentation/owner_client_statement_view.dart';
 import '../../features/owner/warehouse/presentation/owner_warehouse_summary_view.dart';
+import '../../features/owner/warehouse/presentation/owner_warehouse_items_list_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
@@ -245,6 +246,10 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerWarehouse,
         builder: (context, state) => const OwnerWarehouseSummaryView(),
+      ),
+      GoRoute(
+        path: Routes.ownerWarehouseItems,
+        builder: (context, state) => const OwnerWarehouseItemsListView(),
       ),
       GoRoute(
         path: Routes.ownerFinanceAccounts,

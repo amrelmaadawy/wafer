@@ -130,4 +130,5 @@ class Routes {
 
   // --- Warehouse ---
   static const String ownerWarehouse = '/owner/warehouse';
+  static const String ownerWarehouseItems = '/owner/warehouse/items';
 }

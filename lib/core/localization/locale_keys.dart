@@ -2598,6 +2598,8 @@ abstract class  LocaleKeys {
   static const statementEmptySubtitle = 'statementEmptySubtitle';
   static const dateRange = 'dateRange';
   static const warehouse_dashboard_title = 'warehouse.dashboard_title';
+  static const warehouse_summary_title = 'warehouse.summary_title';
+  static const warehouse_items_list_title = 'warehouse.items_list_title';
   static const warehouse_stats_total_items = 'warehouse.stats_total_items';
   static const warehouse_stats_active_items = 'warehouse.stats_active_items';
   static const warehouse_stats_low_items = 'warehouse.stats_low_items';
@@ -2608,6 +2610,9 @@ abstract class  LocaleKeys {
   static const warehouse_low_stock_title = 'warehouse.low_stock_title';
   static const warehouse_low_stock_empty = 'warehouse.low_stock_empty';
   static const warehouse_low_stock_empty_sub = 'warehouse.low_stock_empty_sub';
+  static const warehouse_items_empty = 'warehouse.items_empty';
+  static const warehouse_items_empty_sub = 'warehouse.items_empty_sub';
+  static const warehouse_search_hint = 'warehouse.search_hint';
   static const warehouse_sku = 'warehouse.sku';
   static const warehouse_quantity_available = 'warehouse.quantity_available';
   static const warehouse_min_quantity = 'warehouse.min_quantity';

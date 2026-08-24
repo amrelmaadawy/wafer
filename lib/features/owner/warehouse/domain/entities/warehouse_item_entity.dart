@@ -10,8 +10,11 @@ class WarehouseItemEntity extends Equatable {
   final num quantityAvailable;
   final num quantityMinLimit;
   final num lastCost;
+  final num finalSellingPrice;
   final String status;
   final String statusLabel;
+  final String? imageUrl;
+  final String? description;
 
   const WarehouseItemEntity({
     required this.id,
@@ -22,9 +25,12 @@ class WarehouseItemEntity extends Equatable {
     required this.warehouse,
     required this.quantityAvailable,
     required this.quantityMinLimit,
-    required this.lastCost,
+    this.lastCost = 0,
+    this.finalSellingPrice = 0,
     required this.status,
     required this.statusLabel,
+    this.imageUrl,
+    this.description,
   });
 
   @override
@@ -38,8 +44,11 @@ class WarehouseItemEntity extends Equatable {
         quantityAvailable,
         quantityMinLimit,
         lastCost,
+        finalSellingPrice,
         status,
         statusLabel,
+        imageUrl,
+        description,
       ];
 }
 

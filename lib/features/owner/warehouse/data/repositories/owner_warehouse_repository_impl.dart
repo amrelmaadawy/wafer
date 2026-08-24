@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 
 import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
+import '../../domain/entities/warehouse_items_response_entity.dart';
 import '../../domain/entities/warehouse_summary_entity.dart';
 import '../../domain/repositories/owner_warehouse_repository.dart';
 import '../datasources/owner_warehouse_remote_data_source.dart';
@@ -17,6 +18,36 @@ class OwnerWarehouseRepositoryImpl implements OwnerWarehouseRepository {
     try {
       final summary = await remoteDataSource.getWarehouseSummary();
       return Right(summary);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(
+        ServerFailure(
+          e.response?.data['message'] ?? e.message ?? 'Unknown Error',
+        ),
+      );
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, WarehouseItemsResponseEntity>> getWarehouseItems({
+    int page = 1,
+    String? search,
+    String? category,
+    int? warehouseId,
+    String? status,
+  }) async {
+    try {
+      final response = await remoteDataSource.getWarehouseItems(
+        page: page,
+        search: search,
+        category: category,
+        warehouseId: warehouseId,
+        status: status,
+      );
+      return Right(response);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {

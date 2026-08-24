@@ -35,6 +35,7 @@ class ApiConstants {
   static const String ownerAccountingJournalEntries =
       'owner/accounting/journal-entries';
   static const String ownerContracts = 'owner/contracts';
+  static const String ownerWarehouseItems = 'owner/warehouse/items';
 
   // Owner Finance/Accounting
   static const String ownerAccounting = 'owner/accounting';

@@ -182,13 +182,6 @@ class OwnerDrawerConfig {
             allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
           ),
           DrawerNavItem(
-            labelKey: LocaleKeys.warehouse_dashboard_title,
-            icon: Icons.inventory_2_outlined,
-            activeIcon: Icons.inventory_2_rounded,
-            route: Routes.ownerWarehouse,
-            allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
-          ),
-          DrawerNavItem(
             labelKey: LocaleKeys.drawerNavContracts,
             icon: Icons.description_outlined,
             activeIcon: Icons.description_rounded,
@@ -215,7 +208,28 @@ class OwnerDrawerConfig {
         ],
       ),
 
-      // 3. "الحسابات المالية" (Documents/Finance Section)
+      // 3. Warehouse Section (New)
+      DrawerNavSection(
+        titleKey: LocaleKeys.warehouse_dashboard_title,
+        icon: Icons.inventory_2_outlined,
+        allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
+        items: [
+          DrawerNavItem(
+            labelKey: LocaleKeys.warehouse_summary_title,
+            icon: Icons.dashboard_outlined,
+            activeIcon: Icons.dashboard_rounded,
+            route: Routes.ownerWarehouse,
+          ),
+          DrawerNavItem(
+            labelKey: LocaleKeys.warehouse_items_list_title,
+            icon: Icons.list_alt_outlined,
+            activeIcon: Icons.list_alt_rounded,
+            route: Routes.ownerWarehouseItems,
+          ),
+        ],
+      ),
+
+      // 4. "الحسابات المالية" (Documents/Finance Section)
       DrawerNavSection(
         titleKey: LocaleKeys.drawerSectionDocuments,
         icon: Icons.account_balance_wallet_outlined,

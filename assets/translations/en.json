@@ -2631,6 +2631,8 @@
   "dateRange": "Period",
   "warehouse": {
     "dashboard_title": "Warehouse Dashboard",
+    "summary_title": "Warehouse Summary",
+    "items_list_title": "Items List",
     "stats_total_items": "Total Items",
     "stats_active_items": "Active Items",
     "stats_low_items": "Low Stock",

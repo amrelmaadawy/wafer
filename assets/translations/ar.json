@@ -2625,6 +2625,8 @@
   "dateRange": "الفترة",
   "warehouse": {
     "dashboard_title": "المستودع",
+    "summary_title": "ملخص المستودع",
+    "items_list_title": "قائمة الأصناف",
     "stats_total_items": "إجمالي الأصناف",
     "stats_active_items": "أصناف نشطة",
     "stats_low_items": "نواقص مخزون",
@@ -2635,6 +2637,9 @@
     "low_stock_title": "الأصناف منخفضة المخزون",
     "low_stock_empty": "لا توجد أصناف منخفضة المخزون",
     "low_stock_empty_sub": "جميع أرصدة المستودع في المستوى الآمن",
+    "items_empty": "لا توجد أصناف",
+    "items_empty_sub": "لم يتم العثور على أي أصناف مطابقة للبحث",
+    "search_hint": "ابحث عن صنف...",
     "sku": "رقم الصنف",
     "quantity_available": "الرصيد:",
     "min_quantity": "الحد الأدنى:",

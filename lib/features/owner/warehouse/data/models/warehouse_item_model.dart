@@ -10,9 +10,12 @@ class WarehouseItemModel extends WarehouseItemEntity {
     required super.warehouse,
     required super.quantityAvailable,
     required super.quantityMinLimit,
-    required super.lastCost,
+    super.lastCost = 0,
+    super.finalSellingPrice = 0,
     required super.status,
     required super.statusLabel,
+    super.imageUrl,
+    super.description,
   });
 
   factory WarehouseItemModel.fromJson(Map<String, dynamic> json) {
@@ -25,11 +28,14 @@ class WarehouseItemModel extends WarehouseItemEntity {
       warehouse: json['warehouse'] != null
           ? WarehouseModel.fromJson(json['warehouse'])
           : const WarehouseModel(id: 0, name: '', branchName: ''),
-      quantityAvailable: json['quantity_available'] ?? 0,
-      quantityMinLimit: json['quantity_min_limit'] ?? 0,
+      quantityAvailable: json['quantity'] ?? json['quantity_available'] ?? 0,
+      quantityMinLimit: json['min_quantity'] ?? json['quantity_min_limit'] ?? 0,
       lastCost: json['last_cost'] ?? 0,
-      status: json['status'] ?? '',
-      statusLabel: json['status_label'] ?? '',
+      finalSellingPrice: json['pricing']?['final_selling_price'] ?? 0,
+      status: json['stock_status'] ?? json['status'] ?? '',
+      statusLabel: json['stock_status_label'] ?? json['status_label'] ?? '',
+      imageUrl: json['image_url'],
+      description: json['description'],
     );
   }
 }
