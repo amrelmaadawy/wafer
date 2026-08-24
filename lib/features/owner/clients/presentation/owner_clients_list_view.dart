@@ -9,6 +9,10 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/di/service_locator.dart' as di;
 import 'cubit/list/owner_clients_list_cubit.dart';
 import 'cubit/list/owner_clients_list_state.dart';
+import 'cubit/delete/delete_owner_client_cubit.dart';
+import 'cubit/delete/delete_owner_client_state.dart';
+import '../../../../core/utils/widgets/app_toast.dart';
+import '../../../../core/presentation/widgets/app_loading_overlay.dart';
 import 'widgets/owner_client_card.dart';
 
 class OwnerClientsListView extends StatelessWidget {
@@ -16,8 +20,15 @@ class OwnerClientsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => di.sl<OwnerClientsListCubit>()..loadClients(forceRefresh: true),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => di.sl<OwnerClientsListCubit>()..loadClients(forceRefresh: true),
+        ),
+        BlocProvider(
+          create: (_) => di.sl<DeleteOwnerClientCubit>(),
+        ),
+      ],
       child: const _OwnerClientsListViewContent(),
     );
   }
@@ -60,10 +71,22 @@ class _OwnerClientsListViewContentState extends State<_OwnerClientsListViewConte
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: LocaleKeys.clients.tr(),
-      ),
+    return BlocConsumer<DeleteOwnerClientCubit, DeleteOwnerClientState>(
+      listener: (context, state) {
+        if (state.status == DeleteOwnerClientStatus.success) {
+          AppToast.showSuccess(context, LocaleKeys.commonSuccess.tr()); // or a specific message
+          context.read<OwnerClientsListCubit>().loadClients(forceRefresh: true);
+        } else if (state.status == DeleteOwnerClientStatus.failure) {
+          AppToast.showError(context, state.errorMessage ?? LocaleKeys.commonError.tr());
+        }
+      },
+      builder: (context, deleteState) {
+        return AppLoadingOverlay(
+          isLoading: deleteState.status == DeleteOwnerClientStatus.loading,
+          child: Scaffold(
+            appBar: CustomAppBar(
+              title: LocaleKeys.clients.tr(),
+            ),
       body: BlocBuilder<OwnerClientsListCubit, OwnerClientsListState>(
         builder: (context, state) {
           if (state.status == OwnerClientsListStatus.loading) {
@@ -105,6 +128,9 @@ class _OwnerClientsListViewContentState extends State<_OwnerClientsListViewConte
           );
         },
       ),
+          ),
+        );
+      },
     );
   }
 

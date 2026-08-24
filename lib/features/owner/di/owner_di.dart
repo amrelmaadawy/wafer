@@ -262,7 +262,11 @@ import '../clients/data/datasources/owner_clients_remote_data_source.dart';
 import '../clients/data/repositories/owner_clients_repository_impl.dart';
 import '../clients/domain/repositories/owner_clients_repository.dart';
 import '../clients/domain/usecases/get_owner_clients_use_case.dart';
+import '../clients/domain/usecases/update_owner_client_use_case.dart';
+import '../clients/domain/usecases/delete_owner_client_use_case.dart';
 import '../clients/presentation/cubit/list/owner_clients_list_cubit.dart';
+import '../clients/presentation/cubit/update/update_owner_client_cubit.dart';
+import '../clients/presentation/cubit/delete/delete_owner_client_cubit.dart';
 
 void initOwnerModule() {
   _initDashboard();
@@ -476,6 +480,8 @@ void _initFinance() {
     sl.registerLazySingleton(() => UpdateJournalEntryUseCase(sl()));
     sl.registerLazySingleton(() => PostJournalEntryUseCase(sl()));
     sl.registerLazySingleton(() => ReverseJournalEntryUseCase(sl()));
+
+
 
     // Cubits
     sl.registerFactory(() => JournalEntriesCubit(sl()));
@@ -805,9 +811,25 @@ void _initClients() {
   if (!sl.isRegistered<GetOwnerClientsUseCase>()) {
     sl.registerLazySingleton(() => GetOwnerClientsUseCase(sl()));
   }
+  if (!sl.isRegistered<UpdateOwnerClientUseCase>()) {
+    sl.registerLazySingleton(() => UpdateOwnerClientUseCase(repository: sl()));
+  }
+  if (!sl.isRegistered<DeleteOwnerClientUseCase>()) {
+    sl.registerLazySingleton(() => DeleteOwnerClientUseCase(repository: sl()));
+  }
   if (!sl.isRegistered<OwnerClientsListCubit>()) {
     sl.registerFactory(() => OwnerClientsListCubit(
       getOwnerClientsUseCase: sl(),
+    ));
+  }
+  if (!sl.isRegistered<UpdateOwnerClientCubit>()) {
+    sl.registerFactory(() => UpdateOwnerClientCubit(
+      updateOwnerClientUseCase: sl(),
+    ));
+  }
+  if (!sl.isRegistered<DeleteOwnerClientCubit>()) {
+    sl.registerFactory(() => DeleteOwnerClientCubit(
+      deleteOwnerClientUseCase: sl(),
     ));
   }
 }

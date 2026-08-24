@@ -1421,6 +1421,13 @@ abstract class  LocaleKeys {
   static const contractNotes = 'contractNotes';
   static const contractSettingsUpdatedSuccessfully = 'contractSettingsUpdatedSuccessfully';
   static const clients = 'clients';
+  static const clientsRenterPhone = 'clientsRenterPhone';
+  static const clientStatus = 'clientStatus';
+  static const clientTypeOwner = 'clientTypeOwner';
+  static const clientTypeTenant = 'clientTypeTenant';
+  static const clientTypeClient = 'clientTypeClient';
+  static const clientsDeleteTitle = 'clientsDeleteTitle';
+  static const clientsDeleteMessage = 'clientsDeleteMessage';
   static const noClientsFound = 'noClientsFound';
   static const noClientsFoundSubtitle = 'noClientsFoundSubtitle';
   static const contractsSecurityDeposit = 'contractsSecurityDeposit';

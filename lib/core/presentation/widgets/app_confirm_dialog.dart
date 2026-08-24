@@ -43,13 +43,13 @@ class AppConfirmDialog extends StatelessWidget {
   }) {
     return showDialog<bool>(
       context: context,
-      builder: (_) => AppConfirmDialog(
+      builder: (dialogContext) => AppConfirmDialog(
         titleKey: titleKey,
         messageKey: messageKey,
         impactKey: impactKey,
         confirmKey: confirmKey,
         cancelKey: cancelKey,
-        onConfirm: () => Navigator.of(context).pop(true),
+        onConfirm: () => Navigator.of(dialogContext).pop(true),
         isDangerous: isDangerous,
       ),
     );

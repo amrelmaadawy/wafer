@@ -8,7 +8,13 @@ import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/theme_context.dart';
+import '../../../../../core/theme/color_utils.dart';
+import '../../../../../core/presentation/widgets/app_confirm_dialog.dart';
 import '../../domain/entities/client_entity.dart';
+import '../cubit/list/owner_clients_list_cubit.dart';
+import '../cubit/delete/delete_owner_client_cubit.dart';
+import 'update_client_bottom_sheet.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class OwnerClientCard extends StatelessWidget {
   final ClientEntity client;
@@ -57,10 +63,51 @@ class OwnerClientCard extends StatelessWidget {
                     ],
                   ),
                 ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () async {
+                    final confirmed = await AppConfirmDialog.show(
+                      context: context,
+                      titleKey: LocaleKeys.clientsDeleteTitle, // Need to add to translation
+                      messageKey: LocaleKeys.clientsDeleteMessage, // Need to add to translation
+                    );
+                    if (confirmed == true && context.mounted) {
+                      context.read<DeleteOwnerClientCubit>().deleteClient(client.id);
+                    }
+                  },
+                  icon: Icon(
+                    Icons.delete_outline_rounded,
+                    color: AppColors.error,
+                    size: 20,
+                  ),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  splashRadius: 20,
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                IconButton(
+                  onPressed: () {
+                    UpdateClientBottomSheet.show(
+                      context,
+                      client,
+                      () {
+                        context.read<OwnerClientsListCubit>().loadClients(forceRefresh: true);
+                      },
+                    );
+                  },
+                  icon: Icon(
+                    Icons.edit_rounded,
+                    color: context.primaryColor,
+                    size: 20,
+                  ),
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),
+                  splashRadius: 20,
+                ),
                 const SizedBox(width: AppSpacing.sm),
                 AppStatusBadge(
-                  labelKey: client.clientTypeLabel ?? '',
-                  color: _getClientTypeColor(client.clientType ?? ''),
+                  labelKey: _getClientTypeLabelKey(client.clientType),
+                  color: _getClientTypeColor(client.clientType),
                 ),
               ],
             ),
@@ -126,5 +173,12 @@ class OwnerClientCard extends StatelessWidget {
     if (type == 'owner') return AppColors.primary;
     if (type == 'client' || type == 'tenant') return AppColors.info;
     return AppColors.textSecondaryLight;
+  }
+
+  String _getClientTypeLabelKey(String? type) {
+    if (type == 'owner') return LocaleKeys.clientTypeOwner;
+    if (type == 'tenant') return LocaleKeys.clientTypeTenant;
+    if (type == 'client') return LocaleKeys.clientTypeClient;
+    return '';
   }
 }
