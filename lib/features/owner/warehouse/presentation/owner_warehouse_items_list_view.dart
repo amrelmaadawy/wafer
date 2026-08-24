@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/di/service_locator.dart';
 import '../../../../../core/localization/locale_keys.dart';
-import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/presentation/widgets/custom_empty_widget.dart';
 import '../../../../../core/presentation/widgets/custom_error_widget.dart';
 import '../../../../../core/presentation/widgets/list/paginated_list_view.dart';
 import '../../../../../core/presentation/widgets/list/unified_search_field.dart';
 import '../../../../../core/theme/app_spacing.dart';
+import '../../../../../core/theme/color_utils.dart';
 import 'cubit/items/owner_warehouse_items_cubit.dart';
 import 'cubit/items/owner_warehouse_items_state.dart';
+import '../../shell/presentation/widgets/owner_top_app_bar.dart';
+import '../domain/entities/warehouse_item_entity.dart';
 import 'widgets/warehouse_item_list_card.dart';
 
 class OwnerWarehouseItemsListView extends StatefulWidget {
@@ -48,10 +51,21 @@ class _OwnerWarehouseItemsListViewState
     return BlocProvider.value(
       value: _cubit,
       child: Scaffold(
-        appBar: CustomAppBar(
-          title: LocaleKeys.warehouse_dashboard_title.tr(), // Or a dedicated key
-          showBackButton: true,
-          onBackPressed: () => context.pop(),
+        appBar: OwnerTopAppBar(
+          title: 'warehouse.items_list_title'.tr(),
+        ),
+        floatingActionButton: FloatingActionButton(
+          heroTag: null,
+          backgroundColor: context.primaryColor,
+          elevation: 4,
+          onPressed: () {
+            context.push(Routes.ownerWarehouseItemCreate).then((newItem) {
+              if (newItem != null && newItem is WarehouseItemEntity) {
+                _cubit.addItemToTop(newItem);
+              }
+            });
+          },
+          child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
         ),
         body: Column(
           children: [
@@ -64,46 +78,55 @@ class _OwnerWarehouseItemsListViewState
               ),
             ),
             Expanded(
-              child: BlocBuilder<OwnerWarehouseItemsCubit, OwnerWarehouseItemsState>(
-                builder: (context, state) {
-                  final isLoading = state is OwnerWarehouseItemsLoading;
-                  final isFetchingMore =
-                      isLoading && state.items.isNotEmpty;
-                  final isFirstLoad = isLoading && state.items.isEmpty;
+              child:
+                  BlocBuilder<
+                    OwnerWarehouseItemsCubit,
+                    OwnerWarehouseItemsState
+                  >(
+                    builder: (context, state) {
+                      final isLoading = state is OwnerWarehouseItemsLoading;
+                      final isFetchingMore =
+                          isLoading && state.items.isNotEmpty;
+                      final isFirstLoad = isLoading && state.items.isEmpty;
 
-                  if (state is OwnerWarehouseItemsError && state.items.isEmpty) {
-                    return CustomErrorWidget(
-                      message: state.message,
-                      onRetry: () => _cubit.fetchItems(isRefresh: true),
-                    );
-                  }
+                      if (state is OwnerWarehouseItemsError &&
+                          state.items.isEmpty) {
+                        return CustomErrorWidget(
+                          message: state.message,
+                          onRetry: () => _cubit.fetchItems(isRefresh: true),
+                        );
+                      }
 
-                  return PaginatedListView(
-                    items: state.items,
-                    isLoading: isFirstLoad,
-                    isFetchingMore: isFetchingMore,
-                    hasReachedMax: state.hasReachedMax,
-                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-                    onRefresh: () async {
-                      await _cubit.fetchItems(isRefresh: true);
-                    },
-                    onLoadMore: () {
-                      _cubit.fetchItems();
-                    },
-                    emptyWidget: CustomEmptyWidget(
-                      icon: Icons.inventory_2_outlined,
-                      title: LocaleKeys.warehouse_items_empty.tr(),
-                      subtitle: LocaleKeys.warehouse_items_empty_sub.tr(),
-                    ),
-                    itemBuilder: (context, index, item) {
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                        child: WarehouseItemListCard(item: item),
+                      return PaginatedListView(
+                        items: state.items,
+                        isLoading: isFirstLoad,
+                        isFetchingMore: isFetchingMore,
+                        hasReachedMax: state.hasReachedMax,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.md,
+                        ),
+                        onRefresh: () async {
+                          await _cubit.fetchItems(isRefresh: true);
+                        },
+                        onLoadMore: () {
+                          _cubit.fetchItems();
+                        },
+                        emptyWidget: CustomEmptyWidget(
+                          icon: Icons.inventory_2_outlined,
+                          title: LocaleKeys.warehouse_items_empty.tr(),
+                          subtitle: LocaleKeys.warehouse_items_empty_sub.tr(),
+                        ),
+                        itemBuilder: (context, index, item) {
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                              bottom: AppSpacing.md,
+                            ),
+                            child: WarehouseItemListCard(item: item),
+                          );
+                        },
                       );
                     },
-                  );
-                },
-              ),
+                  ),
             ),
           ],
         ),

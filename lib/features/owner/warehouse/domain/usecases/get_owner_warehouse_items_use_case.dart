@@ -7,14 +7,16 @@ import '../entities/warehouse_items_response_entity.dart';
 import '../repositories/owner_warehouse_repository.dart';
 
 class GetOwnerWarehouseItemsUseCase
-    implements UseCase<WarehouseItemsResponseEntity, GetOwnerWarehouseItemsParams> {
+    implements
+        UseCase<WarehouseItemsResponseEntity, GetOwnerWarehouseItemsParams> {
   final OwnerWarehouseRepository repository;
 
   GetOwnerWarehouseItemsUseCase(this.repository);
 
   @override
   Future<Either<Failure, WarehouseItemsResponseEntity>> call(
-      GetOwnerWarehouseItemsParams params) {
+    GetOwnerWarehouseItemsParams params,
+  ) {
     return repository.getWarehouseItems(
       page: params.page,
       search: params.search,

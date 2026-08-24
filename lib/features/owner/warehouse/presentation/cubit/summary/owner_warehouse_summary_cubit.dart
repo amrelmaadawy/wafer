@@ -8,7 +8,7 @@ class OwnerWarehouseSummaryCubit extends Cubit<OwnerWarehouseSummaryState> {
   final GetOwnerWarehouseSummaryUseCase getWarehouseSummaryUseCase;
 
   OwnerWarehouseSummaryCubit({required this.getWarehouseSummaryUseCase})
-      : super(OwnerWarehouseSummaryInitial());
+    : super(OwnerWarehouseSummaryInitial());
 
   Future<void> fetchSummary() async {
     emit(OwnerWarehouseSummaryLoading());

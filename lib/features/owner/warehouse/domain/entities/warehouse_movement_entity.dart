@@ -15,6 +15,14 @@ class WarehouseMovementEntity extends Equatable {
   final num totalCost;
   final String referenceType;
   final int? referenceId;
+  final String? referenceNumber;
+  final String? reason;
+  final String? reasonLabel;
+  final String? notes;
+  final String? createdByName;
+  final String? journalEntryNumber;
+  final String? journalEntryStatus;
+  final String? createdAt;
 
   const WarehouseMovementEntity({
     required this.id,
@@ -29,21 +37,37 @@ class WarehouseMovementEntity extends Equatable {
     required this.totalCost,
     required this.referenceType,
     this.referenceId,
+    this.referenceNumber,
+    this.reason,
+    this.reasonLabel,
+    this.notes,
+    this.createdByName,
+    this.journalEntryNumber,
+    this.journalEntryStatus,
+    this.createdAt,
   });
 
   @override
   List<Object?> get props => [
-        id,
-        date,
-        type,
-        typeLabel,
-        item,
-        quantity,
-        quantityBefore,
-        quantityAfter,
-        unitCost,
-        totalCost,
-        referenceType,
-        referenceId,
-      ];
+    id,
+    date,
+    type,
+    typeLabel,
+    item,
+    quantity,
+    quantityBefore,
+    quantityAfter,
+    unitCost,
+    totalCost,
+    referenceType,
+    referenceId,
+    referenceNumber,
+    reason,
+    reasonLabel,
+    notes,
+    createdByName,
+    journalEntryNumber,
+    journalEntryStatus,
+    createdAt,
+  ];
 }

@@ -22,7 +22,8 @@ class OwnerWarehouseSummaryView extends StatefulWidget {
   const OwnerWarehouseSummaryView({super.key});
 
   @override
-  State<OwnerWarehouseSummaryView> createState() => _OwnerWarehouseSummaryViewState();
+  State<OwnerWarehouseSummaryView> createState() =>
+      _OwnerWarehouseSummaryViewState();
 }
 
 class _OwnerWarehouseSummaryViewState extends State<OwnerWarehouseSummaryView> {
@@ -44,22 +45,23 @@ class _OwnerWarehouseSummaryViewState extends State<OwnerWarehouseSummaryView> {
           showBackButton: true,
           onBackPressed: () => context.pop(),
         ),
-        body: BlocBuilder<OwnerWarehouseSummaryCubit, OwnerWarehouseSummaryState>(
-          builder: (context, state) {
-            if (state is OwnerWarehouseSummaryLoading) {
-              return const WarehouseSummaryShimmer();
-            } else if (state is OwnerWarehouseSummaryFailure) {
-              return CustomErrorWidget(
-                title: LocaleKeys.common_error.tr(),
-                message: state.message,
-                onRetry: _cubit.fetchSummary,
-              );
-            } else if (state is OwnerWarehouseSummarySuccess) {
-              return _buildContent(context, state.summary);
-            }
-            return const SizedBox.shrink();
-          },
-        ),
+        body:
+            BlocBuilder<OwnerWarehouseSummaryCubit, OwnerWarehouseSummaryState>(
+              builder: (context, state) {
+                if (state is OwnerWarehouseSummaryLoading) {
+                  return const WarehouseSummaryShimmer();
+                } else if (state is OwnerWarehouseSummaryFailure) {
+                  return CustomErrorWidget(
+                    title: LocaleKeys.common_error.tr(),
+                    message: state.message,
+                    onRetry: _cubit.fetchSummary,
+                  );
+                } else if (state is OwnerWarehouseSummarySuccess) {
+                  return _buildContent(context, state.summary);
+                }
+                return const SizedBox.shrink();
+              },
+            ),
       ),
     );
   }
@@ -76,7 +78,7 @@ class _OwnerWarehouseSummaryViewState extends State<OwnerWarehouseSummaryView> {
           children: [
             WarehouseStatsGrid(stats: summary.stats),
             const SizedBox(height: AppSpacing.xl),
-            
+
             // Low Stock Section
             _buildSectionTitle(LocaleKeys.warehouse_low_stock_title.tr()),
             const SizedBox(height: AppSpacing.md),
@@ -87,12 +89,16 @@ class _OwnerWarehouseSummaryViewState extends State<OwnerWarehouseSummaryView> {
                 icon: Icons.check_circle_outline,
               )
             else
-              ...summary.lowStockItems.map((item) => LowStockItemCard(item: item)),
-              
+              ...summary.lowStockItems.map(
+                (item) => LowStockItemCard(item: item),
+              ),
+
             const SizedBox(height: AppSpacing.xl),
-            
+
             // Recent Movements Section
-            _buildSectionTitle(LocaleKeys.warehouse_recent_movements_title.tr()),
+            _buildSectionTitle(
+              LocaleKeys.warehouse_recent_movements_title.tr(),
+            ),
             const SizedBox(height: AppSpacing.md),
             if (summary.recentMovements.isEmpty)
               CustomEmptyWidget(
@@ -101,8 +107,10 @@ class _OwnerWarehouseSummaryViewState extends State<OwnerWarehouseSummaryView> {
                 icon: Icons.description_outlined,
               )
             else
-              ...summary.recentMovements.map((mov) => WarehouseMovementCard(movement: mov)),
-              
+              ...summary.recentMovements.map(
+                (mov) => WarehouseMovementCard(movement: mov),
+              ),
+
             const SizedBox(height: AppSpacing.xxl),
           ],
         ),
@@ -111,10 +119,6 @@ class _OwnerWarehouseSummaryViewState extends State<OwnerWarehouseSummaryView> {
   }
 
   Widget _buildSectionTitle(String title) {
-    return Text(
-      title,
-      style: AppTextStyles.h4.copyWith(
-      ),
-    );
+    return Text(title, style: AppTextStyles.h4.copyWith());
   }
 }

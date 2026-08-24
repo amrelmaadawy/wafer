@@ -2646,6 +2646,19 @@ abstract class  LocaleKeys {
   static const warehouse_item_is_active = 'warehouse.item_is_active';
   static const warehouse_create_item_btn = 'warehouse.create_item_btn';
   static const warehouse_create_item_success = 'warehouse.create_item_success';
+  static const warehouse_item_details_title = 'warehouse.item_details_title';
+  static const warehouse_item_info = 'warehouse.item_info';
+  static const warehouse_item_pricing = 'warehouse.item_pricing';
+  static const warehouse_item_net_selling_price = 'warehouse.item_net_selling_price';
+  static const warehouse_item_final_selling_price = 'warehouse.item_final_selling_price';
+  static const warehouse_item_tax_amount = 'warehouse.item_tax_amount';
+  static const warehouse_item_discount_amount = 'warehouse.item_discount_amount';
+  static const warehouse_item_inventory_value = 'warehouse.item_inventory_value';
+  static const warehouse_item_movements = 'warehouse.item_movements';
+  static const warehouse_item_status = 'warehouse.item_status';
+  static const warehouse_stock_status = 'warehouse.stock_status';
+  static const warehouse_pricing_includes_tax = 'warehouse.pricing_includes_tax';
+  static const warehouse_pricing_excludes_tax = 'warehouse.pricing_excludes_tax';
   static const warehouse = 'warehouse';
 
 }

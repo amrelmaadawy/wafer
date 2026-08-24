@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/usecases/get_owner_warehouse_items_use_case.dart';
+import '../../../domain/entities/warehouse_item_entity.dart';
 import 'owner_warehouse_items_state.dart';
 
 class OwnerWarehouseItemsCubit extends Cubit<OwnerWarehouseItemsState> {
@@ -13,11 +14,11 @@ class OwnerWarehouseItemsCubit extends Cubit<OwnerWarehouseItemsState> {
   String? _status;
 
   OwnerWarehouseItemsCubit({required this.getItemsUseCase})
-      : super(const OwnerWarehouseItemsInitial());
+    : super(const OwnerWarehouseItemsInitial());
 
   Future<void> fetchItems({bool isRefresh = false}) async {
     if (state is OwnerWarehouseItemsLoading && !isRefresh) return;
-    
+
     // Determine the page to request
     int page = 1;
     if (!isRefresh && state is OwnerWarehouseItemsLoaded) {
@@ -25,11 +26,13 @@ class OwnerWarehouseItemsCubit extends Cubit<OwnerWarehouseItemsState> {
       page = state.currentPage + 1;
     }
 
-    emit(OwnerWarehouseItemsLoading(
-      items: isRefresh ? const [] : state.items,
-      currentPage: isRefresh ? 1 : state.currentPage,
-      hasReachedMax: isRefresh ? false : state.hasReachedMax,
-    ));
+    emit(
+      OwnerWarehouseItemsLoading(
+        items: isRefresh ? const [] : state.items,
+        currentPage: isRefresh ? 1 : state.currentPage,
+        hasReachedMax: isRefresh ? false : state.hasReachedMax,
+      ),
+    );
 
     final result = await getItemsUseCase(
       GetOwnerWarehouseItemsParams(
@@ -43,25 +46,52 @@ class OwnerWarehouseItemsCubit extends Cubit<OwnerWarehouseItemsState> {
 
     result.fold(
       (failure) {
-        emit(OwnerWarehouseItemsError(
-          message: failure.message,
-          items: state.items,
-          currentPage: state.currentPage,
-          hasReachedMax: state.hasReachedMax,
-        ));
+        emit(
+          OwnerWarehouseItemsError(
+            message: failure.message,
+            items: state.items,
+            currentPage: state.currentPage,
+            hasReachedMax: state.hasReachedMax,
+          ),
+        );
       },
       (response) {
         final newItems = response.items;
         final pagination = response.pagination;
-        final bool hasReachedMax = pagination.currentPage >= pagination.lastPage;
+        final bool hasReachedMax =
+            pagination.currentPage >= pagination.lastPage;
 
-        emit(OwnerWarehouseItemsLoaded(
-          items: isRefresh ? newItems : [...state.items, ...newItems],
-          currentPage: pagination.currentPage,
-          hasReachedMax: hasReachedMax,
-        ));
+        emit(
+          OwnerWarehouseItemsLoaded(
+            items: isRefresh ? newItems : state.items + newItems,
+            currentPage: pagination.currentPage,
+            hasReachedMax: hasReachedMax,
+          ),
+        );
       },
     );
+  }
+
+  void addItemToTop(WarehouseItemEntity item) {
+    if (state is OwnerWarehouseItemsLoaded) {
+      final currentState = state as OwnerWarehouseItemsLoaded;
+      emit(
+        OwnerWarehouseItemsLoaded(
+          items: [item, ...currentState.items],
+          currentPage: currentState.currentPage,
+          hasReachedMax: currentState.hasReachedMax,
+        ),
+      );
+    } else if (state is OwnerWarehouseItemsInitial ||
+        state is OwnerWarehouseItemsError) {
+      emit(
+        OwnerWarehouseItemsLoaded(
+          items: [item],
+          currentPage: 1,
+          hasReachedMax: true,
+        ),
+      );
+    }
   }
 
   void updateFilters({

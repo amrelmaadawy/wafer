@@ -1,7 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import 'package:go_router/go_router.dart';
+
 import '../../../../../core/localization/locale_keys.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/presentation/widgets/app_surface_card.dart';
 import '../../../../../core/presentation/widgets/custom_cached_image.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -18,9 +21,14 @@ class WarehouseItemListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppSurfaceCard(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      child: Column(
+    return InkWell(
+      onTap: () {
+        context.push('${Routes.ownerWarehouseItemDetails}/${item.id}');
+      },
+      borderRadius: BorderRadius.circular(AppRadius.lg),
+      child: AppSurfaceCard(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
@@ -151,6 +159,7 @@ class WarehouseItemListCard extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 

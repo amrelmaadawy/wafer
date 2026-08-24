@@ -280,6 +280,10 @@ import '../warehouse/domain/usecases/get_owner_warehouse_summary_use_case.dart';
 import '../warehouse/domain/usecases/get_owner_warehouse_items_use_case.dart';
 import '../warehouse/presentation/cubit/summary/owner_warehouse_summary_cubit.dart';
 import '../warehouse/presentation/cubit/items/owner_warehouse_items_cubit.dart';
+import '../warehouse/domain/usecases/create_owner_warehouse_item_use_case.dart';
+import '../warehouse/presentation/cubit/create_item/owner_warehouse_item_create_cubit.dart';
+import '../warehouse/domain/usecases/get_owner_warehouse_item_details_use_case.dart';
+import '../warehouse/presentation/cubit/details/owner_warehouse_item_details_cubit.dart';
 
 void initOwnerModule() {
   _initDashboard();
@@ -325,6 +329,22 @@ void _initWarehouse() {
   if (!sl.isRegistered<OwnerWarehouseItemsCubit>()) {
     sl.registerFactory(
       () => OwnerWarehouseItemsCubit(getItemsUseCase: sl()),
+    );
+  }
+  if (!sl.isRegistered<CreateOwnerWarehouseItemUseCase>()) {
+    sl.registerLazySingleton(() => CreateOwnerWarehouseItemUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerWarehouseItemCreateCubit>()) {
+    sl.registerFactory(
+      () => OwnerWarehouseItemCreateCubit(createWarehouseItemUseCase: sl()),
+    );
+  }
+  if (!sl.isRegistered<GetOwnerWarehouseItemDetailsUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerWarehouseItemDetailsUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerWarehouseItemDetailsCubit>()) {
+    sl.registerFactory(
+      () => OwnerWarehouseItemDetailsCubit(getDetailsUseCase: sl()),
     );
   }
 }

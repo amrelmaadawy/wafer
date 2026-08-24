@@ -35,21 +35,21 @@ class WarehouseItemEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        id,
-        name,
-        sku,
-        serialNumber,
-        category,
-        warehouse,
-        quantityAvailable,
-        quantityMinLimit,
-        lastCost,
-        finalSellingPrice,
-        status,
-        statusLabel,
-        imageUrl,
-        description,
-      ];
+    id,
+    name,
+    sku,
+    serialNumber,
+    category,
+    warehouse,
+    quantityAvailable,
+    quantityMinLimit,
+    lastCost,
+    finalSellingPrice,
+    status,
+    statusLabel,
+    imageUrl,
+    description,
+  ];
 }
 
 class WarehouseEntity extends Equatable {

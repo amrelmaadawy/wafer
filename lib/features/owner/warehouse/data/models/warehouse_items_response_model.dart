@@ -10,7 +10,8 @@ class WarehouseItemsResponseModel extends WarehouseItemsResponseEntity {
 
   factory WarehouseItemsResponseModel.fromJson(Map<String, dynamic> json) {
     return WarehouseItemsResponseModel(
-      items: (json['items'] as List?)
+      items:
+          (json['items'] as List?)
               ?.map((item) => WarehouseItemModel.fromJson(item))
               .toList() ??
           [],

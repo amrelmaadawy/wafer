@@ -21,12 +21,12 @@ class WarehouseStatsEntity extends Equatable {
 
   @override
   List<Object?> get props => [
-        totalItems,
-        activeItems,
-        lowItems,
-        outItems,
-        warehousesCount,
-        suppliersCount,
-        inventoryValue,
-      ];
+    totalItems,
+    activeItems,
+    lowItems,
+    outItems,
+    warehousesCount,
+    suppliersCount,
+    inventoryValue,
+  ];
 }

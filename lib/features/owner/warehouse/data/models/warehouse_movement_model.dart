@@ -15,6 +15,14 @@ class WarehouseMovementModel extends WarehouseMovementEntity {
     required super.totalCost,
     required super.referenceType,
     super.referenceId,
+    super.referenceNumber,
+    super.reason,
+    super.reasonLabel,
+    super.notes,
+    super.createdByName,
+    super.journalEntryNumber,
+    super.journalEntryStatus,
+    super.createdAt,
   });
 
   factory WarehouseMovementModel.fromJson(Map<String, dynamic> json) {
@@ -43,6 +51,14 @@ class WarehouseMovementModel extends WarehouseMovementEntity {
       totalCost: json['total_cost'] ?? 0,
       referenceType: json['reference_type'] ?? '',
       referenceId: json['reference_id'],
+      referenceNumber: json['reference_number'],
+      reason: json['reason'],
+      reasonLabel: json['reason_label'],
+      notes: json['notes'],
+      createdByName: json['created_by']?['name'],
+      journalEntryNumber: json['journal_entry']?['entry_number'],
+      journalEntryStatus: json['journal_entry']?['status'],
+      createdAt: json['created_at'],
     );
   }
 }

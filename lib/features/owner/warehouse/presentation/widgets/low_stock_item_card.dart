@@ -22,88 +22,91 @@ class LowStockItemCard extends StatelessWidget {
       child: AppSurfaceCard(
         padding: const EdgeInsets.all(AppSpacing.md),
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: AppColors.error.withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(AppRadius.md),
-                ),
-                child: const Icon(Icons.inventory_2_outlined, color: AppColors.error),
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item.name,
-                      style: AppTextStyles.labelMedium.copyWith(
-                        color: context.appOnSurfaceColor,
-                        fontSize: 14,
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (item.sku != null && item.sku!.isNotEmpty) ...[
-                      const SizedBox(height: AppSpacing.xs),
-                      Text(
-                        '${LocaleKeys.warehouse_sku.tr()}: ${item.sku}',
-                        style: AppTextStyles.bodyMedium.copyWith(
-                          color: AppColors.textLight,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.sm,
-                  vertical: 4,
-                ),
-                decoration: BoxDecoration(
-                  color: context.appSubtleSurfaceColor,
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
-                child: Text(
-                  item.category,
-                  style: AppTextStyles.labelMedium.copyWith(
-                    color: AppColors.textLight,
-                    fontSize: 10,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: AppColors.error.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(AppRadius.md),
+                  ),
+                  child: const Icon(
+                    Icons.inventory_2_outlined,
+                    color: AppColors.error,
                   ),
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.md),
-          Row(
-            children: [
-              Expanded(
-                child: _buildInfoColumn(
-                  label: LocaleKeys.warehouse_quantity_available.tr(),
-                  value: item.quantityAvailable.toString(),
-                  valueColor: AppColors.error,
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item.name,
+                        style: AppTextStyles.labelMedium.copyWith(
+                          color: context.appOnSurfaceColor,
+                          fontSize: 14,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (item.sku != null && item.sku!.isNotEmpty) ...[
+                        const SizedBox(height: AppSpacing.xs),
+                        Text(
+                          '${LocaleKeys.warehouse_sku.tr()}: ${item.sku}',
+                          style: AppTextStyles.bodyMedium.copyWith(
+                            color: AppColors.textLight,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: _buildInfoColumn(
-                  label: LocaleKeys.warehouse_min_quantity.tr(),
-                  value: item.quantityMinLimit.toString(),
-                  valueColor: context.appOnSurfaceColor,
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.sm,
+                    vertical: 4,
+                  ),
+                  decoration: BoxDecoration(
+                    color: context.appSubtleSurfaceColor,
+                    borderRadius: BorderRadius.circular(AppRadius.sm),
+                  ),
+                  child: Text(
+                    item.category,
+                    style: AppTextStyles.labelMedium.copyWith(
+                      color: AppColors.textLight,
+                      fontSize: 10,
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Row(
+              children: [
+                Expanded(
+                  child: _buildInfoColumn(
+                    label: LocaleKeys.warehouse_quantity_available.tr(),
+                    value: item.quantityAvailable.toString(),
+                    valueColor: AppColors.error,
+                  ),
+                ),
+                Expanded(
+                  child: _buildInfoColumn(
+                    label: LocaleKeys.warehouse_min_quantity.tr(),
+                    value: item.quantityMinLimit.toString(),
+                    valueColor: context.appOnSurfaceColor,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
-     ),
     );
   }
 

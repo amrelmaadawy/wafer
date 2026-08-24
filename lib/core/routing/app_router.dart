@@ -137,6 +137,10 @@ import '../../features/owner/clients/presentation/cubit/search/search_owner_clie
 import '../../features/owner/clients/presentation/owner_client_statement_view.dart';
 import '../../features/owner/warehouse/presentation/owner_warehouse_summary_view.dart';
 import '../../features/owner/warehouse/presentation/owner_warehouse_items_list_view.dart';
+import '../../features/owner/warehouse/presentation/cubit/details/owner_warehouse_item_details_cubit.dart';
+import '../../features/owner/warehouse/presentation/owner_warehouse_item_details_view.dart';
+import '../../features/owner/warehouse/presentation/owner_warehouse_item_create_view.dart';
+import '../../features/owner/warehouse/presentation/cubit/create_item/owner_warehouse_item_create_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../di/service_locator.dart';
 import 'routes.dart';
@@ -250,6 +254,23 @@ class AppRouter {
       GoRoute(
         path: Routes.ownerWarehouseItems,
         builder: (context, state) => const OwnerWarehouseItemsListView(),
+      ),
+      GoRoute(
+        path: '${Routes.ownerWarehouseItemDetails}/:id',
+        builder: (context, state) {
+          final id = int.parse(state.pathParameters['id']!);
+          return BlocProvider<OwnerWarehouseItemDetailsCubit>(
+            create: (_) => sl<OwnerWarehouseItemDetailsCubit>(),
+            child: OwnerWarehouseItemDetailsView(itemId: id),
+          );
+        },
+      ),
+      GoRoute(
+        path: Routes.ownerWarehouseItemCreate,
+        builder: (context, state) => BlocProvider<OwnerWarehouseItemCreateCubit>(
+          create: (_) => sl<OwnerWarehouseItemCreateCubit>(),
+          child: const OwnerWarehouseItemCreateView(),
+        ),
       ),
       GoRoute(
         path: Routes.ownerFinanceAccounts,
