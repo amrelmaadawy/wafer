@@ -2597,5 +2597,28 @@ abstract class  LocaleKeys {
   static const statementEmpty = 'statementEmpty';
   static const statementEmptySubtitle = 'statementEmptySubtitle';
   static const dateRange = 'dateRange';
+  static const warehouse_dashboard_title = 'warehouse.dashboard_title';
+  static const warehouse_stats_total_items = 'warehouse.stats_total_items';
+  static const warehouse_stats_active_items = 'warehouse.stats_active_items';
+  static const warehouse_stats_low_items = 'warehouse.stats_low_items';
+  static const warehouse_stats_out_items = 'warehouse.stats_out_items';
+  static const warehouse_stats_warehouses_count = 'warehouse.stats_warehouses_count';
+  static const warehouse_stats_suppliers_count = 'warehouse.stats_suppliers_count';
+  static const warehouse_stats_inventory_value = 'warehouse.stats_inventory_value';
+  static const warehouse_low_stock_title = 'warehouse.low_stock_title';
+  static const warehouse_low_stock_empty = 'warehouse.low_stock_empty';
+  static const warehouse_low_stock_empty_sub = 'warehouse.low_stock_empty_sub';
+  static const warehouse_sku = 'warehouse.sku';
+  static const warehouse_quantity_available = 'warehouse.quantity_available';
+  static const warehouse_min_quantity = 'warehouse.min_quantity';
+  static const warehouse_recent_movements_title = 'warehouse.recent_movements_title';
+  static const warehouse_recent_movements_empty = 'warehouse.recent_movements_empty';
+  static const warehouse_recent_movements_empty_sub = 'warehouse.recent_movements_empty_sub';
+  static const warehouse_qty_before = 'warehouse.qty_before';
+  static const warehouse_qty_after = 'warehouse.qty_after';
+  static const warehouse_cost = 'warehouse.cost';
+  static const warehouse_currency = 'warehouse.currency';
+  static const warehouse_view_all_movements = 'warehouse.view_all_movements';
+  static const warehouse = 'warehouse';
 
 }

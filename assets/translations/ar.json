@@ -2622,5 +2622,29 @@
   "statementFilter": "تصفية كشف الحساب",
   "statementEmpty": "لا يوجد حركات مالية",
   "statementEmptySubtitle": "لم يتم العثور على أي حركات مالية في الفترة المحددة",
-  "dateRange": "الفترة"
+  "dateRange": "الفترة",
+  "warehouse": {
+    "dashboard_title": "المستودع",
+    "stats_total_items": "إجمالي الأصناف",
+    "stats_active_items": "أصناف نشطة",
+    "stats_low_items": "نواقص مخزون",
+    "stats_out_items": "أصناف نفدت",
+    "stats_warehouses_count": "المستودعات",
+    "stats_suppliers_count": "الموردين",
+    "stats_inventory_value": "قيمة المخزون",
+    "low_stock_title": "الأصناف منخفضة المخزون",
+    "low_stock_empty": "لا توجد أصناف منخفضة المخزون",
+    "low_stock_empty_sub": "جميع أرصدة المستودع في المستوى الآمن",
+    "sku": "رقم الصنف",
+    "quantity_available": "الرصيد:",
+    "min_quantity": "الحد الأدنى:",
+    "recent_movements_title": "آخر حركات المستودع",
+    "recent_movements_empty": "لا توجد حركات مؤخراً",
+    "recent_movements_empty_sub": "ستظهر أحدث حركات الصرف والاستلام هنا",
+    "qty_before": "الرصيد السابق",
+    "qty_after": "الرصيد الحالي",
+    "cost": "التكلفة",
+    "currency": "ر.س",
+    "view_all_movements": "عرض كل الحركات"
+  }
 }

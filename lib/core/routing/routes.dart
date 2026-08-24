@@ -127,4 +127,7 @@ class Routes {
 
   // --- Search ---
   static const String ownerSearch = '/owner/search';
+
+  // --- Warehouse ---
+  static const String ownerWarehouse = '/owner/warehouse';
 }

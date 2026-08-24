@@ -26,11 +26,10 @@ class OwnerClientsListView extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => di.sl<OwnerClientsListCubit>()..loadClients(forceRefresh: true),
+          create: (_) =>
+              di.sl<OwnerClientsListCubit>()..loadClients(forceRefresh: true),
         ),
-        BlocProvider(
-          create: (_) => di.sl<DeleteOwnerClientCubit>(),
-        ),
+        BlocProvider(create: (_) => di.sl<DeleteOwnerClientCubit>()),
       ],
       child: const _OwnerClientsListViewContent(),
     );
@@ -41,10 +40,12 @@ class _OwnerClientsListViewContent extends StatefulWidget {
   const _OwnerClientsListViewContent();
 
   @override
-  State<_OwnerClientsListViewContent> createState() => _OwnerClientsListViewContentState();
+  State<_OwnerClientsListViewContent> createState() =>
+      _OwnerClientsListViewContentState();
 }
 
-class _OwnerClientsListViewContentState extends State<_OwnerClientsListViewContent> {
+class _OwnerClientsListViewContentState
+    extends State<_OwnerClientsListViewContent> {
   final ScrollController _scrollController = ScrollController();
 
   @override
@@ -77,10 +78,16 @@ class _OwnerClientsListViewContentState extends State<_OwnerClientsListViewConte
     return BlocConsumer<DeleteOwnerClientCubit, DeleteOwnerClientState>(
       listener: (context, state) {
         if (state.status == DeleteOwnerClientStatus.success) {
-          AppToast.showSuccess(context, LocaleKeys.commonSuccess.tr()); // or a specific message
+          AppToast.showSuccess(
+            context,
+            LocaleKeys.commonSuccess.tr(),
+          ); // or a specific message
           context.read<OwnerClientsListCubit>().loadClients(forceRefresh: true);
         } else if (state.status == DeleteOwnerClientStatus.failure) {
-          AppToast.showError(context, state.errorMessage ?? LocaleKeys.commonError.tr());
+          AppToast.showError(
+            context,
+            state.errorMessage ?? LocaleKeys.commonError.tr(),
+          );
         }
       },
       builder: (context, deleteState) {
@@ -101,54 +108,63 @@ class _OwnerClientsListViewContentState extends State<_OwnerClientsListViewConte
                 ),
               ],
             ),
-      body: BlocBuilder<OwnerClientsListCubit, OwnerClientsListState>(
-        builder: (context, state) {
-          if (state.status == OwnerClientsListStatus.loading) {
-            return const ClientsListShimmer();
-          }
+            body: BlocBuilder<OwnerClientsListCubit, OwnerClientsListState>(
+              builder: (context, state) {
+                if (state.status == OwnerClientsListStatus.loading) {
+                  return const ClientsListShimmer();
+                }
 
-          if (state.status == OwnerClientsListStatus.failure &&
-              state.clients.isEmpty) {
-            return CustomErrorWidget(
-              message: state.errorMessage ?? LocaleKeys.commonError.tr(),
-              onRetry: () => context.read<OwnerClientsListCubit>().loadClients(forceRefresh: true),
-            );
-          }
-
-          if (state.clients.isEmpty) {
-            return _buildEmptyState(context);
-          }
-
-          return RefreshIndicator(
-            onRefresh: () async => context.read<OwnerClientsListCubit>().loadClients(forceRefresh: true),
-            color: Theme.of(context).primaryColor,
-            child: ListView.builder(
-              controller: _scrollController,
-              padding: const EdgeInsets.all(AppSpacing.md),
-              itemCount: state.clients.length +
-                  (state.status == OwnerClientsListStatus.loadingMore ? 1 : 0),
-              itemBuilder: (context, index) {
-                if (index >= state.clients.length) {
-                  return const Padding(
-                    padding: EdgeInsets.only(bottom: AppSpacing.md),
-                    child: ClientShimmerCard(),
+                if (state.status == OwnerClientsListStatus.failure &&
+                    state.clients.isEmpty) {
+                  return CustomErrorWidget(
+                    message: state.errorMessage ?? LocaleKeys.commonError.tr(),
+                    onRetry: () => context
+                        .read<OwnerClientsListCubit>()
+                        .loadClients(forceRefresh: true),
                   );
                 }
 
-                final client = state.clients[index];
-                return OwnerClientCard(
-                  client: client,
-                  onTap: () {
-                    context.push(
-                      Routes.ownerClientStatementPath(client.id.toString()),
-                    );
-                  },
+                if (state.clients.isEmpty) {
+                  return _buildEmptyState(context);
+                }
+
+                return RefreshIndicator(
+                  onRefresh: () async => context
+                      .read<OwnerClientsListCubit>()
+                      .loadClients(forceRefresh: true),
+                  color: Theme.of(context).primaryColor,
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    itemCount:
+                        state.clients.length +
+                        (state.status == OwnerClientsListStatus.loadingMore
+                            ? 1
+                            : 0),
+                    itemBuilder: (context, index) {
+                      if (index >= state.clients.length) {
+                        return const Padding(
+                          padding: EdgeInsets.only(bottom: AppSpacing.md),
+                          child: ClientShimmerCard(),
+                        );
+                      }
+
+                      final client = state.clients[index];
+                      return OwnerClientCard(
+                        client: client,
+                        onTap: () {
+                          context.push(
+                            Routes.ownerClientStatementPath(
+                              client.id.toString(),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 );
               },
             ),
-          );
-        },
-      ),
           ),
         );
       },

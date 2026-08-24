@@ -182,6 +182,13 @@ class OwnerDrawerConfig {
             allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
           ),
           DrawerNavItem(
+            labelKey: LocaleKeys.warehouse_dashboard_title,
+            icon: Icons.inventory_2_outlined,
+            activeIcon: Icons.inventory_2_rounded,
+            route: Routes.ownerWarehouse,
+            allowedAccountTypes: [accountOwner, accountCompany, accountSystem],
+          ),
+          DrawerNavItem(
             labelKey: LocaleKeys.drawerNavContracts,
             icon: Icons.description_outlined,
             activeIcon: Icons.description_rounded,

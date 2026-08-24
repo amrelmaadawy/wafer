@@ -272,6 +272,13 @@ import '../clients/presentation/cubit/search/search_owner_clients_cubit.dart';
 import '../clients/domain/usecases/get_owner_client_statement_use_case.dart';
 import '../clients/presentation/cubit/statement/owner_client_statement_cubit.dart';
 
+// Warehouse
+import '../warehouse/data/datasources/owner_warehouse_remote_data_source.dart';
+import '../warehouse/data/repositories/owner_warehouse_repository_impl.dart';
+import '../warehouse/domain/repositories/owner_warehouse_repository.dart';
+import '../warehouse/domain/usecases/get_owner_warehouse_summary_use_case.dart';
+import '../warehouse/presentation/cubit/summary/owner_warehouse_summary_cubit.dart';
+
 void initOwnerModule() {
   _initDashboard();
   _initProperties();
@@ -288,6 +295,28 @@ void initOwnerModule() {
   initLegalCases();
   _initTasks();
   _initSearch();
+  _initWarehouse();
+}
+
+void _initWarehouse() {
+  if (!sl.isRegistered<OwnerWarehouseRemoteDataSource>()) {
+    sl.registerLazySingleton<OwnerWarehouseRemoteDataSource>(
+      () => OwnerWarehouseRemoteDataSourceImpl(sl()),
+    );
+  }
+  if (!sl.isRegistered<OwnerWarehouseRepository>()) {
+    sl.registerLazySingleton<OwnerWarehouseRepository>(
+      () => OwnerWarehouseRepositoryImpl(remoteDataSource: sl()),
+    );
+  }
+  if (!sl.isRegistered<GetOwnerWarehouseSummaryUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerWarehouseSummaryUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerWarehouseSummaryCubit>()) {
+    sl.registerFactory(
+      () => OwnerWarehouseSummaryCubit(getWarehouseSummaryUseCase: sl()),
+    );
+  }
 }
 
 void _initFinance() {

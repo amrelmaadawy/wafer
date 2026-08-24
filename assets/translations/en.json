@@ -2628,5 +2628,29 @@
   "statementFilter": "Filter Statement",
   "statementEmpty": "No financial transactions",
   "statementEmptySubtitle": "No transactions were found for the selected period",
-  "dateRange": "Period"
+  "dateRange": "Period",
+  "warehouse": {
+    "dashboard_title": "Warehouse Dashboard",
+    "stats_total_items": "Total Items",
+    "stats_active_items": "Active Items",
+    "stats_low_items": "Low Stock",
+    "stats_out_items": "Out of Stock",
+    "stats_warehouses_count": "Warehouses",
+    "stats_suppliers_count": "Suppliers",
+    "stats_inventory_value": "Inventory Value",
+    "low_stock_title": "Low Stock Items",
+    "low_stock_empty": "No low stock items",
+    "low_stock_empty_sub": "All warehouse balances are at safe levels",
+    "sku": "SKU",
+    "quantity_available": "Balance:",
+    "min_quantity": "Min limit:",
+    "recent_movements_title": "Recent Movements",
+    "recent_movements_empty": "No recent movements",
+    "recent_movements_empty_sub": "The latest receiving and issuing movements will appear here",
+    "qty_before": "Qty Before",
+    "qty_after": "Qty After",
+    "cost": "Cost",
+    "currency": "SAR",
+    "view_all_movements": "View All Movements"
+  }
 }
