@@ -1396,7 +1396,7 @@
   "contractsCycleQuarterly": "ربع سنوي",
   "contractsDetailsTitle": "تفاصيل العقد",
   "contractsEjarLinked": "موثق في إيجار",
-  "contractsEjarNotLinked": "غير موثق في إيجار",
+  "contractsEjarNotLinked": "غير مرتبط",
   "contractsEndDateLabel": "تاريخ النهاية",
   "contractsFilterActive": "ساري",
   "contractsFilterAll": "الكل",
@@ -1432,7 +1432,6 @@
   "contractsSectionSettings": "إعدادات العقد",
   "contractsSectionHandover": "معلومات التسليم",
   "contractsEjarStatus": "حالة إيجار",
-  "contractsEjarNotLinked": "غير مرتبط",
   "contractsEjarContractNumber": "رقم عقد إيجار",
   "contractsEjarReferenceNumber": "رقم المرجع",
   "contractsAutoRenewal": "التجديد التلقائي",
@@ -1446,7 +1445,6 @@
   "saveChanges": "حفظ التغييرات",
   "contractNotes": "ملاحظات العقد",
   "contractSettingsUpdatedSuccessfully": "تم تحديث إعدادات العقد بنجاح",
-  "clients": "العملاء",
   "clientsRenterPhone": "رقم الجوال",
   "clientStatus": "الحالة",
   "clientTypeOwner": "مالك",
@@ -2609,5 +2607,9 @@
   "maintCatAc": "تكييف",
   "maintCatPlumbing": "سباكة",
   "maintCatElectrical": "كهرباء",
-  "legalCasesTitle": "القضايا القانونية"
+  "legalCasesTitle": "القضايا القانونية",
+  "clients": "العملاء",
+  "searchClientsHint": "ابحث باسم العميل أو رقم الهاتف...",
+  "searchClientsNoResults": "لا يوجد عملاء يطابقون بحثك",
+  "searchClientsError": "حدث خطأ أثناء البحث"
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/routing/routes.dart';
 import '../../../../core/localization/locale_keys.dart';
 import '../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../core/presentation/widgets/custom_error_widget.dart';
@@ -88,6 +90,15 @@ class _OwnerClientsListViewContentState extends State<_OwnerClientsListViewConte
               title: LocaleKeys.clients.tr(),
               showBackButton: false,
               showMenuButton: true,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.search_rounded),
+                  color: Theme.of(context).primaryColor,
+                  onPressed: () {
+                    context.push(Routes.ownerClientsSearch);
+                  },
+                ),
+              ],
             ),
       body: BlocBuilder<OwnerClientsListCubit, OwnerClientsListState>(
         builder: (context, state) {

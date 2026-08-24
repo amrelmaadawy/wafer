@@ -15,6 +15,7 @@ abstract class OwnerClientsRemoteDataSource {
   });
 
   Future<void> deleteClient(int clientId);
+  Future<List<ClientModel>> searchClients(String keyword);
 }
 
 class OwnerClientsRemoteDataSourceImpl implements OwnerClientsRemoteDataSource {
@@ -55,5 +56,16 @@ class OwnerClientsRemoteDataSourceImpl implements OwnerClientsRemoteDataSource {
   @override
   Future<void> deleteClient(int clientId) async {
     await _dio.delete('${ApiConstants.ownerClients}/$clientId');
+  }
+
+  @override
+  Future<List<ClientModel>> searchClients(String keyword) async {
+    final response = await _dio.get(
+      ApiConstants.ownerClientsSearch,
+      queryParameters: {'keyword': keyword},
+    );
+
+    final List<dynamic> clientsList = response.data['data']['clients'] ?? [];
+    return clientsList.map((client) => ClientModel.fromJson(client)).toList();
   }
 }

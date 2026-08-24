@@ -15,4 +15,6 @@ abstract class OwnerClientsRepository {
   });
 
   Future<Either<Failure, void>> deleteClient(int clientId);
+
+  Future<Either<Failure, List<ClientEntity>>> searchClients(String keyword);
 }

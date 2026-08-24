@@ -99,6 +99,7 @@ class Routes {
 
   // --- Clients ---
   static const String ownerClientsList = '/owner/clients';
+  static const String ownerClientsSearch = '/owner/clients/search';
   static const String ownerClientDetails = '/owner/clients/:clientId';
   static String ownerClientDetailsPath(String id) => '/owner/clients/$id';
 

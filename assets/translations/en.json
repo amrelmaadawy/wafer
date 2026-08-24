@@ -1475,7 +1475,6 @@
   "saveChanges": "Save Changes",
   "contractNotes": "Contract Notes",
   "contractSettingsUpdatedSuccessfully": "Contract settings updated successfully",
-  "clients": "Clients",
   "clientsRenterPhone": "Phone Number",
   "clientStatus": "Status",
   "clientTypeOwner": "Owner",
@@ -2614,5 +2613,9 @@
   "maintCatAc": "AC",
   "maintCatPlumbing": "Plumbing",
   "maintCatElectrical": "Electrical",
-  "legalCasesTitle": "Legal Cases"
+  "legalCasesTitle": "Legal Cases",
+  "clients": "Clients",
+  "searchClientsHint": "Search by client name or phone...",
+  "searchClientsNoResults": "No clients match your search",
+  "searchClientsError": "An error occurred during search"
 }

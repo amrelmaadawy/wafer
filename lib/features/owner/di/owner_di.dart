@@ -267,6 +267,8 @@ import '../clients/domain/usecases/delete_owner_client_use_case.dart';
 import '../clients/presentation/cubit/list/owner_clients_list_cubit.dart';
 import '../clients/presentation/cubit/update/update_owner_client_cubit.dart';
 import '../clients/presentation/cubit/delete/delete_owner_client_cubit.dart';
+import '../clients/domain/usecases/search_owner_clients_use_case.dart';
+import '../clients/presentation/cubit/search/search_owner_clients_cubit.dart';
 
 void initOwnerModule() {
   _initDashboard();
@@ -830,6 +832,14 @@ void _initClients() {
   if (!sl.isRegistered<DeleteOwnerClientCubit>()) {
     sl.registerFactory(() => DeleteOwnerClientCubit(
       deleteOwnerClientUseCase: sl(),
+    ));
+  }
+  if (!sl.isRegistered<SearchOwnerClientsUseCase>()) {
+    sl.registerLazySingleton(() => SearchOwnerClientsUseCase(sl()));
+  }
+  if (!sl.isRegistered<SearchOwnerClientsCubit>()) {
+    sl.registerFactory(() => SearchOwnerClientsCubit(
+      searchUseCase: sl(),
     ));
   }
 }

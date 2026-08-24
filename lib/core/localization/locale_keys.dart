@@ -1420,7 +1420,6 @@ abstract class  LocaleKeys {
   static const saveChanges = 'saveChanges';
   static const contractNotes = 'contractNotes';
   static const contractSettingsUpdatedSuccessfully = 'contractSettingsUpdatedSuccessfully';
-  static const clients = 'clients';
   static const clientsRenterPhone = 'clientsRenterPhone';
   static const clientStatus = 'clientStatus';
   static const clientTypeOwner = 'clientTypeOwner';
@@ -2583,5 +2582,9 @@ abstract class  LocaleKeys {
   static const maintCatPlumbing = 'maintCatPlumbing';
   static const maintCatElectrical = 'maintCatElectrical';
   static const legalCasesTitle = 'legalCasesTitle';
+  static const clients = 'clients';
+  static const searchClientsHint = 'searchClientsHint';
+  static const searchClientsNoResults = 'searchClientsNoResults';
+  static const searchClientsError = 'searchClientsError';
 
 }

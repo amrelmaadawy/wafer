@@ -40,4 +40,11 @@ class OwnerClientsRepositoryImpl extends BaseRepository implements OwnerClientsR
       call: () => remoteDataSource.deleteClient(clientId),
     );
   }
+
+  @override
+  Future<Either<Failure, List<ClientEntity>>> searchClients(String keyword) async {
+    return executeApiCall<List<ClientEntity>>(
+      call: () => remoteDataSource.searchClients(keyword),
+    );
+  }
 }
