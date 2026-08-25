@@ -17,6 +17,7 @@ import '../../../../core/utils/translations/locale_keys.g.dart';
 import '../domain/entities/warehouse_item_details_entity.dart';
 import 'cubit/details/owner_warehouse_item_details_cubit.dart';
 import 'cubit/details/owner_warehouse_item_details_state.dart';
+import 'widgets/owner_warehouse_item_edit_sheet.dart';
 import 'widgets/warehouse_movement_card.dart';
 
 class OwnerWarehouseItemDetailsView extends StatefulWidget {
@@ -47,6 +48,31 @@ class _OwnerWarehouseItemDetailsViewState
       appBar: CustomAppBar(
         title: LocaleKeys.warehouse_item_details_title.tr(),
         showBackButton: true,
+        actions: [
+          BlocBuilder<OwnerWarehouseItemDetailsCubit,
+              OwnerWarehouseItemDetailsState>(
+            builder: (context, state) {
+              if (state is OwnerWarehouseItemDetailsLoaded) {
+                return IconButton(
+                  icon: const Icon(Icons.edit_rounded),
+                  color: context.primaryColor,
+                  onPressed: () {
+                    OwnerWarehouseItemEditSheet.show(
+                      context,
+                      item: state.details,
+                      onSuccess: () {
+                        context
+                            .read<OwnerWarehouseItemDetailsCubit>()
+                            .fetchItemDetails(widget.itemId);
+                      },
+                    );
+                  },
+                );
+              }
+              return const SizedBox.shrink();
+            },
+          ),
+        ],
       ),
       body: BlocBuilder<OwnerWarehouseItemDetailsCubit,
           OwnerWarehouseItemDetailsState>(
@@ -71,19 +97,23 @@ class _OwnerWarehouseItemDetailsViewState
 
   Widget _buildContent(BuildContext context, WarehouseItemDetailsEntity details) {
     return RefreshIndicator(
+      color: context.primaryColor,
+      backgroundColor: context.appSurfaceColor,
       onRefresh: () => context
           .read<OwnerWarehouseItemDetailsCubit>()
           .fetchItemDetails(widget.itemId),
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.lg),
         physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildInfoCard(context, details),
-            const SizedBox(height: AppSpacing.md),
-            _buildPricingCard(context, details.pricing),
+            _buildHeroHeader(context, details),
             const SizedBox(height: AppSpacing.lg),
+            _buildMetricsGrid(context, details),
+            const SizedBox(height: AppSpacing.xl),
+            _buildPricingSection(context, details.pricing),
+            const SizedBox(height: AppSpacing.xl),
             SectionHeader(
               title: LocaleKeys.warehouse_item_movements.tr(),
               icon: Icons.history_rounded,
@@ -102,141 +132,344 @@ class _OwnerWarehouseItemDetailsViewState
                   child: WarehouseMovementCard(movement: m),
                 ),
               ),
+            const SizedBox(height: AppSpacing.xxl),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInfoCard(
-      BuildContext context, WarehouseItemDetailsEntity details) {
-    return AppSurfaceCard(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    details.name,
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+  Widget _buildHeroHeader(BuildContext context, WarehouseItemDetailsEntity details) {
+    final bool isLowStock = details.status == 'low' || details.status == 'out_of_stock';
+    
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 72,
+          height: 72,
+          decoration: BoxDecoration(
+            color: context.primaryColor.withValues(alpha: 0.1),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: context.primaryColor.withValues(alpha: 0.2),
+              width: 1,
+            ),
+          ),
+          child: Icon(
+            Icons.inventory_2_rounded,
+            size: 36,
+            color: context.primaryColor,
+          ),
+        ),
+        const SizedBox(width: AppSpacing.md),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      details.name,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            height: 1.2,
+                          ),
                     ),
                   ),
+                  const SizedBox(width: AppSpacing.xs),
+                  AppStatusBadge(
+                    labelKey: details.statusLabel,
+                    color: isLowStock ? AppColors.error : AppColors.success,
+                  ),
+                ],
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                details.category,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: context.primaryColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              if (details.sku != null)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.tag_rounded,
+                      size: 14,
+                      color: context.appOnSurfaceColor.withValues(alpha: 0.5),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      details.sku!,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: context.appOnSurfaceColor.withValues(alpha: 0.6),
+                          ),
+                    ),
+                  ],
                 ),
-                AppStatusBadge(
-                  labelKey: details.statusLabel,
-                  color: AppColors.info,
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.md),
-            _buildDetailRow(
-                context, LocaleKeys.warehouse_sku.tr(), details.sku ?? '-'),
-            const SizedBox(height: AppSpacing.sm),
-            _buildDetailRow(context, LocaleKeys.warehouse_item_category.tr(),
-                details.category),
-            const SizedBox(height: AppSpacing.sm),
-            _buildDetailRow(context, LocaleKeys.warehouse_item_quantity.tr(),
-                details.quantityAvailable.toString()),
-          ],
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 
-  Widget _buildPricingCard(
-      BuildContext context, WarehouseItemPricingEntity pricing) {
-    return AppSurfaceCard(
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              LocaleKeys.warehouse_item_pricing.tr(),
-              style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildDetailRow(
-                    context,
-                    LocaleKeys.warehouse_item_unit_price.tr(),
-                    '${pricing.unitPrice} ${LocaleKeys.warehouse_currency.tr()}',
-                  ),
-                ),
-                Expanded(
-                  child: _buildDetailRow(
-                    context,
-                    LocaleKeys.warehouse_item_selling_price.tr(),
-                    '${pricing.sellingPrice} ${LocaleKeys.warehouse_currency.tr()}',
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Row(
-              children: [
-                Expanded(
-                  child: _buildDetailRow(
-                    context,
-                    LocaleKeys.warehouse_item_discount_value.tr(),
-                    pricing.discountAmount > 0
-                        ? '${pricing.discountAmount} ${LocaleKeys.warehouse_currency.tr()}'
-                        : LocaleKeys.warehouse_discount_none.tr(),
-                  ),
-                ),
-                Expanded(
-                  child: _buildDetailRow(
-                    context,
-                    LocaleKeys.warehouse_item_tax_percentage.tr(),
-                    '${pricing.taxPercentage}%',
-                  ),
-                ),
-              ],
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
-              child: Divider(),
-            ),
-            _buildDetailRow(
-              context,
-              LocaleKeys.warehouse_item_final_selling_price.tr(),
-              '${pricing.finalSellingPrice} ${LocaleKeys.warehouse_currency.tr()}',
-              valueStyle: Theme.of(context).textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-                color: context.primaryColor,
-              ),
-            ),
-          ],
+  Widget _buildMetricsGrid(BuildContext context, WarehouseItemDetailsEntity details) {
+    return Row(
+      children: [
+        Expanded(
+          child: _MetricCard(
+            title: LocaleKeys.warehouse_item_quantity.tr(),
+            value: details.quantityAvailable.toString(),
+            icon: Icons.layers_rounded,
+            iconColor: context.primaryColor,
+          ),
         ),
-      ),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: _MetricCard(
+            title: LocaleKeys.warehouse_item_min_quantity.tr(),
+            value: details.quantityMinLimit.toString(),
+            icon: Icons.warning_rounded,
+            iconColor: AppColors.warning,
+          ),
+        ),
+      ],
     );
   }
 
-  Widget _buildDetailRow(BuildContext context, String label, String value,
-      {TextStyle? valueStyle}) {
+  Widget _buildPricingSection(BuildContext context, WarehouseItemPricingEntity pricing) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-            color: context.appOnSurfaceColor.withValues(alpha: 0.6),
+        SectionHeader(
+          title: LocaleKeys.warehouse_item_pricing.tr(),
+          icon: Icons.monetization_on_rounded,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        AppSurfaceCard(
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Column(
+            children: [
+              _PricingRow(
+                title: LocaleKeys.warehouse_item_unit_price.tr(),
+                value: '${pricing.unitPrice} ${LocaleKeys.warehouse_currency.tr()}',
+                icon: Icons.storefront_rounded,
+              ),
+              const _DashedDivider(),
+              _PricingRow(
+                title: LocaleKeys.warehouse_item_selling_price.tr(),
+                value: '${pricing.sellingPrice} ${LocaleKeys.warehouse_currency.tr()}',
+                icon: Icons.sell_rounded,
+              ),
+              if (pricing.discountAmount > 0) ...[
+                const _DashedDivider(),
+                _PricingRow(
+                  title: LocaleKeys.warehouse_item_discount_amount.tr(),
+                  value: '- ${pricing.discountAmount} ${LocaleKeys.warehouse_currency.tr()}',
+                  icon: Icons.money_off_rounded,
+                  valueColor: AppColors.error,
+                ),
+              ],
+              const _DashedDivider(),
+              _PricingRow(
+                title: LocaleKeys.warehouse_item_tax_amount.tr(),
+                value: '+ ${pricing.taxAmount} ${LocaleKeys.warehouse_currency.tr()}',
+                icon: Icons.account_balance_rounded,
+                valueColor: context.appOnSurfaceColor.withValues(alpha: 0.6),
+                subtitle: '(${pricing.taxPercentage}%)',
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Container(
+                padding: const EdgeInsets.all(AppSpacing.md),
+                decoration: BoxDecoration(
+                  color: context.primaryColor.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: context.primaryColor.withValues(alpha: 0.1),
+                  ),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      LocaleKeys.warehouse_item_final_selling_price.tr(),
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                            fontWeight: FontWeight.w800,
+                            color: context.primaryColor,
+                          ),
+                    ),
+                    Text(
+                      '${pricing.finalSellingPrice} ${LocaleKeys.warehouse_currency.tr()}',
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w900,
+                            color: context.primaryColor,
+                          ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
-        const SizedBox(height: AppSpacing.xs),
-        Text(
-          value,
-          style: valueStyle ?? Theme.of(context).textTheme.bodyMedium,
-        ),
       ],
+    );
+  }
+}
+
+class _MetricCard extends StatelessWidget {
+  final String title;
+  final String value;
+  final IconData icon;
+  final Color iconColor;
+
+  const _MetricCard({
+    required this.title,
+    required this.value,
+    required this.icon,
+    required this.iconColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppSurfaceCard(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: iconColor.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(icon, size: 16, color: iconColor),
+              ),
+              const SizedBox(width: AppSpacing.xs),
+              Expanded(
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: context.appOnSurfaceColor.withValues(alpha: 0.6),
+                        fontWeight: FontWeight.w600,
+                      ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                  fontWeight: FontWeight.w900,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _PricingRow extends StatelessWidget {
+  final String title;
+  final String value;
+  final IconData icon;
+  final Color? valueColor;
+  final String? subtitle;
+
+  const _PricingRow({
+    required this.title,
+    required this.value,
+    required this.icon,
+    this.valueColor,
+    this.subtitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 20,
+            color: context.appOnSurfaceColor.withValues(alpha: 0.4),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Row(
+              children: [
+                Text(
+                  title,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontWeight: FontWeight.w500,
+                      ),
+                ),
+                if (subtitle != null) ...[
+                  const SizedBox(width: 4),
+                  Text(
+                    subtitle!,
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: context.appOnSurfaceColor.withValues(alpha: 0.5),
+                        ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+          Text(
+            value,
+            style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: valueColor ?? context.appOnSurfaceColor,
+                ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _DashedDivider extends StatelessWidget {
+  const _DashedDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final boxWidth = constraints.constrainWidth();
+          const dashWidth = 4.0;
+          const dashHeight = 1.0;
+          final dashCount = (boxWidth / (2 * dashWidth)).floor();
+          return Flex(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            direction: Axis.horizontal,
+            children: List.generate(dashCount, (_) {
+              return SizedBox(
+                width: dashWidth,
+                height: dashHeight,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: context.appOnSurfaceColor.withValues(alpha: 0.1),
+                  ),
+                ),
+              );
+            }),
+          );
+        },
+      ),
     );
   }
 }
@@ -251,10 +484,37 @@ class _ItemDetailsShimmer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          AppShimmer.box(height: 120, width: double.infinity),
-          const SizedBox(height: AppSpacing.md),
-          AppShimmer.box(height: 160, width: double.infinity),
+          Row(
+            children: [
+              AppShimmer.box(height: 72, width: 72),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AppShimmer.box(height: 24, width: 200),
+                    const SizedBox(height: 8),
+                    AppShimmer.box(height: 16, width: 120),
+                    const SizedBox(height: 8),
+                    AppShimmer.box(height: 14, width: 100),
+                  ],
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.lg),
+          Row(
+            children: [
+              Expanded(child: AppShimmer.box(height: 100, width: double.infinity)),
+              const SizedBox(width: AppSpacing.sm),
+              Expanded(child: AppShimmer.box(height: 100, width: double.infinity)),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.xl),
+          AppShimmer.box(height: 24, width: 150),
+          const SizedBox(height: AppSpacing.md),
+          AppShimmer.box(height: 200, width: double.infinity),
+          const SizedBox(height: AppSpacing.xl),
           AppShimmer.box(height: 24, width: 150),
           const SizedBox(height: AppSpacing.md),
           AppShimmer.box(height: 80, width: double.infinity),

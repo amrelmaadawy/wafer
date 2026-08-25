@@ -6,6 +6,8 @@ import '../models/warehouse_items_response_model.dart';
 import '../models/warehouse_summary_model.dart';
 import '../models/warehouse_item_details_model.dart';
 import '../models/warehouse_item_model.dart';
+import '../models/update_warehouse_item_params_model.dart';
+import '../models/warehouse_item_update_result_model.dart';
 import '../../domain/entities/create_warehouse_item_params.dart';
 
 abstract class OwnerWarehouseRemoteDataSource {
@@ -22,6 +24,10 @@ abstract class OwnerWarehouseRemoteDataSource {
   );
 
   Future<WarehouseItemDetailsModel> getWarehouseItemDetails(int id);
+  
+  Future<WarehouseItemUpdateResultModel> updateWarehouseItem(
+    UpdateWarehouseItemParamsModel params,
+  );
 }
 
 class OwnerWarehouseRemoteDataSourceImpl
@@ -97,6 +103,20 @@ class OwnerWarehouseRemoteDataSourceImpl
       } else {
         throw ServerException(e.message ?? 'Unknown Error');
       }
+    }
+  }
+
+  @override
+  Future<WarehouseItemUpdateResultModel> updateWarehouseItem(
+      UpdateWarehouseItemParamsModel params) async {
+    try {
+      final response = await dio.patch(
+        '${ApiConstants.ownerWarehouseItems}/${params.id}',
+        data: params.toJson(),
+      );
+      return WarehouseItemUpdateResultModel.fromJson(response.data['data']);
+    } on DioException {
+      rethrow;
     }
   }
 }

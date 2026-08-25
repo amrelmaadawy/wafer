@@ -2659,6 +2659,9 @@ abstract class  LocaleKeys {
   static const warehouse_stock_status = 'warehouse.stock_status';
   static const warehouse_pricing_includes_tax = 'warehouse.pricing_includes_tax';
   static const warehouse_pricing_excludes_tax = 'warehouse.pricing_excludes_tax';
+  static const warehouse_edit_item_title = 'warehouse.edit_item_title';
+  static const warehouse_edit_item_success = 'warehouse.edit_item_success';
+  static const warehouse_edit_item_btn = 'warehouse.edit_item_btn';
   static const warehouse = 'warehouse';
 
 }

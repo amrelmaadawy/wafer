@@ -7,9 +7,12 @@ import '../../domain/entities/warehouse_items_response_entity.dart';
 import '../../domain/entities/warehouse_summary_entity.dart';
 import '../../domain/entities/warehouse_item_entity.dart';
 import '../../domain/entities/warehouse_item_details_entity.dart';
+import '../../domain/entities/warehouse_item_update_result_entity.dart';
 import '../../domain/entities/create_warehouse_item_params.dart';
+import '../../domain/entities/update_warehouse_item_params.dart';
 import '../../domain/repositories/owner_warehouse_repository.dart';
 import '../datasources/owner_warehouse_remote_data_source.dart';
+import '../models/update_warehouse_item_params_model.dart';
 
 class OwnerWarehouseRepositoryImpl implements OwnerWarehouseRepository {
   final OwnerWarehouseRemoteDataSource remoteDataSource;
@@ -98,6 +101,27 @@ class OwnerWarehouseRepositoryImpl implements OwnerWarehouseRepository {
           e.response?.data['message'] ?? e.message ?? 'Unknown Error',
         ),
       );
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, WarehouseItemUpdateResultEntity>> updateWarehouseItem(
+      UpdateWarehouseItemParams params) async {
+    try {
+      final paramsModel = UpdateWarehouseItemParamsModel(
+        id: params.id,
+        minQuantity: params.minQuantity,
+        sellingPrice: params.sellingPrice,
+        description: params.description,
+      );
+      final result = await remoteDataSource.updateWarehouseItem(paramsModel);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(ServerFailure.fromDioException(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

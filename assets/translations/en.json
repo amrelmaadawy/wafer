@@ -2688,6 +2688,9 @@
     "item_status": "Item Status",
     "stock_status": "Stock Status",
     "pricing_includes_tax": "Includes Tax",
-    "pricing_excludes_tax": "Excludes Tax"
+    "pricing_excludes_tax": "Excludes Tax",
+    "edit_item_title": "Edit Item Data",
+    "edit_item_success": "Item updated successfully",
+    "edit_item_btn": "Update Data"
   }
 }

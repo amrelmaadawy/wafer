@@ -2685,6 +2685,9 @@
     "item_status": "حالة الصنف",
     "stock_status": "حالة المخزون",
     "pricing_includes_tax": "شامل الضريبة",
-    "pricing_excludes_tax": "غير شامل الضريبة"
+    "pricing_excludes_tax": "غير شامل الضريبة",
+    "edit_item_title": "تعديل بيانات الصنف",
+    "edit_item_success": "تم تحديث الصنف بنجاح",
+    "edit_item_btn": "تحديث البيانات"
   }
 }
