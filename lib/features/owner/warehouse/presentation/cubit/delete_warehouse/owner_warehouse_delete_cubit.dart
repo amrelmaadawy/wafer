@@ -10,6 +10,7 @@ class OwnerWarehouseDeleteCubit extends Cubit<OwnerWarehouseDeleteState> {
       : super(OwnerWarehouseDeleteInitial());
 
   Future<void> deleteWarehouse(int id) async {
+    if (isClosed) return;
     emit(OwnerWarehouseDeleteLoading());
 
     final result = await _deleteUseCase(id);

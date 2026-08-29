@@ -119,6 +119,7 @@ class OwnerDrawerConfig {
   static const int branchWarehouseSummary = 16;
   static const int branchWarehousesList = 17;
   static const int branchWarehouseItems = 18;
+  static const int branchWarehouseSuppliers = 19;
 
   /// Returns the raw complete ordered business module structure for the Drawer.
   static List<DrawerNavEntry> getEntries() {
@@ -237,6 +238,13 @@ class OwnerDrawerConfig {
             activeIcon: Icons.list_alt_rounded,
             branchIndex: branchWarehouseItems,
               route: Routes.ownerWarehouseItems,
+          ),
+          DrawerNavItem(
+            labelKey: LocaleKeys.warehouse_suppliers_title,
+            icon: Icons.local_shipping_outlined,
+            activeIcon: Icons.local_shipping_rounded,
+            branchIndex: branchWarehouseSuppliers,
+            route: Routes.ownerWarehouseSuppliers,
           ),
         ],
       ),

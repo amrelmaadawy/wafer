@@ -138,6 +138,11 @@ import '../../features/owner/clients/presentation/owner_client_statement_view.da
 import '../../features/owner/warehouse/presentation/owner_warehouse_summary_view.dart';
 import '../../features/owner/warehouse/presentation/owner_warehouses_list_view.dart';
 import '../../features/owner/warehouse/presentation/owner_warehouse_details_view.dart';
+import '../../features/owner/warehouse/presentation/owner_suppliers_list_view.dart';
+import '../../features/owner/warehouse/presentation/suppliers/owner_supplier_create_view.dart';
+import '../../features/owner/warehouse/presentation/suppliers/owner_supplier_details_view.dart';
+import '../../features/owner/warehouse/presentation/suppliers/owner_supplier_update_view.dart';
+import '../../features/owner/warehouse/domain/entities/suppliers/supplier_entity.dart';
 import '../../features/owner/warehouse/presentation/owner_warehouse_items_list_view.dart';
 import '../../features/owner/warehouse/presentation/cubit/details/owner_warehouse_item_details_cubit.dart';
 import '../../features/owner/warehouse/presentation/owner_warehouse_item_details_view.dart';
@@ -1010,9 +1015,34 @@ class AppRouter {
               ),
             ],
           ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerWarehouseSuppliers,
+                builder: (context, state) => const OwnerSuppliersListView(),
+              ),
+              GoRoute(
+                path: Routes.ownerWarehouseSupplierCreate,
+                builder: (context, state) => const OwnerSupplierCreateView(),
+              ),
+              GoRoute(
+                path: Routes.ownerWarehouseSupplierDetails,
+                builder: (context, state) {
+                  final id = int.parse(state.pathParameters['supplierId']!);
+                  return OwnerSupplierDetailsView(supplierId: id);
+                },
+              ),
+              GoRoute(
+                path: Routes.ownerWarehouseSupplierUpdate,
+                builder: (context, state) {
+                  final supplier = state.extra as SupplierEntity;
+                  return OwnerSupplierUpdateView(supplier: supplier);
+                },
+              ),
+            ],
+          ),
         ],
       ),
     ],
   );
 }
-

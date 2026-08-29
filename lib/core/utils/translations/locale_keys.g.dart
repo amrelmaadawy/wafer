@@ -2708,5 +2708,8 @@ abstract class  LocaleKeys {
   static const warehouse_delete_success = 'warehouse_delete_success';
   static const warehouse_delete_title = 'warehouse_delete_title';
   static const warehouse_delete_message = 'warehouse_delete_message';
+  static const warehouse_suppliers_title = 'warehouse_suppliers_title';
+  static const warehouse_no_suppliers_found = 'warehouse_no_suppliers_found';
+  static const warehouse_no_suppliers_found_sub = 'warehouse_no_suppliers_found_sub';
 
 }

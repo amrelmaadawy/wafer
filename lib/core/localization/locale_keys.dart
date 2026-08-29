@@ -2667,5 +2667,41 @@ abstract class  LocaleKeys {
   static const warehouse_create_item_btn = 'warehouse.create_item_btn';
   static const warehouse_create_item_success = 'warehouse.create_item_success';
   static const warehouse = 'warehouse';
+  static const supplier_code_label = 'supplier_code_label';
+  static const supplier_code_hint = 'supplier_code_hint';
+  static const supplier_company_name_hint = 'supplier_company_name_hint';
+  static const supplier_contact_person_hint = 'supplier_contact_person_hint';
+  static const supplier_tax_number_hint = 'supplier_tax_number_hint';
+  static const supplier_email_hint = 'supplier_email_hint';
+  static const supplier_phone_hint = 'supplier_phone_hint';
+  static const supplier_company_phone_hint = 'supplier_company_phone_hint';
+  static const supplier_address_hint = 'supplier_address_hint';
+
+
+  static const supplier_create_title = 'supplier_create_title';
+  static const supplier_details_title = 'supplier_details_title';
+  static const supplier_movements_count = 'supplier_movements_count';
+
+  static const supplier_company_name_label = 'supplier_company_name_label';
+  static const supplier_contact_person_label = 'supplier_contact_person_label';
+  static const supplier_tax_number_label = 'supplier_tax_number_label';
+  static const supplier_email_label = 'supplier_email_label';
+  static const supplier_phone_label = 'supplier_phone_label';
+  static const supplier_company_phone_label = 'supplier_company_phone_label';
+  static const supplier_address_label = 'supplier_address_label';
+  static const supplier_is_active_label = 'supplier_is_active_label';
+  static const supplier_create_btn = 'supplier_create_btn';
+  static const supplier_create_success = 'supplier_create_success';
+  static const supplier_update_title = 'supplier_update_title';
+  static const supplier_update_btn = 'supplier_update_btn';
+  static const supplier_update_success = 'supplier_update_success';
+  static const supplier_delete_confirm_title = 'supplier_delete_confirm_title';
+  static const supplier_delete_confirm_msg = 'supplier_delete_confirm_msg';
+  static const supplier_delete_success = 'supplier_delete_success';
+
+  static const warehouse_suppliers_title = 'warehouse_suppliers_title';
+  static const warehouse_no_suppliers_found = 'warehouse_no_suppliers_found';
+  static const warehouse_no_suppliers_found_sub = 'warehouse_no_suppliers_found_sub';
+
 
 }

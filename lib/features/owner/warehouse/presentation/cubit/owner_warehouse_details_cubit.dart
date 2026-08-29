@@ -10,6 +10,7 @@ class OwnerWarehouseDetailsCubit extends Cubit<OwnerWarehouseDetailsState> {
   }) : super(OwnerWarehouseDetailsInitial());
 
   Future<void> fetchWarehouseDetails(int id) async {
+    if (isClosed) return;
     emit(OwnerWarehouseDetailsLoading());
     final result = await getOwnerWarehouseDetailsUseCase(id);
     if (!isClosed) {

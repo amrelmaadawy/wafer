@@ -18,6 +18,7 @@ class OwnerWarehouseUpdateCubit extends Cubit<OwnerWarehouseUpdateState> {
     bool? isActive,
     int? parentId,
   }) async {
+    if (isClosed) return;
     emit(OwnerWarehouseUpdateLoading());
 
     final params = UpdateOwnerWarehouseParams(

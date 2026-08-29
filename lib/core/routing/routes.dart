@@ -135,4 +135,8 @@ class Routes {
   static const String ownerWarehouseItemCreate = '/owner/warehouse/items/create';
   static const String ownerWarehousesList = '/owner/warehouse/warehouses';
     static const String ownerWarehouseDetails = '/owner/warehouse/warehouses/details';
+    static const String ownerWarehouseSuppliers = '/owner/warehouse/suppliers';
+  static const String ownerWarehouseSupplierCreate = '/owner/warehouse/suppliers/create';
+  static const String ownerWarehouseSupplierDetails = '/owner/warehouse/suppliers/:supplierId';
+  static const String ownerWarehouseSupplierUpdate = '/owner/warehouse/suppliers/:supplierId/update';
 }

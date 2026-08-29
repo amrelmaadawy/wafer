@@ -298,6 +298,22 @@ import '../warehouse/domain/usecases/update_owner_warehouse_item_use_case.dart';
 import '../warehouse/presentation/cubit/update/owner_warehouse_item_update_cubit.dart';
 import '../warehouse/domain/usecases/delete_warehouse_item_use_case.dart';
 import '../warehouse/presentation/cubit/delete_item/delete_owner_warehouse_item_cubit.dart';
+// Suppliers
+import '../warehouse/data/datasources/suppliers/owner_suppliers_remote_data_source.dart';
+import '../warehouse/data/repositories/suppliers/owner_suppliers_repository_impl.dart';
+import '../warehouse/domain/repositories/owner_suppliers_repository.dart';
+import '../warehouse/domain/usecases/suppliers/get_owner_suppliers_usecase.dart';
+import '../warehouse/domain/usecases/suppliers/create_owner_supplier_usecase.dart';
+import '../warehouse/presentation/cubit/suppliers/owner_suppliers_cubit.dart';
+import '../warehouse/domain/usecases/suppliers/get_owner_supplier_details_usecase.dart';
+import '../warehouse/domain/usecases/suppliers/update_owner_supplier_usecase.dart';
+import '../warehouse/domain/usecases/suppliers/delete_owner_supplier_usecase.dart';
+
+import '../warehouse/presentation/cubit/suppliers/details/owner_supplier_details_cubit.dart';
+import '../warehouse/presentation/cubit/suppliers/create/owner_supplier_create_cubit.dart';
+import '../warehouse/presentation/cubit/suppliers/update/owner_supplier_update_cubit.dart';
+import '../warehouse/presentation/cubit/suppliers/delete/owner_supplier_delete_cubit.dart';
+
 
 void initOwnerModule() {
   _initDashboard();
@@ -416,6 +432,52 @@ void _initWarehouse() {
     sl.registerFactory(
       () => DeleteOwnerWarehouseItemCubit(sl()),
     );
+  }
+  // Suppliers
+  if (!sl.isRegistered<OwnerSuppliersRemoteDataSource>()) {
+    sl.registerLazySingleton<OwnerSuppliersRemoteDataSource>(
+      () => OwnerSuppliersRemoteDataSourceImpl(dio: sl()),
+    );
+  }
+  if (!sl.isRegistered<OwnerSuppliersRepository>()) {
+    sl.registerLazySingleton<OwnerSuppliersRepository>(
+      () => OwnerSuppliersRepositoryImpl(
+        remoteDataSource: sl(),
+        networkInfo: sl(),
+      ),
+    );
+  }
+  if (!sl.isRegistered<GetOwnerSuppliersUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerSuppliersUseCase(sl()));
+  }
+  if (!sl.isRegistered<GetOwnerSupplierDetailsUseCase>()) {
+    sl.registerLazySingleton(() => GetOwnerSupplierDetailsUseCase(sl()));
+  }
+  if (!sl.isRegistered<CreateOwnerSupplierUseCase>()) {
+    sl.registerLazySingleton(() => CreateOwnerSupplierUseCase(sl()));
+  }
+  if (!sl.isRegistered<UpdateOwnerSupplierUseCase>()) {
+    sl.registerLazySingleton(() => UpdateOwnerSupplierUseCase(sl()));
+  }
+  if (!sl.isRegistered<DeleteOwnerSupplierUseCase>()) {
+    sl.registerLazySingleton(() => DeleteOwnerSupplierUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerSuppliersCubit>()) {
+    sl.registerFactory(
+      () => OwnerSuppliersCubit(getOwnerSuppliersUseCase: sl()),
+    );
+  }
+  if (!sl.isRegistered<OwnerSupplierDetailsCubit>()) {
+    sl.registerFactory(() => OwnerSupplierDetailsCubit(sl()));
+  }
+  if (!sl.isRegistered<OwnerSupplierCreateCubit>()) {
+    sl.registerFactory(() => OwnerSupplierCreateCubit(sl()));
+  }
+  if (!sl.isRegistered<OwnerSupplierUpdateCubit>()) {
+    sl.registerFactory(() => OwnerSupplierUpdateCubit(sl()));
+  }
+  if (!sl.isRegistered<OwnerSupplierDeleteCubit>()) {
+    sl.registerFactory(() => OwnerSupplierDeleteCubit(sl()));
   }
 }
 
