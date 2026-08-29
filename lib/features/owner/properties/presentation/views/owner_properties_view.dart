@@ -63,6 +63,7 @@ class _OwnerPropertiesViewState extends State<OwnerPropertiesView> {
       backgroundColor: context.appBackgroundColor,
       appBar: OwnerTopAppBar(
         title: LocaleKeys.propertiesTitle.tr(),
+          forceDrawerButton: true,
         subtitle: LocaleKeys.propertiesSubtitle.tr(),
       ),
       floatingActionButton: FloatingActionButton(

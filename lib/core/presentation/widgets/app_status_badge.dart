@@ -11,6 +11,7 @@ class AppStatusBadge extends StatelessWidget {
   final Color color;
   final IconData? icon;
   final AppStatusBadgeSize size;
+  final bool translateText;
 
   const AppStatusBadge({
     super.key,
@@ -18,6 +19,7 @@ class AppStatusBadge extends StatelessWidget {
     required this.color,
     this.icon,
     this.size = AppStatusBadgeSize.small,
+    this.translateText = true,
   });
 
   @override
@@ -44,7 +46,7 @@ class AppStatusBadge extends StatelessWidget {
             const SizedBox(width: 4),
           ],
           Text(
-            labelKey.tr(),
+            translateText ? labelKey.tr() : labelKey,
             style: TextStyle(
               color: color,
               fontSize: fontSize,

@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../../core/utils/widgets/app_toast.dart';
 import '../../../../../core/utils/widgets/custom_button.dart';
-import '../../../../../core/utils/widgets/custom_dropdown_field.dart';
+import '../../../../../core/presentation/widgets/custom_dropdown_menu.dart';
 import '../../../../../core/utils/widgets/custom_text_field.dart';
 import '../domain/entities/create_warehouse_item_params.dart';
 import 'cubit/create_item/owner_warehouse_item_create_cubit.dart';
@@ -113,6 +113,7 @@ class _OwnerWarehouseItemCreateViewState
                   children: [
                     CustomTextField(
                       label: 'warehouse.item_name'.tr(),
+                      hintText: 'warehouse.item_name_hint'.tr(),
                       controller: _nameController,
                       validator: (val) => val == null || val.isEmpty
                           ? 'warehouse.item_name_val'.tr()
@@ -124,6 +125,7 @@ class _OwnerWarehouseItemCreateViewState
                         Expanded(
                           child: CustomTextField(
                             label: 'warehouse.item_sku'.tr(),
+                            hintText: 'warehouse.item_sku_hint'.tr(),
                             controller: _skuController,
                           ),
                         ),
@@ -131,6 +133,7 @@ class _OwnerWarehouseItemCreateViewState
                         Expanded(
                           child: CustomTextField(
                             label: 'warehouse.item_serial_number'.tr(),
+                            hintText: 'warehouse.item_serial_number_hint'.tr(),
                             controller: _serialNumberController,
                           ),
                         ),
@@ -139,6 +142,7 @@ class _OwnerWarehouseItemCreateViewState
                     const SizedBox(height: 16),
                     CustomTextField(
                       label: 'warehouse.item_category'.tr(),
+                      hintText: 'warehouse.item_category_hint'.tr(),
                       controller: _categoryController,
                       validator: (val) => val == null || val.isEmpty
                           ? 'warehouse.item_category_val'.tr()
@@ -150,6 +154,7 @@ class _OwnerWarehouseItemCreateViewState
                         Expanded(
                           child: CustomTextField(
                             label: 'warehouse.item_quantity'.tr(),
+                            hintText: 'warehouse.item_quantity_hint'.tr(),
                             controller: _quantityController,
                             keyboardType: TextInputType.number,
                           ),
@@ -158,6 +163,7 @@ class _OwnerWarehouseItemCreateViewState
                         Expanded(
                           child: CustomTextField(
                             label: 'warehouse.item_min_quantity'.tr(),
+                            hintText: 'warehouse.item_min_quantity_hint'.tr(),
                             controller: _minQuantityController,
                             keyboardType: TextInputType.number,
                           ),
@@ -170,6 +176,7 @@ class _OwnerWarehouseItemCreateViewState
                         Expanded(
                           child: CustomTextField(
                             label: 'warehouse.item_unit_price'.tr(),
+                            hintText: 'warehouse.item_unit_price_hint'.tr(),
                             controller: _unitPriceController,
                             keyboardType: TextInputType.number,
                           ),
@@ -178,6 +185,7 @@ class _OwnerWarehouseItemCreateViewState
                         Expanded(
                           child: CustomTextField(
                             label: 'warehouse.item_selling_price'.tr(),
+                            hintText: 'warehouse.item_selling_price_hint'.tr(),
                             controller: _sellingPriceController,
                             keyboardType: TextInputType.number,
                           ),
@@ -188,39 +196,42 @@ class _OwnerWarehouseItemCreateViewState
                     Row(
                       children: [
                         Expanded(
-                          child: CustomDropdownField<String>(
-                            label: 'warehouse.item_discount_type'.tr(),
-                            hint: 'warehouse.item_discount_type'.tr(),
-                            value: _discountType,
-                            items: [
-                              DropdownMenuItem(
-                                value: 'none',
-                                child: Text('warehouse.discount_none'.tr()),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'warehouse.item_discount_type'.tr(),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      fontWeight: FontWeight.w600,
+                                    ),
                               ),
-                              DropdownMenuItem(
-                                value: 'percentage',
-                                child: Text(
-                                  'warehouse.discount_percentage'.tr(),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'fixed',
-                                child: Text('warehouse.discount_fixed'.tr()),
+                              const SizedBox(height: 8),
+                              CustomDropdownMenu<String>(
+                                hint: 'warehouse.item_discount_type'.tr(),
+                                value: _discountType,
+                                items: const ['none', 'percentage', 'fixed'],
+                                itemLabelBuilder: (val) {
+                                  if (val == 'percentage') {
+                                    return 'warehouse.discount_percentage'.tr();
+                                  } else if (val == 'fixed') {
+                                    return 'warehouse.discount_fixed'.tr();
+                                  }
+                                  return 'warehouse.discount_none'.tr();
+                                },
+                                onSelected: (val) {
+                                  setState(() {
+                                    _discountType = val;
+                                  });
+                                },
                               ),
                             ],
-                            onChanged: (val) {
-                              if (val != null) {
-                                setState(() {
-                                  _discountType = val;
-                                });
-                              }
-                            },
                           ),
                         ),
                         const SizedBox(width: 16),
                         Expanded(
                           child: CustomTextField(
                             label: 'warehouse.item_discount_value'.tr(),
+                            hintText: 'warehouse.item_discount_value_hint'.tr(),
                             controller: _discountValueController,
                             keyboardType: TextInputType.number,
                           ),
@@ -230,6 +241,7 @@ class _OwnerWarehouseItemCreateViewState
                     const SizedBox(height: 16),
                     CustomTextField(
                       label: 'warehouse.item_tax_percentage'.tr(),
+                      hintText: 'warehouse.item_tax_percentage_hint'.tr(),
                       controller: _taxPercentageController,
                       keyboardType: TextInputType.number,
                     ),
@@ -250,6 +262,7 @@ class _OwnerWarehouseItemCreateViewState
                     const SizedBox(height: 16),
                     CustomTextField(
                       label: 'warehouse.item_description'.tr(),
+                      hintText: 'warehouse.item_description_hint'.tr(),
                       controller: _descriptionController,
                       maxLines: 3,
                     ),

@@ -49,6 +49,7 @@ class _OwnerLeasesViewState extends State<OwnerLeasesView> {
         return Scaffold(
           appBar: OwnerTopAppBar(
             title: LocaleKeys.contractsTitle.tr(),
+          forceDrawerButton: true,
             subtitle: totalCount != null ? '${LocaleKeys.contractsTotalCount.tr()}: $totalCount' : null,
           ),
           body: SafeArea(

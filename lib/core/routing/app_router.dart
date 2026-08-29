@@ -136,6 +136,8 @@ import '../../features/owner/clients/presentation/owner_clients_search_view.dart
 import '../../features/owner/clients/presentation/cubit/search/search_owner_clients_cubit.dart';
 import '../../features/owner/clients/presentation/owner_client_statement_view.dart';
 import '../../features/owner/warehouse/presentation/owner_warehouse_summary_view.dart';
+import '../../features/owner/warehouse/presentation/owner_warehouses_list_view.dart';
+import '../../features/owner/warehouse/presentation/owner_warehouse_details_view.dart';
 import '../../features/owner/warehouse/presentation/owner_warehouse_items_list_view.dart';
 import '../../features/owner/warehouse/presentation/cubit/details/owner_warehouse_item_details_cubit.dart';
 import '../../features/owner/warehouse/presentation/owner_warehouse_item_details_view.dart';
@@ -248,12 +250,11 @@ class AppRouter {
         builder: (context, state) => const SearchScreen(),
       ),
       GoRoute(
-        path: Routes.ownerWarehouse,
-        builder: (context, state) => const OwnerWarehouseSummaryView(),
-      ),
-      GoRoute(
-        path: Routes.ownerWarehouseItems,
-        builder: (context, state) => const OwnerWarehouseItemsListView(),
+        path: Routes.ownerWarehouseDetails,
+        builder: (context, state) {
+          final id = state.extra as int? ?? 0;
+          return OwnerWarehouseDetailsView(warehouseId: id);
+        },
       ),
       GoRoute(
         path: '${Routes.ownerWarehouseItemDetails}/:id',
@@ -982,6 +983,30 @@ class AppRouter {
                   final id = int.tryParse(state.pathParameters['clientId'] ?? '0') ?? 0;
                   return OwnerClientStatementView(clientId: id);
                 },
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerWarehouse,
+                builder: (context, state) => const OwnerWarehouseSummaryView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerWarehousesList,
+                builder: (context, state) => const OwnerWarehousesListView(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: Routes.ownerWarehouseItems,
+                builder: (context, state) => const OwnerWarehouseItemsListView(),
               ),
             ],
           ),

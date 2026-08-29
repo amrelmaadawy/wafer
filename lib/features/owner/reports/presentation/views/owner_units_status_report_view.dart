@@ -58,6 +58,7 @@ class _OwnerUnitsStatusReportViewState
       backgroundColor: context.appBackgroundColor,
       appBar: OwnerTopAppBar(
         title: LocaleKeys.drawerNavUnits.tr(),
+          forceDrawerButton: true,
         extraActions: widget.isListMode ? null : const [UnitsStatusExportActions()],
       ),
       body: BlocBuilder<OwnerUnitsStatusCubit, OwnerUnitsStatusState>(

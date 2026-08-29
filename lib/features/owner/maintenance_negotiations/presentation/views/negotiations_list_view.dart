@@ -62,6 +62,7 @@ class _NegotiationsListViewState extends State<NegotiationsListView> {
           return Scaffold(
             appBar: OwnerTopAppBar(
               title: LocaleKeys.drawerNavNegotiations.tr(),
+          forceDrawerButton: true,
             ),
             floatingActionButton: FloatingActionButton(heroTag: null, 
               onPressed: () async {

@@ -16,8 +16,15 @@ import '../../domain/entities/warehouse_item_entity.dart';
 
 class WarehouseItemListCard extends StatelessWidget {
   final WarehouseItemEntity item;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
-  const WarehouseItemListCard({super.key, required this.item});
+  const WarehouseItemListCard({
+    super.key,
+    required this.item,
+    this.onEdit,
+    this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -101,21 +108,70 @@ class WarehouseItemListCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
-              // Status Badge
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 4),
-                decoration: BoxDecoration(
-                  color: _getStatusColor(item.status).withValues(alpha: 0.1),
-                  borderRadius: BorderRadius.circular(AppRadius.sm),
-                ),
-                child: Text(
-                  item.statusLabel,
-                  style: TextStyle(
-                    color: _getStatusColor(item.status),
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
+              // Status Badge and Actions
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: _getStatusColor(item.status).withValues(alpha: 0.1),
+                      borderRadius: BorderRadius.circular(AppRadius.sm),
+                    ),
+                    child: Text(
+                      item.statusLabel,
+                      style: TextStyle(
+                        color: _getStatusColor(item.status),
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
-                ),
+                  if (onEdit != null || onDelete != null) ...[
+                    const SizedBox(height: AppSpacing.sm),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                          if (onDelete != null)
+                            Material(
+                              color: AppColors.error.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(AppRadius.sm),
+                              child: InkWell(
+                                onTap: onDelete,
+                                borderRadius: BorderRadius.circular(AppRadius.sm),
+                                child: const Padding(
+                                  padding: EdgeInsets.all(6.0),
+                                  child: Icon(
+                                    Icons.delete_outline_rounded,
+                                    size: 18,
+                                    color: AppColors.error,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          if (onDelete != null && onEdit != null)
+                            const SizedBox(width: AppSpacing.sm),
+                          if (onEdit != null)
+                            Material(
+                              color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                              borderRadius: BorderRadius.circular(AppRadius.sm),
+                              child: InkWell(
+                                onTap: onEdit,
+                                borderRadius: BorderRadius.circular(AppRadius.sm),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: Icon(
+                                    Icons.edit_rounded,
+                                    size: 18,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                      ],
+                    ),
+                  ],
+                ],
               ),
             ],
           ),
@@ -138,13 +194,15 @@ class WarehouseItemListCard extends StatelessWidget {
                   valueColor: item.quantityAvailable <= item.quantityMinLimit
                       ? AppColors.error
                       : context.appOnSurfaceColor,
+                  isFlexible: true,
                 ),
                 Container(width: 1, height: 24, color: context.appBorderColor),
                 _buildInfoColumn(
                   context,
-                  label: LocaleKeys.warehouse_cost.tr(), // Using translation key available
+                  label: LocaleKeys.warehouse_cost.tr(),
                   value: '${item.finalSellingPrice} ${LocaleKeys.warehouse_currency.tr()}',
                   valueColor: context.appOnSurfaceColor,
+                  isFlexible: true,
                 ),
                 Container(width: 1, height: 24, color: context.appBorderColor),
                 _buildInfoColumn(
@@ -171,21 +229,26 @@ class WarehouseItemListCard extends StatelessWidget {
     bool isFlexible = false,
   }) {
     final column = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Text(
           label,
+          textAlign: TextAlign.center,
           style: AppTextStyles.bodyMedium.copyWith(
             color: AppColors.textLight,
             fontSize: 12,
           ),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 2),
         Text(
           value,
+          textAlign: TextAlign.center,
           style: AppTextStyles.labelLarge.copyWith(
             color: valueColor,
             fontSize: 14,
+            fontWeight: FontWeight.w700,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

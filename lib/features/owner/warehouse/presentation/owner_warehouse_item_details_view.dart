@@ -1,6 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../../../core/di/service_locator.dart';
+import '../../../../core/presentation/widgets/app_confirm_dialog.dart';
+import '../../../../core/utils/widgets/app_toast.dart';
+import '../../../../core/theme/app_radius.dart';
+import 'cubit/delete_item/delete_owner_warehouse_item_cubit.dart';
+import 'cubit/delete_item/delete_owner_warehouse_item_state.dart';
+
 
 import '../../../../core/theme/theme_context.dart';
 import '../../../../core/theme/color_utils.dart';
@@ -43,8 +52,25 @@ class _OwnerWarehouseItemDetailsViewState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.appBackgroundColor,
+    return BlocProvider(
+      create: (context) => sl<DeleteOwnerWarehouseItemCubit>(),
+      child: BlocListener<DeleteOwnerWarehouseItemCubit, DeleteOwnerWarehouseItemState>(
+        listener: (context, state) {
+          if (state is DeleteOwnerWarehouseItemSuccess) {
+            AppToast.showSuccess(
+              context,
+              LocaleKeys.warehouse_item_deleted_success.tr(),
+            );
+            context.pop();
+          } else if (state is DeleteOwnerWarehouseItemError) {
+            AppToast.showError(
+              context,
+              state.message,
+            );
+          }
+        },
+        child: Scaffold(
+          backgroundColor: context.appBackgroundColor,
       appBar: CustomAppBar(
         title: LocaleKeys.warehouse_item_details_title.tr(),
         showBackButton: true,
@@ -53,20 +79,44 @@ class _OwnerWarehouseItemDetailsViewState
               OwnerWarehouseItemDetailsState>(
             builder: (context, state) {
               if (state is OwnerWarehouseItemDetailsLoaded) {
-                return IconButton(
-                  icon: const Icon(Icons.edit_rounded),
-                  color: context.primaryColor,
-                  onPressed: () {
-                    OwnerWarehouseItemEditSheet.show(
-                      context,
-                      item: state.details,
-                      onSuccess: () {
-                        context
-                            .read<OwnerWarehouseItemDetailsCubit>()
-                            .fetchItemDetails(widget.itemId);
+                return Row(
+                  children: [
+                    _buildActionButton(
+                      context: context,
+                      icon: Icons.delete_outline_rounded,
+                      color: AppColors.error,
+                      onPressed: () async {
+                        final confirm = await AppConfirmDialog.show(
+                          context: context,
+                          titleKey: LocaleKeys.warehouse_delete_item_title,
+                          messageKey: LocaleKeys.warehouse_delete_item_message,
+                        );
+                        if (confirm == true && context.mounted) {
+                          context
+                              .read<DeleteOwnerWarehouseItemCubit>()
+                              .deleteItem(widget.itemId);
+                        }
                       },
-                    );
-                  },
+                    ),
+                    const SizedBox(width: AppSpacing.sm),
+                    _buildActionButton(
+                      context: context,
+                      icon: Icons.edit_rounded,
+                      color: context.primaryColor,
+                      onPressed: () {
+                        OwnerWarehouseItemEditSheet.show(
+                          context,
+                          item: state.details,
+                          onSuccess: () {
+                            context
+                                .read<OwnerWarehouseItemDetailsCubit>()
+                                .fetchItemDetails(widget.itemId);
+                          },
+                        );
+                      },
+                    ),
+                    const SizedBox(width: AppSpacing.md),
+                  ],
                 );
               }
               return const SizedBox.shrink();
@@ -91,6 +141,33 @@ class _OwnerWarehouseItemDetailsViewState
           }
           return const SizedBox.shrink();
         },
+      ),
+      ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton({
+    required BuildContext context,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onPressed,
+  }) {
+    return InkWell(
+      onTap: onPressed,
+      borderRadius: BorderRadius.circular(AppRadius.lg),
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: color.withValues(alpha: 0.1),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(
+          icon,
+          color: color,
+          size: 20,
+        ),
       ),
     );
   }
@@ -183,6 +260,7 @@ class _OwnerWarehouseItemDetailsViewState
                   AppStatusBadge(
                     labelKey: details.statusLabel,
                     color: isLowStock ? AppColors.error : AppColors.success,
+                    translateText: false,
                   ),
                 ],
               ),

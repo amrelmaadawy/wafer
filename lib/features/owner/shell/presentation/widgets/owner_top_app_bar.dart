@@ -22,7 +22,9 @@ class OwnerTopAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showDrawerButton;
   final bool showSearch;
   final bool showNotifications;
+  final bool forceDrawerButton;
   final VoidCallback? onBackPressed;
+  final VoidCallback? onDrawerPressed;
   final List<Widget>? extraActions;
   final List<Widget>? extraIconActions;
   final PreferredSizeWidget? bottom;
@@ -37,7 +39,9 @@ class OwnerTopAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.showDrawerButton = true,
     this.showSearch = true,
     this.showNotifications = true,
+    this.forceDrawerButton = false,
     this.onBackPressed,
+    this.onDrawerPressed,
     this.extraActions,
     this.extraIconActions,
     this.bottom,
@@ -58,9 +62,9 @@ class OwnerTopAppBar extends StatelessWidget implements PreferredSizeWidget {
     final canPop = Navigator.canPop(context);
 
     Widget? leadingWidget;
-    if (canPop) {
+    if (canPop && !forceDrawerButton) {
       leadingWidget = CustomBackButton(onPressed: onBackPressed);
-    } else if (showDrawerButton) {
+    } else if (showDrawerButton || forceDrawerButton) {
       leadingWidget = Padding(
         padding: const EdgeInsetsDirectional.only(start: AppSpacing.sm),
         child: Center(
@@ -68,7 +72,7 @@ class OwnerTopAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: primary.withValues(alpha: 0.08),
             borderRadius: AppRadius.circularMd,
             child: InkWell(
-              onTap: () {
+              onTap: onDrawerPressed ?? () {
                 HapticFeedback.lightImpact();
                 final rootScaffold = context.findRootAncestorStateOfType<ScaffoldState>();
                 if (rootScaffold != null) {
@@ -97,7 +101,7 @@ class OwnerTopAppBar extends StatelessWidget implements PreferredSizeWidget {
       scrolledUnderElevation: 0,
       backgroundColor: context.appSurfaceColor,
       centerTitle: false,
-      leadingWidth: canPop ? 68 : (showDrawerButton ? 56 : null),
+      leadingWidth: (canPop && !forceDrawerButton) ? 68 : ((showDrawerButton || forceDrawerButton) ? 56 : null),
       leading: leadingWidget,
       title: Row(
         mainAxisSize: MainAxisSize.min,

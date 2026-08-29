@@ -111,6 +111,7 @@ class _ContractHeader extends StatelessWidget {
           labelKey: contract.statusLabel.isNotEmpty ? contract.statusLabel : contract.status,
           color: _getStatusColor(contract.status),
           size: AppStatusBadgeSize.small,
+          translateText: false,
         ),
         const SizedBox(width: AppSpacing.sm),
         Icon(

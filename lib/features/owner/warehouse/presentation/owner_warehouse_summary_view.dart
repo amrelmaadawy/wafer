@@ -1,9 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../../core/di/service_locator.dart';
+import '../../../../../core/routing/routes.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_spacing.dart';
@@ -42,8 +42,8 @@ class _OwnerWarehouseSummaryViewState extends State<OwnerWarehouseSummaryView> {
       child: Scaffold(
         appBar: CustomAppBar(
           title: LocaleKeys.warehouse_dashboard_title.tr(),
-          showBackButton: true,
-          onBackPressed: () => context.pop(),
+          showBackButton: false,
+          showMenuButton: true,
         ),
         body:
             BlocBuilder<OwnerWarehouseSummaryCubit, OwnerWarehouseSummaryState>(

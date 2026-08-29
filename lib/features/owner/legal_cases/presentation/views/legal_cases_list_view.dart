@@ -49,7 +49,7 @@ class _LegalCasesListViewState extends State<LegalCasesListView> {
     return BlocProvider.value(
       value: _cubit,
       child: Scaffold(
-        appBar: OwnerTopAppBar(title: LocaleKeys.drawerNavLegalCases.tr()),
+        appBar: OwnerTopAppBar(title: LocaleKeys.drawerNavLegalCases.tr(), forceDrawerButton: true),
         backgroundColor: context.appBackgroundColor,
         floatingActionButton: FloatingActionButton(heroTag: null, 
           onPressed: () async {

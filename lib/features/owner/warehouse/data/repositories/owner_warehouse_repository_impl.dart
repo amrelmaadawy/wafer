@@ -5,19 +5,74 @@ import '../../../../../core/error/exceptions.dart';
 import '../../../../../core/error/failures.dart';
 import '../../domain/entities/warehouse_items_response_entity.dart';
 import '../../domain/entities/warehouse_summary_entity.dart';
-import '../../domain/entities/warehouse_item_entity.dart';
+import '../../domain/entities/warehouse_item_entity.dart' hide WarehouseEntity;
+import '../../domain/entities/warehouse_entity.dart';
 import '../../domain/entities/warehouse_item_details_entity.dart';
 import '../../domain/entities/warehouse_item_update_result_entity.dart';
 import '../../domain/entities/create_warehouse_item_params.dart';
+import '../../domain/entities/create_owner_warehouse_params.dart';
 import '../../domain/entities/update_warehouse_item_params.dart';
 import '../../domain/repositories/owner_warehouse_repository.dart';
+
 import '../datasources/owner_warehouse_remote_data_source.dart';
 import '../models/update_warehouse_item_params_model.dart';
+
+
+import '../../domain/entities/warehouse_list_response_entity.dart';
 
 class OwnerWarehouseRepositoryImpl implements OwnerWarehouseRepository {
   final OwnerWarehouseRemoteDataSource remoteDataSource;
 
   OwnerWarehouseRepositoryImpl({required this.remoteDataSource});
+
+
+  @override
+  Future<Either<Failure, WarehouseEntity>> createWarehouse(
+    CreateOwnerWarehouseParams params,
+  ) async {
+    try {
+      final warehouse = await remoteDataSource.createWarehouse(params);
+      return Right(warehouse);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      // For validation errors and API specific errors
+      return Left(
+        ServerFailure(
+          e.response?.data['message'] ?? e.message ?? 'Unknown Error',
+        ),
+      );
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  @override
+  Future<Either<Failure, WarehouseEntity>> getWarehouseDetails(int id) async {
+    try {
+      final result = await remoteDataSource.getWarehouseDetails(id);
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, WarehouseListResponseEntity>> getWarehouses() async {
+    try {
+      final response = await remoteDataSource.getWarehouses();
+      return Right(response);
+    } on DioException catch (e) {
+      return Left(ServerFailure(
+        e.response?.data['message'] ?? e.message ?? 'Unknown error occurred',
+      ));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
 
   @override
   Future<Either<Failure, WarehouseSummaryEntity>> getWarehouseSummary() async {
@@ -122,6 +177,24 @@ class OwnerWarehouseRepositoryImpl implements OwnerWarehouseRepository {
       return Left(ServerFailure(e.message));
     } on DioException catch (e) {
       return Left(ServerFailure.fromDioException(e));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteWarehouseItem(int id) async {
+    try {
+      await remoteDataSource.deleteWarehouseItem(id);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on DioException catch (e) {
+      return Left(
+        ServerFailure(
+          e.response?.data['message'] ?? e.message ?? 'Unknown Error',
+        ),
+      );
     } catch (e) {
       return Left(ServerFailure(e.toString()));
     }

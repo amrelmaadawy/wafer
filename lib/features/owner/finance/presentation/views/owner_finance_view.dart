@@ -38,6 +38,7 @@ class _OwnerFinanceViewState extends State<OwnerFinanceView> {
       backgroundColor: AppColors.backgroundLight,
       appBar: OwnerTopAppBar(
         title: LocaleKeys.owner_finance_title.tr(),
+          forceDrawerButton: true,
         subtitle: LocaleKeys.owner_finance_subtitle.tr(),
       ),
       body: SafeArea(

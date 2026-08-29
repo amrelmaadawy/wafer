@@ -47,6 +47,7 @@ class _SupervisorsListViewState extends State<SupervisorsListView> {
           return Scaffold(
             appBar: OwnerTopAppBar(
               title: LocaleKeys.drawerNavSupervisors.tr(),
+          forceDrawerButton: true,
             ),
             body: NotificationListener<ScrollNotification>(
               onNotification: (notification) {

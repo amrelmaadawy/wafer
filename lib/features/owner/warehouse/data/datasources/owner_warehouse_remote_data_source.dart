@@ -5,12 +5,19 @@ import '../../../../../core/network/api_constants.dart';
 import '../models/warehouse_items_response_model.dart';
 import '../models/warehouse_summary_model.dart';
 import '../models/warehouse_item_details_model.dart';
-import '../models/warehouse_item_model.dart';
+import '../models/warehouse_item_model.dart' hide WarehouseModel;
+import '../models/warehouse_model.dart';
 import '../models/update_warehouse_item_params_model.dart';
 import '../models/warehouse_item_update_result_model.dart';
 import '../../domain/entities/create_warehouse_item_params.dart';
+import '../../domain/entities/create_owner_warehouse_params.dart';
+
+import '../models/warehouse_list_response_model.dart';
 
 abstract class OwnerWarehouseRemoteDataSource {
+  Future<WarehouseListResponseModel> getWarehouses();
+  Future<WarehouseModel> getWarehouseDetails(int id);
+  Future<WarehouseModel> createWarehouse(CreateOwnerWarehouseParams params);
   Future<WarehouseSummaryModel> getWarehouseSummary();
   Future<WarehouseItemsResponseModel> getWarehouseItems({
     int page = 1,
@@ -28,6 +35,7 @@ abstract class OwnerWarehouseRemoteDataSource {
   Future<WarehouseItemUpdateResultModel> updateWarehouseItem(
     UpdateWarehouseItemParamsModel params,
   );
+  Future<void> deleteWarehouseItem(int id);
 }
 
 class OwnerWarehouseRemoteDataSourceImpl
@@ -35,6 +43,49 @@ class OwnerWarehouseRemoteDataSourceImpl
   final Dio dio;
 
   OwnerWarehouseRemoteDataSourceImpl(this.dio);
+
+
+  @override
+  Future<WarehouseModel> createWarehouse(CreateOwnerWarehouseParams params) async {
+    try {
+      final response = await dio.post(
+        ApiConstants.ownerWarehouses,
+        data: params.toJson(),
+      );
+      return WarehouseModel.fromJson(response.data['data']['warehouse']);
+    } on DioException catch (e) {
+      if (e.response != null) {
+        throw ServerException(e.response?.data['message'] ?? 'Unknown Error');
+      } else {
+        throw ServerException(e.message ?? 'Unknown Error');
+      }
+    }
+  }
+
+  @override
+  @override
+  Future<WarehouseModel> getWarehouseDetails(int id) async {
+    final response = await dio.get('${ApiConstants.ownerWarehouses}/$id');
+    if (response.statusCode == 200) {
+      if (response.data['success'] == true) {
+        return WarehouseModel.fromJson(response.data['data']['warehouse']);
+      } else {
+        throw ServerException(response.data['message'] ?? 'Unknown error');
+      }
+    } else {
+      throw ServerException('Failed to load warehouse details');
+    }
+  }
+
+  @override
+  Future<WarehouseListResponseModel> getWarehouses() async {
+    try {
+      final response = await dio.get(ApiConstants.ownerWarehouses);
+      return WarehouseListResponseModel.fromJson(response.data['data']);
+    } on DioException {
+      rethrow;
+    }
+  }
 
   @override
   Future<WarehouseSummaryModel> getWarehouseSummary() async {
@@ -117,6 +168,19 @@ class OwnerWarehouseRemoteDataSourceImpl
       return WarehouseItemUpdateResultModel.fromJson(response.data['data']);
     } on DioException {
       rethrow;
+    }
+  }
+
+  @override
+  Future<void> deleteWarehouseItem(int id) async {
+    try {
+      await dio.delete('${ApiConstants.ownerWarehouseItems}/$id');
+    } on DioException catch (e) {
+      if (e.response != null) {
+        throw ServerException(e.response?.data['message'] ?? 'Unknown Error');
+      } else {
+        throw ServerException(e.message ?? 'Unknown Error');
+      }
     }
   }
 }

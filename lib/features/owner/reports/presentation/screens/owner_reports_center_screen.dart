@@ -24,7 +24,7 @@ class OwnerReportsCenterScreen extends StatelessWidget {
       create: (context) => sl<OwnerReportsIndexCubit>()..fetchReportsIndex(),
       child: Scaffold(
         backgroundColor: AppColors.backgroundLight,
-        appBar: OwnerTopAppBar(title: LocaleKeys.drawerNavReports.tr()),
+        appBar: OwnerTopAppBar(title: LocaleKeys.drawerNavReports.tr(), forceDrawerButton: true),
         body: BlocBuilder<OwnerReportsIndexCubit, OwnerReportsIndexState>(
           builder: (context, state) {
             if (state is OwnerReportsIndexLoading ||

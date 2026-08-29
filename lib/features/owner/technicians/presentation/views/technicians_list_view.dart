@@ -59,6 +59,7 @@ class _TechniciansListViewState extends State<TechniciansListView> {
       backgroundColor: AppColors.backgroundLight,
       appBar: OwnerTopAppBar(
         title: LocaleKeys.drawerNavTechnicians.tr(),
+          forceDrawerButton: true,
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: null,

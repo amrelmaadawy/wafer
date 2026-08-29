@@ -59,6 +59,7 @@ class _OwnerMaintenanceViewState extends State<OwnerMaintenanceView> {
       backgroundColor: AppColors.backgroundLight,
       appBar: OwnerTopAppBar(
         title: LocaleKeys.maintenanceTitle.tr(),
+          forceDrawerButton: true,
         extraIconActions: [
           Material(
             color: Colors.transparent,
