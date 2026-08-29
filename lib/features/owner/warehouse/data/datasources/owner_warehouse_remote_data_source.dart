@@ -18,6 +18,8 @@ abstract class OwnerWarehouseRemoteDataSource {
   Future<WarehouseListResponseModel> getWarehouses();
   Future<WarehouseModel> getWarehouseDetails(int id);
   Future<WarehouseModel> createWarehouse(CreateOwnerWarehouseParams params);
+  Future<WarehouseModel> updateWarehouse(int id, Map<String, dynamic> body);
+  Future<void> deleteWarehouse(int id);
   Future<WarehouseSummaryModel> getWarehouseSummary();
   Future<WarehouseItemsResponseModel> getWarehouseItems({
     int page = 1,
@@ -63,6 +65,38 @@ class OwnerWarehouseRemoteDataSourceImpl
   }
 
   @override
+  Future<WarehouseModel> updateWarehouse(int id, Map<String, dynamic> body) async {
+    try {
+      final response = await dio.put(
+        '${ApiConstants.ownerWarehouses}/$id',
+        data: body,
+      );
+      return WarehouseModel.fromJson(response.data['data']['warehouse']);
+    } on DioException catch (e) {
+      if (e.response != null) {
+        throw ServerException(e.response?.data['message'] ?? 'Unknown Error');
+      } else {
+        throw ServerException(e.message ?? 'Unknown Error');
+      }
+    }
+  }
+
+  @override
+  Future<void> deleteWarehouse(int id) async {
+    try {
+      final response = await dio.delete('${ApiConstants.ownerWarehouses}/$id');
+      if (response.data['success'] != true) {
+        throw ServerException(response.data['message'] ?? 'Failed to delete warehouse');
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        throw ServerException(e.response?.data['message'] ?? 'Unknown Error');
+      } else {
+        throw ServerException(e.message ?? 'Unknown Error');
+      }
+    }
+  }
+
   @override
   Future<WarehouseModel> getWarehouseDetails(int id) async {
     final response = await dio.get('${ApiConstants.ownerWarehouses}/$id');

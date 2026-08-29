@@ -2732,5 +2732,10 @@
   "warehouse_parent": "Main Warehouse / Parent",
   "warehouse_notes": "Notes",
   "warehouse_created_at": "Created At",
-  "warehouse_updated_at": "Updated At"
+  "warehouse_updated_at": "Updated At",
+  "warehouse_update_success": "Warehouse updated successfully",
+  "warehouse_update_title": "Edit Warehouse Details",
+  "warehouse_delete_success": "Warehouse deleted successfully",
+  "warehouse_delete_title": "Delete Warehouse",
+  "warehouse_delete_message": "Are you sure you want to delete this warehouse? This action cannot be undone."
 }

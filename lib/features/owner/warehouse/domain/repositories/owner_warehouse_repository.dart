@@ -11,6 +11,7 @@ import '../entities/warehouse_item_details_entity.dart';
 
 import '../entities/warehouse_list_response_entity.dart';
 import '../entities/create_owner_warehouse_params.dart';
+import '../entities/update_owner_warehouse_params.dart';
 import '../entities/warehouse_entity.dart';
 abstract class OwnerWarehouseRepository {
   Future<Either<Failure, WarehouseListResponseEntity>> getWarehouses();
@@ -37,4 +38,9 @@ abstract class OwnerWarehouseRepository {
   Future<Either<Failure, WarehouseEntity>> createWarehouse(
     CreateOwnerWarehouseParams params,
   );
+  Future<Either<Failure, WarehouseEntity>> updateWarehouse(
+    int id,
+    UpdateOwnerWarehouseParams params,
+  );
+  Future<Either<Failure, void>> deleteWarehouse(int id);
 }

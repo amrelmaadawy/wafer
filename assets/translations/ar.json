@@ -2729,5 +2729,10 @@
   "warehouse_parent": "المخزن الرئيسي / الفرع من",
   "warehouse_notes": "الملاحظات",
   "warehouse_created_at": "تاريخ الإنشاء",
-  "warehouse_updated_at": "تاريخ التحديث"
+  "warehouse_updated_at": "تاريخ التحديث",
+  "warehouse_update_success": "تم تحديث بيانات المخزن بنجاح",
+  "warehouse_update_title": "تعديل بيانات المخزن",
+  "warehouse_delete_success": "تم حذف المخزن بنجاح",
+  "warehouse_delete_title": "حذف المخزن",
+  "warehouse_delete_message": "هل أنت متأكد من رغبتك في حذف هذا المخزن؟ لا يمكن التراجع عن هذه الخطوة."
 }

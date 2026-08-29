@@ -12,9 +12,11 @@ class OwnerWarehouseDetailsCubit extends Cubit<OwnerWarehouseDetailsState> {
   Future<void> fetchWarehouseDetails(int id) async {
     emit(OwnerWarehouseDetailsLoading());
     final result = await getOwnerWarehouseDetailsUseCase(id);
-    result.fold(
-      (failure) => emit(OwnerWarehouseDetailsError(failure.message)),
-      (warehouse) => emit(OwnerWarehouseDetailsLoaded(warehouse)),
-    );
+    if (!isClosed) {
+      result.fold(
+        (failure) => emit(OwnerWarehouseDetailsError(failure.message)),
+        (warehouse) => emit(OwnerWarehouseDetailsLoaded(warehouse)),
+      );
+    }
   }
 }

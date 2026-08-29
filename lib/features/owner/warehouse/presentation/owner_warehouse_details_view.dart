@@ -8,6 +8,7 @@ import '../../../../core/presentation/widgets/app_status_badge.dart';
 import '../../../../core/presentation/widgets/app_surface_card.dart';
 import '../../../../core/presentation/widgets/custom_app_bar.dart';
 import '../../../../core/presentation/widgets/custom_error_widget.dart';
+import '../../../../../core/presentation/widgets/custom_action_button.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_fonts.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -18,6 +19,14 @@ import '../domain/entities/warehouse_entity.dart';
 import 'cubit/owner_warehouse_details_cubit.dart';
 import 'cubit/owner_warehouse_details_state.dart';
 import 'widgets/warehouse_card_shimmer.dart';
+import 'widgets/owner_warehouse_edit_sheet.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../core/presentation/widgets/app_confirm_dialog.dart';
+import '../../../../../core/presentation/widgets/app_loading_overlay.dart';
+import 'cubit/delete_warehouse/owner_warehouse_delete_cubit.dart';
+import 'cubit/delete_warehouse/owner_warehouse_delete_state.dart';
+
 
 class OwnerWarehouseDetailsView extends StatelessWidget {
   final int warehouseId;
@@ -29,13 +38,80 @@ class OwnerWarehouseDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<OwnerWarehouseDetailsCubit>()..fetchWarehouseDetails(warehouseId),
-      child: Scaffold(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<OwnerWarehouseDetailsCubit>()..fetchWarehouseDetails(warehouseId),
+        ),
+        BlocProvider(
+          create: (context) => sl<OwnerWarehouseDeleteCubit>(),
+        ),
+      ],
+      child: BlocConsumer<OwnerWarehouseDeleteCubit, OwnerWarehouseDeleteState>(
+        listener: (context, state) {
+          if (state is OwnerWarehouseDeleteSuccess) {
+            AppToast.showSuccess(context, LocaleKeys.warehouse_delete_success.tr());
+            context.pop();
+          } else if (state is OwnerWarehouseDeleteError) {
+            AppToast.showError(context, state.message);
+          }
+        },
+        builder: (context, deleteState) {
+          return AppLoadingOverlay(
+            isLoading: deleteState is OwnerWarehouseDeleteLoading,
+            child: Scaffold(
         backgroundColor: context.appBackgroundColor,
         appBar: CustomAppBar(
           title: LocaleKeys.warehouse_details_title.tr(),
           showBackButton: true,
+          actions: [
+            BlocBuilder<OwnerWarehouseDetailsCubit, OwnerWarehouseDetailsState>(
+              builder: (context, state) {
+                if (state is OwnerWarehouseDetailsLoaded) {
+                  return Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomActionButton(
+                        icon: Icons.edit_rounded,
+                        color: context.primaryColor,
+                        size: 38,
+                        iconSize: 20,
+                        onTap: () {
+                          OwnerWarehouseEditSheet.show(
+                            context,
+                            warehouse: state.warehouse,
+                            onSuccess: () {
+                              context.read<OwnerWarehouseDetailsCubit>().fetchWarehouseDetails(warehouseId);
+                            },
+                          );
+                        },
+                      ),
+                      const SizedBox(width: AppSpacing.sm),
+                      CustomActionButton(
+                        icon: Icons.delete_rounded,
+                        color: AppColors.error,
+                        size: 38,
+                        iconSize: 20,
+                        onTap: () async {
+                          final confirm = await AppConfirmDialog.show(
+                            context: context,
+                            titleKey: LocaleKeys.warehouse_delete_title,
+                            messageKey: LocaleKeys.warehouse_delete_message,
+                            isDangerous: true,
+                          );
+                          if (confirm == true && context.mounted) {
+                            context.read<OwnerWarehouseDeleteCubit>().deleteWarehouse(warehouseId);
+                          }
+                        },
+                      ),
+                      const SizedBox(width: AppSpacing.md),
+                    ],
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+            ),
+          ],
         ),
         body: BlocBuilder<OwnerWarehouseDetailsCubit, OwnerWarehouseDetailsState>(
           builder: (context, state) {
@@ -66,6 +142,9 @@ class OwnerWarehouseDetailsView extends StatelessWidget {
             return const SizedBox.shrink();
           },
         ),
+      ),
+    );
+        },
       ),
     );
   }
@@ -161,7 +240,7 @@ class OwnerWarehouseDetailsView extends StatelessWidget {
                 ),
                 child: Text(
                   warehouse.notes!,
-                  style: AppTextStyles.bodyMedium.copyWith(color: context.appOnSurfaceColor, height: 1.5),
+                  style: AppTextStyles.bodyMedium.copyWith(color: context.primaryColor, height: 1.5),
                 ),
               ),
             ],
@@ -317,7 +396,7 @@ class OwnerWarehouseDetailsView extends StatelessWidget {
               value,
               style: AppTextStyles.bodyMedium.copyWith(
                 fontWeight: isBold ? FontWeight.w800 : FontWeight.w600,
-                color: context.appOnSurfaceColor,
+                color: context.primaryColor,
               ),
               textAlign: TextAlign.end,
               maxLines: 1,
@@ -345,7 +424,7 @@ class OwnerWarehouseDetailsView extends StatelessWidget {
         ),
         Text(
           date,
-          style: AppTextStyles.bodyMedium.copyWith(color: context.appOnSurfaceColor, fontWeight: FontWeight.w600),
+          style: AppTextStyles.bodyMedium.copyWith(color: context.primaryColor, fontWeight: FontWeight.w600),
         ),
       ],
     );

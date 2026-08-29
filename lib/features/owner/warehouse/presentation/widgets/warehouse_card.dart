@@ -9,16 +9,21 @@ import '../../../../../core/theme/theme_context.dart';
 import '../../../../../core/theme/color_utils.dart';
 import '../../../../../core/presentation/widgets/app_status_badge.dart';
 import '../../../../../core/utils/translations/locale_keys.g.dart';
+import '../../../../../core/presentation/widgets/custom_action_button.dart';
 import '../../domain/entities/warehouse_entity.dart';
 
 class WarehouseCard extends StatelessWidget {
   final WarehouseEntity warehouse;
   final VoidCallback? onTap;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
   const WarehouseCard({
     super.key,
     required this.warehouse,
     this.onTap,
+    this.onEdit,
+    this.onDelete,
   });
 
   @override
@@ -81,10 +86,37 @@ class WarehouseCard extends StatelessWidget {
                         ],
                       ),
                     ),
-                    AppStatusBadge(
-                      color: warehouse.isActive ? AppColors.success : AppColors.error,
-                      labelKey: warehouse.statusLabel,
-                      translateText: false,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        AppStatusBadge(
+                          color: warehouse.isActive ? AppColors.success : AppColors.error,
+                          labelKey: warehouse.statusLabel,
+                          translateText: false,
+                        ),
+                        if (onEdit != null || onDelete != null) ...[
+                          const SizedBox(height: AppSpacing.sm),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if (onEdit != null)
+                                CustomActionButton(
+                                  icon: Icons.edit_rounded,
+                                  color: context.primaryColor,
+                                  onTap: onEdit!,
+                                ),
+                              if (onEdit != null && onDelete != null)
+                                const SizedBox(width: AppSpacing.sm),
+                              if (onDelete != null)
+                                CustomActionButton(
+                                  icon: Icons.delete_rounded,
+                                  color: AppColors.error,
+                                  onTap: onDelete!,
+                                ),
+                            ],
+                          ),
+                        ],
+                      ],
                     ),
                   ],
                 ),

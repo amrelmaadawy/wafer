@@ -2703,5 +2703,10 @@ abstract class  LocaleKeys {
   static const warehouse_notes = 'warehouse_notes';
   static const warehouse_created_at = 'warehouse_created_at';
   static const warehouse_updated_at = 'warehouse_updated_at';
+  static const warehouse_update_success = 'warehouse_update_success';
+  static const warehouse_update_title = 'warehouse_update_title';
+  static const warehouse_delete_success = 'warehouse_delete_success';
+  static const warehouse_delete_title = 'warehouse_delete_title';
+  static const warehouse_delete_message = 'warehouse_delete_message';
 
 }

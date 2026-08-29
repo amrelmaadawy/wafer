@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../../core/di/service_locator.dart';
-import '../../../../../core/routing/routes.dart';
 import '../../../../../core/localization/locale_keys.dart';
 import '../../../../../core/theme/app_fonts.dart';
 import '../../../../../core/theme/app_spacing.dart';

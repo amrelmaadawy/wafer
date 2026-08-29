@@ -17,17 +17,41 @@ import 'cubit/warehouses/owner_warehouses_state.dart';
 import 'widgets/warehouse_card.dart';
 import 'widgets/warehouse_card_shimmer.dart';
 import 'widgets/owner_warehouse_create_sheet.dart';
+import 'widgets/owner_warehouse_edit_sheet.dart';
+import '../../../../../core/utils/widgets/app_toast.dart';
+import '../../../../../core/presentation/widgets/app_confirm_dialog.dart';
+import '../../../../../core/presentation/widgets/app_loading_overlay.dart';
+import 'cubit/delete_warehouse/owner_warehouse_delete_cubit.dart';
+import 'cubit/delete_warehouse/owner_warehouse_delete_state.dart';
+
 
 class OwnerWarehousesListView extends StatelessWidget {
   const OwnerWarehousesListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<OwnerWarehousesCubit>()..fetchWarehouses(),
-      child: Builder(
-        builder: (context) {
-          return Scaffold(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => sl<OwnerWarehousesCubit>()..fetchWarehouses(),
+        ),
+        BlocProvider(
+          create: (context) => sl<OwnerWarehouseDeleteCubit>(),
+        ),
+      ],
+      child: BlocConsumer<OwnerWarehouseDeleteCubit, OwnerWarehouseDeleteState>(
+        listener: (context, state) {
+          if (state is OwnerWarehouseDeleteSuccess) {
+            AppToast.showSuccess(context, LocaleKeys.warehouse_delete_success.tr());
+            context.read<OwnerWarehousesCubit>().fetchWarehouses();
+          } else if (state is OwnerWarehouseDeleteError) {
+            AppToast.showError(context, state.message);
+          }
+        },
+        builder: (context, deleteState) {
+          return AppLoadingOverlay(
+            isLoading: deleteState is OwnerWarehouseDeleteLoading,
+            child: Scaffold(
             backgroundColor: context.appBackgroundColor,
             appBar: CustomAppBar(
               title: LocaleKeys.warehouse_warehouses_list_title.tr(),
@@ -50,6 +74,7 @@ class OwnerWarehousesListView extends StatelessWidget {
               },
               child: const Icon(Icons.add_rounded, color: Colors.white, size: 28),
             ),
+          ),
           );
         },
       ),
@@ -103,6 +128,26 @@ class _OwnerWarehousesListBody extends StatelessWidget {
                   warehouse: warehouse,
                   onTap: () {
                     context.push(Routes.ownerWarehouseDetails, extra: warehouse.id);
+                  },
+                  onEdit: () {
+                    OwnerWarehouseEditSheet.show(
+                      context,
+                      warehouse: warehouse,
+                      onSuccess: () {
+                        context.read<OwnerWarehousesCubit>().fetchWarehouses();
+                      },
+                    );
+                  },
+                  onDelete: () async {
+                    final confirm = await AppConfirmDialog.show(
+                      context: context,
+                      titleKey: LocaleKeys.warehouse_delete_title,
+                      messageKey: LocaleKeys.warehouse_delete_message,
+                      isDangerous: true,
+                    );
+                    if (confirm == true && context.mounted) {
+                      context.read<OwnerWarehouseDeleteCubit>().deleteWarehouse(warehouse.id);
+                    }
                   },
                 );
               },

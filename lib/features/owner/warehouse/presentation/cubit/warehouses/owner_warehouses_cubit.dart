@@ -16,9 +16,11 @@ class OwnerWarehousesCubit extends Cubit<OwnerWarehousesState> {
 
     final result = await getOwnerWarehousesUseCase(const NoParams());
 
-    result.fold(
-      (failure) => emit(OwnerWarehousesError(message: failure.message)),
-      (response) => emit(OwnerWarehousesLoaded(response: response)),
-    );
+    if (!isClosed) {
+      result.fold(
+        (failure) => emit(OwnerWarehousesError(message: failure.message)),
+        (response) => emit(OwnerWarehousesLoaded(response: response)),
+      );
+    }
   }
 }

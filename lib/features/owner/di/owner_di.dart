@@ -60,6 +60,10 @@ import '../finance/domain/repositories/finance_repository.dart';
 import '../finance/domain/repositories/transfers_repository.dart';
 import '../finance/domain/repositories/journal_entries_repository.dart';
 import '../finance/domain/usecases/get_finance_overview_usecase.dart';
+import '../warehouse/domain/usecases/delete_owner_warehouse_use_case.dart';
+import '../warehouse/presentation/cubit/delete_warehouse/owner_warehouse_delete_cubit.dart';
+import '../warehouse/domain/usecases/update_owner_warehouse_use_case.dart';
+import '../warehouse/presentation/cubit/update_warehouse/owner_warehouse_update_cubit.dart';
 import '../finance/domain/usecases/get_finance_accounts_use_case.dart';
 import '../finance/domain/usecases/create_finance_account_use_case.dart';
 import '../finance/domain/usecases/update_finance_account_use_case.dart';
@@ -363,6 +367,22 @@ void _initWarehouse() {
   if (!sl.isRegistered<OwnerWarehouseDetailsCubit>()) {
     sl.registerFactory(
       () => OwnerWarehouseDetailsCubit(getOwnerWarehouseDetailsUseCase: sl()),
+    );
+  }
+  if (!sl.isRegistered<UpdateOwnerWarehouseUseCase>()) {
+    sl.registerLazySingleton(() => UpdateOwnerWarehouseUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerWarehouseUpdateCubit>()) {
+    sl.registerFactory(
+      () => OwnerWarehouseUpdateCubit(sl()),
+    );
+  }
+  if (!sl.isRegistered<DeleteOwnerWarehouseUseCase>()) {
+    sl.registerLazySingleton(() => DeleteOwnerWarehouseUseCase(sl()));
+  }
+  if (!sl.isRegistered<OwnerWarehouseDeleteCubit>()) {
+    sl.registerFactory(
+      () => OwnerWarehouseDeleteCubit(sl()),
     );
   }
   if (!sl.isRegistered<CreateOwnerWarehouseItemUseCase>()) {
